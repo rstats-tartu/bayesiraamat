@@ -50,7 +50,7 @@ Normaaljaotuse korral on meil 2 parameetrit, millele me posteeriori arvutame: mu
 
 ```{r, message=FALSE}
 a <- rnorm(20) # expected mean = 0, sd = 1
-b <- c(a, 5) # plus one outlier
+b <- c(a, 3) # plus one outlier
 
 # ilma outlierita andmed
 m0 <- map2stan(
@@ -70,25 +70,23 @@ m1 <- stan(fit = m0@stanfit,
 m2 <- map2stan(
   alist(
     y ~ student_t(nu, mu, sigma),
-    nu ~ dgamma(2, 0.1), 
+    nu ~ dunif(1, 50), 
     mu ~ dnorm(0, 5), 
     sigma ~ dcauchy(0, 1) 
   ), 
   data = list(y = b),
-  chains = 4,
-  constraints = list(nu = "lower=1"),
-  start = list(mu = 0, sigma = 1))
+  chains = 4)
 
 # studenti t mudel, kus nu väärtus on fikseeritud (me ei arvuta seda üle nu priori)
 m3 <- map2stan(
-    alist(
-        y ~ student_t(nu = 2, mu, sigma),
-        mu ~ dnorm(0, 5), 
-        sigma ~ dcauchy(0, 1)  
-), data = list(y = b),
+  alist(
+    y ~ student_t(nu = 20, mu, sigma),
+    mu ~ dnorm(0, 5), 
+    sigma ~ dcauchy(0, 1)  
+  ), 
+  data = list(y = b),
   chains = 4,
-  constraints = list(nu = "lower=1"),
-  start = list(mu = 0, sigma = 1))
+  constraints = list(nu = "lower=1"))
 ```
 
 Siin on m0 ilma outlierita mudel ja me tahame teada, milline mudel m1 kuni m3 sellele kõige lähedasemad tulemused annab (kuna m0 on fititud valimi andmete peal, ei ole ka mu täpselt 0 ja sigma täpselt 1). 
