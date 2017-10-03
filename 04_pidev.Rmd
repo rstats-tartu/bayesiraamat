@@ -1,18 +1,8 @@
-<<<<<<< HEAD:A03_pidev.Rmd
----
-title: "4.7. Ennustame Pidevat suurust"
----
-=======
 
 # Ennustame Pidevat suurust
->>>>>>> 4a904f8ff148d8ab5f8c60b29e06a3d7233ab7ee:chapters/A03_pidev.Rmd
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, error=FALSE, message=FALSE, warning = FALSE)
-```
 
 
-```{r }
+```{r pidevlibs}
 library(tidyverse)
 library(modelr)
 library(broom)
@@ -53,55 +43,56 @@ Normaaljaotuse korral on meil 2 parameetrit, millele me posteeriori arvutame: mu
     Outlierid toovad meile paksema sabaga jaotuse, mis tipu ümber ei lähe aga kaugeltki nii laiaks, kui samade andmetega fititud normaaljaotus.
     
     
-## 4.7.1 Kui lai on meie tõepärafunktsioon? 
+## Kui lai on meie tõepärafunktsioon? 
 
 > Normaaljaotusega modelleeritud tõepärafunktsioon on normaaljaotus, mille keskväärtus = mean(valim) ja mille standardhälve = sd(valim)/sqrt(N), kus N on valimi suurus. See tõepärafunktsioon modelleerib meie valimi keskväärtuse kohtamise tõenäosust igal võimalikul parameetriväärtusel. Sigma, mille posteeriori me Bayesi mudelist arvutame, on aga standardhälve algsete andmepunktide tasemel. See on väga oluline eristus sest sigma kaudu saab simueerida uusi andmepunkte.  
 
 
-```{r results="hide"}
-a <- c(rnorm(20)) #expected mean = 0, sd= 1
-b <- c(a, 5) #plus one outlier
+```{r, message=FALSE}
+a <- rnorm(20) # expected mean = 0, sd = 1
+b <- c(a, 3) # plus one outlier
 
-#ilma outlierita andmed
+# ilma outlierita andmed
 m0 <- map2stan(
-    alist(
-        a ~ dnorm(mu, sigma) ,  # normal likelihood
-        mu ~ dnorm(0,5), # normal prior for mean
-        sigma ~ dcauchy(0,1) #half-cauchy prior from sd 
-), data=list(a=a))
+  alist(
+    y ~ dnorm(mu, sigma),  # normal likelihood
+    mu ~ dnorm(0, 5), # normal prior for mean
+    sigma ~ dcauchy(0, 1) # half-cauchy prior from sd 
+  ), 
+  data = list(y = a),
+  chains = 4)
 
-#sama mudel, aga outlieriga andmed
-m1 <- map2stan(
-    alist(
-        b ~ dnorm(mu, sigma) ,  # normal likelihood
-        mu ~ dnorm(0,5), # normal prior for mean
-        sigma ~ dcauchy(0,1) #half-cauchy prior from sd 
-), data=list(b=b))
+# Sama mudel, aga outlieriga andmed
+m1 <- stan(fit = m0@stanfit, 
+  data = list(N = length(b), y = b))
 
-#studenti t tõepäramudel
+# studenti t tõepäramudel
 m2 <- map2stan(
-    alist(
-        b ~ student_t(nu, mu, sigma) ,
-        nu~ dunif(1, 50), 
-        mu ~ dnorm(0,5), # normal prior for mean
-        sigma ~ dcauchy(0,1) #half-cauchy prior from sd 
-), data=list(b=b))
+  alist(
+    y ~ student_t(nu, mu, sigma),
+    nu ~ dunif(1, 50), 
+    mu ~ dnorm(0, 5), 
+    sigma ~ dcauchy(0, 1) 
+  ), 
+  data = list(y = b),
+  chains = 4)
 
-#studenti t mudel, kus nu väärtus on fikseeritud (me ei aevuta seda üle nu priori)
+# studenti t mudel, kus nu väärtus on fikseeritud (me ei arvuta seda üle nu priori)
 m3 <- map2stan(
-    alist(
-        b ~ student_t(nu=2, mu, sigma) ,
-        mu ~ dnorm(0,5), # normal prior for mean
-        sigma ~ dcauchy(0,1) #half-cauchy prior from sd 
-), data=list(b=b))
-
+  alist(
+    y ~ student_t(nu = 20, mu, sigma),
+    mu ~ dnorm(0, 5), 
+    sigma ~ dcauchy(0, 1)  
+  ), 
+  data = list(y = b),
+  chains = 4,
+  constraints = list(nu = "lower=1"))
 ```
 
 Siin on m0 ilma outlierita mudel ja me tahame teada, milline mudel m1 kuni m3 sellele kõige lähedasemad tulemused annab (kuna m0 on fititud valimi andmete peal, ei ole ka mu täpselt 0 ja sigma täpselt 1). 
 Nagu näha on m3 ehk fikseeritud nu-ga t-jaotus kõige lähemal m0-le ja seega parim mudel outlieriga andmetele. 
 ```{r}
-plot(coeftab(m0, m1, m2, m3), pars=c("mu", "sigma"))
-
+plot(coeftab(m0, m1, m2, m3), pars = c("mu", "sigma"))
 ```
 
 Siin lihtne posteeriorite plot:
@@ -202,7 +193,7 @@ precis(m1)
 
 
 
-## 4.8. MCMC ahelate kvaliteet
+## MCMC ahelate kvaliteet
 
 Rhat on 1, mis tähendab, et MCMC ahelad on ilusti jooksnud ja posteeriori sämplinud. Kui Rhat > 1.1, siis on kuri majas. Suur Rhat viitab, et ahel(ad) pole jõudnud konvergeeruda. Aitab see, kui pikendada warm-up perioodi (näiteks: map2stan(..., iter= 3000, warmup=2000) pikendab warm-upi 2 korda). 
 
@@ -290,13 +281,13 @@ sum(s$es<0)/nrow(s)
 USA presidendid on keskeltläbi 8 cm pikemad kui euroopa omad, aga ebakindlus selle hinnangu ümber on suur (0-16 cm).
 Tõenäosus, et USA presidentide keskmine pikkus on väiksem kui euroopa presidentide keskmine pikkus on selle mudeli järgi 3%. See ei ole tegelikult parim mudel, milleks me võimelised oleme (meie mudel eeldab pahasti, et mõlema grupi varieeruvus on sama), aga jätame praegu asja nii.
 
-## 4.9. lineaarne regressioon
+## Lineaarne regressioon
 
 Eelmises peatükis hindasime ühe andmekogu (näiteks mõõdetud pikkuste) põhjal ehitatud mudelite parameetreid (näiteks keskmist ja statndardhälvet). Nüüd astume sammu edasi ja hindame kahe muutuja (näiteks pikkuse ja kaalu) koos-varieeruvust. Selleks ehitame mudeli, mis sisaldab mõlemaid muutujaid ja küsime: kui palju sõltub y varieeruvus x varieeruvusest. Lihtsaim viis sellele küsimusele läheneda on lineaarse regressiooni kaudu. Me ehitame lineaarse mudeli, mis vaatab kaalu-pikkuse paare (igal subjektil mõõdeti kaal ja pikkus ning mudel vaatab kaalu ja pikkuse koos-varieeruvust subjektide vahel). Enam ei tohiks tulla üllatusena, et meie arvutused ei anna numbrilist hinnangut mitte teaduslikule küsimusele selle kohta kuidas y-i väärtused sõltuvad x-i väärtustest, vaid mudeli parameetritele. Meie mudel on sirge võrrand y = a + b*x ja tavapärases R-i notatsioonis kirjutatakse see y~x. 
 
 Kuna pikkused ja kaalud on igavad, proovime vaadata kuidas riigi keskmine eluiga on seotud riigi rikkusega.
 
-## 4.10. lm() - vähimruutude meetodiga fititud lineaarsed mudelid
+## lm() - vähimruutude meetodiga fititud lineaarsed mudelid
 
 ```{r}
 library(gapminder)
@@ -363,7 +354,7 @@ AIC on Aikake Informatsiooni Kriteerium, mis võtab arvesse nii R-ruudu kui mude
 Seega parim mudel on m3 ja kõige kehvem on m2, mille intercept on realistlikult nulli fikseeritud! 
 
 
-## 4.11. Bayesi kaudu lineaarse mudeli fittimine
+## Bayesi kaudu lineaarse mudeli fittimine
 
 Nüüd Bayesi mudelid. Glimmer on abivahend, mis konverteerib lm() mudeli kirjelduse Bayesi mudeli kirjelduseks kasutades normaaljaotusega tõepära mudelit.
 ```{r}
@@ -494,7 +485,7 @@ plot(coeftab(m7, m8))
 Pane tähele, et m8 b_gdp koefitsiendi posteerior on plaju laiem kui m7 b_gdp oma. See on üldine nähtus, mis tuleneb sellest, et m7-s on vähem parameetreid. **Iga lisatud parameeter kipub vähendama teiste parameetrite hindamise täpsust.**
 
 
-## 4.12. Ennustused mudelist
+## Ennustused mudelist
 
 Kuidas plottida meie hinnangud ebakindlusele parameetri tegeliku väärtuse ümber?
 Siin tuleb appi link().
@@ -566,7 +557,7 @@ HPDI(sim.length$V10, prob = 0.95)
 Nagu näha, võib mudeli kohaselt sellise riigi keskmine eluiga tulla nii madal, kui 40 aastat ja nii kõrge kui 67 aastat.
 
 
-## 4.13. Mitme prediktoriga lineaarne regressioon
+## Mitme prediktoriga lineaarne regressioon
 
 Meil on võimalik lisada regressioonivõrrandisse lisaprediktoreid. Nüüd ei küsi me enam, kuidas mõjutab l_GDP varieeruvus keskmise eluea varieeruvust vaid: kuidas mõjutavad muutujad l_GDP, continent ja logaritm pop-ist (rahvaarvust) keskmist eluiga. Me modelleerime selle lineaarselt nii, et eeldusena varieeruvad need x-i muutujad üksteisest sõltumatult: y = a + b1x1 + b2x2 + b3x3
 
@@ -627,7 +618,7 @@ Miks ei ole mudeli summary tabelis Aafrikat? Põhjus on tehniline. Kategoorilisi
 
 3) Isegi kui muutujad ei ole omavahel üldse korreleeritud, võib ühe tähtsus sõltuda teise väärtusest. Näiteks taimed vajavad nii valgust kui vett. Aga kui ühte ei ole, siis pole ka teisel suurt tähtsust.
 
-### 4.13.1 mudeldamine standardiseeritud andmetega.
+### Mudeldamine standardiseeritud andmetega.
 
 Kui me lahutame igast andmepunktist selle muutuja keskväärtuse siis saame 0-le tsentreeritud andmed. Kui me need omakorda läbi jagame sellle muutuja standardhälbega, siis saame standardiseeritud andmed, mille keskväärtus on null ja SD=1. Nii on lihtsam erinevas skaalas muutujaid omavahel võrrelda (muutus 1 ühik = muutudega 1 standardhäve võrra) ja mudeli arvutused üle Bayesi on ka lihtsamad.
 
@@ -672,11 +663,11 @@ precis(m6)
 
 ```
 
-### 4.13.2 keerulisemate mudelitega töötamine
+### Keerulisemate mudelitega töötamine
 
 Kasuta graafilisi meetodied. Mudeli koefitsientide jõllitamine üksi ei päästa.
 
-#### 4.13.2.1 Predictor residual plots. 
+#### Predictor residual plots. 
 
 Plotime varieeruvuse, mida mudel ei oota ega seleta.
 
@@ -750,7 +741,7 @@ ggplot(pred.data, aes(lGDP_s, mu.mean)) +
 Näeme, kuidas ennustus sobib/ei sobi andmetega. Võrdle eelneva ennustuspildiga, kus mudel ei sisalda rahvaarvu. Ennustuse intervallid on originaalandmete skaalas (aastates), mis on hea.
 
 
-#### 4.13.2.3. Posterior prediction plots 
+#### Posterior prediction plots 
 
 Need plotivad algandmed mudeli fiti vastu.
 
