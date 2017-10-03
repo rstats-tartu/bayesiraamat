@@ -1,13 +1,8 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 
 # Bayesiaanlik statistika
 
 
-```{r introlibs}
+```{r message=FALSE}
 library(tidyverse)
 library(rethinking)
 library(ggthemes)
