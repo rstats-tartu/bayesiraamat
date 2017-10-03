@@ -35,6 +35,8 @@ Kunagi ei või kindel olla, et parimad teooriad ei ole täiesti tähelepanuta j�
 
 > Ca. 1910 mõtlesid filosoofid Russell ja Moore välja tõe vastavusteooria, mille kohaselt tõest propositsiooni eristab väärast "vastavus" füüsikalisele maailmale. Selle kohaselt on tõesed need laused, mis vastavad asjadele. Ehkki keegi ei oska siiani öelda, mida "vastavus" selles kontekstis ikkagi tähendab, või kuidas seda saavutada, on vastavusteooria senini kõige populaarsem tõeteooria filosoofide hulgas (mis on kõnekas alternatiivide kohta). Samamoodi, kui lausete vastavusest maailmaga, võime rääkida ka võrrandite (ehk mudelite) vastavusest lausetega. Vastavusest lausetaga sellepärast, et mudelid on koostatud teaduslike teooriate, mitte otse maailma, kirjeldusena. Seega ei pea me muretsema mudelite tõeväärtuse pärast. Võib lausa väita, et mudeli tõeväärtusest rääkimine on kohatu.
 
+Teeoria ja mudeli seose kohta selline näide. Meil on hüpotees, mille kohaselt valijad eelistavad demokraatlikus süsteemis kandidaate, kes on ennast juba tõestanud sellega, et saavad hakkama riigi majanduse edendamisega. Seega, kompetentsed poliitikud valitakse tagasi. Sellest hüpoteesist saab tuletada kaks järelmit 1. - majandusel läheb keskmiselt paremini juba tagasi valitud poliitikute all kui esimest korda valitud poliitkute all, keda ei ole veel elektoraadi poolt harvendatud ja 2. - majandusnäitajate varieeruvus on esimesel juhul väiksem, sest kehvemad poliitikud on juba valija poolt valimist eemaldatud (Achen, C. H., & Bartels, L. M. (2016). Democracy for Realists). Esimese järelmi testimiseks kasutati statistilise mudelina aritmeetilist keskmist koos standardveaga ja teise järelmi jaoks standardhälvet. Tulemused olid vastupidised hüpoteesi poolt ennustatutega. Seega: andmed (kas neid on piisavalt? on nad representatiivsed?) --> mudel (kindlasti on siin alternatiivseid võimalusi sama küsimuse modelleerimiseks) --> teooria järelm (sama teooria annab ka teisi järelmeid. Mis juhtub, kui osad neist on andmetega kooskõlas ja teised ei ole?) --> laiem teooria --> järeldus demokraatia toimimise kohta laias maailmas.
+
 ## Mudeli väike maailm
 
   Ülalmainitud teadusliku meetodi puudused tingivad, et meie huvides on oma teaduslikke probleeme veel ühe taseme võrra lihtsustada, taandades need statistilisteks probleemideks. Selleks tuletame tavakeelsest teaduslikust teooriast täpselt formuleeritud matemaatilise mudeli ning seejärel asume uurima oma mudelit lootuses, et mudeli kooskõla andmetega ütleb meile midagi teadusliku hüpoteesi kohta. Enamasti töötab selline lähenemine siis, kui mudeli ehitamisel arvestati võimaliku andmeid genereeriva mehhanismiga -- ehk, kui mudeli matemaatiline struktuur koostati teaduslikku hüpoteesi silmas pidades. Mudelid, mis ehitatakse silmas pidades puhtalt matemaatilist sobivust andmetega, ei kipu omama teaduslikku seletusjõudu, kuigi neil võib olla väga hea ennustusjõud. 
@@ -94,18 +96,12 @@ knitr::include_graphics("img/kop.jpg")
 Kui vaadata Koperniku produkti teooriana, mitte mudelina, siis oli sellel küll selgeid eeliseid Aristotelese maailmateooria ees. Juba ammu oli nähtud komeete üle taevavõlvi lendamas (mis Aristotelese järgi asusid kinnistähtede muutumatus sfääris), nagu ka supernoova tekkimist ja kadu, ning enam ei olnud kaugel aeg, mil Galileo joonistas oma teleskoobist kraatreid kuu pinnal, näidates, et kuu ei saanud koosneda täiuslikust viiendast elemendist ja et sellel toimusid ilmselt sarnased füüsikalised protsessid kui maal. On usutav, et kui Kopernikus oleks jõudnud oma raamatule ise essõna kirjutada, oleks tema teooria vastuvõtt olnud palju kiirem (ja valulisem). 
 
 
-
- 
-      
-      
-
-
 ## Lineaarsed mudelid 
   
 Oletame, et me mõõtsime N inimese pikkuse cm-s ja kaalu kg-s ning meid huvitab, kuidas inimeste pikkus sõltub nende kaalust. Lihtsaim mudel pikkuse sõltuvusest kaalust on pikkus = kaal (formaliseeritult: y = x) ja see mudel ennustab, et kui Johni kaal = 80 kg, siis John on 80 cm pikkune. siin on pikkus muutuja, mille väärtust ennustatakse ja kaal muutuja, mille väärtuste põhjal ennustatakse pikkusi. Selle mudeli saame graafiliselt kujutada nii:
  
 ```{r fig.height=3, fig.width=3}
-x <- 0:200 #y = kaal
+x <- 0:100 #y = kaal
 y <- x # x = pikkus 
 plot(y~x, 
      type="l", 
@@ -125,12 +121,12 @@ Mis juhtub, kui me lisame mudelisse konstandi, mille liidame x-i väärtustele?
 See konstant on mudeli parameeter, mille väärtuse võime vabalt valida. Järgnevalt anname talle väärtuse 30 (ilma konkreetse põhjuseta).
 
 ```{r fig.height=3, fig.width=3}
-x <- 0:200 
+x <- 0:100 
 a <- 30
 y <- a + x 
 plot(y~x, 
      xlim=c(0, 100), 
-     ylim=c(0, 130), 
+     ylim=c(0, 150), 
      col="red",
      type="l")
 abline(c(0,1), lty=2)
@@ -383,8 +379,6 @@ AIC(m, m1)
 
 Siin on idee kasutada fititud mudeli struktuuri enustamaks y keskmisi väärtusi erinevatel x~1~ ja x~2~ väärtustel. Kuna mudel on fititud, on parameetrite väärtused fikseeritud. 
 
-Mudeli, kust me ennustusi tõmbame, *y = x~1~ + x~2~*, koefitsiendid on a = 0 ning b~1~ = b~2~ = 1. Me anname x~1~-e rea väärtusi 1 ja 100 vahel ning x~2~ on fikeeritud oma keskmisele väärtusele.
-
 ```{r fig.height=3, fig.width=3}
 Sepal_length <-  seq(min(iris$Sepal.Length), 
                      max(iris$Sepal.Length), 
@@ -401,10 +395,8 @@ plot(Sepal_width~Sepal_length,
 abline(c(coef(m)[1], coef(m)[2]), lty=2) #prediction from the single predictor model
 ```
 
-Nagu näha, tulemuseks on paraleelne sirge mudeliga *y = x~1~*, mille *intercept = mean(x~2~)*. Muidugi võime me plottida selle mudeli suvalise *x~2~* väärtuse korral või lasta muutuma hoopis *x~2~* ja fikseerida *x~1~* väärtuse. 
 
-
-Nüüd joonistame 3D pildi olukorrast, kus nii *x~1~* kui *x~2~* omandavad rea väärtusi. Selles mudelis erineb sirge *y = x~1~ + x~2~* tõus sirge *y = x~1~* tõusust, aga tegemist on ikkagi sirgega -- mis sest, et 3D ruumis.
+Nüüd joonistame 3D pildi olukorrast, kus nii *x~1~* kui *x~2~* omandavad rea väärtusi. Mudeli ennustus on ikkagi sirge kujul -- mis sest, et 3D ruumis.
 
 ```{r}
 #library(rgl) #plot3d()
@@ -445,27 +437,39 @@ Interaktsioonimudeli 2D avaldus on kurvatuuriga tasapind, kusjuures kurvatuuri m
 
 Interaktsiooniga mudel on AIC-i järgi pisut vähem eelistatud võrreldes m1-ga. Seega, eriti lihtsuse huvides, eelistame m1-e.
 ```{r}
-m2 <- lm(data=iris, Sepal.Width~Sepal.Length + Petal.Length + Sepal.Length*Petal.Length) 
+m2 <- lm(data=iris, 
+         Sepal.Width~Sepal.Length + 
+           Petal.Length + 
+           Sepal.Length*Petal.Length) 
 AIC(m, m1, m2)
 ```
 
 
 **ennustused interaktsioonimudelist**  
 
-Kõigepealt anname rea väärtusi x~1~-le ja hoiame x~2~ konstantsena. Mudelis, millest me ennustusi tõmbame, on a = 0, b~1~ = b~2~ = 1 ja b~3~ = 0.1.
-x~1~ omab rida väärtusi 1 ja 100 vahel ja x~2~ on fikseeritud oma keskväärtusele.
+Kõigepealt anname rea väärtusi x~1~-le ja hoiame x~2~ konstantsena. 
 
-```{r fig.height=3, fig.width=3}
-x1 <-  1:100 
-x2 <-  1:100
-b3 <- 0.1
-y <-   x1 + mean(x2) + b3*x1*mean(x2)
-y1 <-  x1 + mean(x2) 
-plot(y~x1, 
-     type="l", 
-     ylim=c(0, 300), col="red")
-lines(y1~x1)
+```{r}
+Sepal_length <-  seq(min(iris$Sepal.Length), 
+                     max(iris$Sepal.Length), 
+                     length.out = 100) 
+Petal_length <-  mean(iris$Petal.Length)
+
+a <- coef(m2)[1]
+b1 <- coef(m2)[2]
+b2 <- coef(m2)[3]
+b3 <- coef(m2)[4]
+
+Sepal_width <-   a + b1*Sepal_length + 
+  b2*Petal_length + 
+  b3*Sepal_length*Petal_length
+
+plot(Sepal_width ~ Sepal_length, type="l", ylim=c(2, 6))
+abline(m1, lty=2)
 ```
+
+Tulemuseks on sirge, mis on paraleelne ilma interaktsioonita mudeli ennustusele (katkendjoon)
+
 
 Nagu näha, korrutamistehe viib selleni, et interaktsioonimudeli tõus erineb ilma interaktsioonita mudeli tõusust. 
 
