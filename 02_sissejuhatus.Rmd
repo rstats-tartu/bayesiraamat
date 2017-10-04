@@ -502,12 +502,11 @@ Vau! See on alles ennustus!
 
 ## Veamudel
   
-Eelpool kirjeldatud mudelid on deterministlikud --- nad ei sisalda hinnangut andmete varieeruvusele ennustuse ümber. Neid kutsutakse ka **protsessi mudeliteks** sest nad modelleerivad protsessi täpselt. Ehk, kui mudel ennustab, et 80 kg inimene on 166 cm pikkune, siis protsessi mudel ei ütle, kui suurt kaalust sõltumatut pikkuste varieeruvust võime oodata 80 kg-ste inimeste hulgas. Selle hinnangu andmiseks tuleb mudelile lisada veel üks komponent, **veamudel** ehk veakomponent, mis sageli tuuakse sisse normaaljaotuse kujul. Veakomponent modelleerib üksikute inimeste pikkuste varieeruvust (mitte keskmise pikkuse varieeruvust) igal mõeldaval ja mittemõeldaval kaalul. Tänu sellele ei ole mudeli ennustused enam deterministlikud, vaid tõenäosuslikud. 
+Eelpool kirjeldatud mudelid on deterministlikud --- nad ei sisalda hinnangut andmete varieeruvusele ennustuse ümber. Neid kutsutakse ka **protsessi mudeliteks** sest nad modelleerivad protsessi täpselt. Ehk, kui mudel ennustab, et 160 cm inimene kaalub keskmiselt 80 kg, siis protsessi mudel ei ütle, kui suurt pikkusest sõltumatut kaalude varieeruvust võime oodata 160 cm-ste inimeste hulgas. Selle hinnangu andmiseks tuleb mudelile lisada veel üks komponent, **veamudel** ehk veakomponent, mis sageli tuuakse sisse normaaljaotuse kujul. Veakomponent modelleerib üksikute inimeste kaalude varieeruvust (mitte keskmise kaalu varieeruvust) igal mõeldaval ja mittemõeldaval pikkusel. Tänu sellele ei ole mudeli ennustused enam deterministlikud, vaid tõenäosuslikud. 
 
   > Bioloogid, erinevalt füüsikutest, usuvad, et valimisisene andmete varieeruvus on
-   tingitud enam bioloogilisest varieeruvusest, kui mõõtmisveast. Aga loomulikult sisaldub
-    selles ka mõõtmisviga. Lihtsuse huvides räägime
-    edaspidi veamudelist, selle asemel, et öelda "bioloogilise varieeruvuse ja veamudel".
+   tingitud pigem bioloogilisest varieeruvusest, kui mõõtmisveast. Aga loomulikult sisaldub selles ka mõõtmisviga. Lihtsuse huvides räägime
+    edaspidi siiski veamudelist, selle asemel, et öelda "bioloogilise varieeruvuse ja veamudel".
 
 Kuidas veakomponent lineaarsesse mudelisse sisse tuua?
 
@@ -515,13 +514,13 @@ ilma veakomponendita mudel:
 
 *y = a + bx*
 
-Veakomponent tähendab, et *y*-i väärtus varieerub ümber mudeli poolt ennustatud keskväärtuse ja näiteks seda varieeruvust normaaljaotusega modelleerides saame
+ennustab y-i keskväärtust erinevatel x-i väärtustel.
+
+Veakomponent tähendab, et andmepunkti tasemel varieerub *y*-i väärtus ümber mudeli poolt ennustatud keskväärtuse. Lineaarsetes mudelites modelleeritakse seda varieeruvust normaaljaotusega (vahest ka studenti t jaotusega):
 
 *y ~ dnorm(mu, sigma)* 
 
-kus *mu* on mudeli poolt ennustatud keskväärtus ja *sigma* on mudeli poolt ennustatud standardhälve ehk varieeruvus andmepunktide tasemel. Tilde ~ tähistab seose tõenäosuslikkust. Tegelikult on ka veamudelis keskväärtuse ehk mu ennustus deterministlik ja sigma töötab originaalsel andmetasemel, mitte keskväärtuste tasemel. See võimaldab protsessi mudeli veamudelisse sisse kirjutada lihtsalt mu ümber defineerides.
-
-Sirge mudelisse varieeruvuse sisse toomiseks defineerime mu ümber nõnda:
+kus *mu* on mudeli poolt ennustatud keskväärtus ja *sigma* on mudeli poolt ennustatud standardhälve ehk varieeruvus andmepunktide tasemel. Tilde ~ tähistab seose tõenäosuslikkust. Veamudelis on keskväärtuse ehk mu ennustus endiselt deterministlik ja sigma töötab originaalsel andmetasemel, mitte keskväärtuste tasemel. See võimaldab protsessi mudeli veamudelisse sisse kirjutada lihtsalt mu ümber defineerides:
 
 *mu = a + bx*, 
 
