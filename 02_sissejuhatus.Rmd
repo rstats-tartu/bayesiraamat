@@ -875,13 +875,20 @@ Korrelatsioonikordaja mõõdab pelgalt määra, mil üks muutuja muutub siis, ku
 > Kõik summaarsed statistikud kaotavad enamuse teie andmetes leiduvast infost – see kaotus on õigustatud ainult siis, kui teie poolt valitud statistik iseloomustab hästi andmete sügavamat olemust (näiteks tüüpilist mõõtmistulemust või andmete varieeruvust).
 
 Korrelatsioonimaatriksi saab niimoodi:
-```{r eval=FALSE}
+```{r }
 #numeric columns only!
-print(psych::corr.test(iris[-5], use="complete"), short = FALSE)
+#the following gives cor matrix with 
+#frequentist correction for mutliple testing:
+#print(psych::corr.test(iris[-5]))
+
+#only numeric cols allowed! Hence -Species
+cor(iris[,-5]) 
 ```
 
   
+  
 ## EDA --- eksploratoorne andmeanalüüs
+
 
 Kui ühenumbriline andmete summeerimine täidab eelkõige kokkuvõtliku kommunikatsiooni eesmärki, siis EDA on suunatud teadlasele endale. EDA eesmärk on andmeid eelkõige graafiliselt vaadata, et saada aimu 1) andmete kvaliteedist ja 2) lasta andmetel kõneleda "sellisena nagu nad on" ja sugereerida uudseid teaduslikke hüpoteese. Neid hüpoteese peaks siis testima formaalse statistilise analüüsi abil (ptk järeldav statistika). Näiteid erinevate graafiliste lahenduste kohta vt graafika peatükist.
 
