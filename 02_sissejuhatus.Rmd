@@ -547,6 +547,7 @@ Seejärel liidame need 12 arvu. Nüüd võtame uue 12-se valimi ja kordame eelne
 Me teeme seda 10 000 korda järjest ja plotime saadud 10 000 arvu (10 000 liitmistehte tulemust) tihedusfuntksioonina. 
 
 ```{r fig.height=2, fig.width=4}
+
 kasv <- replicate( 10000 , sum( runif( 12, 1, 100 ) ) ) 
 dens( kasv )
 ```
@@ -693,6 +694,7 @@ Mina eelistan selliseid nõuandeid (mis on rangelt soovituslikud):
 andmed <- rlnorm(100)
 #mean(andmed); median(andmed)
 
+
 mode <-  function(x, adjust=1) {
   x <- na.omit(x)
   dx <- density(x, adjust=adjust)
@@ -820,7 +822,7 @@ Normaaljaotuse kindlakstegemiseks on loodud ka peotäis sageduslikke teste, mis 
 MAD –-- median absolute deviation --- on vähem tundlik outlierite suhtes ja ei eelda normaaljaotust. Puuduseks on, et MAD ei oma tõlgendust, mille kohaselt ta hõlmaks kindlat protsenti populatsiooni või valimi andmejaotusest. Seevastu sd puhul võime olla kindlad, et isegi kõige hullema jaotuse korral jäävad vähemalt 75% andmetest 2 SD piiridesse.
 
 ```{r}
-mad(andmed, constant = 1)
+mad(andmed, constant = 1); sd(andmed); mad(andmed)
 ```
 
 
@@ -855,6 +857,7 @@ Korrelatsiooni saab mõõta mitmel viisil (?cor.test, method=). Kõige levinum o
 #correlation$conf.int
 cor(iris$Sepal.Length, iris$Sepal.Width, use="complete.obs") 
 #complete.obs uses only such observations where neither x or y value is NA
+#cor.test(iris$Sepal.Length, iris$Sepal.Width)
 ```
 
 
@@ -915,6 +918,7 @@ corrgram(iris, order=TRUE,
 
 ```{r}
 psych::describe(iris)
+summary(iris)
 
 ```
 

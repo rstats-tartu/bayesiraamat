@@ -91,7 +91,11 @@ Aga vähemalt populatsiooni keskmise saame me palju valimeid tõmmates ilusasti 
 Kahjuks pole meil ei vahendeid ega kannatust loodusest 10 000 valimi kogumiseks. Enamasti on meil üksainus valim. Õnneks pole sellest väga hullu, sest meil on olemas analoogne meetod, mis töötab üsna hästi ka ühe valimiga. Seda kutsutakse *bootstrappimiseks* ja selle võttis esimesena kasutusele parun von Münchausen. Too jutukas parun nimelt suutis end soomülkast iseenda patsi pidi välja tõmmata (koos hobusega), mis ongi bootstrappimise põhimõte. 
 Statistika tõmbas oma saapaid pidi mülkast välja Brad Efron 1979 aastal.
 
-![Bootstrap päästab, kui muu ei aita](/Users/ulomaivali/Dropbox/loengud/2017-R-course/loengu-rmd-konspektid/munchausen.jpg)
+TAAVI: see ei tööta!
+```{r}
+knitr::include_graphics("img/munchausen.jpg")
+```
+
 
 ### 4.2.Bootstrappimine
 
@@ -331,9 +335,17 @@ Võrdluseks, tavaline mitteparameetriline bootstrap annab vastuseks `HPDI(a1$Val
 HPDI(a1$Value)
 ```
 
-Bootstrappimisel (nii parameetrilisel kui mitteparameetrilisel versioonil) on üks konseptuaalne puudus, mis on eriti tõsine väikeste valimite korral. Võtame oma näite USA presidentidest. Meie valimi liikmed on kõik presideerinud viimase 50 aasta jooksul, aga selle aja jooksul on inimeste keskmine pikkus jõudsalt kasvanud. Kui me tahame ennustada järgmise 50 aasta keskmist presidentide pikkust, peaksime selle faktiga arvestama. Aga bootstrap ei jäta meile sellist võimalust. Vähemalt mitte lihtsat. 
 
-Siin tuleb appi Bayesi statistika oma täies hiilguses. Selles paradigmas ei arvesta me mitte ainult andmetega vaid ka taustateadmistega, sünteesides need kokku üheks posterioorseks jaotuseks ehk järeljaotuseks. Selle jaotuse arvutamine erineb bootstrapist, kuid tema tõlgendus ja praktiline töö sellega on samasugune. Erinevalt tavapärasest bootstrapist on Bayes parameetriline meetod, mis sõltub andmete modelleerimisest modeleerija poolt ette antud jaotustesse (normaaljaotus, t jaotus jne). Tegelikult peame me Bayesi arvutuseks modelleerima vähemalt kaks erinevat jaotust: andmete jaotus, mida me kutsume likelihoodiks ehk tõepäraks, ning eelneva teadmise mudel ehk prior, mida samuti modeleeritakse tõenäosusjaotusena.
+#### Bootstrappimine ei ole kogu tõde
+
+Bootstrappimine on võimas ja väga laia kasutusalaga meetodite kogum. Sellel on siiski üks oluline puudus. Nimelt arvestab bootstrap ainult andmetega ja ignoreerib taustateadmisi (parameetriline bootstrap küll eeldab taustateadmisetele tuginevalt jaotusmudelit, kuid ignoreerib kogu muud taustateadmiste kogumit). Miks on see probleem?
+
+Mõtleme hetkeks sellele teadusliku meetodi osale, millel põhineb suuresti näiteks Darwini liikide tekkimise argument. See on nn *inference to the best explanation*, mille kohaselt on eelistatud see teooria, mis on parimas kooskõlas faktidega, ehk mille kehtimise korral on meie andmete esinemine kõige tõenäolisem. Kui mõni hüpotees omistab andmete esinemisele suure tõenäosuse, siis me ütleme tehnilises keeles, et see hüpotees on **tõepärane** (*has high likelihood*). Esmapilgul tundub see kõik igati mõistlik olevat. Aga proovime lihtsat mõtteeksperimenti. Selles juhtub nii, et järgmise nädala loteriil võidab peaauhinna meile tundmatu kodanik Franz K. Meil on selle fakti (ehk nende andmete) seletamiseks kaks teooriat: 1. Franz K. võit oli juhuslik (loterii oli aus ja keegi peab lõpuks võitma) ja 2. Franz K. vanem õde võltsis loterii tulemusi oma venna kasuks. On selge, et teine teooria sobib palju paremini andmetega kui esimene (sest kuigi keegi peab võitma, Franz K. võiduvõimalus oli väga väike); aga ometi eelistab enamus mõistlikke inimesi esimest. Põhjus on selles, et meil pole iseenesest mingit alust uskuda, et Franz K.-l üldse on noorem õde, või et see hüpoteetiline õde omaks ligipääsu loterii tulemustele.  
+
+Siit näeme, et lisaks tõepärale on selleks, et me usuksime mõne teooria kehtimisse, vaja veel, et see teooria oleks piisavalt tõenäoline meie taustateadmiste valguses. Bayesi teoreem ei tee muud, kui kvantifitseerib teooria kehtimise posterioorse tõenäosuse (järeltõenäosuse), kasutades selleks meie eelteadmiste ja tõepära kvantitatiivseid mudeleid. 
+Seega, Bayesi paradigmas ei arvesta me mitte ainult andmetega, vaid ka taustateadmistega, sünteesides need kokku üheks posterioorseks jaotuseks ehk järeljaotuseks. Selle jaotuse arvutamine erineb bootstrapist, kuid tema tõlgendus ja praktiline töö sellega on samasugune. Erinevalt tavapärasest bootstrapist on Bayes parameetriline meetod, mis sõltub andmete modelleerimisest modeleerija poolt ette antud jaotustesse (normaaljaotus, t jaotus jne). Tegelikult peame me Bayesi arvutuseks modelleerima vähemalt kaks erinevat jaotust: andmete jaotus, mida me kutsume likelihoodiks ehk tõepäraks, ning eelneva teadmise mudel ehk prior, mida samuti modeleeritakse tõenäosusjaotusena.
+
+Ehkki bootstrappimine ei arvesta taustateadmistega, ei tee seda olulisel määral ka paljud Bayesi mudelid (mudeldaja vaba valiku töttu, mitte selle pärast, et nad ei suudaks). Bayesi meetodite väljatöötajad ei tea sageli ette, milliste teaduslike probleemide lahendamiseks nende mudeleid hakatakse kasutama, ja seega ei saa nad väga ranget eelteadmist mudelisse sisse kirjutada. Nende mudelite teadlastest kasutajad lepivad sageli selllega ja lasevad oma mudelite kaudu "andmetel kõneleda" enam-vähem sellistena, nagu need juhtuvad olema. Sellist lähenemist ei saa alati hukka mõista, sest vahest meil ei olegi palju eelteadmisi oma probleemi kohta, aga tuleb mainida, et sellistel juhtudel annab bootstrappimine sageli lihtsama vaevaga väga sarnase tulemuse, kui Bayesi täismäng. 
 
 ## 4.3. Bayesi põhimõte
 
