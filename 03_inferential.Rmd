@@ -10,16 +10,85 @@ library(rethinking) #HPDI() and PI(). Requires Stan.
 #source("R/")
 ```
 
-
-
 Järeldav statistika püüab, kasutades keerulisi algoritme, teha valimi põhjal järeldusi statistilise populatsiooni kohta, millest see valim pärineb. 
 Sellisel tegevusel on mõtet ainult siis, kui ühest küljest valim peegeldab populatsiooni ja teisest küljest valim ei ole sama asi, mis populatsioon. 
 Kui valim = populatsioon, siis pole mõtet keerulisi mudeleid kasutada, et valimi põhjal populatsiooni omadusi ennustada --- seda saab teha lihtsalt valimit kirjeldades. 
 Ja kui valimil ning populatsioonil pole suurt midagi ühist, siis on valim lihtsalt ebarelevatne populatsiooni kirjeldamiseks. 
-Seega on järeldava statistika abil tehtud järeldused alati rohkem või vähem ebamäärased ning meil on vaja meetodit selle ebamäärasuse mõõtmiseks. 
-Aga kõigepealt illustreerime valimi ja populatsiooni erinevust.
+Seega on järeldava statistika abil tehtud järeldused alati rohkem või vähem ebamäärased ning meil on vaja meetodit selle ebamäärasuse mõõtmiseks. Selle meetodi annab tõenäosusteooria.
 
-###4.1. Valim ei ole sama, mis populatsioon
+## Järeldav statistika on tõenäosusteooria käepikendus
+
+See õpik õpetab Bayesi statistikat, mis põhineb täies mahus tõenäosusteoorial. Tänu sellele moodustab Bayesi statistika sidusa terviku, mille abil saab teha kõike seda, mida saab teha tõenäosusteooria abil. Bayesi statistika põhineb Bayesi teoreemil, mis on triviaalne tuletus tõenäosusteooria aksioomidest ja mille kohta on omakorda tõestatud teoreem, mis ütleb, et Bayesi teoreem on teoreetiliselt parim viis teha statistikat ja samal ajal mitte kaotada andmetes leiduvat informatsiooni. **NÕUAB TÄPSUSTUST!!!!!** 
+
+Tõenäosusteooria on aksiomaatline süsteem, mille abil saame omistada numbriline väärtuse meie usu määrale mingisse hüpoteesi. Näiteks, kui me planeerime katset, kus me viskame kulli ja kirja ja teeme seda kaks korda, siis saame arvutada, millise tõenäosusega võime oodata katse tulemuseks kaht kirja. Aga seda tingimusel, et me võtame omaks mõned eeldused -- näiteks et münt on aus ja et need kaks viset on üksteisest sõltumatud. 
+
+Sellel katsel on 4 võimalikku tulemust: H-H, H-T, T-H, T-T (H -kull, T - kiri). Tõenäosus saada 2-l mündiviskel 2 kirja, P(2 kirja) = 1/4, P(0 kirja) = 1/4 ja P(1 kirja) = 2/4 = 1/2. Sellega oleme andnud oma katseplaanile täieliku tõenäosusliku kirjelduse (pane tähele, et 1/4 + 1/4 + 1/2 = 1). Ükskõik kui keeruline on teie katseplaan, põhimõtteliselt käib selle analüüs samamoodi.
+Tõenäosusteooria loomus seisneb kõikide võimalike sündmuste üleslugemises ning senikaua, kui me seda nüri järjekindlusega teeme, on vastus, mille me saame, tõsikindel.
+
+Ehkki Bayesi statistika põhineb tõenäosusteoorial ja on sellega kooskõlas, ei ole see sama asi, mis tõenäosusteooria.
+Statistikas pööratakse tõenäosusteoreetiline ülesanne pea peale ja küsitakse nii: kui me saime 2-l mündiviskel 2 kirja, siis millise tõenäosusega on münt aus (tasakaalus)? Erinevus tõenäosusteoreetilise ja statistilise lähenemise vahel seisneb selles, et kui tõenäosusteoorias me eeldame, et teame, kuidas süsteem on üles ehitatud, ja ennustame sellest lähtuvalt andmete tõenäosusi, siis statistikas me kontrollime neid eeldusi andmete põhjal. Seega annab tõenäosusteooria matemaatiliselt tõsikindlaid vastuseid ideaalmaailmade kohta, samas kui statistika püüab andmete põhjal teha kaudseid järeldusi päris maailma kohta.
+
+> Tõenäosusteooria määrab kõikide võimalike sündmuste esinemise tõenäosused, eeldades, et hüpotees H kehtib (H on siin lihtsalt teine nimi "eeldusele"). 
+
+> Statistika arvutab H-i kehtimise tõenäosuse lähtuvalt kogutud andmetest, matemaatilistest mudelitest ning teaduslikest taustateadmistest.  
+
+> Tõenäosus on defineeritud kui usu määr mingisse hüpoteesi. Näiteks 62% tõenäosus (et populatsiooni keskmine pikkus < 180 cm) tähendab, et sa oled ratsionaalse olendina nõus kulutama mitte rohkem kui 62 senti kihlveo peale, mis võidu korral toob sulle sisse 1 EUR (seega 38 senti kasumit).  
+
+Kui me sooritasime päriselt 2 mündiviset ja saime tulemuseks 2 kirja, siis tõenäosus, et münt on aus, 
+
+*P(aus) = (1/4 + 1/4) / (1/4 + 1/4 + 1/2) = 1/2* 
+
+(1/4 + 1/4 selle pärast, et kui meie mündivisked on üksteisest sõltumatud, siis on meil võrdne tõenäosus saada 2 kirja ja 0 kirja). Tõenäosus, et münt ei ole aus, 
+
+*P(mitte-aus) = 1 - P(aus) = 1 - 1/2 = 1/2*
+
+Need arvutused eeldavad ikkagi, et meie kaks mündiviset olid üksteisest sõltumatud (et nende vahel puudub korrelatsioon). 
+
+
+Tõenäosusteooria aksioomid ütlevad inimkeeli, et tõenäosused (P) jäävad 0 ja 1 vahele, et P(A) = 1 tähendab, et A on tõene, et P(A) = 0 tähendab, et A on väär, ning kui A ja B on üksteist välistavad ja ammendavad hüpoteesid, siis P(A) + P(B) = 1. 
+
+Kui tõenäosused on 0 või 1, siis taandub tõenäosusteooria matemaatliselt oma erijuhule, milleks on lausearvutuslik loogika. Lausearvutuse oluline erinevus tõenäosusteooriast on, et kui selle abil on saavutatud valiidne tulemus, on see tõsikindel ja uued andmed ei saa põhimõtteliselt seda tulemust muuta. Seevastu tõenäosusteoorias ja statstikas muudavad uued andmed alati tõenäosusi. Selles mõttes ei lõppe arvutus kunagi ja tõenäosuslik teadus ei saa kunagi valmis.
+
+Tõenäosusteooria aksioomidest on tuletatud järgnevad loogiliselt kehtivaid väited:
+
+1. Kui hüpotees A sisaldab endas hüpoteesi B, siis P(A) on väiksem või võrdne P(B)-ga. Näiteks inimene, kes ennustab, et Jaapanis saab järgmisel aastal maavärina tagajärjel hukka 1000 inimest, aga loodusõnnetuse tagajärjel 700, eksib tõenäosusteooria vastu. Loogiliselt pole võimalik, et tema ennustus täituks.
+
+2. kui A ja B on üksteist välistavad, siis tõenäosus, et A on tõene või B on tõene on nende kahe tõenäosuse summa --- P(A v B) = P(A) + P(B). 
+
+3. Kui A ja B ei ole üksteist välistavad, siis P(A v B) = P(A) + P(B) – P(A & B). 
+
+4. kui A ja B on üksteisest sõltumatud siis P(A & B) = P(A) x P(B). 
+
+5. P(A) = P(A & B) + P(A & mitte-B) --- see on "totaalse tõenäosuse seadus" kitsendatuna kahele ammendavale teineteist välistavale hüpoteesile A & B, mille kohaselt me peame hüpotees A tõenäosuse leidmiseks arvestama ka B tõenäosusega.
+
+6. P(A | B) = P(A & B)/P(B) kus P(A | B) on tinglik tõenäosus: A tõenäosus, tingimusel, et B kehtib. P(vihm | pilves ilm) ei ole sama, mis P(pilves ilm | vihm).
+
+7. Bayesi teoreem: P(A | B) = P(A)P(B | A)/P(B), kus P(B) = P(A)P(BA) + P(mitte-A)P(Bmitte-A) –-- Kui A on H1, mitte-A on ammendav ja välistav H2 ja B tähistab andmeid (data), saame selle ümber kirjutada P(H1 | data) = ( P(H1)P(data | H1) )/( P(H1)P(data | H1) + P(H2)P(data | H2) ). P(H1 | data) on H1 kehtimise tõenäosus meie andmete korral, P(H1) on H1 kehtimise eelnev tõenäosus, P(data | H1) on andmete esinemise tõenäosus tingimusel, et H1 kehtib. Jagamistehe tehakse ainult selle pärast, et normaliseerida 100%-le kõikide hüpoteeside tõenäosuste summa meie andmete korral --- sum( P(data | H~i~)* P(H~i~) ) = 1. 
+
+####Tõenäosusteooriast saab tuletada järgmised statistika põhiprintsiibid
+
+
+ 1. statistilise analüüsi kvaliteet sõltub mudeli eeldustest. Statistikat tehakse arvutusmasinaga. Sellest lihtsast faktist tuleneb, et statistikat tehakse matemaatiliste mudelite raames, kus mudel on matemaatline formalism, mis püüab kajastada meie uskumusi maailma kohta. Kuna maailm ei koosne matemaatikast, on mudelites alati eeldusi maailma kohta, mis ei ole päris tõesed ja mida ei saa tingimata empiiriliselt kontrollida. Mündiviske näites eeldasime, et mündivisked olid üksteisest sõltumatud. Kui me sellest eeldusest loobume, läheb meie mudel keerulisemaks, sest me peame mudelisse lisama teavet visetevahelise korrelatsiooni kohta. Aga see keerulisem mudel toob sisse uued eeldused (vähemalt pool tosinat lisaeeldust).
+ 
+ 2. statistilise analüüsi kvaliteet sõltub andmete hulgast. Kui kahe mündiviske asemel teeksime kakskümmend, siis saaksime samade eelduste põhjal teha oluliselt täpsemaid järeldusi mündi aususe kohta. 
+
+ 3. statistilise analüüsi kvaliteet sõltub andmete  kvaliteedist. Kui münt on aus aga me viskame seda ebaausalt, siis, mida rohkem arv kordi me seda teeme, seda tugevamalt usub teadusüldsus selle tagajärjel millegisse, mis pole tõsi.
+
+ 4. statistilise analüüsi kvaliteet sõltub mudeli kvaliteedist. Statistilised mudelid töötavad kõige paremini siis, kui analüüsis kasutatakse maksimaalselt andmetest leiduvat infomratsiooni. Selle pärast tuleb võimaluse korral panna kõik relevantsed andmed ühte mudelisse ning eelistada hierarhilisi mudeleid, mis vaatlevad andmeid tervikuna. Hea mudel peegeldab andmeid genereeriva loodusliku protsessi või laborikatse struktuuri.  
+
+ 5. statistilise analüüsi kvaliteet sõltub taustateadmiste kvaliteedist. Vähesed taustateadmised ei võimalda statitilistesse mudelitesse panna usutavaid eeldusi ning ei võimalda parandada järeldusi juhul, kui andmed mingil põhjusel ei vasta tegelikkusele.
+
+ 6. Järeldused ühe hüpoteesi kohta mõjutavad järeldusi ka kõigi alternatiivsete hüpoteeside kohta. Relevantsete hüpoteeside eiramine viib ekslikele järeledustele kõigi teiste hüpoteeside kohta.  
+
+
+
+
+### Valim ei ole sama, mis populatsioon
+
+
+Kõigepealt illustreerime valimi ja populatsiooni erinevust.
+
+
 
     Simuleerimine on lahe sest simulatsioonid elavad mudeli väikeses maailmas, kus me teame 
     täpselt, mida me teeme ja mida on selle tagajärjel oodata. Simulatsioonidega saame me 
@@ -184,7 +253,7 @@ mode(a1$Value)
 Ligikaudu 100% tõenäosusega (valimis on 1 mees alla 182 cm, ja tema on 177 cm). Lühikesed jupatsid ei saa Ameerikamaal presidendiks!
 
 #### veidi keerulisem bootsrap
-Eelnevalt tutvustasime nn percentiilmeetodit mootstrapi arvutamiseks. See lihtne meetod on küll populaarne ja annab sageli häid tulemusi, aga parim meetod bootstrappimiseks, empiiriline bootstrap, on siiski veidi keerulisem. Nimelt ei ploti me enam mitte 10 000 statistiku väärtust vaid 10 000 erinevust bootstrapitud statistiku väärtuse ja empiirilise valimi põhjal arvutatud statistiku väärtuse vahel.
+Eelnevalt tutvustasime nn percentiilmeetodit bootstrapi arvutamiseks. See lihtne meetod on küll populaarne ja annab sageli häid tulemusi, aga parim meetod bootstrappimiseks, empiiriline bootstrap, on siiski veidi keerulisem. Nimelt ei ploti me enam mitte 10 000 statistiku väärtust vaid 10 000 erinevust bootstrapitud statistiku väärtuse ja empiirilise valimi põhjal arvutatud statistiku väärtuse vahel.
 ```{r}
 heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) %>% as_tibble() 
 n <- 10 #sample size
