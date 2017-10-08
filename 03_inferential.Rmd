@@ -36,7 +36,7 @@ Statistikas pööratakse tõenäosusteoreetiline ülesanne pea peale ja küsitak
 
 **Tõenäosusteooria aksioomid** ütlevad tõlkes inimkeelde, et tõenäosused (P) jäävad 0 ja 1 vahele, et P(A) = 1 tähendab, et A on tõene, et P(A) = 0 tähendab, et A on väär, ning kui A ja B on ammendavad üksteist välistavad hüpoteesid, siis P(A) + P(B) = 1. Need aksioomid peaksid olema iseenesestmõistetavad ja ainult neist on tuletatud kogu tõenäosusteooria.
 
-Need aksioomid, mis oma matemaatilises vormis postuleeriti Andrei Kolmogorovi poolt ca 1930, on tuletatavad järgmistest eeldustest, mis võiksid defineerida ratsionaalse roboti, kes käsitleb talle ette antud andmeid parimal võimalikul viisil ja konventeerib need hüpoteeside tõenäosusteks:
+Need aksioomid, mis oma matemaatilises vormis postuleeriti Andrei Kolmogorovi poolt ca 1930, on tuletatavad järgmistest eeldustest:
 
 + ratsionaalne mõtlemine vastab kvalitatiivselt tervele mõistusele: lisatõendusmaterjal hüpoteesi kasuks tõstab selle hüpoteesi usutavust.
 
@@ -72,7 +72,7 @@ Kui A on H~1~ ning mitte-A on ammendav ja välistav H~2~ ja B tähistab andmeid 
 
 *P(data | H~1~)* on andmete esinemise tõenäosus tingimusel, et H~1~ kehtib, ehk tõepära. 
 
-Jagamistehe tehakse ainult selle pärast, et normaliseerida 1-le kõikide hüpoteeside tõenäosuste summa meie andmete korral ja seega viia posteerior vastavusse tõenäosusteooria aksioomidega --- kui meil on i ammendavat üksteist välistavat hüpoteesi, siis murrujoone alla läheb: *sum( P(data | H~i~)P(H~i~) )=1*. Bayesi teoreem on triviaalne tuletus tõenäosusteooria aksioomidest, milles pole mitte midagi maagilist. See ei ole automaatne meetod, mis tagaks inimkonna teadmiste kasvu, vaid lihtsalt parim võimalik viis andmemudeli ja taustateadmiste mudeli ühendamiseks ja normaliseerimiseks tinglikuks tõenäosuseks (hüpoteesi tõenäosus meie andmete ja taustateadmiste korral). Nüüd sõltub kõik mudelite, andmete ja taustateadmiste kvaliteedist. 
+Jagamistehe tehakse ainult selle pärast, et normaliseerida 1-le kõikide hüpoteeside tõenäosuste summa meie andmete korral ja seega viia posteerior vastavusse tõenäosusteooria aksioomidega --- kui meil on i ammendavat üksteist välistavat hüpoteesi, siis murrujoone alla läheb: *sum( P(data | H~i~)P(H~i~) ) = 1*. Bayesi teoreem on triviaalne tuletus tõenäosusteooria aksioomidest, milles pole mitte midagi maagilist. See ei ole automaatne meetod, mis tagaks inimkonna teadmiste kasvu, vaid lihtsalt parim võimalik viis andmemudeli ja taustateadmiste mudeli ühendamiseks ja normaliseerimiseks tinglikuks tõenäosuseks (hüpoteesi tõenäosus meie andmete ja taustateadmiste korral). Nüüd sõltub kõik mudelite, andmete ja taustateadmiste kvaliteedist. 
 
 ### Tõenäosusteooriast tulenevad statistika põhiprintsiibid
 
