@@ -18,7 +18,7 @@ Seega on järeldava statistika abil tehtud järeldused alati rohkem või vähem 
 
 ## Järeldav statistika on tõenäosusteooria käepikendus
 
-See õpik õpetab Bayesi statistikat, mis põhineb täies mahus tõenäosusteoorial. Tänu sellele moodustab Bayesi statistika sidusa terviku, mille abil saab teha kõike seda, mida saab teha tõenäosusteooria abil. Bayesi statistika põhineb Bayesi teoreemil, mis on triviaalne tuletus tõenäosusteooria aksioomidest ja mille kohta on omakorda tõestatud teoreem, mis ütleb, et Bayesi teoreem on teoreetiliselt parim viis teha statistikat ja samal ajal mitte kaotada andmetes leiduvat informatsiooni. **NÕUAB TÄPSUSTUST!!!!!** 
+See õpik õpetab Bayesi statistikat, mis põhineb tõenäosusteoorial. Tänu sellele moodustab Bayesi statistika sidusa terviku, mille abil saab teha kõike seda, mida saab teha tõenäosusteooria abil. Bayesi statistika põhineb Bayesi teoreemil, mis on triviaalne tuletus tõenäosusteooria aksioomidest ja mille kohta on omakorda tõestatud teoreem, mis ütleb, et Bayesi teoreem on teoreetiliselt parim viis teha statistikat ja samal ajal mitte kaotada andmetes leiduvat informatsiooni. **NÕUAB TÄPSUSTUST!!!!!** 
 
 Tõenäosusteooria on aksiomaatline süsteem, mille abil saame omistada numbriline väärtuse meie usu määrale mingisse hüpoteesi. Näiteks, kui me planeerime katset, kus me viskame kulli ja kirja ja teeme seda kaks korda, siis saame arvutada, millise tõenäosusega võime oodata katse tulemuseks kaht kirja. Aga seda tingimusel, et me võtame omaks mõned eeldused -- näiteks et münt on aus ja et need kaks viset on üksteisest sõltumatud. 
 
@@ -26,75 +26,75 @@ Sellel katsel on 4 võimalikku tulemust: H-H, H-T, T-H, T-T (H -kull, T - kiri).
 Tõenäosusteooria loomus seisneb kõikide võimalike sündmuste üleslugemises ning senikaua, kui me seda nüri järjekindlusega teeme, on vastus, mille me saame, tõsikindel.
 
 Ehkki Bayesi statistika põhineb tõenäosusteoorial ja on sellega kooskõlas, ei ole see sama asi, mis tõenäosusteooria.
-Statistikas pööratakse tõenäosusteoreetiline ülesanne pea peale ja küsitakse nii: kui me saime 2-l mündiviskel 2 kirja, siis millise tõenäosusega on münt aus (tasakaalus)? Erinevus tõenäosusteoreetilise ja statistilise lähenemise vahel seisneb selles, et kui tõenäosusteoorias me eeldame, et teame, kuidas süsteem on üles ehitatud, ja ennustame sellest lähtuvalt andmete tõenäosusi, siis statistikas me kontrollime neid eeldusi andmete põhjal. Seega annab tõenäosusteooria matemaatiliselt tõsikindlaid vastuseid ideaalmaailmade kohta, samas kui statistika püüab andmete põhjal teha kaudseid järeldusi päris maailma kohta.
+Statistikas pööratakse tõenäosusteoreetiline ülesanne pea peale ja küsitakse nii: kui me saime 2-l mündiviskel 2 kirja, siis millise tõenäosusega on münt aus (tasakaalus)? Erinevus tõenäosusteoreetilise ja statistilise lähenemise vahel seisneb selles, et kui tõenäosusteoorias me eeldame, et teame, kuidas süsteem on üles ehitatud, ja ennustame sellest lähtuvalt andmete tõenäosusi, siis statistikas me kontrollime neid eeldusi andmete põhjal. Seega annab tõenäosusteooria matemaatiliselt tõsikindlaid vastuseid ideaalmaailmade kohta, samas kui statistika püüab andmete põhjal teha kaudseid järeldusi päris maailma kohta. Selleks kasutame Bayesi teoreemi (vt allpool).
 
 > Tõenäosusteooria määrab kõikide võimalike sündmuste esinemise tõenäosused, eeldades, et hüpotees H kehtib (H on siin lihtsalt teine nimi "eeldusele"). 
 
 > Statistika arvutab H-i kehtimise tõenäosuse lähtuvalt kogutud andmetest, matemaatilistest mudelitest ning teaduslikest taustateadmistest.  
 
-> Tõenäosus on defineeritud kui usu määr mingisse hüpoteesi. Näiteks 62% tõenäosus (et populatsiooni keskmine pikkus < 180 cm) tähendab, et sa oled ratsionaalse olendina nõus kulutama mitte rohkem kui 62 senti kihlveo peale, mis võidu korral toob sulle sisse 1 EUR (seega 38 senti kasumit).  
+> Tõenäosus on defineeritud usu määrana mingisse hüpoteesi. Näiteks 62% tõenäosus (et populatsiooni keskmine pikkus < 180 cm) tähendab, et sa oled ratsionaalse olendina nõus kulutama mitte rohkem kui 62 senti kihlveo peale, mis võidu korral toob sulle sisse 1 EUR (seega 38 senti kasumit).  
 
-Kui me sooritasime päriselt 2 mündiviset ja saime tulemuseks 2 kirja, siis tõenäosus, et münt on aus, 
+**Tõenäosusteooria aksioomid** ütlevad tõlkes inimkeelde, et tõenäosused (P) jäävad 0 ja 1 vahele, et P(A) = 1 tähendab, et A on tõene, et P(A) = 0 tähendab, et A on väär, ning kui A ja B on ammendavad üksteist välistavad hüpoteesid, siis P(A) + P(B) = 1. Need aksioomid peaksid olema iseenesestmõistetavad ja ainult neist on tuletatud kogu tõenäosusteooria.
 
-*P(aus) = (1/4 + 1/4) / (1/4 + 1/4 + 1/2) = 1/2* 
+Need aksioomid, mis oma matemaatilises vormis postuleeriti Andrei Kolmogorovi poolt ca 1930, on tuletatavad järgmistest eeldustest, mis võiksid defineerida ratsionaalse roboti, kes käsitleb talle ette antud andmeid parimal võimalikul viisil ja konventeerib need hüpoteeside tõenäosusteks:
 
-(1/4 + 1/4 selle pärast, et kui meie mündivisked on üksteisest sõltumatud, siis on meil võrdne tõenäosus saada 2 kirja ja 0 kirja). Tõenäosus, et münt ei ole aus, 
++ ratsionaalne mõtlemine vastab kvalitatiivselt tervele mõistusele: lisatõendusmaterjal hüpoteesi kasuks tõstab selle hüpoteesi usutavust.
 
-*P(mitte-aus) = 1 - P(aus) = 1 - 1/2 = 1/2*
++ mõtlemine peab olema konsistentne: kui me võime järeldusi teha rohkem kui ühel viisil, peame lõpuks ikkagi alati samale lõppjäreldusele jõudma
 
-Need arvutused eeldavad ikkagi, et meie kaks mündiviset olid üksteisest sõltumatud (et nende vahel puudub korrelatsioon). 
++ kogu kättesaadav relevantne informatsioon tuleb järelduste tegemisel arvesse võtta (totaalse informatsiooni printsiip)
 
++ ekvivalentsed teadmised on representeeritud ekvivalentsete numbritega. 
 
-Tõenäosusteooria aksioomid ütlevad inimkeeli, et tõenäosused (P) jäävad 0 ja 1 vahele, et P(A) = 1 tähendab, et A on tõene, et P(A) = 0 tähendab, et A on väär, ning kui A ja B on üksteist välistavad ja ammendavad hüpoteesid, siis P(A) + P(B) = 1. 
+Kui tõenäosused on 0 või 1, siis taandub tõenäosusteooria matemaatliselt oma erijuhule, milleks on lausearvutuslik loogika. Lausearvutuse oluline erinevus tõenäosusteooriast on, et kui selle abil on saavutatud valiidne tulemus, on see tõsikindel ja uued andmed ei saa põhimõtteliselt seda tulemust muuta. Seevastu tõenäosusteoorias ja statstikas muudavad uued andmed alati tõenäosusi. Selles mõttes ei saa tõenäosuslik teadus kunagi valmis.
 
-Kui tõenäosused on 0 või 1, siis taandub tõenäosusteooria matemaatliselt oma erijuhule, milleks on lausearvutuslik loogika. Lausearvutuse oluline erinevus tõenäosusteooriast on, et kui selle abil on saavutatud valiidne tulemus, on see tõsikindel ja uued andmed ei saa põhimõtteliselt seda tulemust muuta. Seevastu tõenäosusteoorias ja statstikas muudavad uued andmed alati tõenäosusi. Selles mõttes ei lõppe arvutus kunagi ja tõenäosuslik teadus ei saa kunagi valmis.
+### Tõenäosusteooria aksioomide formaalsed tulemid
 
-Tõenäosusteooria aksioomidest on tuletatud järgnevad loogiliselt kehtivaid väited:
+1. Kui hüpotees A sisaldab endas hüpoteesi B, siis P(A) ei saa olla suurem kui P(B). 
 
-1. Kui hüpotees A sisaldab endas hüpoteesi B, siis P(A) on väiksem või võrdne P(B)-ga. Näiteks inimene, kes ennustab, et Jaapanis saab järgmisel aastal maavärina tagajärjel hukka 1000 inimest, aga loodusõnnetuse tagajärjel 700, eksib tõenäosusteooria vastu. Loogiliselt pole võimalik, et tema ennustus täituks.
+2. kui A ja B on üksteist välistavad, siis tõenäosus, et A on tõene või B on tõene on nende kahe tõenäosuse summa --- *P(A v B) = P(A) + P(B)*. 
 
-2. kui A ja B on üksteist välistavad, siis tõenäosus, et A on tõene või B on tõene on nende kahe tõenäosuse summa --- P(A v B) = P(A) + P(B). 
+3. kui A ja B on üksteisest sõltumatud siis *P(A & B) = P(A) x P(B)*, kui A ja B ei ole üksteist välistavad, siis *P(A v B) = P(A) + P(B) – P(A & B)*. 
 
-3. Kui A ja B ei ole üksteist välistavad, siis P(A v B) = P(A) + P(B) – P(A & B). 
+4. *P(A) = P(A & B) + P(A & mitte-B)* --- see on "totaalse tõenäosuse seadus" kitsendatuna kahele ammendavale teineteist välistavale hüpoteesile A & B, mille kohaselt me peame hüpotees A tõenäosuse leidmiseks arvestama ka B tõenäosusega.
 
-4. kui A ja B on üksteisest sõltumatud siis P(A & B) = P(A) x P(B). 
+5. *P(A | B) = P(A & B)/P(B)* kus *P(A | B)* on tinglik tõenäosus: A tõenäosus tingimusel, et B kehtib. *P(vihm | pilves ilm)* ei ole sama, mis *P(pilves ilm | vihm)*. 5. avaldisest saab lihtsa aritmeetika abil tuletada Bayesi teoreemi.
 
-5. P(A) = P(A & B) + P(A & mitte-B) --- see on "totaalse tõenäosuse seadus" kitsendatuna kahele ammendavale teineteist välistavale hüpoteesile A & B, mille kohaselt me peame hüpotees A tõenäosuse leidmiseks arvestama ka B tõenäosusega.
+6. Bayesi teoreem: *P(A | B) = P(A)P(B | A)/P(B)*, kus *P(B) = P(A)P(B  A) + P(mitte-A)P(B  mitte-A)*  
 
-6. P(A | B) = P(A & B)/P(B) kus P(A | B) on tinglik tõenäosus: A tõenäosus, tingimusel, et B kehtib. P(vihm | pilves ilm) ei ole sama, mis P(pilves ilm | vihm).
+Kui A on H~1~ ning mitte-A on ammendav ja välistav H~2~ ja B tähistab andmeid (data), saame Bayesi teoreemi ümber kirjutada 
 
-7. Bayesi teoreem: P(A | B) = P(A)P(B | A)/P(B), kus P(B) = P(A)P(BA) + P(mitte-A)P(Bmitte-A) –-- Kui A on H1, mitte-A on ammendav ja välistav H2 ja B tähistab andmeid (data), saame selle ümber kirjutada P(H1 | data) = ( P(H1)P(data | H1) )/( P(H1)P(data | H1) + P(H2)P(data | H2) ). P(H1 | data) on H1 kehtimise tõenäosus meie andmete korral, P(H1) on H1 kehtimise eelnev tõenäosus, P(data | H1) on andmete esinemise tõenäosus tingimusel, et H1 kehtib. Jagamistehe tehakse ainult selle pärast, et normaliseerida 100%-le kõikide hüpoteeside tõenäosuste summa meie andmete korral --- sum( P(data | H~i~)* P(H~i~) ) = 1. 
+*P(H~1~ | data) = ( P(H~1~)P(data | H~1~) )/( P(H~1~)P(data | H~1~) + P(H~2~)P(data | H~2~) )*
 
-####Tõenäosusteooriast saab tuletada järgmised statistika põhiprintsiibid
+*P(H~1~ | data)* on *H~1~* kehtimise tõenäosus meie andmete korral, ehk posteerior, 
 
+*P(H~1~)* on *H~1~* kehtimise eelnev, ehk meie andmetest sõltumatu, tõenäosus, ehk prior, 
 
- 1. statistilise analüüsi kvaliteet sõltub mudeli eeldustest. Statistikat tehakse arvutusmasinaga. Sellest lihtsast faktist tuleneb, et statistikat tehakse matemaatiliste mudelite raames, kus mudel on matemaatline formalism, mis püüab kajastada meie uskumusi maailma kohta. Kuna maailm ei koosne matemaatikast, on mudelites alati eeldusi maailma kohta, mis ei ole päris tõesed ja mida ei saa tingimata empiiriliselt kontrollida. Mündiviske näites eeldasime, et mündivisked olid üksteisest sõltumatud. Kui me sellest eeldusest loobume, läheb meie mudel keerulisemaks, sest me peame mudelisse lisama teavet visetevahelise korrelatsiooni kohta. Aga see keerulisem mudel toob sisse uued eeldused (vähemalt pool tosinat lisaeeldust).
+*P(data | H~1~)* on andmete esinemise tõenäosus tingimusel, et H~1~ kehtib, ehk tõepära. 
+
+Jagamistehe tehakse ainult selle pärast, et normaliseerida 1-le kõikide hüpoteeside tõenäosuste summa meie andmete korral ja seega viia posteerior vastavusse tõenäosusteooria aksioomidega --- kui meil on i ammendavat üksteist välistavat hüpoteesi, siis murrujoone alla läheb: *sum( P(data | H~i~)P(H~i~) )=1*. Bayesi teoreem on triviaalne tuletus tõenäosusteooria aksioomidest, milles pole mitte midagi maagilist. See ei ole automaatne meetod, mis tagaks inimkonna teadmiste kasvu, vaid lihtsalt parim võimalik viis andmemudeli ja taustateadmiste mudeli ühendamiseks ja normaliseerimiseks tinglikuks tõenäosuseks (hüpoteesi tõenäosus meie andmete ja taustateadmiste korral). Nüüd sõltub kõik mudelite, andmete ja taustateadmiste kvaliteedist. 
+
+### Tõenäosusteooriast tulenevad statistika põhiprintsiibid
+
+ 1. statistilise analüüsi kvaliteet sõltub mudeli eeldustest & struktuurist. Kuna maailm ei koosne matemaatikast, teevad matemaatilised mudelid alati eeldusi maailma kohta, mis ei ole päris tõesed ja mida ei saa tingimata empiiriliselt kontrollida. Mündiviske näites eeldasime, et mündivisked olid üksteisest sõltumatud. Kui me sellest eeldusest loobume, läheb meie mudel keerulisemaks, sest me peame mudelisse lisama teavet visetevahelise korrelatsiooni kohta. Aga see keerulisem mudel toob sisse uued eeldused (vähemalt pool tosinat lisaeeldust). Üldiselt peaks mudeli struktuur kajastama katse struktuuri, mis kaasaegses statistikas tähendab sageli hierarhilisi mudeleid.
  
  2. statistilise analüüsi kvaliteet sõltub andmete hulgast. Kui kahe mündiviske asemel teeksime kakskümmend, siis saaksime samade eelduste põhjal teha oluliselt täpsemaid järeldusi mündi aususe kohta. 
 
- 3. statistilise analüüsi kvaliteet sõltub andmete  kvaliteedist. Kui münt on aus aga me viskame seda ebaausalt, siis, mida rohkem arv kordi me seda teeme, seda tugevamalt usub teadusüldsus selle tagajärjel millegisse, mis pole tõsi.
+ 3. statistilise analüüsi kvaliteet sõltub andmete  kvaliteedist. Kui münt on aus, aga me viskame seda ebaausalt, siis, mida rohkem arv kordi me seda teeme, seda tugevamalt usub teadusüldsus selle tagajärjel millegisse, mis pole tõsi.
 
- 4. statistilise analüüsi kvaliteet sõltub mudeli kvaliteedist. Statistilised mudelid töötavad kõige paremini siis, kui analüüsis kasutatakse maksimaalselt andmetest leiduvat infomratsiooni. Selle pärast tuleb võimaluse korral panna kõik relevantsed andmed ühte mudelisse ning eelistada hierarhilisi mudeleid, mis vaatlevad andmeid tervikuna. Hea mudel peegeldab andmeid genereeriva loodusliku protsessi või laborikatse struktuuri.  
+ 4. statistilise analüüsi kvaliteet sõltub taustateadmiste kvaliteedist. Napid taustateadmised ei võimalda parandada andmete põhjal tehtud järeldusi juhul, kui andmed mingil põhjusel ei vasta tegelikkusele. Adekvaatsete taustateadmiste lisamine mudelisse aitab vältida mudelite üle-fittimist.
 
- 5. statistilise analüüsi kvaliteet sõltub taustateadmiste kvaliteedist. Vähesed taustateadmised ei võimalda statitilistesse mudelitesse panna usutavaid eeldusi ning ei võimalda parandada järeldusi juhul, kui andmed mingil põhjusel ei vasta tegelikkusele.
+ 5. Järeldused ühe hüpoteesi kohta mõjutavad järeldusi ka kõigi alternatiivsete hüpoteeside kohta. Relevantsete hüpoteeside eiramine viib ekslikele järeledustele kõigi teiste hüpoteeside kohta.  
 
- 6. Järeldused ühe hüpoteesi kohta mõjutavad järeldusi ka kõigi alternatiivsete hüpoteeside kohta. Relevantsete hüpoteeside eiramine viib ekslikele järeledustele kõigi teiste hüpoteeside kohta.  
-
-
-
-
-### Valim ei ole sama, mis populatsioon
+## Valim ei ole sama, mis populatsioon
 
 
 Kõigepealt illustreerime valimi ja populatsiooni erinevust.
-
-
-
-    Simuleerimine on lahe sest simulatsioonid elavad mudeli väikeses maailmas, kus me teame 
-    täpselt, mida me teeme ja mida on selle tagajärjel oodata. Simulatsioonidega saame me 
-    hõlpsalt kontrollida, kas ja kuidas meie mudelid töötavad ning genereerida olukordi 
-    (parameetrite väärtuste kombinatsioone), mida suures maailmas kunagi ette ei tule. 
-    Selles mõttes on mudelid korraga nii väiksemad kui suuremad kui päris maailm. 
+Simuleerimine on lahe sest simulatsioonid elavad mudeli väikeses maailmas, kus me teame 
+täpselt, mida me teeme ja mida on selle tagajärjel oodata. Simulatsioonidega saame me 
+hõlpsalt kontrollida, kas ja kuidas meie mudelid töötavad ning genereerida olukordi 
+(parameetrite väärtuste kombinatsioone), mida suures maailmas kunagi ette ei tule. 
+Selles mõttes on mudelid korraga nii väiksemad kui suuremad kui päris maailm. 
 
 Alustuseks simuleerime juhuvalimi n=3 lõpmata suurest normaaljaotusega populatsioonist, mille keskmine on 100 ja sd on 20. Päris elus on korraliku juhuvalimi tõmbamine tehniliselt raske ettevõtmine ja, mis veelgi olulisem, me ei tea kunagi, milline on populatsiooni tõeline jaotus, keskmine ja sd. Elagu simulatsioon!
 
@@ -120,7 +120,8 @@ Summary %>% ggplot(aes(Mean) ) + geom_histogram()
 ```
 
 ```{r}
-mean(Summary$Mean); mean(Summary$SD)
+mean(Summary$Mean) 
+mean(Summary$SD)
 ```
 
 Oh-hooo. Paljude valimite keskmiste keskmine ennustab väga täpselt populatsiooni keskmist aga sd-de keskmise keskmine alahindab populatsiooni sd-d. Valem, millega sd-d arvutatakse tõõtab lihtsalt kallutatult, kui n on väike (<10). Kui ei usu, korda eelnevat simulatsiooni valimiga, mille N=30.
@@ -166,7 +167,7 @@ knitr::include_graphics("img/munchausen.jpg")
 ```
 
 
-### 4.2.Bootstrappimine
+## Bootstrappimine
 
 > Populatsioon on valimile sama, mis valim on bootstrappitud valimile. 
 
@@ -252,7 +253,7 @@ mode(a1$Value)
 ```
 Ligikaudu 100% tõenäosusega (valimis on 1 mees alla 182 cm, ja tema on 177 cm). Lühikesed jupatsid ei saa Ameerikamaal presidendiks!
 
-#### veidi keerulisem bootsrap
+### veidi keerulisem bootsrap
 Eelnevalt tutvustasime nn percentiilmeetodit bootstrapi arvutamiseks. See lihtne meetod on küll populaarne ja annab sageli häid tulemusi, aga parim meetod bootstrappimiseks, empiiriline bootstrap, on siiski veidi keerulisem. Nimelt ei ploti me enam mitte 10 000 statistiku väärtust vaid 10 000 erinevust bootstrapitud statistiku väärtuse ja empiirilise valimi põhjal arvutatud statistiku väärtuse vahel.
 ```{r}
 heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) %>% as_tibble() 
@@ -268,8 +269,10 @@ dens(a1$Value)
 Ja usaldusinterval tuleb niiviisi
 ```{r}
 a <- HPDI(a1$Value)
-CI_low <- mean(heights$value) - a[1]
-CI_high <- mean(heights$value) + a[1]
+a
+mean(heights$value)
+CI <- c(mean(heights$value) - abs(a[1]), mean(heights$value) + abs(a[2]))
+CI
 ```
 
 Alternatiivne kood sama asja tegemiseks: 
@@ -386,7 +389,7 @@ plot(b5)
 
 Bootstrappimine on väga hea meetod, mis sõltub väiksemast arvust eeldustest kui statistikas tavaks. Bootstrap ei eelda, et andmed on normaaljaotusega või mõne muu matemaatiliselt lihtsa jaotusega. Tema põhiline eeldus on, et valim peegeldab populatsiooni --- mis ei pruugi kehtida väikeste valimite korral ja kallutatud (mitte-juhuslike) valimite korral.
 
-####Parameetriline bootstrap
+### Parameetriline bootstrap
 
 Kui me arvame, et me teame, mis jaotusega on meie andmed, ja meil on suhteliselt vähe andmepunkte, võib olla mõistlik lisada bootstrapile andmete jaotuse mudel. Näiteks, meie USA presidentide pikkused võiksid olla umbkaudu normaaljaotusega (sest me teame, et USA meeste pikkused on seda). Seega fitime kõigepealt presidentide pikkusandmetega normaaljaotuse ja seejärel tõmbame bootsrap valimid sellest normaaljaotuse mudelist.
 Normaaljaotuse mudelil on 2 parameetrit: keskmine (mu) ja standardhälve (sigma), mida saame fittida valimiandmete põhjal:
@@ -443,7 +446,7 @@ Me teame juba pool sajandit, et Bayesi teoreem on sellisele ülesandele parim v�
 
 Alustame siiski lihtsa näitega, mida saab käsitsi läbi arvutada.
 
-###1. näide
+### 1. näide
 
 Me teame, et suremus haigusesse on 50% ja meil on palatis 3 patsienti, kes seda haigust põevad. Seega on meil kaks andmetükki (50% ja n=3). Küsimus: mitu meie patsienti oodatavalt hinge heidavad? Eeldusel, et meie patsiendid on iseseisvad (näiteks ei ole sugulased), on meil tüüpiline mündiviske olukord.
 
@@ -572,7 +575,7 @@ Nüüd on meil posterioorne tõenäosusfunktsioon, mis summeerub 1-le ja mis sis
 > Alati on kasulik plottida kõik kolm funktsiooni (tõepära, prior ja posteerior).
 
 
-####Kui n=1
+#### Kui n=1
 
 Bayes on lahe sest tema hinnangud väiksele N-le on loogiliselt sama pädevad kui suurele N-le. See ei ole nii klassikalises sageduslikus statistikas, kus paljud testid on välja töötatud N = Inf eeldusel ja töötavad halvasti väikeste valimitega.
 
@@ -680,7 +683,7 @@ plot( x = p_grid , y = posterior2 , type="b" ,
 ```
 3. patsient jäi ellu. Nüüd on posteeriori tipp mitte 75% juures nagu ennist, vaid kuskil 50% juures --- tänu priorile.
 
-## 4.4. Mudelite keel
+## Mudelite keel
 
 Siin vaatame kuidas kirjeldada mudelit nii, et masin selle ära tunneb. Meie mudelid töötavad läbi rethinking() paketi. See raamatukogu pakub kaks võimalust, kuidas mudelit arvutada, mis mõlemad kasutavad sama notatsiooni. Mõlemad võimalused arvutavad posteeriori mitte Bayesi teoreemi kasutades (nagu me ennist tegime), vaid kasutades stohhastilisi meetodeid, mis iseloomustavad posteeriori umbkaudu (aga piisavalt täpselt). Põhjuseks on, et keerulisemate mudelite korral on Bayesi teoreemi kasutamine liialt arvutusmahukas. 
 
@@ -745,7 +748,7 @@ HPDI(samples$p, prob = 0.95) #highest density 95% at the center
 
 10 korda rohkem andmeid: nüüd on suremus määratud kuskile 57% ja 77% vahele (suure tõenäosusega)
 
-## 4.5. beta prior 
+## beta prior 
 
 Nüüd anname sisse mõistlikuma struktuuriga priori: beta-jaotuse
 
@@ -815,7 +818,7 @@ HPDI(samples$p, prob = 0.95) #highest density 95% at the center
 
 Nagu näha on ka kitsa priori mõju üsna väika, isegi kui kui n=9.
 
-## 4.6. Lõpetuseks veel prioritest üldiselt. 
+## Lõpetuseks veel prioritest üldiselt. 
 
 Neid võib jagada kolmeks: mitteinformatiivsed, väheinformatiivsed ehk "regularizing" ja informatiivsed. 
 
