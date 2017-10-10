@@ -156,8 +156,8 @@ mode <- function(x, adjust = 1){
   dx <- density(x, adjust = adjust)
   dx$x[which.max(dx$y)]
 }
-mode(Summary$SD) %>% exp()
-mode(log(Summary$SD)) %>% exp()
+mode(Summary$SD) 
+
 ```
 
 
