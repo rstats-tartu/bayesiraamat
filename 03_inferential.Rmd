@@ -150,15 +150,7 @@ mode(Summary$SD) %>% exp()
 mode(log(Summary$SD)) %>% exp()
 ```
 
-Need koodiread seletavad lahti funtksiooni `mode()` koodi:
-```{r}
-dx <- density(rnorm(50)) #512 numbers x and y
-head(dx$y)
-plot(dx$x, dx$y)
-plot(dx)
-which.max(dx$y) #Determines the index of the maximum of a vector.
-dx$x[which.max(dx$y)] 
-```
+
 
 SD-de jaotus on ebasümmeetriline ja mood ehk kõige tõenäolisem valimi sd väärtus, mida võiksime oodata, on u 14, samal ajal kui populatsiooni sd = 20. 
 Lisaks on sd-de jaotusel paks saba, mis tagab, et tesest küljest pole ka vähetõenäoline, et meie valimi sd populatsiooni sd-d kõvasti üle hindab.
