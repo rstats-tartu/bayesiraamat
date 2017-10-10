@@ -1,8 +1,3 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 
 # Järeldav statistika
 
@@ -11,8 +6,7 @@ output:
 library(tidyverse)
 library(bayesboot)
 library(boot)
-library(rethinking) #HPDI() and PI(). Requires Stan.
-#source("R/")
+library(rethinking) # HPDI() and PI(). Requires Stan.
 ```
  
 Kui EDA määrab graafiliste meetoditega andmete kvaliteeti ja püstitab uusi hüpoteese, siis järeldav statistika püüab formaalsete arvutuste abil vastata kahele lihtsale küsimusele: 1. mis võiks olla kõige usutavam parameetriväärtus? ja 2. kui suur ebakindlus seda hinnangut ümbritseb? Kuna andmed tulevad meile koos mõõtmisveaga ja koos bioloogilise varieeruvusega lõpliku suurusega valimina, on ebakindlus hinnagusse sisse ehitatud. Hea protseduur kvantifitseerib selle ebakindluse ausalt ja täpselt - siin ei ole eesmärk mitte niivõrd ebakindlust vähendada (seda tehakse eelkõige katse disaini tasemel), vaid seda kirjeldada.  
@@ -40,7 +34,7 @@ Statistikas pööratakse tõenäosusteoreetiline ülesanne pea peale ja küsitak
 
 > Tõenäosus on defineeritud usu määrana mingisse hüpoteesi. Näiteks 62% tõenäosus, et populatsiooni keskmine pikkus < 180 cm, tähendab, et sa oled ratsionaalse olendina nõus kulutama mitte rohkem kui 62 senti kihlveo peale, mis võidu korral toob sulle sisse 1 EUR, ehk 38 senti kasumit.  
 
-**Tõenäosusteooria aksioomid** ütlevad tõlkes inimkeelde, et tõenäosused (P) jäävad 0 ja 1 vahele, et P(A) = 1 tähendab, et A on tõene, et P(A) = 0 tähendab, et A on väär, ning kui A ja B on ammendavad üksteist välistavad hüpoteesid, siis P(A) + P(B) = 1. Need aksioomid peaksid olema iseenesestmõistetavad ja ainult neist on tuletatud kogu tõenäosusteooria.
+**Tõenäosusteooria aksioomid** ütlevad tõlkes inimkeelde, et tõenäosused (P) jäävad 0 ja 1 vahele, et P(A) = 1 tähendab, et A on tõene, et P(A) = 0 tähendab, et A on väär, ning kui A ja B on ammendavad üksteist välistavad hüpoteesid, siis $P(A) + P(B) = 1$. Need aksioomid peaksid olema iseenesestmõistetavad ja ainult neist on tuletatud kogu tõenäosusteooria.
 
 Need aksioomid, mis oma matemaatilises vormis postuleeriti Andrei Kolmogorovi poolt ca 1930, on tuletatavad järgmistest eeldustest:
 
@@ -58,9 +52,9 @@ Kui tõenäosused on 0 või 1, siis taandub tõenäosusteooria matemaatliselt om
 
 1. Kui hüpotees A sisaldab endas hüpoteesi B, siis P(A) ei saa olla suurem kui P(B). 
 
-2. kui A ja B on üksteist välistavad, siis tõenäosus, et A on tõene või B on tõene on nende kahe tõenäosuse summa --- *P(A v B) = P(A) + P(B)*. 
+2. kui A ja B on üksteist välistavad, siis tõenäosus, et A on tõene või B on tõene on nende kahe tõenäosuse summa --- $P(A \lor B) = P(A) + P(B)$. 
 
-3. kui A ja B on üksteisest sõltumatud siis *P(A & B) = P(A) x P(B)*, kui A ja B ei ole üksteist välistavad, siis *P(A v B) = P(A) + P(B) – P(A & B)*. 
+3. kui A ja B on üksteisest sõltumatud siis $P(A & B) = P(A) \times P(B)$, kui A ja B ei ole üksteist välistavad, siis *P(A v B) = P(A) + P(B) – P(A & B)*. 
 
 4. *P(A) = P(A & B) + P(A & mitte-B)* --- see on "totaalse tõenäosuse seadus" kitsendatuna kahele ammendavale teineteist välistavale hüpoteesile A & B, mille kohaselt me peame hüpotees A tõenäosuse leidmiseks arvestama ka B tõenäosusega.
 
@@ -105,8 +99,9 @@ Selles mõttes on mudelid korraga nii väiksemad kui suuremad kui päris maailm.
 Alustuseks simuleerime juhuvalimi n=3 lõpmata suurest normaaljaotusega populatsioonist, mille keskmine on 100 ja sd on 20. Populatsioon (mis on statistiline mõiste) seisab siin tegelikkuse aseainena ja juhuvalim on meie andmete simulatsioon. Päris elus on korraliku juhuvalimi tõmbamine tehniliselt raske ettevõtmine ja, mis veelgi olulisem, me ei tea kunagi, milline on populatsiooni tõeline jaotus, keskmine ja sd. Elagu simulatsioon!
 
 ```{r}
-set.seed(1) #makes random number generation reproducible
-(Sample <- rnorm(n = 3, mean = 100, sd = 20)) #extra parentheses work as print()
+set.seed(1) # makes random number generation reproducible
+Sample <- rnorm(n = 3, mean = 100, sd = 20)
+Sample
 mean(Sample)
 sd(Sample)
 ```
@@ -120,9 +115,14 @@ Meie lootus on, et kui meil on palju valimeid, millel kõigil on juhuslik viga, 
 ```{r}
 N <- 3
 N_simulations <- 10000
-df <- tibble(a = rnorm(N * N_simulations, 100, 20), b = rep(1:N_simulations, each = N) )
-Summary <-  df %>% group_by(b) %>% summarise(Mean=mean(a), SD= sd(a) ) 
-Summary %>% ggplot(aes(Mean) ) + geom_histogram()
+df <- tibble(a = rnorm(N * N_simulations, 100, 20), 
+             b = rep(1:N_simulations, each = N))
+Summary <-  df %>% 
+  group_by(b) %>% 
+  summarise(Mean = mean(a), SD = sd(a)) 
+Summary %>% 
+  ggplot(aes(Mean)) + 
+  geom_histogram(bins = 40)
 ```
 
 ```{r}
@@ -135,20 +135,22 @@ Oh-hooo. Paljude valimite keskmiste keskmine ennustab väga täpselt populatsioo
 Ja nüüd 10 000 SD keskväärtused:
 
 ```{r}
-Summary %>% ggplot(aes(SD)) + geom_histogram()
+Summary %>% 
+  ggplot(aes(SD)) + 
+  geom_histogram(bins = 40)
 ```
 
 ```{r}
-mode <-  function(x, adjust=1) {
+mode <- function(x, adjust = 1){
   x <- na.omit(x)
-  dx <- density(x, adjust=adjust)
-y_max <- dx$x[which.max(dx$y)] 
-y_max
+  dx <- density(x, adjust = adjust)
+  dx$x[which.max(dx$y)]
 }
-mode(Summary$SD)
+mode(Summary$SD) %>% exp()
+mode(log(Summary$SD)) %>% exp()
 ```
 
-need koodiread seletavad lahti funtksiooni mode() koodi:
+Need koodiread seletavad lahti funtksiooni `mode()` koodi:
 ```{r}
 dx <- density(rnorm(50)) #512 numbers x and y
 head(dx$y)
@@ -158,26 +160,26 @@ which.max(dx$y) #Determines the index of the maximum of a vector.
 dx$x[which.max(dx$y)] 
 ```
 
-SD-de jaotus on ebasümmeetriline ja mood ehk kõige tõenäolisem valimi sd väärtus, mida võiksime oodata, on u 14, samal ajal kui populatsiooni sd = 20. Lisaks on sd-de jaotusel paks saba, mis tagab, et tesest küljest pole ka vähetõenäoline, et meie valimi sd populatsiooni sd-d kõvasti üle hindab.
+SD-de jaotus on ebasümmeetriline ja mood ehk kõige tõenäolisem valimi sd väärtus, mida võiksime oodata, on u 14, samal ajal kui populatsiooni sd = 20. 
+Lisaks on sd-de jaotusel paks saba, mis tagab, et tesest küljest pole ka vähetõenäoline, et meie valimi sd populatsiooni sd-d kõvasti üle hindab.
 
 Arvutame, mitu % valimite sd-e keskmistest on > 25
 ```{r}
-mean(Summary$SD>25)
+mean(Summary$SD > 25)
 ```
 
 Me saame >20% tõenäosusega pahasti ülehinnatud SD.
-
 ```{r}
-mean(Summary$SD<15)
+mean(Summary$SD < 15)
 ```
 
-Ja me saame >40% tõenäosusega pahasti alahinnatud sd. Selline on väikeste valimite traagika.
+Ja me saame >40% tõenäosusega pahasti alahinnatud sd. 
+Selline on väikeste valimite traagika.
 
 Aga vähemalt populatsiooni keskmise saame me palju valimeid tõmmates ilusasti kätte --- ka väga väikeste valimitega.
 
 Kahjuks pole meil ei vahendeid ega kannatust loodusest 10 000 valimi kogumiseks. Enamasti on meil üksainus valim. Õnneks pole sellest väga hullu, sest meil on olemas analoogne meetod, mis töötab üsna hästi ka ühe valimiga. Seda kutsutakse *bootstrappimiseks* ja selle võttis esimesena kasutusele parun von Münchausen. Too jutukas parun nimelt suutis end soomülkast iseenda patsi pidi välja tõmmata (koos hobusega), mis ongi bootstrappimise põhimõte. 
 Statistika tõmbas oma saapaid pidi mülkast välja Brad Efron 1979 aastal.
-
 
 ```{r}
 knitr::include_graphics("img/munchausen.jpg")
