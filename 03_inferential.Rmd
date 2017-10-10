@@ -7,7 +7,7 @@ output:
 # Järeldav statistika
 
 
-```{r inferlibs}
+```{r}
 library(tidyverse)
 library(bayesboot)
 library(boot)
@@ -38,7 +38,7 @@ Statistikas pööratakse tõenäosusteoreetiline ülesanne pea peale ja küsitak
 
 > Statistika arvutab H-i kehtimise tõenäosuse lähtuvalt kogutud andmetest, matemaatilistest mudelitest ning teaduslikest taustateadmistest.  
 
-> Tõenäosus on defineeritud usu määrana mingisse hüpoteesi. Näiteks 62% tõenäosus (et populatsiooni keskmine pikkus < 180 cm) tähendab, et sa oled ratsionaalse olendina nõus kulutama mitte rohkem kui 62 senti kihlveo peale, mis võidu korral toob sulle sisse 1 EUR (seega 38 senti kasumit).  
+> Tõenäosus on defineeritud usu määrana mingisse hüpoteesi. Näiteks 62% tõenäosus, et populatsiooni keskmine pikkus < 180 cm, tähendab, et sa oled ratsionaalse olendina nõus kulutama mitte rohkem kui 62 senti kihlveo peale, mis võidu korral toob sulle sisse 1 EUR, ehk 38 senti kasumit.  
 
 **Tõenäosusteooria aksioomid** ütlevad tõlkes inimkeelde, et tõenäosused (P) jäävad 0 ja 1 vahele, et P(A) = 1 tähendab, et A on tõene, et P(A) = 0 tähendab, et A on väär, ning kui A ja B on ammendavad üksteist välistavad hüpoteesid, siis P(A) + P(B) = 1. Need aksioomid peaksid olema iseenesestmõistetavad ja ainult neist on tuletatud kogu tõenäosusteooria.
 
