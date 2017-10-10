@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 
 # Järeldav statistika
 
@@ -9,25 +14,95 @@ library(boot)
 library(rethinking) #HPDI() and PI(). Requires Stan.
 #source("R/")
 ```
+ 
+Kui EDA määrab graafiliste meetoditega andmete kvaliteeti ja püstitab uusi hüpoteese, siis järeldav statistika püüab formaalsete arvutuste abil vastata kahele lihtsale küsimusele: 1. mis võiks olla kõige usutavam parameetriväärtus? ja 2. kui suur ebakindlus seda hinnangut ümbritseb? Kuna andmed tulevad meile koos mõõtmisveaga ja koos bioloogilise varieeruvusega lõpliku suurusega valimina, on ebakindlus hinnagusse sisse ehitatud. Hea protseduur kvantifitseerib selle ebakindluse ausalt ja täpselt - siin ei ole eesmärk mitte niivõrd ebakindlust vähendada (seda tehakse eelkõige katse disaini tasemel), vaid seda kirjeldada.  
+Järeldav statistika püüab, kasutades algoritme ja mudeleid, teha andmete põhjal järeldusi looduse kohta. 
+Sellisel tegevusel on mõtet ainult siis, kui ühest küljest andmed peegeldavad tegelikkust ja teisest küljest tegelikkuses on rohkem, kui lihtsalt meie andmed. 
+Kui andmed = tegelikkus, siis pole mõtet keerulisi mudeleid kasutada --- piisab lihtsast andmete kirjeldusest. 
+Ja kui andmetel pole suurt midagi ühist tegelikkjsega, siis on need lihtsalt ebarelevatsed. 
+Seega on järeldava statistika abil tehtud järeldused alati rohkem või vähem ebamäärased ning meil on vaja meetodit selle ebamäärasuse mõõtmiseks. Selle meetodi annab tõenäosusteooria.
+
+## Järeldav statistika on tõenäosusteooria käepikendus
+
+See õpik õpetab Bayesi statistikat, mis põhineb tõenäosusteoorial. Tänu sellele moodustab Bayesi statistika sidusa terviku, mille abil saab teha kõike seda, mida saab teha tõenäosusteooria abil. Bayesi statistika põhineb Bayesi teoreemil, mis on triviaalne tuletus tõenäosusteooria aksioomidest ja mille kohta on omakorda tõestatud teoreem, mis ütleb, et Bayesi teoreem on teoreetiliselt parim viis teha statistikat ja samal ajal mitte kaotada andmetes leiduvat informatsiooni. **NÕUAB TÄPSUSTUST!!!!!** 
+
+Tõenäosusteooria on aksiomaatline süsteem, mille abil saame omistada numbriline väärtuse meie usu määrale mingisse hüpoteesi. Näiteks, kui me planeerime katset, kus me viskame kulli ja kirja ja teeme seda kaks korda, siis saame arvutada, millise tõenäosusega võime oodata katse tulemuseks kaht kirja. Aga seda tingimusel, et me võtame omaks mõned eeldused -- näiteks et münt on aus ja et need kaks viset on üksteisest sõltumatud. 
+
+Sellel katsel on 4 võimalikku tulemust: H-H, H-T, T-H, T-T (H -kull, T - kiri). Tõenäosus saada 2-l mündiviskel 2 kirja, P(2 kirja) = 1/4, P(0 kirja) = 1/4 ja P(1 kiri) = 2/4 = 1/2. Sellega oleme andnud oma katseplaanile täieliku tõenäosusliku kirjelduse (pane tähele, et 1/4 + 1/4 + 1/2 = 1). Ükskõik kui keeruline on teie katseplaan, põhimõtteliselt käib selle analüüs samamoodi.
+Tõenäosusteooria loomus seisneb kõikide võimalike sündmuste üleslugemises ning senikaua, kui me seda nüri järjekindlusega teeme, on vastus, mille me saame, tõsikindel.
+
+Ehkki Bayesi statistika põhineb tõenäosusteoorial ja on sellega kooskõlas, ei ole see sama asi, mis tõenäosusteooria.
+Statistikas pööratakse tõenäosusteoreetiline ülesanne pea peale ja küsitakse nii: kui me saime 2-l mündiviskel 2 kirja, siis millise tõenäosusega on münt aus (tasakaalus)? Erinevus tõenäosusteoreetilise ja statistilise lähenemise vahel seisneb selles, et kui tõenäosusteoorias me eeldame, et teame, kuidas süsteem on üles ehitatud, ja ennustame sellest lähtuvalt andmete tõenäosusi, siis statistikas me kontrollime neid eeldusi andmete põhjal. Seega annab tõenäosusteooria matemaatiliselt tõsikindlaid vastuseid ideaalmaailmade kohta, samas kui statistika püüab andmete põhjal teha kaudseid järeldusi päris maailma kohta. Selleks kasutame Bayesi teoreemi (vt allpool).
+
+> Tõenäosusteooria määrab kõikide võimalike sündmuste esinemise tõenäosused, eeldades, et hüpotees H kehtib (H on siin lihtsalt teine nimi "eeldusele"). 
+
+> Statistika arvutab H-i kehtimise tõenäosuse lähtuvalt kogutud andmetest, matemaatilistest mudelitest ning teaduslikest taustateadmistest.  
+
+> Tõenäosus on defineeritud usu määrana mingisse hüpoteesi. Näiteks 62% tõenäosus (et populatsiooni keskmine pikkus < 180 cm) tähendab, et sa oled ratsionaalse olendina nõus kulutama mitte rohkem kui 62 senti kihlveo peale, mis võidu korral toob sulle sisse 1 EUR (seega 38 senti kasumit).  
+
+**Tõenäosusteooria aksioomid** ütlevad tõlkes inimkeelde, et tõenäosused (P) jäävad 0 ja 1 vahele, et P(A) = 1 tähendab, et A on tõene, et P(A) = 0 tähendab, et A on väär, ning kui A ja B on ammendavad üksteist välistavad hüpoteesid, siis P(A) + P(B) = 1. Need aksioomid peaksid olema iseenesestmõistetavad ja ainult neist on tuletatud kogu tõenäosusteooria.
+
+Need aksioomid, mis oma matemaatilises vormis postuleeriti Andrei Kolmogorovi poolt ca 1930, on tuletatavad järgmistest eeldustest:
+
++ ratsionaalne mõtlemine vastab kvalitatiivselt tervele mõistusele: lisatõendusmaterjal hüpoteesi kasuks tõstab selle hüpoteesi usutavust.
+
++ mõtlemine peab olema konsistentne: kui me võime järeldusi teha rohkem kui ühel viisil, peame lõpuks ikkagi alati samale lõppjäreldusele jõudma
+
++ kogu kättesaadav relevantne informatsioon tuleb järelduste tegemisel arvesse võtta (totaalse informatsiooni printsiip)
+
++ ekvivalentsed teadmised on representeeritud ekvivalentsete numbritega. 
+
+Kui tõenäosused on 0 või 1, siis taandub tõenäosusteooria matemaatliselt oma erijuhule, milleks on lausearvutuslik loogika. Lausearvutuse oluline erinevus tõenäosusteooriast on, et kui selle abil on saavutatud valiidne tulemus, on see tõsikindel ja uued andmed ei saa põhimõtteliselt seda tulemust muuta. Seevastu tõenäosusteoorias ja statstikas muudavad uued andmed alati tõenäosusi. Selles mõttes ei saa tõenäosuslik teadus kunagi valmis.
+
+### Tõenäosusteooria aksioomide formaalsed tulemid
+
+1. Kui hüpotees A sisaldab endas hüpoteesi B, siis P(A) ei saa olla suurem kui P(B). 
+
+2. kui A ja B on üksteist välistavad, siis tõenäosus, et A on tõene või B on tõene on nende kahe tõenäosuse summa --- *P(A v B) = P(A) + P(B)*. 
+
+3. kui A ja B on üksteisest sõltumatud siis *P(A & B) = P(A) x P(B)*, kui A ja B ei ole üksteist välistavad, siis *P(A v B) = P(A) + P(B) – P(A & B)*. 
+
+4. *P(A) = P(A & B) + P(A & mitte-B)* --- see on "totaalse tõenäosuse seadus" kitsendatuna kahele ammendavale teineteist välistavale hüpoteesile A & B, mille kohaselt me peame hüpotees A tõenäosuse leidmiseks arvestama ka B tõenäosusega.
+
+5. *P(A | B) = P(A & B)/P(B)* kus *P(A | B)* on tinglik tõenäosus: A tõenäosus tingimusel, et B kehtib. *P(vihm | pilves ilm)* ei ole sama, mis *P(pilves ilm | vihm)*. 5. avaldisest saab lihtsa aritmeetika abil tuletada Bayesi teoreemi.
+
+6. Bayesi teoreem: *P(A | B) = P(A)P(B | A)/P(B)*, kus *P(B) = P(A)P(B  A) + P(mitte-A)P(B  mitte-A)*  
+
+Kui A on H~1~ ning mitte-A on ammendav ja välistav H~2~ ja B tähistab andmeid (data), saame Bayesi teoreemi ümber kirjutada 
+
+*P(H~1~ | data) = ( P(H~1~)P(data | H~1~) )/( P(H~1~)P(data | H~1~) + P(H~2~)P(data | H~2~) )*
+
+*P(H~1~ | data)* on *H~1~* kehtimise tõenäosus meie andmete korral, ehk posteerior, 
+
+*P(H~1~)* on *H~1~* kehtimise eelnev, ehk meie andmetest sõltumatu, tõenäosus, ehk prior, 
+
+*P(data | H~1~)* on andmete esinemise tõenäosus tingimusel, et H~1~ kehtib, ehk tõepära. 
+
+Jagamistehe tehakse ainult selle pärast, et normaliseerida 1-le kõikide hüpoteeside tõenäosuste summa meie andmete korral ja seega viia posteerior vastavusse tõenäosusteooria aksioomidega --- kui meil on i ammendavat üksteist välistavat hüpoteesi, siis murrujoone alla läheb: *sum( P(data | H~i~)P(H~i~) ) = 1*. Bayesi teoreem on triviaalne tuletus tõenäosusteooria aksioomidest, milles pole mitte midagi maagilist. See ei ole automaatne meetod, mis tagaks inimkonna teadmiste kasvu, vaid lihtsalt parim võimalik viis andmemudeli ja taustateadmiste mudeli ühendamiseks ja normaliseerimiseks tinglikuks tõenäosuseks (hüpoteesi tõenäosus meie andmete ja taustateadmiste korral). Nüüd sõltub kõik mudelite, andmete ja taustateadmiste kvaliteedist. 
+
+### Tõenäosusteooriast tulenevad statistika põhiprintsiibid
+
+ 1. statistilise analüüsi kvaliteet sõltub mudeli eeldustest & struktuurist. Kuna maailm ei koosne matemaatikast, teevad matemaatilised mudelid alati eeldusi maailma kohta, mis ei ole päris tõesed ja mida ei saa tingimata empiiriliselt kontrollida. Mündiviske näites eeldasime, et mündivisked olid üksteisest sõltumatud. Kui me sellest eeldusest loobume, läheb meie mudel keerulisemaks, sest me peame mudelisse lisama teavet visetevahelise korrelatsiooni kohta. Aga see keerulisem mudel toob sisse uued eeldused (vähemalt pool tosinat lisaeeldust). Üldiselt peaks mudeli struktuur kajastama katse struktuuri, mis kaasaegses statistikas tähendab sageli hierarhilisi mudeleid.
+ 
+ 2. statistilise analüüsi kvaliteet sõltub andmete hulgast. Kui kahe mündiviske asemel teeksime kakskümmend, siis saaksime samade eelduste põhjal teha oluliselt täpsemaid järeldusi mündi aususe kohta. 
+
+ 3. statistilise analüüsi kvaliteet sõltub andmete  kvaliteedist. Kui münt on aus, aga me viskame seda ebaausalt, siis, mida rohkem arv kordi me seda teeme, seda tugevamalt usub teadusüldsus selle tagajärjel millegisse, mis pole tõsi.
+
+ 4. statistilise analüüsi kvaliteet sõltub taustateadmiste kvaliteedist. Napid taustateadmised ei võimalda parandada andmete põhjal tehtud järeldusi juhul, kui andmed mingil põhjusel ei vasta tegelikkusele. Adekvaatsete taustateadmiste lisamine mudelisse aitab vältida mudelite üle-fittimist.
+
+ 5. Järeldused ühe hüpoteesi kohta mõjutavad järeldusi ka kõigi alternatiivsete hüpoteeside kohta. Relevantsete hüpoteeside eiramine viib ekslikele järeledustele kõigi teiste hüpoteeside kohta.  
+
+## Andmed ei ole sama, mis tegelikkus
 
 
+Kõigepealt illustreerime andmete ja tegelikkuse erinevust.
+Simuleerimine on lahe sest simulatsioonid elavad mudeli väikeses maailmas, kus me teame 
+täpselt, mida me teeme ja mida on selle tagajärjel oodata. Simulatsioonidega saame me 
+hõlpsalt kontrollida, kas ja kuidas meie mudelid töötavad ning genereerida olukordi 
+(parameetrite väärtuste kombinatsioone), mida suures maailmas kunagi ette ei tule. 
+Selles mõttes on mudelid korraga nii väiksemad kui suuremad kui päris maailm. 
 
-Järeldav statistika püüab, kasutades keerulisi algoritme, teha valimi põhjal järeldusi statistilise populatsiooni kohta, millest see valim pärineb. 
-Sellisel tegevusel on mõtet ainult siis, kui ühest küljest valim peegeldab populatsiooni ja teisest küljest valim ei ole sama asi, mis populatsioon. 
-Kui valim = populatsioon, siis pole mõtet keerulisi mudeleid kasutada, et valimi põhjal populatsiooni omadusi ennustada --- seda saab teha lihtsalt valimit kirjeldades. 
-Ja kui valimil ning populatsioonil pole suurt midagi ühist, siis on valim lihtsalt ebarelevatne populatsiooni kirjeldamiseks. 
-Seega on järeldava statistika abil tehtud järeldused alati rohkem või vähem ebamäärased ning meil on vaja meetodit selle ebamäärasuse mõõtmiseks. 
-Aga kõigepealt illustreerime valimi ja populatsiooni erinevust.
-
-###4.1. Valim ei ole sama, mis populatsioon
-
-    Simuleerimine on lahe sest simulatsioonid elavad mudeli väikeses maailmas, kus me teame 
-    täpselt, mida me teeme ja mida on selle tagajärjel oodata. Simulatsioonidega saame me 
-    hõlpsalt kontrollida, kas ja kuidas meie mudelid töötavad ning genereerida olukordi 
-    (parameetrite väärtuste kombinatsioone), mida suures maailmas kunagi ette ei tule. 
-    Selles mõttes on mudelid korraga nii väiksemad kui suuremad kui päris maailm. 
-
-Alustuseks simuleerime juhuvalimi n=3 lõpmata suurest normaaljaotusega populatsioonist, mille keskmine on 100 ja sd on 20. Päris elus on korraliku juhuvalimi tõmbamine tehniliselt raske ettevõtmine ja, mis veelgi olulisem, me ei tea kunagi, milline on populatsiooni tõeline jaotus, keskmine ja sd. Elagu simulatsioon!
+Alustuseks simuleerime juhuvalimi n=3 lõpmata suurest normaaljaotusega populatsioonist, mille keskmine on 100 ja sd on 20. Populatsioon (mis on statistiline mõiste) seisab siin tegelikkuse aseainena ja juhuvalim on meie andmete simulatsioon. Päris elus on korraliku juhuvalimi tõmbamine tehniliselt raske ettevõtmine ja, mis veelgi olulisem, me ei tea kunagi, milline on populatsiooni tõeline jaotus, keskmine ja sd. Elagu simulatsioon!
 
 ```{r}
 set.seed(1) #makes random number generation reproducible
@@ -51,7 +126,8 @@ Summary %>% ggplot(aes(Mean) ) + geom_histogram()
 ```
 
 ```{r}
-mean(Summary$Mean); mean(Summary$SD)
+mean(Summary$Mean) 
+mean(Summary$SD)
 ```
 
 Oh-hooo. Paljude valimite keskmiste keskmine ennustab väga täpselt populatsiooni keskmist aga sd-de keskmise keskmine alahindab populatsiooni sd-d. Valem, millega sd-d arvutatakse tõõtab lihtsalt kallutatult, kui n on väike (<10). Kui ei usu, korda eelnevat simulatsiooni valimiga, mille N=30.
@@ -71,17 +147,27 @@ y_max
 }
 mode(Summary$SD)
 ```
+
+```{r}
+dx <- density(rnorm(50)) #512 numbers x and y
+head(dx$y)
+plot(dx$x, dx$y)
+plot(dx)
+which.max(dx$y) #Determines the index of the maximum of a vector.
+dx$x[which.max(dx$y)] 
+```
+
 SD-de jaotus on ebasümmeetriline ja mood ehk kõige tõenäolisem valimi sd väärtus, mida võiksime oodata, on u 14, samal ajal kui populatsiooni sd = 20. Lisaks on sd-de jaotusel paks saba, mis tagab, et tesest küljest pole ka vähetõenäoline, et meie valimi sd populatsiooni sd-d kõvasti üle hindab.
 
 Arvutame, mitu % valimite sd-e keskmistest on > 25
 ```{r}
-sum(Summary$SD>25)/10000
+mean(Summary$SD>25)
 ```
 
 Me saame >20% tõenäosusega pahasti ülehinnatud SD.
 
 ```{r}
-sum(Summary$SD<15)/10000
+mean(Summary$SD<15)
 ```
 
 Ja me saame >40% tõenäosusega pahasti alahinnatud sd. Selline on väikeste valimite traagika.
@@ -91,11 +177,15 @@ Aga vähemalt populatsiooni keskmise saame me palju valimeid tõmmates ilusasti 
 Kahjuks pole meil ei vahendeid ega kannatust loodusest 10 000 valimi kogumiseks. Enamasti on meil üksainus valim. Õnneks pole sellest väga hullu, sest meil on olemas analoogne meetod, mis töötab üsna hästi ka ühe valimiga. Seda kutsutakse *bootstrappimiseks* ja selle võttis esimesena kasutusele parun von Münchausen. Too jutukas parun nimelt suutis end soomülkast iseenda patsi pidi välja tõmmata (koos hobusega), mis ongi bootstrappimise põhimõte. 
 Statistika tõmbas oma saapaid pidi mülkast välja Brad Efron 1979 aastal.
 
-![Bootstrap päästab, kui muu ei aita](/Users/ulomaivali/Dropbox/loengud/2017-R-course/loengu-rmd-konspektid/munchausen.jpg)
+TAAVI: see ei tööta!
+```{r}
+knitr::include_graphics("img/munchausen.jpg")
+```
 
-### 4.2.Bootstrappimine
 
-> Populatsioon on valimile sama, mis valim on bootstrappitud valimile. 
+## Bootstrappimine
+
+> Populatsioon on valimile sama, mis on valim bootstrappitud valimile. 
 
 Nüüd alustame ühestainsast empiirilisest valimist ja genereerime sellest 1000 virtuaalset valimit. 
 Selleks tõmbame me oma valimist virtuaalselt 1000 uut juhuvalimit (bootstrap valimit), millest igaüks on sama suur kui algne valim. 
@@ -106,8 +196,10 @@ Iga bootstrap valimi põhjal arvutatakse meid huvitav statistik (näiteks keskv�
 Ainsad erinevused on, et bootstrapis võrdub andmekogu suurus, millest valimeid tõmmatakse, valimi suurusega ning, et iga bootstrapi valim on sama suur kui algne andmekogu (sest meie statistiku varieeruvus sõltub valimi suurusest ja me tahame seda varieeruvust oma bootstrapvalimiga tabada). 
 Tüüpiliselt kasutatakse bootstrapitud statistikuid selleks, et arvutada usaldusintervall statistiku väärtusele.
 
-    Bootstrap ei muuda meie hinnangut statistiku punktväärtusele. Ta annab hinnangu 
+> Bootstrap ei muuda meie hinnangut statistiku punktväärtusele. Ta annab hinnangu 
     ebakindluse määrale, mida me oma valimi põhjal peaksime selle punkthinnangu kohta tundma.
+    
+ Bootstrappimine on üldiselt väga hea meetod, mis sõltub väiksemast arvust eeldustest kui statistikas tavaks. Bootstrap ei eelda, et andmed on normaaljaotusega või mõne muu matemaatiliselt lihtsa jaotusega. Tema põhiline eeldus on, et valim peegeldab populatsiooni -- mis ei pruugi kehtida väikeste valimite korral ja kallutatud (mitte-juhuslike) valimite korral. Lisaks, tavaline bootstrap ei sobi hierarhiliste andmestruktuuride analüüsiks ega näiteks aegridade analüüsiks.
 
 Bootstrap empiirilisele valimile suurusega n töötab nii:
 
@@ -116,11 +208,11 @@ Bootstrap empiirilisele valimile suurusega n töötab nii:
 3) joonista oma statistiku väärtustest histogramm või density plot
 4) nende andmete põhjal saab küsida palju toreidaid küsimusi --- vt allpool.
 
-Mis on USA presidentide keskmine pikkus? Meil on valim 10 presidendi pikkusega.
+Mis on USA presidentide keskmine pikkus? Meil on valim 11 presidendi pikkusega.
 
 ```{r}
-heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) %>% as_tibble() 
-n <- 10 #sample size
+heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185, 188) %>% as_tibble() 
+n <- 11 #sample size
 nr_boot_samples <- 1000 #the nr of bootstrap samples
 a <- sample_n(heights, n * nr_boot_samples, replace=TRUE)  #create random sample with replacement
 a$key <- rep(1:nr_boot_samples, each = n) #create a column "key" that cuts the sample into slices of size n
@@ -128,29 +220,6 @@ a1 <- a %>% group_by(key) %>% summarise(Value= mean(value)) #calculate the mean 
 dens(a1$Value)
 #HPDI(a1$Value)
 ```
-
-Alternatiivne ja aeglasem kood, mis kasutab mosaic::do(). 
-
-```{r eval=FALSE}
-library(mosaic)
-heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) %>% as_tibble() 
-sample_means <- mosaic::do(1000) *
-    (heights %>% sample_n(size = 10, replace = TRUE)) 
-#võta heigths andmeraamist 10-ne valim (tagasi panekuga) ja tee seda 4000 korda järjest. tulemuseks on tidy tibble, kus on veerg .index, mille järgi saab grupeerida.
-
-sample_means1 <- sample_means %>% group_by(.index) %>% summarise(Mean=mean(value))
-    
-ggplot(data = sample_means1, aes(x = Mean)) +
-  geom_histogram(color = "white", bins = 20)
-```
-
-Nii saab do() abil 2 veeruga tibble, mille igas veerus on 3 juhuslikku arvu. NB! kuna ka tidyverse/dplyr sisaldab do() nimelist funktsiooni, on kasulik seda siin eksplitsiitselt mosaic::do() kaudu esile manada.
-```{r eval=FALSE}
-mosaic::do(3)* rnorm(2)
-
-```
-
-
 
 Mida selline keskväärtuste jaotus tähendab? Me võime seda vaadelda posterioorse tõenäosusjaotusena. Selle tõlgenduse kohaselt iseloomustab see jaotus täpselt meie usku presidentide keskmise pikkuse kohta, niipalju kui see usk põhineb bootstrappimises kasutatud andmetel. Senikaua, kui meil pole muid relevantseid andmeid, on kõik, mida me usume teadvat USA presidentide keskmise pikkuse kohta, peidus selles jaotuses. Need pikkused, mille kohal jaotus on kõrgem, sisaldavad meie jaoks tõenäolisemalt tegelikku USA presidentide keskmist pikkust kui need pikkused, mille kohal posterioorne jaotus on madalam.   
 
@@ -174,16 +243,17 @@ HPDI on üldiselt parem mõõdik kui PI, aga teatud juhtudel on seda raskem arvu
 
 Kui suure tõenäosusega on USA presidentide keskmine pikkus suurem kui USA populatsiooni meeste keskmine pikkus (178.3 cm mediaan)?
 ```{r}
-sum(a1$Value>178.3)/4000
-mode(a1$Value)
+mean(a1$Value>178.3)
 ```
 Ligikaudu 100% tõenäosusega (valimis on 1 mees alla 182 cm, ja tema on 177 cm). Lühikesed jupatsid ei saa Ameerikamaal presidendiks!
 
-#### veidi keerulisem bootsrap
-Eelnevalt tutvustasime nn percentiilmeetodit mootstrapi arvutamiseks. See lihtne meetod on küll populaarne ja annab sageli häid tulemusi, aga parim meetod bootstrappimiseks, empiiriline bootstrap, on siiski veidi keerulisem. Nimelt ei ploti me enam mitte 10 000 statistiku väärtust vaid 10 000 erinevust bootstrapitud statistiku väärtuse ja empiirilise valimi põhjal arvutatud statistiku väärtuse vahel.
+### veidi keerulisem bootstrap
+
+Eelnevalt tutvustasime nn percentiilmeetodit bootstrapi arvutamiseks. See lihtne meetod on küll populaarne ja annab sageli häid tulemusi, aga ei ole parim meetod bootstrappimiseks. Empiiriline bootstrap on sellest ainult veidike keerulisem aga see-eest annab robustsemaid tulemusi. Selles ei ploti me enam mitte 1000 statistiku väärtust vaid 1000 erinevust bootstrapitud statistiku väärtuse ja empiirilise valimi põhjal arvutatud statistiku väärtuse vahel.
+
 ```{r}
-heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) %>% as_tibble() 
-n <- 10 #sample size
+heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185, 188) %>% as_tibble() 
+n <- 11 #sample size
 nr_boot_samples <- 1000 #the nr of bootstrap samples
 a <- sample_n(heights, n * nr_boot_samples, replace=TRUE)  #create random sample with replacement
 a$key <- rep(1:nr_boot_samples, each = n) #create a column "key" that cuts the sample into slices of size n
@@ -194,45 +264,29 @@ dens(a1$Value)
 
 Ja usaldusinterval tuleb niiviisi
 ```{r}
-a <- HPDI(a1$Value)
-CI_low <- mean(heights$value) - a[1]
-CI_high <- mean(heights$value) + a[1]
+a <- HPDI(a1$Value, prob=0.95)
+# a
+# mean(heights$value)
+CI <- c(mean(heights$value) - abs(a[1]), mean(heights$value) + abs(a[2]))
+CI
 ```
 
-Alternatiivne kood sama asja tegemiseks: 
-```{r eval=FALSE}
-heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) 
-n <- 10
-xbar = mean(heights)
-nboot = 20
-# Generate 20 bootstrap samples, i.e.  an n x 20 array of
-# random resamples from x
-tmpdata = sample(heights, n*nboot, replace=TRUE)
-bootstrapsample = matrix(tmpdata, nrow=n, ncol=nboot)
-# Compute the means x∗
-bsmeans = colMeans(bootstrapsample)
-# Compute δ∗ for each bootstrap sample 
-deltastar = bsmeans - xbar
-# Find the 0.1 and 0.9 quantile for deltastar
-d = quantile(deltastar, c(0.1, 0.9))
-```
+### bayesboot()
 
+See funktsioon pakub pisut moodsama meetodi --- Bayesian bootstrap --- mis töötab paremini väikeste valimite korral. Aga üldiselt on tulemused sarnased.
+Hea lihtsa seletuse Bayesian bootstrapi kohta saab siit https://www.youtube.com/watch?v=WMAgzr99PKE ja lihtsa r koodi selle meetodi rakendamiseks saab siit https://www.r-bloggers.com/simple-bayesian-bootstrap/
+Näited sellest, kuidas kasutada bayesbooti standardhälbe, korrelatsioonikoefitsiendi ja lineaarse mudeli koefitsientide usalduspiiride arvutamiseks leiate `?bayesboot` käsuga.
 
-
-
-
-Edaspidi kasutame bootstrappimiseks pisut moodsamat meetodit --- Bayesian bootstrap --- mis töötab veidi paremini väikeste valimite korral. Aga üldiselt on tulemused sarnased.
 ```{r}
 library(bayesboot)
-# Heights of the last ten American presidents in cm (Kennedy to Obama).
-heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185);
+# Heights of the last 11 American presidents in cm (Kennedy to Trump).
+heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185, 188);
 b1 <- bayesboot(heights, mean)
-plot(b1)
+plot(b1, compVal=185)
 #summary(b1)
 #hist(b1)
 HPDI(b1$V1, prob=0.95)
 ```
-
 
 
 ```{r, eval=FALSE}
@@ -240,76 +294,35 @@ HPDI(b1$V1, prob=0.95)
 b2 <- bayesboot(heights, weighted.mean, use.weights = TRUE)
 ```
 
-It can also be easily post processed.
+Tõenäosus, et keskmine on suurem kui 182 cm
 ```{r}
 # the probability that the mean is > 182 cm.
 mean( b1[,1] > 182)
 ```
 
- 2 keskväärtuse erinevus (keskmine1 - keskmine2):
-```{r}
-df <- tibble(a=rnorm(10), b=rnorm(10,1,1))
-m1 <- bayesboot(df$a, mean)
-m2 <- bayesboot(df$b, mean)
-m12 <- bind_cols(m1, m2) 
-m12 <- m12 %>% mutate(value=m12[,2] - m12[,1])
-hist(m12$value)
-median(m12$value)
-mode(m12$value)
-HPDI(m12$value)
-
-#library(BayesianFirstAid); bayes.t.test(m1, m2) 
-#will give a similar, but fully Bayesian, result
-#requires JAGS.
-```
-
+2 keskväärtuse erinevus (ES = keskmine1 - keskmine2):
  
-
-**Bayesian bootstrap SD arvutamiseks.**
-
-When use.weights = FALSE it is important that the summary statistics does not change as a function of sample size. This is the case with the sample standard deviation, so here we have to implement a function calculating the population standard deviation.
-
-```{r eval=FALSE}
-pop.sd <- function(x) {
-  n <- length(x)
-  sd(x) * sqrt( (n - 1) / n)
-}
-
-b3 <- bayesboot(heights, pop.sd)
-summary(b3)
-```
-
-**A Bayesian bootstrap analysis of a correlation coefficient**
-```{r eval=FALSE}
-#Data comparing two methods of measuring blood flow.
-blood.flow <- data.frame(
-  dye = c(1.15, 1.7, 1.42, 1.38, 2.80, 4.7, 4.8, 1.41, 3.9),
-  efp = c(1.38, 1.72, 1.59, 1.47, 1.66, 3.45, 3.87, 1.31, 3.75))
-
-# Using the weighted correlation (corr) from the boot package.
-library(boot)
-b4 <- bayesboot(blood.flow, corr, R = 1000, use.weights = TRUE)
-plot(b4)
+```{r}
+set.seed(1)
+df <- tibble(a=rnorm(10), b=rnorm(10,1,1), c=a-b)
+m <- bayesboot(df$c, weighted.mean, use.weights = TRUE )
+plot(m, compVal=-1)
 
 ```
 
-**A Bayesian bootstrap analysis of lm coefficients** 
+
+BayesianFirstAid raamatukogu funktsioon bayes.t.test() annab t-jaotuse mudeliga täpselt sama vastuse. See raamatukogu eeldab JAGS mcmc sämpleri installeerimist. Abi saab siit https://github.com/rasmusab/bayesian_first_aid ja siit https://faculty.washington.edu/jmiyamot/p548/installing.jags.pdf
 
 ```{r eval=FALSE}
-# A custom function that returns the coefficients of
-# a weighted linear regression on the blood.flow data
-lm.coefs <- function(d, w) {
-  coef( lm(efp ~ dye, data = d, weights = w) )
-}
-
-b5 <- bayesboot(blood.flow, lm.coefs, R = 1000, use.weights = TRUE)
-plot(b5)
-
+library(BayesianFirstAid)
+a <- bayes.t.test(df$a, df$b)
+plot(a)
+a1 <- a$mcmc_samples
+a11 <- a1[[3]] %>% as.data.frame()
+mean(a11$mu_diff > -1)
 ```
 
-Bootstrappimine on väga hea meetod, mis sõltub väiksemast arvust eeldustest kui statistikas tavaks. Bootstrap ei eelda, et andmed on normaaljaotusega või mõne muu matemaatiliselt lihtsa jaotusega. Tema põhiline eeldus on, et valim peegeldab populatsiooni --- mis ei pruugi kehtida väikeste valimite korral ja kallutatud (mitte-juhuslike) valimite korral.
-
-####Parameetriline bootstrap
+### Parameetriline bootstrap
 
 Kui me arvame, et me teame, mis jaotusega on meie andmed, ja meil on suhteliselt vähe andmepunkte, võib olla mõistlik lisada bootstrapile andmete jaotuse mudel. Näiteks, meie USA presidentide pikkused võiksid olla umbkaudu normaaljaotusega (sest me teame, et USA meeste pikkused on seda). Seega fitime kõigepealt presidentide pikkusandmetega normaaljaotuse ja seejärel tõmbame bootsrap valimid sellest normaaljaotuse mudelist.
 Normaaljaotuse mudelil on 2 parameetrit: keskmine (mu) ja standardhälve (sigma), mida saame fittida valimiandmete põhjal:
@@ -326,16 +339,27 @@ ggplot(data = sample_means1, aes(x = Mean)) +
 HPDI(sample_means1$Mean)
 ```
 
-Võrdluseks, tavaline mitteparameetriline bootstrap annab vastuseks `HPDI(a1$Value)`
-```{r}
-HPDI(a1$Value)
+Üldiselt ei soovita me parameetrilist bootstrappi väga soojalt, sest täisbayesiaanlik alternatiiv, mida me kohe õppima asume, on sellest piisavalt paindlikum ja parem.
+
+```{r, fig.cap="Bootstrap eesmärgiga leida usalduspiirid keskväärtusele",fig.align='center',out.width=600, echo=FALSE}
+knitr::include_graphics("img/boot.pdf")
 ```
 
-Bootstrappimisel (nii parameetrilisel kui mitteparameetrilisel versioonil) on üks konseptuaalne puudus, mis on eriti tõsine väikeste valimite korral. Võtame oma näite USA presidentidest. Meie valimi liikmed on kõik presideerinud viimase 50 aasta jooksul, aga selle aja jooksul on inimeste keskmine pikkus jõudsalt kasvanud. Kui me tahame ennustada järgmise 50 aasta keskmist presidentide pikkust, peaksime selle faktiga arvestama. Aga bootstrap ei jäta meile sellist võimalust. Vähemalt mitte lihtsat. 
+### Bootstrappimine ei ole kogu tõde
 
-Siin tuleb appi Bayesi statistika oma täies hiilguses. Selles paradigmas ei arvesta me mitte ainult andmetega vaid ka taustateadmistega, sünteesides need kokku üheks posterioorseks jaotuseks ehk järeljaotuseks. Selle jaotuse arvutamine erineb bootstrapist, kuid tema tõlgendus ja praktiline töö sellega on samasugune. Erinevalt tavapärasest bootstrapist on Bayes parameetriline meetod, mis sõltub andmete modelleerimisest modeleerija poolt ette antud jaotustesse (normaaljaotus, t jaotus jne). Tegelikult peame me Bayesi arvutuseks modelleerima vähemalt kaks erinevat jaotust: andmete jaotus, mida me kutsume likelihoodiks ehk tõepäraks, ning eelneva teadmise mudel ehk prior, mida samuti modeleeritakse tõenäosusjaotusena.
+Bootstrappimine on võimas ja väga laia kasutusalaga meetodite kogum. Sellel on siiski üks oluline puudus. Nimelt arvestab bootstrap ainult andmetega ja ignoreerib taustateadmisi (parameetriline bootstrap küll eeldab taustateadmisetele tuginevalt jaotusmudelit, kuid ignoreerib kogu muud taustateadmist). Miks on see probleem?
 
-## 4.3. Bayesi põhimõte
+Mõtleme hetkeks sellele teadusliku meetodi osale, millel põhineb suuresti näiteks Darwini liikide tekkimise argument. See on nn *inference to the best explanation*, mille kohaselt on eelistatud see teooria, mis on parimas kooskõlas faktidega, ehk mille kehtimise korral on meie andmete esinemine kõige tõenäolisem. Kui mõni hüpotees omistab andmete esinemisele suure tõenäosuse, siis me ütleme tehnilises keeles, et see hüpotees on **tõepärane** (*has high likelihood*). Esmapilgul tundub see kõik igati mõistlik, kuid proovime lihtsat mõtteeksperimenti. Selles juhtub nii, et loteriil võidab peaauhinna meile tundmatu kodanik Franz K. Meil on selle fakti (ehk nende andmete) seletamiseks kaks teooriat: 1. Franz K. võit oli juhuslik (loterii oli aus ja keegi peab ju võitma) ja 2. Franz K. vanem õde võltsis loterii tulemusi oma venna kasuks. Teine teooria sobib andmetega palju paremini kui esimene (sest kuigi keegi peab võitma, Franz K. võiduvõimalus oli väga väike); aga ometi eelistab enamus mõistlikke inimesi esimest teooriat. Põhjus on selles, et meil pole iseenesest mingit alust arvata, et Franz K.-l üldse on noorem õde, või et see õde omaks ligipääsu loteriile. Kui me aga saame teada, et Franz K. noorem õde tõesti korraldab loteriid, siis leiame kohe, et asi on kahtlane. 
+
+Siit näeme, et lisaks tõepärale on selleks, et me usuksime mõne teooria kehtimisse, vaja veel, et see teooria oleks piisavalt tõenäoline meie taustateadmiste valguses. Bayesi teoreem ei tee muud, kui kvantifitseerib teooria kehtimise posterioorse tõenäosuse (järeltõenäosuse), kasutades selleks meie eelteadmiste ja tõepära kvantitatiivseid mudeleid. 
+Seega, Bayesi paradigmas ei arvesta me mitte ainult andmetega, vaid ka taustateadmistega, sünteesides need kokku üheks posterioorseks jaotuseks ehk järeljaotuseks. Selle jaotuse arvutamine erineb bootstrapist, kuid tema tõlgendus ja praktiline töö sellega on samasugune. Erinevalt tavapärasest bootstrapist on Bayes parameetriline meetod, mis sõltub andmete modelleerimisest modeleerija poolt ette antud jaotustesse (normaaljaotus, t jaotus jne). Tegelikult peame me Bayesi arvutuseks modelleerima vähemalt kaks erinevat jaotust: andmete jaotus, mida me kutsume likelihoodiks ehk tõepäraks, ning eelneva teadmise mudel ehk prior, mida samuti modeleeritakse tõenäosusjaotusena.
+
+> Bootstrapil (tavalisel ja Bayesi versioonil) on mõned imelikud formaalsed eeldused:
+1. väärtused, mis ei esine valimiandmetes, on võimatud, 2. Väärtused, mis esinevad väljaspool valimi väärtuste vahemikku, on võimatud, 3. andmetes ei esine ajasõltuvusi ega hierarhilisi struktuure. Nendest puudustest hoolimata kasutatakse bootstrappimist laialt ja edukalt --- eelkõige tema lihtsuse ja paindlikuse tõttu. Küll aga tähendavad eelnimetatud puudused, et bootstrap on harva parim meetod teie ülesande lahendamiseks. 
+
+Ehkki bootstrappimine ei arvesta taustateadmistega, ei tee seda olulisel määral ka paljud Bayesi mudelid (mudeldaja vaba valiku tõttu, mitte selle pärast, et mudel ei suudaks taustainfot inkorporeerida). Bayesi meetodite väljatöötajad ei tea sageli ette, milliste teaduslike probleemide lahendamiseks nende mudeleid hakatakse kasutama, ja seega ei kirjuta nad mudelisse ka väga ranget eelteadmist. Nende mudelite teadlastest kasutajad lepivad sageli selllega ja lasevad oma mudelite kaudu "andmetel kõneleda" enam-vähem sellistena, nagu need juhtuvad olema. Sellist lähenemist ei saa alati hukka mõista, sest vahest ei olegi meil palju eelteadmisi oma probleemi kohta, küll aga tuleb mainida, et sellistel juhtudel annab bootstrappimine sageli lihtsama vaevaga väga sarnase tulemuse, kui Bayesi täismäng. 
+
+## Bayesi põhimõte
 
 Bayesi arvutuseks on meil vaja teada
 
@@ -355,7 +379,7 @@ Me teame juba pool sajandit, et Bayesi teoreem on sellisele ülesandele parim v�
 
 Alustame siiski lihtsa näitega, mida saab käsitsi läbi arvutada.
 
-###1. näide
+### 1. näide
 
 Me teame, et suremus haigusesse on 50% ja meil on palatis 3 patsienti, kes seda haigust põevad. Seega on meil kaks andmetükki (50% ja n=3). Küsimus: mitu meie patsienti oodatavalt hinge heidavad? Eeldusel, et meie patsiendid on iseseisvad (näiteks ei ole sugulased), on meil tüüpiline mündiviske olukord.
 
@@ -484,7 +508,7 @@ Nüüd on meil posterioorne tõenäosusfunktsioon, mis summeerub 1-le ja mis sis
 > Alati on kasulik plottida kõik kolm funktsiooni (tõepära, prior ja posteerior).
 
 
-####Kui n=1
+#### Kui n=1
 
 Bayes on lahe sest tema hinnangud väiksele N-le on loogiliselt sama pädevad kui suurele N-le. See ei ole nii klassikalises sageduslikus statistikas, kus paljud testid on välja töötatud N = Inf eeldusel ja töötavad halvasti väikeste valimitega.
 
@@ -592,7 +616,7 @@ plot( x = p_grid , y = posterior2 , type="b" ,
 ```
 3. patsient jäi ellu. Nüüd on posteeriori tipp mitte 75% juures nagu ennist, vaid kuskil 50% juures --- tänu priorile.
 
-## 4.4. Mudelite keel
+## Mudelite keel
 
 Siin vaatame kuidas kirjeldada mudelit nii, et masin selle ära tunneb. Meie mudelid töötavad läbi rethinking() paketi. See raamatukogu pakub kaks võimalust, kuidas mudelit arvutada, mis mõlemad kasutavad sama notatsiooni. Mõlemad võimalused arvutavad posteeriori mitte Bayesi teoreemi kasutades (nagu me ennist tegime), vaid kasutades stohhastilisi meetodeid, mis iseloomustavad posteeriori umbkaudu (aga piisavalt täpselt). Põhjuseks on, et keerulisemate mudelite korral on Bayesi teoreemi kasutamine liialt arvutusmahukas. 
 
@@ -657,7 +681,7 @@ HPDI(samples$p, prob = 0.95) #highest density 95% at the center
 
 10 korda rohkem andmeid: nüüd on suremus määratud kuskile 57% ja 77% vahele (suure tõenäosusega)
 
-## 4.5. beta prior 
+## beta prior 
 
 Nüüd anname sisse mõistlikuma struktuuriga priori: beta-jaotuse
 
@@ -727,14 +751,14 @@ HPDI(samples$p, prob = 0.95) #highest density 95% at the center
 
 Nagu näha on ka kitsa priori mõju üsna väika, isegi kui kui n=9.
 
-## 4.6. Lõpetuseks veel prioritest üldiselt. 
+## Lõpetuseks veel prioritest üldiselt. 
 
 Neid võib jagada kolmeks: mitteinformatiivsed, väheinformatiivsed ehk "regularizing" ja informatiivsed. 
 
 Mitteinformatiivseid prioreid ei ole sisuliselt olemas ja neid on soovitav vältida. Sageli kutsutakse tasaseid prioreid mitteinformatiivseteks. Neil on vähemalt 2 puudust. Tasane prior, mis ulatub lõpmatusse, on tehniliselt "improper", sest tema alune pindala ei summeeru ühele. Ja teiseks muudavad sellised priorid mcmc ahelad vähem efektiivseteks, mis võib teie arvutuse kihva keerata. 
 
-Väheinformatiivsed priorid kujutavad endast kompromissi: nad muudavad võimalikult vähe tõepärafunktsiooni kuju, aga samas piiravad seda osa parameetriruumist, kust MCMC ahelad posteeriori otsivad (mis on arvutuslikult soodne). Nende taga on filosoofiline eeldus, et teadlast huvitavad eelkõige tema enda andmed ja see, mida need ühe või teise hüpoteesi (parameetri väärtuse) kohta ütlevad. See eeldus on vaieldav aga kui selle järgi käia, siis kulub vähem mõttejõudu eelteadmiste mudelisse formaliseerimiseks. 
+Väheinformatiivsed priorid kujutavad endast kompromissi: nad muudavad võimalikult vähe tõepärafunktsiooni kuju, aga samas piiravad seda osa parameetriruumist, kust MCMC ahelad posteeriori otsivad (mis on soodne arvutuslikult). Nende priorite taga on filosoofiline eeldus, et teadlast huvitavad eelkõige tema enda andmed ja see, mida need ühe või teise hüpoteesi (parameetri väärtuse) kohta ütlevad. See eeldus on vaieldav, aga kui selle järgi käia, siis kulub vähem mõttejõudu eelteadmiste mudelisse formaliseerimiseks. 
 
-Vähemalt suured farmaatsiafirmad seda hoiakut ei jaga ja kulutavad usinalt oma miljoneid korralike informatiivsete priorite tootmiseks. Selles protsessis saavad kokku statistikud, teaduseksperdid ja psühholoogid, et inimkonna teadmisi võimalikult adekvaatselt vormida tõenäosusjaotustesse. Meie töötame siin siiski enamasti väheinformatiivsete prioritega, mis on hetkel moes. Aga teile oma teaduses soovitan siiralt arendada informatiivseid prioreid. Vähemalt nõnda toimides te mõtlete oma teaduse üle põhjalikult järele. 
+Vähemalt suured farmaatsiafirmad seda hoiakut ei jaga ja kulutavad oma miljoneid informatiivsete priorite tootmiseks. Selles protsessis saavad kokku statistikud, teaduseksperdid ja psühholoogid, et inimkonna teadmisi võimalikult adekvaatselt vormida tõenäosusjaotustesse. Meie töötame siiski enamasti väheinformatiivsete prioritega. 
 
 
