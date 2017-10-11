@@ -711,22 +711,22 @@ Kuus patsienti üheksast surid ja nüüd me usume, et tegelik suremus võib olla
 m2 <- map(
     alist(
         dead ~ dbinom(90, p),  # Binomial likelihood
-        p ~ dunif(0,1)     # Uniform prior
-), data=list(dead=60) )
+        p ~ dunif(0, 1)     # Uniform prior
+), data = list(dead = 60))
 # Display summary of quadratic approximation
 precis(m2)
 ```
 
 ```{r}
-samples<-extract.samples(m2)
+samples <- extract.samples(m2)
 dens(samples$p)
-#PI(samples$p, prob = 0.95) #leaves out equal 2.5% at both sides
-HPDI(samples$p, prob = 0.95) #highest density 95% at the center
+#PI(samples$p, prob = 0.95) # Leaves out equal 2.5% at both sides
+HPDI(samples$p, prob = 0.95) # Highest density 95% at the center
 ```
 
 10 korda rohkem andmeid: nüüd on suremus määratud kuskile 57% ja 77% vahele (suure tõenäosusega)
 
-## beta prior 
+## Beta prior 
 
 Nüüd anname sisse mõistlikuma struktuuriga priori: beta-jaotuse
 
@@ -735,6 +735,8 @@ Beta-prior katab vahemiku 0st 1ni ja sellel on 2 parameetrit, a ja b.
 Siin mõned näited erinevatest beta parametriseeringutest
 ```{r}
 x <- seq(0, 1, length = 1000)
+def.par <- par(no.readonly = TRUE)
+par(mfrow = c(2, 4))
 plot(x, dbeta(x, 0.2, 0.2))
 plot(x, dbeta(x, 1, 0.2))
 plot(x, dbeta(x, 1, 1))
@@ -743,6 +745,7 @@ plot(x, dbeta(x, 4, 1))
 plot(x, dbeta(x, 2, 2))
 plot(x, dbeta(x, 4, 4))
 plot(x, dbeta(x, 200, 100))
+par(def.par)
 ```
 
  beta(θ | a, b) jaotuse keskväärtus on 
@@ -776,25 +779,24 @@ Me võime κ-le omistada väärtuse nagu see oleks mündivisete arv, mis iseloom
 
 
 ```{r}
-library(rethinking)
 m3 <- map(
     alist(
-        dead ~ dbinom(9,p) ,  # binomial likelihood
-        p ~ dbeta(200,100)     # beta prior
+        dead ~ dbinom(9, p),  # Binomial likelihood
+        p ~ dbeta(200, 100) # Beta prior
 ), data=list(dead=6) )
-# display summary of quadratic approximation
-precis( m3 )
 
+# Display summary of quadratic approximation
+precis( m3 )
 ```
 
 
 ```{r}
-samples<-extract.samples(m3)
+samples <- extract.samples(m3)
 dens(samples$p)
 HPDI(samples$p, prob = 0.95) #highest density 95% at the center
 ```
 
-Nagu näha on ka kitsa priori mõju üsna väika, isegi kui kui n=9.
+Nagu näha on ka kitsa priori mõju üsna väika, isegi kui kui n = 9.
 
 ## Lõpetuseks veel prioritest üldiselt. 
 
@@ -804,6 +806,4 @@ Mitteinformatiivseid prioreid ei ole sisuliselt olemas ja neid on soovitav vält
 
 Väheinformatiivsed priorid kujutavad endast kompromissi: nad muudavad võimalikult vähe tõepärafunktsiooni kuju, aga samas piiravad seda osa parameetriruumist, kust MCMC ahelad posteeriori otsivad (mis on soodne arvutuslikult). Nende priorite taga on filosoofiline eeldus, et teadlast huvitavad eelkõige tema enda andmed ja see, mida need ühe või teise hüpoteesi (parameetri väärtuse) kohta ütlevad. See eeldus on vaieldav, aga kui selle järgi käia, siis kulub vähem mõttejõudu eelteadmiste mudelisse formaliseerimiseks. 
 
-Vähemalt suured farmaatsiafirmad seda hoiakut ei jaga ja kulutavad oma miljoneid informatiivsete priorite tootmiseks. Selles protsessis saavad kokku statistikud, teaduseksperdid ja psühholoogid, et inimkonna teadmisi võimalikult adekvaatselt vormida tõenäosusjaotustesse. Meie töötame siiski enamasti väheinformatiivsete prioritega. 
-
-
+Vähemalt suured farmaatsiafirmad seda hoiakut ei jaga ja kulutavad oma miljoneid informatiivsete priorite tootmiseks. Selles protsessis saavad kokku statistikud, teaduseksperdid ja psühholoogid, et inimkonna teadmisi võimalikult adekvaatselt vormida tõenäosusjaotustesse. Meie töötame siiski enamasti väheinformatiivsete prioritega.
