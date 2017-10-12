@@ -72,15 +72,17 @@ Me anname siin 9 tuletust ilma tõestuskäikudeta, mis on aga lihtsad. Siin või
 
 9. punktis 6 tuleneb Bayesi teoreem: $P(A | B) = P(A)P(B | A)/P(B)$, kus $P(B) = P(A)P(B  A) + P(notA)P(B  notA)$  
 
+Bayesi teoreemi kasutatakse sageli määramaks hüpoteesi tõenäosuse pärast uute faktide (andmete) lisandumist olemasolevatele teadmistele. 
 Kui A on H~1~ ning mitte-A on ammendav ja välistav H~2~ ja B tähistab andmeid (data), saame Bayesi teoreemi ümber kirjutada 
 
-$P(H1 | data) = ( P(H1)P(data | H1) )/( P(H1)P(data | H1) + P(H2)P(data | H2) )$
+$P(H1 | data) =  P(H1)P(data | H1) /( P(H1)P(data | H1) + P(H2)P(data | H2) )$
 
-*P(H~1~ | data)* on *H~1~* kehtimise tõenäosus meie andmete korral, ehk posteerior, 
+*P(H~1~ | data)* on *H~1~* kehtimise tõenäosus meie andmete korral -- ehk posteerior, 
 
-*P(H~1~)* on *H~1~* kehtimise eelnev, ehk meie andmetest sõltumatu, tõenäosus, ehk prior, 
+*P(H~1~)* on *H~1~* kehtimise eelnev, ehk meie andmetest sõltumatu, tõenäosus -- ehk prior, 
 
-*P(data | H~1~)* on andmete esinemise tõenäosus tingimusel, et H~1~ kehtib, ehk tõepära. 
+*P(data | H~1~)* on andmete esinemise tõenäosus tingimusel, et H~1~ kehtib -- ehk tõepära. 
+
 
 Jagamistehe tehakse ainult selle pärast, et normaliseerida 1-le kõikide hüpoteeside tõenäosuste summa meie andmete korral ja seega viia posteerior vastavusse tõenäosusteooria aksioomidega --- kui meil on i ammendavat üksteist välistavat hüpoteesi, siis murrujoone alla läheb: *sum( P(data | H~i~)P(H~i~) ) = 1*. Bayesi teoreem on triviaalne tuletus tõenäosusteooria aksioomidest, milles pole mitte midagi maagilist. See ei ole automaatne meetod, mis tagaks inimkonna teadmiste kasvu, vaid lihtsalt parim võimalik viis andmemudeli ja taustateadmiste mudeli ühendamiseks ja normaliseerimiseks tinglikuks tõenäosuseks (hüpoteesi tõenäosus meie andmete ja taustateadmiste korral). Nüüd sõltub kõik mudelite, andmete ja taustateadmiste kvaliteedist.
 
@@ -100,7 +102,7 @@ Kui me mõõdame pidevat suurust, näiteks inimeste pikkusi, siis saame arvutuse
  
  2. statistilise analüüsi kvaliteet sõltub andmete hulgast. Kui kahe mündiviske asemel teeksime kakskümmend, siis saaksime samade eelduste põhjal teha oluliselt täpsemaid järeldusi mündi aususe kohta. 
 
- 3. statistilise analüüsi kvaliteet sõltub andmete  kvaliteedist. Kui münt on aus, aga me viskame seda ebaausalt, siis, mida rohkem arv kordi me seda teeme, seda tugevamalt usub teadusüldsus selle tagajärjel millegisse, mis pole tõsi.
+ 3. statistilise analüüsi kvaliteet sõltub andmete  kvaliteedist. Kui münt on aus, aga me viskame seda ebaausalt, siis, mida rohkem arv kordi me seda teeme, seda tugevamalt usub teadusüldsus selle tagajärjel millessegi, mis pole tõsi.
 
  4. statistilise analüüsi kvaliteet sõltub taustateadmiste kvaliteedist. Napid taustateadmised ei võimalda parandada andmete põhjal tehtud järeldusi juhul, kui andmed mingil põhjusel ei vasta tegelikkusele. Adekvaatsete taustateadmiste lisamine mudelisse aitab vältida mudelite üle-fittimist.
 
