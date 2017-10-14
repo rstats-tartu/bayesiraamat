@@ -760,34 +760,31 @@ plot(x, dbeta(x, 200, 100))
 par(def.par)
 ```
 
- beta(θ | a, b) jaotuse keskväärtus on 
+ *beta(θ | a, b)* jaotuse keskväärtus on 
  
- *μ = a/(a + b)* 
+ $μ = a/(a + b)$ 
  
 ja mood on 
 
-*ω = (a − 1)/(a + b − 2)* (juhul kui *a > 1* ja *b > 1*). 
+$ω = (a − 1)/(a + b − 2)$ (kui $a > 1$ ja $b > 1$). 
 
-Seega, kui a=b, siis on keskmine ja mood 0.5. Kui a > b, on keskmine ja mood > 0.5 ja kuid a < b, on mõlemad < 0.5. 
+Seega, kui a = b, siis on keskmine ja mood 0.5. Kui a > b, on keskmine ja mood > 0.5 ja kuid a < b, on mõlemad < 0.5. 
 
-Beta jaotuse "laiuse" annab "konsentratsioon" *κ = a + b*. 
+Beta jaotuse "laiuse" annab "konsentratsioon" $κ = a + b$. 
 Mida suurem κ, seda kitsam jaotus.
 
-*a = μκ*  
+$a = μκ$  
 
-*b = (1 − μ)κ*
+$b = (1 − μ)κ$
 
-*a = ω(κ − 2) + 1* 
+$a = ω(κ − 2) + 1$
 
-*b = (1 − ω)(κ − 2) + 1* for *κ > 2* 
+$b = (1 − ω)(κ − 2) + 1$ kui $κ > 2$ 
 
 Me võime κ-le omistada väärtuse nagu see oleks mündivisete arv, mis iseloomustab meie priori tugevust (juhul kui tõepära funktsioon tuleb andmetest, mis koosnevad selle sama mündi visetest). Kui meie jaoks piisaks ainult mõnest mündiviset, et priorist (eelnevast teadmisest) lahti ütelda, peaks meie prior sisaldama väikest kappat. 
 
-    Näiteks, mu prior on, et münt on aus (μ = 0.5; a = b), aga ma ei ole selles väga kindel. 
-    Niisiis ma arvan, et selle eelteadmise kaal võrdub sellega, kui ma oleksin näinud 8 mündiviske tulemust. 
-    Seega κ = 8, mis tähendab, et a = μκ = 4 and b = (1 − μ)κ = 4. 
-    Aga mis siis kui me tahame beta priorit, mille mood ω = 0.8 ja κ = 12? 
-    Siis saame valemist, et a = 9 ja b = 3. 
+  Näiteks, mu prior on, et münt on aus ($μ = 0.5$; $a = b$), aga ma ei ole selles väga veendunud. Niisiis ma arvan, et selle eelteadmise kaal võrdub sellega, kui ma oleksin näinud 8 mündiviske tulemust. Seega $κ = 8$, mis tähendab, et $a = μκ = 4$ ja $b = (1 − μ)κ = 4$. 
+Aga mis siis kui me tahame beta priorit, mille mood $ω = 0.8$ ja $κ = 12$? Siis saame valemist, et $a = 9$ ja $b = 3$. 
 
 
 ```{r}
