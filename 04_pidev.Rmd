@@ -29,7 +29,31 @@ Selline on täismudeli (tõepära ja priorid) struktuur:
 
 
 
-Tõepära on siin modeleeritud normaaljaotusena, milles on 2 tuunitavat parameetrit: mu (keskmine) ja sigma (standardhälve). Pelgalt nende kahe parameetri fikseerimine annab meile unikaalse normaaljaotuse. See, et keskmise pikkuse prior on tsentreeritud nullile viib õige pisukesele (nõnda laia priori juures küll pigem märkamatule) mu hinnangu nihkumisele nulli suunas. Selle nihke õigustus on püüd vältida mudeli üle-fittimist ehk teisisõnu ülespoole kallutatud hinnangut keskmisele pikkusele. Sama hästi võiksime kasutada ka priorit *mu ~ dnorm( mean = 178, sd = 20 )*, kus 178 on ameerika meeste keskmine pikkus.    
+Tõepära on siin modeleeritud normaaljaotusena, milles on 2 tuunitavat parameetrit: mu (keskmine) ja sigma (standardhälve). Pelgalt nende kahe parameetri fikseerimine annab meile unikaalse normaaljaotuse. See, et keskmise pikkuse prior on tsentreeritud nullile viib õige pisukesele (nõnda laia priori juures küll pigem märkamatule) mu hinnangu nihkumisele nulli suunas. Selle nihke õigustus on püüd vältida mudeli üle-fittimist ehk teisisõnu ülespoole kallutatud hinnangut keskmisele pikkusele. Sama hästi võiksime kasutada ka priorit *mu ~ dnorm( mean = 178, sd = 10 )*, kus 178 on ameerika meeste keskmine pikkus. 
+
+
+Alati tasub mudeli priorid välja plottida, et veenduda, et nad tõesti kajastavad meile taustateadmisi ja on sobivas parameetrivahemikus (bayesi programmide default priorid on sageli kas liiga laiad või vastupidi eeldavad, et parameetriväärtused jäävad alla 10 ühiku).
+
+```{r}
+x <- 0:100
+y <- dcauchy(x, 0 , 20)
+plot(y~x, type="l",main="cauchy prior for sd")
+```
+
+```{r}
+x <- 150:200
+y <- dnorm(x, 0, 200)
+plot(y~x, type="l",main="normal prior for mu")
+```
+
+
+```{r}
+x <- 150:200
+y <- dnorm(x, 178, 10)
+plot(y~x, type="l",main="another normal prior for mu")
+```
+
+Siin on valida kahe priori vahel mu-le. Võib-olla eelistaksid sina mõnda kolmandat? Kui jah, siis pole muud kui tee valmis ja kasuta!
 
 Sama hästi võiksime tõepära modelleerida ka mõne muu jaotusega (Studenti t jaotus, eksponentsiaalne jaotus, lognormaaljaotus jne). Sel juhul oleksid meil erinevad parameetrid, mida tuunida, aga põhimõte on sama. Bayes on modulaarne --- kui sa põhimõtet tead, pole tehniliselt suurt vahet, millist mudelit soovid kasutada.
 
@@ -47,7 +71,7 @@ näiteks:
 
 Normaaljaotusel on 2 parameetrit, millele posteerior arvutada: mu (mean) ja sigma (sd). Seega on vaja ka kahte priorit, üks mu-le ja teine sigma-le. Studenti t jaotuse korral lisandub veel üks parameeter: nu ehk jaotuse kuju määrav parameeter. nu-d saab tuunida 1 ja lõpmatuse vahel. Mida väiksem on nu, seda paksemad tulevad jaotuse sabad. Kui nu on suur, siis on t jaotuse kuju sama, mis normaaljaotusel. Siin andsime nu-le tasase priori 1 ja 100 vahel, hiljem proovime ka teisi prioreid nu-le.   
 
-  Studenti t jaotus on põnev alternatiiv normaaljaotusele sest see on vähem tundlik outlieritele. Kuna normaaljaotus langeb servades väga kiiresti siis, kui meil on mõni andmepunkt, mis jääb jaotuse tipust kaugele, on ainus võimalus selle punkti normaaljaotuse alla mahutamiseks omistada jaotusele väga suur standardhälve. See muudab outlierit sisaldava normaaljaotuse ülemäära laiaks, mis viib analüüsis asjatult kaotatud efektidele. 
+  Studenti t jaotus on põnev alternatiiv normaaljaotusele, sest see on vähem tundlik outlieritele. Kuna normaaljaotus langeb servades väga kiiresti siis, kui meil on mõni andmepunkt, mis jääb jaotuse tipust kaugele, on ainus võimalus selle punkti normaaljaotuse alla mahutamiseks omistada jaotusele väga suur standardhälve. See muudab outlierit sisaldava normaaljaotuse ülemäära laiaks, mis viib analüüsis asjatult kaotatud efektidele. 
 Seevastu t jaotuse sabasid saab nu abil üles-alla liigutada vastavalt sellele, kas andmed sisaldavad outliereid (selleks tuleb lihtsalt fittida nu parameeter andmete põhjal).  
     Outlierid toovad meile paksema sabaga jaotuse, mis tipu ümber ei lähe aga kaugeltki nii laiaks, kui samade andmetega fititud normaaljaotus.
     
@@ -63,14 +87,13 @@ Proovime mudeldada simuleeritud andmete keskväärtust.
 
 ```{r}
 set.seed(1)
-a <- rnorm(20) # expected mean = 0, sd = 1
+a <- rnorm(20, mean = 0, sd = 1) # expected mean = 0, sd = 1
 b <- c(a, 5, 9) # plus 2 outliers
 mean(a); sd(a)
 mean(b); sd(b)
 ```
 
-Siin kasutame andmeid, mille keskväärtus on 0.19 ja sd = 0.91 ja millele on lisatud kaks outlierit (3 ja 9). Proovime neid andmeid mudeldada normaaljaotusega tõepäramudeliga ja seejärel üle studenti t jaotuse. Me fitime 4 mudelit, neist 3 koos outlieritega. Mudeli fittimine käib nii, et mcmc ahelad sammuvad parameetriruumis ja iga samm annab meile ühe väärtuse posteeriorist. Defaultina on meil üks ahel, mis teeb 1000 sammu (seda saab muidugi muuta. vt ?map2stan). Kuna ahelad veedavad rohkem aega seal, kus posterioorne tõenäosuspilv on tihedam, siis saab salvestatud numbrite histogrammist posterioorse jaotuse kuju. Veelgi enam, selle asemel, et tegeleda posterioorsete jaotuste matemaatilise analüüsiga (integreerimisega) võime analüüsida oma mcmc sämpleid otse, mis tähendab, et kõrgema matemaatika asemel vajame 2. klassi aritmeetikat.
-
+Siin kasutame andmeid, mille keskväärtus on 0.19 ja sd = 0.91 ja millele on lisatud kaks outlierit (3 ja 9). Proovime neid andmeid mudeldada normaaljaotusega tõepäramudeliga ja seejärel üle studenti t jaotuse. Me fitime 4 mudelit, neist 3 koos outlieritega. Mudeli fittimine käib nii, et mcmc ahelad sammuvad parameetriruumis ja iga samm annab meile ühe juhusliku väärtuse posteeriorist. Defaultina on meil üks ahel, mis teeb 1000 sammu (seda saab muuta: vt ?map2stan). Kuna ahelad veedavad rohkem aega seal, kus posterioorne tõenäosuspilv on tihedam, siis saab nõnda sämplitud posteeriori juhuvalimi histogrammist posterioorse jaotuse kuju. Veelgi enam, selle asemel, et tegeleda posterioorsete jaotuste matemaatilise analüüsiga (integreerimisega) võime analüüsida oma mcmc sämpleid otse, mis tähendab, et kõrgema matemaatika asemel vajame 2. klassi aritmeetikat.
 
 Kõigepealt ilma outlieriteta mudel normaalse tõepärafuktsiooniga. Me kasutame sd priorina pool-Cauchy jaotust, mille tipp on 0 kohal ja millel on piisavalt paks saba suuremate numbrite poole. See on väheinformatiivne prior, mis on nähtud sd-de puhul mcmc algoritmides hästi töötavat. Andmed võime map2stan() funktsiooni sisestada nii listina kui data.frame-na (aga mitte tibble kujul). 
 
@@ -104,7 +127,7 @@ m2 <- map2stan(
     ), 
   data = list( y = b ), 
   constraints = list( nu = "lower=1" ), 
-  start = list( mu=mean( b ), sigma=sd( b ), nu=10 ), 
+  start = list( mu = mean( b ), sigma = sd( b ), nu = 10 ), 
   cores=4, 
   chains = 4 
 )
@@ -119,7 +142,9 @@ m3 <- map2stan(
     mu ~ dnorm( 0, 5 ), 
     sigma ~ dcauchy( 0, 1 )  
   ), 
-  data = list( y = b ), start = list ( mu=mean( b ), sigma=sd( b ) ) )
+  data = list( y = b ), 
+  start = list ( mu = mean( b ), sigma = sd( b ) ) 
+  )
 ```
 
 Esimene asi, mida tuleks fititud mudeliga teha, on vaadata, kas ahelad konvergeerusid:
@@ -128,15 +153,15 @@ Esimene asi, mida tuleks fititud mudeliga teha, on vaadata, kas ahelad konvergee
 plot(m2)
 ```
 
-Pildilt on näha, et neli ahelat (4 värvi) on hästi konvergeerunud. Hall ala on nn warmup ala, mille tulemusi ei salvestata. Muidu astub iga ahel sammu kaupa ja iga edukas samm salvestatakse ühe posteeriori väärtusena. Ahel sämplib korraga mu, sigma ja nu väärtusi n-mõõtmelises ruumis (n = mudeli parameetrite arv), mis tähendab, et ahela iga samm salvestatakse n kõrvuti numbrina. Kui näit sigma kõrgema väärtusega kaasneb keskeltäbi kõrgem (või madalam) mu väärtus, on sigma ja mu omavahel korreleeritud. 
+Pildilt on näha, et neli ahelat (4 värvi) on hästi konvergeerunud. Hall ala on nn warmup ala, mille tulemusi ei salvestata. Muidu astub iga ahel sammu kaupa ja iga edukas samm salvestatakse ühe posteeriori väärtusena. Ahel sämplib korraga mu, sigma ja nu väärtusi n-mõõtmelises ruumis (n = mudeli parameetrite arv), mis tähendab, et ahela iga samm salvestatakse n kõrvuti numbrina. 
 
-Et kontrollida parameetrite posterioorsete väärtuste korrelatsioone:
+Kui näit sigma kõrgema väärtusega kaasneb keskeltäbi kõrgem (või madalam) mu väärtus, on sigma ja mu omavahel korreleeritud. Et kontrollida parameetrite posterioorsete väärtuste korrelatsioone:
 
 ```{r}
 pairs(m2)
 ```
 
-Normaaljaotus on selle poolest eriline, et tema parameetrid mu ja sigma ei ole korreleeritud. Paljud teised mudelid ei ole nii lahked. Siin on meil mõõdukas korrelatsioon nu ja sigma vahel. See on igati loogiline ja ei sega meie arvutust.
+Normaaljaotus on selle poolest eriline, et tema parameetrid mu ja sigma ei ole korreleeritud. Paljud teised mudelid ei ole nii lahked. Siin on meil mõõdukas korrelatsioon nu ja sigma vahel. See on igati loogiline ja ei häiri meid.
 
 
 Järgmiseks tasub heita kiire pilk fititud mudeli parameetritele
@@ -150,11 +175,11 @@ precis(m2)
 
 #### MCMC ahelate kvaliteet
 
-Kui Rhat on 1, siis see tähendab, et MCMC ahelad on ilusti jooksnud ja posteeriori sämplinud. Kui Rhat > 1.1, siis on kuri karjas. Suur Rhat viitab, et ahel(ad) pole jõudnud konvergeeruda. Aitab see, kui pikendada warm-up perioodi (näiteks: map2stan(..., iter= 3000, warmup=2000) pikendab warm-upi 2 korda). 
+Kui Rhat on 1, siis see tähendab, et MCMC ahelad on ilusti jooksnud ja posteeriori sämplinud. Kui Rhat > 1.1, siis on kuri karjas. Suur Rhat viitab, et ahel(ad) pole jõudnud konvergeeruda. Aitab, kui pikendada warm-up perioodi (map2stan(..., iter= 3000, warmup=2000) pikendab warm-upi 2 korda). 
 
 n_eff on efektiivne valimi suurus, mis ei tohi olla väga väike. Kui n_eff on palju väiksem kui jooksutatud markovi ahela pikkus (iga ahel on defaultina 1000 iteratsiooni pikk), on ahel jooksnud ebaefektiivselt. See ei tähenda tingimata, et posteerior vale oleks.
 
-Kui plotitud ahelad omavad pikki sirgeid lõike (n_eff tuleb siis väga madal), kus ahel ei ole töötanud, siis see rikub korralikult posteeriori. Tüüpiliselt aitavad selle vastu nõrgalt informatiivsed priorid --- priorite õige valik on sama palju arvutuslik vajadus kui taustainfo lisamine. Igal juhul tuleb vältida aladefineeritud tasaseid prioreid, mis võimaldavad ahelatel sämplida lõpmatust ja sel viisil õige tee kaotada. Peale selle, tasased priorid, mis ütlevad, et kõik parameetri väärtused on võrdselt tõenäolised, kajastavad harva meie tegelikke taustateadmisi.
+Kui plotitud ahelad omavad pikki sirgeid lõike (n_eff tuleb siis väga madal), kus ahel ei ole töötanud, siis see rikub korralikult posteeriori. Tüüpiliselt aitavad nõrgalt informatiivsed priorid --- priorite õige valik on sama palju arvutuslik vajadus kui taustainfo lisamine. Igal juhul tuleb vältida aladefineeritud tasaseid prioreid, mis võimaldavad ahelatel sämplida lõpmatust ja sel viisil õige tee kaotada. Peale selle, tasased priorid, mis ütlevad, et kõik parameetri väärtused on võrdselt tõenäolised, kajastavad harva meie tegelikke taustateadmisi.
 
 #############################
 #############################
@@ -167,24 +192,24 @@ Ilusamad parameetriplotid saab *bayesplot* raamatukogust.
 Esiteks usalduspiirid:
 ```{r}
 library(bayesplot)
-fit2d <- as.data.frame(m2@stanfit)
-par <- names(fit2d)
+fit2d <- as.data.frame( m2@stanfit )
+par <- names( fit2d )
 
 # inner interval = 50% CI and outer interval = 95% CI.
-mcmc_intervals(fit2d, pars = par[1:3], prob = 0.5, prob_outer = 0.90) # with pars we remov theed last parameter lp_
+mcmc_intervals( fit2d, pars = par[1:3], prob = 0.5, prob_outer = 0.90 ) # with pars we remov theed last parameter lp_
 ```
 
 Ja teiseks täis posteeriorid
 ```{r}
-mcmc_areas(fit2d, pars = pars[1:2], prob = 0.8)
+mcmc_areas( fit2d, pars = pars[1:2], prob = 0.8 )
 ```
 
 
-Funktsiooniga `extract.samples()` saame koos sämplitud parameetrite numbrid kõrvuti tabeli rea kaupa. 
+Funktsiooniga `extract.samples()` saame koos sämplitud parameetrite numbrid kõrvuti (rea kaupa) tabelisse. 
 
 ```{r}
-s1 <- extract.samples(m2) %>% as.data.frame() 
-str(s1)
+s1 <- extract.samples( m2 ) %>% as.data.frame() 
+str( s1 )
 ```
 
 Sellest tabelist võib arvutada posteerioreid ka uutele "väljamõeldud" parameetritele. Näiteks arvutame posteeriori CV-le:
@@ -199,7 +224,7 @@ ggplot( s1, aes( CV ) ) +
 Kuna posteerior iseloomustab meie teadmiste piire, siis võime selle abil küsida, kui suure tõenäosusega jääb tõeline mu näiteks parameetrivahemikku 2 kuni 5?
 
 ```{r}
-filter(s1, between(CV, 2, 5)) %>% nrow/nrow(s1)
+filter( s1, between( CV, 2, 5 ) ) %>% nrow/nrow( s1 )
 ```
 
 Vastus on, et me arvame 39% kindlusega, et tõde jääb kuskile sellesse vahemikku.
@@ -213,7 +238,7 @@ HPDI( s1$CV, prob = 0.67 )
 Nüüd võrdleme nelja fititud mudelit, et otsustada, milline mudel kirjeldab kõige paremini outlieritega andmeid. m0 on ilma outlierita mudel ja me tahame teada, milline mudel m1, m2 või m3 annab sellele kõige lähedasemad tulemused. 
 
 ```{r}
-plot(coeftab(m0, m1, m2, m3), pars = c("mu", "sigma"), prob=0.5)
+plot( coeftab( m0, m1, m2, m3 ), pars = c( "mu", "sigma" ), prob=0.5 )
 ```
 
 Me sättisime usalduspiirid 0.5 peale, mis tähendab, et need ennustavad, kuhu peaks mudeli järgi jääma parameetri tegelik väärtus 50%-se tõenäosusega. Nagu näha, on m2 ja m3 posteeriorid palju lähemal m0-le kui normaaljaotusega fititud m1 oma. Eriti drastilised on erinevused sigma hinnangule. Lisaks, m1 mu usaldusintervall on palju laiem, kui m0, m2 ja m3 oma --- mudel nagu saaks aru, et andmed lõhnavad kala järgi.
@@ -226,8 +251,8 @@ Kui sulle need priorid ei meeldi, tuuni priorite parameetreid ja proovi uuesti p
 
 ```{r}
 x <- -500:500
-y <- dnorm(x, 0, 200)
-plot(x,y, main="prior for mu", type= "l")
+y <- dnorm( x, 0, 200 )
+plot( x, y, main = "prior for mu", type= "l" )
 ```
 
 Siin kasutame nõrgalt informatiivseid prioreid. Idee on selles, et normaaljaotus, mis on tsentreeritud 0 ümber, tõmbab meie posteeriorit hästi nõrgalt nulli poole (nõrgalt, sest jaotus on hästi lai võrreldes tõepärafunktsiooniga). Pane tähele, et oma priori kohaselt usume me, et 50% tõenäususega on USA presidentide keskmine pikkus negatiivne. See prior on tehniline abivahend, mitte meie tegelike uskumuste peegeldus presidentide kohta. Aga tehniliselt kõik töötab selles mõttes, et andmed domineerivad posteeriori üle ja priori sisuliselt ainus ülesanne on veidi MCMC mootori tööd lihtsustada. 
@@ -236,42 +261,44 @@ Sigma priorina kasutame half-Cauchy jaotust, mis on samuti väheinformatiivne. H
 
 ```{r}
 x <- 0:200
-y <- dcauchy(x, 0, 10)
-plot(x,y, main="prior for sigma", type="l")
+y <- dcauchy( x , 0, 10 )
+plot( x, y, main = "prior for sigma", type="l" )
 ```
 
 Tekitame andmeraami analüüsiks ja mudeli, mis põhineb normaalsel tõepärafunktsioonil.
 
 ```{r results="hide"}
 heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) #the vector of values
-df <- as.data.frame(heights)
+df <- as.data.frame( heights )
 m1 <- map2stan(
     alist(
-        heights ~ dnorm(mu, sigma) ,  # normal likelihood
-        mu ~ dnorm(0,200), # normal prior for mean
-        sigma ~ dcauchy(0,10) #half-cauchy prior from sd 
-), data=df, chains = 4, cores = 4 )
-
+        heights ~ dnorm( mu, sigma ) ,  # normal likelihood
+        mu ~ dnorm( 0, 200 ), # normal prior for mean
+        sigma ~ dcauchy( 0, 10 ) #half-cauchy prior from sd 
+), data=df, 
+chains = 4, 
+cores = 4 
+)
 ```
 
 Mudeli koefitsiendid:
 
 ```{r}
-precis(m1)
+precis( m1 )
 ```
 
 Nüüd teeme katse võrrelda USA presidentide ja Euroopa presidentide keskmisi pikkusi. Kõigepealt loome analüüsitava andmeraami.
 ```{r}
 heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) #the vector of values
-df1 <- as.data.frame(heights)
-df1$indeks <- rep("USA", times=nrow(df1)) 
+df1 <- as.data.frame( heights )
+df1$indeks <- rep( "USA", times=nrow( df1 ) ) 
 #selle abil jagame hiljem koondtabeli kahte ossa
 world_presidents <- read.csv2("data/world_presidents.csv")
-world_presidents$indeks <- rep("eur", times=nrow(world_presidents)) 
+world_presidents$indeks <- rep( "eur", times=nrow( world_presidents ) ) 
 #selle abil jagame hiljem koondtabeli kahte ossa
-world_presidents <- world_presidents %>% rename(heights=Height)
-df2 <- bind_rows(df1, world_presidents)
-head(df2)
+world_presidents <- world_presidents %>% rename( heights = Height )
+df2 <- bind_rows( df1, world_presidents )
+head( df2 )
 
 ```
 
