@@ -197,11 +197,14 @@ precis(m2)
 
 ### MCMC ahelate kvaliteet
 
-Kui Rhat on 1, siis see tähendab, et MCMC ahelad on ilusti jooksnud ja posteeriori sämplinud. Kui Rhat > 1.1, siis on kuri karjas. Suur Rhat viitab, et ahel(ad) pole jõudnud konvergeeruda. Aitab, kui pikendada warm-up perioodi (map2stan(..., iter= 3000, warmup=2000) pikendab warm-upi 2 korda). 
+Kui Rhat on 1, siis see tähendab, et MCMC ahelad on ilusti jooksnud ja posteeriori sämplinud. Kui Rhat > 1.1, siis on kuri karjas. Suur Rhat viitab, et ahel(ad) pole jõudnud konvergeeruda. Kui ahelad ei konvergeeru, siis võib karta, et nad ei sämpli ka sama posteeriori jaotust. Kontrolli, kas mudeli kood ei sisalda vigu. Kui ei, siis vahest aitab, kui pikendada warm-up perioodi (map2stan(..., iter= 3000, warmup=2000) pikendab warm-upi 2 korda). Vahest aitab mudeli re-parametriseerimine (siin on lihtne trikk tekitada priorid, mis ei erineks väga palju oma vahemiku poolest; sellega kaasneb sageli andmete tsentreerimine või standardiseerimine; vt allpool).
 
-n_eff on efektiivne valimi suurus, mis ei tohi olla väga väike. Kui n_eff on palju väiksem kui jooksutatud markovi ahela pikkus (iga ahel on defaultina 1000 iteratsiooni pikk), on ahel jooksnud ebaefektiivselt. See ei tähenda tingimata, et posteerior vale oleks.
+n_eff on efektiivne valimi suurus, mis hindab iseseisvalt sämplitud andmete arvu ning see ei tohi olla väga väike. Kui n_eff on palju väiksem kui jooksutatud markovi ahela pikkus (iga ahel on defaultina 1000 iteratsiooni pikk), on ahel jooksnud ebaefektiivselt. See ei tähenda tingimata, et posteerior vale oleks. Reegilina peaks Neff/N > 0.1
 
-Kui plotitud ahelad omavad pikki sirgeid lõike (n_eff tuleb siis väga madal), kus ahel ei ole töötanud, siis see rikub korralikult posteeriori. Tüüpiliselt aitavad nõrgalt informatiivsed priorid --- priorite õige valik on sama palju arvutuslik vajadus kui taustainfo lisamine. Igal juhul tuleb vältida aladefineeritud tasaseid prioreid, mis võimaldavad ahelatel sämplida lõpmatust ja sel viisil õige tee kaotada. Peale selle, tasased priorid, mis ütlevad, et kõik parameetri väärtused on võrdselt tõenäolised, kajastavad harva meie tegelikke taustateadmisi.
+Ahelad peavad plotitud kujul välja nägema nagu karvased tõugud, mis on ilma paljaste laikudeta.
+Kui ahelad omavad pikki sirgeid lõike (n_eff tuleb siis väga madal), kus ahel ei ole töötanud, siis see rikub korralikult posteeriori. Tüüpiliselt aitavad nõrgalt informatiivsed priorid --- priorite õige valik on sama palju arvutuslik vajadus kui taustainfo lisamine. Igal juhul tuleb vältida aladefineeritud tasaseid prioreid, mis võimaldavad ahelatel sämplida lõpmatust ja sel viisil õige tee kaotada. Peale selle, tasased priorid, mis ütlevad, et kõik parameetri väärtused on võrdselt tõenäolised, kajastavad harva meie tegelikke taustateadmisi.
+
+halvad WARNING-ud: divergent transitions (too many), BMFI too low --- võivad tähendada, et ahelad ei tööta korralikult. WARNING-ute kohta saad abi siit http://mc-stan.org/misc/warnings.html.
 
 Ilusamad parameetriplotid saab *bayesplot* raamatukogust.
 
@@ -402,7 +405,7 @@ See ei tähenda tingimata, et me peaksime eelistama teist mudelit. Oluline on, m
 
 ## Lineaarne regressioon
 
-Eelmises peatükis hindasime ühe andmekogu (näiteks mõõdetud pikkuste) põhjal ehitatud mudelite parameetreid (näiteks keskmist ja statndardhälvet). Nüüd astume sammu edasi ja hindame kahe muutuja (näiteks pikkuse ja kaalu) koos-varieeruvust. Selleks ehitame mudeli, mis sisaldab mõlemaid muutujaid ja küsime: kui palju sõltub y varieeruvus x varieeruvusest. Lihtsaim viis sellele küsimusele läheneda on lineaarse regressiooni kaudu. Me ehitame lineaarse mudeli, mis vaatab kaalu-pikkuse paare (igal subjektil mõõdeti kaal ja pikkus ning mudel vaatab kaalu ja pikkuse koos-varieeruvust subjektide vahel). Enam ei tohiks tulla üllatusena, et meie arvutused ei anna numbrilist hinnangut mitte teaduslikule küsimusele selle kohta kuidas y-i väärtused sõltuvad x-i väärtustest, vaid mudeli parameetritele. Meie mudel on sirge võrrand y = a + b*x ja tavapärases R-i notatsioonis kirjutatakse see y~x. 
+Eelmises peatükis hindasime ühe andmekogu (näiteks mõõdetud pikkuste) põhjal ehitatud mudelite parameetreid (näiteks keskmist ja statndardhälvet). Nüüd astume sammu edasi ja hindame kahe muutuja (näiteks pikkuse ja kaalu) koos-varieeruvust. Selleks ehitame mudeli, mis sisaldab mõlemaid muutujaid ja küsime: kui palju sõltub y varieeruvus x varieeruvusest. Lihtsaim viis sellele küsimusele läheneda on lineaarse regressiooni kaudu. Me ehitame lineaarse mudeli, mis vaatab kaalu-pikkuse paare (igal subjektil mõõdeti kaal ja pikkus ning mudel vaatab kaalu ja pikkuse koos-varieeruvust subjektide vahel). Enam ei tohiks tulla üllatusena, et meie arvutused ei anna numbrilist hinnangut mitte teaduslikule küsimusele selle kohta kuidas *y*-i väärtused sõltuvad *x*-i väärtustest, vaid mudeli parameetritele. Meie mudel on sirge võrrand $y = a + b*x$ ja tavapärases R-i notatsioonis kirjutatakse see *y~x*. 
 
 Kuna pikkused ja kaalud on igavad, proovime vaadata kuidas riigi keskmine eluiga on seotud riigi rikkusega.
 
@@ -468,7 +471,7 @@ Hea küll, aga milline mudel on siis parim?
 AIC(m1, m2, m3)
 ```
 
-AIC on Aikake Informatsiooni Kriteerium, mis võtab arvesse nii R-ruudu kui mudeli parameetrite arvu. Kuna R saab parameetreid lisades ainult kasvada ja me teame, et mingist hetkest oleme niikuinii oma mudeli üle fittinud, siis otsime AIC-i abil kompromissi: võimalult hea fit võimalikult väikese parameetrite arvuga. AIC on suhteline mõõt, selle absoluutnäit ei oma mingit tähendust. Mee eelistame väiksema AIC-ga mudelit nende mudelite seast, mida me võrdleme. See ei tähenda, et võitnud mudel oleks hea mudel --- alati on võimalik, et kõik head mudelid jäid võrdlusest välja. 
+AIC on Aikake Informatsiooni Kriteerium, mis võtab arvesse nii mudeli fiti headuse kui mudeli parameetrite arvu. Kuna R saab parameetreid lisades ainult kasvada ja me teame, et mingist hetkest oleme niikuinii oma mudeli üle fittinud, siis otsime AIC-i abil kompromissi: võimalult hea fit võimalikult väikese parameetrite arvuga. AIC on suhteline mõõt, selle absoluutnäit ei oma mingit tähendust. Mee eelistame väiksema AIC-ga mudelit nende mudelite seast, mida me võrdleme. See ei tähenda, et võitnud mudel oleks hea mudel --- alati on võimalik, et kõik head mudelid jäid võrdlusest välja. 
 
 Seega parim mudel on m3 ja kõige kehvem on m2, mille intercept on realistlikult nulli fikseeritud! 
 
@@ -576,7 +579,9 @@ Now, as it happens, in log scale the intercept-fixed-at-0 model is almost as goo
 
 ```{r}
 cf7 <- coef(m7)
+cf7
 cf8 <- coef(m8)
+cf8
 
 g2007 %>% 
   ggplot(aes(l_GDP, lifeExp)) + 
@@ -590,9 +595,9 @@ g2007 %>%
   coord_cartesian(ylim = c(0, max(g2007$lifeExp) ), xlim = c(0, 5))
 ```
 
-Pane tähele, et kuna Bayesi mudelite fittimine on keerulisem kui lm() abil, on eriti tähtis fititud mudel välja plottida. See on esimene kaitseliin lollide vigade ja halvasti jooksvate markovi ahelate vastu. 
+Kuna Bayesi mudelite fittimine on keerulisem kui lm() abil, on eriti tähtis fititud mudel välja plottida. See on esimene kaitseliin lollide vigade ja halvasti jooksvate markovi ahelate vastu. 
 
-Kui Bayesi mudeleid on raskem fittida, siis milleks me peaksime neid eelistama tavalistele vähimruutude meetodil fititud mudelitele? Tegelikult alati ei peagi. Aga siiski, Bayesi mudelid sisaldavad eksplitsiitset veakomonenti (sigma), mis on kasulik mudelist uusi andmeid ennustades. Samuti annavad nad parima hinnangu ebakindlusele parmeetrite väärtuste hinnangute ümber, võimaldavad mudeli fittimisel siduda andmeid taustainfoga (prior) ning, mis kõige tähtsam, võimaldavad paindlikumalt fittida hierarhilisi mudeleid (nende juurde tuleme hiljem tagasi). 
+Kui Bayesi mudeleid on raskem fittida, siis milleks me peaksime neid eelistama tavalistele vähimruutude meetodil fititud mudelitele? Tegelikult alati ei peagi. Aga siiski, Bayesi mudelid sisaldavad eksplitsiitset veakomonenti (sigma), mis on kasulik mudelist uusi andmeid ennustades. Samuti annavad nad parima hinnangu ebakindlusele parmeetrite väärtuste hinnangute ümber, võimaldavad mudeli fittimisel siduda andmeid taustainfoga (prior) ning, mis kõige tähtsam, võimaldavad paindlikumalt fittida hierarhilisi mudeleid (nende juurde tuleme hiljem). 
 
 Samas, kui prior on väheinformatiivne, siis Bayesi hinnangud mudeli koefitsientide kõige tõenäolisematele väärtustele on praktiliselt samad, kui vähimruutude meetodiga lm() abil saadud punkt-hinnangud. 
 
@@ -637,7 +642,7 @@ Nüüd on meil mu1 objektis 41 l_GDP väärtust, millest igale vastab 1000 ennus
 
 Pane tähele, et hall riba näitab ebakindlust ennustuse ümber keskmisele elueale üle kõikide riikide, mis võiksid sellist l_GDP-d omada (ehk ebakindlust regressioonijoonele). Kui me aga tahame ennustada ka keskmiste eluigade varieeruvust riigi tasemel (kasutades Bayesi hinnangut sigma parameetrile), siis on meil vaja sim() funktsiooni:
 
-```{r }
+```{r}
 mu.mean <- apply(mu1, 2, mean ) # applies the FUN mean() to each column
 mu.HPDI <- apply(mu1, 2, HPDI , prob = 0.95 )
 sim.length <- as_tibble(rethinking::sim(m8, data = list(l_GDP = width)))
@@ -681,6 +686,91 @@ HPDI(sim.length$V10, prob = 0.95)
 
 Nagu näha, võib mudeli kohaselt sellise riigi keskmine eluiga tulla nii madal, kui 40 aastat ja nii kõrge kui 67 aastat.
 
+### Lognormaalne tõepäramudel
+
+See mudel on alternatiiv andmete logaritmimisele, kui Y-muutuja (see muutuja, mille väärtust te ennustate) on lognormaalse jaotusega. 
+
+
+> Lognormaalne Y-i tõepäramudel on mittelineaarne. Lognormaaljaotus defineetitakse üle mu ja sigma, mis aga vastavd hoopis log(Y) normaaljaotuse mu-le ja sigmale.
+
+Seekord ennustame GDP-d keskmise eluea põhjal (mis, nagu näha jooniselt, ei ole küll päris lognormaalne).
+
+```{r}
+ggplot(g2007, aes(gdpPercap))+
+  geom_density()+
+  stat_function(fun=dlnorm, 
+                args=list(mean=mean(log(g2007$gdpPercap)),
+                          sd=sd(log(g2007$gdpPercap))), 
+                colour="red") +
+  theme_classic()
+
+```
+
+Mustaga on näidatud empiiriline SKP jaotus, punasega fititud lognormaalne mudel sellest samast jaotusest. Järgnevalt ennustame SKP-d keskmise eluea põhjal, milleks fitime lognormaalse tõepäramudeli, kus mu on ümber defineeritud regressioonivõrrandiga:
+
+```{r}
+m_ln1 <- map2stan(alist(
+   gdpPercap  ~ dlnorm( mu , sigma ),
+    mu <- a + b * lifeExp,
+    a ~ dnorm(0, 10),
+    b ~ dnorm(0, 10),
+    sigma ~ dcauchy(0,2)
+), data=g2007, start = list(a=3, b=0, sigma=0.5))
+precis(m_ln1)
+```
+
+
+```{r}
+precis(m_ln1)
+plot(m_ln1)
+```
+
+Logormaalses mudelis muutuvad parameetrite tähendused ja need tuleb lineaarse mudeli intercepti ja tõusu interpretatsioonidega kooskõlla viimiseks ümber arvutada. Kõigepealt avaldame tõusu. Kuna meil on tegemist mitte-lineaarse mudeliga, sõltub tõusu väärtus ka mudeli interceptist: $slope = exp(α + β) − exp(α)$. See ei ole lineaarne seos: b omab seda suuremat mõju efektile (tõusule), mida suurem on a. [Kui meil on tegu binaarse X-ga (prediktoriga), siis kodeerime selle 2 taset kui -1 ja 1. Sellises mudelis on slope sama, mis efekti suurus ES, ja $ES = exp(α + β) − exp(α - β)$]
+
+```{r}
+a <- seq(0, 10, length.out = 1000)
+b <- 2
+b1 <- 3
+y <- exp(a+b) - exp(a)
+y1 <- exp(a+b1) - exp(a)
+
+plot(a, y, type="l", xlab="a value", ylab="slope")
+lines(a, y1, col="red")
+```
+
+Must joon näitab mudeli tõusu sõltuvust parameetri a väärtusest, kui parameeter b = 2. Punane joon teeb sedasama, kui b = 3.
+
+Selline on siis mudeli tõusude (beta) posteerior:
+
+```{r}
+s_ln1 <- extract.samples(m_ln1) %>% as.data.frame()
+beta <- exp(s_ln1$a + s_ln1$b) - exp(s_ln1$a)                                   
+
+dens(beta) 
+```
+
+
+Lognormaaljaotusega mudelis täidab normaaljaotusega mudeli intercepti rolli eelkõige meedian, mis on defineeritud kui exp(a), aga arvutada saab ka keskmise:
+```{r}
+i_median <- exp(s_ln1$a)
+mean(grand_median)
+
+i_mean <- exp(s_ln1$a +s_ln1$sigma**2/2)
+mean(grand_mean)
+```
+
+Siin ennustame fititud mudelist uusi andmeid (väljamõeldud riikide rikkust):
+
+```{r}
+sim_ci <- rethinking::sim(m_ln1) %>% as_tibble() %>% apply(2, HPDI, prob=0.95)
+
+ggplot(g2007, aes(lifeExp, gdpPercap)) + 
+  geom_point(aes(color=continent), size=0.8)+
+  geom_ribbon(aes(ymin=sim_ci[1,], ymax=sim_ci[2,]), alpha=0.2) +
+  theme_classic()
+```
+
+Ka see mudel jääb hätta Aafrika outlieritega, mille eluiga ei suuda ennustada rikkust.
 
 ## Mitme prediktoriga lineaarne regressioon
 
@@ -745,7 +835,11 @@ Miks ei ole mudeli summary tabelis Aafrikat? Põhjus on tehniline. Kategoorilisi
 
 ### Mudeldamine standardiseeritud andmetega.
 
-Kui me lahutame igast andmepunktist selle muutuja keskväärtuse siis saame 0-le tsentreeritud andmed. Kui me need omakorda läbi jagame sellle muutuja standardhälbega, siis saame standardiseeritud andmed, mille keskväärtus on null ja SD=1. Nii on lihtsam erinevas skaalas muutujaid omavahel võrrelda (muutus 1 ühik = muutudega 1 standardhäve võrra) ja mudeli arvutused üle Bayesi on ka lihtsamad.
+Kui me lahutame igast andmepunktist selle muutuja keskväärtuse siis saame 0-le tsentreeritud andmed. Kui me sellisel viisil saadud väärtused omakorda läbi jagame muutuja standardhälbega, siis saame standardiseeritud andmed, mille keskväärtus on null ja SD = 1.
+
+$Standard.andmed = (x - mean(x))/sd(x)$ 
+
+Nii on lihtsam erinevas skaalas muutujaid omavahel võrrelda (1 ühikuline muutus võrdub alati muutusega 1 standardhäve võrra) ja mudeli arvutamine üle mcmc ahelate on ka lihtsam.
 
 ```{r results="hide"}
 g2007 <- g2007 %>% 
@@ -801,7 +895,8 @@ names(coef(m5))
 Residuals plot:
 
 ```{r}
-# Using the fitted model compute the expected value of y (mu) for each of the 142 data rows.
+# Using the fitted model compute the expected value of y (mu) 
+# for each of the 142 data rows.
 mu <- coef(m5)['a'] + 
   coef(m5)['b_GDP'] * g2007$lGDP_s + 
   coef(m5)['b_pop'] * g2007$lpop_s
@@ -820,24 +915,40 @@ Me näeme, et seal kus SKP on väiksem kipuvad residuaalid olema negatiivsed, mi
 See seos tuleb eriti selgelt välja järgmisel pildil, kus plotime residuaalide sõltuvuse elueast:
 ```{r}
 g2007$m.resid <- m.resid
+<<<<<<< HEAD
 ggplot(g2007, aes(lifeExp, m.resid)) +
   geom_smooth(method = "lm", se = FALSE) +
   geom_point() +
   geom_hline(yintercept = 0, color = "grey", linetype = 2)
+=======
+
+ggplot( g2007, aes( lifeExp, m.resid ) ) +
+  geom_smooth( method = "lm", se = FALSE ) +
+  geom_point()+
+  geom_hline( yintercept = 0, color = "grey", linetype = 2 ) +
+  theme_tufte()
+>>>>>>> be4c0ddf26e39f3f3932ac3c23ab9431c6eac00f
 ```
 Horisontaal punktiirjoon näitab, kus mudel vastab täpselt andmetele. 
 
 Suuremad eluead omavad eelistatult poitiivseid residuaale ja väiksemad eluead negatiivseid residuaale. See tähendab, et mudel alahindab eluiga seal, kus SKP on kõrge ja vastupidi, ülehindab eluiga seal, kus SKP on madal.
 
-##### 4.13.2.2. ennustavad plotid: 
+####  ennustavad plotid: 
 
-Plot, kus me ennustame keskmise eluea sõltuvust SKP-st nii riikide kaupa eraldi (andmepunktide paupa) kui üldiselt kõikide riikide keskmisena, millel on mingi kindel SKP (mudeli parima ennustuse ehk sirge asendi ümber valitsevat ebakindlust). Et seda teha, peame hoidma rahvaarvu konstantsena ( vt objekti A.avg): 
+Plot, kus me ennustame keskmise eluea sõltuvust SKP-st nii riikide kaupa eraldi (andmepunktide paupa) kui üldiselt kõikide riikide keskmisena, millel on mingi kindel SKP (mudeli parima ennustuse ehk sirge asendi ümber valitsevat ebakindlust). Et seda teha, peame hoidma rahvaarvu konstantsena: 
 
 ```{r}
 # prepare new counterfactual data
 pred.data <- tibble(
+<<<<<<< HEAD
     lGDP_s = seq(-3, 3, length.out = 30), # need meie poolt valitud lGDP_s väärtused, millele me ennustame vastavad eluead 
     lpop_s = 0 # rahvaarv fikseeritakse muutuja keskmisele tasemele, mis standardiseeritud andmete korral = 0
+=======
+    lGDP_s = seq( from = -3 , to = 3 , length.out = 30 ), 
+#need meie poolt valitud lGDP_s väärtused, millele me ennustame vastavad eluead 
+    lpop_s = 0 
+#rahvaarv fikseeritakse muutuja keskmisele tasemele, mis standardiseeritud andmete korral = 0
+>>>>>>> be4c0ddf26e39f3f3932ac3c23ab9431c6eac00f
 )
 
 # compute counterfactual mean lifeExp (mu)
@@ -846,14 +957,26 @@ mu.mean <- apply(mu, 2, mean)
 mu.PI <- apply(mu, 2, PI)
 
 # simulate counterfactual lifeExpectancies of individual countries
+<<<<<<< HEAD
 R.sim <- rethinking::sim(m5, data = pred.data , n = 1e4)
+=======
+R.sim <- rethinking::sim( m5 , data=pred.data )
+>>>>>>> be4c0ddf26e39f3f3932ac3c23ab9431c6eac00f
 R.sim <- na.omit(R.sim)
 R.PI <- apply(R.sim, 2, PI)
 
+<<<<<<< HEAD
 ggplot(pred.data, aes(lGDP_s, mu.mean)) +
   geom_line(y = mu.mean) +
   geom_ribbon(ymin = mu.PI[1,], ymax = mu.PI[2,], color = "grey", alpha = 0.2) +
   geom_ribbon(ymin = R.PI[1,], ymax = R.PI[2,], color = "grey", alpha = 0.2)
+=======
+ggplot( pred.data, aes( lGDP_s, mu.mean ) ) +
+  geom_line( y = mu.mean ) +
+  geom_ribbon( ymin = mu.PI[1,], ymax = mu.PI[2,], color="grey", alpha = 0.2 ) +
+  geom_ribbon( ymin = R.PI[1,], ymax = R.PI[2,], color = "grey", alpha = 0.2 ) +
+  theme_tufte()
+>>>>>>> be4c0ddf26e39f3f3932ac3c23ab9431c6eac00f
 ```
 
 Näeme, kuidas ennustus sobib/ei sobi andmetega. Võrdle eelneva ennustuspildiga, kus mudel ei sisalda rahvaarvu. Ennustuse intervallid on originaalandmete skaalas (aastates), mis on hea.
@@ -867,8 +990,13 @@ Need plotivad algandmed mudeli fiti vastu.
 
 ```{r}
 library(bayesplot)
+<<<<<<< HEAD
 yrep <- sim(m5)
 ppc_dens(g2007$lifeExp, yrep[1:5, ])
+=======
+yrep <- sim( m5 )
+ppc_dens( g2007$lifeExp, yrep[1:5,] )
+>>>>>>> be4c0ddf26e39f3f3932ac3c23ab9431c6eac00f
 ```
 
  
@@ -877,6 +1005,7 @@ ppc_dens(g2007$lifeExp, yrep[1:5, ])
 Ploti ennustused andmepunktide vastu ja lisa sirge, mis näitab täiuslikku ennustust pluss jooned, mis näitavad igale ennustusele omistatud usaldusintervalli
 
 ```{r}
+<<<<<<< HEAD
 g2007 <- gapminder %>% filter(year == 2007)
 g2007 <- g2007 %>% mutate(l_GDP = log10(gdpPercap))
 g2007 <- g2007 %>% 
@@ -884,6 +1013,17 @@ g2007 <- g2007 %>%
          lpop_s = (l_pop - mean(l_pop)) / sd(l_pop),
          lGDP_s = (l_GDP - mean(l_GDP)) / sd(l_GDP)) %>% 
   as.data.frame(g2007)
+=======
+library(gapminder)
+gapminder <- gapminder
+g2007 <- gapminder %>% filter( year == 2007 )
+g2007 <- g2007 %>% mutate( l_GDP = log10( gdpPercap ) )
+g2007 <- g2007 %>% mutate( l_pop = log10( pop ), 
+                           lpop_s = (l_pop - mean( l_pop ) )/sd( l_pop ),
+                           lGDP_s = (l_GDP - mean( l_GDP ) )/sd( l_GDP ) )
+g2007 <- as.data.frame( g2007 )
+
+>>>>>>> be4c0ddf26e39f3f3932ac3c23ab9431c6eac00f
 
 mu <- link(m5)  
 mu.mean <- apply(mu, 2, mean)
@@ -894,12 +1034,14 @@ sim.PI <- apply( mu_sim , 2 , PI )
 coef <- coef(m5)
 g2007$mu.mean <- mu.mean
 
-ggplot(g2007, aes(lifeExp, mu.mean))+
+ggplot( g2007, aes( lifeExp, mu.mean ) )+
   geom_point()+
-  geom_crossbar(ymin=mu.PI[1,], ymax=mu.PI[2,])+
-  geom_abline(intercept= 0, slope =  1)+
-  ylab("predicted life expectancy") + xlab("observed life expectancy")+
-  coord_cartesian(xlim=c(40,85), ylim=c(40,85))+ theme_tufte()
+  geom_crossbar( ymin = mu.PI[1,], ymax = mu.PI[2,] ) +
+  geom_abline( intercept= 0, slope =  1 ) +
+  ylab( "predicted life expectancy" ) + 
+  xlab( "observed life expectancy" ) +
+  coord_cartesian( xlim=c( 40, 85 ), ylim=c( 40, 85 ) )+ 
+  theme_tufte()
 
 ```
 
@@ -912,11 +1054,14 @@ Järgnev plot annab ennustusvea g2007 tabeli igale riigile:
 # compute residuals
 life.resid <- g2007$lifeExp - mu.mean
 
-ggplot(g2007, aes(x=life.resid, y=reorder(country, life.resid))) +
+ggplot( g2007, aes( x = life.resid, y = reorder( country, life.resid ) ) ) +
   geom_point() +
-  geom_errorbarh(aes(xmin=lifeExp - sim.PI[1,], 
-                     xmax=lifeExp - sim.PI[2,]), color="red") +
-  geom_vline(xintercept = 0) + theme_tufte() + ylab(NULL)
+  geom_errorbarh( aes( xmin = lifeExp - sim.PI[1,], 
+                       xmax = lifeExp - sim.PI[2,] ), 
+                  color = "red") +
+  geom_vline( xintercept = 0 ) + 
+  theme_tufte() + 
+  ylab(NULL)
   
 ```
 
@@ -925,11 +1070,11 @@ punased jooned näitavad 89% ennustuspiire igale residuaalile riigi tasemel (89%
 
 
 
-### 4.14. interaktsioonid prediktorite vahel
+### interaktsioonid prediktorite vahel
 
 Eelnevad mudelid eeldavad, et prediktorite varieeruvused on üksteisest sõltumatud. Aga mis, siis kui see nii ei ole ja ühe prediktori mõju suurus sõltub teisest prediktorist, ehk prediktorite vahel on interaktsioon? Lihtsaim viis sellist interaktsiooni modelleerida on lisades aditiivsele mudelile, milliseid me just eelmises peatükis käsitlesime, interaktsioon korrutamisetehtena:
 
-y = a + b1x1 + b2x2 + b3x1x2
+$y = a + b1x1 + b2x2 + b3x1x2$
 
 Sellise mudeli järgi erineb sirge tõus b1 erinevatel b2 väärtustel, ja erinevuse määr sõltub b3-st sõltuvalt interaktsiooni tugevusest. Samamoodi ja sümmeetriliselt erineb ka b2 väärtus erinevatel b1 väärtustel. Seega tähendab interaktsiooni mudel, et sirge tõusunurk ei ole alati sama. See on ühine paljude hierarhiliste mudelitega, mida võib omakorda vaadelda massivsete interaktsioonimudelitena. Seevastu y = a + b1x1 + b2x2 tüüpi mudel annab b1-le konstantse tõusunurga, kuid laseb intercepti muutuma sõltuvalt b2 väärtusest (ja vastupidi) 
 
@@ -948,9 +1093,6 @@ plot(precis(m1))
 Africa on siin võrdluseks.
 
 Interaktsioon on sümmeetriline. Me võime sama hästi küsida, kui palju SKP mõju elueale sõltub kontinendist, kui seda, kui palju kontinendi mõju eluale sõltub SKP-st.
-
-
-
 
 Nüüd joonistame välja regressioonisirge Aafrika ja Euroopa jaoks eraldi m1 mudeli põhjal
 
@@ -1039,7 +1181,7 @@ ggplot(data=dd1, aes(lGDP_s, lifeExp)) +
 
 
 
-### 4.14.1. Interaktsioonid pidevatele tunnustele
+#### Interaktsioonid pidevatele tunnustele
 
 Kasutame standardiseeritud prediktoreid, sest nende koefitsiente saab paremini tõlgendada (tegelikult piisab prediktorite tsentreerimisest). Meie andmed käsitlevad diabeedimarkereid Ameerika lõunaosariikide neegritel 1960-ndatel. Me ennustame siin sõltuvalt vanusest ja vööümbermõõdust hdl-i --- high density cholesterol --- mis on nn hea kolesterool.
 
@@ -1151,7 +1293,7 @@ e <- ensemble(m2, m3, data=d.pred)
 
 # make a plot window with three panels in a single row
 par(mfrow=c(1,3)) # 1 row, 3 columns
-# loop over values of water.c and plot predictions
+# loop over values of age_st and plot predictions
 age.seq <- seq(-2, 2, length.out = 20)
 for ( w in -1:1 ) { #me soovime 3 joonist 3-l waisti näidul: -1, 0, 1.
     plot( hdl ~ age_st , data=d2 , type="n" ,
@@ -1194,25 +1336,31 @@ Isegi kui interaktsiooniparameetri posteerior hõlmab 0-i, tuleb interaktsiooni 
 
 Kui tavaline interaktsioonimudel on y = a + b1x1 + b2x2 + b3x1x2, siis mis juhtub, kui meie mudel on y = b1x1 + b3x1x2? See tähendab, et me surume b2 väärtuse nulli, mis võib ära rikkuda mudeli teiste parameetrite posteeriorid! Kui teil on alust arvata, et b2-l puudub otsene mõju y väärtusele (kuid tal on mõju b1 väärtusele), siis võib muidugi ka sellist mudelit kasutada. Aga see on haruldane juhtum.
 
-## 4.15. Hierarhilised mudelid 
+## Hierarhilised mudelid 
 
-Hierarhiline mudel kajastab sellise katse või vaatluse struktuuri, kus andmed  ei jagune mitte ainult gruppideks katse- ja kontrollgrupi vahel, vaid ka nende gruppide sees alamgruppideks. Näiteks kui me mõõdame platseebo-kontrollitud uuringus 10 patsienti ja teeme igale patsiendile 5 kordusmõõtmist (kahetasemeline mudel). Või kui me mõõdame kalamaksaõli mõju matemaatikaeksami tulemustele võrdluses limonaadi-kontrolliga 10 koolis, ja igas neist 5 klassis (kolmetasemeline mudel). 
+Hierarhiline mudel kajastab sellise katse või vaatluse struktuuri, kus andmed ei grupeeru mitte ainult katse- ja kontrolltingimuste vahel, vaid ka nende gruppide sees alamgruppidesse. Näiteks, kui me mõõdame platseebo-kontrollitud uuringus 10 patsienti ja teeme igale patsiendile 5 kordusmõõtmist (kahetasemeline mudel). Või kui me mõõdame kalamaksaõli mõju matemaatikaeksami tulemustele võrdluses limonaadi-kontrolliga 10 koolis, ja igas neist 5 klassis (kolmetasemeline mudel). 
 
-Tavapärane viis selliste andmetega töötamisel on kõigepealt keskmistada andmed iga klassi kohta. Seejärel keskmistada üle koolide. Ning seejärel, võttes iga kooli keskmise üheks andmepunktiks, sooritada soovitud statistiline test. Sellisel viisil talitades kaotame paraku andmetest infot varieeruvuse kohta ja alahindame varieeruvust, mistõttu meie statistiline test alahindab ebakindluse määra arvutatud statistiku ümber. Hierarhilised mudelid, mis kajastavad adekvaatselt katse struktuuri, aitavad sellest murest üle saada. Üldine soovitus on, et kui teie katse struktuur seda vähegi võimaldab, siis peaksite alustama modelleerimist hierarhilistest mudelitest.
+Tavapärane viis selliste andmetega töötamisel on kõigepealt keskmistada andmed iga klassi kohta. Seejärel keskmistada üle koolide. Ning seejärel, võttes iga kooli keskmise üheks andmepunktiks, sooritada soovitud statistiline test. Sellisel viisil talitades alahindame varieeruvust, mistõttu meie statistiline test alahindab ebakindluse määra arvutatud statistiku ümber. Hierarhilised mudelid, mis kajastavad adekvaatselt katse struktuuri, aitavad sellest murest üle saada. Üldine soovitus on, et kui teie katse struktuur seda vähegi võimaldab, siis peaksite alustama modelleerimist hierarhilistest mudelitest.
 
-Hierarhilised mudelid on eriti kasulikud, kui teil on osades klastrites vähem andmepunkte kui teistes sest nad vaatavad andmeid korraga nii klastrite vahel kui klastrite sees ning kannavad informatsiooni üle klastitest, kus on rohkem andmepunkte, nendesse klastrisse, kus on vähe andmeid. See parandab hinnangute täpsust
+Hierarhilised mudelid on eriti kasulikud, kui teil on osades klastrites vähem andmepunkte kui teistes sest nad vaatavad andmeid korraga nii klastrite vahel kui klastrite sees ning kannavad informatsiooni üle klastitest, kus on rohkem andmepunkte, nendesse klastrisse, kus on vähe andmeid. See parandab hinnangute täpsust.
 
-> Hierarhilised mudelid modelleerivad eksplitsiitselt varieeruvust klastite sees ja klastrite vahel.
+> Hierarhilised mudelid modelleerivad eksplitsiitselt varieeruvust klasrtite sees ja klastrite vahel.
 
-### 4.15.1. Shrinkage
+### Shrinkage
 
-Kasutades hierarhilisi mudeleid saab edukalt võidelda ka *multiple testingu* probleemiga. See probleem on lihtsalt sõnastatav: kui te sooritate palju mõttetuid võrdluskatseid ja statistilisi teste (mõttetuid sellest mõttes, et tegelik katseefekt on tühine), siis juhuslikud protsessid tagavad, et osad teie paljudest testidest annavad ekslikult ülehinnatud efekti. Seega, kui meil on kahtlus, et enamus võrdlusi on "mõttetud" ja me ei oska ette ennustada, millised võrdlused neist (kui üldse mõni) võiks anda tõelise teaduslikult "mõtteka" efekti, siis on lahendus kõiki saadud efekte kunstlikult pisendada kõikide efektide keskmise suunas. Mudeli kontekstis kutsutakse sellist lähenemist parameetrite *shrinkage*-ks. Aga kui suurel määral seda teha? See sõltub nii sellest, kui palju teste me teeme, kui ka sellest, kuidas jaotuvad mõõdetud efektisuurused (milline on efektisuuruste varieeruvus testide vahel). Bayesi lahendus on, et me lisame mudelisse veel ühe hierarhilise priori, mis kõrgub üle gruppide-spetsiifilise priori. Seega anname me olemasolevale priorile uue kõrgema taseme priori, mis tagab selle, et informatsiooni jagatakse gruppide vahel ja samal ajal ka gruppide sees. Sellise lahenduse õigustus on, et me usume, et erinevad alam-grupid pärinevad samast üli-jaotusest ja neil on omavahel midagi ühist (ehkki alam-gruppide vahel võib olla ka reaalseid erinevusi). Näiteks, et kõik klassid saavad oma lapsed samast lastepopulatsioonist, aga siiski, et leidub ka eriklasse eriti andekatele. 
+> Kui teil on olukord, kus te mõõdate erinevaid gruppe, mis küll omavahel erinevad, aga on ka teatud määral sarnased (näiteks testitulemused grupeerituna kooli kaupa), siis on mõistlik kasutada kõikide gruppide andmeid, et adjusteerida iga grupi spetsiifilisi parameetreid. Seda adjusteerimise määra kutsutakse "shrinkage". 
+
+Shrinkage toimub parameetri keskväärtuse suunas ja mingi grupi shrinkage on seda suurem, mida vähem on selles grupis liikmeid ja mida kaugemal asub see grupp kõikide gruppide keskväärtusest. Shrinkage on põhimõtteliselt sama nähtus, mis juba Francis Galtoni poolt avastatud regressioon keskmisele.
+Regressioon keskmisele on stohhastiline protsess kus, olles sooritanud n mõõtmist ja arvutanud nende tulemuste põhjal efekti suuruse, see valimi ES peegeldab nii tegelikku ES-i kui juhuslikku valimiviga. Kui valimivea osakaal ES-s on suur, siis lisamõõtmised vähendavad keskeltläbi efekti suurust. Shrinkage erineb sellest ainult selle poolest, et lisamõõtmised meenutavad ainult **osaliselt** algseid mõõtmisi. 
+
+Kasutades hierarhilisi mudeleid saab edukalt võidelda ka *multiple testingu* probleemiga. See probleem on lihtsalt sõnastatav: kui te sooritate palju võrdluskatseid ja statistilisi teste olukorras, kus tegelik katseefekt on tühine, siis tänu valimiveale osad teie paljudest testidest annavad ekslikult ülehinnatud efekti. Seega, kui meil on kahtlus, et enamus võrdlusi on "mõttetud" ja me ei oska ette ennustada, millised võrdlused neist (kui üldse mõni) võiks anda tõelise teaduslikult mõtteka efekti, siis on lahendus kõiki saadud efekte kunstlikult pisendada kõikide efektide keskmise suunas. Mudeli kontekstis kutsutakse sellist lähenemist parameetrite *shrinkage*-ks. Aga kui suurel määral seda teha? See sõltub nii sellest, kui palju teste me teeme, kui ka sellest, kuidas jaotuvad mõõdetud efektisuurused (milline on efektisuuruste varieeruvus testide vahel). Bayesi lahendus on, et me lisame mudelisse veel ühe hierarhilise priori, mis kõrgub üle gruppide-spetsiifilise priori. Seega anname me olemasolevale priorile uue kõrgema taseme priori, mis tagab selle, et informatsiooni jagatakse gruppide vahel ja samal ajal ka gruppide sees. Sellise lahenduse õigustus on, et me usume, et erinevad alam-grupid pärinevad samast üli-jaotusest ja neil on omavahel midagi ühist (ehkki alam-gruppide vahel võib olla ka reaalseid erinevusi). Näiteks, et kõik klassid saavad oma lapsed samast lastepopulatsioonist, aga siiski, et leidub ka eriklasse eriti andekatele. 
 
 Selline mudel tagab, et samamoodi nagu mudeli ennustused individaalsete andmepunktide kohta iga alam-grupi sees "liiguvad lähemale" oma alam-grupi keskmisele, samamoodi "liiguvad" ka alam-gruppide keskmised lähemale üldisele grupi keskmisele. Selle positiivne mõju on valealarmide vähendamine ja oht on, et me kaotame ka tõelisi efekte. Bayesi eelis on, et see oht realiseerub ainult niipalju, kuipalju meie mudel ei kajasta reaalset katse struktuuri. Klassikalises statistikas rakendatavad multiple testingu korrektsioonid (Bonfferroni, ANOVA jt) on kõik teoreetiliselt kehvemad. 
 
 Lihtsaim shrinkage mudeli tüüp on mudel, kus me laseme vabaks interceptid, aga mitte tõusunurgad. Igale klastrile vastab mudelis oma intercepti parameeter ja oma intercepti prior. Lisaks annab mudel meile fittimise käigus valimi andmete põhjal ise parameetrid kõrgema taseme priorisse, mis on ühine kõikidele interceptidele. Seega me määrame korraga interceptide parameetrid ja kõrgema taseme priori parameetrid, mis tähendab, et informatsioon liigub mudelit fittides mõlemat pidi --- mööda hierarhiat alt ülesse ja ülevalt alla. 
 
-Nüüd konkreetne näide:
+### ANOVA-laadne mudel
+
 
 *The data contain GCSE exam scores on a science subject. Two components of the exam were chosen as outcome variables: written paper and course work. There are 1,905 students from 73 schools in England. Five fields are as follows.*
 
@@ -1243,8 +1391,6 @@ df$school <- as.factor(df$school)
 df$student <- as.factor(df$student)
 #write.csv(df, "schools.csv")
 ```
-
-
 
 
 Alustuseks mitte-hierarhiline mudel, mis arvutab keskmise score1 igale koolile eraldi. See on intercept-only mudel, mis tähendab, et me hindame parameetri keskväärtust, mitte ei püüa ennustada parameeter y väärtust parameeter x-i väärtuse põhjal.
@@ -1282,10 +1428,10 @@ precis(m2, depth = 2)
 Igale koolile antud hinnang on sõltumatu kõigist teistest koolidest.
 
 
-Ja nüüd hierarhiline mudel, mis teab koolide vahelisest varieeruvusest
+Ja nüüd hierarhiline mudel, mis teab koolide vahelisest varieeruvusest:
 
 ```{r, eval=F}
-#glimmer(score1 ~ (1|school), data=df1) #so intercept-only hierarhiline mudel
+#glimmer(score1 ~ (1|school), data=df1) #intercept-only hierarhiline mudel
 
 m3 <- map2stan(
     alist(
@@ -1297,7 +1443,8 @@ m3 <- map2stan(
 ), data=df2 )
 precis(m3, depth = 2)
 ```
-Siin on nüüd lisaparameeter sigma_school. Nagu näha on sigma_school < sigma, mis tähendab, et koolide vaheline varieeruvus on väiksem kui õpilaste vaheline varieeruvus neis koolides. Seega sõltub testi tulemus rohkem sellest, kes seda testi teeb kui sellest, mis koolis ta õpib.
+
+Siin on lisaparameeter sigma_school. Nagu näha on sigma_school < sigma, mis tähendab, et koolide vaheline varieeruvus on väiksem kui õpilaste vaheline varieeruvus neis koolides. Seega sõltub testi tulemus rohkem sellest, kes testi teeb kui sellest, mis koolis ta käib. Loogika on siin järgmine: samamoodi nagu testitulemustel on jaotus õpilasekaupa, on neil ka jaotus koolikaupa. Koolikaupa jaotus töötab priorina õpilasekaupa jaotusele. Aga samas vajab kooli kaupa jaotus oma priorit --- ehk meta-priorit. Seega saame me samast mudelist hinnangu nii testitulemustele kõikvõimalike õpilaste lõikes, kui ka kõikvõimalike koolide lõikes. Mudel ennustab ka nende koolide ja õpilaste tulemusi, keda tegelikult olemas ei ole, aga kes võiksid kunagi sündida.    
 
 
 ning veel üks hierarhiline mudel, mis teab nii koolide skooride keskmiste varieeruvust kui koolide vahelist varieeruvust.
@@ -1318,7 +1465,8 @@ precis(m4, depth = 2)
 ```{r, eval=F}
 compare(m2, m3, m4)
 ```
-m3 is the best model (and preferred by glimmer()), but also m4 and m2 have some weigth!
+
+m3 on parim mudel, aga ka m4 ja m2 omavad mingit kaalu.
 
 ```{r fig.height=10, fig.width=4, eval=F}
 #coeftab(m2, m3, m4)
@@ -1327,10 +1475,12 @@ plot(coeftab(m2, m3, m4))
 
 Siin on hästi näha shrinkage m3 ja m4 puhul, võrreldes m2-ga, mis ei tee multiple testingu korrektsiooni. Nende koolide puhul, kus usaldusintervall on laiem, on ka suurem shrinkage (mudel võtab nende kohta suhteliselt rohkem infot teistest koolidest sest need koolid ise on mingil põhjusel suhteliselt infovaesed)
 
-### 4.15.2 Vabad interceptid.
+### Vabad interceptid.
 
-Ennustame score1 ja score2 summa sõltuvust sex-ist. Küsimus: kui palju poiste ja tüdrukute matemaatikaoskused erinevad?
-Seega kasutame prediktorina binaarset kategoorilist muutujat. See on analoogiline olukord ANOVA mudelile, mis võtab arvesse multiple testingu olukorra, mis meil siin on.
+
+Ennustame score1 ja score2 summa sõltuvust sex-ist. Küsimus: kui palju poiste ja tüdrukute matemaatikaoskused erinevad? Fitime mudeli, mis laseb vabaks intercepti. **Selle mudeli eeldus on, et igal koolil on oma baas-tase (oma intercept), aga kõikide koolide efektid (mudeli tõusu-koefitsient) on identsed.**
+
+Me kasutame prediktorina binaarset kategoorilist muutujat. See on analoogiline olukord ANOVA mudelile, mis võtab arvesse multiple testingu olukorra, mis meil siin on.
 ```{r}
 #df2 <- schools
 df2 <- read.csv( "data/schools.csv")
@@ -1339,7 +1489,7 @@ df2$sex <- as.factor(df2$sex)
 f1 <- glimmer(summa~ sex + (1 | school), data=df2)
 ```
 
-```{r fig.height=8, fig.width=6}
+```{r }
 m1 <- map2stan(alist(
     summa ~ dnorm( mu , sigma ),
     mu <- Intercept +
@@ -1352,9 +1502,16 @@ m1 <- map2stan(alist(
     sigma ~ dcauchy(0,2)
 ), data= f1$d #siin tuleb kasutada glimmeri poolt loodud andmetabelit sest glimmer teeb factorid Stanile sõõdavaks
 )
+```
 
+Siin on v_Intercept kooli-spetsiifiline korrektsioonifaktor, mis tuleb liita üldisele Interceptile. mean(v_Intercept) == 0. Me eeldame, et korrektsioonid on normaaljaotusega.
+Alternatiivne viis seda mudelit kirjutada oleks `mu <- Intercept[school] + b_sex1*sex1` ja see töötab smamoodi (nüüd on iga kooli intercept kohe eraldi). 
+
+```{r fig.height=8, fig.width=6}
 plot(precis(m1, depth = 2))
 ```
+
+
 sex=1 ehk sex1 on tüdruk. Ja selle soo tulemused on tõesti paremad kui 0-seksi omad. intercept annab siin sex=0 (poisid) keskmise  skoori kooli kaupa (kui liita üldisele interceptile kooli-spetsiifiline intercept). Kui tahame näiteks hinnangut 2. kooli tüdrukute skoorile (ehk tõelisele matemaatikavõimekusele) siis: 
 
 *Intercept + b_sex1 + intercept[2]* 
@@ -1378,7 +1535,7 @@ dens(sch2_intercept)
 
 Siin on eeldus, et kõikides koolides on sama poiste ja tüdrukute vaheline erinevus (b_sex1), kuid erinevad matemaatikateadmiste baastasemed (mudeli intercept on koolide vahel vabaks lastud, kuid tõus mitte). 
 
-### 4.15.3. vabad tõusud ja interceptid
+### vabad tõusud ja interceptid
 
 Milline näeb välja mudel, kus me laseme vabaks nii intercepti kui tõusu?
 
