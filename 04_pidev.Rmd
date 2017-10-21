@@ -915,19 +915,10 @@ Me näeme, et seal kus SKP on väiksem kipuvad residuaalid olema negatiivsed, mi
 See seos tuleb eriti selgelt välja järgmisel pildil, kus plotime residuaalide sõltuvuse elueast:
 ```{r}
 g2007$m.resid <- m.resid
-<<<<<<< HEAD
 ggplot(g2007, aes(lifeExp, m.resid)) +
   geom_smooth(method = "lm", se = FALSE) +
   geom_point() +
   geom_hline(yintercept = 0, color = "grey", linetype = 2)
-=======
-
-ggplot( g2007, aes( lifeExp, m.resid ) ) +
-  geom_smooth( method = "lm", se = FALSE ) +
-  geom_point()+
-  geom_hline( yintercept = 0, color = "grey", linetype = 2 ) +
-  theme_tufte()
->>>>>>> be4c0ddf26e39f3f3932ac3c23ab9431c6eac00f
 ```
 Horisontaal punktiirjoon näitab, kus mudel vastab täpselt andmetele. 
 
@@ -940,15 +931,8 @@ Plot, kus me ennustame keskmise eluea sõltuvust SKP-st nii riikide kaupa eraldi
 ```{r}
 # prepare new counterfactual data
 pred.data <- tibble(
-<<<<<<< HEAD
     lGDP_s = seq(-3, 3, length.out = 30), # need meie poolt valitud lGDP_s väärtused, millele me ennustame vastavad eluead 
     lpop_s = 0 # rahvaarv fikseeritakse muutuja keskmisele tasemele, mis standardiseeritud andmete korral = 0
-=======
-    lGDP_s = seq( from = -3 , to = 3 , length.out = 30 ), 
-#need meie poolt valitud lGDP_s väärtused, millele me ennustame vastavad eluead 
-    lpop_s = 0 
-#rahvaarv fikseeritakse muutuja keskmisele tasemele, mis standardiseeritud andmete korral = 0
->>>>>>> be4c0ddf26e39f3f3932ac3c23ab9431c6eac00f
 )
 
 # compute counterfactual mean lifeExp (mu)
@@ -957,26 +941,14 @@ mu.mean <- apply(mu, 2, mean)
 mu.PI <- apply(mu, 2, PI)
 
 # simulate counterfactual lifeExpectancies of individual countries
-<<<<<<< HEAD
 R.sim <- rethinking::sim(m5, data = pred.data , n = 1e4)
-=======
-R.sim <- rethinking::sim( m5 , data=pred.data )
->>>>>>> be4c0ddf26e39f3f3932ac3c23ab9431c6eac00f
 R.sim <- na.omit(R.sim)
 R.PI <- apply(R.sim, 2, PI)
 
-<<<<<<< HEAD
 ggplot(pred.data, aes(lGDP_s, mu.mean)) +
   geom_line(y = mu.mean) +
   geom_ribbon(ymin = mu.PI[1,], ymax = mu.PI[2,], color = "grey", alpha = 0.2) +
   geom_ribbon(ymin = R.PI[1,], ymax = R.PI[2,], color = "grey", alpha = 0.2)
-=======
-ggplot( pred.data, aes( lGDP_s, mu.mean ) ) +
-  geom_line( y = mu.mean ) +
-  geom_ribbon( ymin = mu.PI[1,], ymax = mu.PI[2,], color="grey", alpha = 0.2 ) +
-  geom_ribbon( ymin = R.PI[1,], ymax = R.PI[2,], color = "grey", alpha = 0.2 ) +
-  theme_tufte()
->>>>>>> be4c0ddf26e39f3f3932ac3c23ab9431c6eac00f
 ```
 
 Näeme, kuidas ennustus sobib/ei sobi andmetega. Võrdle eelneva ennustuspildiga, kus mudel ei sisalda rahvaarvu. Ennustuse intervallid on originaalandmete skaalas (aastates), mis on hea.
@@ -990,13 +962,8 @@ Need plotivad algandmed mudeli fiti vastu.
 
 ```{r}
 library(bayesplot)
-<<<<<<< HEAD
 yrep <- sim(m5)
 ppc_dens(g2007$lifeExp, yrep[1:5, ])
-=======
-yrep <- sim( m5 )
-ppc_dens( g2007$lifeExp, yrep[1:5,] )
->>>>>>> be4c0ddf26e39f3f3932ac3c23ab9431c6eac00f
 ```
 
  
@@ -1005,7 +972,6 @@ ppc_dens( g2007$lifeExp, yrep[1:5,] )
 Ploti ennustused andmepunktide vastu ja lisa sirge, mis näitab täiuslikku ennustust pluss jooned, mis näitavad igale ennustusele omistatud usaldusintervalli
 
 ```{r}
-<<<<<<< HEAD
 g2007 <- gapminder %>% filter(year == 2007)
 g2007 <- g2007 %>% mutate(l_GDP = log10(gdpPercap))
 g2007 <- g2007 %>% 
@@ -1013,17 +979,6 @@ g2007 <- g2007 %>%
          lpop_s = (l_pop - mean(l_pop)) / sd(l_pop),
          lGDP_s = (l_GDP - mean(l_GDP)) / sd(l_GDP)) %>% 
   as.data.frame(g2007)
-=======
-library(gapminder)
-gapminder <- gapminder
-g2007 <- gapminder %>% filter( year == 2007 )
-g2007 <- g2007 %>% mutate( l_GDP = log10( gdpPercap ) )
-g2007 <- g2007 %>% mutate( l_pop = log10( pop ), 
-                           lpop_s = (l_pop - mean( l_pop ) )/sd( l_pop ),
-                           lGDP_s = (l_GDP - mean( l_GDP ) )/sd( l_GDP ) )
-g2007 <- as.data.frame( g2007 )
-
->>>>>>> be4c0ddf26e39f3f3932ac3c23ab9431c6eac00f
 
 mu <- link(m5)  
 mu.mean <- apply(mu, 2, mean)
