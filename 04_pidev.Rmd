@@ -786,6 +786,18 @@ Ka see mudel jääb hätta Aafrika outlieritega, mille eluiga ei suuda ennustada
 
 ## Mitme prediktoriga lineaarne regressioon
 
+```{r}
+library(gapminder)
+gapminder <- gapminder
+g2007 <- gapminder %>% filter( year == 2007 )
+g2007 <- g2007 %>% mutate( l_GDP = log10( gdpPercap ) )
+g2007 <- g2007 %>% mutate( l_pop = log10( pop ), 
+                           lpop_s = (l_pop - mean( l_pop ) )/sd( l_pop ),
+                           lGDP_s = (l_GDP - mean( l_GDP ) )/sd( l_GDP ) ) %>% 
+  as.data.frame()
+```
+
+
 Meil on võimalik lisada regressioonivõrrandisse lisaprediktoreid. Nüüd ei küsi me enam, kuidas mõjutab l_GDP varieeruvus keskmise eluea varieeruvust vaid: kuidas mõjutavad muutujad l_GDP, continent ja logaritm pop-ist (rahvaarvust) keskmist eluiga. Me modelleerime selle lineaarselt nii, et eeldusena varieeruvad need x-i muutujad üksteisest sõltumatult: y = a + b1x1 + b2x2 + b3x3
 
 Sellise mudeli tõlgendus on suhteliselt lihtne: 
@@ -807,10 +819,8 @@ Kui meil on mudelis SKP ja pop, siis saame küsida
 Järgenval mudelil on 4 parameetrit (intercept + 3 betat).
 
 ```{r}
-
 m1 <- lm( lifeExp ~ l_GDP + continent + log10( pop ), data = g2007 )
 summary( m1 )
-
 ```
 
 loeme mudelis "+" märki nagu "või". Ehk, "eluiga võib olla funktsioon SKP-st **või** rahvaarvust".
@@ -819,16 +829,13 @@ Intercept 19 ei tähenda tõlgenduslikult midagi. l-GDP tõus ühiku võrra tõs
 
 võrdluseks lihtne mudel
 ```{r}
-
 m2 <- lm( lifeExp ~ l_GDP, data = g2007 )
 summary( m2 )
-
 ```
 
 Siin on l_GDP mõju suurem, 16.6 aastat. Millisel mudelil on siis õigus? Proovime veel ülejäänud variendid
 
 ```{r}
-
 m3 <- lm( lifeExp ~ l_GDP + continent, data = g2007 )
 summary( m3 )
 
@@ -859,13 +866,6 @@ $Standard.andmed = (x - mean(x))/sd(x)$
 Nii on lihtsam erinevas skaalas muutujaid omavahel võrrelda (1 ühikuline muutus võrdub alati muutusega 1 standardhäve võrra) ja mudeli arvutamine üle mcmc ahelate on ka lihtsam.
 
 ```{r results="hide"}
-
-g2007 <- g2007 %>% mutate( l_GDP = log10( gdpPercap ) )
-g2007 <- g2007 %>% 
-  mutate( l_pop = log10( pop ),
-          lpop_s = ( l_pop - mean( l_pop ) )/sd( l_pop ),
-          lGDP_s = ( l_GDP - mean( l_GDP ) )/sd( l_GDP ) ) %>% 
-  as.data.frame()
 
 m5 <- map2stan(
     alist(
@@ -970,7 +970,7 @@ mu.mean <- apply(mu, 2, mean)
 mu.PI <- apply(mu, 2, PI)
 
 # simulate counterfactual lifeExpectancies of individual countries
-R.sim <- rethinking::sim(m5, data = pred.data , n = 1e4)
+R.sim <- rethinking::sim(m5, data = pred.data)
 R.sim <- na.omit(R.sim)
 R.PI <- apply(R.sim, 2, PI)
 
@@ -1002,7 +1002,6 @@ Ploti ennustused andmepunktide vastu, pluss jooned, mis näitavad igale ennustus
 
 Loeme gapminderi andmed uuesti sisse:
 ```{r}
-
 library(gapminder)
 gapminder <- gapminder
 g2007 <- gapminder %>% filter( year == 2007 )
@@ -1015,16 +1014,6 @@ g2007 <- g2007 %>% mutate( l_pop = log10( pop ),
 
 Ja nüüd plotime ennustused Y-le tegelike Y valimi väärtuste vastu:
 ```{r}
-mu <- link( m5 )  
-mu.mean <- apply( mu , 2 , mean )
-
-g2007 <- gapminder %>% filter(year == 2007)
-g2007 <- g2007 %>% mutate(l_GDP = log10(gdpPercap))
-g2007 <- g2007 %>% 
-  mutate(l_pop = log10(pop), 
-         lpop_s = (l_pop - mean(l_pop)) / sd(l_pop),
-         lGDP_s = (l_GDP - mean(l_GDP)) / sd(l_GDP)) %>% 
-  as.data.frame(g2007)
 
 mu <- link(m5)  
 mu.mean <- apply(mu, 2, mean)
