@@ -807,13 +807,10 @@ Kui meil on mudelis SKP ja pop, siis saame küsida
 Järgenval mudelil on 4 parameetrit (intercept + 3 betat).
 
 ```{r}
-<<<<<<< HEAD
+
 m1 <- lm( lifeExp ~ l_GDP + continent + log10( pop ), data = g2007 )
 summary( m1 )
-=======
-m1 <- lm(lifeExp~ l_GDP + continent + log10(pop), data = g2007)
-summary(m1)
->>>>>>> 7cd604181e619dad8eaaaaddcfced91ff32998c9
+
 ```
 
 loeme mudelis "+" märki nagu "või". Ehk, "eluiga võib olla funktsioon SKP-st **või** rahvaarvust".
@@ -822,31 +819,21 @@ Intercept 19 ei tähenda tõlgenduslikult midagi. l-GDP tõus ühiku võrra tõs
 
 võrdluseks lihtne mudel
 ```{r}
-<<<<<<< HEAD
+
 m2 <- lm( lifeExp ~ l_GDP, data = g2007 )
 summary( m2 )
-=======
-m2 <- lm(lifeExp ~ l_GDP, data = g2007)
-summary(m2)
->>>>>>> 7cd604181e619dad8eaaaaddcfced91ff32998c9
+
 ```
 
 Siin on l_GDP mõju suurem, 16.6 aastat. Millisel mudelil on siis õigus? Proovime veel ülejäänud variendid
 
 ```{r}
-<<<<<<< HEAD
+
 m3 <- lm( lifeExp ~ l_GDP + continent, data = g2007 )
 summary( m3 )
 
 m4 <- lm( lifeExp ~ l_GDP + log10( pop ), data = g2007 )
 AIC( m1, m2, m3, m4 )
-=======
-m3 <- lm(lifeExp ~ l_GDP + continent, data = g2007)
-summary(m3)
-
-m4 <- lm(lifeExp ~ l_GDP + log10(pop), data = g2007)
-AIC(m1, m2, m3, m4)
->>>>>>> 7cd604181e619dad8eaaaaddcfced91ff32998c9
 ```
 
 Võitja mudel on hoopis m3, mis võtab arvesse kontinendi. Siin on l_GDP mõju samuti 10.7 aastat. Lisaks näeme, et kui riik ei asu Aafrikas, siis on l_GDP mõju elueale u 11 aasta võrra suurem. Seega elu Aafrika kisub alla keskmise eluea riigi rikkusest sõltumata. Võib olla on põhjuseks sõjad, võib-olla AIDS ja malaaria, võib-olla midagi muud. 
@@ -872,7 +859,7 @@ $Standard.andmed = (x - mean(x))/sd(x)$
 Nii on lihtsam erinevas skaalas muutujaid omavahel võrrelda (1 ühikuline muutus võrdub alati muutusega 1 standardhäve võrra) ja mudeli arvutamine üle mcmc ahelate on ka lihtsam.
 
 ```{r results="hide"}
-<<<<<<< HEAD
+
 g2007 <- g2007 %>% mutate( l_GDP = log10( gdpPercap ) )
 g2007 <- g2007 %>% 
   mutate( l_pop = log10( pop ),
@@ -889,21 +876,7 @@ m5 <- map2stan(
         sigma ~ dunif( 0 , 10 )
 ),
     data = g2007 )
-=======
-g2007 <- g2007 %>% 
-  mutate(l_pop = log10(pop), 
-         lpop_s = (l_pop - mean(l_pop)) / sd(l_pop),
-         lGDP_s = (l_GDP - mean(l_GDP)) / sd(l_GDP))
-g2007 <- as.data.frame(g2007)
-m5 <- map2stan(
-  alist(
-    lifeExp ~ dnorm(mu, sigma) ,
-    mu <- a + b_GDP * lGDP_s + b_pop * lpop_s,
-    a ~ dnorm(0, 10),
-    c(b_GDP, b_pop) ~ dnorm(0, 1),
-    sigma ~ dunif(0, 10)
-  ), data = g2007 )
->>>>>>> 7cd604181e619dad8eaaaaddcfced91ff32998c9
+
 ```
 
 ```{r}
@@ -913,34 +886,21 @@ precis( m5 )
 kui l_GDP kasvab 1 sd võrra, siis eluiga kasvab 6.9 aasta võrra. 
 
 ```{r}
-<<<<<<< HEAD
  f1 <- glimmer( lifeExp ~ lGDP_s + lpop_s + continent, data = g2007 )
- 
-=======
-f1 <- glimmer(lifeExp ~ lGDP_s + lpop_s + continent, data = g2007) 
->>>>>>> 7cd604181e619dad8eaaaaddcfced91ff32998c9
 ```
 See on mudeli struktuur, mis sisaldab uusi kategoorilisi muutujaid
 
 Siin on tähtis anda map2stan()-le ette glimmeri poolt eeltöödeldud andmed:
 ```{r results="hide"}
 m6 <- map2stan(
-<<<<<<< HEAD
   f1$f, 
-=======
-  f1$f,
->>>>>>> 7cd604181e619dad8eaaaaddcfced91ff32998c9
   data = f1$d
 )
 ```
 
 ```{r}
-<<<<<<< HEAD
 precis( m6 )
 
-=======
-precis(m6)
->>>>>>> 7cd604181e619dad8eaaaaddcfced91ff32998c9
 ```
 
 ### Keerulisemate mudelitega töötamine
@@ -960,31 +920,23 @@ Kõigepealt lihtne residuals plot, kus meil on y-teljel residuaalid ja x-teljel 
 ```{r}
 # Using the fitted model compute the expected value of y (mu) 
 # for each of the 142 data rows.
-<<<<<<< HEAD
+
 mu <- coef( m5 )[ 'a' ] + 
   coef( m5 )[ 'b_GDP' ] * g2007$lGDP_s + 
   coef( m5 )[ 'b_pop' ] * g2007$lpop_s
-=======
-mu <- coef(m5)['a'] + 
-  coef(m5)['b_GDP'] * g2007$lGDP_s + 
-  coef(m5)['b_pop'] * g2007$lpop_s
->>>>>>> 7cd604181e619dad8eaaaaddcfced91ff32998c9
+
 
 # compute residuals - a vector w. 142 values
 m.resid <- g2007$lifeExp - mu
 
-<<<<<<< HEAD
+
 library(ggthemes)
 ggplot( g2007, aes( lGDP_s, m.resid ) ) + 
   geom_segment( aes( xend = lGDP_s, yend = 0 ), size = 0.2 ) +
   geom_point( size = 0.5, type = 1 ) + 
   theme_tufte()
   
-=======
-ggplot(g2007, aes(lGDP_s, m.resid)) + 
-  geom_segment(aes(xend = lGDP_s, yend = 0), size = 0.2) +
-  geom_point(size = 0.5, type = 1)
->>>>>>> 7cd604181e619dad8eaaaaddcfced91ff32998c9
+
 ```
 
 
@@ -1050,7 +1002,7 @@ Ploti ennustused andmepunktide vastu, pluss jooned, mis näitavad igale ennustus
 
 Loeme gapminderi andmed uuesti sisse:
 ```{r}
-<<<<<<< HEAD
+
 library(gapminder)
 gapminder <- gapminder
 g2007 <- gapminder %>% filter( year == 2007 )
@@ -1065,7 +1017,7 @@ Ja nüüd plotime ennustused Y-le tegelike Y valimi väärtuste vastu:
 ```{r}
 mu <- link( m5 )  
 mu.mean <- apply( mu , 2 , mean )
-=======
+
 g2007 <- gapminder %>% filter(year == 2007)
 g2007 <- g2007 %>% mutate(l_GDP = log10(gdpPercap))
 g2007 <- g2007 %>% 
@@ -1076,7 +1028,7 @@ g2007 <- g2007 %>%
 
 mu <- link(m5)  
 mu.mean <- apply(mu, 2, mean)
->>>>>>> 7cd604181e619dad8eaaaaddcfced91ff32998c9
+
 mu.PI <- apply( mu , 2 , PI )
 
 g2007$mu.mean <- mu.mean
