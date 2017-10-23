@@ -1060,14 +1060,14 @@ punased jooned näitavad 89% ennustuspiire igale residuaalile riigi tasemel (89%
 
 ### interaktsioonid prediktorite vahel
 
-Eelnevad mudelid eeldavad, et prediktorite varieeruvused on üksteisest sõltumatud. Aga mis, siis kui see nii ei ole ja ühe prediktori mõju suurus sõltub teisest prediktorist, ehk prediktorite vahel on interaktsioon? Lihtsaim viis sellist interaktsiooni modelleerida on lisades aditiivsele mudelile, milliseid me just eelmises peatükis käsitlesime, interaktsioon korrutamisetehtena:
+Eelnevad mudelid eeldavad, et prediktorite varieeruvused on üksteisest sõltumatud. Aga mis siis, kui see nii ei ole ja ühe prediktori mõju suurus sõltub teisest prediktorist, ehk prediktorite vahel on interaktsioon? Lihtsaim viis sellist interaktsiooni modelleerida on lisades interaktsiooni aditiivsele mudelile korrutamisetehtena:
 
 $y = a + b1x1 + b2x2 + b3x1x2$
 
-Sellise mudeli järgi erineb sirge tõus b1 erinevatel b2 väärtustel, ja erinevuse määr sõltub b3-st sõltuvalt interaktsiooni tugevusest. Samamoodi ja sümmeetriliselt erineb ka b2 väärtus erinevatel b1 väärtustel. Seega tähendab interaktsiooni mudel, et sirge tõusunurk ei ole alati sama. See on ühine paljude hierarhiliste mudelitega, mida võib omakorda vaadelda massivsete interaktsioonimudelitena. Seevastu y = a + b1x1 + b2x2 tüüpi mudel annab b1-le konstantse tõusunurga, kuid laseb intercepti muutuma sõltuvalt b2 väärtusest (ja vastupidi) 
+Sellise mudeli järgi erineb sirge tõus b1 erinevatel b2 väärtustel, ja erinevuse määr sõltub b3-st (b3 annab interaktsiooni tugevuse). Samamoodi ja sümmeetriliselt erineb ka tõus b2 sõltuvalt b1 väärtusest. See on ühine paljude hierarhiliste mudelitega, mida võib omakorda vaadelda massivsete interaktsioonimudelitena. Seevastu y = a + b1x1 + b2x2 tüüpi mudel annab b1-le konstantse tõusunurga, kuid laseb intercepti muutuma sõltuvalt b2 väärtusest (ja vastupidi). 
 
-Sellise mudeli fittimises pole midagi erilist võrreldes sellega, mida me oleme juba õppinud. Aga selle fititud parameetrite tõlgendamine on keeruline. 
-alustame diskreetse muutujaga, continent. Selle interaktsioon SKP-ga.
+Interaktsioonimudeli fittimises pole midagi erilist võrreldes sellega, mida me oleme juba õppinud. Aga fititud parameetrite tõlgendamine on keeruline. 
+Alustame diskreetse muutujaga, continent, ja mudeldame selle interaktsiooni SKP-ga.
 
 ```{r}
 f1 <- glimmer(lifeExp~ lGDP_s*continent, data=g2007)
@@ -1089,56 +1089,11 @@ c1 <- coef(m1)
 names(c1)
 ```
 
+Kõigepealt defineerime X1 ja X2 väärtused, millele teeme ennustused link() funktsiooni abil. Link tabelist veergude keskmine annab keskmise eluea ennustuse vastavale mandrile ja SKP-le. PI() abil saame 89% CI igale ennustusele. 
 
 ```{r}
-GDP.seq <- seq(from=-3,to=3,by=0.1)
-mu.Africa <- link( m1 , 
-                     data=data.frame(continentAmericas=0, 
-                                     continentAsia=0,
-                                     continentEurope=0,
-                                     continentOceania=0,
-                                     lGDP_s_X_continentAmericas=0,
-                                     lGDP_s_X_continentAsia=0,
-                                     lGDP_s_X_continentEurope=0,
-                                     lGDP_s_X_continentOceania=0,
-                                     lGDP_s=GDP.seq) )
-mu.Africa.mean <- apply( mu.Africa , 2 , mean )
-mu.Africa.PI <- apply( mu.Africa , 2 , PI , prob=0.9 )
-mu.Europe <- link( m1 , data=data.frame(continentAmericas=0, 
-                                     continentAsia=0,
-                                     continentEurope=1,
-                                     continentOceania=0,
-                                     lGDP_s_X_continentAmericas=0,
-                                     lGDP_s_X_continentAsia=0,
-                        lGDP_s_X_continentEurope=c1["b_lGDP_s_X_continentEurope"],
-                                     lGDP_s_X_continentOceania=0, 
-                                     lGDP_s=GDP.seq) )
-mu.Europe.mean <- apply( mu.Europe , 2 , mean )
-mu.Europe.PI <- apply( mu.Europe , 2 , PI , prob=0.9 )
-
-# plot regression line for African nations
-dd <- as.data.frame(f1$d)
-
-plot( lifeExp ~ lGDP_s , data=dd ,
-    col=rangi2 , ylab="life expectancy" ,
-    xlab="GDP", type="n" )
-mtext( "African nations" , 3 )
-lines( GDP.seq , mu.Africa.mean , col=rangi2 )
-shade( mu.Africa.PI , GDP.seq , col=col.alpha(rangi2,0.3) )
-
-# plot european nations with regression
-d.A0 <- dd[dd$continentEurope==1,]
-plot( lifeExp ~ lGDP_s, data=d.A0 ,
-    col="black" , ylab="life expectancy" ,
-    xlab="GDP", xlim=c(-2,2) )
-mtext( "European nations" , 3 )
-lines( GDP.seq , mu.Europe.mean )
-shade( mu.Europe.PI , GDP.seq )
-```
-Nagu näha, on meil nüüd üsna erinevad sirge tõusunurgad.
-
-Sama ggplotiga
-```{r}
+dd <- as.data.frame(f1$d) #we use the dataframe made by glimmer()
+#in dd all continents are in separate 2-level columns (except Africa)
 dd1 <- dd %>% filter(continentAmericas==0, 
                      continentAsia==0, 
                      continentEurope==0, 
@@ -1156,7 +1111,6 @@ ggplot(data=dd1, aes(lGDP_s, lifeExp)) +
 ```{r}
 dd1 <- dd %>% filter(continentEurope==1)
 mu.Europe <- link(m1, dd1)
-mu.Europe <- link(m1, dd1)
 mu.Europe.mean <- apply( mu.Europe , 2 , mean )
 mu.Europe.PI <- apply( mu.Europe , 2 , PI , prob=0.9 )
 
@@ -1166,7 +1120,7 @@ ggplot(data=dd1, aes(lGDP_s, lifeExp)) +
   geom_line( aes( y=mu.Europe.mean))+ theme_tufte()
 ```
 
-
+Nagu näha, on meil nüüd üsna erinevad sirge tõusunurgad.
 
 
 #### Interaktsioonid pidevatele tunnustele
@@ -1174,31 +1128,33 @@ ggplot(data=dd1, aes(lGDP_s, lifeExp)) +
 Kasutame standardiseeritud prediktoreid, sest nende koefitsiente saab paremini tõlgendada (tegelikult piisab prediktorite tsentreerimisest). Meie andmed käsitlevad diabeedimarkereid Ameerika lõunaosariikide neegritel 1960-ndatel. Me ennustame siin sõltuvalt vanusest ja vööümbermõõdust hdl-i --- high density cholesterol --- mis on nn hea kolesterool.
 
 ```{r}
-diabetes <- read.table(file = 'data/diabetes.csv', header = TRUE, sep = ';', dec = ',')
-diabetes <- read.csv2("data/diabetes.csv")
-d1 <- diabetes %>% select(hdl, age, waist) %>% na.omit()
-d2 <- d1 %>% mutate(age_st=(age - mean(age))/sd(age), 
-                    waist_st=(waist - mean(waist))/sd(waist))
+#diabetes <- read.table( file = 'data/diabetes.csv', header = TRUE, sep = ';', dec = ',' )
+diabetes <- read.csv2( "data/diabetes.csv" )
+d1 <- diabetes %>% select( hdl, age, waist ) %>% na.omit()
+d2 <- d1 %>% mutate( age_st = ( age - mean( age ) )/sd( age ), 
+                    waist_st = ( waist - mean( waist ) )/sd( waist ) )
 m2 <- map2stan(
     alist(
         hdl ~ dnorm( mu , sigma ) ,
         mu <- a + bR*age_st + bA*waist_st + bAR*age_st*waist_st,
-        a ~ dnorm(0,100),
-        bR ~ dnorm(0,2),
-        bA ~ dnorm(0,2),
-        bAR~ dnorm(0,2),
-        sigma ~ dcauchy(0,1)
-), data=d2, chains=1 , cores=1 )
+        a ~ dnorm( 0, 100 ),
+        bR ~ dnorm( 0, 2 ),
+        bA ~ dnorm( 0, 2 ),
+        bAR~ dnorm( 0, 2),
+        sigma ~ dcauchy( 0, 1 )
+), data = d2 )
 
-plot(precis(m2))
+plot(precis( m2 ) )
 ```
 
-a - hdl-i oodatav keskväärtus siis kui waist ja age on fikseeritud oma keskmisel väärtusel. 
-bR - oodatav hdl-i muutus, kui vanus kasvab 1 aasta võrra ja waist on fikseeritud oma keskväärtusel
-bA - sama, kui võõ-ümbermõõt kasvab 1 ühiku (inch) võrra 
-bAR - kaks ekvivalentset tõlgendust: 1) oodatav muutus vanuse mõju määrale hdl-le, kui vööümbermõõt kasvab 1 ühiku võrra. 2) oodatav muutus vööümbermõõdu mõju määrale hdl-le, kui vanus kasvab 1 ühiku võrra.
+**NB!** Järgmised interpretatsioonid kehtivad ainult siis, kui mudeldame nullile tsentreeritud andmeid.
 
-Negatiivne bAR tähendab, et vanus ja vööümbermõõt omavad vastandlikke mõjusid hdl-i tasemele, aga samas kumgki tõstab teise tähtsust hdl-le.
+a - hdl-i oodatav keskväärtus siis kui võõ-ümbermõõt ja vanus on fikseeritud oma keskmistel väärtustel. 
+bR - oodatav hdl-i muutus, kui vanus kasvab 1 aasta võrra ja võõ-ümbermõõt on fikseeritud oma keskväärtusel
+bA - sama, kui võõ-ümbermõõt kasvab 1 ühiku (inch) võrra 
+bAR - kaks ekvivalentset tõlgendust: 1) oodatav muutus vanuse mõju määrale hdl-le, kui vöö-ümbermõõt kasvab 1 ühiku võrra. 2) oodatav muutus vöö-ümbermõõdu mõju määrale hdl-le, kui vanus kasvab 1 ühiku võrra.
+
+Negatiivne bAR tähendab, et vanus ja vöö-ümbermõõt omavad vastandlikke mõjusid hdl-i tasemele, aga samas kumgki tõstab teise tähtsust hdl-le.
 
 
 ```{r}
@@ -1206,15 +1162,15 @@ m3 <- map2stan(
     alist(
         hdl ~ dnorm( mu , sigma ) ,
         mu <- a + bR*age_st + bA*waist_st,
-        a ~ dnorm(0,100),
-        c(bR, bA) ~ dnorm(0,2),
-        sigma ~ dcauchy(0,1)
-), data=d2, chains=1 , cores=1 )
+        a ~ dnorm( 0, 100 ),
+        c(bR, bA) ~ dnorm( 0, 2 ),
+        sigma ~ dcauchy( 0, 1 )
+), data = d2)
 
 compare(m2, m3)
 ```
 
-Siin on tegelikult eelistatud ilma interaktsioonita mudel. Aga kuna interaktsioonimudeli kaal on ikkagi 27%, tasub meil ennustuste tegemisel mõlemat mudelit koos arvestada vastavalt oma kaalule. 
+Siin on tegelikult eelistatud ilma interaktsioonita mudel. Aga kuna interaktsioonimudeli kaal on ikkagi 23%, tasub meil ennustuste tegemisel mõlemat mudelit koos arvestada vastavalt oma kaalule. 
 
 ```{r}
 coeftab(m2, m3)
@@ -1222,53 +1178,56 @@ coeftab(m2, m3)
 
 Tõesti, bA ja bR on mõlemas mudelis väga sarnased. m3 on kindlasti lihtsamini tõlgendatav.
 
-Ensemble teeb ära nii link() kui sim() kasutades mõlemat mudelit vastavalt mudelite WAIC-i kaaludele ja toodab listi, mille elementideks on link() toodetud maatriks ja sim() toodetud maatriks.
+Ensemble teeb ära nii link()-i kui sim()-i, kasutades mõlemat mudelit vastavalt nende mudelite WAIC-i kaaludele ja toodab listi, mille elementideks on link() toodetud maatriks ja sim() toodetud maatriks.
 
-Teeme 3 plotti: waist=0 (keskmine), waist=-1 (miinus üks sd) ja waist=1
+Teeme 3 plotti: waist = 0 (keskmine), waist = -1 (miinus üks sd) ja waist = 1
 
 ```{r}
 d.pred <- data.frame(
-  age_st=seq(-2, 2, length.out = 20),
-  waist_st=0
+  age_st = seq( -2, 2, length.out = 20 ),
+  waist_st = 0
 ) #siia lähevad kõik prediktorid nende väärtuste kombinatsioonidega, millele me tahame ennustada hdl-i väärtusi.
-e <- ensemble(m2, m3, data=d.pred)
+e <- ensemble( m2, m3, data = d.pred )
 hdl <- apply( e$link , 2 , mean )
 mu.PI <- apply( e$link , 2 , PI , prob=0.97 )
 
-ggplot(d.pred, aes(x=age_st))+
-  geom_line(aes(y=hdl))+
-  geom_line(aes(y=mu.PI[1,]), linetype=2)+
-  geom_line(aes(y=mu.PI[2,]), linetype=2)+ theme_tufte()
+ggplot(d.pred, aes( x = age_st ) ) +
+  geom_line( aes( y = hdl ) ) +
+  geom_line( aes( y = mu.PI[1,] ), linetype = 2 ) +
+  geom_line( aes( y = mu.PI[2,] ), linetype = 2 ) + 
+  theme_tufte()
 ```
 
 ```{r}
 d.pred <- data.frame(
-  age_st=seq(-2, 2, length.out = 20),
-  waist_st=-1
+  age_st=seq( -2, 2, length.out = 20 ),
+  waist_st = -1
 ) #siia lähevad kõik prediktorid nende väärtuste kombinatsioonidega, millele me tahame ennustada hdl-i väärtusi.
-e <- ensemble(m2, m3, data=d.pred)
+e <- ensemble( m2, m3, data = d.pred )
 hdl <- apply( e$link , 2 , mean )
 mu.PI <- apply( e$link , 2 , PI , prob=0.97 )
 
-ggplot(d.pred, aes(x=age_st))+
-  geom_line(aes(y=hdl))+
-  geom_line(aes(y=mu.PI[1,]), linetype=2)+
-  geom_line(aes(y=mu.PI[2,]), linetype=2)+ theme_tufte()
+ggplot( d.pred, aes( x = age_st ) ) +
+  geom_line( aes( y = hdl ) ) +
+  geom_line( aes( y = mu.PI[1,] ), linetype = 2 ) +
+  geom_line( aes( y = mu.PI[2,] ), linetype = 2) + 
+  theme_tufte()
 ```
 
 ```{r}
 d.pred <- data.frame(
-  age_st=seq(-2, 2, length.out = 20),
-  waist_st=1
+  age_st = seq( -2, 2, length.out = 20 ),
+  waist_st = 1
 ) #siia lähevad kõik prediktorid nende väärtuste kombinatsioonidega, millele me tahame ennustada hdl-i väärtusi.
-e <- ensemble(m2, m3, data=d.pred)
+e <- ensemble( m2, m3, data = d.pred )
 hdl <- apply( e$link , 2 , mean )
-mu.PI <- apply( e$link , 2 , PI , prob=0.97 )
+mu.PI <- apply( e$link , 2 , PI , prob = 0.97 )
 
-ggplot(d.pred, aes(x=age_st))+
-  geom_line(aes(y=hdl))+
-  geom_line(aes(y=mu.PI[1,]), linetype=2)+
-  geom_line(aes(y=mu.PI[2,]), linetype=2)+ theme_tufte()
+ggplot( d.pred, aes( x = age_st ) ) +
+  geom_line( aes( y = hdl ) ) +
+  geom_line( aes( y = mu.PI[1,] ), linetype = 2 ) +
+  geom_line( aes( y = mu.PI[2,] ), linetype = 2 ) + 
+  theme_tufte()
 ```
 
 sama base plotis
