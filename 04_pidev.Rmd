@@ -9,6 +9,7 @@ library(broom)
 library(car)
 library(gapminder)
 library(rethinking)
+library(bayesplot)
 ```
 
 ## Lihtne normaaljaotuse mudel
@@ -469,7 +470,7 @@ HPDI(samplesm2.1$ES, prob = 0.9)
 mean(samplesm2.1$ES < 0)
 ```
 
-Erineva SD-ga mudeli järgi on riigijuhtide pikkuste vahe `r round(median(samplespm2.1$ES), 1)` cm, ebakindlus väiksem -- 90% HDI on `r paste(round(HPDI(samplespm2.1$ES, prob = 0.9), 1), collapse = " kuni ")` ja tõenäosus et pikkuste erinevus on väiksem kui 0 on `r round(mean(samplespm2.1$ES < 0), 2)`.
+Erineva SD-ga mudeli järgi on riigijuhtide pikkuste vahe `r round(median(samplesm2.1$ES), 1)` cm, ebakindlus väiksem -- 90% HDI on `r paste(round(HPDI(samplesm2.1$ES, prob = 0.9), 1), collapse = " kuni ")` ja tõenäosus et pikkuste erinevus on väiksem kui 0 on `r round(mean(samplesm2.1$ES < 0), 2)`.
 
 See ei tähenda tingimata, et me peaksime eelistama teist mudelit. Oluline on, mida me teoreetiliselt usume, kas seda, et tegelik presidentide varieeruvus on USAs ja Euroopas võrdne, või mitte.
 
@@ -643,6 +644,7 @@ Viime SKP andmed log-skaalasse ja proovime uuesti. See tähendab, et me arvame, 
 g2007 <- g2007 %>% 
   mutate(l_GDP = log10(gdpPercap)) %>% 
   as.data.frame()
+
 gapmod7 <- map2stan(alist(
     lifeExp ~ dnorm(mu, sigma),
     mu <- b_gdp * l_GDP,
@@ -660,6 +662,9 @@ gapmod8 <- map2stan(alist(
 ```
 
 ```{r, include=FALSE}
+g2007 <- g2007 %>% 
+  mutate(l_GDP = log10(gdpPercap)) %>% 
+  as.data.frame()
 gapmod7 <- readRDS("data/gapmod7.rds")
 gapmod8 <- readRDS("data/gapmod8.rds")
 ```
@@ -1090,8 +1095,7 @@ Posterioorsed ennustusplotid panevad kõrvuti (või üksteise otsa) Y-i algandme
 1) võrdle mudeli ennustusi andmetega. (Aga arvesta sellega, et mitte kõik mudelid ei püüagi täpselt andmetele vastata.)
 
 ```{r}
-library(bayesplot)
-yrep <- sim(m5)
+yrep <- rethinking::sim(m5)
 ppc_dens(g2007$lifeExp, yrep[1:5, ])
 ```
 
@@ -1102,8 +1106,6 @@ Ploti ennustused andmepunktide vastu, pluss jooned, mis näitavad igale ennustus
 
 Loeme gapminderi andmed uuesti sisse:
 ```{r}
-library(gapminder)
-gapminder <- gapminder
 g2007 <- gapminder %>% filter( year == 2007 )
 g2007 <- g2007 %>% mutate( l_GDP = log10( gdpPercap ) )
 g2007 <- g2007 %>% mutate( l_pop = log10( pop ), 
@@ -1114,7 +1116,6 @@ g2007 <- g2007 %>% mutate( l_pop = log10( pop ),
 
 Ja nüüd plotime ennustused Y-le tegelike Y valimi väärtuste vastu:
 ```{r}
-
 mu <- link(m5)  
 mu.mean <- apply(mu, 2, mean)
 
@@ -1468,7 +1469,7 @@ Lihtne ANOVA on sageduslik test, mis võrdleb gruppide keskmisi mitmese testimis
 
 Missing values are coded as -1.
 
-```{r, eval=F}
+```{r}
 df <- read.table("data/Gcsemv.txt", sep = " ", dec = ".", header = FALSE) 
 
 df$V4[df$V4 == -1] <- NA
@@ -1492,7 +1493,7 @@ m2 <- map2stan(
         mu <- a_school[school],
         a_school[school]  ~ dnorm(50, 30),
         sigma ~ dcauchy(0,1)
-), data=df2 )
+), data = df2 )
 ```
 
 
@@ -1712,7 +1713,7 @@ d.pred <- list(
   sex1= 0
 )
 
-sim_sch <- sim(m2, data= d.pred) 
+sim_sch <- rethinking::sim(m2, data = d.pred) 
 pred.p <- apply( sim_sch , 2 , mean )
 pred.p.PI <- apply( sim_sch , 2 , PI )
 
@@ -1767,8 +1768,7 @@ postcheck(m2)
 Siin püüame ennustada score1 mõju score2 väärtusele.
 
 ```{r}
-#df2 <- read.csv( "data/schools.csv")
-df2 <- schools
+df2 <- read_csv("data/schools.csv")
 plot(df2$score2, df2$score1)
 abline(lm(score1~score2, data=df2))
 ```
