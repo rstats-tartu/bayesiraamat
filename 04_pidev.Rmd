@@ -691,20 +691,11 @@ sim_ci <- rethinking::sim(m8) %>%
   apply(2, HPDI, prob = 0.95)
 coef <- coef(m8)
 
-<<<<<<< HEAD
-ggplot( g2007, aes( l_GDP, lifeExp ) ) + 
-  geom_point( aes( color = continent ), size = 0.8 ) +
-  geom_abline( slope = coef[2], intercept = coef[1] ) +
-  geom_ribbon( aes( ymin = linked_ci[1,], ymax = linked_ci[2,] ), alpha = 0.2 ) +
-  geom_ribbon( aes( ymin = sim_ci[1,], ymax = sim_ci[2,]), alpha = 0.1, color = "grey70" ) +
-  theme_classic()
-=======
 ggplot(g2007, aes(l_GDP, lifeExp)) + 
   geom_point(aes(color = continent), size = 0.8) +
   geom_abline(slope = coef[2], intercept = coef[1]) +
   geom_ribbon(aes(ymin = linked_ci[1,], ymax = linked_ci[2,]), alpha = 0.2) +
   geom_ribbon(aes(ymin = sim_ci[1,], ymax = sim_ci[2,]), alpha = 0.1, color = "grey70")
->>>>>>> 7cd604181e619dad8eaaaaddcfced91ff32998c9
 ```
 
 Kuidas saada ennustusi kindlale l_GDP väärtusele? Näiteks tulp V10 vastab l_GDP väärtusele 2.9. Järgnevalt arvutame oodatavad keskmised eluead sellele SKP väärtusele (fiksionaalsetele riikidele, millel võiks olla täpselt selline SKP):
