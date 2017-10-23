@@ -3,6 +3,7 @@
 
 ```{r}
 library(tidyverse)
+library(stringr)
 library(modelr)
 library(broom)
 library(car)
@@ -397,7 +398,7 @@ precis(potusm2, depth = 2)
 Me võime ka vaadata 2 grupi standardhälbeid lahus.
 Järgnevas mudelis on mõistlik ahelale stardipositsioon ette anda.
 
-```{r}
+```{r, eval=FALSE}
 ## Calculate start values
 startvalues <- presidents %>% 
   group_by(Groups) %>% 
@@ -417,7 +418,7 @@ potusm2.1 <- map2stan(
 )
 ```
 
-```{r}
+```{r, include=FALSE}
 potusm2.1 <- readRDS("data/potusm21.rds")
 precis(potusm2.1, depth = 2)
 ```
@@ -502,7 +503,7 @@ mean(g2007$lifeExp)
 
 See on lihtsalt parameetri, mida me ennustame, keskmine väärtus ehk keskmine eluiga üle kõikide riikide.
 
-Nüüd fitime mudeli, kus on olemas SKP ja eluea seos aga puudub intercept.
+Nüüd fitime mudeli, kus on olemas SKP ja eluea seos aga puudub lõikepunkt.
 ```{r}
 gapmod2 <- lm(lifeExp ~ -1 + gdpPercap, data = g2007)
 summary(gapmod2)
@@ -526,39 +527,47 @@ Kuidas me seda m3 mudelit tõlgendame?
 summary(gapmod3)
 ```
 
-Esiteks, Intercept on 59.6, mis tähendab, et mudel ennustab, et kui riigi SKP = 0 USD, siis selle riigi elanime keskmine euliga on 60 aastat. 
-See on selgelt imelik, sest ühegi riigi SKP ei ole null, ja kui oleks, oleks seal ka eluiga 0. (selle järgi peaksime eelistama m2, kus me oleme intercepti nulli surunud).
+Esiteks, Intercept on `r round(coef(gapmod3)[1], 1)`, mis tähendab, et mudel ennustab, et kui riigi SKP = 0 USD, siis selle riigi elanime keskmine euliga on ligi 60 aastat. 
+See on selgelt imelik, sest ühegi riigi SKP ei ole null, ja kui oleks, oleks seal ka eluiga 0 (selle järgi peaksime eelistama mudelit gapmod2, kus me oleme intercepti nulli surunud).
 
-Teiseks, koefitsient b = 6.37 x 10-4, mis on üsna väike arv. See tähendab, et SKP tõus 1 USD võrra tõstab eluiga keskmiselt 0.000637 aasta võrra (ja SKP tõus 1000 USD võrra tõstab eluiga 0.6 aasta võrra). Muidugi ainult siis, kui uskuda mudelit.
+Teiseks, koefitsient b = `r signif(coef(gapmod3)[2], 2)`, mis on üsna väike arv. See tähendab, et SKP tõus 1 USD võrra tõstab eluiga keskmiselt `r signif(coef(gapmod3)[2], 2)` aasta võrra (ja SKP tõus 1000 USD võrra tõstab eluiga `r signif(1000 * coef(gapmod3)[2], 2)` aasta võrra). 
+Muidugi ainult siis, kui uskuda mudelit.
 
-Kolmandaks, adjusted R squared on 0.457, mis tähendab et mudeli järgi seletab SKP varieerumine 45.7% eluea varieeruvusest riikide vahel.
-
+Kolmandaks, adjusted R squared on `r signif(summary(gapmod3)$r.squared, 2)`, mis tähendab et mudeli järgi seletab SKP varieerumine `r str_c(signif(100 * summary(gapmod3)$r.squared, 2), "%")` eluea varieeruvusest riikide vahel.
 
 Hea küll, aga milline mudel on siis parim? 
 ```{r}
-AIC(m1, m2, m3)
+AIC(gapmod1, gapmod2, gapmod3)
 ```
 
-AIC on Aikake Informatsiooni Kriteerium, mis võtab arvesse nii mudeli fiti headuse kui mudeli parameetrite arvu. Kuna R saab parameetreid lisades ainult kasvada ja me teame, et mingist hetkest oleme niikuinii oma mudeli üle fittinud, siis otsime AIC-i abil kompromissi: võimalult hea fit võimalikult väikese parameetrite arvuga. AIC on suhteline mõõt, selle absoluutnäit ei oma mingit tähendust. Mee eelistame väiksema AIC-ga mudelit nende mudelite seast, mida me võrdleme. See ei tähenda, et võitnud mudel oleks hea mudel --- alati on võimalik, et kõik head mudelid jäid võrdlusest välja. 
+AIC on *Aikake informatsiooni kriteerium*, mis võtab arvesse nii mudeli fiti headuse kui mudeli parameetrite arvu. 
+Kuna R saab parameetreid lisades ainult kasvada ja me teame, et mingist hetkest oleme niikuinii oma mudeli üle fittinud, siis otsime AIC-i abil kompromissi: võimalult hea fit võimalikult väikese parameetrite arvuga. 
+AIC on suhteline mõõt, selle absoluutnäit ei oma mingit tähendust. 
+Me eelistame väiksema AIC-ga mudelit nende mudelite seast, mida me võrdleme. 
+See ei tähenda, et võitnud mudel oleks hea mudel --- alati on võimalik, et kõik head mudelid jäid võrdlusest välja. 
 
-Seega parim mudel on m3 ja kõige kehvem on m2, mille intercept on realistlikult nulli fikseeritud! 
+Seega parim mudel on gapmod3 ja kõige kehvem on gapmod2, mille lõikepunkt on realistlikult nulli fikseeritud! 
 
+## Bayesi meetodil lineaarse mudeli fittimine
 
-## Bayesi kaudu lineaarse mudeli fittimine
-
-Nüüd Bayesi mudelid. Glimmer on abivahend, mis konverteerib lm() mudeli kirjelduse Bayesi mudeli kirjelduseks kasutades normaaljaotusega tõepära mudelit.
+Nüüd Bayesi mudelid. 
+"rethinking" paketi `glimmer()` on abivahend, mis konverteerib `lm()` mudeli kirjelduse Bayesi mudeli kirjelduseks kasutades normaaljaotusega tõepära mudelit.
 ```{r}
-glimmer(lifeExp~1, data = g2007)
+glimmer(lifeExp ~ 1, data = g2007)
 ```
 
-Ainult interceptiga mudel. Keksväärtus ehk mu on ümber defineeritud kui intercept, aga see annab talle lihtsalt uue nime. Sama hästi oleksime võinud fittida mudeilt, kus hindame otse mu keskväärtust (nagu me eelmises peatükis tegime). Pane tähele, et võrreldes `lm()` funktisiooniga on meil mudelis lisaparameeter --- sigma. Kui Intercept annab meile keskmise eluea, siis sigma annab eluigade standardhälbe riikide vahel.
+Ainult interceptiga mudel. 
+Keskväärtus ehk mu on ümber defineeritud kui intercept, aga see annab talle lihtsalt uue nime. 
+Sama hästi oleksime võinud fittida mudelit, kus hindame otse mu keskväärtust (nagu me eelmises peatükis tegime). 
+Pane tähele, et võrreldes `lm()` funktsiooniga on meil mudelis lisaparameeter --- sigma. 
+Kui Intercept annab meile keskmise eluea, siis sigma annab eluigade standardhälbe riikide vahel.
 
 > Kui me tahame fittida lineaarset mudelit, siis peab tõepära funktsioon olema kas normaaljaotus või studenti t jaotus.
 
 
-```{r results="hide"}
+```{r, eval=FALSE}
 g2007 <- as.data.frame(g2007)
-m4 <- map2stan(alist(
+gapmod4 <- map2stan(alist(
   lifeExp ~ dnorm(mu, sigma),
   mu <- Intercept,
   Intercept ~ dnorm(0, 10),
@@ -566,8 +575,12 @@ m4 <- map2stan(alist(
 ), data = g2007)
 ```
 
+```{r, include=FALSE}
+gapmod4 <- readRDS("data/gapmod4.rds")
+```
+
 ```{r}
-precis(m4)
+precis(gapmod4)
 ```
 
 Nüüd ilma interceptita mudel
@@ -575,10 +588,10 @@ Nüüd ilma interceptita mudel
 glimmer(lifeExp ~ -1 + gdpPercap, data = g2007)
 ```
 
-Bayesi mudel on ilusam kui `lm()` sest ta toob mudeli eksplitsiitselt välja (samas kui lm notatsioon ütleb, et mudel on "miinus intercept") 
+Selline Bayesi mudeli esitus on "ilusam" kui `lm()` sest ta toob mudeli eksplitsiitselt välja (samas kui lm notatsioon ütleb, et mudel on "miinus intercept") 
 
-```{r results="hide"}
-m5 <- map2stan(alist(
+```{r, eval=FALSE}
+gapmod5 <- map2stan(alist(
   lifeExp ~ dnorm(mu , sigma ),
   mu <- b_gdpPercap * gdpPercap,
   b_gdpPercap ~ dnorm(0, 10),
@@ -586,108 +599,127 @@ m5 <- map2stan(alist(
 ), data = g2007)
 ```
 
+```{r, include=FALSE}
+gapmod5 <- readRDS("data/gapmod5.rds")
+```
+
+
 ```{r}
-precis(m5)
+precis(gapmod5)
 ```
 
 Ja lõpuks täismudel:
-```{r results="hide"}
-m6 <- map2stan(alist(
+```{r, eval=FALSE}
+gapmod6 <- map2stan(alist(
     lifeExp ~ dnorm(mu, sigma),
     mu <- Intercept + b_gdpPercap * gdpPercap,
-    Intercept~ dnorm(0, 100),
-    b_gdpPercap ~ dnorm(0,10),
-    sigma ~ dcauchy(0,2)
+    Intercept ~ dnorm(0, 100),
+    b_gdpPercap ~ dnorm(0, 10),
+    sigma ~ dcauchy(0, 2)
 ), data = g2007)
+```
 
+```{r, include=FALSE}
+gapmod6 <- readRDS("data/gapmod6.rds")
 ```
 
 ```{r}
-compare(m4, m5, m6)
+compare(gapmod4, gapmod5, gapmod6)
 ```
 
-Jälle on täismudel võija ja kui intercept nulli suruda, saame kehveima tulemuse.
-Siin me kasutame AIC-i Bayesi analoogi WAIC, mis nende mudelite peal peaks töötama veidi paremini, kui AIC. Aga see on tehniline detail...
-WAIC abil mudeleid võrreldes saame muuhulgas mudeli kaalu. Antud juhul on m6-l 100% kaalust ja ülejäänud mudelitele ei jää midagi.
+Jälle on täismudel võitja ja kui intercept nulli suruda, saame kehveima tulemuse.
+Siin me kasutame AIC-i Bayesi analoogi WAIC, mis nende mudelite peal peaks töötama veidi paremini kui AIC. 
+Aga see on tehniline detail.
+WAIC abil mudeleid võrreldes saame muuhulgas mudeli kaalu. 
+Antud juhul on 100% kaalust gapmo6-l ja ülejäänud mudelitele ei jää midagi.
 
 ```{r}
-plot(coeftab(m4, m5, m6))
+plot(coeftab(gapmod4, gapmod5, gapmod6))
 ```
-
 
 
 Viime SKP andmed log-skaalasse ja proovime uuesti. See tähendab, et me arvame, et iga SKP kümnekordne tõus võiks kaasa tuua eluea tõusu x aasta võrra.
-```{r results="hide"}
-g2007 <- g2007 %>% mutate(l_GDP = log10(gdpPercap))
-g2007 <- as.data.frame(g2007)
-m7 <- map2stan(alist(
+```{r, eval=FALSE}
+g2007 <- g2007 %>% 
+  mutate(l_GDP = log10(gdpPercap)) %>% 
+  as.data.frame()
+gapmod7 <- map2stan(alist(
     lifeExp ~ dnorm(mu, sigma),
     mu <- b_gdp * l_GDP,
     b_gdp ~ dnorm(0, 10),
     sigma ~ dcauchy(0, 2)
 ), data = g2007)
 
-m8 <- map2stan(alist(
+gapmod8 <- map2stan(alist(
     lifeExp ~ dnorm(mu, sigma),
     mu <- Intercept + b_gdp * l_GDP,
     Intercept ~ dnorm(0, 100),
     b_gdp ~ dnorm(0, 10),
     sigma ~ dcauchy(0, 2)
 ), data = g2007)
+```
 
+```{r, include=FALSE}
+gapmod7 <- readRDS("data/gapmod7.rds")
+gapmod8 <- readRDS("data/gapmod8.rds")
 ```
 
 ```{r}
-compare(m4, m5, m6, m7, m8)
-
+compare(gapmod4, gapmod5, gapmod6, gapmod7, gapmod8)
 ```
 
-
-Now, as it happens, in log scale the intercept-fixed-at-0 model is almost as good as the full model. This is, however, not a general feature of modelling.
+Now, as it happens, in log scale the intercept-fixed-at-0 model is almost as good as the full model. 
+This is, however, not a general feature of modelling.
 
 ```{r}
-cf7 <- coef(m7)
-cf7
-cf8 <- coef(m8)
-cf8
+coefs7 <- coef(gapmod7)
+coefs7
+coefs8 <- coef(gapmod8)
+coefs8
 
 g2007 %>% 
   ggplot(aes(l_GDP, lifeExp)) + 
   geom_point() +
   geom_abline(intercept = 0, 
-              slope = cf7["b_gdp"], 
+              slope = coefs7["b_gdp"], 
               color = "blue") + 
-  geom_abline(intercept = cf8["Intercept"], 
-              slope = cf8["b_gdp"], 
+  geom_abline(intercept = coefs8["Intercept"], 
+              slope = coefs8["b_gdp"], 
               color = "red" ) +
-  coord_cartesian(ylim = c(0, max(g2007$lifeExp) ), xlim = c(0, 5))
+  coord_cartesian(ylim = c(0, max(g2007$lifeExp)), xlim = c(0, 5))
 ```
 
-Kuna Bayesi mudelite fittimine on keerulisem kui lm() abil, on eriti tähtis fititud mudel välja plottida. See on esimene kaitseliin lollide vigade ja halvasti jooksvate markovi ahelate vastu. 
+Kuna Bayesi mudelite fittimine on keerulisem kui `lm()` abil, on eriti tähtis fititud mudel välja plottida. 
+See on esimene kaitseliin lollide vigade ja halvasti jooksvate Markovi ahelate vastu. 
 
-Kui Bayesi mudeleid on raskem fittida, siis milleks me peaksime neid eelistama tavalistele vähimruutude meetodil fititud mudelitele? Tegelikult alati ei peagi. Aga siiski, Bayesi mudelid sisaldavad eksplitsiitset veakomonenti (sigma), mis on kasulik mudelist uusi andmeid ennustades. Samuti annavad nad parima hinnangu ebakindlusele parmeetrite väärtuste hinnangute ümber, võimaldavad mudeli fittimisel siduda andmeid taustainfoga (prior) ning, mis kõige tähtsam, võimaldavad paindlikumalt fittida hierarhilisi mudeleid (nende juurde tuleme hiljem). 
+Kui Bayesi mudeleid on raskem fittida, siis milleks me peaksime neid eelistama tavalistele vähimruutude meetodil fititud mudelitele? 
+Tegelikult alati ei peagi. 
+Aga siiski, Bayesi mudelid sisaldavad eksplitsiitset veakomonenti (sigma), mis on kasulik mudelist uusi andmeid ennustades. 
+Samuti annavad nad parima hinnangu ebakindlusele parmeetrite väärtuste hinnangute ümber, võimaldavad mudeli fittimisel siduda andmeid taustainfoga (prior) ning, mis kõige tähtsam, võimaldavad paindlikumalt fittida hierarhilisi mudeleid (nende juurde tuleme hiljem). 
 
-Samas, kui prior on väheinformatiivne, siis Bayesi hinnangud mudeli koefitsientide kõige tõenäolisematele väärtustele on praktiliselt samad, kui vähimruutude meetodiga lm() abil saadud punkt-hinnangud. 
+Samas, kui prior on väheinformatiivne, siis Bayesi hinnangud mudeli koefitsientide kõige tõenäolisematele väärtustele on praktiliselt samad, kui vähimruutude meetodiga `lm()` abil saadud punkt-hinnangud.
 
-Siin me fitime pedagooglistel kaalutlustel kõike Bayesiga aga praktikas jätavad paljud mõistlikud inimesed Bayesi hierarhiliste mudelite jaoks ja kasutavad lihtsate mudelite jaoks lm(). 
+Siin me fitime pedagooglistel kaalutlustel kõike Bayesiga aga praktikas jätavad paljud mõistlikud inimesed Bayesi hierarhiliste mudelite jaoks ja kasutavad lihtsate mudelite jaoks `lm()`. 
 
-Hea küll, tagasi m7 ja m8 mudelite juurde. Plotime nende koefitsiendid koos usalduspiiridega.
+Tagasi gapmod7 ja gapmod8 mudelite juurde. 
+Plotime nende koefitsiendid koos usalduspiiridega.
 ```{r}
-plot(coeftab(m7, m8))
+plot(coeftab(gapmod7, gapmod8))
 ```
 
-Pane tähele, et m8 b_gdp koefitsiendi posteerior on plaju laiem kui m7 b_gdp oma. See on üldine nähtus, mis tuleneb sellest, et m7-s on vähem parameetreid. **Iga lisatud parameeter kipub vähendama teiste parameetrite hindamise täpsust.**
-
+Pane tähele, et gapmod8 "b_gdp" koefitsiendi posteerior on palju laiem kui gapmod7 "b_gdp" oma.
+See on üldine nähtus, mis tuleneb sellest, et gapmod7-s on vähem parameetreid. 
+**Iga lisatud parameeter kipub vähendama teiste parameetrite hindamise täpsust.**
 
 ## Ennustused mudelist
 
 Kuidas plottida meie hinnangud ebakindlusele parameetri tegeliku väärtuse ümber?
-Siin tuleb appi link().
+Siin tuleb appi `rethinking::link()`.
 
 Nii tõmbame posteriorist igale meie andmetes esinevale log GDP väärtusele vastavad 1000 ennustust keskmise eluea kohta sellel l_GDP väärtusel: 
 
 ```{r eval=FALSE}
-linked <- link(m8)
+linked <- link(gapmod8)
 linked <- as_tibble(linked)
 linked_mean <- apply(linked, 2, HPDI, prob = 0.95)
 ```
@@ -697,29 +729,44 @@ Sel viisil saab tabeli, kus igale 142-le andmepunktist vastab üks veerg, milles
 Praktikas soovime aga enamasti meie poolt ette antud l_GDP väärtustel põhinevaid ennustusi keskmise eluea kohta. See käib nii:
 
 ```{r}
-#first we create an evenly spced grid of l_GDP values, 
-#for which we wish to obtain 95% CI-s 
+# first we create an evenly spced grid of l_GDP values, 
+# for which we wish to obtain 95% CI-s 
 width <- seq(2, 6, 0.1)
 
 # link() draws from the posterior 1000 mu values for each l_GDP value in the width object; out pops a table with 1000 rows and 41 columns. 
-mu1 <- as_tibble(link(m8, data = data.frame(l_GDP = width)))
+mu1 <- as_tibble(link(gapmod8, data = data.frame(l_GDP = width)))
 ```
 
-Nüüd on meil mu1 objektis 41 l_GDP väärtust, millest igale vastab 1000 ennustust keskmise eluea kohta sellel l_GDP-l. Järgmiseks arvutame igale neist 41-st tulbast keskmise ja 95% HPDI ning plotime need koos andmepunktidega kasutades base-R graafikasüsteemi.
+Nüüd on meil mu1 objektis 41 l_GDP väärtust, millest igale vastab 1000 ennustust keskmise eluea kohta sellel l_GDP-l. 
+Järgmiseks arvutame igale neist 41-st tulbast keskmise ja 95% HPDI ning plotime need koos andmepunktidega kasutades base-R graafikasüsteemi.
 
 
-Pane tähele, et hall riba näitab ebakindlust ennustuse ümber keskmisele elueale üle kõikide riikide, mis võiksid sellist l_GDP-d omada (ehk ebakindlust regressioonijoonele). Kui me aga tahame ennustada ka keskmiste eluigade varieeruvust riigi tasemel (kasutades Bayesi hinnangut sigma parameetrile), siis on meil vaja sim() funktsiooni:
+Pane tähele, et hall riba näitab ebakindlust ennustuse ümber keskmisele elueale üle kõikide riikide, mis võiksid sellist l_GDP-d omada (ehk ebakindlust regressioonijoonele). 
+Kui me aga tahame ennustada ka keskmiste eluigade varieeruvust riigi tasemel (kasutades Bayesi hinnangut sigma parameetrile), siis on meil vaja `sim()` funktsiooni:
 
 ```{r}
-mu.mean <- apply(mu1, 2, mean ) # applies the FUN mean() to each column
-mu.HPDI <- apply(mu1, 2, HPDI , prob = 0.95 )
-sim.length <- as_tibble(rethinking::sim(m8, data = list(l_GDP = width)))
-height.PI <- apply(sim.length, 2, PI, prob = 0.95)
+mu.mean <- apply(mu1, 2, mean) # applies the FUN mean() to each column
+mu.HPDI <- apply(mu1, 2, HPDI, prob = 0.95) %>% 
+  t() %>% 
+  as_data_frame()
+mu.HPDI <- bind_cols(data_frame(width), mu.HPDI)
+colnames(mu.HPDI) <- c("width", "lower", "upper")
+sim.length <- as_tibble(rethinking::sim(gapmod8, data = list(l_GDP = width)))
+height.PI <- apply(sim.length, 2, PI, prob = 0.95) %>% 
+  t() %>% 
+  as_data_frame()
+height.PI <- bind_cols(data_frame(width), height.PI)
+colnames(height.PI) <- c("width", "lower", "upper")
 
-plot(lifeExp ~ l_GDP, data = g2007, col = col.alpha(rangi2, 0.5))
-lines(width, mu.mean) # mu.mean tuleb eelmisest koodiplokist
-shade(mu.HPDI, width) # mu.HPDI tuleb eelmisest koodiplokist
-shade(height.PI, width) # draw PI region for simulated heights
+ggplot(g2007) +
+  geom_point(aes(l_GDP, lifeExp, color = continent)) +
+  geom_line(data = data_frame(width, mu.mean), aes(width, mu.mean)) +
+  geom_ribbon(data = mu.HPDI, aes(x = width, ymin = lower, ymax = upper), 
+              fill = "gray10", alpha = 0.3) +
+  geom_ribbon(data = height.PI, aes(x = width, ymin = lower, ymax = upper), 
+              fill = "gray40", alpha = 0.3) +
+  labs(caption = "Dark grey, 95% HDPI - highest posterior density.\nLight grey, 95% PI - percentile interval.") +
+  theme(legend.title = element_blank())
 ```
 
 Nüüd ütleb laiem hall ala, et me oleme üsna kindlad, et nende riikide puhul, mille puhul mudel töötab, kohtame individaalsete riikide keskmiseid eluigasid halli ala sees ja mitte sealt väljas. 
@@ -728,23 +775,6 @@ Need on äkki riigid, kus parasjagu on sõda üle käinud ja mille eluiga ei ole
 Igal juhul tasuks need ükshaaval üle vaadata sest punktid, mida mudel ei seleta, võivad varjata endas mõnd huvitavat saladust, mis pikisilmi ootab avastajat. 
 Lisaks: pane tähele, et mudel eeldab, et riikide keskmise eluea SD on muutumatu igal GDP väärtusel.
 
-
-Sama pilt ggplot-ga.
-```{r}
-linked_ci <- link(m8) %>% 
-  as_tibble() %>% 
-  apply(2, HPDI, prob = 0.95)
-sim_ci <- rethinking::sim(m8) %>% 
-  as_tibble() %>% 
-  apply(2, HPDI, prob = 0.95)
-coef <- coef(m8)
-
-ggplot(g2007, aes(l_GDP, lifeExp)) + 
-  geom_point(aes(color = continent), size = 0.8) +
-  geom_abline(slope = coef[2], intercept = coef[1]) +
-  geom_ribbon(aes(ymin = linked_ci[1,], ymax = linked_ci[2,]), alpha = 0.2) +
-  geom_ribbon(aes(ymin = sim_ci[1,], ymax = sim_ci[2,]), alpha = 0.1, color = "grey70")
-```
 
 Kuidas saada ennustusi kindlale l_GDP väärtusele? Näiteks tulp V10 vastab l_GDP väärtusele 2.9. Järgnevalt arvutame oodatavad keskmised eluead sellele SKP väärtusele (fiksionaalsetele riikidele, millel võiks olla täpselt selline SKP):
 ```{r}
@@ -1182,7 +1212,7 @@ ggplot(data=dd1, aes(lGDP_s, lifeExp)) +
 Nagu näha, on meil nüüd üsna erinevad sirge tõusunurgad.
 
 
-#### Interaktsioonid pidevatele tunnustele
+### Interaktsioonid pidevatele tunnustele
 
 Kasutame standardiseeritud prediktoreid, sest nende koefitsiente saab paremini tõlgendada (tegelikult piisab prediktorite tsentreerimisest). Meie andmed käsitlevad diabeedimarkereid Ameerika lõunaosariikide neegritel 1960-ndatel. Me ennustame siin sõltuvalt vanusest ja vööümbermõõdust hdl-i --- high density cholesterol --- mis on nn hea kolesterool.
 
@@ -1219,11 +1249,11 @@ Negatiivne bAR tähendab, et vanus ja vöö-ümbermõõt omavad vastandlikke mõ
 ```{r}
 m3 <- map2stan(
     alist(
-        hdl ~ dnorm( mu , sigma ) ,
-        mu <- a + bR*age_st + bA*waist_st,
-        a ~ dnorm( 0, 100 ),
-        c(bR, bA) ~ dnorm( 0, 2 ),
-        sigma ~ dcauchy( 0, 1 )
+        hdl ~ dnorm(mu, sigma),
+        mu <- a + bR * age_st + bA * waist_st,
+        a ~ dnorm(0, 100),
+        c(bR, bA) ~ dnorm(0, 2),
+        sigma ~ dcauchy(0, 1)
 ), data = d2)
 
 compare(m2, m3)
@@ -1317,19 +1347,22 @@ for ( w in -1:1 ) { #me soovime 3 joonist 3-l waisti näidul: -1, 0, 1.
 Ja sama ainult m2-ga
 ```{r}
 # make a plot window with three panels in a single row
-par(mfrow=c(1,3)) # 1 row, 3 columns
+par(mfrow = c(1, 3)) # 1 row, 3 columns
 # loop over values of age_st and plot predictions
 age.seq <- seq(-2, 2, length.out = 20)
-for ( w in -1:1 ) {
-    plot( hdl ~ age_st , data=d2 , type="n" ,
-        main=paste("waist =",w) , xaxp=c(-1,1,2) , ylim=c(40,60) , xlim=c(-2,2),
-        xlab="age (centered)" )
-    mu <- link( m2 , data=data.frame(waist_st=w, age_st=age.seq) )
-    mu.mean <- apply( mu , 2 , mean )
-    mu.PI <- apply( mu , 2 , PI , prob=0.97 )
-    lines( age.seq , mu.mean )
-    lines( age.seq , mu.PI[1,] , lty=2 )
-    lines( age.seq , mu.PI[2,] , lty=2 )
+for (w in -1:1) {
+    plot(hdl ~ age_st , data = d2 , type = "n",
+        main = paste("waist =",w), 
+        xaxp = c(-1, 1, 2) , 
+        ylim = c(40, 60) , 
+        xlim = c(-2, 2),
+        xlab = "Age (centered)")
+    mu <- link(m2 , data = data.frame(waist_st = w, age_st = age.seq))
+    mu.mean <- apply(mu, 2, mean)
+    mu.PI <- apply(mu, 2, PI, prob = 0.97)
+    lines(age.seq, mu.mean)
+    lines(age.seq, mu.PI[1,], lty = 2)
+    lines(age.seq, mu.PI[2,], lty = 2)
 }
 ```
 
@@ -1501,9 +1534,9 @@ Me kasutame prediktorina binaarset kategoorilist muutujat. See on analoogiline o
 ```{r}
 #df2 <- schools
 df2 <- read.csv( "data/schools.csv")
-df2 <- df2 %>% mutate(summa=score1 + score2) %>% na.omit()
+df2 <- df2 %>% mutate(summa = score1 + score2) %>% na.omit()
 df2$sex <- as.factor(df2$sex)
-f1 <- glimmer(summa~ sex + (1 | school), data=df2)
+f1 <- glimmer(summa ~ sex + (1 | school), data = df2)
 ```
 
 ```{r }
@@ -1760,15 +1793,14 @@ precis(m2)
 ```
 
 
-
-```{r warning=F}
-m0 <- map2stan( alist(score1 ~ dnorm( mu , sigma ),
-    mu <- Intercept + b_score2*score2 ,
-    Intercept ~ dnorm(50,50),
-    b_score2 ~ dnorm(0,10),
-    sigma ~ dcauchy(0,2)
-    ), data=f$d )
-compare(m0,m1,m2)
+```{r}
+m0 <- map2stan( alist(score1 ~ dnorm(mu , sigma),
+    mu <- Intercept + b_score2 * score2,
+    Intercept ~ dnorm(50, 50),
+    b_score2 ~ dnorm(0, 10),
+    sigma ~ dcauchy(0, 2)
+    ), data = f$d)
+compare(m0, m1, m2)
 ```
 m2 on selgelt parem mudel, kuigi m3 hinnangud interceptidele on suurema ebakindlusega. beta on nyyd 0.35
 
