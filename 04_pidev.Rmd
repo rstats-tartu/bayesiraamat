@@ -1,7 +1,6 @@
 
 # Ennustame Pidevat suurust
 
-
 ```{r}
 library(tidyverse)
 library(modelr)
@@ -85,7 +84,7 @@ Outlierid toovad meile paksema sabaga jaotuse, mis tipu ümber ei lähe aga kaug
     
 ### Kui lai on meie tõepärafunktsioon? 
 
-Normaaljaotusega modelleeritud tõepärafunktsioon on normaaljaotus, mille keskväärtus = mean(valim) ja mille standardhälve = sd(valim)/sqrt(N), kus N on valimi suurus. 
+Normaaljaotusega modelleeritud tõepärafunktsioon on normaaljaotus, mille `keskväärtus = mean(valim)` ja mille `standardhälve = sd(valim) / sqrt(N)`, kus N on valimi suurus. 
 See tõepärafunktsioon modelleerib meie valimi keskväärtuse kohtamise tõenäosust igal võimalikul parameetriväärtusel. 
 Kui oleme huvitatud USA presidentide keskmisest pikkusest, siis tõepärafunktsioon ütleb iga võimaliku pikkuse kohta, millise tõenäosusega kohtaksime oma valimi keskväärtust juhul, kui just see oleks tegelik presidentide keskmine pikkus. 
 Sigma, mille posteeriori me mudelist arvutame, on aga standardhälve algsete andmepunktide tasemel. 
@@ -96,7 +95,7 @@ See on väga oluline eristus, sest sigma kaudu saab simueerida uusi andmepunkte.
 Proovime mudeldada simuleeritud andmete keskväärtust.
 
 ```{r}
-set.seed(1)
+set.seed(890775)
 a <- rnorm(20, mean = 0, sd = 1) # expected mean = 0, sd = 1
 b <- c(a, 5, 9) # plus 2 outliers
 ```
@@ -113,25 +112,36 @@ Me kasutame sd priorina pool-Cauchy jaotust, mille tipp on 0 kohal ja millel on 
 See on väheinformatiivne prior, mis on nähtud sd-de puhul mcmc algoritmides hästi töötavat. 
 Andmed võime `map2stan()` funktsiooni sisestada nii listina kui data.frame-na (aga mitte tibble kujul). 
 
-```{r, message=FALSE, warning=FALSE}
+```{r, eval=FALSE}
 # Ilma outlierita andmed
 m0 <- map2stan(
   alist(
     y ~ dnorm(mu, sigma),  # normal likelihood
     mu ~ dnorm(0, 5), # normal prior for mean
-    sigma ~ dcauchy(0, 1) # half-cauchy prior from sd 
-  ), 
+    sigma ~ dcauchy(0, 2.5) # half-cauchy prior from sd 
+  ),
   data = list(y = a))
 ```
 
-Sama mudel, aga outlieritega andmed. map2stan() tõlgib sisestatud mudeli Stan keelde ja see mudel kompileeritakse C++ keelde, milles on kodeeritud Stani mcmc mootor. 
+```{r, include=FALSE}
+m0 <- readRDS("data/stan_m0.rds")
+m0@stanfit
+```
+
+
+Sama mudel, aga outlieritega andmed. `map2stan()` tõlgib sisestatud mudeli Stan keelde ja see mudel kompileeritakse C++ keelde, milles on kodeeritud Stani mcmc mootor. 
 Kuna kompileerimine on ajakulukas, kasutame m1 fittimiseks rstan raamatukogu (see loetakse sisse rethinkingu depency-na) ja juba komplieeritud m0 mudelit, millele lisame andmed kahe elemendina: N annab andmete arvu ja y tegelikud andmeväärtused. 
-Selline andmete sisestamise viis on omane Stan-le -- map2stan arvutab ise kapoti all N-i.
-```{r, echo=FALSE}
+Selline andmete sisestamise viis on omane Stanile - `map2stan()` arvutab ise kapoti all N-i.
+```{r, eval=FALSE}
 m1 <- stan(fit = m0@stanfit,
            data = list(N = length(b), 
                        y = b),
            chains = 4)
+```
+
+```{r, include=FALSE}
+m1 <- readRDS("data/stan_m1.rds")
+m1
 ```
 
 Nüüd studenti t jaotusega tõepäramudel. 
@@ -140,13 +150,13 @@ Mudeli m2 juures tähendab argument constraints(list(nu = "lower=1")), et mcmc s
 See on siin kuna definitsiooni kohaselt ei saa nu olla väiksem kui 1.
 Argument start annab listi, mis annab iga parameetri jaoks väärtuse, millest mcmc ahel posteeriori sämplimist alustab. See on vahest vajalik, sest kui mcmc ahelad hakkavad posteeriori tõenäosuspilve otsima kaugel selle tegelikust asukohast n-mõõtmelises ruumis (n = mudeli parameetrite arv), siis võib juhtuda, et mudeli fittimine ebaõnnestub ja te saate veateate. 
 
-```{r}
+```{r, eval=FALSE}
 m2 <- map2stan(
   alist(
     y ~ student_t(nu, mu, sigma),
     nu ~ dnorm(5, 10), 
     mu ~ dnorm(0, 5),
-    sigma ~ dcauchy(0, 1)
+    sigma ~ dcauchy(0, 2.5)
     ),
   data = list(y = b),
   constraints = list(nu = "lower=1"),
@@ -156,14 +166,19 @@ m2 <- map2stan(
 )
 ```
 
+```{r}
+m2 <- readRDS("data/stan_m2.rds")
+m2@stanfit
+```
+
 Ja viimasena studenti t mudel, kus nu on fikseeritud konstandina. Kuna me ei fiti nu-d mudeli parameetrina, pole meil vaja ka priorit nu-le. Me teeme selle mudeli, sest nu täpsel väärtusel pole väga suurt mõju tulemustele. Me lihtsalt fikseerime nu suvalisele väärtusele, mis annab t jaotusele piisavalt paksud sabad.
 
-```{r, message=FALSE, warning=FALSE}
+```{r, eval=FALSE}
 m3 <- map2stan(
   alist(
     y ~ student_t(4, mu, sigma),
     mu ~ dnorm(0, 5),
-    sigma ~ dcauchy(0, 1)
+    sigma ~ dcauchy(0, 2.5)
   ),
   data = list(y = b),
   constraints = list(nu = "lower=1"),
@@ -172,7 +187,15 @@ m3 <- map2stan(
   chains = 4)
 ```
 
-Esimene asi, mida tuleks fititud mudeliga teha, on vaadata, kas ahelad konvergeerusid:
+
+```{r, include=FALSE}
+m3 <- readRDS("data/stan_m3.rds")
+m3@stanfit
+```
+
+
+Üks esimesi asju mida koos parameetrite vaatamisega teha on lisaks vaadata, kas ka ahelad konvergeerusid.
+Selleks saab mugavalt kasutada `rethinking::tracerplot()` funktsiooni.
 
 ```{r}
 tracerplot(m2)
@@ -180,20 +203,17 @@ tracerplot(m2)
 
 Pildilt on näha, et neli ahelat (4 värvi) on hästi konvergeerunud. Hall ala on nn warmup ala, mille tulemusi ei salvestata. Muidu astub iga ahel sammu kaupa ja iga edukas samm salvestatakse ühe posteeriori väärtusena. Ahel sämplib korraga mu, sigma ja nu väärtusi n-mõõtmelises ruumis (n = mudeli parameetrite arv), mis tähendab, et ahela iga samm salvestatakse n kõrvuti numbrina. 
 
-Kui näit sigma kõrgema väärtusega kaasneb keskeltäbi kõrgem (või madalam) mu väärtus, on sigma ja mu omavahel korreleeritud. Et kontrollida parameetrite posterioorsete väärtuste korrelatsioone:
+Kui näit sigma kõrgema väärtusega kaasneb keskeltäbi kõrgem (või madalam) mu väärtus, on sigma ja mu omavahel korreleeritud. 
+Et kontrollida parameetrite posterioorsete väärtuste korrelatsioone kasutame funktsiooni `rethinking::pairs()`:
 
 ```{r}
 pairs(m2)
 ```
 
-Normaaljaotus on selle poolest eriline, et tema parameetrid mu ja sigma ei ole korreleeritud. Paljud teised mudelid ei ole nii lahked. Siin on meil mõõdukas korrelatsioon nu ja sigma vahel. See on igati loogiline ja ei häiri meid.
-
-
-Järgmiseks tasub heita kiire pilk fititud mudeli parameetritele
-
-```{r}
-precis(m2)
-```
+Normaaljaotus on selle poolest eriline, et tema parameetrid mu ja sigma ei ole korreleeritud. 
+Paljud teised mudelid ei ole nii lahked. 
+Siin on meil mõõdukas korrelatsioon nu ja sigma vahel. 
+See on igati loogiline ja ei häiri meid.
 
 ### MCMC ahelate kvaliteet
 
@@ -671,20 +691,11 @@ sim_ci <- rethinking::sim(m8) %>%
   apply(2, HPDI, prob = 0.95)
 coef <- coef(m8)
 
-<<<<<<< HEAD
-ggplot( g2007, aes( l_GDP, lifeExp ) ) + 
-  geom_point( aes( color = continent ), size = 0.8 ) +
-  geom_abline( slope = coef[2], intercept = coef[1] ) +
-  geom_ribbon( aes( ymin = linked_ci[1,], ymax = linked_ci[2,] ), alpha = 0.2 ) +
-  geom_ribbon( aes( ymin = sim_ci[1,], ymax = sim_ci[2,]), alpha = 0.1, color = "grey70" ) +
-  theme_classic()
-=======
 ggplot(g2007, aes(l_GDP, lifeExp)) + 
   geom_point(aes(color = continent), size = 0.8) +
   geom_abline(slope = coef[2], intercept = coef[1]) +
   geom_ribbon(aes(ymin = linked_ci[1,], ymax = linked_ci[2,]), alpha = 0.2) +
   geom_ribbon(aes(ymin = sim_ci[1,], ymax = sim_ci[2,]), alpha = 0.1, color = "grey70")
->>>>>>> 7cd604181e619dad8eaaaaddcfced91ff32998c9
 ```
 
 Kuidas saada ennustusi kindlale l_GDP väärtusele? Näiteks tulp V10 vastab l_GDP väärtusele 2.9. Järgnevalt arvutame oodatavad keskmised eluead sellele SKP väärtusele (fiksionaalsetele riikidele, millel võiks olla täpselt selline SKP):
