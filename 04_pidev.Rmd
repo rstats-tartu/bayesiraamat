@@ -691,11 +691,20 @@ sim_ci <- rethinking::sim(m8) %>%
   apply(2, HPDI, prob = 0.95)
 coef <- coef(m8)
 
+<<<<<<< HEAD
+ggplot( g2007, aes( l_GDP, lifeExp ) ) + 
+  geom_point( aes( color = continent ), size = 0.8 ) +
+  geom_abline( slope = coef[2], intercept = coef[1] ) +
+  geom_ribbon( aes( ymin = linked_ci[1,], ymax = linked_ci[2,] ), alpha = 0.2 ) +
+  geom_ribbon( aes( ymin = sim_ci[1,], ymax = sim_ci[2,]), alpha = 0.1, color = "grey70" ) +
+  theme_classic()
+=======
 ggplot(g2007, aes(l_GDP, lifeExp)) + 
   geom_point(aes(color = continent), size = 0.8) +
   geom_abline(slope = coef[2], intercept = coef[1]) +
   geom_ribbon(aes(ymin = linked_ci[1,], ymax = linked_ci[2,]), alpha = 0.2) +
   geom_ribbon(aes(ymin = sim_ci[1,], ymax = sim_ci[2,]), alpha = 0.1, color = "grey70")
+>>>>>>> 7cd604181e619dad8eaaaaddcfced91ff32998c9
 ```
 
 Kuidas saada ennustusi kindlale l_GDP väärtusele? Näiteks tulp V10 vastab l_GDP väärtusele 2.9. Järgnevalt arvutame oodatavad keskmised eluead sellele SKP väärtusele (fiksionaalsetele riikidele, millel võiks olla täpselt selline SKP):
@@ -716,12 +725,12 @@ See mudel on alternatiiv andmete logaritmimisele, kui Y-muutuja (see muutuja, mi
 Seekord ennustame GDP-d keskmise eluea põhjal (mis, nagu näha jooniselt, ei ole küll päris lognormaalne).
 
 ```{r}
-ggplot(g2007, aes(gdpPercap))+
-  geom_density()+
-  stat_function(fun=dlnorm, 
-                args=list(mean=mean(log(g2007$gdpPercap)),
-                          sd=sd(log(g2007$gdpPercap))), 
-                colour="red") +
+ggplot( g2007, aes( gdpPercap ) ) +
+  geom_density() +
+  stat_function( fun = dlnorm, 
+                args = list( mean = mean( log( g2007$gdpPercap ) ),
+                             sd = sd( log( g2007$gdpPercap ) ) ), 
+                colour = "red" ) +
   theme_classic()
 
 ```
@@ -729,14 +738,17 @@ ggplot(g2007, aes(gdpPercap))+
 Mustaga on näidatud empiiriline SKP jaotus, punasega fititud lognormaalne mudel sellest samast jaotusest. Järgnevalt ennustame SKP-d keskmise eluea põhjal, milleks fitime lognormaalse tõepäramudeli, kus mu on ümber defineeritud regressioonivõrrandiga:
 
 ```{r}
-m_ln1 <- map2stan(alist(
+m_ln1 <- map2stan(
+  alist(
    gdpPercap  ~ dlnorm( mu , sigma ),
     mu <- a + b * lifeExp,
-    a ~ dnorm(0, 10),
-    b ~ dnorm(0, 10),
-    sigma ~ dcauchy(0,2)
-), data=g2007, start = list(a=3, b=0, sigma=0.5))
-precis(m_ln1)
+    a ~ dnorm( 0, 10 ),
+    b ~ dnorm( 0, 10 ),
+    sigma ~ dcauchy( 0, 2 ) 
+   ), 
+  data = g2007, 
+  start = list( a = 3, b = 0, sigma = 0.5 ) 
+  )
 ```
 
 
@@ -748,14 +760,14 @@ plot(m_ln1)
 Logormaalses mudelis muutuvad parameetrite tähendused ja need tuleb lineaarse mudeli intercepti ja tõusu interpretatsioonidega kooskõlla viimiseks ümber arvutada. Kõigepealt avaldame tõusu. Kuna meil on tegemist mitte-lineaarse mudeliga, sõltub tõusu väärtus ka mudeli interceptist: $slope = exp(α + β) − exp(α)$. See ei ole lineaarne seos: b omab seda suuremat mõju efektile (tõusule), mida suurem on a. [Kui meil on tegu binaarse X-ga (prediktoriga), siis kodeerime selle 2 taset kui -1 ja 1. Sellises mudelis on slope sama, mis efekti suurus ES, ja $ES = exp(α + β) − exp(α - β)$]
 
 ```{r}
-a <- seq(0, 10, length.out = 1000)
+a <- seq( 0, 10, length.out = 1000 )
 b <- 2
 b1 <- 3
-y <- exp(a+b) - exp(a)
-y1 <- exp(a+b1) - exp(a)
+y <- exp( a + b ) - exp( a )
+y1 <- exp( a + b1 ) - exp( a )
 
-plot(a, y, type="l", xlab="a value", ylab="slope")
-lines(a, y1, col="red")
+plot( a, y, type = "l", xlab = "a value", ylab = "slope" )
+lines( a, y1, col = "red" )
 ```
 
 Must joon näitab mudeli tõusu sõltuvust parameetri a väärtusest, kui parameeter b = 2. Punane joon teeb sedasama, kui b = 3.
@@ -763,19 +775,19 @@ Must joon näitab mudeli tõusu sõltuvust parameetri a väärtusest, kui parame
 Selline on siis mudeli tõusude (beta) posteerior:
 
 ```{r}
-s_ln1 <- extract.samples(m_ln1) %>% as.data.frame()
-beta <- exp(s_ln1$a + s_ln1$b) - exp(s_ln1$a)                                   
+s_ln1 <- extract.samples( m_ln1 ) %>% as.data.frame()
+beta <- exp( s_ln1$a + s_ln1$b ) - exp( s_ln1$a )                                   
 
-dens(beta) 
+dens( beta ) 
 ```
 
 
 Lognormaaljaotusega mudelis täidab normaaljaotusega mudeli intercepti rolli eelkõige meedian, mis on defineeritud kui exp(a), aga arvutada saab ka keskmise:
 ```{r}
-i_median <- exp(s_ln1$a)
+i_median <- exp( s_ln1$a )
 mean(grand_median)
 
-i_mean <- exp(s_ln1$a +s_ln1$sigma**2/2)
+i_mean <- exp( s_ln1$a + s_ln1$sigma**2/2 )
 mean(grand_mean)
 ```
 
@@ -784,15 +796,27 @@ Siin ennustame fititud mudelist uusi andmeid (väljamõeldud riikide rikkust):
 ```{r}
 sim_ci <- rethinking::sim(m_ln1) %>% as_tibble() %>% apply(2, HPDI, prob=0.95)
 
-ggplot(g2007, aes(lifeExp, gdpPercap)) + 
-  geom_point(aes(color=continent), size=0.8)+
-  geom_ribbon(aes(ymin=sim_ci[1,], ymax=sim_ci[2,]), alpha=0.2) +
+ggplot( g2007, aes( lifeExp, gdpPercap ) ) + 
+  geom_point( aes( color = continent ), size = 0.8 )+
+  geom_ribbon( aes( ymin = sim_ci[1,], ymax = sim_ci[2,]), alpha = 0.2 ) +
   theme_classic()
 ```
 
 Ka see mudel jääb hätta Aafrika outlieritega, mille eluiga ei suuda ennustada rikkust.
 
 ## Mitme prediktoriga lineaarne regressioon
+
+```{r}
+library(gapminder)
+gapminder <- gapminder
+g2007 <- gapminder %>% filter( year == 2007 )
+g2007 <- g2007 %>% mutate( l_GDP = log10( gdpPercap ) )
+g2007 <- g2007 %>% mutate( l_pop = log10( pop ), 
+                           lpop_s = (l_pop - mean( l_pop ) )/sd( l_pop ),
+                           lGDP_s = (l_GDP - mean( l_GDP ) )/sd( l_GDP ) ) %>% 
+  as.data.frame()
+```
+
 
 Meil on võimalik lisada regressioonivõrrandisse lisaprediktoreid. Nüüd ei küsi me enam, kuidas mõjutab l_GDP varieeruvus keskmise eluea varieeruvust vaid: kuidas mõjutavad muutujad l_GDP, continent ja logaritm pop-ist (rahvaarvust) keskmist eluiga. Me modelleerime selle lineaarselt nii, et eeldusena varieeruvad need x-i muutujad üksteisest sõltumatult: y = a + b1x1 + b2x2 + b3x3
 
@@ -815,8 +839,8 @@ Kui meil on mudelis SKP ja pop, siis saame küsida
 Järgenval mudelil on 4 parameetrit (intercept + 3 betat).
 
 ```{r}
-m1 <- lm(lifeExp~ l_GDP + continent + log10(pop), data = g2007)
-summary(m1)
+m1 <- lm( lifeExp ~ l_GDP + continent + log10( pop ), data = g2007 )
+summary( m1 )
 ```
 
 loeme mudelis "+" märki nagu "või". Ehk, "eluiga võib olla funktsioon SKP-st **või** rahvaarvust".
@@ -825,18 +849,18 @@ Intercept 19 ei tähenda tõlgenduslikult midagi. l-GDP tõus ühiku võrra tõs
 
 võrdluseks lihtne mudel
 ```{r}
-m2 <- lm(lifeExp ~ l_GDP, data = g2007)
-summary(m2)
+m2 <- lm( lifeExp ~ l_GDP, data = g2007 )
+summary( m2 )
 ```
 
 Siin on l_GDP mõju suurem, 16.6 aastat. Millisel mudelil on siis õigus? Proovime veel ülejäänud variendid
 
 ```{r}
-m3 <- lm(lifeExp ~ l_GDP + continent, data = g2007)
-summary(m3)
+m3 <- lm( lifeExp ~ l_GDP + continent, data = g2007 )
+summary( m3 )
 
-m4 <- lm(lifeExp ~ l_GDP + log10(pop), data = g2007)
-AIC(m1, m2, m3, m4)
+m4 <- lm( lifeExp ~ l_GDP + log10( pop ), data = g2007 )
+AIC( m1, m2, m3, m4 )
 ```
 
 Võitja mudel on hoopis m3, mis võtab arvesse kontinendi. Siin on l_GDP mõju samuti 10.7 aastat. Lisaks näeme, et kui riik ei asu Aafrikas, siis on l_GDP mõju elueale u 11 aasta võrra suurem. Seega elu Aafrika kisub alla keskmise eluea riigi rikkusest sõltumata. Võib olla on põhjuseks sõjad, võib-olla AIDS ja malaaria, võib-olla midagi muud. 
@@ -862,19 +886,17 @@ $Standard.andmed = (x - mean(x))/sd(x)$
 Nii on lihtsam erinevas skaalas muutujaid omavahel võrrelda (1 ühikuline muutus võrdub alati muutusega 1 standardhäve võrra) ja mudeli arvutamine üle mcmc ahelate on ka lihtsam.
 
 ```{r results="hide"}
-g2007 <- g2007 %>% 
-  mutate(l_pop = log10(pop), 
-         lpop_s = (l_pop - mean(l_pop)) / sd(l_pop),
-         lGDP_s = (l_GDP - mean(l_GDP)) / sd(l_GDP))
-g2007 <- as.data.frame(g2007)
+
 m5 <- map2stan(
-  alist(
-    lifeExp ~ dnorm(mu, sigma) ,
-    mu <- a + b_GDP * lGDP_s + b_pop * lpop_s,
-    a ~ dnorm(0, 10),
-    c(b_GDP, b_pop) ~ dnorm(0, 1),
-    sigma ~ dunif(0, 10)
-  ), data = g2007 )
+    alist(
+        lifeExp ~ dnorm( mu , sigma ) ,
+        mu <- a + b_GDP * lGDP_s + b_pop * lpop_s ,
+        a ~ dnorm( 0 , 10 ) ,
+        c(b_GDP, b_pop) ~ dnorm( 0 , 1 ) ,
+        sigma ~ dunif( 0 , 10 )
+),
+    data = g2007 )
+
 ```
 
 ```{r}
@@ -884,20 +906,21 @@ precis( m5 )
 kui l_GDP kasvab 1 sd võrra, siis eluiga kasvab 6.9 aasta võrra. 
 
 ```{r}
-f1 <- glimmer(lifeExp ~ lGDP_s + lpop_s + continent, data = g2007) 
+ f1 <- glimmer( lifeExp ~ lGDP_s + lpop_s + continent, data = g2007 )
 ```
 See on mudeli struktuur, mis sisaldab uusi kategoorilisi muutujaid
 
 Siin on tähtis anda map2stan()-le ette glimmeri poolt eeltöödeldud andmed:
 ```{r results="hide"}
 m6 <- map2stan(
-  f1$f,
+  f1$f, 
   data = f1$d
 )
 ```
 
 ```{r}
-precis(m6)
+precis( m6 )
+
 ```
 
 ### Keerulisemate mudelitega töötamine
@@ -909,30 +932,37 @@ Kasuta graafilisi meetodied. Mudeli koefitsientide jõllitamine üksi ei pääst
 Plotime varieeruvuse, mida mudel ei oota ega seleta.
 
 ```{r}
-names(coef(m5))
+names( coef( m5 ) )
 ```
 
-Residuals plot:
+Kõigepealt lihtne residuals plot, kus meil on y-teljel residuaalid ja x-teljel X1 muutuja tegelikud  valimiväärtused. Y = 0 tähistab horisontaalse joonena mudeli ennustatud Y (eluea) väärtusi kõigil prediktori X1 (lGDP_s) väärtustel ja residuaal on defineeritud kui tegelik Y miinus mudeli poolt ennustatud eluiga sellel X1 väärtusel. Mudeli ennustuse saamiseks anname mudelile ette fikseeritud parameetrite (koefitsientide) a, b_GDP ja b_pop väärtused ning arvutame oodatava keskmise eluea üle kõigi valimis leiduvate lGDP_s ja lpop_s väärtuste. Seega saame sama palju keskmise eluea ennustusi, kui palju on meie andmetabelis ridu.
 
 ```{r}
 # Using the fitted model compute the expected value of y (mu) 
 # for each of the 142 data rows.
-mu <- coef(m5)['a'] + 
-  coef(m5)['b_GDP'] * g2007$lGDP_s + 
-  coef(m5)['b_pop'] * g2007$lpop_s
 
-# compute residuals - järgmine vector 142 arvuga
+mu <- coef( m5 )[ 'a' ] + 
+  coef( m5 )[ 'b_GDP' ] * g2007$lGDP_s + 
+  coef( m5 )[ 'b_pop' ] * g2007$lpop_s
+
+
+# compute residuals - a vector w. 142 values
 m.resid <- g2007$lifeExp - mu
 
-ggplot(g2007, aes(lGDP_s, m.resid)) + 
-  geom_segment(aes(xend = lGDP_s, yend = 0), size = 0.2) +
-  geom_point(size = 0.5, type = 1)
+
+library(ggthemes)
+ggplot( g2007, aes( lGDP_s, m.resid ) ) + 
+  geom_segment( aes( xend = lGDP_s, yend = 0 ), size = 0.2 ) +
+  geom_point( size = 0.5, type = 1 ) + 
+  theme_tufte()
+  
+
 ```
 
 
 Me näeme, et seal kus SKP on väiksem kipuvad residuaalid olema negatiivsed, mis tähendab, et mudel ülehindab keskmist eluiga. Ja vastupidi, seal kus SKP on üle keskmise, mudel kipub alahindma keskmist eluiga.
 
-See seos tuleb eriti selgelt välja järgmisel pildil, kus plotime residuaalide sõltuvuse elueast:
+See seos tuleb eriti selgelt välja järgmisel pildil, kus plotime residuaalide sõltuvuse elueast (kui eelmine plot oli m.resid ~ X1, siis nüüd plotime  m.resid ~ Y). Lisaks joonistame selguse mõttes regressioonisirge. Kui residuaalid oleks ühtlaselt jaotunud mõlemale poole mudeli ennustust, siis saaksime horisontaalse regressioonisirge. Tegeliku sirge tõus näitab, et suuremad eluead omavad eelistatult poitiivseid residuaale ja väiksemad eluead negatiivseid residuaale. See tähendab, et mudel alahindab eluiga seal, kus SKP on kõrge ja vastupidi, ülehindab eluiga seal, kus SKP on madal.
 ```{r}
 g2007$m.resid <- m.resid
 ggplot(g2007, aes(lifeExp, m.resid)) +
@@ -940,13 +970,12 @@ ggplot(g2007, aes(lifeExp, m.resid)) +
   geom_point() +
   geom_hline(yintercept = 0, color = "grey", linetype = 2)
 ```
-Horisontaal punktiirjoon näitab, kus mudel vastab täpselt andmetele. 
 
-Suuremad eluead omavad eelistatult poitiivseid residuaale ja väiksemad eluead negatiivseid residuaale. See tähendab, et mudel alahindab eluiga seal, kus SKP on kõrge ja vastupidi, ülehindab eluiga seal, kus SKP on madal.
+Horisontaalne punktiirjoon näitab, kus mudel vastab täpselt andmetele. 
 
 ####  ennustavad plotid: 
 
-Plot, kus me ennustame keskmise eluea sõltuvust SKP-st nii riikide kaupa eraldi (andmepunktide paupa) kui üldiselt kõikide riikide keskmisena, millel on mingi kindel SKP (mudeli parima ennustuse ehk sirge asendi ümber valitsevat ebakindlust). Et seda teha, peame hoidma rahvaarvu konstantsena: 
+Plot, kus me ennustame keskmise eluea sõltuvust SKP-st nii riikide kaupa eraldi (andmepunktide paupa) kui üldiselt kõikide riikide keskmisena, millel on mingi kindel SKP (mudeli parima ennustuse ehk sirge asendi ümber valitsevat ebakindlust). Et seda teha, hoiame rahvaarvu konstantsena oma keskväärtusel, mis standardiseeritud andmetl võrdub alati nulliga. link() funktsioon annab meile keskmiste eluigade ennustused meie poolt ette antud X1 ja X2 väärtustel, ning sim() annab meile eluigade ennustused fiktsionaalsete riikide kaupa samadel X1 ja X2 väärtustel. Nagu näha, on meie mudeli arvates riikide kaupa ennustamine palju laiema varieeruvusega kui üle kõikväimalike riikide kesmise kaupa ennustamine.
 
 ```{r}
 # prepare new counterfactual data
@@ -961,7 +990,7 @@ mu.mean <- apply(mu, 2, mean)
 mu.PI <- apply(mu, 2, PI)
 
 # simulate counterfactual lifeExpectancies of individual countries
-R.sim <- rethinking::sim(m5, data = pred.data , n = 1e4)
+R.sim <- rethinking::sim(m5, data = pred.data)
 R.sim <- na.omit(R.sim)
 R.PI <- apply(R.sim, 2, PI)
 
@@ -976,9 +1005,9 @@ Näeme, kuidas ennustus sobib/ei sobi andmetega. Võrdle eelneva ennustuspildiga
 
 ### Posterior prediction plots 
 
-Need plotivad algandmed mudeli fiti vastu.
+Posterioorsed ennustusplotid panevad kõrvuti (või üksteise otsa) Y-i algandmed ja mudeli ennustused Y-väärtustele. Kui meie valimi suurus on N, siis me tõmbame mudelist näiteks 5 valimit, igaüks suurusega N ja plotime need kõrvuti valimiandmete plotiga. Siis me vaatame sellele plotile peale ja otsustame, kas mudeli ennustused on piisavalt lähedal valimi andmetele. Kui ei, siis on tõenäoline, et meie mudelis on midagi mäda ja me peame hakkama sealt vigu otsima. Tõsi küll, keerulisemate hierarhiliste mudelite korral on vahest raske otsustada, millised peaksid tulema eduka mudeli ennustused võrreldes algandmetega --- aga siiski, see on arvatavasti kõige tähtsam plot, mida oma mudelist teha!
 
-1) võrdle mudeli ennustusi andmetega. (Aga arvesta sellega, et mitte kõik mudelid ei püüa täpselt andmetele vastata.)
+1) võrdle mudeli ennustusi andmetega. (Aga arvesta sellega, et mitte kõik mudelid ei püüagi täpselt andmetele vastata.)
 
 ```{r}
 library(bayesplot)
@@ -987,32 +1016,36 @@ ppc_dens(g2007$lifeExp, yrep[1:5, ])
 ```
 
  
-2) Millisel viisil täpselt meie mudel ebaõnnestub? Annab mõtteid, kuidas mudelit parandada.
+2) Millisel viisil täpselt meie mudel ebaõnnestub? See plot annab mõtteid, kuidas mudelit parandada.
 
-Ploti ennustused andmepunktide vastu ja lisa sirge, mis näitab täiuslikku ennustust pluss jooned, mis näitavad igale ennustusele omistatud usaldusintervalli
+Ploti ennustused andmepunktide vastu, pluss jooned, mis näitavad igale ennustusele omistatud usaldusintervalli. Lisaks veel sirge, mis näitab täiuslikku ennustust (slope = 1, intercept = 0). 
 
+Loeme gapminderi andmed uuesti sisse:
 ```{r}
-g2007 <- gapminder %>% filter(year == 2007)
-g2007 <- g2007 %>% mutate(l_GDP = log10(gdpPercap))
-g2007 <- g2007 %>% 
-  mutate(l_pop = log10(pop), 
-         lpop_s = (l_pop - mean(l_pop)) / sd(l_pop),
-         lGDP_s = (l_GDP - mean(l_GDP)) / sd(l_GDP)) %>% 
-  as.data.frame(g2007)
+library(gapminder)
+gapminder <- gapminder
+g2007 <- gapminder %>% filter( year == 2007 )
+g2007 <- g2007 %>% mutate( l_GDP = log10( gdpPercap ) )
+g2007 <- g2007 %>% mutate( l_pop = log10( pop ), 
+                           lpop_s = (l_pop - mean( l_pop ) )/sd( l_pop ),
+                           lGDP_s = (l_GDP - mean( l_GDP ) )/sd( l_GDP ) ) %>% 
+  as.data.frame()
+```
+
+Ja nüüd plotime ennustused Y-le tegelike Y valimi väärtuste vastu:
+```{r}
 
 mu <- link(m5)  
 mu.mean <- apply(mu, 2, mean)
-mu.PI <- apply( mu , 2 , PI )
-mu_sim <- rethinking::sim( m5 )  
-sim.PI <- apply( mu_sim , 2 , PI )
 
-coef <- coef(m5)
+mu.PI <- apply( mu , 2 , PI )
+
 g2007$mu.mean <- mu.mean
 
-ggplot( g2007, aes( lifeExp, mu.mean ) )+
+ggplot( g2007, aes( lifeExp, mu.mean ) ) +
   geom_point()+
   geom_crossbar( ymin = mu.PI[1,], ymax = mu.PI[2,] ) +
-  geom_abline( intercept= 0, slope =  1 ) +
+  geom_abline( intercept= 0, slope =  1, lty = 2 ) +
   ylab( "predicted life expectancy" ) + 
   xlab( "observed life expectancy" ) +
   coord_cartesian( xlim=c( 40, 85 ), ylim=c( 40, 85 ) )+ 
@@ -1020,14 +1053,17 @@ ggplot( g2007, aes( lifeExp, mu.mean ) )+
 
 ```
 
+Siin on ennustus ja seda ümbritsev ebakindlus iga riigi keskmisele elueale.
 
-Siin on ennustus ja seda ümbritsev ebakindlus iga riigi keskmisele elueale
-Järgnev plot annab ennustusvea g2007 tabeli igale riigile:
+Järgnev plot annab ennustusvea igale riigile. Siin tähistab 89% CI näiteks Vietnamile eluigade vahemikku, millese jääb mudeli ennustuse kohaselt 89% kõikvõimalike fiktsionaalsete riikide keskmistest eluigadest, mille SKP ja rahvaarv võrdub Vietnami omaga. Kuna me tsentreerime CI Vietnami tegeliku keskmise eluea residuaalile (erinevusele mudeli ennustusest), näitab see, kui palju erineb Vietnami eluiga mudeli ennustusest riikidele, nagu Vietnam. See plot annab meile riigid, mille suhtes mudel jänni jääb. Enamasti leiame need riigid Aafrikast.
  
 ```{r fig.height=8, fig.width= 4 }
 
 # compute residuals
 life.resid <- g2007$lifeExp - mu.mean
+
+mu_sim <- rethinking::sim( m5 )  
+sim.PI <- apply( mu_sim , 2 , PI )
 
 ggplot( g2007, aes( x = life.resid, y = reorder( country, life.resid ) ) ) +
   geom_point() +
@@ -1042,19 +1078,16 @@ ggplot( g2007, aes( x = life.resid, y = reorder( country, life.resid ) ) ) +
 
 punased jooned näitavad 89% ennustuspiire igale residuaalile riigi tasemel (89% kõikvõimalike riikide keskmiste eluigade residuaalidest sellel SKPl jääb punasesse vahemikku).
 
-
-
-
 ### interaktsioonid prediktorite vahel
 
-Eelnevad mudelid eeldavad, et prediktorite varieeruvused on üksteisest sõltumatud. Aga mis, siis kui see nii ei ole ja ühe prediktori mõju suurus sõltub teisest prediktorist, ehk prediktorite vahel on interaktsioon? Lihtsaim viis sellist interaktsiooni modelleerida on lisades aditiivsele mudelile, milliseid me just eelmises peatükis käsitlesime, interaktsioon korrutamisetehtena:
+Eelnevad mudelid eeldavad, et prediktorite varieeruvused on üksteisest sõltumatud. Aga mis siis, kui see nii ei ole ja ühe prediktori mõju suurus sõltub teisest prediktorist, ehk prediktorite vahel on interaktsioon? Lihtsaim viis sellist interaktsiooni modelleerida on lisades interaktsiooni aditiivsele mudelile korrutamisetehtena:
 
 $y = a + b1x1 + b2x2 + b3x1x2$
 
-Sellise mudeli järgi erineb sirge tõus b1 erinevatel b2 väärtustel, ja erinevuse määr sõltub b3-st sõltuvalt interaktsiooni tugevusest. Samamoodi ja sümmeetriliselt erineb ka b2 väärtus erinevatel b1 väärtustel. Seega tähendab interaktsiooni mudel, et sirge tõusunurk ei ole alati sama. See on ühine paljude hierarhiliste mudelitega, mida võib omakorda vaadelda massivsete interaktsioonimudelitena. Seevastu y = a + b1x1 + b2x2 tüüpi mudel annab b1-le konstantse tõusunurga, kuid laseb intercepti muutuma sõltuvalt b2 väärtusest (ja vastupidi) 
+Sellise mudeli järgi erineb sirge tõus b1 erinevatel b2 väärtustel, ja erinevuse määr sõltub b3-st (b3 annab interaktsiooni tugevuse). Samamoodi ja sümmeetriliselt erineb ka tõus b2 sõltuvalt b1 väärtusest. See on ühine paljude hierarhiliste mudelitega, mida võib omakorda vaadelda massivsete interaktsioonimudelitena. Seevastu y = a + b1x1 + b2x2 tüüpi mudel annab b1-le konstantse tõusunurga, kuid laseb intercepti muutuma sõltuvalt b2 väärtusest (ja vastupidi). 
 
-Sellise mudeli fittimises pole midagi erilist võrreldes sellega, mida me oleme juba õppinud. Aga selle fititud parameetrite tõlgendamine on keeruline. 
-alustame diskreetse muutujaga, continent. Selle interaktsioon SKP-ga.
+Interaktsioonimudeli fittimises pole midagi erilist võrreldes sellega, mida me oleme juba õppinud. Aga fititud parameetrite tõlgendamine on keeruline. 
+Alustame diskreetse muutujaga, continent, ja mudeldame selle interaktsiooni SKP-ga.
 
 ```{r}
 f1 <- glimmer(lifeExp~ lGDP_s*continent, data=g2007)
@@ -1076,56 +1109,11 @@ c1 <- coef(m1)
 names(c1)
 ```
 
+Kõigepealt defineerime X1 ja X2 väärtused, millele teeme ennustused link() funktsiooni abil. Link tabelist veergude keskmine annab keskmise eluea ennustuse vastavale mandrile ja SKP-le. PI() abil saame 89% CI igale ennustusele. 
 
 ```{r}
-GDP.seq <- seq(from=-3,to=3,by=0.1)
-mu.Africa <- link( m1 , 
-                     data=data.frame(continentAmericas=0, 
-                                     continentAsia=0,
-                                     continentEurope=0,
-                                     continentOceania=0,
-                                     lGDP_s_X_continentAmericas=0,
-                                     lGDP_s_X_continentAsia=0,
-                                     lGDP_s_X_continentEurope=0,
-                                     lGDP_s_X_continentOceania=0,
-                                     lGDP_s=GDP.seq) )
-mu.Africa.mean <- apply( mu.Africa , 2 , mean )
-mu.Africa.PI <- apply( mu.Africa , 2 , PI , prob=0.9 )
-mu.Europe <- link( m1 , data=data.frame(continentAmericas=0, 
-                                     continentAsia=0,
-                                     continentEurope=1,
-                                     continentOceania=0,
-                                     lGDP_s_X_continentAmericas=0,
-                                     lGDP_s_X_continentAsia=0,
-                        lGDP_s_X_continentEurope=c1["b_lGDP_s_X_continentEurope"],
-                                     lGDP_s_X_continentOceania=0, 
-                                     lGDP_s=GDP.seq) )
-mu.Europe.mean <- apply( mu.Europe , 2 , mean )
-mu.Europe.PI <- apply( mu.Europe , 2 , PI , prob=0.9 )
-
-# plot regression line for African nations
-dd <- as.data.frame(f1$d)
-
-plot( lifeExp ~ lGDP_s , data=dd ,
-    col=rangi2 , ylab="life expectancy" ,
-    xlab="GDP", type="n" )
-mtext( "African nations" , 3 )
-lines( GDP.seq , mu.Africa.mean , col=rangi2 )
-shade( mu.Africa.PI , GDP.seq , col=col.alpha(rangi2,0.3) )
-
-# plot european nations with regression
-d.A0 <- dd[dd$continentEurope==1,]
-plot( lifeExp ~ lGDP_s, data=d.A0 ,
-    col="black" , ylab="life expectancy" ,
-    xlab="GDP", xlim=c(-2,2) )
-mtext( "European nations" , 3 )
-lines( GDP.seq , mu.Europe.mean )
-shade( mu.Europe.PI , GDP.seq )
-```
-Nagu näha, on meil nüüd üsna erinevad sirge tõusunurgad.
-
-Sama ggplotiga
-```{r}
+dd <- as.data.frame(f1$d) #we use the dataframe made by glimmer()
+#in dd all continents are in separate 2-level columns (except Africa)
 dd1 <- dd %>% filter(continentAmericas==0, 
                      continentAsia==0, 
                      continentEurope==0, 
@@ -1143,7 +1131,6 @@ ggplot(data=dd1, aes(lGDP_s, lifeExp)) +
 ```{r}
 dd1 <- dd %>% filter(continentEurope==1)
 mu.Europe <- link(m1, dd1)
-mu.Europe <- link(m1, dd1)
 mu.Europe.mean <- apply( mu.Europe , 2 , mean )
 mu.Europe.PI <- apply( mu.Europe , 2 , PI , prob=0.9 )
 
@@ -1153,7 +1140,7 @@ ggplot(data=dd1, aes(lGDP_s, lifeExp)) +
   geom_line( aes( y=mu.Europe.mean))+ theme_tufte()
 ```
 
-
+Nagu näha, on meil nüüd üsna erinevad sirge tõusunurgad.
 
 
 #### Interaktsioonid pidevatele tunnustele
@@ -1161,31 +1148,33 @@ ggplot(data=dd1, aes(lGDP_s, lifeExp)) +
 Kasutame standardiseeritud prediktoreid, sest nende koefitsiente saab paremini tõlgendada (tegelikult piisab prediktorite tsentreerimisest). Meie andmed käsitlevad diabeedimarkereid Ameerika lõunaosariikide neegritel 1960-ndatel. Me ennustame siin sõltuvalt vanusest ja vööümbermõõdust hdl-i --- high density cholesterol --- mis on nn hea kolesterool.
 
 ```{r}
-diabetes <- read.table(file = 'data/diabetes.csv', header = TRUE, sep = ';', dec = ',')
-diabetes <- read.csv2("data/diabetes.csv")
-d1 <- diabetes %>% select(hdl, age, waist) %>% na.omit()
-d2 <- d1 %>% mutate(age_st=(age - mean(age))/sd(age), 
-                    waist_st=(waist - mean(waist))/sd(waist))
+#diabetes <- read.table( file = 'data/diabetes.csv', header = TRUE, sep = ';', dec = ',' )
+diabetes <- read.csv2( "data/diabetes.csv" )
+d1 <- diabetes %>% select( hdl, age, waist ) %>% na.omit()
+d2 <- d1 %>% mutate( age_st = ( age - mean( age ) )/sd( age ), 
+                    waist_st = ( waist - mean( waist ) )/sd( waist ) )
 m2 <- map2stan(
     alist(
         hdl ~ dnorm( mu , sigma ) ,
         mu <- a + bR*age_st + bA*waist_st + bAR*age_st*waist_st,
-        a ~ dnorm(0,100),
-        bR ~ dnorm(0,2),
-        bA ~ dnorm(0,2),
-        bAR~ dnorm(0,2),
-        sigma ~ dcauchy(0,1)
-), data=d2, chains=1 , cores=1 )
+        a ~ dnorm( 0, 100 ),
+        bR ~ dnorm( 0, 2 ),
+        bA ~ dnorm( 0, 2 ),
+        bAR~ dnorm( 0, 2),
+        sigma ~ dcauchy( 0, 1 )
+), data = d2 )
 
-plot(precis(m2))
+plot(precis( m2 ) )
 ```
 
-a - hdl-i oodatav keskväärtus siis kui waist ja age on fikseeritud oma keskmisel väärtusel. 
-bR - oodatav hdl-i muutus, kui vanus kasvab 1 aasta võrra ja waist on fikseeritud oma keskväärtusel
-bA - sama, kui võõ-ümbermõõt kasvab 1 ühiku (inch) võrra 
-bAR - kaks ekvivalentset tõlgendust: 1) oodatav muutus vanuse mõju määrale hdl-le, kui vööümbermõõt kasvab 1 ühiku võrra. 2) oodatav muutus vööümbermõõdu mõju määrale hdl-le, kui vanus kasvab 1 ühiku võrra.
+**NB!** Järgmised interpretatsioonid kehtivad ainult siis, kui mudeldame nullile tsentreeritud andmeid.
 
-Negatiivne bAR tähendab, et vanus ja vööümbermõõt omavad vastandlikke mõjusid hdl-i tasemele, aga samas kumgki tõstab teise tähtsust hdl-le.
+a - hdl-i oodatav keskväärtus siis kui võõ-ümbermõõt ja vanus on fikseeritud oma keskmistel väärtustel. 
+bR - oodatav hdl-i muutus, kui vanus kasvab 1 aasta võrra ja võõ-ümbermõõt on fikseeritud oma keskväärtusel
+bA - sama, kui võõ-ümbermõõt kasvab 1 ühiku (inch) võrra 
+bAR - kaks ekvivalentset tõlgendust: 1) oodatav muutus vanuse mõju määrale hdl-le, kui vöö-ümbermõõt kasvab 1 ühiku võrra. 2) oodatav muutus vöö-ümbermõõdu mõju määrale hdl-le, kui vanus kasvab 1 ühiku võrra.
+
+Negatiivne bAR tähendab, et vanus ja vöö-ümbermõõt omavad vastandlikke mõjusid hdl-i tasemele, aga samas kumgki tõstab teise tähtsust hdl-le.
 
 
 ```{r}
@@ -1193,15 +1182,15 @@ m3 <- map2stan(
     alist(
         hdl ~ dnorm( mu , sigma ) ,
         mu <- a + bR*age_st + bA*waist_st,
-        a ~ dnorm(0,100),
-        c(bR, bA) ~ dnorm(0,2),
-        sigma ~ dcauchy(0,1)
-), data=d2, chains=1 , cores=1 )
+        a ~ dnorm( 0, 100 ),
+        c(bR, bA) ~ dnorm( 0, 2 ),
+        sigma ~ dcauchy( 0, 1 )
+), data = d2)
 
 compare(m2, m3)
 ```
 
-Siin on tegelikult eelistatud ilma interaktsioonita mudel. Aga kuna interaktsioonimudeli kaal on ikkagi 27%, tasub meil ennustuste tegemisel mõlemat mudelit koos arvestada vastavalt oma kaalule. 
+Siin on tegelikult eelistatud ilma interaktsioonita mudel. Aga kuna interaktsioonimudeli kaal on ikkagi 23%, tasub meil ennustuste tegemisel mõlemat mudelit koos arvestada vastavalt oma kaalule. 
 
 ```{r}
 coeftab(m2, m3)
@@ -1209,53 +1198,56 @@ coeftab(m2, m3)
 
 Tõesti, bA ja bR on mõlemas mudelis väga sarnased. m3 on kindlasti lihtsamini tõlgendatav.
 
-Ensemble teeb ära nii link() kui sim() kasutades mõlemat mudelit vastavalt mudelite WAIC-i kaaludele ja toodab listi, mille elementideks on link() toodetud maatriks ja sim() toodetud maatriks.
+Ensemble teeb ära nii link()-i kui sim()-i, kasutades mõlemat mudelit vastavalt nende mudelite WAIC-i kaaludele ja toodab listi, mille elementideks on link() toodetud maatriks ja sim() toodetud maatriks.
 
-Teeme 3 plotti: waist=0 (keskmine), waist=-1 (miinus üks sd) ja waist=1
+Teeme 3 plotti: waist = 0 (keskmine), waist = -1 (miinus üks sd) ja waist = 1
 
 ```{r}
 d.pred <- data.frame(
-  age_st=seq(-2, 2, length.out = 20),
-  waist_st=0
+  age_st = seq( -2, 2, length.out = 20 ),
+  waist_st = 0
 ) #siia lähevad kõik prediktorid nende väärtuste kombinatsioonidega, millele me tahame ennustada hdl-i väärtusi.
-e <- ensemble(m2, m3, data=d.pred)
+e <- ensemble( m2, m3, data = d.pred )
 hdl <- apply( e$link , 2 , mean )
 mu.PI <- apply( e$link , 2 , PI , prob=0.97 )
 
-ggplot(d.pred, aes(x=age_st))+
-  geom_line(aes(y=hdl))+
-  geom_line(aes(y=mu.PI[1,]), linetype=2)+
-  geom_line(aes(y=mu.PI[2,]), linetype=2)+ theme_tufte()
+ggplot(d.pred, aes( x = age_st ) ) +
+  geom_line( aes( y = hdl ) ) +
+  geom_line( aes( y = mu.PI[1,] ), linetype = 2 ) +
+  geom_line( aes( y = mu.PI[2,] ), linetype = 2 ) + 
+  theme_tufte()
 ```
 
 ```{r}
 d.pred <- data.frame(
-  age_st=seq(-2, 2, length.out = 20),
-  waist_st=-1
+  age_st=seq( -2, 2, length.out = 20 ),
+  waist_st = -1
 ) #siia lähevad kõik prediktorid nende väärtuste kombinatsioonidega, millele me tahame ennustada hdl-i väärtusi.
-e <- ensemble(m2, m3, data=d.pred)
+e <- ensemble( m2, m3, data = d.pred )
 hdl <- apply( e$link , 2 , mean )
 mu.PI <- apply( e$link , 2 , PI , prob=0.97 )
 
-ggplot(d.pred, aes(x=age_st))+
-  geom_line(aes(y=hdl))+
-  geom_line(aes(y=mu.PI[1,]), linetype=2)+
-  geom_line(aes(y=mu.PI[2,]), linetype=2)+ theme_tufte()
+ggplot( d.pred, aes( x = age_st ) ) +
+  geom_line( aes( y = hdl ) ) +
+  geom_line( aes( y = mu.PI[1,] ), linetype = 2 ) +
+  geom_line( aes( y = mu.PI[2,] ), linetype = 2) + 
+  theme_tufte()
 ```
 
 ```{r}
 d.pred <- data.frame(
-  age_st=seq(-2, 2, length.out = 20),
-  waist_st=1
+  age_st = seq( -2, 2, length.out = 20 ),
+  waist_st = 1
 ) #siia lähevad kõik prediktorid nende väärtuste kombinatsioonidega, millele me tahame ennustada hdl-i väärtusi.
-e <- ensemble(m2, m3, data=d.pred)
+e <- ensemble( m2, m3, data = d.pred )
 hdl <- apply( e$link , 2 , mean )
-mu.PI <- apply( e$link , 2 , PI , prob=0.97 )
+mu.PI <- apply( e$link , 2 , PI , prob = 0.97 )
 
-ggplot(d.pred, aes(x=age_st))+
-  geom_line(aes(y=hdl))+
-  geom_line(aes(y=mu.PI[1,]), linetype=2)+
-  geom_line(aes(y=mu.PI[2,]), linetype=2)+ theme_tufte()
+ggplot( d.pred, aes( x = age_st ) ) +
+  geom_line( aes( y = hdl ) ) +
+  geom_line( aes( y = mu.PI[1,] ), linetype = 2 ) +
+  geom_line( aes( y = mu.PI[2,] ), linetype = 2 ) + 
+  theme_tufte()
 ```
 
 sama base plotis
