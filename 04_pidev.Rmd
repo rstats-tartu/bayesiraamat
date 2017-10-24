@@ -6,7 +6,6 @@ library(tidyverse)
 library(stringr)
 library(modelr)
 library(broom)
-library(car)
 library(gapminder)
 library(rethinking)
 library(bayesplot)
@@ -1485,11 +1484,11 @@ Nende koolide puhul, kus usaldusintervall on laiem, on ka suurem shrinkage (mude
 
 ### Vabad interceptid klassikalises regressioonimudelis
 
-Ennustame score1 ja score2 summa sõltuvust sex-ist. Küsimus: kui palju poiste ja tüdrukute matemaatikaoskused erinevad? Fitime mudeli, mis laseb vabaks intercepti. **Selle mudeli eeldus on, et igal koolil on oma baastase (oma intercept), aga kõikide koolide efektid (mudeli tõusu-koefitsient) on identsed.**
+Ennustame score1 sõltuvust sex-ist. Küsimus: kui palju poiste ja tüdrukute matemaatikaoskused erinevad? Fitime mudeli, mis laseb vabaks intercepti. **Selle mudeli eeldus on, et igal koolil on oma baastase (oma intercept), aga kõikide koolide efektid (mudeli tõusu-koefitsient) on identsed.**
 
 Me kasutame prediktorina binaarset kategoorilist muutujat. See on analoogiline olukord ANOVA mudelile, mis võtab arvesse multiple testingu olukorra, mis meil siin on.
 ```{r}
-schools_f1 <- glimmer(summa ~ sex + (1 | school), data = schools)
+schools_f1 <- glimmer(score1 ~ sex + (1 | school), data = schools)
 ```
 
 ```{r, eval=FALSE}
@@ -1540,7 +1539,7 @@ Siin on eeldus, et kõikides koolides on sama poiste ja tüdrukute vaheline erin
 Milline näeb välja mudel, kus me laseme vabaks nii intercepti kui tõusu?
 
 ```{r}
-schools_f2 <- glimmer(summa ~ sex + (1 + sex | school), data = schools)
+schools_f2 <- glimmer(score1 ~ sex + (1 + sex | school), data = schools)
 ```
 
 nüüd on meil lisaparameetrid v_sex1, mis annab tõusu igale koolile eraldi ning Rho-school, mis annab korrelatsiooni intercepti ja tõusu vahel. Nüüd me jagame informatsiooni erinevat tüüpi parameetrite, nimelt interceptide ja tõusude, vahel. Selleks ongi vaja Rho lisa-parameetrit. Nüüd ei modelleeri me intercepti ja tõusu enam 2 eraldi normaaljaotuste abil vaid ühe 2-dimensionaalse normaaljaotusega (mvnorm2).

@@ -1,7 +1,6 @@
 
 # Järeldav statistika
 
-
 ```{r}
 library(tidyverse)
 library(broom)
