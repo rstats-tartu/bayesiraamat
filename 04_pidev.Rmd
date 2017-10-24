@@ -1679,49 +1679,55 @@ ja poiste keskmine skoor üle kõikide koolide:
 
 Tõmbame mudelist ennustused 1., 2. ja 37. kooli poiste skooridele järgmisel semestril:
 ```{r}
-df2$school <- as.factor(df2$school)
+schools <- mutate_at(schools, "school", as.factor)
 d.pred <- list(
-  school=c(1, 2, 37),
-  sex1= 0
+  school = c(1, 2, 37),
+  sex1 = 0
 )
 
-sim_sch <- rethinking::sim(m2, data = d.pred) 
-pred.p <- apply( sim_sch , 2 , mean )
-pred.p.PI <- apply( sim_sch , 2 , PI )
+schools_sim <- rethinking::sim(m2, data = d.pred) 
+pred.p <- apply(schools_sim, 2, mean)
+pred.p.PI <- apply(schools_sim, 2 , PI)
+```
+
+NB! kasutades `rethinking::sim()` saame me enustused andmepunktide (üksikute poiste tasemel). 
+Antud juhul jääb ennustuse kohaselt esimeses koolis 89% individuaalseid skoore vahemikku 61-132 punkti 200-st võimalikust. 
+
+Kui meid huvitab hoopis nende koolide keskmine skoor järgmisel semestril, siis kasuta `rethinking::sim()` asemel `rethinking::link()` funktsiooni.
+```{r}
+schools_sim <- link(schools_m2, data = d.pred) 
+pred.p <- apply(schools_sim, 2, mean)
+pred.p.PI <- apply(schools_sim, 2, PI)
 
 pred.p.PI
 ```
 
-NB! kasutades sim() saame me enustused andmepunktide (üksikute poiste tasemel). Antud juhul jääb ennustuse kohaselt esimeses koolis 89% individuaalseid skoore vahemikku 61-132 punkti 200-st võimalikust. 
-
-Kui meid huvitab hoopis nende koolide keskmine skoor järgmisel semestril, siis kasuta sim() asemel link() funktsiooni.
-```{r}
-sim_sch <- link(m2, data= d.pred) 
-pred.p <- apply( sim_sch , 2 , mean )
-pred.p.PI <- apply( sim_sch , 2 , PI )
-
-pred.p.PI
-```
-
-Esimeses koolis jääb keskmine poiste skoor 89% tõenäosusega vahemikku 80-112 punkti.
+Esimeses koolis jääb keskmine poiste skoor 89% tõenäosusega vahemikku `r str_c(round(pred.p.PI[,1]), collapse = " kuni ")` punkti.
 
 ```{r}
-compare(m1, m2)
+compare(schools_m1, schools_m2)
 ```
 
 Tundub, et tõusude vabakslaskine oli hea mõte. Ma saan hästi pihta, et erinevad koolid õpetavad matemaatikat erineva kvaliteediga. Aga miks peaks erinevates Inglismaa koolides olema erinev vahe poiste ja tüdrukute matemaatikateadmistel? Kas olukorras, kus meil on hea kool, läheb see vahe väiksemaks või suuremaks? Tehke kindlaks!!! ploti slope vs. intercept.
 
 ```{r}
-s2 <- as.data.frame(m2@stanfit)
-ss2 <- apply(s2,2,mean)
-ss2 <- as.data.frame(ss2) 
-ss2$names <- colnames(s2)
-ss2 <- spread(ss2, key=names, value = ss2) #alternatiiv oleks regexpr kasutamine koos filter() verbiga.
-ss3 <- ss2 %>% select(starts_with("v_Int")) %>% gather
-ss4 <- ss2 %>% select(starts_with("v_sex")) %>% gather
+schools_m2_samples <- as.data.frame(schools_m2@stanfit)
+schools_m2_samples_mean <- apply(schools_m2_samples, 2, mean)
+schools_m2_samples_mean <- as.data.frame(schools_m2_samples_mean)
+schools_m2_samples_mean$names <- colnames(schools_m2_samples)
+schools_m2_samples_mean <- spread(schools_m2_samples_mean, 
+                                  key = names, 
+                                  value = schools_m2_samples_mean) #alternatiiv oleks regexpr kasutamine koos filter() verbiga.
+schools_m2_samples_mean2 <- schools_m2_samples_mean %>% 
+  select(starts_with("v_Int")) %>% 
+  gather()
+schools_m2_samples_mean3 <- schools_m2_samples_mean %>% 
+  select(starts_with("v_sex")) %>% gather()
 
-plot(ss3$value, ss4$value, xlab="poiste skoor", ylab="erinevus poiste-tydrukute vahel")
-abline(lm(ss4$value~ss3$value))
+plot(schools_m2_samples_mean2$value, schools_m2_samples_mean3$value, 
+     xlab = "Poiste skoor", 
+     ylab = "Erinevus poiste ja tüdrukute vahel")
+abline(lm(schools_m2_samples_mean3$value ~ schools_m2_samples_mean2$value))
 
 ```
 
@@ -1732,7 +1738,7 @@ Muide sel joonisel tähendavad negatiivsed väärtused alla keskmist väärtust,
 Arvutage nüüd poiste ja tüdrukute keskmine skoor kooli kaupa ja vaadake uuesti sõltuvust samasse erinevusesse. Mis on õigem viis: kas fittida ilma interceptita mudel (nagu eelmises peatükis) ja kasutada otse selle koefitsiente või kasutada meie m2 mudelit ning arvutada selle mudeli koefitsientide põhjal uus statistik (kaalutud keskmine näiteks)? Miks?
 
 ```{r}
-postcheck(m2)
+postcheck(schools_m2)
 ```
 
 ### Hierarhiline mudel pidevate prediktoritega
@@ -1740,13 +1746,11 @@ postcheck(m2)
 Siin püüame ennustada score1 mõju score2 väärtusele.
 
 ```{r}
-df2 <- read_csv("data/schools.csv")
-df2 <- df2 %>% filter(complete.cases(.))
-plot(df2$score2, df2$score1)
-abline(lm(score1 ~ score2, data = df2))
+plot(schools$score2, schools$score1)
+abline(lm(score1 ~ score2, data = schools))
 ```
 
-Kõigepealt lihtne regressioon lm()-ga (see ei ole hierarhiline mudel)
+Kõigepealt lihtne regressioon `lm()` funktsiooniga (see ei ole hierarhiline mudel).
 ```{r}
 lm(score1 ~ score2, data = df2)
 ```
