@@ -1404,13 +1404,12 @@ Lihtne ANOVA on sageduslik test, mis võrdleb gruppide keskmisi mitmese testimis
 Missing values are coded as -1.
 
 ```{r}
-gcsemv <- read_delim("data/Gcsemv.txt", delim = " ", col_names = FALSE)
-colnames(gcsemv) <- c("school", "student", "sex", "score1", "score2")
-gcsemv <- gcsemv %>% mutate_at(vars(school, student), as.factor)
-gcsemv$score1[gcsemv$score1 == -1] <- NA
-gcsemv$score2[gcsemv$score2 == -1] <- NA
-gcsemv <- drop_na(gcsemv)
-gcsemv
+schools <- read.csv( "data/schools.csv")
+schools <- schools %>%
+  filter(complete.cases(.)) %>%
+  mutate(summa = score1 + score2,
+         sex = as.factor(sex),
+         school = as.factor(school))
 ```
 
 
@@ -1418,17 +1417,18 @@ Alustuseks mitte-hierarhiline mudel, mis arvutab keskmise score1 igale koolile e
 
 ```{r, eval=FALSE}
 schoolm2 <- map2stan(
-    alist(
-        score1~ dnorm( mu , sigma ) ,
-        mu <- a_school[school],
-        a_school[school]  ~ dnorm(50, 30),
-        sigma ~ dcauchy(0,1)
-), data = gcsemv)
+  alist(
+    score1 ~ dnorm(mu, sigma),
+    mu <- Intercept + v_Intercept[school],
+    Intercept ~ dnorm(0, 50),
+    v_Intercept[school] ~ dnorm(0, 50),
+    sigma ~ dcauchy(0, 2)
+  ), data = schools)
 ```
 
 
 ```{r, include=FALSE}
-# saveRDS(m2, file = "data/schoolm2.rds")
+# saveRDS(schoolm2, file = "data/schoolm2.rds")
 schoolm2 <- readRDS("data/schoolm2.rds")
 ```
 
@@ -1444,25 +1444,25 @@ Igale koolile antud hinnang on sõltumatu kõigist teistest koolidest.
 Ja nüüd hierarhiline mudel, mis teab koolide vahelisest varieeruvusest. Siin leiab a_school-i priorist teise taseme meta-parameetri nimega sigma_school, millele on defineeritud oma meta-prior. 
 
 ```{r, eval=FALSE}
-#glimmer(score1 ~ (1|school), data=df1) #intercept-only hierarhiline mudel
-m3 <- map2stan(
-    alist(
-        score1~ dnorm( mu , sigma ) ,
-        mu <- a_school[school],
-        a_school[school]  ~ dnorm(50, sigma_school), #50 võiks olla keskmine testi tulemus
-        sigma_school~ dcauchy(0,1),
-        sigma ~ dcauchy(0,1)
-), data = gcsemv)
+schoolm3 <- map2stan(alist(
+  score1 ~ dnorm(mu, sigma),
+  mu <- Intercept + v_Intercept[school],
+  Intercept ~ dnorm(0, 50),
+  v_Intercept[school] ~ dnorm(0, sigma_school),
+  sigma_school ~ dcauchy(0, 2),
+  sigma ~ dcauchy(0, 2)
+), data = schools)
 ```
+
 
 ```{r, include=FALSE}
-# saveRDS(m3, file = "data/schoolm3.rds")
-m3 <- readRDS("data/schoolm3.rds")
+# saveRDS(schoolm3, file = "data/schoolm3.rds")
+schoolm3 <- readRDS("data/schoolm3.rds")
 ```
 
 
-```{r}
-precis(m3, depth = 2)
+```{r, eval=FALSE}
+precis(schoolm3, depth = 2)
 ```
 
 
@@ -1471,39 +1471,19 @@ Nagu näha on sigma_school < sigma, mis tähendab, et koolide vaheline varieeruv
 
 Ning veel üks hierarhiline mudel, mis teab nii koolide skooride keskmiste varieeruvust kui koolide vahelist varieeruvust.
 
-```{r, eval=FALSE}
-m4 <- map2stan(
-    alist(
-        score1 ~ dnorm( mu , sigma ) ,
-        mu <- a_school[school],
-        a_school[school]  ~ dnorm(mu_school, sigma_school),
-        mu_school~ dnorm(50, 20),
-        sigma_school~ dcauchy(0, 1),
-        sigma ~ dcauchy(0, 1)
-), data = df2)
-```
-
-```{r, include=FALSE}
-# saveRDS(m4, file = "data/schoolm4.rds")
-m4 <- readRDS("data/schoolm4.rds")
-```
-
-```{r}
-precis(m4, depth = 2)
-```
-
 Võrdleme mudeleid.
 ```{r, eval=F}
-compare(m2, m3, m4)
+compare(schoolm2, schoolm3)
 ```
 
-Siit nähtub, et m3 on parim mudel, aga ka m4 ja m2 omavad mingit kaalu.
+Siit nähtub, et m3 on parim mudel, aga ka m2 omab mingit kaalu.
 
-```{r}
-plot(coeftab(m2, m3, m4))
+```{r, fig.height=9}
+plot(coeftab(schoolm2, schoolm3))
 ```
 
-Siin on hästi näha shrinkage m3 ja m4 puhul, võrreldes m2-ga, mis ei tee multiple testingu korrektsiooni. Nende koolide puhul, kus usaldusintervall on laiem, on ka suurem shrinkage (mudel võtab nende kohta suhteliselt rohkem infot teistest koolidest sest need koolid ise on mingil põhjusel suhteliselt infovaesed)
+Siin on hästi näha shrinkage m3 puhul võrreldes m2-ga, mis ei tee multiple testingu korrektsiooni. 
+Nende koolide puhul, kus usaldusintervall on laiem, on ka suurem shrinkage (mudel võtab nende kohta suhteliselt rohkem infot teistest koolidest sest need koolid ise on mingil põhjusel suhteliselt infovaesed).
 
 ### Vabad interceptid klassikalises regressioonimudelis
 
@@ -1511,11 +1491,6 @@ Ennustame score1 ja score2 summa sõltuvust sex-ist. Küsimus: kui palju poiste 
 
 Me kasutame prediktorina binaarset kategoorilist muutujat. See on analoogiline olukord ANOVA mudelile, mis võtab arvesse multiple testingu olukorra, mis meil siin on.
 ```{r}
-schools <- read.csv( "data/schools.csv")
-schools <- schools %>%
-  filter(complete.cases(.)) %>% 
-  mutate(summa = score1 + score2,
-         sex = as.factor(sex))
 schools_f1 <- glimmer(summa ~ sex + (1 | school), data = schools)
 ```
 
