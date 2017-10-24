@@ -1508,14 +1508,14 @@ m4 <- readRDS("data/schoolm4.rds")
 precis(m4, depth = 2)
 ```
 
+Võrdleme mudeleid.
 ```{r, eval=F}
 compare(m2, m3, m4)
 ```
 
-m3 on parim mudel, aga ka m4 ja m2 omavad mingit kaalu.
+Siit nähtub, et m3 on parim mudel, aga ka m4 ja m2 omavad mingit kaalu.
 
-```{r fig.height=10, fig.width=4, eval=F}
-#coeftab(m2, m3, m4)
+```{r}
 plot(coeftab(m2, m3, m4))
 ```
 
@@ -1527,98 +1527,97 @@ Ennustame score1 ja score2 summa sõltuvust sex-ist. Küsimus: kui palju poiste 
 
 Me kasutame prediktorina binaarset kategoorilist muutujat. See on analoogiline olukord ANOVA mudelile, mis võtab arvesse multiple testingu olukorra, mis meil siin on.
 ```{r}
-df2 <- read.csv( "data/schools.csv")
-df2 <- df2 %>% mutate(summa = score1 + score2) %>% na.omit()
-df2$sex <- as.factor(df2$sex)
-f1 <- glimmer(summa ~ sex + (1 | school), data = df2)
+schools <- read.csv( "data/schools.csv")
+schools <- schools %>%
+  filter(complete.cases(.)) %>% 
+  mutate(summa = score1 + score2,
+         sex = as.factor(sex))
+schools_f1 <- glimmer(summa ~ sex + (1 | school), data = schools)
 ```
 
-```{r }
-m1 <- map2stan(alist(
-    summa ~ dnorm( mu , sigma ),
-    mu <- Intercept +
-        b_sex1*sex1 +
-        v_Intercept[school],
-    Intercept ~ dnorm(0,200),
-    b_sex1 ~ dnorm(0,10),
-    v_Intercept[school] ~ dnorm(0,sigma_school),
-    sigma_school ~ dcauchy(0,2),
-    sigma ~ dcauchy(0,2)
-), data= f1$d #siin tuleb kasutada glimmeri poolt loodud andmetabelit sest glimmer teeb factorid Stanile sõõdavaks
-)
+```{r, eval=FALSE}
+schools_m1 <- map2stan(flist = schools_f1$f, data = schools_f1$d) # siin tuleb kasutada glimmeri poolt loodud andmetabelit sest glimmer teeb factorid Stanile sõõdavaks
 ```
+
+```{r, include=FALSE}
+# saveRDS(schools_m1, file = "data/schools_m1.rds")
+schools_m1 <- readRDS("data/schools_m1.rds")
+```
+
 
 Siin on v_Intercept kooli-spetsiifiline korrektsioonifaktor, mis tuleb liita üldisele Interceptile. mean(v_Intercept) == 0. Me eeldame, et korrektsioonid on normaaljaotusega.
 Alternatiivne viis seda mudelit kirjutada oleks `mu <- Intercept[school] + b_sex1*sex1` ja see töötab smamoodi (nüüd on iga kooli intercept kohe eraldi). 
 
-```{r fig.height=8, fig.width=6}
-plot(precis(m1, depth = 2))
+```{r, fig.height=6}
+plot(precis(schools_m1, depth = 2))
 ```
 
 
-sex=1 ehk sex1 on tüdruk. Ja selle soo tulemused on tõesti paremad kui 0-seksi omad. intercept annab siin sex=0 (poisid) keskmise  skoori kooli kaupa (kui liita üldisele interceptile kooli-spetsiifiline intercept). Kui tahame näiteks hinnangut 2. kooli tüdrukute skoorile (ehk tõelisele matemaatikavõimekusele) siis: 
+sex = 1 ehk sex1 on tüdruk. 
+Ja selle soo tulemused on tõesti paremad kui 0-seksi omad. 
+Intercept annab siin sex = 0 (poisid) keskmise  skoori kooli kaupa (kui liita üldisele interceptile kooli-spetsiifiline intercept). 
+Kui tahame näiteks hinnangut 2. kooli tüdrukute skoorile (ehk tõelisele matemaatikavõimekusele) siis: 
 
-*Intercept + b_sex1 + intercept[2]* 
+`Intercept + b_sex1 + intercept[2]`
 
 annab meile selle posteeriori. Poistele sama 2. kooli kohta:
 
-*Intercept + intercept[2]*
+`Intercept + intercept[2]`
 
 Ja poiste-tüdrukute erinevus skooripunktides võrdub 
 
-*b_sex1* 
+`b_sex1`
 
 ```{r}
-s1 <- as.data.frame(m1@stanfit)
-sch2_intercept <- s1$Intercept + s1$b_sex1 + s1$`v_Intercept[2]`
-#median(sch2_intercept)
-#HPDI(sch2_intercept)
-dens(sch2_intercept)
+schools_m1_samples <- as.data.frame(schools_m1@stanfit)
+schools_m1_intercept <- schools_m1_samples$Intercept + schools_m1_samples$b_sex1 + schools_m1_samples$`v_Intercept[2]`
+## Plot density histogram of intercepts
+dens(schools_m1_intercept)
 ```
 
 
 Siin on eeldus, et kõikides koolides on sama poiste ja tüdrukute vaheline erinevus (b_sex1), kuid erinevad matemaatikateadmiste baastasemed (mudeli intercept on koolide vahel vabaks lastud, kuid tõus mitte). 
 
-### vabad tõusud ja interceptid
+### Vabad tõusud ja interceptid
 
 Milline näeb välja mudel, kus me laseme vabaks nii intercepti kui tõusu?
 
-```{r }
-f2 <- glimmer(summa~ sex + (1 + sex | school), data=df2)
+```{r}
+schools_f2 <- glimmer(summa ~ sex + (1 + sex | school), data = schools)
 ```
 
 nüüd on meil lisaparameetrid v_sex1, mis annab tõusu igale koolile eraldi ning Rho-school, mis annab korrelatsiooni intercepti ja tõusu vahel. Nüüd me jagame informatsiooni erinevat tüüpi parameetrite, nimelt interceptide ja tõusude, vahel. Selleks ongi vaja Rho lisa-parameetrit. Nüüd ei modelleeri me intercepti ja tõusu enam 2 eraldi normaaljaotuste abil vaid ühe 2-dimensionaalse normaaljaotusega (mvnorm2).
 
-prior korrelatsioonile Interceptide ja tõusude vahel on lkjcorr. Selle ainus parameeter on K. Mida suurem K, seda rohkem on prior konsentreeritud 0 korrelatsiooni ümber. K = 1 annab tasase priori. Meie kasutame K = 2, mis töötab laia vahemiku mudelitega.
-```{r}
-R <- rlkjcorr( 1e4 , K=2 , eta=2 )
-dens( R[,1,2] , xlab="correlation" )
-```
-*Joonis: korrelatsiooni prior (nõrgalt informatiivne --- suunab posteeriori eemale ekstreemsetest korrelatsioonidest).*
-
-
-```{r fig.height=10, fig.width=6}
-m2 <- map2stan(alist(
-    summa ~ dnorm( mu , sigma ),
-    mu <- Intercept +
-        b_sex1*sex1 +
-        v_Intercept[school] +
-        v_sex1[school]*sex1,
-    Intercept ~ dnorm(100,100),
-    b_sex1 ~ dnorm(0,10),
-    c(v_Intercept,v_sex1)[school] ~ dmvnorm2(0,sigma_school,Rho_school),
-    sigma_school ~ dcauchy(0,2),
-    Rho_school ~ dlkjcorr(2),
-    sigma ~ dcauchy(0,2)
-), f2$d)
-plot(precis(m2, depth = 2))
+Prior korrelatsioonile Interceptide ja tõusude vahel on `rethinking::lkjcorr()`. 
+Selle ainus parameeter on K.
+Mida suurem K, seda rohkem on prior konsentreeritud 0 korrelatsiooni ümber. K = 1 annab tasase priori. 
+Meie kasutame K = 2, mis töötab laia vahemiku mudelitega.
+```{r, fig.cap="Korrelatsiooni prior on nõrgalt informatiivne -- suunab posteeriori eemale ekstreemsetest korrelatsioonidest."}
+R <- rlkjcorr(1e4, K = 2, eta = 2)
+dens(R[, 1, 2] , xlab = "correlation")
 ```
 
 
 
+```{r, eval=FALSE}
+schools_m2 <- map2stan(schools_f2$f, schools_f2$d)
+```
+
+```{r, include=FALSE}
+saveRDS(schools_m2, file = "data/schools_m2.rds")
+schools_m2 <- readRDS("data/schools_m2.rds")
+```
+
+
+```{r, fig.height=6}
+plot(precis(schools_m2, depth = 2))
+```
+
+
+
 ```{r}
-s <- extract.samples(m2)
-dens( s$Rho_school[,1,2] )
+schools_m2_samples <- extract.samples(schools_m2)
+dens(schools_m2_samples$Rho_school[, 1, 2])
 ```
 
 Meil on negatiivne korrelatsioon intercepti ja tõusu vahel. Seega, mida väiksem on poiste keskmine skoor koolis (=intercept), seda suurem om erinevus poiste ja tüdrukute skooride vahel (= tõus).
@@ -1650,49 +1649,55 @@ ja poiste keskmine skoor üle kõikide koolide:
 
 Tõmbame mudelist ennustused 1., 2. ja 37. kooli poiste skooridele järgmisel semestril:
 ```{r}
-df2$school <- as.factor(df2$school)
+schools <- mutate_at(schools, "school", as.factor)
 d.pred <- list(
-  school=c(1, 2, 37),
-  sex1= 0
+  school = c(1, 2, 37),
+  sex1 = 0
 )
 
-sim_sch <- rethinking::sim(m2, data = d.pred) 
-pred.p <- apply( sim_sch , 2 , mean )
-pred.p.PI <- apply( sim_sch , 2 , PI )
+schools_sim <- rethinking::sim(m2, data = d.pred) 
+pred.p <- apply(schools_sim, 2, mean)
+pred.p.PI <- apply(schools_sim, 2 , PI)
+```
+
+NB! kasutades `rethinking::sim()` saame me enustused andmepunktide (üksikute poiste tasemel). 
+Antud juhul jääb ennustuse kohaselt esimeses koolis 89% individuaalseid skoore vahemikku 61-132 punkti 200-st võimalikust. 
+
+Kui meid huvitab hoopis nende koolide keskmine skoor järgmisel semestril, siis kasuta `rethinking::sim()` asemel `rethinking::link()` funktsiooni.
+```{r}
+schools_sim <- link(schools_m2, data = d.pred) 
+pred.p <- apply(schools_sim, 2, mean)
+pred.p.PI <- apply(schools_sim, 2, PI)
 
 pred.p.PI
 ```
 
-NB! kasutades sim() saame me enustused andmepunktide (üksikute poiste tasemel). Antud juhul jääb ennustuse kohaselt esimeses koolis 89% individuaalseid skoore vahemikku 61-132 punkti 200-st võimalikust. 
-
-Kui meid huvitab hoopis nende koolide keskmine skoor järgmisel semestril, siis kasuta sim() asemel link() funktsiooni.
-```{r}
-sim_sch <- link(m2, data= d.pred) 
-pred.p <- apply( sim_sch , 2 , mean )
-pred.p.PI <- apply( sim_sch , 2 , PI )
-
-pred.p.PI
-```
-
-Esimeses koolis jääb keskmine poiste skoor 89% tõenäosusega vahemikku 80-112 punkti.
+Esimeses koolis jääb keskmine poiste skoor 89% tõenäosusega vahemikku `r str_c(round(pred.p.PI[,1]), collapse = " kuni ")` punkti.
 
 ```{r}
-compare(m1, m2)
+compare(schools_m1, schools_m2)
 ```
 
 Tundub, et tõusude vabakslaskine oli hea mõte. Ma saan hästi pihta, et erinevad koolid õpetavad matemaatikat erineva kvaliteediga. Aga miks peaks erinevates Inglismaa koolides olema erinev vahe poiste ja tüdrukute matemaatikateadmistel? Kas olukorras, kus meil on hea kool, läheb see vahe väiksemaks või suuremaks? Tehke kindlaks!!! ploti slope vs. intercept.
 
 ```{r}
-s2 <- as.data.frame(m2@stanfit)
-ss2 <- apply(s2,2,mean)
-ss2 <- as.data.frame(ss2) 
-ss2$names <- colnames(s2)
-ss2 <- spread(ss2, key=names, value = ss2) #alternatiiv oleks regexpr kasutamine koos filter() verbiga.
-ss3 <- ss2 %>% select(starts_with("v_Int")) %>% gather
-ss4 <- ss2 %>% select(starts_with("v_sex")) %>% gather
+schools_m2_samples <- as.data.frame(schools_m2@stanfit)
+schools_m2_samples_mean <- apply(schools_m2_samples, 2, mean)
+schools_m2_samples_mean <- as.data.frame(schools_m2_samples_mean)
+schools_m2_samples_mean$names <- colnames(schools_m2_samples)
+schools_m2_samples_mean <- spread(schools_m2_samples_mean, 
+                                  key = names, 
+                                  value = schools_m2_samples_mean) #alternatiiv oleks regexpr kasutamine koos filter() verbiga.
+schools_m2_samples_mean2 <- schools_m2_samples_mean %>% 
+  select(starts_with("v_Int")) %>% 
+  gather()
+schools_m2_samples_mean3 <- schools_m2_samples_mean %>% 
+  select(starts_with("v_sex")) %>% gather()
 
-plot(ss3$value, ss4$value, xlab="poiste skoor", ylab="erinevus poiste-tydrukute vahel")
-abline(lm(ss4$value~ss3$value))
+plot(schools_m2_samples_mean2$value, schools_m2_samples_mean3$value, 
+     xlab = "Poiste skoor", 
+     ylab = "Erinevus poiste ja tüdrukute vahel")
+abline(lm(schools_m2_samples_mean3$value ~ schools_m2_samples_mean2$value))
 
 ```
 
@@ -1702,35 +1707,31 @@ Muide sel joonisel tähendavad negatiivsed väärtused alla keskmist väärtust,
 
 Arvutage nüüd poiste ja tüdrukute keskmine skoor kooli kaupa ja vaadake uuesti sõltuvust samasse erinevusesse. Mis on õigem viis: kas fittida ilma interceptita mudel (nagu eelmises peatükis) ja kasutada otse selle koefitsiente või kasutada meie m2 mudelit ning arvutada selle mudeli koefitsientide põhjal uus statistik (kaalutud keskmine näiteks)? Miks?
 
-```{r}
-postcheck(m2)
+```{r, eval=FALSE}
+postcheck(schools_m2)
 ```
 
-### 4.15.4. hierarhiline mudel pidevate prediktoritega
+### Hierarhiline mudel pidevate prediktoritega
 
 Siin püüame ennustada score1 mõju score2 väärtusele.
 
 ```{r}
-df2 <- read_csv("data/schools.csv")
-plot(df2$score2, df2$score1)
-abline(lm(score1~score2, data=df2))
+plot(schools$score2, schools$score1)
+abline(lm(score1 ~ score2, data = schools))
 ```
 
-Kõigepealt lihtne regressioon lm()-ga (see ei ole hierarhiline mudel)
+Kõigepealt lihtne regressioon `lm()` funktsiooniga (see ei ole hierarhiline mudel).
 ```{r}
-lm(score1~ score2, data=df2)
+lm(score1 ~ score2, data = schools)
 ```
 
 score2 tõus 1 punkti võrra tõstab score1-e 0.39 punkti võrra.
 
-
 Modelleerime seost üle Bayesi hierarhilise mudeli, kus ainult Intercept on vabaks lastud.
 
 ```{r}
-f <- glimmer(score1~score2 + (1 | school), data=df2)
-
+f <- glimmer(score1 ~ score2 + (1 | school), data = df2)
 ```
-
 
 
 ```{r fig.height=10, fig.width=6}
@@ -1744,7 +1745,7 @@ m1 <- map2stan(alist(
     v_Intercept[school] ~ dnorm(0,sigma_school),
     sigma_school ~ dcauchy(0,2),
     sigma ~ dcauchy(0,2)
-), data=f$d)
+), data = f$d)
 plot(precis(m1, depth = 2))
 ```
 
