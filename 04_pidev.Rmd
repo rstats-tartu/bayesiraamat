@@ -1707,9 +1707,6 @@ Muide sel joonisel tähendavad negatiivsed väärtused alla keskmist väärtust,
 
 Arvutage nüüd poiste ja tüdrukute keskmine skoor kooli kaupa ja vaadake uuesti sõltuvust samasse erinevusesse. Mis on õigem viis: kas fittida ilma interceptita mudel (nagu eelmises peatükis) ja kasutada otse selle koefitsiente või kasutada meie m2 mudelit ning arvutada selle mudeli koefitsientide põhjal uus statistik (kaalutud keskmine näiteks)? Miks?
 
-```{r, eval=FALSE}
-postcheck(schools_m2)
-```
 
 ### Hierarhiline mudel pidevate prediktoritega
 
