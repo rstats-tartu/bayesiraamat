@@ -638,9 +638,8 @@ plot(coeftab(gapmod4, gapmod5, gapmod6))
 Viime SKP andmed log-skaalasse ja proovime uuesti. See tähendab, et me arvame, et iga SKP kümnekordne tõus võiks kaasa tuua eluea tõusu x aasta võrra.
 ```{r, eval=FALSE}
 g2007 <- g2007 %>% 
-  mutate(l_GDP = log10(gdpPercap)) %>% 
-  as.data.frame()
-
+  mutate(l_GDP = log10(gdpPercap))
+# glimmer(lifeExp ~ -1 + l_GDP, data = g2007)
 gapmod7 <- map2stan(alist(
     lifeExp ~ dnorm(mu, sigma),
     mu <- b_gdp * l_GDP,
