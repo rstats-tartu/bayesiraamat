@@ -1769,13 +1769,14 @@ Siin püüame ennustada score1 mõju score2 väärtusele.
 
 ```{r}
 df2 <- read_csv("data/schools.csv")
+df2 <- df2 %>% filter(complete.cases(.))
 plot(df2$score2, df2$score1)
-abline(lm(score1~score2, data=df2))
+abline(lm(score1 ~ score2, data = df2))
 ```
 
 Kõigepealt lihtne regressioon lm()-ga (see ei ole hierarhiline mudel)
 ```{r}
-lm(score1~ score2, data=df2)
+lm(score1 ~ score2, data = df2)
 ```
 
 score2 tõus 1 punkti võrra tõstab score1-e 0.39 punkti võrra.
@@ -1784,10 +1785,8 @@ score2 tõus 1 punkti võrra tõstab score1-e 0.39 punkti võrra.
 Modelleerime seost üle Bayesi hierarhilise mudeli, kus ainult Intercept on vabaks lastud.
 
 ```{r}
-f <- glimmer(score1~score2 + (1 | school), data=df2)
-
+f <- glimmer(score1 ~ score2 + (1 | school), data = df2)
 ```
-
 
 
 ```{r fig.height=10, fig.width=6}
@@ -1801,7 +1800,7 @@ m1 <- map2stan(alist(
     v_Intercept[school] ~ dnorm(0,sigma_school),
     sigma_school ~ dcauchy(0,2),
     sigma ~ dcauchy(0,2)
-), data=f$d)
+), data = f$d)
 plot(precis(m1, depth = 2))
 ```
 
