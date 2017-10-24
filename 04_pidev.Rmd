@@ -1404,43 +1404,37 @@ Lihtne ANOVA on sageduslik test, mis võrdleb gruppide keskmisi mitmese testimis
 Missing values are coded as -1.
 
 ```{r}
-df <- read.table("data/Gcsemv.txt", sep = " ", dec = ".", header = FALSE) 
-
-df$V4[df$V4 == -1] <- NA
-df$V5[df$V5 == -1] <- NA
-colnames(df) <- c("school", "student", "sex", "score1", "score2")
-
-df$school <- as.factor(df$school)
-df$student <- as.factor(df$student)
+gcsemv <- read_delim("data/Gcsemv.txt", delim = " ", col_names = FALSE)
+colnames(gcsemv) <- c("school", "student", "sex", "score1", "score2")
+gcsemv <- gcsemv %>% mutate_at(vars(school, student), as.factor)
+gcsemv$score1[gcsemv$score1 == -1] <- NA
+gcsemv$score2[gcsemv$score2 == -1] <- NA
+gcsemv <- drop_na(gcsemv)
+gcsemv
 ```
 
 
 Alustuseks mitte-hierarhiline mudel, mis arvutab keskmise score1 igale koolile eraldi. See on intercept-only mudel, mis tähendab, et me hindame testitulemuse keskväärtust kooli kaupa ja igale koolile sõltumatult kõigist teistest koolidest. Me ei püüa siin ennustada testitulemuste väärtusi x-i väärtuste põhjal. Selles mudelis on tavapärased ühetasemelised priorid, ainult mu on ümber nimetatud a_school-iks ja sellele on antud indeks [school], mis tähendab, et mudel arvutab a_school-i, ehk keskmise testitulemuse, igale koolile. Kuna siin puuduvad kõrgema taseme priorid, siis vaatab mudel igat kooli eraldi ja ühegi kooli hinnang ei arvesta ühegi teise kooli andmetega.
 
 ```{r, eval=FALSE}
-df1 <- na.omit(df)
-df2 <- df %>% filter(score1 > 0) 
-
-m2 <- map2stan(
+schoolm2 <- map2stan(
     alist(
         score1~ dnorm( mu , sigma ) ,
         mu <- a_school[school],
         a_school[school]  ~ dnorm(50, 30),
         sigma ~ dcauchy(0,1)
-), data = df2 )
+), data = gcsemv)
 ```
 
 
 ```{r, include=FALSE}
-df1 <- na.omit(df)
-df2 <- df %>% filter(score1 > 0) 
 # saveRDS(m2, file = "data/schoolm2.rds")
-m2 <- readRDS("data/schoolm2.rds")
+schoolm2 <- readRDS("data/schoolm2.rds")
 ```
 
-
-```{r}
-precis(m2, depth = 2)
+Vaata koefitsente.
+```{r, eval=FALSE}
+precis(schoolm2, depth = 2)
 ```
 
 
@@ -1451,7 +1445,6 @@ Ja nüüd hierarhiline mudel, mis teab koolide vahelisest varieeruvusest. Siin l
 
 ```{r, eval=FALSE}
 #glimmer(score1 ~ (1|school), data=df1) #intercept-only hierarhiline mudel
-
 m3 <- map2stan(
     alist(
         score1~ dnorm( mu , sigma ) ,
@@ -1459,7 +1452,7 @@ m3 <- map2stan(
         a_school[school]  ~ dnorm(50, sigma_school), #50 võiks olla keskmine testi tulemus
         sigma_school~ dcauchy(0,1),
         sigma ~ dcauchy(0,1)
-), data = df2)
+), data = gcsemv)
 ```
 
 ```{r, include=FALSE}
