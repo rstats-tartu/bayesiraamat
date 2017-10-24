@@ -10,6 +10,7 @@ library(car)
 library(gapminder)
 library(rethinking)
 library(bayesplot)
+library(gridExtra)
 ```
 
 ## Lihtne normaaljaotuse mudel
@@ -964,12 +965,7 @@ $Standard.andmed = (x - mean(x))/sd(x)$
 
 Nii on lihtsam erinevas skaalas muutujaid omavahel võrrelda (1 ühikuline muutus võrdub alati muutusega 1 standardhäve võrra) ja mudeli arvutamine üle mcmc ahelate on ka lihtsam.
 
-<<<<<<< HEAD
-```{r results="hide"}
-=======
 ```{r eval=FALSE}
-
->>>>>>> 3c3ebcc8d6ae441961ce914ea121889588a4d91a
 m5 <- map2stan(
     alist(
         lifeExp ~ dnorm( mu , sigma ) ,
@@ -979,15 +975,12 @@ m5 <- map2stan(
         sigma ~ dunif( 0 , 10 )
 ),
     data = g2007 )
-<<<<<<< HEAD
-=======
 ```
 
 
 ```{r, include=FALSE}
 # saveRDS(m5, file = "data/gapmod_m5.rds")
 m5 <- readRDS("data/gapmod_m5.rds")
->>>>>>> 3c3ebcc8d6ae441961ce914ea121889588a4d91a
 ```
 
 
@@ -1240,12 +1233,17 @@ Nagu näha, on meil nüüd üsna erinevad sirge tõusunurgad.
 
 Kasutame standardiseeritud prediktoreid, sest nende koefitsiente saab paremini tõlgendada (tegelikult piisab prediktorite tsentreerimisest). Meie andmed käsitlevad diabeedimarkereid Ameerika lõunaosariikide neegritel 1960-ndatel. Me ennustame siin sõltuvalt vanusest ja vööümbermõõdust hdl-i --- high density cholesterol --- mis on nn hea kolesterool.
 
-```{r, eval=FALSE}
+```{r, }
 #diabetes <- read.table( file = 'data/diabetes.csv', header = TRUE, sep = ';', dec = ',' )
 diabetes <- read.csv2( "data/diabetes.csv" )
 d1 <- diabetes %>% select( hdl, age, waist ) %>% na.omit()
 d2 <- d1 %>% mutate( age_st = ( age - mean( age ) )/sd( age ), 
                     waist_st = ( waist - mean( waist ) )/sd( waist ) )
+
+```
+
+
+```{r eval=FALSE}
 m2 <- map2stan(
     alist(
         hdl ~ dnorm( mu , sigma ) ,
@@ -1256,16 +1254,10 @@ m2 <- map2stan(
         bAR~ dnorm( 0, 2),
         sigma ~ dcauchy( 0, 1 )
 ), data = d2 )
-
-
 ```
 
 
 ```{r, include=FALSE}
-diabetes <- read.csv2( "data/diabetes.csv" )
-d1 <- diabetes %>% select( hdl, age, waist ) %>% na.omit()
-d2 <- d1 %>% mutate( age_st = ( age - mean( age ) )/sd( age ), 
-                    waist_st = ( waist - mean( waist ) )/sd( waist ) )
 # saveRDS(m2, file = "data/anotherm2.rds")
 m2 <- readRDS("data/anotherm2.rds")
 ```
@@ -1307,7 +1299,7 @@ compare(m2, m3)
 ```
 
 
-Siin on tegelikult eelistatud ilma interaktsioonita mudel. Aga kuna interaktsioonimudeli kaal on ikkagi 23%, tasub meil ennustuste tegemisel mõlemat mudelit koos arvestada vastavalt oma kaalule. 
+Siin on tegelikult eelistatud ilma interaktsioonita mudel. Aga kuna interaktsioonimudeli kaal on ikkagi 28%, tasub meil ennustuste tegemisel mõlemat mudelit koos arvestada vastavalt oma kaalule. 
 
 ```{r}
 coeftab(m2, m3)
@@ -1320,96 +1312,41 @@ Ensemble teeb ära nii link()-i kui sim()-i, kasutades mõlemat mudelit vastaval
 Teeme 3 plotti: waist = 0 (keskmine), waist = -1 (miinus üks sd) ja waist = 1
 
 ```{r}
-d.pred <- data.frame(
-  age_st = seq( -2, 2, length.out = 20 ),
-  waist_st = 0
-) #siia lähevad kõik prediktorid nende väärtuste kombinatsioonidega, millele me tahame ennustada hdl-i väärtusi.
-e <- ensemble( m2, m3, data = d.pred )
-hdl <- apply( e$link , 2 , mean )
-mu.PI <- apply( e$link , 2 , PI , prob=0.97 )
-
-ggplot(d.pred, aes( x = age_st ) ) +
-  geom_line( aes( y = hdl ) ) +
-  geom_line( aes( y = mu.PI[1,] ), linetype = 2 ) +
-  geom_line( aes( y = mu.PI[2,] ), linetype = 2 )
-```
-
-```{r}
-d.pred <- data.frame(
-  age_st=seq( -2, 2, length.out = 20 ),
-  waist_st = -1
-) #siia lähevad kõik prediktorid nende väärtuste kombinatsioonidega, millele me tahame ennustada hdl-i väärtusi.
-e <- ensemble( m2, m3, data = d.pred )
-hdl <- apply( e$link , 2 , mean )
-mu.PI <- apply( e$link , 2 , PI , prob=0.97 )
-
-ggplot( d.pred, aes( x = age_st ) ) +
-  geom_line( aes( y = hdl ) ) +
-  geom_line( aes( y = mu.PI[1,] ), linetype = 2 ) +
-  geom_line( aes( y = mu.PI[2,] ), linetype = 2)
-```
-
-```{r}
-d.pred <- data.frame(
-  age_st = seq( -2, 2, length.out = 20 ),
-  waist_st = 1
-) #siia lähevad kõik prediktorid nende väärtuste kombinatsioonidega, millele me tahame ennustada hdl-i väärtusi.
-e <- ensemble( m2, m3, data = d.pred )
-hdl <- apply( e$link , 2 , mean )
-mu.PI <- apply( e$link , 2 , PI , prob = 0.97 )
-
-ggplot( d.pred, aes( x = age_st ) ) +
-  geom_line( aes( y = hdl ) ) +
-  geom_line( aes( y = mu.PI[1,] ), linetype = 2 ) +
-  geom_line( aes( y = mu.PI[2,] ), linetype = 2 )
-```
-
-sama base plotis
-```{r}
-d.pred <- data.frame(
-  age_st=seq(-2, 2, length.out = 20),
-  waist_st=0
-) #siia lähevad kõik prediktorid nende väärtuste kombinatsioonidega, millele me tahame ennustada hdl-i väärtusi.
-e <- ensemble(m2, m3, data=d.pred)
-
-# make a plot window with three panels in a single row
-par(mfrow=c(1,3)) # 1 row, 3 columns
-# loop over values of age_st and plot predictions
-age.seq <- seq(-2, 2, length.out = 20)
-for ( w in -1:1 ) { #me soovime 3 joonist 3-l waisti näidul: -1, 0, 1.
-    plot( hdl ~ age_st , data=d2 , type="n" ,
-        main=paste("waist =",w) , xaxp=c(-1,1,2) , ylim=c(40,60) , xlim=c(-2,2),
-        xlab="age (centered)" )
-    mu.mean <- apply( e$link , 2 , mean )
-    mu.PI <- apply( e$link , 2 , PI , prob=0.97 )
-    lines( age.seq , mu.mean )
-    lines( age.seq , mu.PI[1,] , lty=2 )
-    lines( age.seq , mu.PI[2,] , lty=2 )
+waist_fun <- function(waist, ...) {
+  d.pred <- data.frame(age_st = seq( -2, 2, length.out = 20 ),
+                       waist_st = waist)
+  e <- ensemble(..., data = d.pred)
+  hdl <- apply(e$link, 2, mean)
+  mu.PI <- apply(e$link, 2, PI, prob = 0.97)
+  ggplot(d.pred, aes(x = age_st)) +
+    geom_line(aes(y = hdl)) +
+    geom_line( aes(y = mu.PI[1,]), linetype = 2) +
+    geom_line( aes( y = mu.PI[2,] ), linetype = 2) +
+    ylim(40, 70)
 }
 ```
 
-
-Ja sama ainult m2-ga
+Ensemble mudel:
 ```{r}
-# make a plot window with three panels in a single row
-par(mfrow = c(1, 3)) # 1 row, 3 columns
-# loop over values of age_st and plot predictions
-age.seq <- seq(-2, 2, length.out = 20)
-for (w in -1:1) {
-    plot(hdl ~ age_st , data = d2 , type = "n",
-        main = paste("waist =",w), 
-        xaxp = c(-1, 1, 2) , 
-        ylim = c(40, 60) , 
-        xlim = c(-2, 2),
-        xlab = "Age (centered)")
-    mu <- link(m2 , data = data.frame(waist_st = w, age_st = age.seq))
-    mu.mean <- apply(mu, 2, mean)
-    mu.PI <- apply(mu, 2, PI, prob = 0.97)
-    lines(age.seq, mu.mean)
-    lines(age.seq, mu.PI[1,], lty = 2)
-    lines(age.seq, mu.PI[2,], lty = 2)
-}
+## Fit ensemble model
+# p <- lapply(-1:1, waist_fun, m2, m3)
+## Plot three plots
+# do.call(grid.arrange, c(p, ncol = 3))
+## 
+p_1 <- waist_fun(-1, m2, m3)
+p0 <- waist_fun(0, m2, m3)
+p1 <- waist_fun(1, m2, m3)
+grid.arrange(p_1, p0, p1, ncol = 3)
 ```
+
+Ja sama ainult ühe mudeliga -- m2. 
+```{r, warning=FALSE}
+w0 <- waist_fun(-1, m2)
+w_1 <- waist_fun(0, m2)
+w1 <- waist_fun(1, m2)
+grid.arrange(w0, w_1, w1, ncol = 3)
+```
+
 
 Nüüd on hästi näha, et interaktsioonimudel laseb sirge tõusunurgad vabaks!
 
@@ -1438,7 +1375,6 @@ Oletame, et te plaanite reisi Kopenhaagenisse ja soovite sellega seoses teada, k
 2. Te arvestate võrdselt kõiki andmeid, mis teil on --- ehk te võtate keskmise kõikidest õllehindadest, hoolimata riigist. See töötab parimini siis, kui päriselt pole vahet, millisest riigist te oma õlle ostate, ehk kui õlu maksab igal pool sama palju. Antud juhul pole see ilmselt parim eeldus.
 
 3. Te eeldate, et õlle hinna kujunemisel erinevates riikides on midagi ühist, aga et seal on ka erinevusi. Sellisel juhul tahate te fittida hierarhilise mudeli, kus teie hinnang õlle hinnale Kopenhaagenis sõltuks mingil määral (aga mitte nii suurel määral, kui eelmises punktis) ka teie kogemustest teistes linnades. Sama moodi, teie hinnang õlle hinnale Pariisis, Prahas jne hakkab mingil määral sõltuma kõikide linnade andmetest.
-
 
 
 > Kui teil on olukord, kus te mõõdate erinevaid gruppe, mis küll omavahel erinevad, aga on ka teatud määral sarnased (näiteks testitulemused grupeerituna kooli kaupa), siis on mõistlik kasutada kõikide gruppide andmeid, et adjusteerida iga grupi spetsiifilisi parameetreid. Seda adjusteerimise määra kutsutakse "shrinkage". 
