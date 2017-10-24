@@ -483,8 +483,8 @@ Kuna pikkused ja kaalud on igavad, proovime vaadata kuidas riigi keskmine eluiga
 
 ## `lm()` - vähimruutude meetodiga fititud lineaarsed mudelid
 
+Kautame gapminder andmeid aastast 2007.
 ```{r}
-library(gapminder)
 # Select only data from year 2007
 g2007 <- gapminder %>% filter(year == 2007)
 g2007
@@ -497,7 +497,7 @@ gapmod1 <- lm(lifeExp ~ 1, data = g2007)
 summary(gapmod1)
 ```
 
-Ok, intercept = 67. 
+Ok, intercept = `r round(coef(gapmod1)[1])`. 
 Mida see tähendab?
 ```{r}
 mean(g2007$lifeExp)
@@ -509,9 +509,13 @@ Nüüd fitime mudeli, kus on olemas SKP ja eluea seos aga puudub lõikepunkt.
 ```{r}
 gapmod2 <- lm(lifeExp ~ -1 + gdpPercap, data = g2007)
 summary(gapmod2)
+```
+
+```{r}
 plot(g2007$gdpPercap, g2007$lifeExp, ylim = c(0, max(g2007$lifeExp)))
 abline(gapmod2)
 ```
+
 
 Nüüd on intercept surutud väärtusele y = 0.
 
@@ -519,16 +523,16 @@ Ja lõpuks täismudel
 ```{r}
 gapmod3 <- lm(lifeExp ~ gdpPercap, data = g2007)
 summary(gapmod3)
+```
+
+```{r}
 plot(g2007$gdpPercap, g2007$lifeExp, ylim = c(0, max(g2007$lifeExp)))
 abline(gapmod2)
 abline(gapmod3, col = "red", lwd = 2)
 ```
 
-Kuidas me seda m3 mudelit tõlgendame?
-```{r}
-summary(gapmod3)
-```
 
+Kuidas me seda m3 mudelit tõlgendame?
 Esiteks, Intercept on `r round(coef(gapmod3)[1], 1)`, mis tähendab, et mudel ennustab, et kui riigi SKP = 0 USD, siis selle riigi elanime keskmine euliga on ligi 60 aastat. 
 See on selgelt imelik, sest ühegi riigi SKP ei ole null, ja kui oleks, oleks seal ka eluiga 0 (selle järgi peaksime eelistama mudelit gapmod2, kus me oleme intercepti nulli surunud).
 
@@ -554,8 +558,9 @@ Seega parim mudel on gapmod3 ja kõige kehvem on gapmod2, mille lõikepunkt on r
 
 Nüüd Bayesi mudelid. 
 "rethinking" paketi `glimmer()` on abivahend, mis konverteerib `lm()` mudeli kirjelduse Bayesi mudeli kirjelduseks kasutades normaaljaotusega tõepära mudelit.
+Intercept only model
 ```{r}
-glimmer(lifeExp ~ 1, data = g2007)
+intercept_only <- glimmer(lifeExp ~ 1, data = g2007)
 ```
 
 Ainult interceptiga mudel. 
@@ -568,16 +573,11 @@ Kui Intercept annab meile keskmise eluea, siis sigma annab eluigade standardhäl
 
 
 ```{r, eval=FALSE}
-g2007 <- as.data.frame(g2007)
-gapmod4 <- map2stan(alist(
-  lifeExp ~ dnorm(mu, sigma),
-  mu <- Intercept,
-  Intercept ~ dnorm(0, 10),
-  sigma ~ dcauchy(0, 2)
-), data = g2007)
+gapmod4 <- map2stan(flist = intercept_only$f, data = intercept_only$d)
 ```
 
 ```{r, include=FALSE}
+# saveRDS(gapmod4, file = "data/gapmod4.rds")
 gapmod4 <- readRDS("data/gapmod4.rds")
 ```
 
@@ -587,18 +587,13 @@ precis(gapmod4)
 
 Nüüd ilma interceptita mudel
 ```{r}
-glimmer(lifeExp ~ -1 + gdpPercap, data = g2007)
+no_intercept <- glimmer(lifeExp ~ -1 + gdpPercap, data = g2007)
 ```
 
 Selline Bayesi mudeli esitus on "ilusam" kui `lm()` sest ta toob mudeli eksplitsiitselt välja (samas kui lm notatsioon ütleb, et mudel on "miinus intercept") 
 
 ```{r, eval=FALSE}
-gapmod5 <- map2stan(alist(
-  lifeExp ~ dnorm(mu , sigma ),
-  mu <- b_gdpPercap * gdpPercap,
-  b_gdpPercap ~ dnorm(0, 10),
-  sigma ~ dcauchy(0, 2)
-), data = g2007)
+gapmod5 <- map2stan(flist = no_intercept$f, data = no_intercept$d)
 ```
 
 ```{r, include=FALSE}
@@ -611,14 +606,14 @@ precis(gapmod5)
 ```
 
 Ja lõpuks täismudel:
+```{r}
+full_model <- glimmer(lifeExp ~ gdpPercap, data = g2007)
+```
+
+
+
 ```{r, eval=FALSE}
-gapmod6 <- map2stan(alist(
-    lifeExp ~ dnorm(mu, sigma),
-    mu <- Intercept + b_gdpPercap * gdpPercap,
-    Intercept ~ dnorm(0, 100),
-    b_gdpPercap ~ dnorm(0, 10),
-    sigma ~ dcauchy(0, 2)
-), data = g2007)
+gapmod6 <- map2stan(flist = full_model$f, data = full_model$d)
 ```
 
 ```{r, include=FALSE}
@@ -887,8 +882,7 @@ Ka see mudel jääb hätta Aafrika outlieritega, mille eluiga ei suuda ennustada
 ## Mitme prediktoriga lineaarne regressioon
 
 ```{r}
-library(gapminder)
-gapminder <- gapminder
+
 g2007 <- gapminder %>% filter( year == 2007 )
 g2007 <- g2007 %>% mutate( l_GDP = log10( gdpPercap ) )
 g2007 <- g2007 %>% mutate( l_pop = log10( pop ), 
@@ -1136,7 +1130,7 @@ Siin on ennustus ja seda ümbritsev ebakindlus iga riigi keskmisele elueale.
 
 Järgnev plot annab ennustusvea igale riigile. Siin tähistab 89% CI näiteks Vietnamile eluigade vahemikku, millese jääb mudeli ennustuse kohaselt 89% kõikvõimalike fiktsionaalsete riikide keskmistest eluigadest, mille SKP ja rahvaarv võrdub Vietnami omaga. Kuna me tsentreerime CI Vietnami tegeliku keskmise eluea residuaalile (erinevusele mudeli ennustusest), näitab see, kui palju erineb Vietnami eluiga mudeli ennustusest riikidele, nagu Vietnam. See plot annab meile riigid, mille suhtes mudel jänni jääb. Enamasti leiame need riigid Aafrikast.
  
-```{r fig.height=8, fig.width= 4 }
+```{r fig.height=7}
 # compute residuals
 life.resid <- g2007$lifeExp - mu.mean
 
@@ -1148,10 +1142,8 @@ ggplot( g2007, aes( x = life.resid, y = reorder( country, life.resid ) ) ) +
   geom_errorbarh( aes( xmin = lifeExp - sim.PI[1,], 
                        xmax = lifeExp - sim.PI[2,] ), 
                   color = "red") +
-  geom_vline( xintercept = 0 ) + 
-  theme_tufte() + 
-  ylab(NULL)
-  
+  geom_vline( xintercept = 0 ) +
+  theme(axis.title.y = element_blank())
 ```
 
 punased jooned näitavad 89% ennustuspiire igale residuaalile riigi tasemel (89% kõikvõimalike riikide keskmiste eluigade residuaalidest sellel SKPl jääb punasesse vahemikku).
@@ -1604,7 +1596,7 @@ schools_m2 <- map2stan(schools_f2$f, schools_f2$d)
 ```
 
 ```{r, include=FALSE}
-saveRDS(schools_m2, file = "data/schools_m2.rds")
+# saveRDS(schools_m2, file = "data/schools_m2.rds")
 schools_m2 <- readRDS("data/schools_m2.rds")
 ```
 
