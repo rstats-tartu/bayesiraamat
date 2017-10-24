@@ -887,7 +887,6 @@ $Standard.andmed = (x - mean(x))/sd(x)$
 Nii on lihtsam erinevas skaalas muutujaid omavahel võrrelda (1 ühikuline muutus võrdub alati muutusega 1 standardhäve võrra) ja mudeli arvutamine üle mcmc ahelate on ka lihtsam.
 
 ```{r results="hide"}
-
 m5 <- map2stan(
     alist(
         lifeExp ~ dnorm( mu , sigma ) ,
@@ -897,7 +896,6 @@ m5 <- map2stan(
         sigma ~ dunif( 0 , 10 )
 ),
     data = g2007 )
-
 ```
 
 ```{r}
