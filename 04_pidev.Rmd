@@ -1737,7 +1737,7 @@ Muide sel joonisel tähendavad negatiivsed väärtused alla keskmist väärtust,
 
 Arvutage nüüd poiste ja tüdrukute keskmine skoor kooli kaupa ja vaadake uuesti sõltuvust samasse erinevusesse. Mis on õigem viis: kas fittida ilma interceptita mudel (nagu eelmises peatükis) ja kasutada otse selle koefitsiente või kasutada meie m2 mudelit ning arvutada selle mudeli koefitsientide põhjal uus statistik (kaalutud keskmine näiteks)? Miks?
 
-```{r}
+```{r, eval=FALSE}
 postcheck(schools_m2)
 ```
 
@@ -1752,11 +1752,10 @@ abline(lm(score1 ~ score2, data = schools))
 
 Kõigepealt lihtne regressioon `lm()` funktsiooniga (see ei ole hierarhiline mudel).
 ```{r}
-lm(score1 ~ score2, data = df2)
+lm(score1 ~ score2, data = schools)
 ```
 
 score2 tõus 1 punkti võrra tõstab score1-e 0.39 punkti võrra.
-
 
 Modelleerime seost üle Bayesi hierarhilise mudeli, kus ainult Intercept on vabaks lastud.
 
