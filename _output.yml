@@ -2,7 +2,7 @@ bookdown::gitbook:
   includes:
     in_header: ["fa.html"]
   css: style.css
-  bibliography: book.bib
+  bibliography: [book.bib, packages.bib]
   config:
     toc:
       before: |
