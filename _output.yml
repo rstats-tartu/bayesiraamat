@@ -2,7 +2,7 @@ bookdown::gitbook:
   includes:
     in_header: ["fa.html"]
   css: style.css
-  bibliography: book.bib
+  bibliography: [book.bib]
   config:
     toc:
       before: |
@@ -14,7 +14,7 @@ bookdown::gitbook:
 bookdown::pdf_book:
   includes:
     in_header: ["preamble.tex"]
-  latex_engine: xelatex
+  latex_engine: pdflatex
   citation_package: natbib
-  keep_tex: yes
+  keep_tex: no
 bookdown::epub_book: default

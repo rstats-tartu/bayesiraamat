@@ -57,15 +57,15 @@ Me anname siin 9 tuletust ilma tõestuskäikudeta, mis on aga lihtsad. Siin või
 
 2. kui A ja B on üksteisest sõltumatud, siis $P(A) = P(A | B)$ (definitsioon)
 
-3. kui A ja B on üksteisest sõltumatud, siis $P(A & B) = P(A)P(B)$ 
+3. kui A ja B on üksteisest sõltumatud, siis $P(A \land B) = P(A)P(B)$ 
 
-4. kui A ja B on üksteist välistavad, siis $P(A \lor B) = P(A) + P(B)$ (tõenäosus, et A on tõene või B on tõene on nende tõenäosuste summa). kui A ja B ei ole üksteist välistavad, siis $P(A \lor B) = P(A) + P(B) – P(A & B)$
+4. kui A ja B on üksteist välistavad, siis $P(A \lor B) = P(A) + P(B)$ (tõenäosus, et A on tõene või B on tõene on nende tõenäosuste summa). kui A ja B ei ole üksteist välistavad, siis $P(A \lor B) = P(A) + P(B) – P(A \land B)$
 
-5. $P(A) = P(A & B) + P(A & mitte-B)$ --- see on "totaalse tõenäosuse seadus" kitsendatuna kahele ammendavale teineteist välistavale hüpoteesile A & B, mille kohaselt me peame hüpotees A tõenäosuse leidmiseks arvestama ka B tõenäosusega.
+5. $P(A) = P(A \land B) + P(A \land mitte-B)$ --- see on "totaalse tõenäosuse seadus" kitsendatuna kahele ammendavale teineteist välistavale hüpoteesile A & B, mille kohaselt me peame hüpotees A tõenäosuse leidmiseks arvestama ka B tõenäosusega.
 
-6. Tingliku tõenäosause definitsioon: $P(A | B) = P(A & B)/P(B)$ kus *P(A | B)* on tinglik tõenäosus: A tõenäosus tingimusel, et B kehtib. *P(vihm | pilves ilm)* ei ole sama, mis *P(pilves ilm | vihm)*. 
+6. Tingliku tõenäosause definitsioon: $P(A | B) = P(A \land B)/P(B)$ kus *P(A | B)* on tinglik tõenäosus: A tõenäosus tingimusel, et B kehtib. *P(vihm | pilves ilm)* ei ole sama, mis *P(pilves ilm | vihm)*. 
 
-7. Punktist 6 tuleneb: $P(A & B) = P(A | B)P(B)$.
+7. Punktist 6 tuleneb: $P(A \land B) = P(A | B)P(B)$.
 
 8. punktis 6 tuleneb totaalne tõenäosus: $P(A) = P(A | B)P(B) + P(A | notB)P(notB)$ 
 
@@ -412,7 +412,7 @@ HPDI(sample_means_sum$Mean)
 
 Üldiselt ei soovita me parameetrilist bootstrappi väga soojalt, sest täisbayesiaanlik alternatiiv, mida me kohe õppima asume, on sellest piisavalt paindlikum ja parem.
 
-```{r, fig.align='center', out.width=600, echo=FALSE}
+```{r, fig.align='center', echo=FALSE}
 knitr::include_graphics("img/boot1.pdf")
 ```
 
