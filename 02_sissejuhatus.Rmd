@@ -90,7 +90,7 @@ Seega on kogu liikumine eetri sfäärides ühtlane ja ringikujuline ja see liiku
 Kaasa arvatud sündimine, elukäik ja surm. 
 Kõik, mis maapeal huvitavat, ehk kogu liikumine, on algselt põhjustatud esimese liikumise poolt, mille käivitab kõige välimises sfääris paiknev meie jaoks mõistetamatu intellektiga "olend".  
 
-```{r, fig.cap="Keskaegne aristotellik maailm.", out.width='\\textwidth', fig.align='center', echo=FALSE}
+```{r, fig.cap="Keskaegne aristotellik maailm.", out.width='\\linewidth', fig.align='center', echo=FALSE}
 knitr::include_graphics("img/arist.jpg")
 ```
 

@@ -264,7 +264,7 @@ Bootstrap empiirilisele valimile suurusega n töötab nii:
 
 Mis on USA presidentide keskmine pikkus? Meil on valim 11 presidendi pikkusega.
 
-```{r, out.width='.49\textwidth'}
+```{r, out.width='.49\\linewidth'}
 heights <- tibble(value = c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185, 188))
 boot_mean <- heights %>% 
   bootstrap(1000) %>% 
