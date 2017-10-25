@@ -798,9 +798,7 @@ ggplot( g2007, aes( gdpPercap ) ) +
   stat_function( fun = dlnorm, 
                 args = list( mean = mean( log( g2007$gdpPercap ) ),
                              sd = sd( log( g2007$gdpPercap ) ) ), 
-                colour = "red" ) +
-  theme_classic()
-
+                colour = "red" )
 ```
 
 Mustaga on näidatud empiiriline SKP jaotus, punasega fititud lognormaalne mudel sellest samast jaotusest. Järgnevalt ennustame SKP-d keskmise eluea põhjal, milleks fitime lognormaalse tõepäramudeli, kus mu on ümber defineeritud regressioonivõrrandiga:
