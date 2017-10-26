@@ -19,7 +19,7 @@ Kui andmed = tegelikkus, siis pole mõtet keerulisi mudeleid kasutada -- piisab 
 Ja kui andmetel pole midagi ühist tegelikkusega, siis on need lihtsalt ebarelevatsed. 
 Seega on järeldava statistika abil tehtud järeldused alati rohkem või vähem ebamäärased ning meil on vaja meetodit selle ebamäärasuse mõõtmiseks. Selle meetodi annab tõenäosusteooria.
 
-## Järeldav statistika on tõenäosusteooria käepikendus
+## Järeldav statistika on tõenäosusteooria käepikendus {-}
 
 See õpik õpetab Bayesi statistikat, mis põhineb tõenäosusteoorial. Tänu sellele moodustab Bayesi statistika sidusa terviku, mille abil saab teha kõike seda, mida saab teha tõenäosusteooria abil. Bayesi statistika põhineb Bayesi teoreemil, mis on triviaalne tuletus tõenäosusteooria aksioomidest. Tänu Cox-i teoreemile (1961) teame, et klassikaline lausearvutuslik loogika on tõenäosusteooria erijuht ning, et Bayesi teoreem on teoreetiliselt parim viis tõenäosustega töötamiseks. Seega, kui te olete kindel oma väidete tõesuses või vääruses, siis on klassikaline loogika parim viis nendega opereerida; aga kui te ei saa oma järeldustes päris kindel olla, siis on teoreetiliselt parim lahendus tõenäosusteooria ja Bayesi teoreem.
 
@@ -49,43 +49,44 @@ Need aksioomid, mis oma matemaatilises vormis postuleeriti Andrei Kolmogorovi po
 
 Kui tõenäosused on 0 või 1, siis taandub tõenäosusteooria matemaatliselt oma erijuhule, milleks on lausearvutuslik loogika. Lausearvutuse oluline erinevus tõenäosusteooriast on, et kui selle abil on saavutatud valiidne tulemus, on see tõsikindel ja uute andmete lisandumisel ei saa me seda tulemust muuta. Seevastu tõenäosusteoorias ja statstikas muudavad uued andmed alati tõenäosusi. Selles mõttes ei saa tõenäosuslik teadus kunagi valmis.
 
-### formaalsed tuletused tõenäosusteooria aksioomidest
+## Formaalsed tuletused tõenäosusteooria aksioomidest {-}
 
 Me anname siin 9 tuletust ilma tõestuskäikudeta, mis on aga lihtsad. Siin võib A ja B vaadelda erinevate sündmustena või hüpoteesidena.
 
 1. Kui B sisaldab endas A-d, siis $P(B) \leq P(A)$ 
 
-2. kui A ja B on üksteisest sõltumatud, siis $P(A) = P(A | B)$ (definitsioon)
+2. kui A ja B on üksteisest sõltumatud, siis $P(A) = P(A \vert B)$ (definitsioon)
 
 3. kui A ja B on üksteisest sõltumatud, siis $P(A \land B) = P(A)P(B)$ 
 
-4. kui A ja B on üksteist välistavad, siis $P(A \lor B) = P(A) + P(B)$ (tõenäosus, et A on tõene või B on tõene on nende tõenäosuste summa). kui A ja B ei ole üksteist välistavad, siis $P(A \lor B) = P(A) + P(B) – P(A \land B)$
+4. kui A ja B on üksteist välistavad, siis $P(A \lor B) = P(A) + P(B)$ (tõenäosus, et A on tõene või B on tõene on nende tõenäosuste summa). kui A ja B ei ole üksteist välistavad, siis $P(A \lor B) = P(A) + P(B) - P(A \land B)$
 
-5. $P(A) = P(A \land B) + P(A \land mitte-B)$ --- see on "totaalse tõenäosuse seadus" kitsendatuna kahele ammendavale teineteist välistavale hüpoteesile A & B, mille kohaselt me peame hüpotees A tõenäosuse leidmiseks arvestama ka B tõenäosusega.
+5. $P(A) = P(A \land B) + P(A \land mitte~B)$ --- see on "totaalse tõenäosuse seadus" kitsendatuna kahele ammendavale teineteist välistavale hüpoteesile A & B, mille kohaselt me peame hüpotees A tõenäosuse leidmiseks arvestama ka B tõenäosusega.
 
-6. Tingliku tõenäosause definitsioon: $P(A | B) = P(A \land B)/P(B)$ kus *P(A | B)* on tinglik tõenäosus: A tõenäosus tingimusel, et B kehtib. *P(vihm | pilves ilm)* ei ole sama, mis *P(pilves ilm | vihm)*. 
+6. Tingliku tõenäosause definitsioon: $P(A \vert B) = P(A \land B)/P(B)$ kus $P(A \vert B)$ on tinglik tõenäosus: A tõenäosus tingimusel, et B kehtib. $P(vihm~\vert~pilves~ilm)$ ei ole sama, mis *P(pilves ilm | vihm)*. 
 
 7. Punktist 6 tuleneb: $P(A \land B) = P(A | B)P(B)$.
 
 8. punktis 6 tuleneb totaalne tõenäosus: $P(A) = P(A | B)P(B) + P(A | notB)P(notB)$ 
 
-9. punktis 6 tuleneb Bayesi teoreem: $P(A | B) = P(A)P(B | A)/P(B)$, kus $P(B) = P(A)P(B  A) + P(notA)P(B  notA)$  
+9. punktis 6 tuleneb Bayesi teoreem: $P(A | B) = P(A)P(B | A)/P(B)$, kus $P(B) = P(A)P(B  A) + P(not~A)P(B~\vert~not~A)$  
 
 Bayesi teoreemi kasutatakse sageli määramaks hüpoteesi tõenäosuse pärast uute faktide (andmete) lisandumist olemasolevatele teadmistele. 
 Kui A on H~1~ ning mitte-A on ammendav ja välistav H~2~ ja B tähistab andmeid (data), saame Bayesi teoreemi ümber kirjutada 
 
-$P(H1 | data) =  P(H1)P(data | H1) /( P(H1)P(data | H1) + P(H2)P(data | H2) )$
+$P(H1 | data) =  P(H1)P(data | H1) /( P(H1)P(data | H1) + P(H2)P(data \vert H2) )$
 
-*P(H~1~ | data)* on *H~1~* kehtimise tõenäosus meie andmete korral -- ehk posteerior, 
+$P(H_1~\vert~data)$ on $H_1$ kehtimise tõenäosus meie andmete korral -- ehk posteerior, 
 
-*P(H~1~)* on *H~1~* kehtimise eelnev, ehk meie andmetest sõltumatu, tõenäosus -- ehk prior, 
+$P(H_1)$ on $H_1$ kehtimise eelnev, ehk meie andmetest sõltumatu, tõenäosus -- ehk prior, 
 
-*P(data | H~1~)* on andmete esinemise tõenäosus tingimusel, et H~1~ kehtib -- ehk tõepära. 
+$P(data~\vert~H_1)$ on andmete esinemise tõenäosus tingimusel, et H~1~ kehtib -- ehk tõepära.
 
 
-Jagamistehe tehakse ainult selle pärast, et normaliseerida 1-le kõikide hüpoteeside tõenäosuste summa meie andmete korral ja seega viia posteerior vastavusse tõenäosusteooria aksioomidega --- kui meil on i ammendavat üksteist välistavat hüpoteesi, siis murrujoone alla läheb: *sum( P(data | H~i~)P(H~i~) ) = 1*. Bayesi teoreem on triviaalne tuletus tõenäosusteooria aksioomidest, milles pole mitte midagi maagilist. See ei ole automaatne meetod, mis tagaks inimkonna teadmiste kasvu, vaid lihtsalt parim võimalik viis andmemudeli ja taustateadmiste mudeli ühendamiseks ja normaliseerimiseks tinglikuks tõenäosuseks (hüpoteesi tõenäosus meie andmete ja taustateadmiste korral). Nüüd sõltub kõik mudelite, andmete ja taustateadmiste kvaliteedist.
+Jagamistehe tehakse ainult selle pärast, et normaliseerida 1-le kõikide hüpoteeside tõenäosuste summa meie andmete korral ja seega viia posteerior vastavusse tõenäosusteooria aksioomidega --- kui meil on i ammendavat üksteist välistavat hüpoteesi, siis murrujoone alla läheb: $sum(P(data~\vert~H_i)P(H_i)) = 1$. 
+Bayesi teoreem on triviaalne tuletus tõenäosusteooria aksioomidest, milles pole mitte midagi maagilist. See ei ole automaatne meetod, mis tagaks inimkonna teadmiste kasvu, vaid lihtsalt parim võimalik viis andmemudeli ja taustateadmiste mudeli ühendamiseks ja normaliseerimiseks tinglikuks tõenäosuseks (hüpoteesi tõenäosus meie andmete ja taustateadmiste korral). Nüüd sõltub kõik mudelite, andmete ja taustateadmiste kvaliteedist.
 
-### Bayesi teoreemi rakendamine diskreetsetele hüpoteesidele
+### Bayesi teoreemi rakendamine diskreetsetele hüpoteesidele {-}
 
 Oletame, et 45 aastane naine saab rinnavähi sõeluuringus mammograafias positiivse tulemuse. Millise tõenäosusega on tal rinnavähk? Kõigepealt jagame hüpoteesiruumi kahe diskreetse hüpoteesi vahel: H1 - vähk ja H2 - mitte vähk. Edasi on meil vaja omistada numbrilised väärtused järgmistele parameetritele: 
 
@@ -123,7 +124,7 @@ posterior2
 
 Patsiendile võib pärast kordustesti positiivset tulemust öelda, et ta on 44% tõenäosusega vähivaba. Eelduseks on, et me ei tea midagi selle patsiendi geneetikast ega keskkonnast põhjustatud vastuvõtlikusest vähile ning, et testi ja kordustesti vead on üksteisest sõltumatud (mitte korreleeritud). 
 
-### Tõenäosuse tõlgendus
+### Tõenäosuse tõlgendus {-}
 
 Bayesi statistika opereerib episteemilise tõenäosusega. See tähendab, et tõenäosus annab numbrilise mõõdu meie ebakindluse määrale mõne hüpoteesi ehk parameetriväärtuse kehtimise kohta. Seega mõõdab tõenäosus meie teadmiste kindlust (või ebakindlust). Näiteks, kui Bayesi arvutus väidab, et vihma tõenäosus homme on 60%, siis me oleme 60% kindlad, et homme tuleb vihma. Aga hoolimata sellest, mida me vihma kohta usume, homme kas sajab vihma või mitte, ja seega on objektiivne vihma tõenäosus meie akna taga 0% või 100% -- mitte kunagi 60%. 
 
@@ -133,7 +134,7 @@ Selles mõttes on Bayesi tõenäosus subjektiivne. Kui me teaksime täpselt, mis
 
 Kui me mõõdame pidevat suurust, näiteks inimeste pikkusi, siis saame arvutuse tagajärjel tõenäosused kõigi võimalike parameetriväärtuste kohta, ehk igale mõeldavale pikkuse väärtusele. Kuna pideval suurusel on lõpmata hulk võimalikke väärtusi, avaldame me sellised tõenäosused pideva tõenäosusfunktsioonina, ehk posteeriorina. See näeb sageli välja nagu normaaljaotus ja me võime igast posteeriorist arvutada, kui suur osa summaarsest tõenäosusest, mis on 100%, jääb meid huvitavasse pikkustevahemikku. Kui näiteks 67% posteeriori pindalast jääb pikkuste vahemikku 178 kuni 180 cm, siis me usume 67%-se kindlusega, et tõde asub kuskil selles vahemikus.  
 
-### Tõenäosusteooriast tulenevad statistika põhiprintsiibid
+### Tõenäosusteooriast tulenevad statistika põhiprintsiibid {-}
 
  1. statistilise analüüsi kvaliteet sõltub mudeli eeldustest & struktuurist. Kuna maailm ei koosne matemaatikast, teevad matemaatilised mudelid alati eeldusi maailma kohta, mis ei ole päris tõesed ja mida ei saa tingimata empiiriliselt kontrollida. Mündiviske näites eeldasime, et mündivisked olid üksteisest sõltumatud. Kui me sellest eeldusest loobume, läheb meie mudel keerulisemaks, sest me peame mudelisse lisama teavet visetevahelise korrelatsiooni kohta. Aga see keerulisem mudel toob sisse uued eeldused (vähemalt pool tosinat lisaeeldust). Üldiselt peaks mudeli struktuur kajastama katse struktuuri, mis kaasaegses statistikas tähendab sageli hierarhilisi mudeleid.
  
@@ -145,7 +146,7 @@ Kui me mõõdame pidevat suurust, näiteks inimeste pikkusi, siis saame arvutuse
 
  5. Järeldused ühe hüpoteesi kohta mõjutavad järeldusi ka kõigi alternatiivsete hüpoteeside kohta. Relevantsete hüpoteeside eiramine viib ekslikele järeledustele kõigi teiste hüpoteeside kohta.  
 
-## Andmed ei ole sama, mis tegelikkus
+## Andmed ei ole sama, mis tegelikkus {-}
 
 
 Kõigepealt illustreerime andmete ja tegelikkuse erinevust.
@@ -237,7 +238,7 @@ knitr::include_graphics("img/munchausen.jpg")
 ```
 
 
-## Bootstrappimine
+## Bootstrappimine {-}
 
 > Populatsioon on valimile sama, mis on valim bootstrappitud valimile. 
 
@@ -309,7 +310,7 @@ mean(heights$value > 178.3)
 
 Ligikaudu 100% tõenäosusega (valimis on 1 mees alla 182 cm, ja tema on 177 cm). Lühikesed jupatsid ei saa Ameerikamaal presidendiks!
 
-### Veidi keerulisem bootstrap
+### Veidi keerulisem bootstrap {-}
 
 Eelnevalt tutvustasime nn protsentiilmeetodit bootstrapi arvutamiseks. 
 See lihtne meetod on küll populaarne ja annab sageli häid tulemusi, aga ei ole parim meetod bootstrappimiseks. 
@@ -331,7 +332,7 @@ ci <- mean(heights$value) + bm_hdi
 ci
 ```
 
-### bayesboot()
+### bayesboot() {-}
 
 See funktsioon pakub pisut moodsama meetodi --- Bayesian bootstrap --- mis töötab paremini väikeste valimite korral. Aga üldiselt on tulemused sarnased.
 Hea lihtsa seletuse Bayesian bootstrapi kohta saab siit https://www.youtube.com/watch?v=WMAgzr99PKE ja lihtsa r koodi selle meetodi rakendamiseks saab siit https://www.r-bloggers.com/simple-bayesian-bootstrap/
@@ -390,7 +391,7 @@ bind_cols(btt_mu_diff) %>%
   rowMeans()
 ```
 
-### Parameetriline bootstrap
+### Parameetriline bootstrap {-}
 
 Kui me arvame, et me teame, mis jaotusega on meie andmed, ja meil on suhteliselt vähe andmepunkte, võib olla mõistlik lisada bootstrapile andmete jaotuse mudel. Näiteks, meie USA presidentide pikkused võiksid olla umbkaudu normaaljaotusega (sest me teame, et USA meeste pikkused on seda). Seega fitime kõigepealt presidentide pikkusandmetega normaaljaotuse ja seejärel tõmbame bootsrap valimid sellest normaaljaotuse mudelist.
 Normaaljaotuse mudelil on 2 parameetrit: keskmine (mu) ja standardhälve (sigma), mida saame fittida valimiandmete põhjal:
@@ -416,7 +417,7 @@ HPDI(sample_means_sum$Mean)
 knitr::include_graphics("img/boot1.pdf")
 ```
 
-### Bootstrappimine ei ole kogu tõde
+### Bootstrappimine ei ole kogu tõde {-}
 
 Bootstrappimine on võimas ja väga laia kasutusalaga meetodite kogum. Sellel on siiski üks oluline puudus. Nimelt arvestab bootstrap ainult andmetega ja ignoreerib taustateadmisi (parameetriline bootstrap küll eeldab taustateadmisetele tuginevalt jaotusmudelit, kuid ignoreerib kogu muud taustateadmist). Miks on see probleem?
 
@@ -430,7 +431,7 @@ Seega, Bayesi paradigmas ei arvesta me mitte ainult andmetega, vaid ka taustatea
 
 Ehkki bootstrappimine ei arvesta taustateadmistega, ei tee seda olulisel määral ka paljud Bayesi mudelid (mudeldaja vaba valiku tõttu, mitte selle pärast, et mudel ei suudaks taustainfot inkorporeerida). Bayesi meetodite väljatöötajad ei tea sageli ette, milliste teaduslike probleemide lahendamiseks nende mudeleid hakatakse kasutama, ja seega ei kirjuta nad mudelisse ka väga ranget eelteadmist. Nende mudelite teadlastest kasutajad lepivad sageli selllega ja lasevad oma mudelite kaudu "andmetel kõneleda" enam-vähem sellistena, nagu need juhtuvad olema. Sellist lähenemist ei saa alati hukka mõista, sest vahest ei olegi meil palju eelteadmisi oma probleemi kohta, küll aga tuleb mainida, et sellistel juhtudel annab bootstrappimine sageli lihtsama vaevaga väga sarnase tulemuse, kui Bayesi täismäng. 
 
-## Bayesi põhimõte
+## Bayesi põhimõte {-}
 
 Bayesi arvutuseks on meil vaja teada
 
@@ -450,7 +451,7 @@ Me teame juba pool sajandit, et Bayesi teoreem on sellisele ülesandele parim v�
 
 Alustame siiski lihtsa näitega, mida saab käsitsi läbi arvutada.
 
-### 1. näide
+### Esimene näide {-}
 
 Me teame, et suremus haigusesse on 50% ja meil on palatis 3 patsienti, kes seda haigust põevad. Seega on meil kaks andmetükki (50% ja n=3). Küsimus: mitu meie patsienti oodatavalt hinge heidavad? Eeldusel, et meie patsiendid on iseseisvad (näiteks ei ole sugulased), on meil tüüpiline mündiviske olukord.
 
@@ -552,7 +553,7 @@ plot(x, posterior,
 
 See on parim võimalik teadmine, mitu kirstu tasuks tellida, arvestades meie priori ja likelihoodi mudelitega. Näiteks, sedapalju, kui surmad ei ole üksteisest sõltumatud, on meie tõepäramudel (binoomjaotus) vale. 
 
-### Teine näide: sõnastame oma probleemi ümber
+### Teine näide: sõnastame oma probleemi ümber {-}
 
 Mis siis, kui me ei tea suremust ja tahaksime seda välja arvutada?
 Kõik, mida me teame on, et 6 patsienti 9st surid.
@@ -606,7 +607,7 @@ Nüüd on meil posterioorne tõenäosusfunktsioon, mis summeerub 1-le ja mis sis
 > Alati on kasulik plottida kõik kolm funktsiooni (tõepära, prior ja posteerior).
 
 
-### Kui n = 1
+### Kui n = 1 {-}
 
 Bayes on lahe sest tema hinnangud väiksele N-le on loogiliselt sama pädevad kui suurele N-le. See ei ole nii klassikalises sageduslikus statistikas, kus paljud testid on välja töötatud N = Inf eeldusel ja töötavad halvasti väikeste valimitega.
 
@@ -745,7 +746,7 @@ par(def.par)
 ```
 Kolmas patsient jäi ellu. Nüüd on posteeriori tipp mitte 75% juures nagu ennist, vaid kuskil 50% juures --- tänu priorile.
 
-## Mudelite keel
+## Mudelite keel {-}
 
 Siin vaatame kuidas kirjeldada mudelit nii, et masin selle ära tunneb. Meie mudelid töötavad läbi rethinking() paketi. See raamatukogu pakub kaks võimalust, kuidas mudelit arvutada, mis mõlemad kasutavad sama notatsiooni. Mõlemad võimalused arvutavad posteeriori mitte Bayesi teoreemi kasutades (nagu me ennist tegime), vaid kasutades stohhastilisi meetodeid, mis iseloomustavad posteeriori umbkaudu (aga piisavalt täpselt). Põhjuseks on, et keerulisemate mudelite korral on Bayesi teoreemi kasutamine liialt arvutusmahukas. 
 
@@ -810,7 +811,7 @@ HPDI(samples$p, prob = 0.95) # Highest density 95% at the center
 
 10 korda rohkem andmeid: nüüd on suremus määratud kuskile 57% ja 77% vahele (suure tõenäosusega)
 
-## Beta prior 
+## Beta prior {-}
 
 Nüüd anname sisse mõistlikuma struktuuriga priori: beta-jaotuse
 
@@ -879,7 +880,7 @@ HPDI(samples$p, prob = 0.95) #highest density 95% at the center
 
 Nagu näha on ka kitsa priori mõju üsna väika, isegi kui kui n = 9.
 
-## Lõpetuseks veel prioritest üldiselt. 
+## Lõpetuseks veel prioritest üldiselt {-}
 
 Neid võib jagada kolmeks: mitteinformatiivsed, väheinformatiivsed ehk "regularizing" ja informatiivsed. 
 

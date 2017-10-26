@@ -12,7 +12,7 @@ library(bayesplot)
 library(gridExtra)
 ```
 
-## Lihtne normaaljaotuse mudel
+## Lihtne normaaljaotuse mudel {-}
 
 Kui me eelmises peatükis modelleerisime diskreetseid binaarseid sündmusi (elus või surnud) üle binoomjaotuse, siis edasi tegeleme pidevate suurustega ehk parameetritega, millele saab omistada iga väärtuse vahemikus -Inf kuni Inf. 
 

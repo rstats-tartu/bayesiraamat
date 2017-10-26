@@ -1,8 +1,5 @@
 
-
-(PART) Bayesi statistika {-}
-
-# Statistiline analüüs {-}
+# Statistiline analüüs
 
 ```{r message=FALSE}
 library(tidyverse)

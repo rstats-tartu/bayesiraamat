@@ -1,5 +1,5 @@
 
-# Küsimused, mida statistika küsib {-}
+# Küsimused, mida statistika küsib
 
 Statistika abil saab vastuseid järgmisetele küsimustele:
 

@@ -1,5 +1,5 @@
 
-# Kaks lineaarse mudeli laiendust {-}
+# Kaks lineaarse mudeli laiendust
 
 ## Mitme sõltumatu prediktoriga mudel {-}
 
