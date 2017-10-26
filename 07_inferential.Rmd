@@ -98,7 +98,7 @@ Oletame, et 45 aastane naine saab rinnavähi sõeluuringus mammograafias positii
 
 4. $P(H_2) = 1 - P(H_2) = 0.99$
 
-Nüüd arvutame posterioorse tõenäosuse P(H1~\vert~+ )
+Nüüd arvutame posterioorse tõenäosuse $P(H_1~\vert~+)$
 
 ```{r}
 likelihood_H1 <- 0.9
