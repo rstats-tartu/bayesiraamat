@@ -32,7 +32,12 @@ options(htmltools.dir.version = FALSE,
 knitr::include_graphics('assets/img/cover.png', dpi = NA)
 ```
 
-Bayesi tõlgenduses on tõenäosus teadlase usu määr mingi hüpoteesi kehtimisse. 
-Hüpotees võib näiteks olla, et järgmise juulikuu sademete hulk Vilsandil jääb vahemikku 22 kuni 34 mm. 
-Kui arvutus annab selle hüpoteesi tõenäosuseks 0.57, siis oleme me selle teadmise najal nõus maksma mitte rohkem kui 57 senti kihlveo eest, mille alusel makstakse juhul, kui see hüpotees tõeseks osutub, välja 1 euro (ja me saame vähemalt 43 senti kasumit).  
+See õpik soovib anda praktilisi oskusi, mis võimaldavad kasutajal töötada reaalsete andmetega ning teha neist mõistlikke teaduslikult põhjendatud järeldusi.
+
+1. Kuidas summeerida andmeid: keskmise, varieeruvuse ja kovarieeruvuse näitajad. 
+
+2. Kuidas graafiliste meetodite abil kontrollida andmete kvaliteeti ja püstitada uusi hüpoteese.
+
+3. Kuidas teha andmete põhjal järeldusi protsesside kohta, mis neid andmeid genereerivad, ühtlasi adekvaatselt kirjeldades meie hinnanguid ümbritsevat ebakindlust.
+
 
