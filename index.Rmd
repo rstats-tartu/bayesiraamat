@@ -29,7 +29,7 @@ options(htmltools.dir.version = FALSE,
 # Haara kannel, Vanemuine! {-}
 
 ```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html')}
-knitr::include_graphics('assets/img/cover.png', dpi = NA)
+knitr::include_graphics('img/cyclo.png', dpi = NA)
 ```
 
 See õpik soovib anda praktilisi oskusi, mis võimaldavad kasutajal töötada reaalsete andmetega ning teha neist mõistlikke teaduslikult põhjendatud järeldusi.
