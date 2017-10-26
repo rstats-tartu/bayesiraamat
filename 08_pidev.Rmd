@@ -535,10 +535,18 @@ Kuidas me seda m3 mudelit tõlgendame?
 Esiteks, Intercept on `r round(coef(gapmod3)[1], 1)`, mis tähendab, et mudel ennustab, et kui riigi SKP = 0 USD, siis selle riigi elanime keskmine euliga on ligi 60 aastat. 
 See on selgelt imelik, sest ühegi riigi SKP ei ole null, ja kui oleks, oleks seal ka eluiga 0 (selle järgi peaksime eelistama mudelit gapmod2, kus me oleme intercepti nulli surunud).
 
-Teiseks, koefitsient b = `r signif(coef(gapmod3)[2], 2)`, mis on üsna väike arv. See tähendab, et SKP tõus 1 USD võrra tõstab eluiga keskmiselt `r signif(coef(gapmod3)[2], 2)` aasta võrra (ja SKP tõus 1000 USD võrra tõstab eluiga `r signif(1000 * coef(gapmod3)[2], 2)` aasta võrra). 
+```{r, include=FALSE}
+b <- signif(coef(gapmod3)[2], 2)
+b1000 <- as.character(1000*b)
+r2 <- as.character(signif(summary(gapmod3)$r.squared, 2))
+rproc <- str_c(signif(100 * summary(gapmod3)$r.squared, 2), "%")
+```
+
+
+Teiseks, koefitsient b = 0.00064, mis on üsna väike arv. See tähendab, et SKP tõus 1 USD võrra tõstab eluiga keskmiselt 0.00064 aasta võrra (ja SKP tõus 1000 USD võrra tõstab eluiga 0.64 aasta võrra). 
 Muidugi ainult siis, kui uskuda mudelit.
 
-Kolmandaks, adjusted R squared on `r signif(summary(gapmod3)$r.squared, 2)`, mis tähendab et mudeli järgi seletab SKP varieerumine `r str_c(signif(100 * summary(gapmod3)$r.squared, 2), "%")` eluea varieeruvusest riikide vahel.
+Kolmandaks, adjusted R squared on 0.46, mis tähendab et mudeli järgi seletab SKP varieerumine 46% eluea varieeruvusest riikide vahel.
 
 Hea küll, aga milline mudel on siis parim? 
 ```{r}
@@ -828,7 +836,7 @@ precis(m_ln1)
 plot(m_ln1)
 ```
 
-Logormaalses mudelis muutuvad parameetrite tähendused ja need tuleb lineaarse mudeli intercepti ja tõusu interpretatsioonidega kooskõlla viimiseks ümber arvutada. Kõigepealt avaldame tõusu. Kuna meil on tegemist mitte-lineaarse mudeliga, sõltub tõusu väärtus ka mudeli interceptist: $slope = exp(α + β) − exp(α)$. See ei ole lineaarne seos: b omab seda suuremat mõju efektile (tõusule), mida suurem on a. [Kui meil on tegu binaarse X-ga (prediktoriga), siis kodeerime selle 2 taset kui -1 ja 1. Sellises mudelis on slope sama, mis efekti suurus ES, ja $ES = exp(α + β) − exp(α - β)$]
+Logormaalses mudelis muutuvad parameetrite tähendused ja need tuleb lineaarse mudeli intercepti ja tõusu interpretatsioonidega kooskõlla viimiseks ümber arvutada. Kõigepealt avaldame tõusu. Kuna meil on tegemist mitte-lineaarse mudeliga, sõltub tõusu väärtus ka mudeli interceptist: $slope = exp(\alpha + \beta)-exp(\alpha)$. See ei ole lineaarne seos: b omab seda suuremat mõju efektile (tõusule), mida suurem on a. [Kui meil on tegu binaarse X-ga (prediktoriga), siis kodeerime selle 2 taset kui -1 ja 1. Sellises mudelis on slope sama, mis efekti suurus ES, ja $ES = exp(\alpha + \beta)-exp(\alpha-\beta)$]
 
 ```{r}
 a <- seq( 0, 10, length.out = 1000 )
@@ -847,11 +855,12 @@ Selline on siis mudeli tõusude (beta) posteerior:
 
 ```{r}
 s_ln1 <- extract.samples( m_ln1 ) %>% as.data.frame()
-beta <- exp( s_ln1$a + s_ln1$b ) - exp( s_ln1$a )                                   
-
-dens( beta ) 
+beta <- exp(s_ln1$a + s_ln1$b) - exp(s_ln1$a)
 ```
 
+```{r}
+dens(beta)
+```
 
 Lognormaaljaotusega mudelis täidab normaaljaotusega mudeli intercepti rolli eelkõige meedian, mis on defineeritud kui exp(a), aga arvutada saab ka keskmise:
 ```{r}
@@ -865,25 +874,30 @@ mean(i_mean)
 Siin ennustame fititud mudelist uusi andmeid (väljamõeldud riikide rikkust):
 
 ```{r}
-sim_ci <- rethinking::sim(m_ln1) %>% as_tibble() %>% apply(2, HPDI, prob=0.95)
-
-ggplot( g2007, aes( lifeExp, gdpPercap ) ) + 
-  geom_point( aes( color = continent ), size = 0.8 )+
-  geom_ribbon( aes( ymin = sim_ci[1,], ymax = sim_ci[2,]), alpha = 0.2 ) +
-  theme_classic()
+sim_ci <- rethinking::sim(m_ln1) %>% 
+  as_tibble() %>% 
+  apply(2, HPDI, prob = 0.95)
 ```
+
+
+```{r}
+ggplot(g2007, aes(lifeExp, gdpPercap)) + 
+  geom_point(aes(color = continent), size = 0.8) +
+  geom_ribbon(aes( ymin = sim_ci[1,], ymax = sim_ci[2,]), alpha = 0.2)
+```
+
 
 Ka see mudel jääb hätta Aafrika outlieritega, mille eluiga ei suuda ennustada rikkust.
 
 ## Mitme prediktoriga lineaarne regressioon
 
 ```{r}
-
-g2007 <- gapminder %>% filter( year == 2007 )
-g2007 <- g2007 %>% mutate( l_GDP = log10( gdpPercap ) )
-g2007 <- g2007 %>% mutate( l_pop = log10( pop ), 
-                           lpop_s = (l_pop - mean( l_pop ) )/sd( l_pop ),
-                           lGDP_s = (l_GDP - mean( l_GDP ) )/sd( l_GDP ) ) %>% 
+g2007 <- gapminder %>% 
+  filter(year == 2007 ) %>% 
+  mutate(l_GDP = log10(gdpPercap),
+         l_pop = log10(pop), 
+         lpop_s = (l_pop - mean(l_pop )) / sd(l_pop),
+         lGDP_s = (l_GDP - mean(l_GDP )) / sd(l_GDP)) %>% 
   as.data.frame()
 ```
 
@@ -892,7 +906,7 @@ Meil on võimalik lisada regressioonivõrrandisse lisaprediktoreid. Nüüd ei k�
 
 Sellise mudeli tõlgendus on suhteliselt lihtne: 
 
-  > koef b1 ütleb meile, 
+> koef b1 ütleb meile, 
       kui mitme ühiku võrra tõuseb/langeb muutuja y (eluiga) 
       kui muutuja x1 (l_GDP) tõuseb 1 ühiku võrra; 
       tingimusel, et me hoiame kõigi teiste muutujate väärtused konstantsed. 
@@ -909,7 +923,7 @@ Kui meil on mudelis SKP ja pop, siis saame küsida
 Järgenval mudelil on 4 parameetrit (intercept + 3 betat).
 
 ```{r}
-m1 <- lm( lifeExp ~ l_GDP + continent + log10( pop ), data = g2007 )
+m1 <- lm(lifeExp ~ l_GDP + continent + l_pop, data = g2007)
 summary( m1 )
 ```
 
@@ -926,10 +940,10 @@ summary( m2 )
 Siin on l_GDP mõju suurem, 16.6 aastat. Millisel mudelil on siis õigus? Proovime veel ülejäänud variendid
 
 ```{r}
-m3 <- lm( lifeExp ~ l_GDP + continent, data = g2007 )
+m3 <- lm(lifeExp ~ l_GDP + continent, data = g2007)
 summary( m3 )
 
-m4 <- lm( lifeExp ~ l_GDP + log10( pop ), data = g2007 )
+m4 <- lm(lifeExp ~ l_GDP + l_pop, data = g2007 )
 AIC( m1, m2, m3, m4 )
 ```
 
