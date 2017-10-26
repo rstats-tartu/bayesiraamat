@@ -63,18 +63,18 @@ Me anname siin 9 tuletust ilma tõestuskäikudeta, mis on aga lihtsad. Siin või
 
 5. $P(A) = P(A \land B) + P(A \land mitte~B)$ --- see on "totaalse tõenäosuse seadus" kitsendatuna kahele ammendavale teineteist välistavale hüpoteesile A & B, mille kohaselt me peame hüpotees A tõenäosuse leidmiseks arvestama ka B tõenäosusega.
 
-6. Tingliku tõenäosause definitsioon: $P(A \vert B) = P(A \land B)/P(B)$ kus $P(A \vert B)$ on tinglik tõenäosus: A tõenäosus tingimusel, et B kehtib. $P(vihm~\vert~pilves~ilm)$ ei ole sama, mis *P(pilves ilm | vihm)*. 
+6. Tingliku tõenäosause definitsioon: $P(A~\vert~B) = P(A \land B)/P(B)$ kus $P(A~\vert~B)$ on tinglik tõenäosus: A tõenäosus tingimusel, et B kehtib. $P(vihm~\vert~pilves~ilm)$ ei ole sama, mis $P(pilves~ilm~\vert~vihm)$. 
 
-7. Punktist 6 tuleneb: $P(A \land B) = P(A | B)P(B)$.
+7. Punktist 6 tuleneb: $P(A \land B) = P(A~\vert~B)P(B)$.
 
-8. punktis 6 tuleneb totaalne tõenäosus: $P(A) = P(A | B)P(B) + P(A | notB)P(notB)$ 
+8. punktis 6 tuleneb totaalne tõenäosus: $P(A) = P(A~\vert~B)P(B) + P(A~\vert~notB)P(notB)$ 
 
-9. punktis 6 tuleneb Bayesi teoreem: $P(A | B) = P(A)P(B | A)/P(B)$, kus $P(B) = P(A)P(B  A) + P(not~A)P(B~\vert~not~A)$  
+9. punktis 6 tuleneb Bayesi teoreem: $P(A~\vert~B) = P(A)P(B~\vert~A)/P(B)$, kus $P(B) = P(A)P(B~\vert~A) + P(not~A)P(B~\vert~not~A)$  
 
 Bayesi teoreemi kasutatakse sageli määramaks hüpoteesi tõenäosuse pärast uute faktide (andmete) lisandumist olemasolevatele teadmistele. 
 Kui A on H~1~ ning mitte-A on ammendav ja välistav H~2~ ja B tähistab andmeid (data), saame Bayesi teoreemi ümber kirjutada 
 
-$P(H1 | data) =  P(H1)P(data | H1) /( P(H1)P(data | H1) + P(H2)P(data \vert H2) )$
+$P(H1~\vert~data) =  P(H1)P(data~\vert~H1) /( P(H1)P(data~\vert~H1) + P(H2)P(data \vert H2) )$
 
 $P(H_1~\vert~data)$ on $H_1$ kehtimise tõenäosus meie andmete korral -- ehk posteerior, 
 
@@ -90,15 +90,15 @@ Bayesi teoreem on triviaalne tuletus tõenäosusteooria aksioomidest, milles pol
 
 Oletame, et 45 aastane naine saab rinnavähi sõeluuringus mammograafias positiivse tulemuse. Millise tõenäosusega on tal rinnavähk? Kõigepealt jagame hüpoteesiruumi kahe diskreetse hüpoteesi vahel: H1 - vähk ja H2 - mitte vähk. Edasi on meil vaja omistada numbrilised väärtused järgmistele parameetritele: 
 
-1. H1 tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil on rinnavähk P( + | H1) = 0.9
+1. H1 tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil on rinnavähk $P( +~\vert~H_1) = 0.9$
 
-2. H2 tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil ei ole rinnavähki P( + | H2) = 0.08 (pane tähele, et 0.9 + 0.08 ei võrdu ühega, mis tähendab, et tõepära pole tõenäosusteooria mõttes päris tõenäosus)
+2. H2 tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil ei ole rinnavähki $P( +~\vert~H_2) = 0.08$ (pane tähele, et 0.9 + 0.08 ei võrdu ühega, mis tähendab, et tõepära pole tõenäosusteooria mõttes päris tõenäosus).
 
-3. eelnev tõenäosus, et patsiendil on rinnavähk P(H1) = 0.01 (see on rinnavähi sagedus 45 a naiste populatsioonis; kui me teame patsiendi genoomi järjestust või rinnavähijuhte tema lähisugulastel, võib P(H1) tulla väga erinev).
+3. Eelnev tõenäosus, et patsiendil on rinnavähk $P(H_1) = 0.01$ (see on rinnavähi sagedus 45 a naiste populatsioonis; kui me teame patsiendi genoomi järjestust või rinnavähijuhte tema lähisugulastel, võib P(H1) tulla väga erinev).
 
-4. P(H2) = 1 - P(H2) = 0.99
+4. $P(H_2) = 1 - P(H_2) = 0.99$
 
-Nüüd arvutame posterioorse tõenäosuse P(H1 | + )
+Nüüd arvutame posterioorse tõenäosuse P(H1~\vert~+ )
 
 ```{r}
 likelihood_H1 <- 0.9
@@ -238,7 +238,7 @@ knitr::include_graphics("img/munchausen.jpg")
 ```
 
 
-## Bootstrappimine {-}
+# Bootstrappimine
 
 > Populatsioon on valimile sama, mis on valim bootstrappitud valimile. 
 
@@ -310,7 +310,7 @@ mean(heights$value > 178.3)
 
 Ligikaudu 100% tõenäosusega (valimis on 1 mees alla 182 cm, ja tema on 177 cm). Lühikesed jupatsid ei saa Ameerikamaal presidendiks!
 
-### Veidi keerulisem bootstrap {-}
+## Veidi keerulisem bootstrap {-}
 
 Eelnevalt tutvustasime nn protsentiilmeetodit bootstrapi arvutamiseks. 
 See lihtne meetod on küll populaarne ja annab sageli häid tulemusi, aga ei ole parim meetod bootstrappimiseks. 
@@ -332,7 +332,7 @@ ci <- mean(heights$value) + bm_hdi
 ci
 ```
 
-### bayesboot() {-}
+## bayesboot() {-}
 
 See funktsioon pakub pisut moodsama meetodi --- Bayesian bootstrap --- mis töötab paremini väikeste valimite korral. Aga üldiselt on tulemused sarnased.
 Hea lihtsa seletuse Bayesian bootstrapi kohta saab siit https://www.youtube.com/watch?v=WMAgzr99PKE ja lihtsa r koodi selle meetodi rakendamiseks saab siit https://www.r-bloggers.com/simple-bayesian-bootstrap/
@@ -391,7 +391,7 @@ bind_cols(btt_mu_diff) %>%
   rowMeans()
 ```
 
-### Parameetriline bootstrap {-}
+## Parameetriline bootstrap {-}
 
 Kui me arvame, et me teame, mis jaotusega on meie andmed, ja meil on suhteliselt vähe andmepunkte, võib olla mõistlik lisada bootstrapile andmete jaotuse mudel. Näiteks, meie USA presidentide pikkused võiksid olla umbkaudu normaaljaotusega (sest me teame, et USA meeste pikkused on seda). Seega fitime kõigepealt presidentide pikkusandmetega normaaljaotuse ja seejärel tõmbame bootsrap valimid sellest normaaljaotuse mudelist.
 Normaaljaotuse mudelil on 2 parameetrit: keskmine (mu) ja standardhälve (sigma), mida saame fittida valimiandmete põhjal:
@@ -417,7 +417,7 @@ HPDI(sample_means_sum$Mean)
 knitr::include_graphics("img/boot1.pdf")
 ```
 
-### Bootstrappimine ei ole kogu tõde {-}
+## Bootstrappimine ei ole kogu tõde {-}
 
 Bootstrappimine on võimas ja väga laia kasutusalaga meetodite kogum. Sellel on siiski üks oluline puudus. Nimelt arvestab bootstrap ainult andmetega ja ignoreerib taustateadmisi (parameetriline bootstrap küll eeldab taustateadmisetele tuginevalt jaotusmudelit, kuid ignoreerib kogu muud taustateadmist). Miks on see probleem?
 
@@ -431,13 +431,13 @@ Seega, Bayesi paradigmas ei arvesta me mitte ainult andmetega, vaid ka taustatea
 
 Ehkki bootstrappimine ei arvesta taustateadmistega, ei tee seda olulisel määral ka paljud Bayesi mudelid (mudeldaja vaba valiku tõttu, mitte selle pärast, et mudel ei suudaks taustainfot inkorporeerida). Bayesi meetodite väljatöötajad ei tea sageli ette, milliste teaduslike probleemide lahendamiseks nende mudeleid hakatakse kasutama, ja seega ei kirjuta nad mudelisse ka väga ranget eelteadmist. Nende mudelite teadlastest kasutajad lepivad sageli selllega ja lasevad oma mudelite kaudu "andmetel kõneleda" enam-vähem sellistena, nagu need juhtuvad olema. Sellist lähenemist ei saa alati hukka mõista, sest vahest ei olegi meil palju eelteadmisi oma probleemi kohta, küll aga tuleb mainida, et sellistel juhtudel annab bootstrappimine sageli lihtsama vaevaga väga sarnase tulemuse, kui Bayesi täismäng. 
 
-## Bayesi põhimõte {-}
+# Bayesi põhimõte {-}
 
 Bayesi arvutuseks on meil vaja teada
 
 1) milline on "*parameter space*" ehk parameetriruum? Parameetriruum koosneb kõikidest loogiliselt võimalikest parameetriväärtustest. Näiteks kui me viskame ühe korra münti, koosneb parameetriruum kahest elemendist: 0 ja 1, ehk null kulli ja üks kull. See ammendab võimalike sündmuste nimekirja. Kui me aga hindame mõnd pidevat suurust (keskmine pikkus, tõenäosus 0 ja 1 vahel jms), koosneb parameetriruum lõpmata paljudest elementidest (arvudest). 
 
-2) milline on "*likelihood function*" ehk tõepärafunktsioon? Me omistame igale parameetriruumi elemendile (igale võimalikule parameetri väärtusele) tõepära. Tõepära parameetri väärtusel x on tõenäosus, millega me võiksime kohata oma andmete keskväärtust, juhul kui x oleks see ainus päris õige parameetri väärtus. Teisisõnu, tõepära on kooskõla määr andmete ja parameetri väärtuse x vahel. Tõepära = Pr(andmed | parameetri väärtus). Näiteks, kui tõenäolised on meie andmed, kui USA keskmine president on juhtumisi 183.83629 cm pikkune? Kuna meil on vaja modeleerida tõepära igal võimalikul parameetri väärtusel (mida pideva suuruse puhul on lõpmatu hulk), siis kujutame tõepära  pideva funktsioonina (näiteks normaaljaotusena), mis täielikult katab parameetriruumi. Tõepärafunktsioon ei summeeru 100-le protsendile --- see on normaliseerimata.
+2) milline on "*likelihood function*" ehk tõepärafunktsioon? Me omistame igale parameetriruumi elemendile (igale võimalikule parameetri väärtusele) tõepära. Tõepära parameetri väärtusel x on tõenäosus, millega me võiksime kohata oma andmete keskväärtust, juhul kui x oleks see ainus päris õige parameetri väärtus. Teisisõnu, tõepära on kooskõla määr andmete ja parameetri väärtuse x vahel. Tõepära = Pr(andmed~\vert~parameetri väärtus). Näiteks, kui tõenäolised on meie andmed, kui USA keskmine president on juhtumisi 183.83629 cm pikkune? Kuna meil on vaja modeleerida tõepära igal võimalikul parameetri väärtusel (mida pideva suuruse puhul on lõpmatu hulk), siis kujutame tõepära  pideva funktsioonina (näiteks normaaljaotusena), mis täielikult katab parameetriruumi. Tõepärafunktsioon ei summeeru 100-le protsendile --- see on normaliseerimata.
 
 3) milline on "*prior function*" ehk prior? Igale tõepära väärtusele peab vastama priori väärtus. Seega, kui tõepära on modelleeritud pideva funktsioonina, siis on ka prior pidev funktsioon (aga prior ei pea olema sama tüüpi funktsioon, kui tõepära). Erinevus tõepära ja priori vahel seisneb selles, et kui tõepärafunktsioon annab just meie andmete keskväärtuse tõenäosuse igal parameetriväärtusel, siis prior annab iga parameetriväärtuse tõenäosuse, sõltumata meie andmetest. See-eest arvestab prior kõikide teiste relevantsete andmetega, sünteesides taustateadmised ühte tõenäousmudelisse. Me omistame igale parameetriruumi väärtusele eelneva tõenäosuse, et see väärtus on üks ja ainus tõene väärtus. Prior jaotus summeerub 1-le. Prior kajastab meie konkreetsetest andmetest sõltumatut arvamust, kui suure tõenäosusega on just see parameetri väärtus tõene; seega seda, mida me usume enne oma andmete nägemist. Nendel parameetri väärtustel, kus prior (või tõepära) = 0%, on ka posteerior garanteeritult 0%. See tähendab, et kui te olete 100% kindel, et mingi sündmus on võimatu, siis ei suuda ka mäekõrgune hunnik uusi andmeid teie uskumust muuta (eelduselt, et te olete ratsionaalne inimene).
 
@@ -451,7 +451,7 @@ Me teame juba pool sajandit, et Bayesi teoreem on sellisele ülesandele parim v�
 
 Alustame siiski lihtsa näitega, mida saab käsitsi läbi arvutada.
 
-### Esimene näide {-}
+## Esimene näide {-}
 
 Me teame, et suremus haigusesse on 50% ja meil on palatis 3 patsienti, kes seda haigust põevad. Seega on meil kaks andmetükki (50% ja n=3). Küsimus: mitu meie patsienti oodatavalt hinge heidavad? Eeldusel, et meie patsiendid on iseseisvad (näiteks ei ole sugulased), on meil tüüpiline mündiviske olukord.
 
@@ -553,7 +553,7 @@ plot(x, posterior,
 
 See on parim võimalik teadmine, mitu kirstu tasuks tellida, arvestades meie priori ja likelihoodi mudelitega. Näiteks, sedapalju, kui surmad ei ole üksteisest sõltumatud, on meie tõepäramudel (binoomjaotus) vale. 
 
-### Teine näide: sõnastame oma probleemi ümber {-}
+## Teine näide: sõnastame oma probleemi ümber {-}
 
 Mis siis, kui me ei tea suremust ja tahaksime seda välja arvutada?
 Kõik, mida me teame on, et 6 patsienti 9st surid.
@@ -607,7 +607,7 @@ Nüüd on meil posterioorne tõenäosusfunktsioon, mis summeerub 1-le ja mis sis
 > Alati on kasulik plottida kõik kolm funktsiooni (tõepära, prior ja posteerior).
 
 
-### Kui n = 1 {-}
+## Kui n = 1 {-}
 
 Bayes on lahe sest tema hinnangud väiksele N-le on loogiliselt sama pädevad kui suurele N-le. See ei ole nii klassikalises sageduslikus statistikas, kus paljud testid on välja töötatud N = Inf eeldusel ja töötavad halvasti väikeste valimitega.
 
@@ -746,7 +746,7 @@ par(def.par)
 ```
 Kolmas patsient jäi ellu. Nüüd on posteeriori tipp mitte 75% juures nagu ennist, vaid kuskil 50% juures --- tänu priorile.
 
-## Mudelite keel {-}
+# Mudelite keel {-}
 
 Siin vaatame kuidas kirjeldada mudelit nii, et masin selle ära tunneb. Meie mudelid töötavad läbi rethinking() paketi. See raamatukogu pakub kaks võimalust, kuidas mudelit arvutada, mis mõlemad kasutavad sama notatsiooni. Mõlemad võimalused arvutavad posteeriori mitte Bayesi teoreemi kasutades (nagu me ennist tegime), vaid kasutades stohhastilisi meetodeid, mis iseloomustavad posteeriori umbkaudu (aga piisavalt täpselt). Põhjuseks on, et keerulisemate mudelite korral on Bayesi teoreemi kasutamine liialt arvutusmahukas. 
 
@@ -833,7 +833,7 @@ plot(x, dbeta(x, 200, 100))
 par(def.par)
 ```
 
- *beta(θ | a, b)* jaotuse keskväärtus on 
+ *beta(θ~\vert~a, b)* jaotuse keskväärtus on 
  
  $μ = a/(a + b)$ 
  
@@ -861,26 +861,27 @@ Aga mis siis kui me tahame beta priorit, mille mood $ω = 0.8$ ja $κ = 12$? Sii
 
 
 ```{r}
-m3 <- map(
+## Fit model
+m3 <- rethinking::map(
     alist(
         dead ~ dbinom(9, p),  # Binomial likelihood
         p ~ dbeta(200, 100) # Beta prior
-), data=list(dead=6) )
-
+), data = list(dead = 6))
+## Extract samples
+samples <- extract.samples(m3)
 # Display summary of quadratic approximation
-precis( m3 )
+precis(m3)
 ```
 
 
-```{r}
-samples <- extract.samples(m3)
+```{r, out.width='0.49\\linewidth'}
 dens(samples$p)
-HPDI(samples$p, prob = 0.95) #highest density 95% at the center
+HPDI(samples$p, prob = 0.95) # Highest density 95% at the center
 ```
 
 Nagu näha on ka kitsa priori mõju üsna väika, isegi kui kui n = 9.
 
-## Lõpetuseks veel prioritest üldiselt {-}
+## Prioritest üldiselt {-}
 
 Neid võib jagada kolmeks: mitteinformatiivsed, väheinformatiivsed ehk "regularizing" ja informatiivsed. 
 
