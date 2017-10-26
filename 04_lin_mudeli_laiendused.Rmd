@@ -14,32 +14,44 @@ $$y = a + b_1x_1~ + b_2x_2~ + b_nx_n$$
 Kui meie andmed on mõõdetud 3D-s ja me tahame ennnustada ühe muutuja väärtust kahe teise muutuja väärtuste põhjal (meil on 2 prediktorit), siis tuleb meie 3 parameetriga lineaarne regressioonimudel tasapinna kujul. Kui meil on 4 prediktoriga mudel, siis me liigume 4-mõõtmelisse ruumi, jne. 3D ruumi on veel võimalik mõistlikult plottida.
 
 ```{r echo=FALSE}
-library(scatterplot3d)  
-data(iris)
-# prepare a df of 3 cols: 
+# Prepare a dataframe of 3 cols: 
 # Sepal.Length -- Sepal.Width -- Petal.Length (x -- y -- z)
-  iris1 <- iris[,1:3]
-   s3d <- scatterplot3d(iris1, angle = 55, scale.y = 0.7, pch=20, 
-                        col.axis="blue", col.grid="lightblue" )
-  my.lm <- lm(Sepal.Width ~ Sepal.Length + Petal.Length, data= iris1)
-  s3d$plane3d(my.lm, lty.box = "solid")
+iris1 <- iris[,1:3]
+my.lm <- lm(Sepal.Width ~ Sepal.Length + Petal.Length, data = iris1)
 ```
+
+```{r, echo=FALSE}
+library(scatterplot3d)
+s3d <- scatterplot3d(iris1, angle = 55, scale.y = 0.7, pch = 20, 
+                        col.axis = "blue", col.grid = "lightblue")
+s3d$plane3d(my.lm, lty.box = "solid")
+```
+
 
 Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile. 
 
 ```{r}
-m1 <- lm(data = iris, Sepal.Width~Sepal.Length + Petal.Length)
-plot(iris$Sepal.Width~iris$Sepal.Length, ylim=c(2,8), col=iris$Species)
-abline(m1)
+m1 <- lm(Sepal.Width ~ Sepal.Length + Petal.Length, data = iris)
 ```
+
+```{r}
+p <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
+  geom_point()
+p + geom_abline(intercept = coef(m1)[1], slope = coef(m1)[2]) +
+  labs(title = deparse(formula(m1)))
+```
+
 
 Enam ei läbi sirge punkte, nagu ta seda 3D ruumis tegi.
 
-Võrlduseks ühe prediktoriga mudel
+Võrdluseks ühe prediktoriga mudel:
 ```{r}
-m <- lm(data=iris, Sepal.Width~Sepal.Length)
-plot(iris$Sepal.Width~iris$Sepal.Length, ylim=c(2,8), col=iris$Species)
-abline(m)
+m <- lm(Sepal.Width ~ Sepal.Length, data = iris)
+```
+
+```{r}
+p + geom_abline(intercept = coef(m)[1], slope = coef(m)[2]) +
+  labs(title = deparse(formula(m)))
 ```
 
 
@@ -59,7 +71,8 @@ AIC(m, m1)
 
 **Ennustused sõltumatute prediktoritega mudelist**
 
-Siin on idee kasutada fititud mudeli struktuuri enustamaks y keskmisi väärtusi erinevatel x~1~ ja x~2~ väärtustel. Kuna mudel on fititud, on parameetrite väärtused fikseeritud. 
+Siin on idee kasutada fititud mudeli struktuuri enustamaks y keskmisi väärtusi erinevatel $x_1$ ja $x_2$ väärtustel. 
+Kuna mudel on fititud, on parameetrite väärtused fikseeritud. 
 
 ```{r fig.height=3, fig.width=3}
 Sepal_length <-  seq(min(iris$Sepal.Length), 
@@ -69,13 +82,17 @@ Petal_length <-  mean(iris$Petal.Length)
 a <- coef(m1)[1]
 b1 <- coef(m1)[2]
 b2 <- coef(m1)[3]
-Sepal_width <-   a + b1*Sepal_length + b2*Petal_length
-plot(Sepal_width~Sepal_length, 
+Sepal_width <-   a + b1 * Sepal_length + b2 * Petal_length
+```
+
+```{r}
+plot(Sepal_width ~ Sepal_length, 
      type="b", 
      ylim=c(0, 5), 
      col="red")
 abline(c(coef(m)[1], coef(m)[2]), lty=2) #prediction from the single predictor model
 ```
+
 
 
 Nüüd joonistame 3D pildi olukorrast, kus nii *x~1~* kui *x~2~* omandavad rea väärtusi. Mudeli ennustus on ikkagi sirge kujul -- mis sest, et 3D ruumis.
