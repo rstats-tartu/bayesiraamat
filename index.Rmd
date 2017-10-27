@@ -1,5 +1,5 @@
 --- 
-title: "Reprodutseeritav andmeanalüüs kasutades R keelt"
+title: "Bayesi statistika kasutades R keelt"
 author: "Taavi Päll, Ülo Maiväli"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -11,7 +11,7 @@ link-citations: yes
 colorlinks: yes
 github-repo: rstats-tartu/lectures
 description: "Praktilise kursuse 'Reprodutseeritav andmeanalüüs R keeles' materjalid."
-cover-image: assets/img/cover.png
+cover-image: img/cyclo.png
 ---
 
 
@@ -29,7 +29,7 @@ options(htmltools.dir.version = FALSE,
 # Haara kannel, Vanemuine! {-}
 
 ```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html')}
-knitr::include_graphics('assets/img/cover.png', dpi = NA)
+knitr::include_graphics('img/cyclo.png', dpi = NA)
 ```
 
 See õpik soovib anda praktilisi oskusi, mis võimaldavad kasutajal töötada reaalsete andmetega ning teha neist mõistlikke teaduslikult põhjendatud järeldusi.

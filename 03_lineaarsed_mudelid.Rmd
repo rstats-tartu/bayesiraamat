@@ -177,7 +177,7 @@ Seda tuunimist nimetatakse mudeli fittimiseks.
 Mudelit fittides on eesmärk saavutada antud tüüpi mudeli maksimaalne sobivus andmetega.
 <!-- See näide on küll millegi muu kohta -->
 Näiteks võrrand $y = a + bx$ määrab mudeli, kus $y = x$ on see struktuur, mis tagab, et mudeli tüüp on sirge, ning $a$ ja $b$ on parameetrid, mis määravad sirge asendi. 
-Seevastu struktuur $y = x + x^2^$ tagab, et mudeli $y = a + b_1x + b_2x^2$  tüüp on parabool, ning parameetrite $a$, $b_1$ ja $b_2$ väärtused määravad selle parabooli täpse kuju. Ja nii edasi. 
+Seevastu struktuur $y = x + x^2$ tagab, et mudeli $y = a + b_1x + b_2x^2$  tüüp on parabool, ning parameetrite $a$, $b_1$ ja $b_2$ väärtused määravad selle parabooli täpse kuju. Ja nii edasi. 
 
 > Lineraarse mudeli parima sobivuse andmetega saab tagada kahel erineval viisil: (i) vähimruutude meetod mõõdab y telje suunaliselt iga andmepunkti kauguse mudeli ennustusest, võtab selle kauguse ruutu, summeerib kauguste ruudud ning leiab sirge asendi, mille korral see summa on minimaalne; (ii) Bayesi teoreem annab väheinformatiivse priori korral praktiliselt sama fiti. 
   
@@ -207,29 +207,27 @@ Osad mudelite tüübid on vähem paindlikud kui teised (parameetreid tuunides on
 Üks kõige jäigemaid mudeleid on sirge, mis tähendab, et sirge mudel on suure tõenäosusega alafittitud. Keera sirget kuipalju tahad, ikka ei sobitu ta enamiku andmekogudega. Ja need vähesed andmekogud, mis sirge mudeliga sobivad, on genereeritud teatud tüüpi lineaarsete protsesside poolt. Sirge on seega üks kõige paremini tõlgendatavaid mudeleid. Teises äärmuses on polünoomsed mudelid, mis on väga paindlikud, mida on väga raske tõlgendada ja mille puhul esineb suur mudeli ülefittimise oht. Ülefititud mudel järgib nii täpselt valimiandmeid, et sobitub hästi valimis leiduva juhusliku müraga ning seetõttu sobitub halvasti järgmise valimiga samast populatsioonist (igal valimil on oma juhuslik müra). Üldiselt, mida rohkem on mudelis tuunitavaid parameetreid, seda paindlikum on mudel, seda kergem on seda valimiandmetega sobitada ja seda raskem on seda tõlgendada. Veelgi enam, alati on võimalik konstrueerida mudel, mis sobitub täiuslikult kõikide andmepunktidega (selle mudeli parameetrite arv = N). Selline mudel on täpselt sama informatiivne kui andmed, mille põhjal see fititi --- ja täiesti kasutu.
   
   
-```{r echo=FALSE, fig.height=3, fig.width=6, fig.cap="Kasvava paindlikusega polünoomsed mudelid. mod_e1 on sirge võrrand y = a + b~1~x (2 parameetrit: a ja b~1~), mod_e2 on lihtsaim võimalik polünoom: y= a + b~1~x + b~2~x^2 (3 parameetrit), ..., mod_e5: y= a + b~1~x + b~2~x^2 + b~3~x^3 + b4x^4 + b5x^5 (6 parameetrit). mod_e5 vastab täpselt andmepunktidele (N = 6)."}
-dfr <- tibble(x = c(2, 3, 2.2, 5, 7, 8), y = c(8, 5, 9, 10, 11, 10.1))
-mod_e1 <- lm(y ~ x)
-mod_e2 <- lm(y ~ poly(x, 2), data = dfr)
-mod_e3 <- lm(y ~ poly(x, 3), data = dfr)
-mod_e4 <- lm(y ~ poly(x, 4), data = dfr)
-mod_e5 <- lm(y ~ poly(x, 5), data = dfr)
-## Extract model formulas for plotting
-model_formulas <- tibble(model = c("mod_e1", "mod_e2", "mod_e3", "mod_e4", "mod_e5"),
-                         fit = list(mod_e1, mod_e2, mod_e3, mod_e4, mod_e5)) %>% 
-  mutate(frms = map(fit, formula),
-         frms = map_chr(frms, deparse)) %>% 
-  select(model, frms)
+```{r, echo=FALSE}
+data <- tibble(x = c(2, 3, 2.25, 5, 7.3, 8), y = c(8, 5.1, 9.5, 10.5, 11, 10.1))
+model_formula <- c("y ~ x", 
+                    "y ~ poly(x, 2)", 
+                    "y ~ poly(x, 3)", 
+                    "y ~ poly(x, 4)", 
+                    "y ~ poly(x, 5)")
+tib <- tibble(model_formula, data = list(data)) %>% 
+  mutate(model = map2(model_formula, data, ~lm(as.formula(.x), .y)),
+         preds = map2(data, model, ~gather_predictions(.x, .y)),
+         aic = map_dbl(model, AIC))
 ```
 
 
-```{r}
-dfr %>%
-  gather_predictions(mod_e1, mod_e2, mod_e3, mod_e4, mod_e5) %>% 
-  left_join(model_formulas) %>%
+```{r, eval=FALSE, echo=FALSE, fig.cap="Kasvava paindlikusega polünoomsed mudelid. mod_e1 on sirge võrrand y = a + b~1~x (2 parameetrit: a ja b~1~), mod_e2 on lihtsaim võimalik polünoom: y= a + b~1~x + b~2~x^2 (3 parameetrit), ..., mod_e5: y= a + b~1~x + b~2~x^2 + b~3~x^3 + b4x^4 + b5x^5 (6 parameetrit). mod_e5 vastab täpselt andmepunktidele (N = 6)."}
+tib %>% 
+  select(model_formula, preds) %>% 
+  unnest %>%
   ggplot() +
   geom_point(aes(x, y), color = "black") +
-  geom_line(aes(x, pred, colour = frms)) +
+  geom_line(aes(x, pred, colour = model_formula)) +
   theme(legend.title = element_blank()) +
   scale_color_viridis(discrete = TRUE)
 ```
@@ -238,7 +236,7 @@ dfr %>%
 Vähimruutude meetodil fititud mudeleid saame võrrelda AIC-i näitaja järgi. AIC  - Akaike Informatsiooni Kriteerium - vaatab mudeli sobivust andmetega ja mudeli parameetrite arvu. 
 Väikseim AIC tähitab parimat fitti väikseima parameetrite arvu juures (kompromissi) ja väikseima AIC-ga mudel on eelistatuim mudel. Aga seda ainult võrreldud mudelite hulgas. AIC-i absoluutväärtus ei loe - see on suhteline näitaja.
 ```{r}
-AIC(mod_e1, mod_e2, mod_e3, mod_e4, mod_e5)
+tib %>% select(model_formula, aic)
 ```
 
 AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel? Mis siis, kui 3-s andmepunkt on andmesisestaja näpuviga?
