@@ -74,10 +74,10 @@ Kui kõik andmeväärtused on positiivsed ja andmed on lognormaaljaotusega, siis
 Kui lognormaalsetele andmetele arvutada tavaline sd lineaarses skaalas kasutades sd() funktsiooni, siis tuleb SD sageli palju laiem kui peaks ja hõlmab ka negatiivseid väärtusi (pea meeles, et SD definitsiooni järgi jääb 96% populatsioonist 2 SD vahemikku).   
 Sageli on aga negatiivsed muutuja väärtused võimatud (näiteks nädalas suitsetatud sigarettide arv). See on näide halvast mudelist! 
 
-Kirjutame logaritmimise kaudu avaldatud multiplikatsiivse SD arvutamiseks funktsiooni mulitplicative_sd(): 
+logaritmimise kaudu avaldatud multiplikatsiivse SD arvutamiseks kasutame enda kirjutatud funktsiooni mulitplicative_sd(): 
 
-```{r }
-
+```{r echo=FALSE, message=FALSE}
+library(tidyverse)
 multiplicative_sd <- function(x) {
   x <- na.omit(x)
   log_data <- log10(x)
@@ -113,7 +113,10 @@ multiplicative_sd <- function(x) {
   results
 }
 
-multiplicative_sd(andmed)
+```
+
+```{r}
+knitr::kable(multiplicative_sd(andmed))
 ```
 
 Tavalise aritmeetitilise keskmise asemel on meil nüüd geomeetriline keskmine.  Võrdluseks on antud ka tavaline (aritmeetiline) keskmine ja (aditiivne) SD. Additiivne SD on selle jaotuse kirjeldamiseks selgelt ebaadekvaatne (vt jaotuse pilti ülalpool ja võrdle mulitplikatiivse SD-ga).
@@ -123,7 +126,7 @@ Kuidas aga töötab multiplikatiivne standardhälve normaaljaotusest pärit andm
 ```{r}
 set.seed(5363)
 norm_andmed <- rnorm(3, 100, 20)
-multiplicative_sd(norm_andmed)
+knitr::kable(multiplicative_sd(norm_andmed))
 ```
 
 Nagu näha, on multiplikatiivse sd kasutamine normaalsete andmetega pigem ohutu (kui andmed on positiivsed). Arvestades, et additiivne SD on lognormaalsete andmete korral kõike muud kui ohutu ning et lognormaaljaotus on bioloogias üsna tavaline (eriti ensüümreaktsioonide ja kasvuprotsesside juures), on mõistlik alati kasutada multiplicative_sd() funktsiooni. Kui mõlema SD väärtused on sarnased, siis võib loota, et andmed on normaalsed ning saab refereede rõõmuks avaldada tavapärase additiivse SD.
@@ -210,7 +213,7 @@ Korrelatsioonimaatriksi saab niimoodi:
 # frequentist correction for mutliple testing:
 # print(psych::corr.test(iris[-5]))
 # only numeric cols allowed! Hence -Species
-cor(iris[,-5]) 
+knitr::kable(cor(iris[,-5]) )
 ```
 
 

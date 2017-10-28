@@ -3,15 +3,15 @@
 
 ## Mitme sõltumatu prediktoriga mudel {-}
 
-Esiteks vaatame mudelit, kus on mitu prediktorit x~1~, x~2~, ... xn, mis on additiivse mõjuga. See tähendab, et me liidame nende mõjud, mis omakorda tähendab, et me usume, et x~1~...xn mõjud y-i väärtusele on üksteisest sõltumatud. Mudel on siis kujul 
+Esiteks vaatame mudelit, kus on mitu prediktorit x~1~, x~2~, ... x~n~, mis on additiivse mõjuga. See tähendab, et me liidame nende mõjud, mis omakorda tähendab, et me usume, et x~1~...x~n~ mõjud y-i väärtusele on üksteisest sõltumatud. Mudel on siis kujul 
 
 $$y = a + b_1x_1~ + b_2x_2~ + b_nx_n$$
 
 
-> Mitme prediktoriga mudeli iga prediktori tõus (beta koefitsient) ütleb, mitme ühiku võrra ennustab mudel y muutumist juhul kui see prediktor muutub ühe ühiku võrra ja kõik teised prediktorid ei muutu üldse. Seega pole teiste (kollapseeritud) prediktorite absoluutväärtus ennustusel oluline.
+> Mitme prediktoriga mudeli iga prediktori tõus (beta koefitsient) ütleb, mitme ühiku võrra ennustab mudel y muutumist juhul kui see prediktor muutub ühe ühiku võrra ja kõik teised prediktorid ei muutu üldse. 
 
 
-Kui meie andmed on mõõdetud 3D-s ja me tahame ennnustada ühe muutuja väärtust kahe teise muutuja väärtuste põhjal (meil on 2 prediktorit), siis tuleb meie 3 parameetriga lineaarne regressioonimudel tasapinna kujul. Kui meil on 4 prediktoriga mudel, siis me liigume 4-mõõtmelisse ruumi, jne. 3D ruumi on veel võimalik mõistlikult plottida.
+Kui meie andmed on kolmedimensioonaalsed (me mõõdame igal mõõteobjektil kolme muutujat) ja me tahame ennnustada ühe muutuja väärtust kahe teise muutuja väärtuste põhjal (meil on 2 prediktorit), siis tuleb meie 3 parameetriga lineaarne regressioonimudel tasapinna kujul. Kui meil on 3 prediktoriga mudel, siis me liigume 4-mõõtmelisse ruumi, jne. 
 
 ```{r echo=FALSE}
 # Prepare a dataframe of 3 cols: 
@@ -28,21 +28,21 @@ s3d$plane3d(my.lm, lty.box = "solid")
 ```
 
 
-Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile. 
+3D ruumi on võimalik visualiseerida 2D ruumis, kui kollapseerida kolmas mõõde konstandile. 
 
 ```{r}
-m1 <- lm(Sepal.Width ~ Sepal.Length + Petal.Length, data = iris)
+m1 <- lm(Sepal.Width ~ Sepal.Length + Petal.Length, data = iris1)
 ```
 
-```{r fig.cap="2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile."}
-p <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
-  geom_point()
+```{r fig.cap="2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile.", message=FALSE, error=FALSE}
+library(tidyverse)
+p <- ggplot(iris, aes(Sepal.Length, Sepal.Width)) +
+  geom_point(aes(color = Species))
 p + geom_abline(intercept = coef(m1)[1], slope = coef(m1)[2]) +
   labs(title = deparse(formula(m1)))
 ```
 
-
-Enam ei läbi sirge punkte, nagu ta seda 3D ruumis tegi.
+Siin on regressioonijoon hoopis teises kohas, kui lihtsas ühe prediktoriga mudelis.
 
 Võrdluseks ühe prediktoriga mudel:
 ```{r}
@@ -55,14 +55,14 @@ p + geom_abline(intercept = coef(m)[1], slope = coef(m)[2]) +
 ```
 
 
-Nõnda võrdleme kahe mudeli koefitsiente
+Nõnda võrdleme kahe mudeli koefitsiente:
 
 ```{r}
 coef(m)
 coef(m1)
 ```
 
-Nagu näha, mudeli m b~1~ koefitsient erineb oluliselt mudeli m1 vastavast koefitsiendist.
+Nagu näha, mudeli m b~1~ koefitsient erineb oluliselt mudeli m1 vastavast koefitsiendist. Ühel juhul on tõus nõrgalt negatiivne, teisel selgelt positiivne.
 
 Kumb mudel on siis parem? AIC-i järgi on m1 kõvasti parem, kui m.
 ```{r}

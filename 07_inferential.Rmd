@@ -1,7 +1,7 @@
 
 # Järeldav statistika
 
-```{r}
+```{r message=FALSE, echo=FALSE}
 library(tidyverse)
 library(broom)
 library(bayesboot)

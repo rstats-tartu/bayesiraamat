@@ -26,8 +26,8 @@ corrgram(iris, order=TRUE,
 2. vaata andmeid numbrilise kokkuvõttena.
 
 ```{r}
-psych::describe(iris)
-summary(iris)
+psych::describe(iris) %>% knitr::kable()
+#summary(iris)
 
 ```
 
@@ -62,7 +62,7 @@ NB! selles psych::describe() väljundis on mad läbi korrutatud konstandiga 1.48
 
 
 11. Nii saab plottida multiplikatiivse sd:
-```{r fig.height=3, fig.width=4, fig.cap="Multiplikatiivse sd joonistamine."}
+```{r fig.height=3, fig.width=4, fig.cap="Multiplikatiivse sd joonistamine.", echo=FALSE}
 # Function to produce summary statistics (geometric mean and multipülicative sd)
 multi_sd <- function(x) {
   x <- na.omit(x)

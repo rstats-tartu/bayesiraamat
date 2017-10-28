@@ -1,7 +1,7 @@
 
 # Ennustame Pidevat suurust
 
-```{r}
+```{r echo=FALSE, message=FALSE,warning=FALSE}
 library(tidyverse)
 library(stringr)
 library(modelr)
@@ -358,7 +358,7 @@ world_leaders <- read.csv2("data/world_leaders.csv")
 presidents <- world_leaders %>% 
   select(Country, Height) %>% 
   bind_rows(us_presidents)
-head(presidents)
+knitr::kable(head(presidents))
 ```
 
 Ja siin on mudel. 
@@ -486,7 +486,7 @@ Kautame gapminder andmeid aastast 2007.
 ```{r}
 # Select only data from year 2007
 g2007 <- gapminder %>% filter(year == 2007)
-head(g2007)
+knitr::kable(head(g2007))
 ```
 
 Enne kui SKP ja eluea seoseid otsima hakkame, vaatame, mis juhtub, kui me arvutame ainult interceptiga mudeli, kus puudub SKP (kasutades lihtsuse mõttes mudeli fittimiseks nn vähimruutude meetodit `lm()` funktsiooni abil).
@@ -550,7 +550,7 @@ Kolmandaks, adjusted R squared on 0.46, mis tähendab et mudeli järgi seletab S
 
 Hea küll, aga milline mudel on siis parim? 
 ```{r}
-AIC(gapmod1, gapmod2, gapmod3)
+knitr::kable(AIC(gapmod1, gapmod2, gapmod3))
 ```
 
 AIC on *Aikake informatsiooni kriteerium*, mis võtab arvesse nii mudeli fiti headuse kui mudeli parameetrite arvu. 
@@ -1138,7 +1138,7 @@ Siin on ennustus ja seda ümbritsev ebakindlus iga riigi keskmisele elueale.
 
 Järgnev plot annab ennustusvea igale riigile. Siin tähistab 89% CI näiteks Vietnamile eluigade vahemikku, millese jääb mudeli ennustuse kohaselt 89% kõikvõimalike fiktsionaalsete riikide keskmistest eluigadest, mille SKP ja rahvaarv võrdub Vietnami omaga. Kuna me tsentreerime CI Vietnami tegeliku keskmise eluea residuaalile (erinevusele mudeli ennustusest), näitab see, kui palju erineb Vietnami eluiga mudeli ennustusest riikidele, nagu Vietnam. See plot annab meile riigid, mille suhtes mudel jänni jääb. Enamasti leiame need riigid Aafrikast.
  
-```{r fig.height=7, fig.width=5, fig.cap="Ennustused riigi kaupa."}
+```{r fig.height=10, fig.width=5, fig.cap="Ennustused riigi kaupa."}
 # compute residuals
 life.resid <- g2007$lifeExp - mu.mean
 
@@ -1151,7 +1151,7 @@ ggplot( g2007, aes( x = life.resid, y = reorder( country, life.resid ) ) ) +
                        xmax = lifeExp - sim.PI[2,] ), 
                   color = "red") +
   geom_vline( xintercept = 0 ) +
-  theme(text = element_text(size=12)) +
+  theme(text = element_text(size=7)) +
   theme(axis.title.y = element_blank())
 ```
 
