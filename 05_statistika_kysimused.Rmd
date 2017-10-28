@@ -134,14 +134,14 @@ Vahest tekkib teil vajadus empiiriliselt määrata, kas teie andmed on normaalja
 Enne kui seda tegema asute, peaksite mõistma, et see, et teie valim ei ole normaalne, ei tähenda automaatselt, et populatsioon, millest see valim tõmmati, ei oleks normaaljaotusega.
 Igal juhul, valimiandmete normaalsuse määramiseks on kõige mõistlikum kasutada qq-plotti. 
 QQ-plot (kvantiil-kvantiil plot) võrdleb andmete jaotust ideaalse normaaljaotusega andmepunkti haaval. Kui empiiriline jaotus kattub referentsjaotusega, siis on tulemuseks sirgel paiknevad punktid. Järgneval qq plotil on näha, mis juhtub, kui plottida lognormaalseid andmeid normaaljaotuse vastu: 
-```{r message=FALSE, fig.height=4, fig.width=4}
+```{r message=FALSE, fig.height=4, fig.width=4, fig.cap="QQ-plot lognormaalsetele andmetele."}
 library(car)
 qqPlot(andmed)
 ```
 
 Nüüd joonistame qq-ploti logaritmitud andmetele. 
 
-```{r fig.height=4, fig.width=4}
+```{r fig.height=4, fig.width=4, fig.cap="QQ-plot normaalsetele andmetele."}
 qqPlot(log2(andmed))
 ```
 

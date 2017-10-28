@@ -34,20 +34,20 @@ Sama hästi võiksime kasutada ka priorit *mu ~ dnorm(mean = 178, sd = 10)*, kus
 
 Alati tasub mudeli priorid välja plottida, et veenduda, et nad tõesti kajastavad meile taustateadmisi ja on sobivas parameetrivahemikus (bayesi programmide default priorid on sageli kas liiga laiad või vastupidi eeldavad, et parameetriväärtused jäävad alla 10 ühiku).
 
-```{r}
+```{r fig.cap="Cauchy prior", fig.height=3, fig.width=3}
 x <- 0:100
 y <- dcauchy(x, 0, 20)
 plot(y ~ x, type = "l" , main = "Cauchy prior for sd")
 ```
 
-```{r}
+```{r fig.cap="Normaaljaptuse prior", fig.height=3, fig.width=3}
 x <- 150:200
 y <- dnorm(x, 0, 200)
 plot(y ~ x, type = "l", main = "Normal prior for mu")
 ```
 
 
-```{r}
+```{r fig.cap="veel üks Normaaljaptuse prior.", fig.height=3, fig.width=3}
 x <- 150:200
 y <- dnorm(x, 178, 10)
 plot(y ~ x, type = "l", main = "Another normal prior for mu")
@@ -199,7 +199,7 @@ m3@stanfit
 Üks esimesi asju mida koos parameetrite vaatamisega teha on lisaks vaadata, kas ka ahelad konvergeerusid.
 Selleks saab mugavalt kasutada `rethinking::tracerplot()` funktsiooni.
 
-```{r}
+```{r fig.cap="Traceplot markovi ahelate inspekteerimiseks"}
 tracerplot(m2)
 ```
 
@@ -208,7 +208,7 @@ Pildilt on näha, et neli ahelat (4 värvi) on hästi konvergeerunud. Hall ala o
 Kui näit sigma kõrgema väärtusega kaasneb keskeltäbi kõrgem (või madalam) mu väärtus, on sigma ja mu omavahel korreleeritud. 
 Et kontrollida parameetrite posterioorsete väärtuste korrelatsioone kasutame funktsiooni `rethinking::pairs()`:
 
-```{r}
+```{r fig.cap="korrelatsiooniplot mudeli parameetritele."}
 pairs(m2)
 ```
 
@@ -231,7 +231,7 @@ halvad WARNING-ud: divergent transitions (too many), BMFI too low --- võivad t�
 Ilusamad parameetriplotid saab kasutades "bayesplot" raamatukogu funktsioone.
 
 Esiteks usalduspiirid:
-```{r}
+```{r fig.cap="Posteeriorite CI plot"}
 library(bayesplot)
 fit2d <- as.data.frame(m2@stanfit)
 pars <- names(fit2d)
@@ -244,7 +244,7 @@ mcmc_intervals(fit2d,
 ```
 
 Ja teiseks täis posteeriorid.
-```{r}
+```{r fig.cap="Posteeriorite tihedusplot."}
 mcmc_areas(fit2d, pars = pars[1:2], prob = 0.8)
 ```
 
@@ -260,7 +260,7 @@ m2sampl <- extract.samples(m2) %>%
 Sellest tabelist võib arvutada posteerioreid ka uutele "väljamõeldud" parameetritele. 
 Näiteks arvutame posteeriori CV-le:
 
-```{r}
+```{r fig.cap="Posteerior uuele parameetrile"}
 ggplot(m2sampl, aes(CV)) + 
   geom_density(breaks = seq(0, 1, by = 0.1)) + 
   xlim(0, 10)
@@ -284,7 +284,7 @@ HPDI(m2sampl$CV, prob = 0.67)
 Nüüd võrdleme nelja fititud mudelit, et otsustada, milline mudel kirjeldab kõige paremini outlieritega andmeid. 
 m0 on ilma outlierita mudel ja me tahame teada, milline mudel m1, m2 või m3 annab sellele kõige lähedasemad tulemused. 
 
-```{r}
+```{r fig.cap="Võrdlev plot mitme mudeli posteerioritele."}
 coeftab_plot(coeftab(m0, m1, m2, m3), 
              pars = c("mu", "sigma"), 
              prob = 0.5)
@@ -304,7 +304,7 @@ Pea meeles, et sigma ehk sd on samades ühikutes, mis mõõtmisandmed.
 
 Kui sulle need priorid ei meeldi, tuuni priorite parameetreid ja proovi uuesti plottida.
 
-```{r}
+```{r fig.cap="Prior keskmisele."}
 x <- -500:500
 y <- dnorm(x, 0, 200)
 plot(x, y, main = "Prior for mu", type = "l")
@@ -319,7 +319,7 @@ Aga tehniliselt kõik töötab selles mõttes, et andmed domineerivad posteerior
 Sigma priorina kasutame half-Cauchy jaotust, mis on samuti väheinformatiivne. 
 Half-Cauchy ei saa olla < 0 ja on meile soodsa kujuga sest annab suurema tõenäosuse nullile lähemal asuvatele sd-väärtustele --- aga samas, kuna ta on paksu sabaga, ei välista see ka päris suuri sd väärtusi.
 
-```{r}
+```{r fig.cap="Prior SD-le"}
 x <- 0:200
 y <- dcauchy(x , 0, 10)
 plot(x, y, main = "Prior for sigma", type = "l")
@@ -358,7 +358,7 @@ world_leaders <- read.csv2("data/world_leaders.csv")
 presidents <- world_leaders %>% 
   select(Country, Height) %>% 
   bind_rows(us_presidents)
-presidents
+head(presidents)
 ```
 
 Ja siin on mudel. 
@@ -425,13 +425,13 @@ precis(potusm2.1, depth = 2)
 ```
 
 
-```{r}
+```{r fig.cap="Traceplot."}
 tracerplot(potusm2.1, n_cols = 2)
 ```
 
 
 Tulemus ES-i osas tuleb üsna sarnane.
-```{r}
+```{r fig.cap="mudelite võrdlusplot."}
 plot(coeftab(potusm2, potusm2.1))
 ```
 
@@ -443,7 +443,7 @@ precis(potusm2, depth = 2)
 Siin tuleb kasulik trikk: me lahutame rea kaupa mu1[1] posteeriori sampli liikmed mu1[2] sampli liikmetest. 
 Nii saame posteeriori efekti suurusele ehk hinnangu sellele, mitme cm võrra on USA presidendid keskmiselt pikemad kui Euroopa omad!
 
-```{r}
+```{r fig.cap="Posteerior ES-le."}
 samplespm2 <- extract.samples(potusm2) %>% 
   as.data.frame() %>% 
   mutate(ES = mu_1.1 - mu_1.2)
@@ -486,7 +486,7 @@ Kautame gapminder andmeid aastast 2007.
 ```{r}
 # Select only data from year 2007
 g2007 <- gapminder %>% filter(year == 2007)
-g2007
+head(g2007)
 ```
 
 Enne kui SKP ja eluea seoseid otsima hakkame, vaatame, mis juhtub, kui me arvutame ainult interceptiga mudeli, kus puudub SKP (kasutades lihtsuse mõttes mudeli fittimiseks nn vähimruutude meetodit `lm()` funktsiooni abil).
@@ -510,7 +510,7 @@ gapmod2 <- lm(lifeExp ~ -1 + gdpPercap, data = g2007)
 summary(gapmod2)
 ```
 
-```{r}
+```{r fig.cap="Nulli surutud interceptiga lineaarne regressioon eluea sõltuvusele SKP-st."}
 plot(g2007$gdpPercap, g2007$lifeExp, ylim = c(0, max(g2007$lifeExp)))
 abline(gapmod2)
 ```
@@ -524,7 +524,7 @@ gapmod3 <- lm(lifeExp ~ gdpPercap, data = g2007)
 summary(gapmod3)
 ```
 
-```{r}
+```{r fig.cap="Täismudeliga regressioon."}
 plot(g2007$gdpPercap, g2007$lifeExp, ylim = c(0, max(g2007$lifeExp)))
 abline(gapmod2)
 abline(gapmod3, col = "red", lwd = 2)
@@ -637,7 +637,7 @@ Aga see on tehniline detail.
 WAIC abil mudeleid võrreldes saame muuhulgas mudeli kaalu. 
 Antud juhul on 100% kaalust gapmo6-l ja ülejäänud mudelitele ei jää midagi.
 
-```{r}
+```{r fig.cap="Mudelite võrdlusplot."}
 plot(coeftab(gapmod4, gapmod5, gapmod6))
 ```
 
@@ -675,14 +675,10 @@ gapmod8 <- readRDS("data/gapmod8.rds")
 compare(gapmod4, gapmod5, gapmod6, gapmod7, gapmod8)
 ```
 
-Now, as it happens, in log scale the intercept-fixed-at-0 model is almost as good as the full model. 
-This is, however, not a general feature of modelling.
 
-```{r}
+```{r fig.cap="Log skaalas töötab nulli surutud interceptiga mudel sama hästi kui täismudel. See ei ole paraku mudeldamise üldine omadus.", echo=FALSE}
 coefs7 <- coef(gapmod7)
-coefs7
 coefs8 <- coef(gapmod8)
-coefs8
 
 g2007 %>% 
   ggplot(aes(l_GDP, lifeExp)) + 
@@ -710,7 +706,7 @@ Siin me fitime pedagooglistel kaalutlustel kõike Bayesiga aga praktikas jätava
 
 Tagasi gapmod7 ja gapmod8 mudelite juurde. 
 Plotime nende koefitsiendid koos usalduspiiridega.
-```{r}
+```{r fig.cap="mudelite võrdlusplot."}
 plot(coeftab(gapmod7, gapmod8))
 ```
 
@@ -751,7 +747,7 @@ Järgmiseks arvutame igale neist 41-st tulbast keskmise ja 95% HPDI ning plotime
 Pane tähele, et hall riba näitab ebakindlust ennustuse ümber keskmisele elueale üle kõikide riikide, mis võiksid sellist l_GDP-d omada (ehk ebakindlust regressioonijoonele). 
 Kui me aga tahame ennustada ka keskmiste eluigade varieeruvust riigi tasemel (kasutades Bayesi hinnangut sigma parameetrile), siis on meil vaja `sim()` funktsiooni:
 
-```{r}
+```{r }
 mu.mean <- apply(mu1, 2, mean) # applies the FUN mean() to each column
 mu.HPDI <- apply(mu1, 2, HPDI, prob = 0.95) %>% 
   t() %>% 
@@ -764,7 +760,9 @@ height.PI <- apply(sim.length, 2, PI, prob = 0.95) %>%
   as_data_frame()
 height.PI <- bind_cols(data_frame(width), height.PI)
 colnames(height.PI) <- c("width", "lower", "upper")
+```
 
+```{r fig.cap="Ennustused mudelist."}
 ggplot(g2007) +
   geom_point(aes(l_GDP, lifeExp, color = continent)) +
   geom_line(data = data_frame(width, mu.mean), aes(width, mu.mean)) +
@@ -784,7 +782,7 @@ Lisaks: pane tähele, et mudel eeldab, et riikide keskmise eluea SD on muutumatu
 
 
 Kuidas saada ennustusi kindlale l_GDP väärtusele? Näiteks tulp V10 vastab l_GDP väärtusele 2.9. Järgnevalt arvutame oodatavad keskmised eluead sellele SKP väärtusele (fiksionaalsetele riikidele, millel võiks olla täpselt selline SKP):
-```{r}
+```{r fig.cap="Ennustus mudelist kindlale l_GDP väärtusele."}
 dens(sim.length$V10)
 HPDI(sim.length$V10, prob = 0.95)
 ```
@@ -800,7 +798,7 @@ See mudel on alternatiiv andmete logaritmimisele, kui Y-muutuja (see muutuja, mi
 
 Seekord ennustame GDP-d keskmise eluea põhjal (mis, nagu näha jooniselt, ei ole küll päris lognormaalne).
 
-```{r}
+```{r fig.cap="SKP-de jaotus", echo=FALSE}
 ggplot( g2007, aes( gdpPercap ) ) +
   geom_density() +
   stat_function( fun = dlnorm, 
@@ -831,14 +829,14 @@ m_ln1 <- readRDS("data/m_ln1.rds")
 ```
 
 
-```{r}
+```{r }
 precis(m_ln1)
-plot(m_ln1)
+#plot(m_ln1)
 ```
 
 Logormaalses mudelis muutuvad parameetrite tähendused ja need tuleb lineaarse mudeli intercepti ja tõusu interpretatsioonidega kooskõlla viimiseks ümber arvutada. Kõigepealt avaldame tõusu. Kuna meil on tegemist mitte-lineaarse mudeliga, sõltub tõusu väärtus ka mudeli interceptist: $slope = exp(\alpha + \beta)-exp(\alpha)$. See ei ole lineaarne seos: b omab seda suuremat mõju efektile (tõusule), mida suurem on a. [Kui meil on tegu binaarse X-ga (prediktoriga), siis kodeerime selle 2 taset kui -1 ja 1. Sellises mudelis on slope sama, mis efekti suurus ES, ja $ES = exp(\alpha + \beta)-exp(\alpha-\beta)$]
 
-```{r}
+```{r fig.cap="Mudeli tõus sõltub interceptist."}
 a <- seq( 0, 10, length.out = 1000 )
 b <- 2
 b1 <- 3
@@ -858,7 +856,7 @@ s_ln1 <- extract.samples( m_ln1 ) %>% as.data.frame()
 beta <- exp(s_ln1$a + s_ln1$b) - exp(s_ln1$a)
 ```
 
-```{r}
+```{r fig.cap="Mudeli tõusude (beta) posteerior."}
 dens(beta)
 ```
 
@@ -880,7 +878,7 @@ sim_ci <- rethinking::sim(m_ln1) %>%
 ```
 
 
-```{r}
+```{r fig.cap="Ennustus mudelist."}
 ggplot(g2007, aes(lifeExp, gdpPercap)) + 
   geom_point(aes(color = continent), size = 0.8) +
   geom_ribbon(aes( ymin = sim_ci[1,], ymax = sim_ci[2,]), alpha = 0.2)
@@ -891,7 +889,7 @@ Ka see mudel jääb hätta Aafrika outlieritega, mille eluiga ei suuda ennustada
 
 ## Mitme prediktoriga lineaarne regressioon
 
-```{r}
+```{r }
 g2007 <- gapminder %>% 
   filter(year == 2007 ) %>% 
   mutate(l_GDP = log10(gdpPercap),
@@ -1031,9 +1029,9 @@ Plotime varieeruvuse, mida mudel ei oota ega seleta.
 names( coef( m5 ) )
 ```
 
-Kõigepealt lihtne residuals plot, kus meil on y-teljel residuaalid ja x-teljel X1 muutuja tegelikud  valimiväärtused. Y = 0 tähistab horisontaalse joonena mudeli ennustatud Y (eluea) väärtusi kõigil prediktori X1 (lGDP_s) väärtustel ja residuaal on defineeritud kui tegelik Y miinus mudeli poolt ennustatud eluiga sellel X1 väärtusel. Mudeli ennustuse saamiseks anname mudelile ette fikseeritud parameetrite (koefitsientide) a, b_GDP ja b_pop väärtused ning arvutame oodatava keskmise eluea üle kõigi valimis leiduvate lGDP_s ja lpop_s väärtuste. Seega saame sama palju keskmise eluea ennustusi, kui palju on meie andmetabelis ridu.
+Kõigepealt lihtne residuaalide plot, kus meil on y-teljel residuaalid ja x-teljel X1 muutuja tegelikud  valimiväärtused. Y = 0 tähistab horisontaalse joonena mudeli ennustatud Y (eluea) väärtusi kõigil prediktori X1 (lGDP_s) väärtustel ja residuaal on defineeritud kui tegelik Y miinus mudeli poolt ennustatud eluiga sellel X1 väärtusel. Mudeli ennustuse saamiseks anname mudelile ette fikseeritud parameetrite (koefitsientide) a, b_GDP ja b_pop väärtused ning arvutame oodatava keskmise eluea üle kõigi valimis leiduvate lGDP_s ja lpop_s väärtuste. Seega saame sama palju keskmise eluea ennustusi, kui palju on meie andmetabelis ridu.
 
-```{r}
+```{r fig.cap="Mudeli residuaalide plot (m.resid ~ X1)."}
 # Using the fitted model compute the expected value of y (mu) 
 # for each of the 142 data rows.
 mu <- coef( m5 )[ 'a' ] + 
@@ -1052,7 +1050,7 @@ ggplot( g2007, aes( lGDP_s, m.resid ) ) +
 Me näeme, et seal kus SKP on väiksem kipuvad residuaalid olema negatiivsed, mis tähendab, et mudel ülehindab keskmist eluiga. Ja vastupidi, seal kus SKP on üle keskmise, mudel kipub alahindma keskmist eluiga.
 
 See seos tuleb eriti selgelt välja järgmisel pildil, kus plotime residuaalide sõltuvuse elueast (kui eelmine plot oli m.resid ~ X1, siis nüüd plotime  m.resid ~ Y). Lisaks joonistame selguse mõttes regressioonisirge. Kui residuaalid oleks ühtlaselt jaotunud mõlemale poole mudeli ennustust, siis saaksime horisontaalse regressioonisirge. Tegeliku sirge tõus näitab, et suuremad eluead omavad eelistatult poitiivseid residuaale ja väiksemad eluead negatiivseid residuaale. See tähendab, et mudel alahindab eluiga seal, kus SKP on kõrge ja vastupidi, ülehindab eluiga seal, kus SKP on madal.
-```{r}
+```{r fig.cap="m.resid ~ Y plot"}
 g2007$m.resid <- m.resid
 ggplot(g2007, aes(lifeExp, m.resid)) +
   geom_smooth(method = "lm", se = FALSE) +
@@ -1066,7 +1064,7 @@ Horisontaalne punktiirjoon näitab, kus mudel vastab täpselt andmetele.
 
 Plot, kus me ennustame keskmise eluea sõltuvust SKP-st nii riikide kaupa eraldi (andmepunktide paupa) kui üldiselt kõikide riikide keskmisena, millel on mingi kindel SKP (mudeli parima ennustuse ehk sirge asendi ümber valitsevat ebakindlust). Et seda teha, hoiame rahvaarvu konstantsena oma keskväärtusel, mis standardiseeritud andmetl võrdub alati nulliga. link() funktsioon annab meile keskmiste eluigade ennustused meie poolt ette antud X1 ja X2 väärtustel, ning sim() annab meile eluigade ennustused fiktsionaalsete riikide kaupa samadel X1 ja X2 väärtustel. Nagu näha, on meie mudeli arvates riikide kaupa ennustamine palju laiema varieeruvusega kui üle kõikväimalike riikide kesmise kaupa ennustamine.
 
-```{r}
+```{r fig.cap="Ennustav plot"}
 # prepare new counterfactual data
 pred.data <- tibble(
     lGDP_s = seq(-3, 3, length.out = 30), # need meie poolt valitud lGDP_s väärtused, millele me ennustame vastavad eluead 
@@ -1098,7 +1096,7 @@ Posterioorsed ennustusplotid panevad kõrvuti (või üksteise otsa) Y-i algandme
 
 1) võrdle mudeli ennustusi andmetega. (Aga arvesta sellega, et mitte kõik mudelid ei püüagi täpselt andmetele vastata.)
 
-```{r}
+```{r fig.cap="valimi andmed vs. mudeli poolt ennustatud andmed."}
 yrep <- rethinking::sim(m5)
 ppc_dens(g2007$lifeExp, yrep[1:5, ])
 ```
@@ -1109,7 +1107,7 @@ ppc_dens(g2007$lifeExp, yrep[1:5, ])
 Ploti ennustused andmepunktide vastu, pluss jooned, mis näitavad igale ennustusele omistatud usaldusintervalli. Lisaks veel sirge, mis näitab täiuslikku ennustust (slope = 1, intercept = 0). 
 
 Loeme gapminderi andmed uuesti sisse:
-```{r}
+```{r }
 g2007 <- gapminder %>% filter( year == 2007 )
 g2007 <- g2007 %>% mutate( l_GDP = log10( gdpPercap ) )
 g2007 <- g2007 %>% mutate( l_pop = log10( pop ), 
@@ -1119,7 +1117,7 @@ g2007 <- g2007 %>% mutate( l_pop = log10( pop ),
 ```
 
 Ja nüüd plotime ennustused Y-le tegelike Y valimi väärtuste vastu:
-```{r}
+```{r fig.cap="Ennustus vs. valimi väärtus"}
 mu <- link(m5)  
 mu.mean <- apply(mu, 2, mean)
 
@@ -1140,7 +1138,7 @@ Siin on ennustus ja seda ümbritsev ebakindlus iga riigi keskmisele elueale.
 
 Järgnev plot annab ennustusvea igale riigile. Siin tähistab 89% CI näiteks Vietnamile eluigade vahemikku, millese jääb mudeli ennustuse kohaselt 89% kõikvõimalike fiktsionaalsete riikide keskmistest eluigadest, mille SKP ja rahvaarv võrdub Vietnami omaga. Kuna me tsentreerime CI Vietnami tegeliku keskmise eluea residuaalile (erinevusele mudeli ennustusest), näitab see, kui palju erineb Vietnami eluiga mudeli ennustusest riikidele, nagu Vietnam. See plot annab meile riigid, mille suhtes mudel jänni jääb. Enamasti leiame need riigid Aafrikast.
  
-```{r fig.height=7}
+```{r fig.height=7, fig.cap="Ennustused riigi kaupa."}
 # compute residuals
 life.resid <- g2007$lifeExp - mu.mean
 
@@ -1182,7 +1180,7 @@ m1 <- map2stan(f1$f, f1$d)
 m1 <- readRDS("data/anotherm1.rds")
 ```
 
-```{r}
+```{r fig.cap="Mudeli koefitsientide plot."}
 plot(precis(m1))
 ```
 
@@ -1200,7 +1198,7 @@ names(c1)
 
 Kõigepealt defineerime X1 ja X2 väärtused, millele teeme ennustused link() funktsiooni abil. Link tabelist veergude keskmine annab keskmise eluea ennustuse vastavale mandrile ja SKP-le. PI() abil saame 89% CI igale ennustusele. 
 
-```{r}
+```{r fig.cap="Ennustusplot Aafrikale."}
 dd <- as.data.frame(f1$d) #we use the dataframe made by glimmer()
 #in dd all continents are in separate 2-level columns (except Africa)
 dd1 <- dd %>% filter(continentAmericas == 0, 
@@ -1217,7 +1215,7 @@ ggplot(dd1, aes(lGDP_s, lifeExp)) +
   geom_line(aes(y = mu.Africa.mean))
 ```
 
-```{r}
+```{r fig.cap="Ennustusplot Euroopale."}
 dd1 <- dd %>% filter(continentEurope == 1)
 mu.Europe <- link(m1, dd1)
 mu.Europe.mean <- apply( mu.Europe , 2 , mean )
@@ -1264,7 +1262,7 @@ m2 <- map2stan(
 m2 <- readRDS("data/anotherm2.rds")
 ```
 
-```{r}
+```{r fig.cap="mudeli koefitsientide plot"}
 plot(precis( m2 ) )
 ```
 
@@ -1313,7 +1311,7 @@ Ensemble teeb ära nii link()-i kui sim()-i, kasutades mõlemat mudelit vastaval
 
 Teeme 3 plotti: waist = 0 (keskmine), waist = -1 (miinus üks sd) ja waist = 1
 
-```{r}
+```{r }
 waist_fun <- function(waist, ...) {
   d.pred <- data.frame(age_st = seq( -2, 2, length.out = 20 ),
                        waist_st = waist)
@@ -1329,7 +1327,7 @@ waist_fun <- function(waist, ...) {
 ```
 
 Ensemble mudel:
-```{r}
+```{r fig.cap="Ennustusplot üle kahe mudeli."}
 ## Fit ensemble model
 # p <- lapply(-1:1, waist_fun, m2, m3)
 ## Plot three plots
@@ -1342,7 +1340,7 @@ grid.arrange(p_1, p0, p1, ncol = 3)
 ```
 
 Ja sama ainult ühe mudeliga -- m2. 
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.cap="Ennustusplot m2-le."}
 w0 <- waist_fun(-1, m2)
 w_1 <- waist_fun(0, m2)
 w1 <- waist_fun(1, m2)
@@ -1487,7 +1485,7 @@ compare(schoolm2, schoolm3)
 
 Siit nähtub, et m3 on parim mudel, aga ka m2 omab mingit kaalu.
 
-```{r, fig.height=9}
+```{r, fig.height=9, fig.cap="mudelite koefitsiendid."}
 plot(coeftab(schoolm2, schoolm3))
 ```
 
@@ -1512,7 +1510,7 @@ Kuna glimmeri priorite parametriseeringud on vales skaalas (liiga väikesed), mu
 
 Glimmeri väljundis on sama palju koolide veerge, kui palju on erinevaid koole, miinus üks. Selline binaarne numbriline väljund on Stani-le vajalik. Seega ei saa me faktortunnuste korral kasutada algset andmetabelit.
 
-```{r}
+```{r eval=FALSE}
 head(schools_f1$d)
 ```
 
@@ -1539,7 +1537,7 @@ schools_m1 <- readRDS("data/schools_m1.rds")
 Siin on v_Intercept kooli-spetsiifiline korrektsioonifaktor, mis tuleb liita üldisele Interceptile. mean(v_Intercept) == 0. Me eeldame, et korrektsioonid on normaaljaotusega.
 Alternatiivne viis seda mudelit kirjutada oleks `mu <- Intercept[school] + b_sex1*sex1` ja see töötab smamoodi (nüüd on iga kooli intercept kohe eraldi). 
 
-```{r, fig.height=6}
+```{r, fig.height=6, fig.cap="Mudeli koefitsiendid"}
 plot(precis(schools_m1, depth = 2))
 ```
 
@@ -1564,7 +1562,7 @@ Ja poiste-tüdrukute erinevus skooripunktides võrdub
 
 
 Arvutame siis kooli nr 2 tüdrukute keskmise skoori posteeriori.
-```{r}
+```{r fig.cap="Tüdrukute skoori posteerior"}
 schools_m1_samples <- as.data.frame(schools_m1@stanfit)
 school_2_girls <- schools_m1_samples$Intercept + 
   schools_m1_samples$b_sex1 + 
@@ -1575,7 +1573,7 @@ dens(school_2_girls)
 
 
 Ja Poiste oma
-```{r}
+```{r fig.cap="Poiste skoori posteerior."}
 school_2_boys <- schools_m1_samples$Intercept + 
   schools_m1_samples$`v_Intercept[2]`
 ## Plot density histogram of intercepts
@@ -1628,17 +1626,17 @@ schools_m2 <- readRDS("data/schools_m2.rds")
 ```
 
 
-```{r, fig.height=5, fig.width= 5}
+```{r, fig.height=5, fig.width= 5, fig.cap="Mudeli m2 koefitsiendid."}
 plot(precis(schools_m2, depth = 2))
 ```
 
 
 Posteerior korrelatsioonile intercepti ja tõusu vahel:
 
-```{r}
+```{r fig.cap="Posteerior korrelatsioonile intercepti ja tõusu vahel."}
 schools_m2_samples <- extract.samples(schools_m2)
 df1 <- schools_m2_samples$Rho_school %>% as.data.frame()
-df1 #corr matrix- we need only the V2 col
+#df1 #corr matrix- we need only the V2 col
 dens(df1$V2)
 ```
 
@@ -1699,13 +1697,13 @@ Esimeses koolis jääb keskmine poiste skoor 89% tõenäosusega vahemikku `r str
 compare(schools_m1, schools_m2)
 ```
 
-Tundub, et tõusude vabakslaskine oli hea mõte. 
+Tundub, et tõusude vabakslaskmine oli hea mõte. 
 Ma saan hästi pihta, et erinevad koolid õpetavad matemaatikat erineva kvaliteediga.
 Aga miks peaks erinevates Inglismaa koolides olema erinev vahe poiste ja tüdrukute matemaatikateadmistel? 
 Kas olukorras kus meil on hea kool, läheb see vahe väiksemaks või suuremaks? 
 Tehke kindlaks!!! võrrelge graafiku slope vs. intercept.
 
-```{r}
+```{r fig.cap="mida suurem on koolis poiste skoor, seda väiksem on poiste ja tüdrukute erinevus", echo=FALSE}
 ## convert stanfit matrix to data.frame
 schools_m2_samples <- as.data.frame(schools_m2@stanfit)
 ## calculate mean for each coefficient, apply outputs named vector
@@ -1740,7 +1738,7 @@ Arvutage nüüd poiste ja tüdrukute keskmine skoor kooli kaupa ja vaadake uuest
 
 Siin püüame ennustada score1 mõju score2 väärtusele.
 
-```{r}
+```{r fig.cap="score1 vs. score2"}
 plot(schools$score2, schools$score1)
 abline(lm(score1 ~ score2, data = schools))
 ```
@@ -1781,7 +1779,7 @@ schoolm7 <- readRDS("data/schoolm7.rds")
 ```
 
 
-```{r}
+```{r eval=FALSE}
 precis(schoolm7, depth = 2)
 ```
 
@@ -1815,12 +1813,12 @@ schoolm5 <- readRDS("data/schoolm5.rds")
 
 nüüd saame igale koolile arvutada oma intercepti ja oma tõusu (ikka samamoodi: Intercept + v_intercept[] ja b_score2 + v_score2[])
 
-```{r}
+```{r eval=FALSE}
 precis(schoolm5, depth = 2)
 ```
 
 
-```{r}
+```{r eval=FALSE}
 schoolm6 <- map2stan(alist(
   score1 ~ dnorm(mu , sigma),
   mu <- Intercept + b_score2 * score2,
@@ -1842,7 +1840,7 @@ compare(schoolm7, schoolm6, schoolm5)
 ```
 0-mudel, mis on kõige kehvem, on kõige suurema betaga ja kõige väiksema ebakindlusega selle ümber. See on tavaline --- hierarhiline mudel modelleerib ebakindlust paremini (realistlikumalt) ja vähendab üle-fittimise ohtu (beta tuleb selle võrra väiksem).
 
-```{r}
+```{r eval=FALSE}
 precis(schoolm7, depth = 2)
 ```
 

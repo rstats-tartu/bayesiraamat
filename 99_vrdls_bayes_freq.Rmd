@@ -185,9 +185,9 @@ Igal juhul järgmise sammuna korrutab bayesiaan selle jaotuse andmejaotusega, sa
 See kolmas jaotus on posterioorne tõenäosusjaotus, mis sisaldab kogu infot, millest saab arvutada kõige tõenäolisema katseefekti suuruse koos ebakindluse määraga selle ümber (mida rohkem andmeid, seda väiksem ebakindlus) ja tõenäosused, et tegelik katseefekt jääb ükskõik milllisesse meid huvitavasse vahemikku.
 
 Nüüd ei ole siis muud kui bayesi mudel läbi arvutada.
-```{r vrdlsstan, cache=TRUE}
+```{r vrdlsstan, cache=TRUE, eval=FALSE}
 dfa <- data.frame(a)
-m <- map2stan(
+m99 <- map2stan(
   alist(
     a ~ dnorm(mean = mu, sd = sigma),
     mu  ~ dnorm(0, 1), 
@@ -195,8 +195,14 @@ m <- map2stan(
   data = dfa)
 ```
 
+
+```{r include=FALSE}
+#saveRDS(m99, file = "data/m99.rds")
+m99 <- readRDS("data/m99.rds")
+```
+
 ```{r vrdlstriplot, fig.cap="Triplot. Bayesi väljund on posterioorne tõenäosusjaotus (roheline). Nagu näha, ei ole selle jaotuse tipp täpselt samas kohas kui andmejaotuse tipp ehk keskväärtus. Prior tõmbab seda veidi nulli suunas. Lisaks on posteerior veidi kitsam kui andmemudel, mis tähendab, et hinnang ES-le tuleb väiksema ebakindluse määraga."}
-mm <- as.data.frame(m@stanfit)
+mm <- as.data.frame(m99@stanfit)
 ggplot(mm, aes(mu)) + 
   stat_density(color = "green", geom = "line") + 
   stat_function(fun = densfun,
@@ -228,10 +234,10 @@ Sageduslik lähenemine sisaldab ainult ühte mudelit, mida võrreldakse valimi a
 Sageduslik statistik alustab selles lihtsas näites täpselt samamoodi nagu bayesiaan, tekitades eelmisega identse andmemudeli, mis on keskendatud valimi keskväärtusele \@ref(fig:vrdlsse).
 Seejärel nihutab ta oma andmemudelit niipalju, et normaaljaotuse tipp ei ole enam valimi keskväärtuse kohal vaid hoopis 0-efekti kohal. Jaotuse laius nihutamisel ei muutu. 
 
-```{r vrdlsnull, fig.cap="Nullhüpotees (must kõver) ja andmed (punane kõver)."}
+```{r vrdlsnull, fig.cap="Nullhüpotees (must kõver) ja tõepärafunktsioon (punane kõver)."}
 p + stat_function(fun = densfun,
                 args = list(data = a, se = TRUE),
-                colour = "red") +
+                colour = "red", alpha = 0.5) +
   stat_function(fun = dnorm,
                 args = list(mean = 0, sd = sd(a)/sqrt(length(a)))) +
   scale_y_continuous(NULL, breaks = NULL, 
