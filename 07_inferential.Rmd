@@ -163,9 +163,7 @@ Alustuseks simuleerime juhuvalimi n=3 lõpmata suurest normaaljaotusega populats
 ```{r}
 set.seed(1) # makes random number generation reproducible
 Sample <- rnorm(n = 3, mean = 100, sd = 20)
-Sample
-mean(Sample)
-sd(Sample)
+Sample; mean(Sample); sd(Sample)
 ```
 
 Nagu näha on meie valimi keskmine 10% väiksem kui peaks ja valimi sd lausa kaks korda väiksem. Seega peegeldab meie valim halvasti populatsiooni --- aga me teame seda ainult tänu sellele, et tegu on simulatsiooniga.
@@ -174,7 +172,7 @@ Kui juba simuleerida, siis robinal: tõmbame ühe valimi asemel 10 000, arvutame
 
 Meie lootus on, et kui meil on palju valimeid, millel kõigil on juhuslik viga, mis neid populatsiooni suhtes ühele või teisele poole kallutab, siis rohkem on valimeid, mis asuvad tõelisele populatsioonile pigem lähemal kui kaugemal. Samuti, kui valimiviga on juhuslik, siis satub umbkaudu sama palju valimeid tõelisest populatsiooniväärtusest ühele poole kui teisele poole ja vigade jaotus tuleb sümmeetriline. 
 
-```{r fig.cap="Keskmiste jaotus 10 000 valimist."}
+```{r fig.cap="Keskmiste jaotus 10 000 valimist.", fig.height=3, fig.width=4}
 N <- 3
 N_simulations <- 10000
 df <- tibble(a = rnorm(N * N_simulations, 100, 20), 
@@ -196,7 +194,7 @@ Oh-hooo. Paljude valimite keskmiste keskmine ennustab väga täpselt populatsioo
 
 Ja nüüd 10 000 SD keskväärtused:
 
-```{r fig.cap="SD-de jaotus 10 000 valimist."}
+```{r fig.cap="SD-de jaotus 10 000 valimist.", , fig.height=3, fig.width=4}
 Summary %>% 
   ggplot(aes(SD)) + 
   geom_histogram(bins = 40)
@@ -235,7 +233,7 @@ Aga vähemalt populatsiooni keskmise saame me palju valimeid tõmmates ilusasti 
 Kahjuks pole meil ei vahendeid ega kannatust loodusest 10 000 valimi kogumiseks. Enamasti on meil üksainus valim. Õnneks pole sellest väga hullu, sest meil on olemas analoogne meetod, mis töötab üsna hästi ka ühe valimiga. Seda kutsutakse *bootstrappimiseks* ja selle võttis esimesena kasutusele parun von Münchausen. Too jutukas parun nimelt suutis end soomülkast iseenda patsi pidi välja tõmmata (koos hobusega), mis ongi bootstrappimise põhimõte. 
 Statistika tõmbas oma saapaid pidi mülkast välja Brad Efron 1979 aastal.
 
-```{r }
+```{r echo=FALSE}
 knitr::include_graphics("img/munchausen.jpg")
 ```
 
@@ -267,7 +265,7 @@ Bootstrap empiirilisele valimile suurusega n töötab nii:
 
 Mis on USA presidentide keskmine pikkus? Meil on valim 11 presidendi pikkusega.
 
-```{r, out.width='.49\\linewidth', fig.cap="Bootstrapitud posteerior USA presidentide keskmisele pikkusele."}
+```{r, out.width='.49\\linewidth', fig.cap="Bootstrapitud posteerior USA presidentide keskmisele pikkusele.",  fig.height=2, fig.width=3}
 library(rethinking)
 heights <- tibble(value = c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185, 188))
 
@@ -320,12 +318,12 @@ See lihtne meetod on küll populaarne ja annab sageli häid tulemusi, aga ei ole
 Empiiriline bootstrap on sellest ainult veidi keerulisem, aga annab robustsemaid tulemusi. 
 Selles ei ploti me enam mitte 1000 statistiku väärtust vaid 1000 erinevust bootstrapitud statistiku väärtuse ja empiirilise valimi põhjal arvutatud statistiku väärtuse vahel.
 
-```{r fig.cap="Empiirilise bootstrapi posteerior USA presidentide keskmisele pikkusele.", fig.height=3, fig.width=3}
+```{r fig.cap="Empiirilise bootstrapi posteerior USA presidentide keskmisele pikkusele.", fig.height=3, fig.width=4}
 boot_mean <- boot_mean %>% 
   mutate(Diff = Mean - mean(heights$value))
 # dens(boot_mean$Diff)
 ggplot(boot_mean, aes(Diff)) +
-  geom_density()
+  geom_density()+ theme_classic()
 ```
 
 Ja usaldusinterval tuleb niiviisi
@@ -341,7 +339,7 @@ See funktsioon pakub pisut moodsama meetodi --- Bayesian bootstrap --- mis töö
 Hea lihtsa seletuse Bayesian bootstrapi kohta saab siit https://www.youtube.com/watch?v=WMAgzr99PKE ja lihtsa r koodi selle meetodi rakendamiseks saab siit https://www.r-bloggers.com/simple-bayesian-bootstrap/
 Näited sellest, kuidas kasutada bayesbooti standardhälbe, korrelatsioonikoefitsiendi ja lineaarse mudeli koefitsientide usalduspiiride arvutamiseks leiate `?bayesboot` käsuga.
 
-```{r fig.cap="Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele."}
+```{r fig.cap="Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele.", fig.height=4, fig.width=5}
 library(bayesboot)
 heights_bb <- bayesboot(heights$value, mean)
 plot(heights_bb, compVal = 185)
@@ -363,7 +361,7 @@ mean(heights_bb[, 1] > 182)
 ```
 
 Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):
-```{r fig.cap="Bayesi bootstrap ES-le."}
+```{r fig.cap="Bayesi bootstrap ES-le.", fig.height=4, fig.width=5}
 set.seed(1)
 ## Simulate two random normal distributions with mean 0. 
 ## True difference is 0.
@@ -382,7 +380,7 @@ BayesianFirstAid raamatukogu funktsioon bayes.t.test() annab kasutades t-jaotuse
 
 Kui me arvame, et me teame, mis jaotusega on meie andmed, ja meil on suhteliselt vähe andmepunkte, võib olla mõistlik lisada bootstrapile andmete jaotuse mudel. Näiteks, meie USA presidentide pikkused võiksid olla umbkaudu normaaljaotusega (sest me teame, et USA meeste pikkused on seda). Seega fitime kõigepealt presidentide pikkusandmetega normaaljaotuse ja seejärel tõmbame bootsrap valimid sellest normaaljaotuse mudelist.
 Normaaljaotuse mudelil on 2 parameetrit: keskmine (mu) ja standardhälve (sigma), mida saame fittida valimiandmete põhjal:
-```{r fig.cap="Parameetrilise bootstrapi posteerior USA presidentide keskmisele pikkusele."}
+```{r fig.height=4, fig.width=5, fig.cap="Parameetrilise bootstrapi posteerior USA presidentide keskmisele pikkusele."}
 mu <- mean(heights$value)
 sigma <- sd(heights$value)
 N <- length(heights$value)
@@ -400,7 +398,7 @@ HPDI(sample_means_sum$Mean)
 
 Üldiselt ei soovita me parameetrilist bootstrappi väga soojalt, sest täisbayesiaanlik alternatiiv, mida me kohe õppima asume, on sellest paindlikum.
 
-```{r, fig.align='center', echo=FALSE, fig.cap="x"}
+```{r, fig.align='center', echo=FALSE, fig.cap="Bootstrappimise meetodid.", echo=FALSE}
 knitr::include_graphics("img/boot1.pdf")
 ```
 
@@ -474,7 +472,7 @@ x <- seq(from = 0, to = 3)
 y <- c(1, 3, 3, 1)
 ```
 
-```{r fig.cap="Tõepärafunktsioon."}
+```{r fig.cap="Tõepärafunktsioon.", fig.height=4, fig.width=5}
 plot(x, y, 
      ylab = "Number of possibilities", 
      xlab = "Number of deaths", 
@@ -492,7 +490,7 @@ Me saame sama tulemuse kasutades formaalsel viisil binoomjaotuse mudelit. Ainus 
 y <- dbinom(x, 3, 0.5)
 ```
 
-```{r fig.cap="Tõepärafunktsioon binoomjaotuse mudelist."}
+```{r fig.cap="Tõepärafunktsioon binoomjaotuse mudelist.", fig.height=4, fig.width=5}
 plot(x, y, 
      type = "b",
      xlab = "Number of deaths",
@@ -508,7 +506,7 @@ x <- seq(from = 0, to = 9)
 y <- dbinom(x, 9, 0.67)
 ```
 
-```{r fig.cap="Veel üks tõepärafunktsioon."}
+```{r fig.cap="Veel üks tõepärafunktsioon.", fig.height=4, fig.width=5}
 plot(x, y, 
      type = "b", 
      xlab = "Number of deaths", 
@@ -521,7 +519,7 @@ Lisame sellele tõepärafunktsioonile tasase priori (lihtsuse huvides) ja arvuta
 
 Me defineerime X telje kui rea 10-st arvust (0 kuni 9 surma) ja arvutame tõepära igale neist 10-st arvust. Sellega ammendame me kõik loogiliselt võimalikud parameetri väärtused.
 
-```{r fig.cap="Posteerior."}
+```{r fig.cap="Posteerior.", fig.height=4, fig.width=5}
 # Define grid
 x <- seq(from = 0 , to = 9)
 # Define flat prior
@@ -609,7 +607,7 @@ Hea küll, me arvutame jälle suremust.
 Bayes töötab andmepunkti kaupa (see et me talle ennist kõik andmed korraga ette andsime, on puhtalt mugavuse pärast).
 
 
-```{r fig.cap="N=1, esimene patsient suri."}
+```{r fig.cap="N=1, esimene patsient suri.", fig.height=4, fig.width=5}
 # Define grid
 x <- seq(from = 0, to = 1, length.out = 20)
 
@@ -629,7 +627,7 @@ plot(x, posterior,
 Esimene patsient suri - 0 mortaalsus ei ole enam loogiliselt võimalik (välja arvatud siis kui prior selle koha peal = 0) ja mortaalsus 100% on andmetega (tegelikult andmega) parimini kooskõlas. Posteerior on nulli ja 100% vahel sirge sest vähene sissepandud informatsioon lihtsalt ei võimalda enamat.
 
 
-```{r fig.cap="N=2, teine patsient suri."}
+```{r fig.cap="N=2, teine patsient suri.", fig.height=4, fig.width=5}
 # Define prior
 prior <- posterior
 
@@ -647,7 +645,7 @@ Teine patsient suri.
 Nüüd ei ole 0 ja 1 vahel enam sirge posteerior. 
 Posteerior on kaldu 100 protsendi poole, mis on ikka kõige tõenäolisem väärtus.
 
-```{r fig.cap="N=3, kolmas patsient jäi ellu."}
+```{r fig.cap="N=3, kolmas patsient jäi ellu.", fig.height=4, fig.width=5}
 # Define prior
 prior <- posterior1
 
@@ -775,7 +773,7 @@ precis(m1)
 
 Nüüd tõmbame posteerioroorsest jaotusest valimi n=10 000. Selleks on funktsioon extract.samples()
 
-```{r fig.cap="tõmbame valimi posteeriorist."}
+```{r fig.cap="tõmbame valimi posteeriorist.", fig.height=2, fig.width=3}
 samples <- extract.samples(m1)
 # hist(samples$p)
 dens(samples$p)
@@ -795,7 +793,7 @@ m2 <- map(
 precis(m2)
 ```
 
-```{r fig.cap="Veel üks valim posteeriorist (60 surma 90st)."}
+```{r fig.cap="Veel üks valim posteeriorist (60 surma 90st).", fig.height=2, fig.width=3}
 samples <- extract.samples(m2)
 dens(samples$p)
 #PI(samples$p, prob = 0.95) # Leaves out equal 2.5% at both sides
@@ -867,7 +865,7 @@ precis(m3)
 ```
 
 
-```{r, out.width='0.49\\linewidth', fig.cap="Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist."}
+```{r, out.width='0.49\\linewidth', fig.cap="Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist.", fig.height=2, fig.width=3}
 dens(samples$p)
 HPDI(samples$p, prob = 0.95) # Highest density 95% at the center
 ```

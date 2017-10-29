@@ -34,7 +34,7 @@ s3d$plane3d(my.lm, lty.box = "solid")
 m1 <- lm(Sepal.Width ~ Sepal.Length + Petal.Length, data = iris1)
 ```
 
-```{r fig.cap="2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile.", message=FALSE, error=FALSE}
+```{r fig.cap="2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile.", message=FALSE, error=FALSE, fig.height=4, fig.width=6}
 library(tidyverse)
 p <- ggplot(iris, aes(Sepal.Length, Sepal.Width)) +
   geom_point(aes(color = Species))
@@ -45,11 +45,11 @@ p + geom_abline(intercept = coef(m1)[1], slope = coef(m1)[2]) +
 Siin on regressioonijoon hoopis teises kohas, kui lihtsas ühe prediktoriga mudelis.
 
 Võrdluseks ühe prediktoriga mudel:
-```{r}
+```{r echo=FALSE}
 m <- lm(Sepal.Width ~ Sepal.Length, data = iris)
 ```
 
-```{r fig.cap="2D visualiseering 2D andmete põhjal fititud mudelist."}
+```{r fig.cap="2D visualiseering 2D andmete põhjal fititud mudelist.", echo=FALSE, fig.height=4, fig.width=6}
 p + geom_abline(intercept = coef(m)[1], slope = coef(m)[2]) +
   labs(title = deparse(formula(m)))
 ```
@@ -64,7 +64,7 @@ coef(m1)
 
 Nagu näha, mudeli m b~1~ koefitsient erineb oluliselt mudeli m1 vastavast koefitsiendist. Ühel juhul on tõus nõrgalt negatiivne, teisel selgelt positiivne.
 
-Kumb mudel on siis parem? AIC-i järgi on m1 kõvasti parem, kui m.
+Kumb mudel on siis parem? AIC-i järgi on kahe prediktoriga m1 kõvasti eelistatum, kui ühe prediktoriga m.
 ```{r}
 AIC(m, m1)
 ```
@@ -74,7 +74,7 @@ AIC(m, m1)
 Siin on idee kasutada fititud mudeli struktuuri enustamaks y keskmisi väärtusi erinevatel $x_1$ ja $x_2$ väärtustel. 
 Kuna mudel on fititud, on parameetrite väärtused fikseeritud. 
 
-```{r fig.height=3, fig.width=3}
+```{r }
 Sepal_length <-  seq(min(iris$Sepal.Length), 
                      max(iris$Sepal.Length), 
                      length.out = 10) 
@@ -85,7 +85,7 @@ b2 <- coef(m1)[3]
 Sepal_width <-   a + b1 * Sepal_length + b2 * Petal_length
 ```
 
-```{r fig.cap="Ennustus ainsa prediktoriga mudelist."}
+```{r fig.cap="Ennustus ainsa prediktoriga mudelist.", fig.height=3, fig.width=4}
 plot(Sepal_width ~ Sepal_length, 
      type="b", 
      ylim=c(0, 5), 
@@ -148,7 +148,7 @@ AIC(m, m1, m2)
 
 Kõigepealt anname rea väärtusi x~1~-le ja hoiame x~2~ konstantsena. 
 
-```{r fig.cap="Ennustus interaktsioonimudelist, kus x1 on antud rida väärtusi ja x2 hoitakse konstantsena."}
+```{r fig.cap="Ennustus interaktsioonimudelist, kus x1 on antud rida väärtusi ja x2 hoitakse konstantsena.", fig.height=3, fig.width=4}
 Sepal_length <-  seq(min(iris$Sepal.Length), 
                      max(iris$Sepal.Length), 
                      length.out = 100) 
@@ -295,7 +295,7 @@ Eelnev ei kehti Bayesi mudelite kohta, mis toovad priorite kaudu sisse lisainfot
 
 Kuidas panna skeptik uskuma, et statistilised meetodid töötavad halvasti väikestel valimitel? Siin aitab simulatsioon, kus me tõmbame 3-se valimi etteantud populatsioonist ning üritame selle valimi põhjal ennustada selleasama populatsiooni struktuuri. Kuna tegemist on simulatsiooniga, teame täpselt, et populatsioon, kust me tõmbame oma kolmese valimi, on normaaljaotusega, et tema keskväärtus = 0 ja et tema sd = 1. Me fitime oma valimi andmetega 2 erinevat mudelit: normaaljaotuse ja Studenti t jaotuse. 
   
-```{r message=FALSE, fig.height=3, fig.width=4, fig.cap="Normaaljaotus ja studenti t jaotus fitituna N = 3 andmetega.", echo=FALSE}
+```{r message=FALSE, fig.height=3, fig.width=4, fig.cap="Normaaljaotus ja studenti t jaotus fitituna N = 3 andmetega. Juhuvalim normaaljaotusest, mille keskmine=0 ja sd=1 (andmepunktid on näidatud mustade munadena). Sinine joon - populatsioon, millest tõmmati valim; punane joon - normaaljaotuse mudel, mis on fititud valimi andmetel; must joon - Studenti t jaotuse mudel, mis on fititud samade andmetega.", echo=FALSE}
 library(brms) #t jaotuse modelleerimiseks
 library(ggthemes)
 #pakett ggfotify pakub alt lahendust jaotuste joonistamiseks
@@ -309,8 +309,6 @@ df %>% ggplot(aes(x=a)) +
   stat_function(fun=dstudent_t, args=list(df=2, mu=mean(df$a), sigma=sd(df$a)))+
   xlim(-3, 3) + ylim(0, 0.55) + labs(x=NULL, y=NULL) + theme_tufte()
 ```
-
-*Joonis: juhuvalim normaaljaotusest, mille keskmine=0 ja sd=1 (n=3; andmepunktid on näidatud mustade munadena). Sinine joon - popualtsioon, millest tõmmati valim; punane joon - normaaljaotuse mudel, mis on fititud valimi andmetel; must joon - Studenti t jaotuse mudel, mis on fititud samade andmetega.*
 
 Siin saame hinnata mudelite fitte jumala positsioonilt, võrreldes fititud mudelite jaotusi "tõese" sinise jaotusega.
 Mõlemad mudelid on süstemaatiliselt nihutatud väiksemate väärtuste poole ja alahindavad varieeruvust. t jaotuse mudel on oodatult paksemate sabadega ja ennustab 0-st kaugele palju rohkem väärtusi kui normaaljaotuse mudel. Kuna me teame, et populatsioon on normaaljaotusega, pole väga üllatav, et t jaotus modeleerib seda halvemini kui normaaljaotus. 
