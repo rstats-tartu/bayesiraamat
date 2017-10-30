@@ -314,7 +314,7 @@ Eeldus 2: mudel kirjeldab andmeid genereerivat mehhanismi (siit tulevad sageli l
 Modelleerib (1) andmete esinduslikkust, mis on seda väiksem, mida väiksem on valim; ja (2) süstemaatilist viga.
 Eeldus: meil on andemtest sõltumatuid teadmisi populatsiooni jaotuse kohta 
 
-NB! Valimiviga ja andmete esinduslikus on erinevad ja üksteisest sõltumatud asjad, ehkki mõlemad on juhuslikud protsessid, mille tõenäosus kahaneb andmete hulga kasvuga. Kui valim on piisavalt suur, siis võime olla piisavalt kindlad, et andmed on esinduslikud ning klassikalise statistika hinnangud ebakindlusele punktväärtuse ümber muutuvad selle võrra usutavamaks.  
+Valimiviga ja andmete esinduslikus on erinevad ja üksteisest sõltumatud pseudo-protsessid, ehkki mõlemad on juhuslikud protsessid, mille tõenäosus muutub proportsionaalselt andmete hulga kasvuga (täpsemalt sqrt(N)-ga). Kui valim on piisavalt suur, siis võime olla piisavalt kindlad, et andmed on esinduslikud ning klassikalise statistika hinnangud ebakindlusele punktväärtuse ümber muutuvad selle võrra usutavamaks.  
 
 
 
