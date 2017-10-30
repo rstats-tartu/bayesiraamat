@@ -108,7 +108,7 @@ Bayesiaan alustab sellest, et ehitab kaks mudelit: andmete tõepäramudel ja tau
 Kui andmed on normaaljaotusega, siis on ka tõepäramudel normaaljaotus. 
 Alustame sellest, et fitime oma valimiandmed (üksikud efekti suurused) normaaljaotuse mudelisse.
 
-```{r vrdlssd, fig.cap="Paariviisiline katse - kontroll disain. Katset on korratud 30 korda. X-teljel on efektisuurused (ES). 30 üksikut efektisuurust on näidatud punktidena. Must joon näitab keskmist efektisuurust. Andmed on mudeldatud normaaljaotusena."}
+```{r vrdlssd, fig.cap="Paariviisiline katse - kontroll disain. Katset on korratud 30 korda. X-teljel on efektisuurused (ES). 30 üksikut efektisuurust on näidatud punktidena. Must joon näitab keskmist efektisuurust. Andmed on mudeldatud normaaljaotusena.", echo=FALSE, fig.height=3, fig.width=4}
 set.seed(19)
 ## Function to provide density data
 densfun <- function(x, data, se = FALSE) {
@@ -142,7 +142,7 @@ See ei ole veel tõepäramudel, sest me tahame hinnangut ES **keskväärtuse** k
 Seega tuleb eelmine jaotus kitsamaks tõmmata, et ta kajastaks meie teadmisi ES-ide keskväärtuste, mitte individuaalsete ES-de, kohta. 
 Uue jaotusmudeli sd = eelmise jaotuse sd/sqrt(30).
 
-```{r vrdlsse, fig.cap="See jaotus iseloomustab keskmise ES paiknemist puhtalt meie andmete põhjal."}
+```{r vrdlsse, fig.cap="See jaotus iseloomustab keskmise ES paiknemist puhtalt meie andmete põhjal.", echo=FALSE, fig.height=3, fig.width=4}
 p + geom_dotplot(binwidth = 1, dotsize = 1/3) + 
   stat_function(fun = densfun,
                 args = list(data = a, se = TRUE),
@@ -166,7 +166,7 @@ Kui sul on väike valim, siis sinu andmed vajavad sellist kantseldamist.
 
 Olgu meie taustateadmise mudel normaaljaotus keskväärtusega 0 ja standardhälbega 1.
 
-```{r vrdlssdse, fig.cap="Taustateadmiste mudel ehk prior on normaaljaotus (must joon), mille ülesanne on veidi vähendada ekstreemsete valimite kahjulikku mõju."}
+```{r vrdlssdse, fig.cap="Taustateadmiste mudel ehk prior on normaaljaotus (must joon), mille ülesanne on veidi vähendada ekstreemsete valimite kahjulikku mõju.", echo=FALSE, fig.height=3, fig.width=4}
 p + stat_function(fun = densfun,
                 args = list(data = a, se = TRUE),
                 colour = "red") +
@@ -201,7 +201,7 @@ m99 <- map2stan(
 m99 <- readRDS("data/m99.rds")
 ```
 
-```{r vrdlstriplot, fig.cap="Triplot. Bayesi väljund on posterioorne tõenäosusjaotus (roheline). Nagu näha, ei ole selle jaotuse tipp täpselt samas kohas kui andmejaotuse tipp ehk keskväärtus. Prior tõmbab seda veidi nulli suunas. Lisaks on posteerior veidi kitsam kui andmemudel, mis tähendab, et hinnang ES-le tuleb väiksema ebakindluse määraga."}
+```{r vrdlstriplot, fig.cap="Triplot. Bayesi väljund on posterioorne tõenäosusjaotus (roheline). Nagu näha, ei ole selle jaotuse tipp täpselt samas kohas kui andmejaotuse tipp ehk keskväärtus. Prior tõmbab seda veidi nulli suunas. Lisaks on posteerior veidi kitsam kui andmemudel, mis tähendab, et hinnang ES-le tuleb väiksema ebakindluse määraga.", echo=FALSE, fig.height=3, fig.width=4}
 mm <- as.data.frame(m99@stanfit)
 ggplot(mm, aes(mu)) + 
   stat_density(color = "green", geom = "line") + 
@@ -211,7 +211,7 @@ ggplot(mm, aes(mu)) +
   stat_function(fun = densfun,
                 args = list(data = rnorm(30))) +
   scale_y_continuous(NULL, breaks = NULL) +
-  xlim(-10, 10)
+  xlim(-5, 5)
 ```
 
 Posteerior sisaldab endas kogu infot, mis meil ES-i tõelise väärtuse kohta on. 
@@ -234,14 +234,15 @@ Sageduslik lähenemine sisaldab ainult ühte mudelit, mida võrreldakse valimi a
 Sageduslik statistik alustab selles lihtsas näites täpselt samamoodi nagu bayesiaan, tekitades eelmisega identse andmemudeli, mis on keskendatud valimi keskväärtusele \@ref(fig:vrdlsse).
 Seejärel nihutab ta oma andmemudelit niipalju, et normaaljaotuse tipp ei ole enam valimi keskväärtuse kohal vaid hoopis 0-efekti kohal. Jaotuse laius nihutamisel ei muutu. 
 
-```{r vrdlsnull, fig.cap="Nullhüpotees (must kõver) ja tõepärafunktsioon (punane kõver)."}
+```{r vrdlsnull, fig.cap="Nullhüpotees (must kõver) ja tõepärafunktsioon (punane kõver).", echo=FALSE, fig.height=3, fig.width=4}
 p + stat_function(fun = densfun,
                 args = list(data = a, se = TRUE),
                 colour = "red", alpha = 0.5) +
   stat_function(fun = dnorm,
                 args = list(mean = 0, sd = sd(a)/sqrt(length(a)))) +
   scale_y_continuous(NULL, breaks = NULL, 
-                     limits = c(0, densfun(mean(a), a, se = TRUE)))
+                     limits = c(0, densfun(mean(a), a, se = TRUE))) +
+  xlim(-5, 5)
 ```
 
 
@@ -292,3 +293,30 @@ Tüüpiline tulemuse kirjeldus artiklis:
 
 See on kõik, mida me sagedusliku statistika kohta ütleme. 
 Mitte miski, mis järgneb, ei eelda sagedusliku paradigma tundmist.
+
+## Statistiline ennustus kui mitmetasandiline protsess
+
+Me võime vaadelda ennustavat statistikat mitmetasemelise protsessina, kus alumisel tasemel on punkthinnang parameetri väärtusele, selle peal oleval tasemel on hinnang ebakindlusele selle punkthinnangu ümber, ning 3. tasemel on omakorda hinnang ebakindlusele 2. taseme hinnangu ümber. Ja nii edasi lõpmatusse. Bayes erineb klassikalisest statistikast selle poolest, et kui Bayes ehitab 2. taseme hinnangu tõepära ja priori põhjal, siis klassikaline statistika kasutab selleks pelgalt tõepära (konverteerituna null hüpoteesiks). See on tähtis, kuna tõepära modelleerib ainult seda osa juhuslikust varieeruvusest punkthinnangu ümber, mida kutsutakse valimiveaks. Prior on võimeline arvesse võtma ka teise osa juhuslikust varieeruvusest punktväärtuse ümber, mida võime kutsuda andmete esinduslikuseks. 
+
+Juhuslik varieeruvus tähendab siin, et viga ehk erinevus tegelikust väärtusest on jaotunud sümmeetriliselt tegeliku väärtuse ümber.  Andmete esinduslikus on määr, millega meie andmete jaotus sarnaneb populatsiooni jaotusele, kust need andmed on korjatud. Kui esinduslikus kehtib konkreetselt meie andmete kohta, siis valimiviga on modelleeritud funktsioonina, mis kirjeldab kõikvõimalike hüpoteetiliste andmete kohtamise tõenäosust igal mõeldaval parameetriväärtusel. Paraku, kuna valimivea mudel fititakse andmete peal, siis eeldab see meie konkreetsete andmete esinduslikkust.
+
+Kuna klassikalises statistikas ei ole formaalset priori mudelit, ei hinda klassikalised usaldusintervallid (2. tase) ebakindlust punktväärtuse ümber. Seda teevad bayesiaanlikud kredibiilsusintervallid, aga ainult siis, kui priorite koostamisse on tõsiselt suhtutud. 
+
+**I Punkthinnang** -- enamasti aritmeetiline keskmine –- modelleerib andmejaotuse tüüpilist elementi.
+Eeldus: me teame, milline on andmete jaotus.
+
+**II tõepärafunktsioon** hindab ebakindlust punkthinnangu ümber.
+Modelleerib valimiviga, mis on seda suurem, mida vähem on teil andmeid. 
+Eeldus 1: andmed on esinduslikud (andmejaotus = populatsiooni jaotus)
+Eeldus 2: mudel kirjeldab andmeid genereerivat mehhanismi (siit tulevad sageli lisaeeldused, nagu populatsiooni normaaljaotus, lineaarsus, sõltumatud sündmused valimi koostamisel, vigade sõltumatus, homoskedastilisus jms)
+
+**III  prior** kohendab tõepärafunktsiooni hinnangut 
+Modelleerib (1) andmete esinduslikkust, mis on seda väiksem, mida väiksem on valim; ja (2) süstemaatilist viga.
+Eeldus: meil on andemtest sõltumatuid teadmisi populatsiooni jaotuse kohta 
+
+NB! Valimiviga ja andmete esinduslikus on erinevad ja üksteisest sõltumatud asjad, ehkki mõlemad on juhuslikud protsessid, mille tõenäosus kahaneb andmete hulga kasvuga. Kui valim on piisavalt suur, siis võime olla piisavalt kindlad, et andmed on esinduslikud ning klassikalise statistika hinnangud ebakindlusele punktväärtuse ümber muutuvad selle võrra usutavamaks.  
+
+
+
+
+
