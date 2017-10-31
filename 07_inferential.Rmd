@@ -74,7 +74,7 @@ Me anname siin 9 tuletust ilma tõestuskäikudeta, mis on aga lihtsad. Siin või
 Bayesi teoreemi kasutatakse sageli määramaks hüpoteesi tõenäosuse pärast uute faktide (andmete) lisandumist olemasolevatele teadmistele. 
 Kui A on H~1~ ning mitte-A on ammendav ja välistav H~2~ ja B tähistab andmeid (data), saame Bayesi teoreemi ümber kirjutada 
 
-$P(H1~\vert~data) =  P(H1)P(data~\vert~H1) /( P(H1)P(data~\vert~H1) + P(H2)P(data \vert H2) )$
+$P(H_1~\vert~data) =  P(H_1)P(data~\vert~H_1) /( P(H_1)P(data~\vert~H_1) + P(H_2)P(data \vert H_2) )$
 
 $P(H_1~\vert~data)$ on $H_1$ kehtimise tõenäosus meie andmete korral -- ehk posteerior, 
 
@@ -88,13 +88,13 @@ Bayesi teoreem on triviaalne tuletus tõenäosusteooria aksioomidest, milles pol
 
 ### Bayesi teoreemi rakendamine diskreetsetele hüpoteesidele {-}
 
-Oletame, et 45 aastane naine saab rinnavähi sõeluuringus mammograafias positiivse tulemuse. Millise tõenäosusega on tal rinnavähk? Kõigepealt jagame hüpoteesiruumi kahe diskreetse hüpoteesi vahel: H1 - vähk ja H2 - mitte vähk. Edasi on meil vaja omistada numbrilised väärtused järgmistele parameetritele: 
+Oletame, et 45 aastane naine saab rinnavähi sõeluuringus mammograafias positiivse tulemuse. Millise tõenäosusega on tal rinnavähk? Kõigepealt jagame hüpoteesiruumi kahe diskreetse hüpoteesi vahel: H~1~ - vähk ja H~2~ - mitte vähk. Edasi on meil vaja omistada numbrilised väärtused järgmistele parameetritele: 
 
-1. H1 tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil on rinnavähk $P( +~\vert~H_1) = 0.9$
+1. H~1~ tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil on rinnavähk $P( +~\vert~H_1) = 0.9$
 
-2. H2 tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil ei ole rinnavähki $P( +~\vert~H_2) = 0.08$ (pane tähele, et 0.9 + 0.08 ei võrdu ühega, mis tähendab, et tõepära pole tõenäosusteooria mõttes päris tõenäosus).
+2. H~2~ tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil ei ole rinnavähki $P( +~\vert~H_2) = 0.08$ (pane tähele, et 0.9 + 0.08 ei võrdu ühega, mis tähendab, et tõepära pole tõenäosusteooria mõttes päris tõenäosus).
 
-3. Eelnev tõenäosus, et patsiendil on rinnavähk $P(H_1) = 0.01$ (see on rinnavähi sagedus 45 a naiste populatsioonis; kui me teame patsiendi genoomi järjestust või rinnavähijuhte tema lähisugulastel, võib P(H1) tulla väga erinev).
+3. Eelnev tõenäosus, et patsiendil on rinnavähk $P(H_1) = 0.01$ (see on rinnavähi sagedus 45 a naiste populatsioonis; kui me teame patsiendi genoomi järjestust või rinnavähijuhte tema lähisugulastel, võib P(H~1) tulla väga erinev).
 
 4. $P(H_2) = 1 - P(H_2) = 0.99$
 
