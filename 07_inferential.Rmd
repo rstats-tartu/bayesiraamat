@@ -55,11 +55,11 @@ Me anname siin 9 tuletust ilma tõestuskäikudeta, mis on aga lihtsad. Siin või
 
 1. Kui B sisaldab endas A-d, siis $P(B) \leq P(A)$ 
 
-2. kui A ja B on üksteisest sõltumatud, siis $P(A) = P(A \vert B)$ (definitsioon)
+2. A ja B on üksteisest sõltumatud siis ja ainult siis kui $P(A \vert B) = P(A)$ 
 
-3. kui A ja B on üksteisest sõltumatud, siis $P(A \land B) = P(A)P(B)$ 
+3. Kui A ja B on üksteisest sõltumatud, siis $P(A \land B) = P(A)P(B)$ 
 
-4. kui A ja B on üksteist välistavad, siis $P(A \lor B) = P(A) + P(B)$ (tõenäosus, et A on tõene või B on tõene on nende tõenäosuste summa). kui A ja B ei ole üksteist välistavad, siis $P(A \lor B) = P(A) + P(B) - P(A \land B)$
+4. Kui A ja B on üksteist välistavad, siis $P(A \lor B) = P(A) + P(B)$ (tõenäosus, et A on tõene või B on tõene on nende tõenäosuste summa). Kui A ja B ei ole üksteist välistavad, siis $P(A \lor B) = P(A) + P(B) - P(A \land B)$
 
 5. $P(A) = P(A \land B) + P(A \land mitte~B)$ --- see on "totaalse tõenäosuse seadus" kitsendatuna kahele ammendavale teineteist välistavale hüpoteesile A & B, mille kohaselt me peame hüpotees A tõenäosuse leidmiseks arvestama ka B tõenäosusega.
 
@@ -67,9 +67,9 @@ Me anname siin 9 tuletust ilma tõestuskäikudeta, mis on aga lihtsad. Siin või
 
 7. Punktist 6 tuleneb: $P(A \land B) = P(A~\vert~B)P(B)$.
 
-8. punktis 6 tuleneb totaalne tõenäosus: $P(A) = P(A~\vert~B)P(B) + P(A~\vert~notB)P(notB)$ 
+8. Punktist 6 tuleneb totaalne tõenäosus: $P(A) = P(A~\vert~B)P(B) + P(A~\vert~notB)P(notB)$ 
 
-9. punktis 6 tuleneb Bayesi teoreem: $P(A~\vert~B) = P(A)P(B~\vert~A)/P(B)$, kus $P(B) = P(A)P(B~\vert~A) + P(not~A)P(B~\vert~not~A)$  
+9. Punktist 6 tuleneb Bayesi teoreem: $P(A~\vert~B) = P(A)P(B~\vert~A)/P(B)$, kus $P(B) = P(A)P(B~\vert~A) + P(not~A)P(B~\vert~not~A)$  
 
 Bayesi teoreemi kasutatakse sageli määramaks hüpoteesi tõenäosuse pärast uute faktide (andmete) lisandumist olemasolevatele teadmistele. 
 Kui A on H~1~ ning mitte-A on ammendav ja välistav H~2~ ja B tähistab andmeid (data), saame Bayesi teoreemi ümber kirjutada 
