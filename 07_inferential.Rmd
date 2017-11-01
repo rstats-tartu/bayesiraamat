@@ -55,8 +55,8 @@ Me anname siin 9 tuletust ilma tõestuskäikudeta, mis on aga lihtsad. Siin või
 
 Sümbolite tähendused:
 + $P(A \vert B)$ on tinglik tõenäosus, mida tuleks lugeda: "A tõenäosus tingimusel, et kehtib B". Pane tähele, et $P(vihm~\vert~pilves~ilm)$ ei ole sama, mis $P(pilves~ilm~\vert~vihm)$. 
-+ $P(A \land B)$ tähendab "A ja B", 
-+ $P(A \lor B)$ tähendab "A ja/või B" (loogiline "või" tähendab tavakeeles ja/või), 
++ $A \land B$ tähendab "A ja B", 
++ $A \lor B$ tähendab "A ja/või B" (loogiline "või" tähendab tavakeeles ja/või), 
 + $\lnot A$ tähendab mitte-A, ehk A == FALSE.
 
 1. Kui B sisaldab endas A-d, siis $P(B) \leq P(A)$ 
