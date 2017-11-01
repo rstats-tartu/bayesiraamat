@@ -51,7 +51,7 @@ Kui tõenäosused on 0 või 1, siis taandub tõenäosusteooria matemaatliselt om
 
 ## Formaalsed tuletused tõenäosusteooria aksioomidest {-}
 
-Me anname siin 9 tuletust ilma tõestuskäikudeta, mis on aga lihtsad. Siin võib A ja B vaadelda erinevate sündmustena või hüpoteesidena.
+Me anname siin 9 tuletust ilma tõestuskäikudeta, mis on aga lihtsad. Siin võib A ja B vaadelda erinevate sündmustena või hüpoteesidena. $P(A \vert B)$ on tinglik tõenäosus, mida tuleks lugeda nii: "A tõenäosus tingimusel, et kehtib B". $P(vihm~\vert~pilves~ilm)$ ei ole sama, mis $P(pilves~ilm~\vert~vihm)$. $P(A \land B)$ tähendab A ja B, $P(A \lor B)$ tähendab A ja/või B (loogiline "või" tähendab tavakeeles ja/või).
 
 1. Kui B sisaldab endas A-d, siis $P(B) \leq P(A)$ 
 
@@ -61,9 +61,9 @@ Me anname siin 9 tuletust ilma tõestuskäikudeta, mis on aga lihtsad. Siin või
 
 4. Kui A ja B on üksteist välistavad, siis $P(A \lor B) = P(A) + P(B)$ (tõenäosus, et A on tõene või B on tõene on nende tõenäosuste summa). Kui A ja B ei ole üksteist välistavad, siis $P(A \lor B) = P(A) + P(B) - P(A \land B)$
 
-5. $P(A) = P(A \land B) + P(A \land mitte~B)$ --- see on "totaalse tõenäosuse seadus" kitsendatuna kahele ammendavale teineteist välistavale hüpoteesile A & B, mille kohaselt me peame hüpotees A tõenäosuse leidmiseks arvestama ka B tõenäosusega.
+5. $P(A) = P(A \land B) + P(A \land notB)$ -- see on "totaalse tõenäosuse seadus" kitsendatuna kahele ammendavale teineteist välistavale hüpoteesile, mille kohaselt me peame hüpotees A tõenäosuse leidmiseks arvestama ka B tõenäosusega.
 
-6. Tingliku tõenäosause definitsioon: $P(A~\vert~B) = P(A \land B)/P(B)$ kus $P(A~\vert~B)$ on tinglik tõenäosus: A tõenäosus tingimusel, et B kehtib. $P(vihm~\vert~pilves~ilm)$ ei ole sama, mis $P(pilves~ilm~\vert~vihm)$. 
+6. Tingliku tõenäosause definitsioon: $P(A~\vert~B) = P(A \land B)/P(B)$  
 
 7. Punktist 6 tuleneb: $P(A \land B) = P(A~\vert~B)P(B)$.
 
