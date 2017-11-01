@@ -186,7 +186,7 @@ $$\mu = a + bx$$
 
 mis tähendab, et
 
-$$y \sim dnorm(a + bx, ~\sigma)$$
+$$y \sim dnorm(a + b\times x, ~\sigma)$$
 
 
 See ongi sirge mudel koos veakomponendiga. Seega on sellel lineaarsel regressioonimudelil kolm parameetrit: intercept a, tõus b ja "veaparameeter" $\sigma$. 
