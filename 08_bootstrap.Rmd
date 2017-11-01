@@ -28,10 +28,9 @@ Mis on USA presidentide keskmine pikkus? Meil on valim 11 presidendi pikkusega.
 
 ```{r, out.width='.49\\linewidth', fig.cap="Bootstrapitud posteerior USA presidentide keskmisele pikkusele.",  fig.height=2, fig.width=3}
 library(tidyverse)
-library(broom)
 heights <- tibble(value = c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185, 188))
 boot_mean <- heights %>% 
-  bootstrap(1000) %>% 
+  broom::bootstrap(1000) %>% 
   do(summarise(., Mean = mean(value)))
 ggplot(boot_mean, aes(Mean)) + geom_density()
 ```
