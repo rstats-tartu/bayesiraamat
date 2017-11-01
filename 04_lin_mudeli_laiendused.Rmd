@@ -177,16 +177,16 @@ Lineaarsetes mudelites modelleeritakse seda varieeruvust normaaljaotusega (vahes
 
 $$y\sim dnorm(\mu,~\sigma)$$
 
-kus $\mu$ on mudeli poolt ennustatud keskväärtus ja $\sigma$ on mudeli poolt ennustatud standardhälve ehk varieeruvus andmepunktide tasemel. 
+kus $\mu$ (mu) on mudeli poolt ennustatud keskväärtus ja $\sigma$ (sigma) on mudeli poolt ennustatud standardhälve ehk varieeruvus andmepunktide tasemel. 
 Tilde $\sim$ tähistab seose tõenäosuslikkust. 
 Veamudelis on keskväärtuse ehk mu ennustus endiselt deterministlik ja sigma töötab originaalsel andmetasemel, mitte keskväärtuste tasemel. 
 See võimaldab protsessi mudeli veamudelisse sisse kirjutada lihtsalt mu ümber defineerides:
 
-$$mu = a + bx$$ 
+$$\mu = a + bx$$ 
 
 mis tähendab, et
 
-$$y \sim dnorm(a + bx, ~sigma)$$
+$$y \sim dnorm(a + bx, ~\sigma)$$
 
 
 See ongi sirge mudel koos veakomponendiga. Seega on sellel lineaarsel regressioonimudelil kolm parameetrit: intercept a, tõus b ja "veaparameeter" $\sigma$. 
