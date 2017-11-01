@@ -51,7 +51,13 @@ Kui tõenäosused on 0 või 1, siis taandub tõenäosusteooria matemaatliselt om
 
 ## Formaalsed tuletused tõenäosusteooria aksioomidest {-}
 
-Me anname siin 9 tuletust ilma tõestuskäikudeta, mis on aga lihtsad. Siin võib A ja B vaadelda erinevate sündmustena või hüpoteesidena. $P(A \vert B)$ on tinglik tõenäosus, mida tuleks lugeda nii: "A tõenäosus tingimusel, et kehtib B". $P(vihm~\vert~pilves~ilm)$ ei ole sama, mis $P(pilves~ilm~\vert~vihm)$. $P(A \land B)$ tähendab A ja B, $P(A \lor B)$ tähendab A ja/või B (loogiline "või" tähendab tavakeeles ja/või).
+Me anname siin 9 tuletust ilma tõestuskäikudeta, mis on aga lihtsad. Siin võib A ja B vaadelda erinevate sündmustena või hüpoteesidena. Me eeldame, et kummagi hüpoteesi tõenäosus > 0.
+
+Sümbolite tähendused:
++ $P(A \vert B)$ on tinglik tõenäosus, mida tuleks lugeda: "A tõenäosus tingimusel, et kehtib B". Pane tähele, et $P(vihm~\vert~pilves~ilm)$ ei ole sama, mis $P(pilves~ilm~\vert~vihm)$. 
++ $P(A \land B)$ tähendab "A ja B", 
++ $P(A \lor B)$ tähendab "A ja/või B" (loogiline "või" tähendab tavakeeles ja/või), 
++ $\lnot A$ tähendab mitte-A, ehk A == FALSE.
 
 1. Kui B sisaldab endas A-d, siis $P(B) \leq P(A)$ 
 
@@ -61,15 +67,17 @@ Me anname siin 9 tuletust ilma tõestuskäikudeta, mis on aga lihtsad. Siin või
 
 4. Kui A ja B on üksteist välistavad, siis $P(A \lor B) = P(A) + P(B)$ (tõenäosus, et A on tõene või B on tõene on nende tõenäosuste summa). Kui A ja B ei ole üksteist välistavad, siis $P(A \lor B) = P(A) + P(B) - P(A \land B)$
 
-5. $P(A) = P(A \land B) + P(A \land notB)$ -- see on "totaalse tõenäosuse seadus" kitsendatuna kahele ammendavale teineteist välistavale hüpoteesile, mille kohaselt me peame hüpotees A tõenäosuse leidmiseks arvestama ka B tõenäosusega.
+5. $P(A) = P(A \land B) + P(A \land \lnot B)$. 
 
-6. Tingliku tõenäosause definitsioon: $P(A~\vert~B) = P(A \land B)/P(B)$  
+6. $P(A) = P(B)P(A~ \vert ~B) + P(\lnot B)P(A~ \lvert ~\lnot B)$ -- totaalse tõenäosuse definitsioon
 
-7. Punktist 6 tuleneb: $P(A \land B) = P(A~\vert~B)P(B)$.
+7. $P(A~\vert~B) = P(A \land B)/P(B)$ -- tingliku tõenäosause definitsioon
 
-8. Punktist 6 tuleneb totaalne tõenäosus: $P(A) = P(A~\vert~B)P(B) + P(A~\vert~notB)P(notB)$ 
+8. Punktist 7 tuleneb: $P(A \land B) = P(A~\vert~B)P(B)$.
 
-9. Punktist 6 tuleneb Bayesi teoreem: $P(A~\vert~B) = P(A)P(B~\vert~A)/P(B)$, kus $P(B) = P(A)P(B~\vert~A) + P(not~A)P(B~\vert~not~A)$  
+9. Punktist 7 tuleneb totaalne tõenäosus: $P(A) = P(A~\vert~B)P(B) + P(A~\vert~\lnot B)P(\lnot B)$ 
+
+10. Punktist 7 tuleneb Bayesi teoreem: $P(A~\vert~B) = P(A)P(B~\vert~A)/P(B)$, kus $P(B) = P(A)P(B~\vert~A) + P(\lnot A)P(B~\vert~\lnot A)$  
 
 Bayesi teoreemi kasutatakse sageli määramaks hüpoteesi tõenäosuse pärast uute faktide (andmete) lisandumist olemasolevatele teadmistele. 
 Kui A on H~1~ ning mitte-A on ammendav ja välistav H~2~ ja B tähistab andmeid (data), saame Bayesi teoreemi ümber kirjutada 
