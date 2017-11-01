@@ -86,8 +86,7 @@ ggplot(ToothGrowth, aes(dose, len)) +
 
 
 
-
-##  Kokkuvõte
+##  EDA kokkuvõte
 
 1. Andmepunktide plottimine säilitab maksimaalselt andmetes olevat infot (nii kasulikku infot kui müra). Aitab leida outliereid (valesti sisestatud andmeid, valesti mõõdetud proove jms). Kui valim on väiksem kui 20, piisab täiesti üksikute andmepunktide plotist koos mediaaniga. Dot-plot ruulib.
 
