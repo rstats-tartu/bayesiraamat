@@ -1,3 +1,4 @@
+
 # Bootstrappimine
 
 > Populatsioon on valimile sama, mis on valim bootstrappitud valimile. 
@@ -26,15 +27,13 @@ Bootstrap empiirilisele valimile suurusega n töötab nii:
 Mis on USA presidentide keskmine pikkus? Meil on valim 11 presidendi pikkusega.
 
 ```{r, out.width='.49\\linewidth', fig.cap="Bootstrapitud posteerior USA presidentide keskmisele pikkusele.",  fig.height=2, fig.width=3}
-library(rethinking)
+library(tidyverse)
+library(broom)
 heights <- tibble(value = c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185, 188))
-
 boot_mean <- heights %>% 
   bootstrap(1000) %>% 
   do(summarise(., Mean = mean(value)))
-
-dens(boot_mean$Mean)
-
+ggplot(boot_mean, aes(Mean)) + geom_density()
 ```
 
 Mida selline keskväärtuste jaotus tähendab? Me võime seda vaadelda posterioorse tõenäosusjaotusena. Selle tõlgenduse kohaselt iseloomustab see jaotus täpselt meie usku presidentide keskmise pikkuse kohta, niipalju kui see usk põhineb bootstrappimises kasutatud andmetel. Senikaua, kui meil pole muud relevantset teavet, on kõik, mida me usume teadvat USA presidentide keskmise pikkuse kohta, peidus selles jaotuses. Need pikkused, mille kohal jaotus on kõrgem, sisaldavad meie jaoks tõenäolisemalt tegelikku USA presidentide keskmist pikkust kui need pikkused, mille kohal posterioorne jaotus on madalam.   
@@ -50,6 +49,7 @@ Miks just 92% usaldusinterval? Vastus on, et miks mitte? Meil pole ühtegi unive
 1. HPDI --- Highest Density Probability Interval --- alustab jaotuse tipust (tippudest) ja katab 92% jaotuse kõrgema(te) osa(de) pindalast
 
 ```{r}
+library(rethinking)
 HPDI(heights$value, prob = 0.92)
 ```
 
