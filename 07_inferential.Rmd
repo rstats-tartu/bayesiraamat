@@ -55,7 +55,7 @@ Me anname siin 9 tuletust ilma tõestuskäikudeta, mis on aga lihtsad. Siin või
 
 Sümbolite tähendused:
 
-+ $P(A \vert B)$ on tinglik tõenäosus, mida tuleks lugeda: "A tõenäosus tingimusel, et kehtib B". Pane tähele, et $P(vihm~\vert~pilves~ilm)$ ei ole sama, mis $P(pilves~ilm~\vert~vihm)$. 
++ $P(A~ \vert ~B)$ on tinglik tõenäosus, mida tuleks lugeda: "A tõenäosus tingimusel, et kehtib B". Pane tähele, et $P(vihm~\vert~pilves~ilm)$ ei ole sama, mis $P(pilves~ilm~\vert~vihm)$. 
 
 + $A \land B$ tähendab "A ja B", 
 
@@ -67,23 +67,19 @@ Tõenäosusteooria põhituletused:
 
 1. Kui B sisaldab endas A-d, siis $P(B) \leq P(A)$ 
 
-2. A ja B on üksteisest sõltumatud siis ja ainult siis kui $P(A \vert B) = P(A)$ 
+2. A ja B on üksteisest sõltumatud siis ja ainult siis kui $P(A~ \vert B) = P(A)$ 
 
-3. Kui A ja B on üksteisest sõltumatud, siis $P(A \land B) = P(A)P(B)$ 
+3. Kui A ja B on üksteisest sõltumatud, siis $P(A \land B) = P(A)P(B) = P(A~\vert~B)P(B)$ 
 
-4. Kui A ja B on üksteist välistavad, siis $P(A \lor B) = P(A) + P(B)$ (tõenäosus, et A on tõene või B on tõene on nende tõenäosuste summa). Kui A ja B ei ole üksteist välistavad, siis $P(A \lor B) = P(A) + P(B) - P(A \land B)$
+4. Kui A ja B on üksteist välistavad, siis $P(A \lor B) = P(A) + P(B)$. 
 
-5. $P(A) = P(A \land B) + P(A \land \lnot B)$. 
+5. Kui A ja B ei ole üksteist välistavad, siis $P(A \lor B) = P(A) + P(B) - P(A \land B)$
 
-6. $P(A) = P(B)P(A~ \vert ~B) + P(\lnot B)P(A~ \lvert ~\lnot B)$ -- totaalse tõenäosuse definitsioon
+6. $P(A~\vert~B) = P(A \land B)/P(B)$ -- tingliku tõenäosuse definitsioon
 
-7. $P(A~\vert~B) = P(A \land B)/P(B)$ -- tingliku tõenäosause definitsioon
+7. Punktist 6 tuleneb totaalne tõenäosus: $P(A) = P(A~\vert~B)P(B) + P(A~\vert~\lnot B)P(\lnot B)$.
 
-8. Punktist 7 tuleneb: $P(A \land B) = P(A~\vert~B)P(B)$.
-
-9. Punktist 7 tuleneb totaalne tõenäosus: $P(A) = P(A~\vert~B)P(B) + P(A~\vert~\lnot B)P(\lnot B)$ 
-
-10. Punktist 7 tuleneb Bayesi teoreem: $P(A~\vert~B) = P(A)P(B~\vert~A)/P(B)$, kus $P(B) = P(A)P(B~\vert~A) + P(\lnot A)P(B~\vert~\lnot A)$  
+8. Punktist 6 tuleneb Bayesi teoreem: $P(A~\vert~B) = P(A)P(B~\vert~A)/P(B)$, kus $P(B) = P(A)P(B~\vert~A) + P(\lnot A)P(B~\vert~\lnot A)$  
 
 Bayesi teoreemi kasutatakse sageli määramaks hüpoteesi tõenäosuse pärast uute faktide (andmete) lisandumist olemasolevatele teadmistele. 
 Kui A on H~1~ ning mitte-A on ammendav ja välistav H~2~ ja B tähistab andmeid (data), saame Bayesi teoreemi ümber kirjutada 
@@ -96,12 +92,16 @@ $P(H_1)$ on $H_1$ kehtimise eelnev, ehk meie andmetest sõltumatu, tõenäosus -
 
 $P(data~\vert~H_1)$ on andmete esinemise tõenäosus tingimusel, et H~1~ kehtib -- ehk tõepära.
 
-
 Jagamistehe tehakse ainult selle pärast, et normaliseerida 1-le kõikide hüpoteeside tõenäosuste summa meie andmete korral ja seega viia posteerior vastavusse tõenäosusteooria aksioomidega --- kui meil on i ammendavat üksteist välistavat hüpoteesi, siis murrujoone alla läheb: $\sum~P(data~\vert~H_i)P(H_i) = 1$. 
 Bayesi teoreem on triviaalne tuletus tõenäosusteooria aksioomidest, milles pole mitte midagi maagilist. See ei ole automaatne meetod, mis tagaks inimkonna teadmiste kasvu, vaid lihtsalt parim võimalik viis andmemudeli ja taustateadmiste mudeli ühendamiseks ja normaliseerimiseks tinglikuks tõenäosuseks (hüpoteesi tõenäosus meie andmete ja taustateadmiste korral). Nüüd sõltub kõik mudelite, andmete ja taustateadmiste kvaliteedist.
 
-### Bayesi teoreemi rakendamine diskreetsetele hüpoteesidele {-}
+### Näited tõenäosusteooria tuletiste rakendamisest
 
+**Punkt 6.** Meil on kolm pannkooki, millest esimesel on mõlemad küljed moosised, teisel on üks külg moosine ja kolmandal pole üldse moosi. Kui meile lüüakse taldrikule pannkook, mille pealmine külg on moosine, siis millise tõenäosusega on moosine ka alumine külg? Lahendus: Kui A - moos all, B - moos üleval, siis vastavalt tingliku tõenäosuse definitsioonile $P(moos~ all~ \lvert ~moos~üleval ) = P(moos~all \land ~moos~üleval)/P(moos~all)$ Tõenäosus, et moos on all ja üleval on 1/3 (me teame, et 1 pannkook 3st on mõlemalt küljelt moosine) ja tõenäosus, et moos on all, on keskmine kolmest tõenäosusest, millega me kolmel pannkoogil moosise külje saame: mean(c(1, 0.5, 0)) = 1/2. Seega, vastus on (1/3)/(1/2) = 2/3. Kui me saame moosise ülemise külje, siis on tõenäosus 2/3, et ka all on moos!
+
+**Punkt 7.** Kui A tähistab sündmust "ma sain aru tõenäosusteooriast" ja B tähistab sündmust "ma tuubin nagu loom", siis $P(A) = P(tuubid)P(A~ \lvert tuubid) + P(ei~ tuubi)P(A~ \lvert ~ei ~ tuubi)$. Siit saad välja arvutada tõenäosuse, millega just sina saad kasu sellest õpikust. 
+
+**Punkt8.** Bayesi teoreemi rakendamine diskreetsetele hüpoteesidele:
 Oletame, et 45 aastane naine saab rinnavähi sõeluuringus mammograafias positiivse tulemuse. Millise tõenäosusega on tal rinnavähk? Kõigepealt jagame hüpoteesiruumi kahe diskreetse hüpoteesi vahel: H~1~ - vähk ja H~2~ - mitte vähk. Edasi on meil vaja omistada numbrilised väärtused järgmistele parameetritele: 
 
 1. H~1~ tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil on rinnavähk $P( +~\vert~H_1) = 0.9$
