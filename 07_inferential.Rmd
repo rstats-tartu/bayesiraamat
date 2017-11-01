@@ -95,7 +95,7 @@ $P(data~\vert~H_1)$ on andmete esinemise tõenäosus tingimusel, et H~1~ kehtib 
 Jagamistehe tehakse ainult selle pärast, et normaliseerida 1-le kõikide hüpoteeside tõenäosuste summa meie andmete korral ja seega viia posteerior vastavusse tõenäosusteooria aksioomidega --- kui meil on i ammendavat üksteist välistavat hüpoteesi, siis murrujoone alla läheb: $\sum~P(data~\vert~H_i)P(H_i) = 1$. 
 Bayesi teoreem on triviaalne tuletus tõenäosusteooria aksioomidest, milles pole mitte midagi maagilist. See ei ole automaatne meetod, mis tagaks inimkonna teadmiste kasvu, vaid lihtsalt parim võimalik viis andmemudeli ja taustateadmiste mudeli ühendamiseks ja normaliseerimiseks tinglikuks tõenäosuseks (hüpoteesi tõenäosus meie andmete ja taustateadmiste korral). Nüüd sõltub kõik mudelite, andmete ja taustateadmiste kvaliteedist.
 
-### Näited tõenäosusteooria tuletiste rakendamisest
+### Näited tõenäosusteooria tuletiste rakendamisest {-}
 
 **Punkt 6.** Meil on kolm pannkooki, millest esimesel on mõlemad küljed moosised, teisel on üks külg moosine ja kolmandal pole üldse moosi. Kui meile lüüakse taldrikule pannkook, mille pealmine külg on moosine, siis millise tõenäosusega on moosine ka alumine külg? NB! Vastus ei ole 50%. Lahendus: Kui A - moos all, B - moos üleval, siis vastavalt tingliku tõenäosuse definitsioonile $P(moos~ all~ \lvert ~moos~üleval ) = P(moos~all \land ~moos~üleval)/P(moos~all)$ Tõenäosus, et moos on all ja üleval on 1/3 (me teame, et 1 pannkook 3st on mõlemalt küljelt moosine) ja tõenäosus, et moos on all, on keskmine kolmest tõenäosusest, millega me kolmel pannkoogil moosise külje saame: mean(c(1, 0.5, 0)) = 1/2. Seega, vastus on (1/3)/(1/2) = 2/3. Kui me saame moosise ülemise külje, siis on tõenäosus 2/3, et ka all on moos!
 
