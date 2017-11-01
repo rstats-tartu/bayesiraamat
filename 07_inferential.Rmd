@@ -49,7 +49,7 @@ Need aksioomid, mis oma matemaatilises vormis postuleeriti Andrei Kolmogorovi po
 
 Kui tõenäosused on 0 või 1, siis taandub tõenäosusteooria matemaatliselt oma erijuhule, milleks on lausearvutuslik loogika. Lausearvutuse oluline erinevus tõenäosusteooriast on, et kui selle abil on saavutatud valiidne tulemus, on see tõsikindel ja uute andmete lisandumisel ei saa me seda tulemust muuta. Seevastu tõenäosusteoorias ja statstikas muudavad uued andmed alati tõenäosusi. Selles mõttes ei saa tõenäosuslik teadus kunagi valmis.
 
-### Formaalsed tuletused tõenäosusteooria aksioomidest {-}
+### Formaalsed tuletised tõenäosusteooria aksioomidest {-}
 
 Me anname siin 9 tuletust ilma tõestuskäikudeta, mis on aga lihtsad. Siin võib A ja B vaadelda erinevate sündmustena või hüpoteesidena. Me eeldame, et kummagi hüpoteesi tõenäosus > 0.
 
@@ -63,7 +63,7 @@ Sümbolite tähendused:
 
 + $\lnot A$ tähendab mitte-A, ehk A == FALSE.
 
-Tõenäosusteooria põhituletused:
+Tõenäosusteooria põhituletised:
 
 1. Kui B sisaldab endas A-d, siis $P(B) \leq P(A)$ 
 
