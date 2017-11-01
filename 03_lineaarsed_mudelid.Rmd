@@ -1,11 +1,9 @@
 
 # Lineaarsed mudelid
 
-<<<<<<< HEAD
+
 ```{r, echo=FALSE, message=FALSE, error=FALSE}
-=======
-```{r, message=FALSE}
->>>>>>> b960f4f6b5627423024c150522146b2179dd819c
+
 library(tidyverse)
 library(broom)
 library(modelr)
