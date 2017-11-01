@@ -11,62 +11,50 @@ $$y = a + b_1x_1~ + b_2x_2~ +~ ... +~ b_nx_n$$
 > Mitme prediktoriga mudeli iga prediktori tõus (beta koefitsient) ütleb, mitme ühiku võrra ennustab mudel y muutumist juhul kui see prediktor muutub ühe ühiku võrra ja kõik teised prediktorid ei muutu üldse. 
 
 
-Kui meie andmed on kolmedimensioonaalsed (me mõõdame igal mõõteobjektil kolme muutujat) ja me tahame ennnustada ühe muutuja väärtust kahe teise muutuja väärtuste põhjal (meil on 2 prediktorit), siis tuleb meie 3 parameetriga lineaarne regressioonimudel tasapinna kujul. Kui meil on 3 prediktoriga mudel, siis me liigume 4-mõõtmelisse ruumi, jne. 
+Kui meie andmed on kolmedimensioonaalsed (me mõõdame igal mõõteobjektil kolme muutujat) ja me tahame ennnustada ühe muutuja väärtust kahe teise muutuja väärtuste põhjal (meil on 2 prediktorit), siis tuleb meie 3 parameetriga lineaarne regressioonimudel tasapinna kujul. 
+Kui meil on 3 prediktoriga mudel, siis me liigume juba 4-mõõtmelisse ruumi.
 
 ```{r echo=FALSE}
-# Prepare a dataframe of 3 cols: 
-# Sepal.Length -- Sepal.Width -- Petal.Length (x -- y -- z)
-iris1 <- iris[,1:3]
-my.lm <- lm(Sepal.Width ~ Sepal.Length + Petal.Length, data = iris1)
+m2 <- lm(Sepal.Width ~ Sepal.Length + Petal.Length, data = iris)
 ```
 
-```{r, echo=FALSE, fig.cap="regressioonitasand 3D andmetele. Siin on Sepal.Length ja Petal.Length prediktorid ja Sepal.Width ennustatav muutuja."}
+
+```{r, echo=FALSE, fig.cap="Regressioonitasand 3D andmetele. Siin on Sepal.Length ja Petal.Length prediktorid ja Sepal.Width ennustatav muutuja."}
 library(scatterplot3d)
-s3d <- scatterplot3d(iris1, angle = 55, scale.y = 0.7, pch = 20, 
-                        col.axis = "blue", col.grid = "lightblue")
-s3d$plane3d(my.lm, lty.box = "solid")
+s3d <- with(iris, scatterplot3d(Sepal.Length, Petal.Length, Sepal.Width, pch = 20, color = rep(viridis(3), table(iris$Species)), col.axis = "blue", col.grid = "lightblue"))
+s3d$plane3d(m2, lty.box = "solid")
 ```
 
 
-3D ruumi on võimalik visualiseerida 2D ruumis, kui kollapseerida kolmas mõõde konstandile. 
+Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile.
 
-```{r}
-m1 <- lm(Sepal.Width ~ Sepal.Length + Petal.Length, data = iris1)
-```
-
-```{r fig.cap="2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile.", message=FALSE, error=FALSE, fig.height=4, fig.width=6}
-library(tidyverse)
-p <- ggplot(iris, aes(Sepal.Length, Sepal.Width)) +
-  geom_point(aes(color = Species))
+```{r lin2d, fig.cap='2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile.'}
+p <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
+  geom_point() +
+  xlim(4, 8) +
+  scale_color_viridis_d()
+p + geom_abline(intercept = coef(m2)[1], slope = coef(m2)[2]) +
+  labs(title = deparse(formula(m2)))
+m1 <- lm(Sepal.Width ~ Sepal.Length, data = iris)
 p + geom_abline(intercept = coef(m1)[1], slope = coef(m1)[2]) +
   labs(title = deparse(formula(m1)))
 ```
 
 Siin on regressioonijoon hoopis teises kohas, kui lihtsas ühe prediktoriga mudelis.
 
-Võrdluseks ühe prediktoriga mudel:
-```{r echo=FALSE}
-m <- lm(Sepal.Width ~ Sepal.Length, data = iris)
-```
-
-```{r fig.cap="2D visualiseering 2D andmete põhjal fititud mudelist.", echo=FALSE, fig.height=4, fig.width=6}
-p + geom_abline(intercept = coef(m)[1], slope = coef(m)[2]) +
-  labs(title = deparse(formula(m)))
-```
-
-
-Nõnda võrdleme kahe mudeli koefitsiente:
+Nõnda võrdleme kahe mudeli koefitsiente.
 
 ```{r}
-coef(m)
 coef(m1)
+coef(m2)
 ```
 
-Nagu näha, mudeli m b~1~ koefitsient erineb oluliselt mudeli m1 vastavast koefitsiendist. Ühel juhul on tõus nõrgalt negatiivne, teisel selgelt positiivne.
+Nagu näha, mudeli m2 b_1 koefitsient erineb oluliselt mudeli m1 vastavast koefitsiendist.
 
-Kumb mudel on siis parem? AIC-i järgi on kahe prediktoriga m1 kõvasti eelistatum, kui ühe prediktoriga m.
+Kumb mudel on siis parem? 
+AIC-i järgi on m2 kõvasti parem, kui m1, lisakoefitsendi (Petal.Length) kaasamisel mudelisse paranes oluliselt selle ennustusvõime.
 ```{r}
-AIC(m, m1)
+AIC(m1, m2)
 ```
 
 **Ennustused sõltumatute prediktoritega mudelist**
@@ -74,97 +62,78 @@ AIC(m, m1)
 Siin on idee kasutada fititud mudeli struktuuri enustamaks y keskmisi väärtusi erinevatel $x_1$ ja $x_2$ väärtustel. 
 Kuna mudel on fititud, on parameetrite väärtused fikseeritud. 
 
-```{r }
-Sepal_length <-  seq(min(iris$Sepal.Length), 
-                     max(iris$Sepal.Length), 
-                     length.out = 10) 
-Petal_length <-  mean(iris$Petal.Length)
-a <- coef(m1)[1]
-b1 <- coef(m1)[2]
-b2 <- coef(m1)[3]
-Sepal_width <-   a + b1 * Sepal_length + b2 * Petal_length
+```{r}
+## New sepal length values
+Sepal_length <- seq(min(iris$Sepal.Length), max(iris$Sepal.Length), length.out = 10)
+## Keep new petal length constant
+Petal_length <- mean(iris$Petal.Length)
+## Extract model coeficents
+a <- coef(m2)[1]
+b1 <- coef(m2)[2]
+b2 <- coef(m2)[3]
+## Predict new sepal width values
+Sepal_width_predicted <- a + b1 * Sepal_length + b2 * Petal_length
 ```
 
-```{r fig.cap="Ennustus ainsa prediktoriga mudelist.", fig.height=3, fig.width=4}
-plot(Sepal_width ~ Sepal_length, 
-     type="b", 
-     ylim=c(0, 5), 
-     col="red")
-abline(c(coef(m)[1], coef(m)[2]), lty=2) #prediction from the single predictor model
+```{r, fig.cap='Ennustatud y väärtused erinevatel x1 ja x2 väärtustel, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus.'}
+plot(Sepal_width_predicted ~ Sepal_length, type = "b", ylim = c(0, 5), col = "red")
+# prediction from the single predictor model
+abline(c(coef(m1)[1], coef(m1)[2]), lty = "dashed")
 ```
 
+Nüüd joonistame 3D pildi olukorrast, kus nii $x_1$ kui $x_2$ omandavad rea väärtusi. Mudeli ennustus on ikkagi sirge kujul -- mis sest, et 3D ruumis.
 
-
-Nüüd joonistame 3D pildi olukorrast, kus nii *x~1~* kui *x~2~* omandavad rea väärtusi. Mudeli ennustus on ikkagi sirge kujul -- mis sest, et 3D ruumis.
-
-```{r fig.cap="Ennustus 2 prediktoriga mudelist on sirge 3D ruumis.", echo=FALSE}
-#library(rgl) #plot3d()
-library(scatterplot3d)
-Sepal_length <-  seq(min(iris$Sepal.Length), 
-                     max(iris$Sepal.Length), 
-                     length.out = 10) 
-Petal_length <-  seq(min(iris$Petal.Length), 
-                     max(iris$Petal.Length), 
-                     length.out = 10) 
-a <- coef(m1)[1]
-b1 <- coef(m1)[2]
-b2 <- coef(m1)[3]
-Sepal_width <-   a + b1*Sepal_length + b2*Petal_length
-df <- data.frame(Sepal_width=Sepal_width, 
-                 Sepal_length=Sepal_length, 
-                 Petal_length=Petal_length)
-scatterplot3d(df$Sepal_length, 
-              df$Petal_length, 
-              df$Sepal_width, 
-              col.axis="blue", 
-              col.grid="lightblue", 
-              type="l", lwd=2)
+```{r, fig.cap='kahe prediktoriga mudeli ennustus 3D ruumis.'}
+Petal_length <- seq(min(iris$Petal.Length), max(iris$Petal.Length), length.out = 10)
+Sepal_width <- a + b1 * Sepal_length + b2 * Petal_length
+dfr <- data_frame(Sepal_width, Sepal_length, Petal_length)
+with(dfr, scatterplot3d(Sepal_length, Petal_length, Sepal_width, col.axis = "blue", col.grid = "lightblue", type = "l", lwd = 2))
 ```
 
+## Interaktsioonimudel {-}
 
+Interaktsioonimudelis sõltub ühe prediktori mõju sõltub teise prediktori väärtusest:
 
+$$y = a + b_1x_1 + b_2x_2 + b_3x_1x_2$$
 
+<<<<<<< HEAD
 ## Interaktsioonimudel - ühe prediktori mõju sõltub teise prediktori väärtusest {-}
 
 $$y = a + b_1x_1 + b_2x_2 + b_3x_1x_2$$
 
 Interaktsioonimudeli koefitsientide tõlgendamine on keerulisem. b~1~ on otse tõlgendatav ainult siis, kui x~2~ = 0 (ja b~2~ ainult siis, kui x~1~ = 0).  Hiljem õpime selliseid mudeleid graafiliselt tõlgendama. Mudeli koefitsientide otse tõlgendamine ei ole siin sageli perspektiivikas.
+=======
+Interaktsioonimudeli koefitsientide tõlgendamine on keerulisem. 
+b_1 on otse tõlgendatav ainult siis, kui x_2 = 0 (ja b_2 ainult siis, kui x_1 = 0).
+Edaspidi õpime selliseid mudeleid graafiliselt tõlgendama. 
+Mudeli koefitsientide otse tõlgendamine ei ole siin sageli perspektiivikas.
 
-> Interaktsioonimudelis sõltub x~1~ mõju tugevus y-le x~2~ väärtusest. Selle sõltuvuse määra kirjeldab b~3~ (x~1~ & x~2~ interaktsiooni tugevus). Samamoodi ja sümmeetriliselt erineb ka x~2~ mõju erinevatel x~1~ väärtustel. Ainult siis, kui x~2~ = 0, ennustab x~1~ tõus 1 ühiku võrra y muutust b~1~ ühiku võrra.
+> Interaktsioonimudelis sõltub x_1 mõju tugevus y-le x_2 väärtusest. Selle sõltuvuse määra kirjeldab b_3 (x_1 ja x_2 interaktsiooni tugevus). Samamoodi ja sümmeetriliselt erineb ka x_2 mõju erinevatel x_1 väärtustel. Ainult siis, kui x_2 = 0, ennustab x_1 tõus 1 ühiku võrra y muutust b_1 ühiku võrra.
+>>>>>>> b960f4f6b5627423024c150522146b2179dd819c
 
-Interaktsioonimudeli 2D avaldus on kurvatuuriga tasapind, kusjuures kurvatuuri määrab b~3~. 
+Interaktsioonimudeli 2D avaldus on kurvatuuriga tasapind, kusjuures kurvatuuri määrab b_3. 
 
-Interaktsiooniga mudel on AIC-i järgi pisut vähem eelistatud võrreldes m1-ga. Seega, eriti lihtsuse huvides, eelistame m1-e.
+Interaktsiooniga mudel on AIC-i järgi pisut vähem eelistatud võrreldes m2-ga. 
+Seega, eriti lihtsuse huvides, eelistame m2-e.
 ```{r}
-m2 <- lm(data=iris, 
-         Sepal.Width~Sepal.Length + 
-           Petal.Length + 
-           Sepal.Length*Petal.Length) 
-AIC(m, m1, m2)
+m3 <- lm(Sepal.Width ~ Sepal.Length + Petal.Length + Sepal.Length * Petal.Length, data = iris)
+AIC(m1, m2, m3)
 ```
 
 
-**ennustused interaktsioonimudelist**  
+**Ennustused interaktsioonimudelist**  
 
-Kõigepealt anname rea väärtusi x~1~-le ja hoiame x~2~ konstantsena. 
+Kõigepealt anname rea väärtusi x_1-le ja hoiame x_2 konstantsena. 
 
-```{r fig.cap="Ennustus interaktsioonimudelist, kus x1 on antud rida väärtusi ja x2 hoitakse konstantsena.", fig.height=3, fig.width=4}
-Sepal_length <-  seq(min(iris$Sepal.Length), 
-                     max(iris$Sepal.Length), 
-                     length.out = 100) 
+```{r, fig.cap='Ennustus interaktsioonimudelist, kus x1 on antud rida väärtusi ja x2 hoitakse konstantsena.'}
 Petal_length <-  mean(iris$Petal.Length)
-
-a <- coef(m2)[1]
-b1 <- coef(m2)[2]
-b2 <- coef(m2)[3]
-b3 <- coef(m2)[4]
-
-Sepal_width <-   a + b1*Sepal_length + 
-  b2*Petal_length + 
-  b3*Sepal_length*Petal_length
-
-plot(Sepal_width ~ Sepal_length, type="l", ylim=c(2, 6))
-abline(m1, lty=2)
+a <- coef(m3)[1]
+b1 <- coef(m3)[2]
+b2 <- coef(m3)[3]
+b3 <- coef(m3)[4]
+Sepal_width <- a + b1 * Sepal_length + b2 * Petal_length + b3 * Sepal_length * Petal_length
+plot(Sepal_width ~ Sepal_length, type = "l", ylim = c(2, 6))
+abline(m2, lty = "dashed")
 ```
 
 Tulemuseks on sirge, mis on paraleelne ilma interaktsioonita mudeli ennustusele (katkendjoon)
@@ -172,34 +141,20 @@ Tulemuseks on sirge, mis on paraleelne ilma interaktsioonita mudeli ennustusele 
 
 Nagu näha, korrutamistehe viib selleni, et interaktsioonimudeli tõus erineb ilma interaktsioonita mudeli tõusust. 
 
-Kui aga interaktsioonimudel plottida välja 3D-s üle paljude x~1~ ja x~2~ väärtuste, saame me regressioonikurvi (mitte sirge), kus b~3~ annab kurvatuuri.
+Kui aga interaktsioonimudel plottida välja 3D-s üle paljude x_1 ja x_2 väärtuste, saame me regressioonikurvi (mitte sirge), kus b_3 annab kurvatuuri.
 
-
-```{r fig.cap="Ennustused 3D interaktsioonimudelist üle paljude x1 ja x2 väärtuste.", echo=FALSE}
-Sepal_length <-  seq(min(iris$Sepal.Length), 
-                     max(iris$Sepal.Length), 
-                     length.out = 100) 
+```{r, fig.cap='Ennustused 3D interaktsioonimudelist üle paljude x1 ja x2 väärtuste.'}
 Petal_length <-  seq(min(iris$Petal.Length), 
                      max(iris$Petal.Length), 
-                     length.out = 100) 
-a <- coef(m2)[1]
-b1 <- coef(m2)[2]
-b2 <- coef(m2)[3]
-b3 <- coef(m2)[4]
+                     length.out = 100)
+a <- coef(m3)[1]
+b1 <- coef(m3)[2]
+b2 <- coef(m3)[3]
+b3 <- coef(m3)[4]
 
-Sepal_width <-   a + b1*Sepal_length + 
-  b2*Petal_length + 
-  b3*Sepal_length*Petal_length
-
-df <- data.frame(Sepal_width=Sepal_width, 
-                 Sepal_length=Sepal_length, 
-                 Petal_length=Petal_length)
-scatterplot3d(df$Sepal_length, 
-              df$Petal_length, 
-              df$Sepal_width, 
-              col.axis="blue", 
-              col.grid="lightblue", 
-              type="l", lwd=2)
+Sepal_width <-   a + b1 * Sepal_length + b2 * Petal_length +  b3 * Sepal_length * Petal_length
+dfr <- data.frame(Sepal_width, Sepal_length, Petal_length)
+with(dfr, scatterplot3d(Sepal_length, Petal_length, Sepal_width, pch = 20, col.axis = "blue", col.grid = "lightblue", lwd = 2))
 ```
 
 Vau! See on alles ennustus!
@@ -213,74 +168,115 @@ Eelpool kirjeldatud mudelid on deterministlikud --- nad ei sisalda hinnangut and
    tingitud pigem bioloogilisest varieeruvusest, kui mõõtmisveast. Aga loomulikult sisaldub selles ka mõõtmisviga. Lihtsuse huvides räägime
     edaspidi siiski veamudelist, selle asemel, et öelda "bioloogilise varieeruvuse ja veamudel".
 
-Kuidas veakomponent lineaarsesse mudelisse sisse tuua?
+Kuidas veakomponent lineaarsesse mudelisse sisse tuua? 
+Ilma veakomponendita mudel: 
 
+<<<<<<< HEAD
 ilma veakomponendita mudel: 
 
 $$y = a + bx$$
+=======
+$$y = a + b \times x$$
+>>>>>>> b960f4f6b5627423024c150522146b2179dd819c
 
 ennustab y-i keskväärtust erinevatel x-i väärtustel.
 
-Veakomponent tähendab, et andmepunkti tasemel varieerub *y*-i väärtus ümber mudeli poolt ennustatud keskväärtuse. Lineaarsetes mudelites modelleeritakse seda varieeruvust normaaljaotusega (vahest ka studenti t jaotusega):
+Veakomponent tähendab, et andmepunkti tasemel varieerub y-i väärtus ümber mudeli poolt ennustatud keskväärtuse. 
+Lineaarsetes mudelites modelleeritakse seda varieeruvust normaaljaotusega (vahest ka studenti t jaotusega): 
 
+<<<<<<< HEAD
 $$y~ \tilde~ ~dnorm(mu, sigma)$$ 
+=======
+$$y~\sim~dnorm(\mu,~~\sigma)$$
+>>>>>>> b960f4f6b5627423024c150522146b2179dd819c
 
-kus *mu* on mudeli poolt ennustatud keskväärtus ja *sigma* on mudeli poolt ennustatud standardhälve ehk varieeruvus andmepunktide tasemel. Tilde ~ tähistab seose tõenäosuslikkust. Veamudelis on keskväärtuse ehk mu ennustus endiselt deterministlik ja sigma töötab originaalsel andmetasemel, mitte keskväärtuste tasemel. See võimaldab protsessi mudeli veamudelisse sisse kirjutada lihtsalt mu ümber defineerides:
+kus $\mu$ on mudeli poolt ennustatud keskväärtus ja $\sigma$ on mudeli poolt ennustatud standardhälve ehk varieeruvus andmepunktide tasemel. 
+Tilde $\sim$ tähistab seose tõenäosuslikkust. 
+Veamudelis on keskväärtuse ehk mu ennustus endiselt deterministlik ja sigma töötab originaalsel andmetasemel, mitte keskväärtuste tasemel. 
+See võimaldab protsessi mudeli veamudelisse sisse kirjutada lihtsalt mu ümber defineerides:
 
+<<<<<<< HEAD
 $$mu = a + bx$$ 
 
 mis tähendab, et
 
 $$y~ \tilde~ ~dnorm(a + bx, ~sigma)$$
+=======
+$$mu = a + b \times x$$, 
 
-See ongi sirge mudel koos veakomponendiga. Seega on sellel lineaarsel regressioonimudelil kolm parameetrit: intercept *a*, tõus *b* ja "veaparameeter" *sigma*. Sellist mudelit on mõistlik fittida Bayesi teoreemi abil. Bayesi meetodiga fititud mudel, mida kutsutakse posteerioriks, näitab, millised kombinatsioonid nendest kolmest parameetrist usutavalt koos esinevad, ja millised mitte. Seega on fititud 3 parameetriga bayesi mudel 3-dimensionaalne tõenäosusjaotus (3D posteerior). Muidugi saame ka ükshaaval välja plottida kolm 1D posteeriori, millest igaüks iseloomustab üht parameetrit ning on kollapseeritud üle kahe ülejäänud parameetri. 4. peatükis õpime selliste mudelitega töötama. 
+mis tähendab, et
+
+$$y \sim dnorm(a + b\times x,~~\sigma)$$
+>>>>>>> b960f4f6b5627423024c150522146b2179dd819c
+
+See ongi sirge mudel koos veakomponendiga. Seega on sellel lineaarsel regressioonimudelil kolm parameetrit: intercept a, tõus b ja "veaparameeter" $\sigma$. 
+Sellist mudelit on mõistlik fittida Bayesi teoreemi abil. 
+Bayesi meetodiga fititud mudel, mida kutsutakse posteerioriks, näitab, millised kombinatsioonid nendest kolmest parameetrist usutavalt koos esinevad, ja millised mitte. 
+Seega on fititud 3 parameetriga bayesi mudel 3-dimensionaalne tõenäosusjaotus (3D posteerior). 
+Muidugi saame ka ükshaaval välja plottida kolm 1D posteeriori, millest igaüks iseloomustab üht parameetrit ning on kollapseeritud üle kahe ülejäänud parameetri. 
+[Edaspidi](pidev) õpime selliste mudelitega töötama. 
 
 
 > Kõik statistilised mudelid on tõenäosusmudelid ning sisaldavad veakomponenti.  
 
 
-Muide, kõik veamudelid, millega me edaspidi töötame, modelleerivad igale x-i väärtusele (kaalule) sama suure y-i suunalise varieeruvuse (pikkuste sd). Suurem osa statistikast kasutab eeldusi, mida keegi päriselt tõe pähe ei võta, aga millega on arvutuslikus mõttes lihtsam elada.
+Muide, kõik veamudelid, millega me edaspidi töötame, modelleerivad igale x-i väärtusele (kaalule) sama suure y-i suunalise varieeruvuse (pikkuste sd). 
+Suurem osa statistikast kasutab eeldusi, mida keegi päriselt tõe pähe ei võta, aga millega on arvutuslikus mõttes lihtsam elada.
 
 ### Enimkasutatud veamudel on normaaljaotus {-}
 
 Alustuseks simuleerime lihtsate vahenditega looduslikku protsessi, mille tulemusel tekib normaaljaotus.  
-Oletame, et bakteri kasvukiirust mõjutavad 12 geeni, mille mõjud võivad olla väga erineva tugevusega, kuid mille mõjude suurused ei sõltu üksteisest. Seega nende 12 geeni mõjud kasvukiirusele liituvad.
-Järgnevas koodis võtame 12 juhuslikku arvu 1 ja 100 vahel (kasutades runif() funktsiooni). Need 12 arvu näitavad 12 erineva geeni individuaalsete mõjude suurusi bakteritüve kasvukiirusele. Meil on seega kuni 100-kordsed erinevused erinevate geenide mõjude suuruste vahel. 
-Seejärel liidame need 12 arvu. Nüüd võtame uue 12-se valimi ja kordame eelnevat. 
+Oletame, et bakteri kasvukiirust mõjutavad 12 geeni, mille mõjud võivad olla väga erineva tugevusega, kuid mille mõjude suurused ei sõltu üksteisest. 
+Seega nende 12 geeni mõjud kasvukiirusele liituvad.
+Järgnevas koodis võtame 12 juhuslikku arvu 1 ja 100 vahel (kasutades `runif()` funktsiooni). 
+Need 12 arvu näitavad 12 erineva geeni individuaalsete mõjude suurusi bakteritüve kasvukiirusele. 
+Meil on seega kuni 100-kordsed erinevused erinevate geenide mõjude suuruste vahel. 
+Seejärel liidame need 12 arvu. 
+Nüüd võtame uue 12-se valimi ja kordame eelnevat. 
 Me teeme seda 10 000 korda järjest ja plotime saadud 10 000 arvu (10 000 liitmistehte tulemust) tihedusfuntksioonina. 
 
+<<<<<<< HEAD
 ```{r fig.height=2, fig.width=4, message=FALSE, error=FALSE, fig.cap="Normaaljaotus tekib sõltumatutest efektidest."}
+=======
+```{r fig.height=2, fig.width=4, fig.cap='Normaaljaotus tekib sõltumatutest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi summa tihedusdiagramm.'}
+>>>>>>> b960f4f6b5627423024c150522146b2179dd819c
 library(rethinking)
-kasv <- replicate( 10000 , sum( runif( 12, 1, 100 ) ) ) 
-dens( kasv )
+kasv <- replicate(10000, sum(runif(12, 1, 100))) 
+dens(kasv)
 ```
 
 Selles näites võrdub iga andmepunkt 10 000st ühe bakteritüve kasvukiiruse mõõtmisega. Seega, antud eelduste korral on bakteritüvede kasvukiirused normaaljaotusega.
 
 Nüüd vaatame, mis juhtub, kui 12 geeni mõjud ei ole üksteisest sõltumatud. Kui 12 geeni on omavahel vastasmõjudes, siis nende geenide mõjud korrutuvad, mitte ei liitu. (Korrutamine pole ainus viis, kuidas vastasmõjusid modeleerida, küll aga kõige levinum.)
 Kõigepealt vaatleme juhtu, kus 12 geeni on kõik väikeste mõjudega ning seega mitte ühegi geeni mõju ei domineeri teiste üle.
-Seekord genreerime 12 juhuslikku arvu 1 ja 1.1 vahel. Siin tähendab arv 1.1 kasvu tõusu 10% võrra. Seejärel korrutame need 12 arvu, misjärel kordame eelnevat 10 000 korda. 
+Seekord genreerime 12 juhuslikku arvu 1 ja 1.1 vahel. 
+Siin tähendab arv 1.1 kasvu tõusu 10% võrra. 
+Seejärel korrutame need 12 arvu, misjärel kordame eelnevat 10 000 korda. 
 
-```{r fig.height=2, fig.width=4, fig.cap="Normaaljaotus tekib väikestest sõltuvatest efektidest."}
-kasv <- replicate( 10000 , prod( runif( 12, 1, 1.1 ) ) ) 
-dens( kasv )
+```{r fig.height=2, fig.width=4, fig.cap='Normaaljaotus tekib väikestest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Ühegi geeni mõju ei domineeri teiste üle.'}
+kasv <- replicate(10000, prod(runif(12, 1, 1.1))) 
+dens(kasv)
 ```
 
 Tulemuseks on jällegi normaaljaotus.
-Selles näites olid üksikud interakteeruvad geenid ükshaaval väikeste mõjudega ja ühegi geeni mõju ei domineerinud teiste üle. Mis juhtub, kui mõnel geenil on kuni 2 korda suurem mõju kui teisel?
+Selles näites olid üksikud interakteeruvad geenid ükshaaval väikeste mõjudega ja ühegi geeni mõju ei domineerinud teiste üle. 
+Mis juhtub, kui mõnel geenil on kuni 2 korda suurem mõju kui teisel?
 
-```{r fig.height=2, fig.width=4, fig.cap="Lognormaaljaotus tekib suurematest sõltuvatest efektidest."}
-kasv <- replicate( 10000 , prod( runif(12,1,2) ) ) 
-dens( kasv )
+```{r fig.height=2, fig.width=4, fig.cap='Lognormaaljaotus tekib suurematest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel.'}
+kasv <- replicate(10000, prod(runif(12, 1, 2))) 
+dens(kasv)
 ```
 
-Nüüd on tulemuseks log-normaaljaotus. Mis teie arvate, kas teie poolt uuritavat tunnust mõjutavad faktorid, mis omavahel ei interakteeru või kui interakteeruvad, on kõik ühtlaselt väikeste efektidega? Või on tegu vastasmõjudes olevate faktoritega, millest osad on palju suuremate mõjudega, kui teised? Ühel juhul eelistate te normaaljaotust, teisel juhul peate õppima töötama ka lognormaaljaotusega.
+Nüüd on tulemuseks log-normaaljaotus. Mis teie arvate, kas teie poolt uuritavat tunnust mõjutavad faktorid, mis omavahel ei interakteeru või kui interakteeruvad, on kõik ühtlaselt väikeste efektidega? 
+Või on tegu vastasmõjudes olevate faktoritega, millest osad on palju suuremate mõjudega, kui teised? 
+Ühel juhul eelistate te normaaljaotust, teisel juhul peate õppima töötama ka lognormaaljaotusega.
 
-Kui me vaatame samu andmeid logaritmilises skaalas, avastame, et need andmed on normaaljaotusega. See ongi andmete logaritmimise mõte.
+Kui me vaatame samu andmeid logaritmilises skaalas, avastame, et need andmed on normaaljaotusega. 
+See ongi andmete logaritmimise mõte.
 
-```{r fig.height=2, fig.width=4, fig.cap="Logaritmilises skaalas lognormaalsed efektid on normaaljaotusega."}
-kasv <- replicate( 10000 , log10(prod( runif(12,1,2) ) ) )
-dens( kasv )
+```{r fig.height=2, fig.width=4, fig.cap='Logaritmilises skaalas lognormaalsed efektid on normaaljaotusega. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel.'}
+kasv <- replicate(10000, log10(prod(runif(12,1,2) ) ) )
+dens(kasv)
 ```
 
 ### Normaaljaotuse mudel väikestel valimitel {-}
@@ -294,20 +290,26 @@ Aga pidage meeles, et selle mudeli fittimiseks kasutame me ainult neid andmeid, 
 Eelnev ei kehti Bayesi mudelite kohta, mis toovad priorite kaudu sisse lisainfot, mis ei kajastu valimiandmetes ja võib analüüsi päästa.
 
 Kuidas panna skeptik uskuma, et statistilised meetodid töötavad halvasti väikestel valimitel? Siin aitab simulatsioon, kus me tõmbame 3-se valimi etteantud populatsioonist ning üritame selle valimi põhjal ennustada selleasama populatsiooni struktuuri. Kuna tegemist on simulatsiooniga, teame täpselt, et populatsioon, kust me tõmbame oma kolmese valimi, on normaaljaotusega, et tema keskväärtus = 0 ja et tema sd = 1. Me fitime oma valimi andmetega 2 erinevat mudelit: normaaljaotuse ja Studenti t jaotuse. 
-  
-```{r message=FALSE, fig.height=3, fig.width=4, fig.cap="Normaaljaotus ja studenti t jaotus fitituna N = 3 andmetega. Juhuvalim normaaljaotusest, mille keskmine=0 ja sd=1 (andmepunktid on näidatud mustade munadena). Sinine joon - populatsioon, millest tõmmati valim; punane joon - normaaljaotuse mudel, mis on fititud valimi andmetel; must joon - Studenti t jaotuse mudel, mis on fititud samade andmetega.", echo=FALSE}
-library(brms) #t jaotuse modelleerimiseks
-library(ggthemes)
-#pakett ggfotify pakub alt lahendust jaotuste joonistamiseks
-set.seed(19)
-df <- tibble(a=rnorm(3))
 
-df %>% ggplot(aes(x=a)) +
+```{r echo = FALSE, fig.height=3, fig.width=4, fig.cap='Juhuvalim normaaljaotusest, mille keskmine = 0 ja sd = 1 (n=3; andmepunktid on näidatud mustade munadena). Sinine joon - popualtsioon, millest tõmmati valim; punane joon - normaaljaotuse mudel, mis on fititud valimi andmetel; must joon - Studenti t jaotuse mudel, mis on fititud samade andmetega.'}
+library(brms)
+set.seed(19)
+dfr <- tibble(a = rnorm(3))
+
+dfr %>% 
+  ggplot(aes(a)) +
   geom_dotplot() + 
-  stat_function(fun=dnorm, args=list(mean=mean(df$a),sd=sd(df$a)), colour="red") +
-  stat_function(fun=dnorm, args=list(mean=0, sd=1), colour="blue") +
-  stat_function(fun=dstudent_t, args=list(df=2, mu=mean(df$a), sigma=sd(df$a)))+
-  xlim(-3, 3) + ylim(0, 0.55) + labs(x=NULL, y=NULL) + theme_tufte()
+  stat_function(fun = dnorm, 
+                args = list(mean = mean(dfr$a),
+                            sd = sd(dfr$a)), colour = "red") +
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), colour = "blue") +
+  stat_function(fun = dstudent_t, 
+                args = list(df = 2, 
+                            mu = mean(dfr$a), 
+                            sigma = sd(dfr$a))) +
+  xlim(-3, 3) +
+  ylim(0, 0.55) +
+  theme(axis.text = element_blank())
 ```
 
 Siin saame hinnata mudelite fitte jumala positsioonilt, võrreldes fititud mudelite jaotusi "tõese" sinise jaotusega.
@@ -317,30 +319,37 @@ Igal juhul, mõni teine juhuvalim annaks meile hoopis teistsugused mudelid, mis 
 
 Mis juhtub kui me kasutame oma normaaljaotuse mudelit uute andmete simuleerimiseks? Kui lähedased on need simuleeritud andmed populatsiooni andmetega ja kui lähedased valimi andmetega, millega me normaaljaotuse mudeli fittisime?
 
-```{r fig.height=3, fig.width=4, fig.cap="Kasutame fititud mudeleid uute andmete simuleerimiseks." }
-set.seed(19) #muudab simulatsiooni korratavaks
-#tõmbame 3 juhuslikku arvu normaalhaotusest, mille keskväärtus = 0 ja sd = 1.
-df <- tibble(sample_data=rnorm(3)) 
-#fitime normaaljaotuse mudeli valimi keskmise ja sd-ga
-mean(df$sample_data); sd(df$sample_data)
-#simuleerime 1000 uut andmepunkti fititud mudelist
-simulated_data <- rnorm(1000, mean(df$sample_data), sd(df$sample_data))
-#arvutame simuleeritud andmete keskmise ja sd ning joonistame neist histogrammi
-mean(simulated_data); sd(simulated_data); hist(simulated_data)
+```{r fig.height=3, fig.width=4, fig.cap='Kasutame fititud mudeleid uute andmete simuleerimiseks.'}
+set.seed(19) # muudab simulatsiooni korratavaks
+# tõmbame 3 juhuslikku arvu normaalhaotusest, mille keskväärtus = 0 ja sd = 1.
+dfr <- tibble(sample_data = rnorm(3)) 
+dfr <- summarise_at(dfr, "sample_data", c("mean", "sd"))
+dfr
+# simuleerime 1000 uut andmepunkti fititud mudelist
+simulated_data <- rnorm(1000, dfr$mean, dfr$sd)
+# arvutame simuleeritud andmete keskmise ja sd ning joonistame neist histogrammi
+hist(simulated_data)
 ```
 
-Nagu näha, on uute (simuleeritud) andmete keskväärtus ja SD väga sarnased algsete andmete omale, mida kasutasime mudeli fittimisel. Kahjuks ei ole need aga kaugeltki nii sarnased algsele jaotusele, mille kuju me püüame oma andmete ja mudeli pealt ennustada. Seega on meie mudel üle-fittitud, mis tähendab, et ta kajastab liigselt neid valimi aspekte, mis ei peegelda algse populatsiooni omadusi. Loomulikult ei vasta ükski mudel päriselt tegelikkusele. Küsimus on pigem selles, kas mõni meie mudelitest on piisavalt hea, et olla kasulik. Vastus sellele sõltub, milleks plaanime oma mudelit kasutada.
+Nagu näha, on uute (simuleeritud) andmete keskväärtus ja SD väga sarnased algsete andmete omale, mida kasutasime mudeli fittimisel. 
+Kahjuks ei ole need aga kaugeltki nii sarnased algsele jaotusele, mille kuju me püüame oma andmete ja mudeli pealt ennustada. 
+Seega on meie mudel üle-fittitud, mis tähendab, et ta kajastab liigselt neid valimi aspekte, mis ei peegelda algse populatsiooni omadusi. 
+Loomulikult ei vasta ükski mudel päriselt tegelikkusele. 
+Küsimus on pigem selles, kas mõni meie mudelitest on piisavalt hea, et olla kasulik.
+Vastus sellele sõltub, milleks plaanime oma mudelit kasutada.
 
 ```{r}
-mean(simulated_data > 0); mean(simulated_data > 1)
+mean(simulated_data > 0) 
+mean(simulated_data > 1)
 ```
 Kui populatsiooniväärtustest on 50% suuremad kui 0, siis mudeli järgi vaevalt 32%. Kui populatsiooniväärtustest on 16% suuremad kui 1, siis mudeli järgi vaevalt 4%.
 See illustreerib hästi mudeli kvaliteeti.
 
 ```{r}
 library(brms)
-sim_t <- rstudent_t(1000, 2, mean(df$sample_data), sd(df$sample_data))
-mean(sim_t > 0); mean(sim_t > 1)
+sim_t <- rstudent_t(1000, 2, dfr$mean, dfr$sd)
+mean(sim_t > 0)
+mean(sim_t > 1)
 ```
 Samad ennustused t jaotusest on isegi paremad! Aga kumb on ikkagi parem mudel populatsioonile?
 
