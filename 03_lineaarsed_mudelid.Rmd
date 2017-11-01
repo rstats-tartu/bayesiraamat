@@ -22,7 +22,7 @@ y <- x
 ```
 
 Selle mudeli saame graafiliselt kujutada nii:
-```{r, fig.cap='Lineaarne mudel, y = x.'}
+```{r, fig.cap="Lihtne mudel y ~ x, mille intecept = 0 ja tõus = 1."}
 plot(y ~ x, type = "l", xlab = "Weight in kg", ylab = "Heigth in cm", main = bquote(y == x))
 ```
 
@@ -44,7 +44,8 @@ a <- 30
 y <- a + x
 ```
 
-```{r, fig.cap=paste0('Lineaarne mudel. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = ', a,".")}
+
+```{r, fig.cap=paste0('Lineaarne mudel, mille intecept = ", a ," ja tõus = 1.. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = ', a,".")}
 plot(y ~ x, xlim = c(0, 100), ylim = c(0, 150), type = "l",
      main = bquote(y == a + x))
 abline(c(0, 1), lty = 2)
@@ -66,7 +67,8 @@ b <- 3
 y <- b * x
 ```
 
-```{r, fig.cap=paste0('Lineaarne mudel. Katkendjoon, tõus = 1. Pidevjoon, tõus = ', b,".")}
+
+```{r, fig.cap=paste0('Lineaarne mudel, mille intercept = 0 ja tõus = ', b, '. Katkendjoon, tõus = 1. Pidevjoon, tõus = ', b, '.')}
 plot(y ~ x, xlim = c(0, 100), ylim = c(0, 100), type = "l", main = bquote(y == b %*% x))
 abline(c(0, 1), lty = 2)
 ```
@@ -101,7 +103,7 @@ y <-  a + b * x
 ```
 
 
-```{r, fig.cap='Lineaarne mudel lõikepunkti ja tõusuga.'}
+```{r, fig.cap='Lineaarne mudel, millel on tuunitud nii lõikepunkt kui tõus.'}
 plot(y ~ x, xlab = "Weight in kg", ylab = "Heigth in cm", ylim = c(50, 200), type = "l", main = bquote(y == 102 + 0.8 %*% x))
 ```
 
@@ -121,7 +123,8 @@ Näiteks nii, kasutame R-i "iris" andmesetti:
 m <- lm(Sepal.Length ~ Petal.Length, data = iris)
 ```
 
-```{r, fig.cap='Linear model predicting Sepal.Length from Petal.Length from iris dataset.'}
+
+```{r, fig.cap='Fititud mudel, kus muutuja Petal.Length järgi ennustatakse muutuja Sepal.Length väärtusi.'}
 # Make a scatter plot, colored by the var called "Species"
 # Draw the fitted regression line from m
 augment(m, iris) %>% 
@@ -153,7 +156,7 @@ Aga sama hästi võiksime ekstrapoleerida ja küsida, mis on oodatav Sepal_lengt
 Sellele küsimusele on ebareaalne vastus, aga mudel ei tea seda. 
 Proovi, mis vastus tuleb.
 
-```{r}
+```{r }
 ## Genereerime uued andmed Petal.Length vahemikus
 Petal_length <- seq(min(iris$Petal.Length), 
                     max(iris$Petal.Length), 
@@ -251,7 +254,8 @@ tib <- tibble(model_formula, data = list(data)) %>%
 ```
 
 
-```{r, eval=FALSE, echo=FALSE, fig.cap="Kasvava paindlikusega polünoomsed mudelid. mod_e1 on sirge võrrand y = a + b~1~x (2 parameetrit: a ja b~1~), mod_e2 on lihtsaim võimalik polünoom: y= a + b~1~x + b~2~x^2 (3 parameetrit), ..., mod_e5: y= a + b~1~x + b~2~x^2 + b~3~x^3 + b4x^4 + b5x^5 (6 parameetrit). mod_e5 vastab täpselt andmepunktidele (N = 6)."}
+```{r, echo=FALSE, fig.cap="Kasvava paindlikusega polünoomsed mudelid. mod_e1 on sirge võrrand y = a + b~1~x (2 parameetrit: a ja b~1~), mod_e2 on lihtsaim võimalik polünoom: y= a + b~1~x + b~2~x^2 (3 parameetrit), ..., mod_e5: y= a + b~1~x + b~2~x^2 + b~3~x^3 + b4x^4 + b5x^5 (6 parameetrit). mod_e5 vastab täpselt andmepunktidele (N = 6).", fig.height=4, fig.width=6}
+library(viridis)
 tib %>% 
   select(model_formula, preds) %>% 
   unnest %>%
@@ -265,8 +269,8 @@ tib %>%
 
 Vähimruutude meetodil fititud mudeleid saame võrrelda AIC-i näitaja järgi. AIC  - Akaike Informatsiooni Kriteerium - vaatab mudeli sobivust andmetega ja mudeli parameetrite arvu. 
 Väikseim AIC tähitab parimat fitti väikseima parameetrite arvu juures (kompromissi) ja väikseima AIC-ga mudel on eelistatuim mudel. Aga seda ainult võrreldud mudelite hulgas. AIC-i absoluutväärtus ei loe - see on suhteline näitaja.
-```{r}
-tib %>% select(model_formula, aic)
+```{r echo=FALSE}
+tib %>% select(model_formula, aic) %>% knitr::kable()
 ```
 
 AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel? Mis siis, kui 3-s andmepunkt on andmesisestaja näpuviga?
