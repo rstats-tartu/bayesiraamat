@@ -1,5 +1,4 @@
 
-
 # EDA --- eksploratoorne andmeanalüüs
 
 Kui ühenumbriline andmete summeerimine täidab eelkõige kokkuvõtliku kommunikatsiooni eesmärki, siis EDA on suunatud teadlasele endale. EDA eesmärk on andmeid eelkõige graafiliselt vaadata, et saada aimu 1) andmete kvaliteedist ja 2) lasta andmetel kõneleda "sellisena nagu nad on" ja sugereerida uudseid teaduslikke hüpoteese. Neid hüpoteese peaks siis testima formaalse statistilise analüüsi abil (ptk järeldav statistika). Näiteid erinevate graafiliste lahenduste kohta vt graafika peatükist.
@@ -14,8 +13,7 @@ Mõned üldised soovitused võib siiski anda.
 
 Millised korrelatsioonid võiksid andmetes esineda?
 ```{r fig.cap="Korrelatstioonimaatriks joonisena."}
-library(corrgram) #PCA for ordering
-
+library(corrgram) # PCA for ordering
 corrgram(iris, order=TRUE, 
          lower.panel = panel.pts,
          upper.panel = panel.ellipse,

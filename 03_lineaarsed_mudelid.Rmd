@@ -255,7 +255,6 @@ tib <- tibble(model_formula, data = list(data)) %>%
 
 
 ```{r, echo=FALSE, fig.cap="Kasvava paindlikusega polünoomsed mudelid.", fig.height=4, fig.width=6}
-library(viridis)
 tib %>% 
   select(model_formula, preds) %>% 
   unnest %>%

@@ -4,15 +4,20 @@ Title: Does not matter.
 Version: 0.0.1
 Imports: 
     bookdown, 
-    tidyverse, 
-    forcats, 
-    VIM, 
-    car, 
+    tidyverse,
+    broom,
+    modelr,
+    viridis,
+    scatterplot3d,
+    rethinking,
+    brms,
+    car,
+    corrgram,
+    boot,
+    bayesboot,
+    gapminder,
     devtools, 
     ggthemes, 
-    grid, 
-    ggExtra,
-    ggrepel,
-    ggjoy,
-    wesanderson
+    grid,
+    gridExtra
 Remotes: rstudio/bookdown
