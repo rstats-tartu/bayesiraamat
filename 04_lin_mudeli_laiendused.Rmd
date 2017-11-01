@@ -216,7 +216,7 @@ Nüüd võtame uue 12-se valimi ja kordame eelnevat.
 Me teeme seda 10 000 korda järjest ja plotime saadud 10 000 arvu (10 000 liitmistehte tulemust) tihedusfuntksioonina. 
 
 
-```{r fig.height=2, fig.width=4, fig.cap='Normaaljaotus tekib sõltumatutest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi summa tihedusdiagramm.'}
+```{r fig.height=2, fig.width=4, fig.cap='Normaaljaotus tekib sõltumatutest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi summa tihedusdiagramm.', message=FALSE, error=FALSE}
 library(rethinking)
 kasv <- replicate(10000, sum(runif(12, 1, 100))) 
 dens(kasv)
@@ -268,7 +268,7 @@ Eelnev ei kehti Bayesi mudelite kohta, mis toovad priorite kaudu sisse lisainfot
 
 Kuidas panna skeptik uskuma, et statistilised meetodid töötavad halvasti väikestel valimitel? Siin aitab simulatsioon, kus me tõmbame 3-se valimi etteantud populatsioonist ning üritame selle valimi põhjal ennustada selleasama populatsiooni struktuuri. Kuna tegemist on simulatsiooniga, teame täpselt, et populatsioon, kust me tõmbame oma kolmese valimi, on normaaljaotusega, et tema keskväärtus = 0 ja et tema sd = 1. Me fitime oma valimi andmetega 2 erinevat mudelit: normaaljaotuse ja Studenti t jaotuse. 
 
-```{r echo = FALSE, fig.height=3, fig.width=4, fig.cap='Juhuvalim normaaljaotusest, mille keskmine = 0 ja sd = 1 (n=3; andmepunktid on näidatud mustade munadena). Sinine joon - popualtsioon, millest tõmmati valim; punane joon - normaaljaotuse mudel, mis on fititud valimi andmetel; must joon - Studenti t jaotuse mudel, mis on fititud samade andmetega.'}
+```{r echo = FALSE, message=FALSE, error=FALSE, fig.height=3, fig.width=4, fig.cap='Juhuvalim normaaljaotusest, mille keskmine = 0 ja sd = 1 (n=3; andmepunktid on näidatud mustade munadena). Sinine joon - popualtsioon, millest tõmmati valim; punane joon - normaaljaotuse mudel, mis on fititud valimi andmetel; must joon - Studenti t jaotuse mudel, mis on fititud samade andmetega.'}
 library(brms)
 set.seed(19)
 dfr <- tibble(a = rnorm(3))
