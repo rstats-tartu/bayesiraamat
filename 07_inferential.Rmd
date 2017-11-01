@@ -54,10 +54,16 @@ Kui tõenäosused on 0 või 1, siis taandub tõenäosusteooria matemaatliselt om
 Me anname siin 9 tuletust ilma tõestuskäikudeta, mis on aga lihtsad. Siin võib A ja B vaadelda erinevate sündmustena või hüpoteesidena. Me eeldame, et kummagi hüpoteesi tõenäosus > 0.
 
 Sümbolite tähendused:
+
 + $P(A \vert B)$ on tinglik tõenäosus, mida tuleks lugeda: "A tõenäosus tingimusel, et kehtib B". Pane tähele, et $P(vihm~\vert~pilves~ilm)$ ei ole sama, mis $P(pilves~ilm~\vert~vihm)$. 
+
 + $A \land B$ tähendab "A ja B", 
+
 + $A \lor B$ tähendab "A ja/või B" (loogiline "või" tähendab tavakeeles ja/või), 
+
 + $\lnot A$ tähendab mitte-A, ehk A == FALSE.
+
+Tõenäosusteooria põhituletused:
 
 1. Kui B sisaldab endas A-d, siis $P(B) \leq P(A)$ 
 
