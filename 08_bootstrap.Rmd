@@ -82,9 +82,8 @@ Selles ei ploti me enam mitte 1000 statistiku väärtust vaid 1000 erinevust boo
 ```{r fig.cap="Empiirilise bootstrapi posteerior USA presidentide keskmisele pikkusele.", fig.height=3, fig.width=4}
 boot_mean <- boot_mean %>% 
   mutate(Diff = Mean - mean(heights$value))
-# dens(boot_mean$Diff)
 ggplot(boot_mean, aes(Diff)) +
-  geom_density()+ theme_classic()
+  geom_density()
 ```
 
 Ja usaldusinterval tuleb niiviisi

@@ -464,7 +464,7 @@ rethinking::HPDI(samplespm2$ES, prob = 0.9)
 mean(samplespm2$ES < 0)
 ```
 
-Võrdse SD-ga mudeli järgi on USA presidendid keskeltläbi `r round(median(samplespm2$ES), 1)` cm pikemad, ebakindlus selle hinnangu ümber on suur -- 90% HDI on `r paste(round(HPDI(samplespm2$ES, prob = 0.9), 1), collapse = " kuni ")` ja tõenäosus et pikkuste erinevus on väiksem kui 0 on `r round(mean(samplespm2$ES < 0), 2)`.
+Võrdse SD-ga mudeli järgi on USA presidendid keskeltläbi `r round(median(samplespm2$ES), 1)` cm pikemad, ebakindlus selle hinnangu ümber on suur -- 90% HDI on `r paste(round(rethinking::HPDI(samplespm2$ES, prob = 0.9), 1), collapse = " kuni ")` ja tõenäosus et pikkuste erinevus on väiksem kui 0 on `r round(mean(samplespm2$ES < 0), 2)`.
 
 ```{r}
 samplesm2.1 <- extract.samples(potusm2.1) %>% 
@@ -475,7 +475,7 @@ HPDI(samplesm2.1$ES, prob = 0.9)
 mean(samplesm2.1$ES < 0)
 ```
 
-Erineva SD-ga mudeli järgi on riigijuhtide pikkuste vahe `r round(median(samplesm2.1$ES), 1)` cm, ebakindlus väiksem -- 90% HDI on `r paste(round(HPDI(samplesm2.1$ES, prob = 0.9), 1), collapse = " kuni ")` ja tõenäosus et pikkuste erinevus on väiksem kui 0 on `r round(mean(samplesm2.1$ES < 0), 2)`.
+Erineva SD-ga mudeli järgi on riigijuhtide pikkuste vahe `r round(median(samplesm2.1$ES), 1)` cm, ebakindlus väiksem -- 90% HDI on `r paste(round(rethinking::HPDI(samplesm2.1$ES, prob = 0.9), 1), collapse = " kuni ")` ja tõenäosus et pikkuste erinevus on väiksem kui 0 on `r round(mean(samplesm2.1$ES < 0), 2)`.
 
 See ei tähenda tingimata, et me peaksime eelistama teist mudelit. Oluline on, mida me teoreetiliselt usume, kas seda, et tegelik presidentide varieeruvus on USAs ja Euroopas võrdne, või mitte.
 
