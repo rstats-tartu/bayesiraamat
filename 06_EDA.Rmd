@@ -57,8 +57,10 @@ NB! selles psych::describe() väljundis on mad läbi korrutatud konstandiga 1.48
 + N > 100: geom_histogram(), geom_density() --- nende abil saab ka 2 kuni 6 jaotust võrrelda
 
 + Mitme jaotuse kõrvuti vaatamiseks, kui N > 15: geom_boxplot(), or geom_violin(), geom_joy() 
+
 11. Nii saab plottida multiplikatiivse sd:
-```{r fig.height=3, fig.width=4, fig.cap="Multiplikatiivse sd joonistamine.", echo=FALSE}
+
+```{r, fig.cap='Multiplikatiivse sd joonistamine.', echo=FALSE}
 # Function to produce summary statistics (geometric mean and multipülicative sd)
 multi_sd <- function(x) {
   x <- na.omit(x)
