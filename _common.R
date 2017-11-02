@@ -5,6 +5,7 @@ options(digits = 3,
         dplyr.print_max = 6)
 
 knitr::opts_chunk$set(
+  message = FALSE,
   comment = "#>",
   collapse = TRUE,
   cache = TRUE,

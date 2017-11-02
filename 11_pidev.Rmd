@@ -460,7 +460,7 @@ dens(samplespm2$ES)
 
 ```{r}
 median(samplespm2$ES)
-HPDI(samplespm2$ES, prob = 0.9)
+rethinking::HPDI(samplespm2$ES, prob = 0.9)
 mean(samplespm2$ES < 0)
 ```
 

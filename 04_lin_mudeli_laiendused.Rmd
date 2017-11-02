@@ -32,7 +32,8 @@ Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile.
 library(tidyverse)
 p <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   geom_point() +
-  xlim(4, 8) 
+  xlim(4, 8) +
+  scale_color_viridis(discrete = TRUE)
 p + geom_abline(intercept = coef(m2)[1], slope = coef(m2)[2]) +
   labs(title = deparse(formula(m2)))
 m1 <- lm(Sepal.Width ~ Sepal.Length, data = iris)
@@ -217,10 +218,10 @@ Nüüd võtame uue 12-se valimi ja kordame eelnevat.
 Me teeme seda 10 000 korda järjest ja plotime saadud 10 000 arvu (10 000 liitmistehte tulemust) tihedusfuntksioonina. 
 
 
-```{r fig.height=2, fig.width=4, fig.cap='Normaaljaotus tekib sõltumatutest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi summa tihedusdiagramm.', message=FALSE, error=FALSE}
-library(rethinking)
+```{r fig.height=2, fig.width=4, fig.cap='Normaaljaotus tekib sõltumatutest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi summa tihedusdiagramm.'}
 kasv <- replicate(10000, sum(runif(12, 1, 100))) 
-dens(kasv)
+p <- ggplot(tibble(kasv), aes(kasv)) + geom_density()
+p
 ```
 
 Selles näites võrdub iga andmepunkt 10 000st ühe bakteritüve kasvukiiruse mõõtmisega. Seega, antud eelduste korral on bakteritüvede kasvukiirused normaaljaotusega.
@@ -233,7 +234,7 @@ Seejärel korrutame need 12 arvu, misjärel kordame eelnevat 10 000 korda.
 
 ```{r fig.height=2, fig.width=4, fig.cap='Normaaljaotus tekib väikestest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Ühegi geeni mõju ei domineeri teiste üle.'}
 kasv <- replicate(10000, prod(runif(12, 1, 1.1))) 
-dens(kasv)
+p %+% tibble(kasv)
 ```
 
 Tulemuseks on jällegi normaaljaotus.
@@ -241,8 +242,8 @@ Selles näites olid üksikud interakteeruvad geenid ükshaaval väikeste mõjude
 Mis juhtub, kui mõnel geenil on kuni 2 korda suurem mõju kui teisel?
 
 ```{r fig.height=2, fig.width=4, fig.cap='Lognormaaljaotus tekib suurematest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel.'}
-kasv <- replicate(10000, prod(runif(12, 1, 2))) 
-dens(kasv)
+kasv <- replicate(10000, prod(runif(12, 1, 2)))
+p %+% tibble(kasv)
 ```
 
 Nüüd on tulemuseks log-normaaljaotus. Mis teie arvate, kas teie poolt uuritavat tunnust mõjutavad faktorid, mis omavahel ei interakteeru või kui interakteeruvad, on kõik ühtlaselt väikeste efektidega? 
@@ -253,8 +254,8 @@ Kui me vaatame samu andmeid logaritmilises skaalas, avastame, et need andmed on 
 See ongi andmete logaritmimise mõte.
 
 ```{r fig.height=2, fig.width=4, fig.cap='Logaritmilises skaalas lognormaalsed efektid on normaaljaotusega. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel.'}
-kasv <- replicate(10000, log10(prod(runif(12,1,2) ) ) )
-dens(kasv)
+kasv <- replicate(10000, log10(prod(runif(12, 1, 2))))
+p %+% tibble(kasv) + labs(x = "kasv, log10")
 ```
 
 ### Normaaljaotuse mudel väikestel valimitel {-}
@@ -267,27 +268,31 @@ Aga pidage meeles, et selle mudeli fittimiseks kasutame me ainult neid andmeid, 
 
 Eelnev ei kehti Bayesi mudelite kohta, mis toovad priorite kaudu sisse lisainfot, mis ei kajastu valimiandmetes ja võib analüüsi päästa.
 
-Kuidas panna skeptik uskuma, et statistilised meetodid töötavad halvasti väikestel valimitel? Siin aitab simulatsioon, kus me tõmbame 3-se valimi etteantud populatsioonist ning üritame selle valimi põhjal ennustada selleasama populatsiooni struktuuri. Kuna tegemist on simulatsiooniga, teame täpselt, et populatsioon, kust me tõmbame oma kolmese valimi, on normaaljaotusega, et tema keskväärtus = 0 ja et tema sd = 1. Me fitime oma valimi andmetega 2 erinevat mudelit: normaaljaotuse ja Studenti t jaotuse. 
+Kuidas panna skeptik uskuma, et statistilised meetodid töötavad halvasti väikestel valimitel? Siin aitab simulatsioon, kus me tõmbame 3-se valimi etteantud populatsioonist ning üritame selle valimi põhjal ennustada selleasama populatsiooni struktuuri. Kuna tegemist on simulatsiooniga, teame täpselt, et populatsioon, kust me tõmbame oma kolmese valimi, on normaaljaotusega, et tema keskväärtus = 0 ja et tema sd = 1. 
+Me fitime oma valimi andmetega 2 erinevat mudelit: normaaljaotuse ja Studenti t jaotuse. 
 
-```{r echo = FALSE, message=FALSE, error=FALSE, fig.height=3, fig.width=4, fig.cap='Juhuvalim normaaljaotusest, mille keskmine = 0 ja sd = 1 (n=3; andmepunktid on näidatud mustade munadena). Sinine joon - popualtsioon, millest tõmmati valim; punane joon - normaaljaotuse mudel, mis on fititud valimi andmetel; must joon - Studenti t jaotuse mudel, mis on fititud samade andmetega.'}
+```{r echo = FALSE, fig.cap='Juhuvalim normaaljaotusest, mille keskmine = 0 ja sd = 1 (n=3; andmepunktid on näidatud mustade munadena). Sinine joon - populatsioon, millest tõmmati valim; punane joon - normaaljaotuse mudel, mis on fititud valimi andmetel; must joon - Studenti t jaotuse mudel, mis on fititud samade andmetega. Mustad punktid, valim. Katkendjoon, populatsiooni keskmine, millest valim tõmmati.'}
 library(brms)
 set.seed(19)
-dfr <- tibble(a = rnorm(3))
-
-dfr %>% 
-  ggplot(aes(a)) +
-  geom_dotplot() + 
-  stat_function(fun = dnorm, 
-                args = list(mean = mean(dfr$a),
-                            sd = sd(dfr$a)), colour = "red") +
-  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), colour = "blue") +
-  stat_function(fun = dstudent_t, 
-                args = list(df = 2, 
-                            mu = mean(dfr$a), 
-                            sigma = sd(dfr$a))) +
-  xlim(-3, 3) +
-  ylim(0, 0.55) +
-  theme(axis.text = element_blank())
+valim <- rnorm(3)
+dfr <- tibble(x = seq(-3, 3, length.out = 1000)) %>% 
+  mutate(Teoreetiline = dnorm(x),
+         `Normaaljaotus valimist` = dnorm(x, mean(valim), sd(valim)),
+         `Student's t valimist` = dstudent_t(x, df = length(valim) - 1, 
+                                 mean(valim), 
+                                 sd(valim))) %>% 
+  gather(Mudel, value, -x)
+ggplot() +
+  geom_line(aes(x, value, color = Mudel), data = dfr) +
+  geom_dotplot(aes(value), data = tibble(value = valim), 
+               binwidth = 0.1) +
+  labs(caption = "Mustad punktid, valim.\nKatkendjoon, populatsiooni keskmine, millest valim tõmmati.") +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  ylim(0, 0.6) +
+  scale_color_manual(values = c("red", "black", "blue")) +
+  theme(axis.title = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank())
 ```
 
 Siin saame hinnata mudelite fitte jumala positsioonilt, võrreldes fititud mudelite jaotusi "tõese" sinise jaotusega.
@@ -298,7 +303,6 @@ Igal juhul, mõni teine juhuvalim annaks meile hoopis teistsugused mudelid, mis 
 Mis juhtub kui me kasutame oma normaaljaotuse mudelit uute andmete simuleerimiseks? Kui lähedased on need simuleeritud andmed populatsiooni andmetega ja kui lähedased valimi andmetega, millega me normaaljaotuse mudeli fittisime?
 
 ```{r fig.height=3, fig.width=4, fig.cap='Kasutame fititud mudeleid uute andmete simuleerimiseks.'}
-set.seed(19) # muudab simulatsiooni korratavaks
 # tõmbame 3 juhuslikku arvu normaalhaotusest, mille keskväärtus = 0 ja sd = 1.
 dfr <- tibble(sample_data = rnorm(3)) 
 dfr <- summarise_at(dfr, "sample_data", c("mean", "sd"))
