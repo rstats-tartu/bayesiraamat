@@ -5,12 +5,12 @@ date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
-bibliography: [book.bib]
+bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 colorlinks: yes
-github-repo: rstats-tartu/lectures
-description: "Praktilise kursuse 'Reprodutseeritav andmeanalüüs R keeles' materjalid."
+github-repo: rstats-tartu/bayesiraamat
+description: "Praktilise kursuse 'Reprodutseeritav andmeanalüüs R keeles' Bayesi statistika materjalid."
 cover-image: img/cyclo.png
 ---
 

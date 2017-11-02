@@ -1,6 +1,7 @@
 
-# Sissejuhatus: maailm, teooria ja mudel
+# (PART) Teooria {-}
 
+# Sissejuhatus: maailm, teooria ja mudel
 
 ## Suur ja väike maailm {-}
 
