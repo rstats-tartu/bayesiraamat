@@ -1,15 +1,13 @@
 language: r
 sudo: false
-addons:
-  apt:
-    packages:
-      - libssl-dev
-install:
-  - R -e 'install.packages("rstan", repos = "https://cloud.r-project.org/", dependencies=TRUE)'
 cache:
   packages: true
   directories:
   - $TRAVIS_BUILD_DIR/_book
+addons:
+  apt:
+    packages:
+      - libssl-dev
 pandoc_version: 1.19.2.1
 before_script:
 - chmod +x ./_build.sh
