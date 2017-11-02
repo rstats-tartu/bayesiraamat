@@ -1,5 +1,11 @@
 
+<<<<<<< HEAD
 # Bootstrap  
+=======
+# (PART) Praktika {-}
+
+# Bootstrappimine
+>>>>>>> e242583f104469da6a7735d12bf865619f5ab778
 
 > Populatsioon on valimile sama, mis on valim bootstrappitud valimile. 
 

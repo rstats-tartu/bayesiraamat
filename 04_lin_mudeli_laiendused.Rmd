@@ -18,9 +18,9 @@ Kui meil on 3 prediktoriga mudel, siis me liigume juba 4-mõõtmelisse ruumi.
 m2 <- lm(Sepal.Width ~ Sepal.Length + Petal.Length, data = iris)
 ```
 
-
 ```{r, echo=FALSE, fig.cap="Regressioonitasand 3D andmetele. Siin on Sepal.Length ja Petal.Length prediktorid ja Sepal.Width ennustatav muutuja."}
 library(scatterplot3d)
+library(viridis)
 s3d <- with(iris, scatterplot3d(Sepal.Length, Petal.Length, Sepal.Width, pch = 20, color = rep(viridis(3), table(iris$Species)), col.axis = "blue", col.grid = "lightblue"))
 s3d$plane3d(m2, lty.box = "solid")
 ```
@@ -29,6 +29,7 @@ s3d$plane3d(m2, lty.box = "solid")
 Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile.
 
 ```{r lin2d, fig.cap='2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile.'}
+library(tidyverse)
 p <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   geom_point() +
   xlim(4, 8) 

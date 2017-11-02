@@ -5,15 +5,16 @@ date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
-bibliography: [book.bib]
+bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 colorlinks: yes
-github-repo: rstats-tartu/lectures
-description: "Praktilise kursuse 'Reprodutseeritav andmeanalüüs R keeles' materjalid."
+github-repo: rstats-tartu/bayesiraamat
+description: "Praktilise kursuse 'Reprodutseeritav andmeanalüüs R keeles' Bayesi statistika materjalid."
 cover-image: img/cyclo.png
 ---
 
+<<<<<<< HEAD
 
 ```{r setup, include=FALSE}
 # knitr::write_bib(c(.packages(), 'bookdown', 'knitr', 'rmarkdown'), 'packages.bib')
@@ -27,6 +28,9 @@ options(htmltools.dir.version = FALSE,
 ```
 
 # Saateks {-}
+=======
+# Haara kannel, Vanemuine! {-}
+>>>>>>> e242583f104469da6a7735d12bf865619f5ab778
 
 ```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html')}
 knitr::include_graphics('img/cyclo.png', dpi = NA)

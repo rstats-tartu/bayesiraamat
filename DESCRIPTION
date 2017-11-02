@@ -2,13 +2,14 @@ Package: placeholder
 Type: Book
 Title: Does not matter.
 Version: 0.0.1
-Imports: 
-    bookdown, 
+Imports:
+    bookdown,
     tidyverse,
     broom,
     modelr,
     viridis,
     scatterplot3d,
+    rstan,
     rethinking,
     brms,
     car,
@@ -19,5 +20,6 @@ Imports:
     devtools, 
     ggthemes, 
     grid,
-    gridExtra
+    gridExtra,
+    inline
 Remotes: rstudio/bookdown
