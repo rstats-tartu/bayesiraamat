@@ -1,9 +1,8 @@
-book_filename: "main"
+new_session: yes
 language:
-  language:
   label:
     fig: 'Joonis '
     tab: 'Tabel '
   ui:
     chapter_name: ""
-
+before_chapter_script: "_common.R"

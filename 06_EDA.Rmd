@@ -24,9 +24,10 @@ corrgram(iris, order=TRUE,
 2. vaata andmeid numbrilise kokkuvõttena.
 
 ```{r}
-psych::describe(iris) %>% knitr::kable()
-#summary(iris)
-
+library(tidyverse)
+library(psych)
+library(knitr)
+describe(iris) %>% kable()
 ```
 
 Siin pööra kindlasti tähelepanu tulpadele min ja max, mis annavad kiire võimalusi outliereid ära tunda. Kontrolli, kas andmete keskmised (mediaan, mean ja trimmed mean) on üksteisele piisavalt lähedal --- kui ei ole, siis on andmete jaotus pika õlaga, ja kindlasti mitte normaalne. 
