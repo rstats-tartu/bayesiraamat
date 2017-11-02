@@ -14,11 +14,6 @@ description: "Praktilise kursuse 'Reprodutseeritav andmeanalüüs R keeles' Baye
 cover-image: img/cyclo.png
 ---
 
-
-```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html')}
-knitr::include_graphics('img/cyclo.png', dpi = NA)
-```
-
 # Saateks {-}
 
 See õpik soovib anda praktilisi andmeanalüüsi oskusi töötamiseks reaalsete andmetega. See puudutab laias laastus kolme teemat: 
@@ -43,6 +38,8 @@ Pingutus R õppimiseks tasub teile mitmel erineval viisil. R võimaldab palju ki
 
 xxx
 
-
+```{r echo=FALSE, include=identical(knitr:::pandoc_to(), 'html')}
+knitr::include_graphics('img/cyclo.png', dpi = NA)
+```
 
 

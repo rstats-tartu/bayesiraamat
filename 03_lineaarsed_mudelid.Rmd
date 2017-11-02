@@ -1,9 +1,12 @@
 
 # Lineaarsed mudelid
 
+```{r, echo=FALSE}
+ggplot2::theme_set(ggthemes::theme_tufte())
+```
 
-```{r, echo=FALSE, message=FALSE, error=FALSE}
 
+```{r}
 library(tidyverse)
 library(broom)
 library(modelr)
@@ -272,7 +275,9 @@ tib %>%
 Vähimruutude meetodil fititud mudeleid saame võrrelda AIC-i näitaja järgi. AIC  - Akaike Informatsiooni Kriteerium - vaatab mudeli sobivust andmetega ja mudeli parameetrite arvu. 
 Väikseim AIC tähitab parimat fitti väikseima parameetrite arvu juures (kompromissi) ja väikseima AIC-ga mudel on eelistatuim mudel. Aga seda ainult võrreldud mudelite hulgas. AIC-i absoluutväärtus ei loe - see on suhteline näitaja.
 ```{r echo=FALSE}
-tib %>% select(model_formula, aic) %>% knitr::kable()
+tib %>% 
+  select(model_formula, aic) %>% 
+  knitr::kable(booktabs = TRUE)
 ```
 
 AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel? Mis siis, kui 3-s andmepunkt on andmesisestaja näpuviga?

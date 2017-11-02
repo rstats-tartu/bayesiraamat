@@ -60,6 +60,7 @@ Ok, aitab mulast, laadime vajalikud raamatukogud ja andmed ning vaatame mis saab
 ```{r}
 library(rethinking)
 library(tidyverse)
+library(stringr)
 library(psych)
 ```
 
