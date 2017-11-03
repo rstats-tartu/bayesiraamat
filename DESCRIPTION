@@ -25,6 +25,4 @@ Imports:
     grid,
     gridExtra,
     inline
-Remotes: 
-  - rstudio/bookdown
-  - rmcelreath/rethinking
+Remotes: rstudio/bookdown
