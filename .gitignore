@@ -4,7 +4,7 @@
 .Ruserdata
 _book
 _bookdown_files
-main.Rmd
+
 A01_sissejuhatus_files
 bayesiaanlik-statistika.html
 jata-meelde.html
@@ -18,5 +18,3 @@ loeng_models_files
 statistiline-analuus.html
 03_inferential_files
 jareldav-statistika.html
-*.rds
-bookdown*
