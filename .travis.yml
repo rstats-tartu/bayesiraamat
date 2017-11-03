@@ -8,9 +8,6 @@ addons:
   apt:
     packages:
       - libssl-dev
-## Use patched devtools
-r_github_packages:
-  - hadley/devtools@efa894ffa
 pandoc_version: 1.19.2.1
 before_script:
 - chmod +x ./_build.sh
