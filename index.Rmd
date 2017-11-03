@@ -43,3 +43,7 @@ knitr::include_graphics('img/cyclo.png', dpi = NA)
 ```
 
 
+```{r, include=FALSE}
+knitr::write_bib(c(.packages(), 'bookdown', 'knitr', 'rmarkdown', 'tidyverse', 'broom', 'modelr', 'viridis', 'scatterplot3d', 'rstan', 'rethinking', 'brms', 'car', 'corrgram', 'boot', 'bayesboot', 'gapminder', 'devtools', 'ggthemes', 'grid', 'gridExtra'), 'packages.bib')
+```
+

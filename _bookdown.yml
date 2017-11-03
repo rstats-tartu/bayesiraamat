@@ -6,3 +6,8 @@ language:
   ui:
     chapter_name: ""
 before_chapter_script: "_common.R"
+clean: ["packages.bib"]
+delete_merged_file: yes
+edit:
+      link: https://github.com/rstats-tartu/lectures/edit/master/%s
+      text: "Editeeri"

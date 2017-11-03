@@ -18,3 +18,5 @@ loeng_models_files
 statistiline-analuus.html
 03_inferential_files
 jareldav-statistika.html
+*.rds
+bookdown*

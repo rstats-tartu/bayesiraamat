@@ -1,3 +1,24 @@
+```{r include=FALSE, cache=FALSE}
+
+rm(list = ls(all = TRUE))
+set.seed(19)
+
+options(digits = 3,
+        dplyr.print_min = 6,
+        dplyr.print_max = 6)
+
+knitr::opts_chunk$set(
+  message = FALSE,
+  comment = "#>",
+  collapse = TRUE,
+  out.width = "70%",
+  fig.align = 'center',
+  fig.width = 6,
+  fig.asp = 0.618,  # 1 / phi
+  fig.show = "hold"
+)
+
+```
 
 # Ennustame pidevat suurust {-}
 
@@ -1139,7 +1160,7 @@ Siin on ennustus ja seda ümbritsev ebakindlus iga riigi keskmisele elueale.
 
 Järgnev plot annab ennustusvea igale riigile. Siin tähistab 89% CI näiteks Vietnamile eluigade vahemikku, millese jääb mudeli ennustuse kohaselt 89% kõikvõimalike fiktsionaalsete riikide keskmistest eluigadest, mille SKP ja rahvaarv võrdub Vietnami omaga. Kuna me tsentreerime CI Vietnami tegeliku keskmise eluea residuaalile (erinevusele mudeli ennustusest), näitab see, kui palju erineb Vietnami eluiga mudeli ennustusest riikidele, nagu Vietnam. See plot annab meile riigid, mille suhtes mudel jänni jääb. Enamasti leiame need riigid Aafrikast.
  
-```{r, fig.cap="Ennustused riigi kaupa."}
+```{r, fig.height=9,fig.cap="Ennustused riigi kaupa."}
 # compute residuals
 life.resid <- g2007$lifeExp - mu.mean
 
@@ -1357,5 +1378,5 @@ Interaktsiooni koefitsiendi määramine võib suurendada ebakindlust teiste para
 
 Isegi kui interaktsiooniparameetri posteerior hõlmab 0-i, tuleb interaktsiooni parameetrit mudelisse pannes arvestada, et individuaalsete prediktorite mõju ei saa summeerida pelgalt läbi nende koefitsientide. Selle asemel tuleb vaadata sirge tõusu erinevatel teiste prediktorite väärtustel (nagu eelneval joonisel)
 
-Kui tavaline interaktsioonimudel on $y = a + b1x1 + b2x2 + b3x1x2$, siis mis juhtub, kui meie mudel on $y = b1x1 + b3x1x2$? See tähendab, et me surume b2 väärtuse nulli, mis võib ära rikkuda mudeli teiste parameetrite posteeriorid! Kui teil on alust arvata, et b2-l puudub otsene mõju y väärtusele (kuid tal on mõju b1 väärtusele), siis võib muidugi ka sellist mudelit kasutada. Aga see on haruldane juhtum.
+Kui tavaline interaktsioonimudel on $y = a + b_1x_1 + b_2x_2 + b_3x_1x_2$, siis mis juhtub, kui meie mudel on $y = b_1x_1 + b_3x_1x_2$? See tähendab, et me surume b2 väärtuse nulli, mis võib ära rikkuda mudeli teiste parameetrite posteeriorid! Kui teil on alust arvata, et b2-l puudub otsene mõju y väärtusele (kuid tal on mõju b1 väärtusele), siis võib muidugi ka sellist mudelit kasutada. Aga see on haruldane juhtum.
 
