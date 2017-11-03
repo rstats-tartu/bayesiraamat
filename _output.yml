@@ -1,7 +1,7 @@
 bookdown::gitbook:
   includes:
     in_header: ["fa.html"]
-  css: [style.css, toc.css, font-awesome.min.css]
+  css: [style.css, toc.css]
   config:
     toc:
       collapse: section
