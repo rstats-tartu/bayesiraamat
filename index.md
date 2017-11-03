@@ -2,17 +2,13 @@
 --- 
 knit: "bookdown::render_book"
 title: "Bayesi statistika kasutades R keelt"
-author: "Taavi Päll, Ülo Maiväli"
-date: "2017-11-03"
-bibliography: [book.bib, packages.bib]
-biblio-style: apalike
-link-citations: yes
-colorlinks: yes
+author: ["Taavi Päll", "Ülo Maiväli"]
 github-repo: rstats-tartu/bayesiraamat
 description: "Praktilise kursuse 'Reprodutseeritav andmeanalüüs R keeles' Bayesi statistika materjalid."
-cover-image: img/cyclo.png
+bibliography: [book.bib, packages.bib]
 site: bookdown::bookdown_site
 documentclass: book
+cover-image: img/cyclo.png
 ---
 
 # Saateks {-}
