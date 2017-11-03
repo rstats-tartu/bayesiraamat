@@ -10,6 +10,9 @@ Imports:
     viridis,
     scatterplot3d,
     rstan,
+    coda,
+    mvtnorm,
+    loo,
     rethinking,
     brms,
     car,
@@ -22,4 +25,6 @@ Imports:
     grid,
     gridExtra,
     inline
-Remotes: rstudio/bookdown
+Remotes: 
+- rstudio/bookdown
+- rmcelreath/rethinking
