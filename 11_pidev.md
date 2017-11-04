@@ -1,6 +1,5 @@
 
 
-
 # Ennustame pidevat suurust {-}
 
 Selles peatükis saab "rethinking" library hullult kuuma.
@@ -42,8 +41,8 @@ plot(y ~ x, type = "l" , main = "Cauchy prior for sd")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-4-1.png" alt="Cauchy prior" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-4)Cauchy prior</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-3-1.png" alt="Cauchy prior" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-3)Cauchy prior</p>
 </div>
 
 
@@ -54,8 +53,8 @@ plot(y ~ x, type = "l", main = "Normal prior for mu")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-5-1.png" alt="Normaaljaptuse prior" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-5)Normaaljaptuse prior</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-4-1.png" alt="Normaaljaptuse prior" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-4)Normaaljaptuse prior</p>
 </div>
 
 
@@ -67,8 +66,8 @@ plot(y ~ x, type = "l", main = "Another normal prior for mu")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-6-1.png" alt="veel üks Normaaljaptuse prior." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-6)veel üks Normaaljaptuse prior.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-5-1.png" alt="veel üks Normaaljaptuse prior." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-5)veel üks Normaaljaptuse prior.</p>
 </div>
 
 Siin on valida kahe priori vahel mu-le. Võib-olla eelistaksid sina mõnda kolmandat? 
@@ -235,8 +234,8 @@ tracerplot(m2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-16-1.png" alt="Traceplot markovi ahelate inspekteerimiseks" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-16)Traceplot markovi ahelate inspekteerimiseks</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-15-1.png" alt="Traceplot markovi ahelate inspekteerimiseks" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-15)Traceplot markovi ahelate inspekteerimiseks</p>
 </div>
 
 Pildilt on näha, et neli ahelat (4 värvi) on hästi konvergeerunud. Hall ala on nn warmup ala, mille tulemusi ei salvestata. Muidu astub iga ahel sammu kaupa ja iga edukas samm salvestatakse ühe posteeriori väärtusena. Ahel sämplib korraga mu, sigma ja nu väärtusi n-mõõtmelises ruumis (n = mudeli parameetrite arv), mis tähendab, et ahela iga samm salvestatakse n kõrvuti numbrina. 
@@ -250,8 +249,8 @@ pairs(m2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-17-1.png" alt="korrelatsiooniplot mudeli parameetritele." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-17)korrelatsiooniplot mudeli parameetritele.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-16-1.png" alt="korrelatsiooniplot mudeli parameetritele." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-16)korrelatsiooniplot mudeli parameetritele.</p>
 </div>
 
 Normaaljaotus on selle poolest eriline, et tema parameetrid mu ja sigma ei ole korreleeritud. 
@@ -298,8 +297,8 @@ mcmc_intervals(fit2d,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-18-1.png" alt="Posteeriorite CI plot" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-18)Posteeriorite CI plot</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-17-1.png" alt="Posteeriorite CI plot" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-17)Posteeriorite CI plot</p>
 </div>
 
 Ja teiseks täis posteeriorid.
@@ -309,8 +308,8 @@ mcmc_areas(fit2d, pars = pars[1:2], prob = 0.8)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-19-1.png" alt="Posteeriorite tihedusplot." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-19)Posteeriorite tihedusplot.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-18-1.png" alt="Posteeriorite tihedusplot." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-18)Posteeriorite tihedusplot.</p>
 </div>
 
 
@@ -336,8 +335,8 @@ ggplot(m2sampl, aes(CV)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-21-1.png" alt="Posteerior uuele parameetrile" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-21)Posteerior uuele parameetrile</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-20-1.png" alt="Posteerior uuele parameetrile" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-20)Posteerior uuele parameetrile</p>
 </div>
 
 Kuna posteerior iseloomustab meie teadmiste piire, siis võime selle abil küsida, kui suure tõenäosusega jääb tõeline CV näiteks parameetrivahemikku 2 kuni 5?
@@ -371,8 +370,8 @@ coeftab_plot(coeftab(m0, m1, m2, m3),
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-24-1.png" alt="Võrdlev plot mitme mudeli posteerioritele." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-24)Võrdlev plot mitme mudeli posteerioritele.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-23-1.png" alt="Võrdlev plot mitme mudeli posteerioritele." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-23)Võrdlev plot mitme mudeli posteerioritele.</p>
 </div>
 
 Me sättisime usalduspiirid 0.5 peale, mis tähendab, et need ennustavad, kuhu peaks mudeli järgi jääma parameetri tegelik väärtus 50%-se tõenäosusega. 
@@ -397,8 +396,8 @@ plot(x, y, main = "Prior for mu", type = "l")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-25-1.png" alt="Prior keskmisele." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-25)Prior keskmisele.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-24-1.png" alt="Prior keskmisele." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-24)Prior keskmisele.</p>
 </div>
 
 Siin kasutame nõrgalt informatiivseid prioreid. 
@@ -418,8 +417,8 @@ plot(x, y, main = "Prior for sigma", type = "l")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-26-1.png" alt="Prior SD-le" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-26)Prior SD-le</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-25-1.png" alt="Prior SD-le" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-25)Prior SD-le</p>
 </div>
 
 Tekitame andmeraami analüüsiks ja mudeli, mis põhineb normaalsel tõepärafunktsioonil.
@@ -544,8 +543,8 @@ tracerplot(potusm2.1, n_cols = 2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-37-1.png" alt="Traceplot." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-37)Traceplot.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-36-1.png" alt="Traceplot." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-36)Traceplot.</p>
 </div>
 
 
@@ -556,8 +555,8 @@ plot(coeftab(potusm2, potusm2.1))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-38-1.png" alt="mudelite võrdlusplot." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-38)mudelite võrdlusplot.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-37-1.png" alt="mudelite võrdlusplot." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-37)mudelite võrdlusplot.</p>
 </div>
 
 
@@ -582,8 +581,8 @@ dens(samplespm2$ES)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-40-1.png" alt="Posteerior ES-le." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-40)Posteerior ES-le.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-39-1.png" alt="Posteerior ES-le." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-39)Posteerior ES-le.</p>
 </div>
 
 
@@ -711,8 +710,8 @@ p
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-47-1.png" alt="Nulli surutud interceptiga lineaarne regressioon eluea sõltuvusele SKP-st." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-47)Nulli surutud interceptiga lineaarne regressioon eluea sõltuvusele SKP-st.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-46-1.png" alt="Nulli surutud interceptiga lineaarne regressioon eluea sõltuvusele SKP-st." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-46)Nulli surutud interceptiga lineaarne regressioon eluea sõltuvusele SKP-st.</p>
 </div>
 
 
@@ -749,8 +748,8 @@ p + geom_line(aes(y = .fitted), data = gapmod3, color = "#FDE725FF")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-49-1.png" alt="Täismudeliga regressioon." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-49)Täismudeliga regressioon.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-48-1.png" alt="Täismudeliga regressioon." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-48)Täismudeliga regressioon.</p>
 </div>
 
 
@@ -900,8 +899,8 @@ plot(coeftab(gapmod4, gapmod5, gapmod6))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-64-1.png" alt="Mudelite võrdlusplot." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-64)Mudelite võrdlusplot.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-63-1.png" alt="Mudelite võrdlusplot." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-63)Mudelite võrdlusplot.</p>
 </div>
 
 
@@ -942,8 +941,8 @@ compare(gapmod4, gapmod5, gapmod6, gapmod7, gapmod8)
 
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-68-1.png" alt="Log skaalas töötab nulli surutud interceptiga mudel sama hästi kui täismudel. See ei ole paraku mudeldamise üldine omadus." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-68)Log skaalas töötab nulli surutud interceptiga mudel sama hästi kui täismudel. See ei ole paraku mudeldamise üldine omadus.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-67-1.png" alt="Log skaalas töötab nulli surutud interceptiga mudel sama hästi kui täismudel. See ei ole paraku mudeldamise üldine omadus." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-67)Log skaalas töötab nulli surutud interceptiga mudel sama hästi kui täismudel. See ei ole paraku mudeldamise üldine omadus.</p>
 </div>
 
 Kuna Bayesi mudelite fittimine on keerulisem kui `lm()` abil, on eriti tähtis fititud mudel välja plottida. 
@@ -966,8 +965,8 @@ plot(coeftab(gapmod7, gapmod8))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-69-1.png" alt="mudelite võrdlusplot." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-69)mudelite võrdlusplot.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-68-1.png" alt="mudelite võrdlusplot." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-68)mudelite võrdlusplot.</p>
 </div>
 
 Pane tähele, et gapmod8 "b_gdp" koefitsiendi posteerior on palju laiem kui gapmod7 "b_gdp" oma.
@@ -1038,8 +1037,8 @@ ggplot(g2007) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-73-1.png" alt="Ennustused mudelist." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-73)Ennustused mudelist.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-72-1.png" alt="Ennustused mudelist." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-72)Ennustused mudelist.</p>
 </div>
 
 Nüüd ütleb laiem hall ala, et me oleme üsna kindlad, et nende riikide puhul, mille puhul mudel töötab, kohtame individaalsete riikide keskmiseid eluigasid halli ala sees ja mitte sealt väljas. 
@@ -1059,8 +1058,8 @@ HPDI(sim.length$V10, prob = 0.95)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-74-1.png" alt="Ennustus mudelist kindlale log GDP väärtusele." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-74)Ennustus mudelist kindlale log GDP väärtusele.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-73-1.png" alt="Ennustus mudelist kindlale log GDP väärtusele." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-73)Ennustus mudelist kindlale log GDP väärtusele.</p>
 </div>
 
 Nagu näha, võib mudeli kohaselt sellise riigi keskmine eluiga tulla nii madal, kui 40 aastat ja nii kõrge kui 67 aastat.
@@ -1075,8 +1074,8 @@ See mudel on alternatiiv andmete logaritmimisele, kui Y-muutuja (see muutuja, mi
 Seekord ennustame GDP-d keskmise eluea põhjal (mis, nagu näha jooniselt, ei ole küll päris lognormaalne).
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-75-1.png" alt="SKP-de jaotus" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-75)SKP-de jaotus</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-74-1.png" alt="SKP-de jaotus" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-74)SKP-de jaotus</p>
 </div>
 
 Mustaga on näidatud empiiriline SKP jaotus, punasega fititud lognormaalne mudel sellest samast jaotusest. Järgnevalt ennustame SKP-d keskmise eluea põhjal, milleks fitime lognormaalse tõepäramudeli, kus mu on ümber defineeritud regressioonivõrrandiga:
@@ -1123,8 +1122,8 @@ lines( a, y1, col = "red" )
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-79-1.png" alt="Mudeli tõus sõltub interceptist." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-79)Mudeli tõus sõltub interceptist.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-78-1.png" alt="Mudeli tõus sõltub interceptist." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-78)Mudeli tõus sõltub interceptist.</p>
 </div>
 
 Must joon näitab mudeli tõusu sõltuvust parameetri a väärtusest, kui parameeter b = 2. Punane joon teeb sedasama, kui b = 3.
@@ -1143,8 +1142,8 @@ dens(beta)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-81-1.png" alt="Mudeli tõusude (beta) posteerior." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-81)Mudeli tõusude (beta) posteerior.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-80-1.png" alt="Mudeli tõusude (beta) posteerior." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-80)Mudeli tõusude (beta) posteerior.</p>
 </div>
 
 Lognormaaljaotusega mudelis täidab normaaljaotusega mudeli intercepti rolli eelkõige meedian, mis on defineeritud kui exp(a), aga arvutada saab ka keskmise:
@@ -1178,8 +1177,8 @@ ggplot(g2007, aes(lifeExp, gdpPercap)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-84-1.png" alt="Ennustus mudelist." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-84)Ennustus mudelist.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-83-1.png" alt="Ennustus mudelist." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-83)Ennustus mudelist.</p>
 </div>
 
 
@@ -1450,8 +1449,8 @@ ggplot( g2007, aes( lGDP_s, m.resid ) ) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-97-1.png" alt="Mudeli residuaalide plot (m.resid ~ X1)." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-97)Mudeli residuaalide plot (m.resid ~ X1).</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-96-1.png" alt="Mudeli residuaalide plot (m.resid ~ X1)." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-96)Mudeli residuaalide plot (m.resid ~ X1).</p>
 </div>
 
 
@@ -1468,8 +1467,8 @@ ggplot(g2007, aes(lifeExp, m.resid)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-98-1.png" alt="m.resid ~ Y plot" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-98)m.resid ~ Y plot</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-97-1.png" alt="m.resid ~ Y plot" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-97)m.resid ~ Y plot</p>
 </div>
 
 Horisontaalne punktiirjoon näitab, kus mudel vastab täpselt andmetele. 
@@ -1505,8 +1504,8 @@ ggplot(pred.data, aes(lGDP_s, mu.mean)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-99-1.png" alt="Ennustav plot" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-99)Ennustav plot</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-98-1.png" alt="Ennustav plot" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-98)Ennustav plot</p>
 </div>
 
 Näeme, kuidas ennustus sobib/ei sobi andmetega. Võrdle eelneva ennustuspildiga, kus mudel ei sisalda rahvaarvu. Ennustuse intervallid on originaalandmete skaalas (aastates), mis on hea.
@@ -1526,8 +1525,8 @@ ppc_dens(g2007$lifeExp, yrep[1:5, ])
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-100-1.png" alt="Valimi andmed vs. mudeli poolt ennustatud andmed." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-100)Valimi andmed vs. mudeli poolt ennustatud andmed.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-99-1.png" alt="Valimi andmed vs. mudeli poolt ennustatud andmed." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-99)Valimi andmed vs. mudeli poolt ennustatud andmed.</p>
 </div>
 
  
@@ -1567,8 +1566,8 @@ ggplot(g2007, aes(lifeExp, mu.mean)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-102-1.png" alt="Ennustus vs. valimi väärtus" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-102)Ennustus vs. valimi väärtus</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-101-1.png" alt="Ennustus vs. valimi väärtus" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-101)Ennustus vs. valimi väärtus</p>
 </div>
 
 Siin on ennustus ja seda ümbritsev ebakindlus iga riigi keskmisele elueale.
@@ -1595,8 +1594,8 @@ ggplot( g2007, aes( x = life.resid, y = reorder( country, life.resid ) ) ) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-103-1.png" alt="Ennustused riigi kaupa." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-103)Ennustused riigi kaupa.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-102-1.png" alt="Ennustused riigi kaupa." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-102)Ennustused riigi kaupa.</p>
 </div>
 
 punased jooned näitavad 89% ennustuspiire igale residuaalile riigi tasemel (89% kõikvõimalike riikide keskmiste eluigade residuaalidest sellel SKPl jääb punasesse vahemikku).
@@ -1654,8 +1653,8 @@ plot(precis(m1))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-107-1.png" alt="Mudeli koefitsientide plot." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-107)Mudeli koefitsientide plot.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-106-1.png" alt="Mudeli koefitsientide plot." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-106)Mudeli koefitsientide plot.</p>
 </div>
 
 
@@ -1699,8 +1698,8 @@ ggplot(dd1, aes(lGDP_s, lifeExp)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-109-1.png" alt="Ennustusplot Aafrikale." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-109)Ennustusplot Aafrikale.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-108-1.png" alt="Ennustusplot Aafrikale." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-108)Ennustusplot Aafrikale.</p>
 </div>
 
 
@@ -1718,8 +1717,8 @@ ggplot(data=dd1, aes(lGDP_s, lifeExp)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-110-1.png" alt="Ennustusplot Euroopale." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-110)Ennustusplot Euroopale.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-109-1.png" alt="Ennustusplot Euroopale." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-109)Ennustusplot Euroopale.</p>
 </div>
 
 Nagu näha, on meil nüüd üsna erinevad sirge tõusunurgad.
@@ -1761,8 +1760,8 @@ plot(precis( m2 ) )
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-114-1.png" alt="mudeli koefitsientide plot" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-114)mudeli koefitsientide plot</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-113-1.png" alt="mudeli koefitsientide plot" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-113)mudeli koefitsientide plot</p>
 </div>
 
 
@@ -1852,8 +1851,8 @@ grid.arrange(p_1, p0, p1, ncol = 3)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-120-1.png" alt="Ennustusplot üle kahe mudeli." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-120)Ennustusplot üle kahe mudeli.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-119-1.png" alt="Ennustusplot üle kahe mudeli." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-119)Ennustusplot üle kahe mudeli.</p>
 </div>
 
 Ja sama ainult ühe mudeliga -- m2. 
@@ -1866,8 +1865,8 @@ grid.arrange(w0, w_1, w1, ncol = 3)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11_pidev_files/figure-html/unnamed-chunk-121-1.png" alt="Ennustusplot m2-le." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-121)Ennustusplot m2-le.</p>
+<img src="11_pidev_files/figure-html/unnamed-chunk-120-1.png" alt="Ennustusplot m2-le." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-120)Ennustusplot m2-le.</p>
 </div>
 
 

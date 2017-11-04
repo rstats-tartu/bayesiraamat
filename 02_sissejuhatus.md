@@ -1,7 +1,6 @@
 
 
-
-# (PART) Teooria {-}
+# (PART) OSA {-}
 
 # Sissejuhatus: maailm, teooria ja mudel
 
@@ -92,7 +91,7 @@ Kõik, mis maapeal huvitavat, ehk kogu liikumine, on algselt põhjustatud esimes
 
 <div class="figure" style="text-align: center">
 <img src="img/arist.jpg" alt="Keskaegne aristotellik maailm." width="\linewidth" />
-<p class="caption">(\#fig:unnamed-chunk-3)Keskaegne aristotellik maailm.</p>
+<p class="caption">(\#fig:unnamed-chunk-2)Keskaegne aristotellik maailm.</p>
 </div>
 
 
@@ -106,7 +105,7 @@ Ptolemaiosel ja tema järgijatel oli tegelikult mitu erinevat mudelit. Osad neis
 
 <div class="figure" style="text-align: center">
 <img src="img/pt2.jpg" alt="Ilma epitsükliteta ptolemailine mudel." width="\linewidth" />
-<p class="caption">(\#fig:unnamed-chunk-4)Ilma epitsükliteta ptolemailine mudel.</p>
+<p class="caption">(\#fig:unnamed-chunk-3)Ilma epitsükliteta ptolemailine mudel.</p>
 </div>
 
 Nii tekkis olukord, kus maailma mõistmiseks kasutati Aristotelese ühendteooriat, aga selle kirjeldamiseks ja tuleviku ennustamiseks hoopis ptolemailisi mudeleid, mida keegi päriselt tõeks ei pidanud ja mida hinnati selle järgi, kui hästi need "päästsid fenomene". 
@@ -115,7 +114,7 @@ See toob meid Kopernikuse (1473 – 1543) juurde, kes teadusajaloolaste arvates 
 
 <div class="figure" style="text-align: center">
 <img src="img/kop.jpg" alt="Ptolemaiose ja Kopernikuse mudelid on üllatavalt sarnased." width="\linewidth" />
-<p class="caption">(\#fig:unnamed-chunk-5)Ptolemaiose ja Kopernikuse mudelid on üllatavalt sarnased.</p>
+<p class="caption">(\#fig:unnamed-chunk-4)Ptolemaiose ja Kopernikuse mudelid on üllatavalt sarnased.</p>
 </div>
 
 

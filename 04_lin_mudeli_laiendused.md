@@ -1,7 +1,5 @@
 
 
-
-
 # Kaks lineaarse mudeli laiendust
 
 ## Mitme sõltumatu prediktoriga mudel {-}
@@ -20,8 +18,8 @@ Kui meil on 3 prediktoriga mudel, siis me liigume juba 4-mõõtmelisse ruumi.
 
 
 <div class="figure" style="text-align: center">
-<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-5-1.png" alt="Regressioonitasand 3D andmetele. Siin on Sepal.Length ja Petal.Length prediktorid ja Sepal.Width ennustatav muutuja." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-5)Regressioonitasand 3D andmetele. Siin on Sepal.Length ja Petal.Length prediktorid ja Sepal.Width ennustatav muutuja.</p>
+<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-3-1.png" alt="Regressioonitasand 3D andmetele. Siin on Sepal.Length ja Petal.Length prediktorid ja Sepal.Width ennustatav muutuja." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-3)Regressioonitasand 3D andmetele. Siin on Sepal.Length ja Petal.Length prediktorid ja Sepal.Width ennustatav muutuja.</p>
 </div>
 
 
@@ -99,8 +97,8 @@ abline(c(coef(m1)[1], coef(m1)[2]), lty = "dashed")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-9-1.png" alt="Ennustatud y väärtused erinevatel x1 ja x2 väärtustel, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-9)Ennustatud y väärtused erinevatel x1 ja x2 väärtustel, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus.</p>
+<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-7-1.png" alt="Ennustatud y väärtused erinevatel x1 ja x2 väärtustel, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-7)Ennustatud y väärtused erinevatel x1 ja x2 väärtustel, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus.</p>
 </div>
 
 Nüüd joonistame 3D pildi olukorrast, kus nii $x_1$ kui $x_2$ omandavad rea väärtusi. Mudeli ennustus on ikkagi sirge kujul -- mis sest, et 3D ruumis.
@@ -114,8 +112,8 @@ with(dfr, scatterplot3d(Sepal_length, Petal_length, Sepal_width, col.axis = "blu
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-10-1.png" alt="kahe prediktoriga mudeli ennustus 3D ruumis." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-10)kahe prediktoriga mudeli ennustus 3D ruumis.</p>
+<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-8-1.png" alt="kahe prediktoriga mudeli ennustus 3D ruumis." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-8)kahe prediktoriga mudeli ennustus 3D ruumis.</p>
 </div>
 
 ## Interaktsioonimudel {-}
@@ -165,8 +163,8 @@ abline(m2, lty = "dashed")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-12-1.png" alt="Ennustus interaktsioonimudelist, kus x1 on antud rida väärtusi ja x2 hoitakse konstantsena." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-12)Ennustus interaktsioonimudelist, kus x1 on antud rida väärtusi ja x2 hoitakse konstantsena.</p>
+<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-10-1.png" alt="Ennustus interaktsioonimudelist, kus x1 on antud rida väärtusi ja x2 hoitakse konstantsena." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-10)Ennustus interaktsioonimudelist, kus x1 on antud rida väärtusi ja x2 hoitakse konstantsena.</p>
 </div>
 
 Tulemuseks on sirge, mis on paraleelne ilma interaktsioonita mudeli ennustusele (katkendjoon)
@@ -192,8 +190,8 @@ with(dfr, scatterplot3d(Sepal_length, Petal_length, Sepal_width, pch = 20, col.a
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-13-1.png" alt="Ennustused 3D interaktsioonimudelist üle paljude x1 ja x2 väärtuste." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-13)Ennustused 3D interaktsioonimudelist üle paljude x1 ja x2 väärtuste.</p>
+<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-11-1.png" alt="Ennustused 3D interaktsioonimudelist üle paljude x1 ja x2 väärtuste." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-11)Ennustused 3D interaktsioonimudelist üle paljude x1 ja x2 väärtuste.</p>
 </div>
 
 Vau! See on alles ennustus!
@@ -272,8 +270,8 @@ p
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-14-1.png" alt="Normaaljaotus tekib sõltumatutest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi summa tihedusdiagramm." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-14)Normaaljaotus tekib sõltumatutest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi summa tihedusdiagramm.</p>
+<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-12-1.png" alt="Normaaljaotus tekib sõltumatutest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi summa tihedusdiagramm." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-12)Normaaljaotus tekib sõltumatutest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi summa tihedusdiagramm.</p>
 </div>
 
 Selles näites võrdub iga andmepunkt 10 000st ühe bakteritüve kasvukiiruse mõõtmisega. Seega, antud eelduste korral on bakteritüvede kasvukiirused normaaljaotusega.
@@ -291,8 +289,8 @@ p %+% tibble(kasv)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-15-1.png" alt="Normaaljaotus tekib väikestest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Ühegi geeni mõju ei domineeri teiste üle." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-15)Normaaljaotus tekib väikestest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Ühegi geeni mõju ei domineeri teiste üle.</p>
+<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-13-1.png" alt="Normaaljaotus tekib väikestest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Ühegi geeni mõju ei domineeri teiste üle." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-13)Normaaljaotus tekib väikestest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Ühegi geeni mõju ei domineeri teiste üle.</p>
 </div>
 
 Tulemuseks on jällegi normaaljaotus.
@@ -306,8 +304,8 @@ p %+% tibble(kasv)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-16-1.png" alt="Lognormaaljaotus tekib suurematest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-16)Lognormaaljaotus tekib suurematest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel.</p>
+<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-14-1.png" alt="Lognormaaljaotus tekib suurematest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-14)Lognormaaljaotus tekib suurematest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel.</p>
 </div>
 
 Nüüd on tulemuseks log-normaaljaotus. Mis teie arvate, kas teie poolt uuritavat tunnust mõjutavad faktorid, mis omavahel ei interakteeru või kui interakteeruvad, on kõik ühtlaselt väikeste efektidega? 
@@ -324,8 +322,8 @@ p %+% tibble(kasv) + labs(x = "kasv, log10")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-17-1.png" alt="Logaritmilises skaalas lognormaalsed efektid on normaaljaotusega. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-17)Logaritmilises skaalas lognormaalsed efektid on normaaljaotusega. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel.</p>
+<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-15-1.png" alt="Logaritmilises skaalas lognormaalsed efektid on normaaljaotusega. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-15)Logaritmilises skaalas lognormaalsed efektid on normaaljaotusega. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel.</p>
 </div>
 
 ### Normaaljaotuse mudel väikestel valimitel {-}
@@ -342,8 +340,8 @@ Kuidas panna skeptik uskuma, et statistilised meetodid töötavad halvasti väik
 Me fitime oma valimi andmetega 2 erinevat mudelit: normaaljaotuse ja Studenti t jaotuse. 
 
 <div class="figure" style="text-align: center">
-<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-18-1.png" alt="Juhuvalim normaaljaotusest, mille keskmine = 0 ja sd = 1 (n=3; andmepunktid on näidatud mustade munadena). Sinine joon - populatsioon, millest tõmmati valim; punane joon - normaaljaotuse mudel, mis on fititud valimi andmetel; must joon - Studenti t jaotuse mudel, mis on fititud samade andmetega. Mustad punktid, valim. Katkendjoon, populatsiooni keskmine, millest valim tõmmati." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-18)Juhuvalim normaaljaotusest, mille keskmine = 0 ja sd = 1 (n=3; andmepunktid on näidatud mustade munadena). Sinine joon - populatsioon, millest tõmmati valim; punane joon - normaaljaotuse mudel, mis on fititud valimi andmetel; must joon - Studenti t jaotuse mudel, mis on fititud samade andmetega. Mustad punktid, valim. Katkendjoon, populatsiooni keskmine, millest valim tõmmati.</p>
+<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-16-1.png" alt="Juhuvalim normaaljaotusest, mille keskmine = 0 ja sd = 1 (n=3; andmepunktid on näidatud mustade munadena). Sinine joon - populatsioon, millest tõmmati valim; punane joon - normaaljaotuse mudel, mis on fititud valimi andmetel; must joon - Studenti t jaotuse mudel, mis on fititud samade andmetega. Mustad punktid, valim. Katkendjoon, populatsiooni keskmine, millest valim tõmmati." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-16)Juhuvalim normaaljaotusest, mille keskmine = 0 ja sd = 1 (n=3; andmepunktid on näidatud mustade munadena). Sinine joon - populatsioon, millest tõmmati valim; punane joon - normaaljaotuse mudel, mis on fititud valimi andmetel; must joon - Studenti t jaotuse mudel, mis on fititud samade andmetega. Mustad punktid, valim. Katkendjoon, populatsiooni keskmine, millest valim tõmmati.</p>
 </div>
 
 Siin saame hinnata mudelite fitte jumala positsioonilt, võrreldes fititud mudelite jaotusi "tõese" sinise jaotusega.
@@ -370,8 +368,8 @@ hist(simulated_data)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-19-1.png" alt="Kasutame fititud mudeleid uute andmete simuleerimiseks." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-19)Kasutame fititud mudeleid uute andmete simuleerimiseks.</p>
+<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-17-1.png" alt="Kasutame fititud mudeleid uute andmete simuleerimiseks." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-17)Kasutame fititud mudeleid uute andmete simuleerimiseks.</p>
 </div>
 
 Nagu näha, on uute (simuleeritud) andmete keskväärtus ja SD väga sarnased algsete andmete omale, mida kasutasime mudeli fittimisel. 

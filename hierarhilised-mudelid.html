@@ -107,7 +107,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Saateks</a></li>
-<li class="part"><span><b>I Teooria</b></span></li>
+<li class="part"><span><b>I OSA</b></span></li>
 <li class="chapter" data-level="1" data-path="sissejuhatus-maailm-teooria-ja-mudel.html"><a href="sissejuhatus-maailm-teooria-ja-mudel.html"><i class="fa fa-check"></i><b>1</b> Sissejuhatus: maailm, teooria ja mudel</a><ul>
 <li class="chapter" data-level="" data-path="sissejuhatus-maailm-teooria-ja-mudel.html"><a href="sissejuhatus-maailm-teooria-ja-mudel.html#suur-ja-vaike-maailm"><i class="fa fa-check"></i>Suur ja väike maailm</a></li>
 <li class="chapter" data-level="" data-path="sissejuhatus-maailm-teooria-ja-mudel.html"><a href="sissejuhatus-maailm-teooria-ja-mudel.html#mudeli-vaike-maailm"><i class="fa fa-check"></i>Mudeli väike maailm</a></li>
@@ -150,7 +150,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#andmed-ei-ole-sama-mis-tegelikkus"><i class="fa fa-check"></i>Andmed ei ole sama, mis tegelikkus</a></li>
 </ul></li>
-<li class="part"><span><b>II Praktika</b></span></li>
+<li class="part"><span><b>II OSA</b></span></li>
 <li class="chapter" data-level="8" data-path="bootstrappimine.html"><a href="bootstrappimine.html"><i class="fa fa-check"></i><b>8</b> Bootstrappimine</a><ul>
 <li class="chapter" data-level="" data-path="bootstrappimine.html"><a href="bootstrappimine.html#veidi-keerulisem-bootstrap"><i class="fa fa-check"></i>Veidi keerulisem bootstrap</a></li>
 <li class="chapter" data-level="" data-path="bootstrappimine.html"><a href="bootstrappimine.html#bayesboot"><i class="fa fa-check"></i>bayesboot()</a></li>
@@ -306,8 +306,8 @@ schools &lt;-<span class="st"> </span>schools <span class="op">%&gt;%</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">compare</span>(schoolm2, schoolm3)</code></pre></div>
 <p>Siit nähtub, et m3 on parim mudel, aga ka m2 omab mingit kaalu.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">coeftab</span>(schoolm2, schoolm3))</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
-<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-12-1.png" alt="mudelite koefitsiendid." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
+<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-11-1.png" alt="mudelite koefitsiendid." width="70%" />
 <p class="caption">
 Joonis 3.3: mudelite koefitsiendid.
 </p>
@@ -358,8 +358,8 @@ Joonis 3.3: mudelite koefitsiendid.
 <span class="co">#glimmer converts factors to Stan-eatable form.</span></code></pre></div>
 <p>Siin on v_Intercept kooli-spetsiifiline korrektsioonifaktor, mis tuleb liita üldisele Interceptile. mean(v_Intercept) == 0. Me eeldame, et korrektsioonid on normaaljaotusega. Alternatiivne viis seda mudelit kirjutada oleks <code>mu &lt;- Intercept[school] + b_sex1*sex1</code> ja see töötab smamoodi (nüüd on iga kooli intercept kohe eraldi).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">precis</span>(schools_m1, <span class="dt">depth =</span> <span class="dv">2</span>))</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-18"></span>
-<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-18-1.png" alt="Mudeli koefitsiendid" width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-17"></span>
+<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-17-1.png" alt="Mudeli koefitsiendid" width="70%" />
 <p class="caption">
 Joonis 2.6: Mudeli koefitsiendid
 </p>
@@ -384,8 +384,8 @@ school_2_girls &lt;-<span class="st"> </span>schools_m1_samples<span class="op">
 <span class="st">  </span>schools_m1_samples<span class="op">$</span><span class="st">`</span><span class="dt">v_Intercept[2]</span><span class="st">`</span>
 ## Plot density histogram of intercepts
 <span class="kw">dens</span>(school_2_girls)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-20"></span>
-<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-20-1.png" alt="Tüdrukute skoori posteerior" width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-19"></span>
+<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-19-1.png" alt="Tüdrukute skoori posteerior" width="70%" />
 <p class="caption">
 Joonis 11.1: Tüdrukute skoori posteerior
 </p>
@@ -395,10 +395,10 @@ Joonis 11.1: Tüdrukute skoori posteerior
 <span class="st">  </span>schools_m1_samples<span class="op">$</span><span class="st">`</span><span class="dt">v_Intercept[2]</span><span class="st">`</span>
 ## Plot density histogram of intercepts
 <span class="kw">dens</span>(school_2_boys)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-21"></span>
-<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-21-1.png" alt="Poiste skoori posteerior." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-20"></span>
+<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-20-1.png" alt="Poiste skoori posteerior." width="70%" />
 <p class="caption">
-Joonis 10.1: Poiste skoori posteerior.
+Joonis 10.2: Poiste skoori posteerior.
 </p>
 </div>
 <p>Siin on eeldus, et kõikides koolides on sama poiste ja tüdrukute vaheline erinevus (b_sex1), kuid erinevad matemaatikateadmiste baastasemed (mudeli intercept on koolide vahel vabaks lastud, kuid tõus mitte).</p>
@@ -424,8 +424,8 @@ Joonis 10.1: Poiste skoori posteerior.
 <p>Prior korrelatsioonile Interceptide ja tõusude vahel on <code>rethinking::lkjcorr()</code>. Selle ainus parameeter on K. Mida suurem K, seda rohkem on prior konsentreeritud 0 korrelatsiooni ümber. K = 1 annab tasase priori. Meie kasutame K = 2, mis töötab laia vahemiku mudelitega.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">R &lt;-<span class="st"> </span><span class="kw">rlkjcorr</span>(<span class="fl">1e4</span>, <span class="dt">K =</span> <span class="dv">2</span>, <span class="dt">eta =</span> <span class="dv">2</span>)
 <span class="kw">dens</span>(R[, <span class="dv">1</span>, <span class="dv">2</span>] , <span class="dt">xlab =</span> <span class="st">&quot;correlation&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-23"></span>
-<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-23-1.png" alt="Korrelatsiooni prior on nõrgalt informatiivne -- suunab posteeriori eemale ekstreemsetest korrelatsioonidest." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-22"></span>
+<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-22-1.png" alt="Korrelatsiooni prior on nõrgalt informatiivne -- suunab posteeriori eemale ekstreemsetest korrelatsioonidest." width="70%" />
 <p class="caption">
 Joonis 11.2: Korrelatsiooni prior on nõrgalt informatiivne – suunab posteeriori eemale ekstreemsetest korrelatsioonidest.
 </p>
@@ -444,10 +444,10 @@ Joonis 11.2: Korrelatsiooni prior on nõrgalt informatiivne – suunab posteerio
     sigma <span class="op">~</span><span class="st"> </span><span class="kw">dcauchy</span>(<span class="dv">0</span>,<span class="dv">2</span>)
 ), schools_f2<span class="op">$</span>d)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">precis</span>(schools_m2, <span class="dt">depth =</span> <span class="dv">2</span>))</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-26"></span>
-<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-26-1.png" alt="Mudeli m2 koefitsiendid." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-25"></span>
+<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-25-1.png" alt="Mudeli m2 koefitsiendid." width="70%" />
 <p class="caption">
-Joonis 10.4: Mudeli m2 koefitsiendid.
+Joonis 10.5: Mudeli m2 koefitsiendid.
 </p>
 </div>
 <p>Posteerior korrelatsioonile intercepti ja tõusu vahel:</p>
@@ -455,8 +455,8 @@ Joonis 10.4: Mudeli m2 koefitsiendid.
 df1 &lt;-<span class="st"> </span>schools_m2_samples<span class="op">$</span>Rho_school <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()
 <span class="co">#df1 #corr matrix- we need only the V2 col</span>
 <span class="kw">dens</span>(df1<span class="op">$</span>V2)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-27"></span>
-<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-27-1.png" alt="Posteerior korrelatsioonile intercepti ja tõusu vahel." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-26"></span>
+<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-26-1.png" alt="Posteerior korrelatsioonile intercepti ja tõusu vahel." width="70%" />
 <p class="caption">
 Joonis 11.3: Posteerior korrelatsioonile intercepti ja tõusu vahel.
 </p>
@@ -518,8 +518,8 @@ pred.p.PI
 <span class="co">#&gt; schools_m1 11734  55.8   0.0    0.7 57.2   NA</span>
 <span class="co">#&gt; schools_m2 11736  60.8   1.7    0.3 57.2 1.38</span></code></pre></div>
 <p>Tundub, et tõusude vabakslaskmine oli hea mõte. Ma saan hästi pihta, et erinevad koolid õpetavad matemaatikat erineva kvaliteediga. Aga miks peaks erinevates Inglismaa koolides olema erinev vahe poiste ja tüdrukute matemaatikateadmistel? Kas olukorras kus meil on hea kool, läheb see vahe väiksemaks või suuremaks? Tehke kindlaks!!! võrrelge graafiku slope vs. intercept.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-31"></span>
-<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-31-1.png" alt="mida suurem on koolis poiste skoor, seda väiksem on poiste ja tüdrukute erinevus" width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-30"></span>
+<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-30-1.png" alt="mida suurem on koolis poiste skoor, seda väiksem on poiste ja tüdrukute erinevus" width="70%" />
 <p class="caption">
 Joonis 11.4: mida suurem on koolis poiste skoor, seda väiksem on poiste ja tüdrukute erinevus
 </p>
@@ -533,8 +533,8 @@ Joonis 11.4: mida suurem on koolis poiste skoor, seda väiksem on poiste ja tüd
 <p>Siin püüame ennustada score1 mõju score2 väärtusele.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(schools<span class="op">$</span>score2, schools<span class="op">$</span>score1)
 <span class="kw">abline</span>(<span class="kw">lm</span>(score1 <span class="op">~</span><span class="st"> </span>score2, <span class="dt">data =</span> schools))</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-32"></span>
-<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-32-1.png" alt="score1 vs. score2" width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-31"></span>
+<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-31-1.png" alt="score1 vs. score2" width="70%" />
 <p class="caption">
 Joonis 11.5: score1 vs. score2
 </p>

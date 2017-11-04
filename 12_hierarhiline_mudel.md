@@ -1,6 +1,5 @@
 
 
-
 # Hierarhilised mudelid 
 
 Hierarhiline mudel kajastab sellise katse või vaatluse struktuuri, kus andmed ei grupeeru mitte ainult katse- ja kontrolltingimuste vahel, vaid ka nende gruppide sees klastritesse ehk alamgruppidesse.  Näiteks, kui me mõõdame platseebo-kontrollitud uuringus kümmet patsienti ja teeme igale patsiendile viis kordusmõõtmist (kahetasemeline mudel). Või kui mõõdame kalamaksaõli mõju matemaatikaeksami tulemustele kümnes koolis, ja igas neist viies klassis (kolmetasemeline mudel). 
@@ -166,8 +165,8 @@ plot(coeftab(schoolm2, schoolm3))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-12-1.png" alt="mudelite koefitsiendid." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-12)mudelite koefitsiendid.</p>
+<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-11-1.png" alt="mudelite koefitsiendid." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-11)mudelite koefitsiendid.</p>
 </div>
 
 Siin on hästi näha shrinkage m3 puhul võrreldes m2-ga, mis ei tee multiple testingu korrektsiooni. 
@@ -248,8 +247,8 @@ plot(precis(schools_m1, depth = 2))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-18-1.png" alt="Mudeli koefitsiendid" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-18)Mudeli koefitsiendid</p>
+<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-17-1.png" alt="Mudeli koefitsiendid" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-17)Mudeli koefitsiendid</p>
 </div>
 
 
@@ -290,8 +289,8 @@ dens(school_2_girls)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-20-1.png" alt="Tüdrukute skoori posteerior" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-20)Tüdrukute skoori posteerior</p>
+<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-19-1.png" alt="Tüdrukute skoori posteerior" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-19)Tüdrukute skoori posteerior</p>
 </div>
 
 
@@ -305,8 +304,8 @@ dens(school_2_boys)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-21-1.png" alt="Poiste skoori posteerior." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-21)Poiste skoori posteerior.</p>
+<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-20-1.png" alt="Poiste skoori posteerior." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-20)Poiste skoori posteerior.</p>
 </div>
 
 
@@ -347,8 +346,8 @@ dens(R[, 1, 2] , xlab = "correlation")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-23-1.png" alt="Korrelatsiooni prior on nõrgalt informatiivne -- suunab posteeriori eemale ekstreemsetest korrelatsioonidest." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-23)Korrelatsiooni prior on nõrgalt informatiivne -- suunab posteeriori eemale ekstreemsetest korrelatsioonidest.</p>
+<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-22-1.png" alt="Korrelatsiooni prior on nõrgalt informatiivne -- suunab posteeriori eemale ekstreemsetest korrelatsioonidest." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-22)Korrelatsiooni prior on nõrgalt informatiivne -- suunab posteeriori eemale ekstreemsetest korrelatsioonidest.</p>
 </div>
 
 
@@ -379,8 +378,8 @@ plot(precis(schools_m2, depth = 2))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-26-1.png" alt="Mudeli m2 koefitsiendid." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-26)Mudeli m2 koefitsiendid.</p>
+<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-25-1.png" alt="Mudeli m2 koefitsiendid." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-25)Mudeli m2 koefitsiendid.</p>
 </div>
 
 
@@ -395,8 +394,8 @@ dens(df1$V2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-27-1.png" alt="Posteerior korrelatsioonile intercepti ja tõusu vahel." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-27)Posteerior korrelatsioonile intercepti ja tõusu vahel.</p>
+<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-26-1.png" alt="Posteerior korrelatsioonile intercepti ja tõusu vahel." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-26)Posteerior korrelatsioonile intercepti ja tõusu vahel.</p>
 </div>
 
 
@@ -474,8 +473,8 @@ Kas olukorras kus meil on hea kool, läheb see vahe väiksemaks või suuremaks?
 Tehke kindlaks!!! võrrelge graafiku slope vs. intercept.
 
 <div class="figure" style="text-align: center">
-<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-31-1.png" alt="mida suurem on koolis poiste skoor, seda väiksem on poiste ja tüdrukute erinevus" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-31)mida suurem on koolis poiste skoor, seda väiksem on poiste ja tüdrukute erinevus</p>
+<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-30-1.png" alt="mida suurem on koolis poiste skoor, seda väiksem on poiste ja tüdrukute erinevus" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-30)mida suurem on koolis poiste skoor, seda väiksem on poiste ja tüdrukute erinevus</p>
 </div>
 
 Tõepoolest: mida suurem on koolis poiste skoor (parem kool), seda väiksem on poiste ja tüdrukute erinevus. Aga seos on kaunis nõrk! 
@@ -496,8 +495,8 @@ abline(lm(score1 ~ score2, data = schools))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-32-1.png" alt="score1 vs. score2" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-32)score1 vs. score2</p>
+<img src="12_hierarhiline_mudel_files/figure-html/unnamed-chunk-31-1.png" alt="score1 vs. score2" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-31)score1 vs. score2</p>
 </div>
 
 Kõigepealt lihtne regressioon `lm()` funktsiooniga (see ei ole hierarhiline mudel).

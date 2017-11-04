@@ -107,7 +107,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Saateks</a></li>
-<li class="part"><span><b>I Teooria</b></span></li>
+<li class="part"><span><b>I OSA</b></span></li>
 <li class="chapter" data-level="1" data-path="sissejuhatus-maailm-teooria-ja-mudel.html"><a href="sissejuhatus-maailm-teooria-ja-mudel.html"><i class="fa fa-check"></i><b>1</b> Sissejuhatus: maailm, teooria ja mudel</a><ul>
 <li class="chapter" data-level="" data-path="sissejuhatus-maailm-teooria-ja-mudel.html"><a href="sissejuhatus-maailm-teooria-ja-mudel.html#suur-ja-vaike-maailm"><i class="fa fa-check"></i>Suur ja väike maailm</a></li>
 <li class="chapter" data-level="" data-path="sissejuhatus-maailm-teooria-ja-mudel.html"><a href="sissejuhatus-maailm-teooria-ja-mudel.html#mudeli-vaike-maailm"><i class="fa fa-check"></i>Mudeli väike maailm</a></li>
@@ -150,7 +150,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#andmed-ei-ole-sama-mis-tegelikkus"><i class="fa fa-check"></i>Andmed ei ole sama, mis tegelikkus</a></li>
 </ul></li>
-<li class="part"><span><b>II Praktika</b></span></li>
+<li class="part"><span><b>II OSA</b></span></li>
 <li class="chapter" data-level="8" data-path="bootstrappimine.html"><a href="bootstrappimine.html"><i class="fa fa-check"></i><b>8</b> Bootstrappimine</a><ul>
 <li class="chapter" data-level="" data-path="bootstrappimine.html"><a href="bootstrappimine.html#veidi-keerulisem-bootstrap"><i class="fa fa-check"></i>Veidi keerulisem bootstrap</a></li>
 <li class="chapter" data-level="" data-path="bootstrappimine.html"><a href="bootstrappimine.html#bayesboot"><i class="fa fa-check"></i>bayesboot()</a></li>
@@ -241,8 +241,8 @@ x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</spa
 y &lt;-<span class="st"> </span>x</code></pre></div>
 <p>Selle mudeli saame graafiliselt kujutada nii:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Weight in kg&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Heigth in cm&quot;</span>, <span class="dt">main =</span> <span class="kw">bquote</span>(y <span class="op">==</span><span class="st"> </span>x))</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
-<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-5-1.png" alt="Lihtne mudel y ~ x, mille intecept = 0 ja tõus = 1." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
+<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-4-1.png" alt="Lihtne mudel y ~ x, mille intecept = 0 ja tõus = 1." width="70%" />
 <p class="caption">
 Joonis 1.3: Lihtne mudel y ~ x, mille intecept = 0 ja tõus = 1.
 </p>
@@ -258,8 +258,8 @@ y &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </s
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">150</span>), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,
      <span class="dt">main =</span> <span class="kw">bquote</span>(y <span class="op">==</span><span class="st"> </span>a <span class="op">+</span><span class="st"> </span>x))
 <span class="kw">abline</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
-<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-7-1.png" alt="Lineaarne mudel, mille intecept = &quot;, a ,&quot; ja tõus = 1.. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = 30." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
+<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-6-1.png" alt="Lineaarne mudel, mille intecept = &quot;, a ,&quot; ja tõus = 1.. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = 30." width="70%" />
 <p class="caption">
 Joonis 2.1: Lineaarne mudel, mille intecept = “, a ,” ja tõus = 1.. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = 30.
 </p>
@@ -273,8 +273,8 @@ b &lt;-<span class="st"> </span><span class="dv">3</span>
 y &lt;-<span class="st"> </span>b <span class="op">*</span><span class="st"> </span>x</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">main =</span> <span class="kw">bquote</span>(y <span class="op">==</span><span class="st"> </span>b <span class="op">%*%</span><span class="st"> </span>x))
 <span class="kw">abline</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-9"></span>
-<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-9-1.png" alt="Lineaarne mudel, mille intercept = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
+<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-8-1.png" alt="Lineaarne mudel, mille intercept = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3." width="70%" />
 <p class="caption">
 Joonis 2.2: Lineaarne mudel, mille intercept = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3.
 </p>
@@ -290,8 +290,8 @@ b &lt;-<span class="st"> </span><span class="fl">0.8</span>
 x &lt;-<span class="st">  </span><span class="dv">0</span><span class="op">:</span><span class="dv">100</span> 
 y &lt;-<span class="st">  </span>a <span class="op">+</span><span class="st"> </span>b <span class="op">*</span><span class="st"> </span>x</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">xlab =</span> <span class="st">&quot;Weight in kg&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Heigth in cm&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">200</span>), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">main =</span> <span class="kw">bquote</span>(y <span class="op">==</span><span class="st"> </span><span class="dv">102</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.8</span> <span class="op">%*%</span><span class="st"> </span>x))</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
-<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-11-1.png" alt="Lineaarne mudel, millel on tuunitud nii lõikepunkt kui tõus." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-10"></span>
+<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-10-1.png" alt="Lineaarne mudel, millel on tuunitud nii lõikepunkt kui tõus." width="70%" />
 <p class="caption">
 Joonis 2.3: Lineaarne mudel, millel on tuunitud nii lõikepunkt kui tõus.
 </p>
@@ -314,8 +314,8 @@ m &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Length <span cl
 <span class="co">#&gt; Warning: Deprecated: please use `purrr::possibly()` instead</span>
 <span class="co">#&gt; Warning: Deprecated: please use `purrr::possibly()` instead</span>
 <span class="co">#&gt; Warning: Deprecated: please use `purrr::possibly()` instead</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-13"></span>
-<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-13-1.png" alt="Fititud mudel, kus muutuja Petal.Length järgi ennustatakse muutuja Sepal.Length väärtusi." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
+<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-12-1.png" alt="Fititud mudel, kus muutuja Petal.Length järgi ennustatakse muutuja Sepal.Length väärtusi." width="70%" />
 <p class="caption">
 Joonis 2.4: Fititud mudel, kus muutuja Petal.Length järgi ennustatakse muutuja Sepal.Length väärtusi.
 </p>
@@ -343,8 +343,8 @@ b &lt;-<span class="st"> </span><span class="kw">coef</span>(m)[<span class="dv"
 ## Kasutades mudeli koefitsente genereerime Sepal_length väärtused
 Sepal_length &lt;-<span class="st">  </span>a <span class="op">+</span><span class="st"> </span>b <span class="op">*</span><span class="st"> </span>Petal_length</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(Sepal_length <span class="op">~</span><span class="st"> </span>Petal_length, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-16"></span>
-<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-16-1.png" alt="Siin ennustasime kümme y väärtust x väärtuste põhjal.." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-15"></span>
+<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-15-1.png" alt="Siin ennustasime kümme y väärtust x väärtuste põhjal.." width="70%" />
 <p class="caption">
 Joonis 2.5: Siin ennustasime kümme y väärtust x väärtuste põhjal..
 </p>
@@ -387,8 +387,8 @@ Joonis 2.5: Siin ennustasime kümme y väärtust x väärtuste põhjal..
 <h2>Üle- ja alafittimine</h2>
 <p>Osad mudelite tüübid on vähem paindlikud kui teised (parameetreid tuunides on neil vähem liikumisruumi). Kuigi sellised mudelid sobituvad halvemini andmetega, võivad need ikkagi paremini kui mõni paindlikum mudel välja tuua andmete peidetud olemuse. Mudeldamine eeldab, et me usume, et meie andmetes leidub nii müra (mida mudel võiks ignoreerida), kui signaal (mida mudel püüab tabada). Kuna mudeli jaoks näeb müra samamoodi välja, kui signaal, on iga mudel kompromiss üle- ja alafittimise vahel. Me lihtsalt loodame, et meie mudel on piisavalt jäik, et mitte liiga palju müra modelleerida ja samas piisavalt paindlik, et piisaval määral signaali tabada.</p>
 <p>Üks kõige jäigemaid mudeleid on sirge, mis tähendab, et sirge mudel on suure tõenäosusega alafittitud. Keera sirget kuipalju tahad, ikka ei sobitu ta enamiku andmekogudega. Ja need vähesed andmekogud, mis sirge mudeliga sobivad, on genereeritud teatud tüüpi lineaarsete protsesside poolt. Sirge on seega üks kõige paremini tõlgendatavaid mudeleid. Teises äärmuses on polünoomsed mudelid, mis on väga paindlikud, mida on väga raske tõlgendada ja mille puhul esineb suur mudeli ülefittimise oht. Ülefititud mudel järgib nii täpselt valimiandmeid, et sobitub hästi valimis leiduva juhusliku müraga ning seetõttu sobitub halvasti järgmise valimiga samast populatsioonist (igal valimil on oma juhuslik müra). Üldiselt, mida rohkem on mudelis tuunitavaid parameetreid, seda paindlikum on mudel, seda kergem on seda valimiandmetega sobitada ja seda raskem on seda tõlgendada. Veelgi enam, alati on võimalik konstrueerida mudel, mis sobitub täiuslikult kõikide andmepunktidega (selle mudeli parameetrite arv = N). Selline mudel on täpselt sama informatiivne kui andmed, mille põhjal see fititi — ja täiesti kasutu.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-18"></span>
-<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-18-1.png" alt="Kasvava paindlikusega polünoomsed mudelid." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-17"></span>
+<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-17-1.png" alt="Kasvava paindlikusega polünoomsed mudelid." width="70%" />
 <p class="caption">
 Joonis 2.6: Kasvava paindlikusega polünoomsed mudelid.
 </p>

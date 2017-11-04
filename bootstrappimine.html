@@ -107,7 +107,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Saateks</a></li>
-<li class="part"><span><b>I Teooria</b></span></li>
+<li class="part"><span><b>I OSA</b></span></li>
 <li class="chapter" data-level="1" data-path="sissejuhatus-maailm-teooria-ja-mudel.html"><a href="sissejuhatus-maailm-teooria-ja-mudel.html"><i class="fa fa-check"></i><b>1</b> Sissejuhatus: maailm, teooria ja mudel</a><ul>
 <li class="chapter" data-level="" data-path="sissejuhatus-maailm-teooria-ja-mudel.html"><a href="sissejuhatus-maailm-teooria-ja-mudel.html#suur-ja-vaike-maailm"><i class="fa fa-check"></i>Suur ja väike maailm</a></li>
 <li class="chapter" data-level="" data-path="sissejuhatus-maailm-teooria-ja-mudel.html"><a href="sissejuhatus-maailm-teooria-ja-mudel.html#mudeli-vaike-maailm"><i class="fa fa-check"></i>Mudeli väike maailm</a></li>
@@ -150,7 +150,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#andmed-ei-ole-sama-mis-tegelikkus"><i class="fa fa-check"></i>Andmed ei ole sama, mis tegelikkus</a></li>
 </ul></li>
-<li class="part"><span><b>II Praktika</b></span></li>
+<li class="part"><span><b>II OSA</b></span></li>
 <li class="chapter" data-level="8" data-path="bootstrappimine.html"><a href="bootstrappimine.html"><i class="fa fa-check"></i><b>8</b> Bootstrappimine</a><ul>
 <li class="chapter" data-level="" data-path="bootstrappimine.html"><a href="bootstrappimine.html#veidi-keerulisem-bootstrap"><i class="fa fa-check"></i>Veidi keerulisem bootstrap</a></li>
 <li class="chapter" data-level="" data-path="bootstrappimine.html"><a href="bootstrappimine.html#bayesboot"><i class="fa fa-check"></i>bayesboot()</a></li>
@@ -251,8 +251,8 @@ boot_mean &lt;-<span class="st"> </span>heights <span class="op">%&gt;%</span><s
 <span class="st">  </span>broom<span class="op">::</span><span class="kw">bootstrap</span>(<span class="dv">1000</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">do</span>(<span class="kw">summarise</span>(., <span class="dt">Mean =</span> <span class="kw">mean</span>(value)))
 <span class="kw">ggplot</span>(boot_mean, <span class="kw">aes</span>(Mean)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>()</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
-<img src="08_bootstrap_files/figure-html/unnamed-chunk-3-1.png" alt="Bootstrapitud posteerior USA presidentide keskmisele pikkusele." width=".49\linewidth" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
+<img src="08_bootstrap_files/figure-html/unnamed-chunk-2-1.png" alt="Bootstrapitud posteerior USA presidentide keskmisele pikkusele." width=".49\linewidth" />
 <p class="caption">
 Joonis 1.1: Bootstrapitud posteerior USA presidentide keskmisele pikkusele.
 </p>
@@ -287,8 +287,8 @@ Joonis 1.1: Bootstrapitud posteerior USA presidentide keskmisele pikkusele.
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Diff =</span> Mean <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(heights<span class="op">$</span>value))
 <span class="kw">ggplot</span>(boot_mean, <span class="kw">aes</span>(Diff)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_density</span>()</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
-<img src="08_bootstrap_files/figure-html/unnamed-chunk-7-1.png" alt="Empiirilise bootstrapi posteerior USA presidentide keskmisele pikkusele." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
+<img src="08_bootstrap_files/figure-html/unnamed-chunk-6-1.png" alt="Empiirilise bootstrapi posteerior USA presidentide keskmisele pikkusele." width="70%" />
 <p class="caption">
 Joonis 2.1: Empiirilise bootstrapi posteerior USA presidentide keskmisele pikkusele.
 </p>
@@ -309,8 +309,8 @@ heights_bb &lt;-<span class="st"> </span><span class="kw">bayesboot</span>(heigh
 <span class="kw">HPDI</span>(heights_bb<span class="op">$</span>V1, <span class="dt">prob =</span> <span class="fl">0.95</span>)
 <span class="co">#&gt; |0.95 0.95| </span>
 <span class="co">#&gt;   183   187</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-9"></span>
-<img src="08_bootstrap_files/figure-html/unnamed-chunk-9-1.png" alt="Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
+<img src="08_bootstrap_files/figure-html/unnamed-chunk-8-1.png" alt="Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele." width="70%" />
 <p class="caption">
 Joonis 2.2: Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele.
 </p>
@@ -333,8 +333,8 @@ dfr &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt
               <span class="dt">c =</span> a <span class="op">-</span><span class="st"> </span>b)
 dfr_bb &lt;-<span class="st"> </span><span class="kw">bayesboot</span>(dfr<span class="op">$</span>c, weighted.mean, <span class="dt">use.weights =</span> <span class="ot">TRUE</span> )
 <span class="kw">plot</span>(dfr_bb, <span class="dt">compVal =</span> <span class="dv">0</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
-<img src="08_bootstrap_files/figure-html/unnamed-chunk-12-1.png" alt="Bayesi bootstrap ES-le." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
+<img src="08_bootstrap_files/figure-html/unnamed-chunk-11-1.png" alt="Bayesi bootstrap ES-le." width="70%" />
 <p class="caption">
 Joonis 3.3: Bayesi bootstrap ES-le.
 </p>
@@ -359,14 +359,14 @@ sample_means_sum &lt;-<span class="st"> </span>sample_means <span class="op">%&g
 <span class="kw">HPDI</span>(sample_means_sum<span class="op">$</span>Mean)
 <span class="co">#&gt; |0.89 0.89| </span>
 <span class="co">#&gt;   183   187</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-13"></span>
-<img src="08_bootstrap_files/figure-html/unnamed-chunk-13-1.png" alt="Parameetrilise bootstrapi posteerior USA presidentide keskmisele pikkusele." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
+<img src="08_bootstrap_files/figure-html/unnamed-chunk-12-1.png" alt="Parameetrilise bootstrapi posteerior USA presidentide keskmisele pikkusele." width="70%" />
 <p class="caption">
 Joonis 2.4: Parameetrilise bootstrapi posteerior USA presidentide keskmisele pikkusele.
 </p>
 </div>
 <p>Üldiselt ei soovita me parameetrilist bootstrappi väga soojalt, sest täisbayesiaanlik alternatiiv, mida me kohe õppima asume, on sellest paindlikum.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-14"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-13"></span>
 <img src="img/boot1.pdf" alt="Bootstrappimise meetodid." width="70%" />
 <p class="caption">
 Joonis 3.4: Bootstrappimise meetodid.

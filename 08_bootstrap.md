@@ -1,7 +1,6 @@
 
 
-
-# (PART) Praktika {-}
+# (PART) OSA {-}
 
 # Bootstrappimine
 
@@ -41,8 +40,8 @@ ggplot(boot_mean, aes(Mean)) + geom_density()
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08_bootstrap_files/figure-html/unnamed-chunk-3-1.png" alt="Bootstrapitud posteerior USA presidentide keskmisele pikkusele." width=".49\linewidth" />
-<p class="caption">(\#fig:unnamed-chunk-3)Bootstrapitud posteerior USA presidentide keskmisele pikkusele.</p>
+<img src="08_bootstrap_files/figure-html/unnamed-chunk-2-1.png" alt="Bootstrapitud posteerior USA presidentide keskmisele pikkusele." width=".49\linewidth" />
+<p class="caption">(\#fig:unnamed-chunk-2)Bootstrapitud posteerior USA presidentide keskmisele pikkusele.</p>
 </div>
 
 Mida selline keskväärtuste jaotus tähendab? Me võime seda vaadelda posterioorse tõenäosusjaotusena. Selle tõlgenduse kohaselt iseloomustab see jaotus täpselt meie usku presidentide keskmise pikkuse kohta, niipalju kui see usk põhineb bootstrappimises kasutatud andmetel. Senikaua, kui meil pole muud relevantset teavet, on kõik, mida me usume teadvat USA presidentide keskmise pikkuse kohta, peidus selles jaotuses. Need pikkused, mille kohal jaotus on kõrgem, sisaldavad meie jaoks tõenäolisemalt tegelikku USA presidentide keskmist pikkust kui need pikkused, mille kohal posterioorne jaotus on madalam.   
@@ -104,8 +103,8 @@ ggplot(boot_mean, aes(Diff)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08_bootstrap_files/figure-html/unnamed-chunk-7-1.png" alt="Empiirilise bootstrapi posteerior USA presidentide keskmisele pikkusele." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-7)Empiirilise bootstrapi posteerior USA presidentide keskmisele pikkusele.</p>
+<img src="08_bootstrap_files/figure-html/unnamed-chunk-6-1.png" alt="Empiirilise bootstrapi posteerior USA presidentide keskmisele pikkusele." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-6)Empiirilise bootstrapi posteerior USA presidentide keskmisele pikkusele.</p>
 </div>
 
 Ja usaldusinterval tuleb niiviisi
@@ -135,8 +134,8 @@ HPDI(heights_bb$V1, prob = 0.95)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08_bootstrap_files/figure-html/unnamed-chunk-9-1.png" alt="Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-9)Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele.</p>
+<img src="08_bootstrap_files/figure-html/unnamed-chunk-8-1.png" alt="Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-8)Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele.</p>
 </div>
 
 Bayesi bootstrap töötab veidi efektiivsemalt, kui me arvutame kaalutud statistikuid. Näiteks kaalutud keskmise saab niimoodi:
@@ -170,8 +169,8 @@ plot(dfr_bb, compVal = 0)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08_bootstrap_files/figure-html/unnamed-chunk-12-1.png" alt="Bayesi bootstrap ES-le." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-12)Bayesi bootstrap ES-le.</p>
+<img src="08_bootstrap_files/figure-html/unnamed-chunk-11-1.png" alt="Bayesi bootstrap ES-le." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-11)Bayesi bootstrap ES-le.</p>
 </div>
 
 
@@ -202,15 +201,15 @@ HPDI(sample_means_sum$Mean)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08_bootstrap_files/figure-html/unnamed-chunk-13-1.png" alt="Parameetrilise bootstrapi posteerior USA presidentide keskmisele pikkusele." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-13)Parameetrilise bootstrapi posteerior USA presidentide keskmisele pikkusele.</p>
+<img src="08_bootstrap_files/figure-html/unnamed-chunk-12-1.png" alt="Parameetrilise bootstrapi posteerior USA presidentide keskmisele pikkusele." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-12)Parameetrilise bootstrapi posteerior USA presidentide keskmisele pikkusele.</p>
 </div>
 
 Üldiselt ei soovita me parameetrilist bootstrappi väga soojalt, sest täisbayesiaanlik alternatiiv, mida me kohe õppima asume, on sellest paindlikum.
 
 <div class="figure" style="text-align: center">
 <img src="img/boot1.pdf" alt="Bootstrappimise meetodid." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-14)Bootstrappimise meetodid.</p>
+<p class="caption">(\#fig:unnamed-chunk-13)Bootstrappimise meetodid.</p>
 </div>
 
 ## Bootstrappimine ei ole kogu tõde {-}
