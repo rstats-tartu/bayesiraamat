@@ -241,7 +241,7 @@ Tulemuseks on jällegi normaaljaotus.
 Selles näites olid üksikud interakteeruvad geenid ükshaaval väikeste mõjudega ja ühegi geeni mõju ei domineerinud teiste üle. 
 Mis juhtub, kui mõnel geenil on kuni 2 korda suurem mõju kui teisel?
 
-```{r fig.height=2, fig.width=4, fig.cap='Lognormaaljaotus tekib suurematest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel.'}
+```{r, fig.cap='Lognormaaljaotus tekib suurematest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel.'}
 kasv <- replicate(10000, prod(runif(12, 1, 2)))
 p %+% tibble(kasv)
 ```
@@ -253,7 +253,7 @@ Või on tegu vastasmõjudes olevate faktoritega, millest osad on palju suuremate
 Kui me vaatame samu andmeid logaritmilises skaalas, avastame, et need andmed on normaaljaotusega. 
 See ongi andmete logaritmimise mõte.
 
-```{r fig.height=2, fig.width=4, fig.cap='Logaritmilises skaalas lognormaalsed efektid on normaaljaotusega. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel.'}
+```{r, fig.cap='Logaritmilises skaalas lognormaalsed efektid on normaaljaotusega. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel.'}
 kasv <- replicate(10000, log10(prod(runif(12, 1, 2))))
 p %+% tibble(kasv) + labs(x = "kasv, log10")
 ```
