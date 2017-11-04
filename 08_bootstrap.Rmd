@@ -28,7 +28,7 @@ Bootstrap empiirilisele valimile suurusega n töötab nii:
 
 Mis on USA presidentide keskmine pikkus? Meil on valim 11 presidendi pikkusega.
 
-```{r, out.width='.49\\linewidth', fig.cap="Bootstrapitud posteerior USA presidentide keskmisele pikkusele.",  fig.height=2, fig.width=3}
+```{r, out.width='.49\\linewidth', fig.cap="Bootstrapitud posteerior USA presidentide keskmisele pikkusele."}
 library(tidyverse)
 heights <- tibble(value = c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185, 188))
 boot_mean <- heights %>% 
@@ -79,7 +79,7 @@ See lihtne meetod on küll populaarne ja annab sageli häid tulemusi, aga ei ole
 Empiiriline bootstrap on sellest ainult veidi keerulisem, aga annab robustsemaid tulemusi. 
 Selles ei ploti me enam mitte 1000 statistiku väärtust vaid 1000 erinevust bootstrapitud statistiku väärtuse ja empiirilise valimi põhjal arvutatud statistiku väärtuse vahel.
 
-```{r fig.cap="Empiirilise bootstrapi posteerior USA presidentide keskmisele pikkusele.", fig.height=3, fig.width=4}
+```{r fig.cap="Empiirilise bootstrapi posteerior USA presidentide keskmisele pikkusele."}
 boot_mean <- boot_mean %>% 
   mutate(Diff = Mean - mean(heights$value))
 ggplot(boot_mean, aes(Diff)) +
@@ -99,7 +99,7 @@ See funktsioon pakub pisut moodsama meetodi --- Bayesian bootstrap --- mis töö
 Hea lihtsa seletuse Bayesian bootstrapi kohta saab siit https://www.youtube.com/watch?v=WMAgzr99PKE ja lihtsa r koodi selle meetodi rakendamiseks saab siit https://www.r-bloggers.com/simple-bayesian-bootstrap/
 Näited sellest, kuidas kasutada bayesbooti standardhälbe, korrelatsioonikoefitsiendi ja lineaarse mudeli koefitsientide usalduspiiride arvutamiseks leiate `?bayesboot` käsuga.
 
-```{r fig.cap="Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele.", fig.height=4, fig.width=5}
+```{r fig.cap="Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele."}
 library(bayesboot)
 heights_bb <- bayesboot(heights$value, mean)
 plot(heights_bb, compVal = 185)
@@ -158,7 +158,7 @@ HPDI(sample_means_sum$Mean)
 
 Üldiselt ei soovita me parameetrilist bootstrappi väga soojalt, sest täisbayesiaanlik alternatiiv, mida me kohe õppima asume, on sellest paindlikum.
 
-```{r, fig.align='center', echo=FALSE, fig.cap="Bootstrappimise meetodid.", echo=FALSE}
+```{r, echo=FALSE, fig.cap="Bootstrappimise meetodid.", out.width='50%'}
 knitr::include_graphics("img/boot1.pdf")
 ```
 

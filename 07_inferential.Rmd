@@ -251,7 +251,7 @@ Seda kutsutakse *bootstrappimiseks* ja selle võttis esimesena kasutusele parun 
 Too jutukas parun nimelt suutis end soomülkast iseenda patsi pidi välja tõmmata (koos hobusega), mis ongi bootstrappimise põhimõte.
 Statistika tõmbas oma saapaid pidi mülkast välja Brad Efron 1979. aastal.
 
-```{r echo=FALSE, out.width='.7\\linewidth', fig.cap='Nii nagu parun Münchausen tõmbas ennast patsi pidi mülkast välja, genereeritakse bootstrappimisega algse valimi põhjal teststatistiku jaotus.'}
+```{r echo=FALSE, fig.cap='Nii nagu parun Münchausen tõmbas ennast patsi pidi mülkast välja, genereeritakse bootstrappimisega algse valimi põhjal teststatistiku jaotus.', out.width='50%'}
 knitr::include_graphics("img/munchausen.jpg")
 ```
 

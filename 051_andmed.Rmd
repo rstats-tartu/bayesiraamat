@@ -25,7 +25,9 @@ Järgnevad nõuanded on rangelt soovituslikud:
 
 (3) Valimi kõige levinumat esindajat iseloomustab mood ehk jaotuse tipp. Seda on aga raskem täpselt määrata ja mitmetipulisel jaotusel on mitu moodi. Töötamisel posterioorsete jaotustega on mood sageli parim lahendus. 
 
-```{r echo=FALSE, fig.cap='Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete "keskväärtusest"? Miks?'}
+(ref:lognorm) Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete "keskväärtusest"? Miks?
+
+```{r echo=FALSE, fig.cap='(ref:lognorm)'}
 andmed <- rlnorm(100)
 mode <-  function(x, adjust = 1) {
   x <- na.omit(x)
@@ -79,23 +81,22 @@ multiplicative_sd <- function(x) {
   upper3 <- mean(x) + sd(x)
   lower4 <- mean(x) - sd(x)*2
   upper4 <- mean(x) + sd(x)*2
-  results <- tibble(SD=c("multiplicative_SD", 
-                         "multiplicative_2_SD", 
-                         "additive_SD", 
-                         "additive_2_SD"), 
-                    MEAN=c(geom_mean, 
-                           geom_mean, 
-                           Mean, 
-                           Mean), 
-                    lower=c(lower1, 
-                            lower2, 
-                            lower3, 
-                            lower4), 
-                    upper=c(upper1, 
-                            upper2, 
-                            upper3, 
-                            upper4) )
-  results
+  tibble(SD = c("multiplicative_SD", 
+                "multiplicative_2_SD", 
+                "additive_SD", 
+                "additive_2_SD"), 
+         MEAN = c(geom_mean, 
+                  geom_mean, 
+                  Mean, 
+                  Mean), 
+         lower = c(lower1, 
+                   lower2, 
+                   lower3, 
+                   lower4), 
+         upper = c(upper1, 
+                   upper2, 
+                   upper3, 
+                   upper4))
 }
 
 multiplicative_sd(andmed) %>% knitr::kable()
@@ -119,14 +120,14 @@ Vahest tekkib teil vajadus empiiriliselt määrata, kas teie andmed on normaalja
 Enne kui seda tegema asute, peaksite mõistma, et see, et teie valim ei ole normaalne, ei tähenda automaatselt, et populatsioon, millest see valim tõmmati, ei oleks normaaljaotusega.
 Igal juhul, valimiandmete normaalsuse määramiseks on kõige mõistlikum kasutada qq-plotti. 
 QQ-plot (kvantiil-kvantiil plot) võrdleb andmete jaotust ideaalse normaaljaotusega andmepunkti haaval. Kui empiiriline jaotus kattub referentsjaotusega, siis on tulemuseks sirgel paiknevad punktid. Järgneval qq plotil on näha, mis juhtub, kui plottida lognormaalseid andmeid normaaljaotuse vastu: 
-```{r message=FALSE, fig.height=4, fig.width=4, fig.cap="QQ-plot lognormaalsetele andmetele."}
+```{r, fig.cap="QQ-plot lognormaalsetele andmetele."}
 library(car)
 qqPlot(andmed)
 ```
 
 Nüüd joonistame qq-ploti logaritmitud andmetele. 
 
-```{r fig.height=4, fig.width=4, fig.cap="QQ-plot normaalsetele andmetele."}
+```{r, fig.cap="QQ-plot normaalsetele andmetele."}
 qqPlot(log2(andmed))
 ```
 
@@ -198,6 +199,6 @@ Korrelatsioonimaatriksi saab niimoodi:
 # frequentist correction for mutliple testing:
 # print(psych::corr.test(iris[-5]))
 # only numeric cols allowed! Hence -Species
-knitr::kable(cor(iris[,-5]) )
+knitr::kable(cor(iris[,-5]))
 ```
 
