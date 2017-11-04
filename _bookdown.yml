@@ -1,13 +1,12 @@
 new_session: yes
+book_filename: _main
 language:
   label:
     fig: 'Joonis '
     tab: 'Tabel '
   ui:
-    chapter_name: ""
-before_chapter_script: "_common.R"
-clean: ["packages.bib"]
-delete_merged_file: yes
+    chapter_name: ''
+before_chapter_script: '_common.R'
 edit:
-      link: https://github.com/rstats-tartu/lectures/edit/master/%s
-      text: "Editeeri"
+  link: https://github.com/rstats-tartu/lectures/edit/master/%s
+  text: 'Editeeri'
