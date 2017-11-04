@@ -40,7 +40,7 @@ p + geom_abline(intercept = coef(m1)[1], slope = coef(m1)[2]) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04_lin_mudeli_laiendused_files/figure-html/lin2d-1.png" alt="2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile." width="70%" /><img src="04_lin_mudeli_laiendused_files/figure-html/lin2d-2.png" alt="2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile." width="70%" />
+<img src="04_lin_mudeli_laiendused_files/figure-html/lin2d-1.png" alt="2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile." width="48%" /><img src="04_lin_mudeli_laiendused_files/figure-html/lin2d-2.png" alt="2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile." width="48%" />
 <p class="caption">(\#fig:lin2d)2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile.</p>
 </div>
 
