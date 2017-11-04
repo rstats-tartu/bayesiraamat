@@ -28,7 +28,7 @@ s3d$plane3d(m2, lty.box = "solid")
 
 Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile.
 
-```{r lin2d, fig.cap='2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile.'}
+```{r lin2d, fig.cap='2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile.', out.width='48%'}
 library(tidyverse)
 p <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   geom_point() +
