@@ -6,6 +6,7 @@ author: ["Taavi Päll", "Ülo Maiväli"]
 github-repo: rstats-tartu/bayesiraamat
 description: "Praktilise kursuse 'Reprodutseeritav andmeanalüüs R keeles' Bayesi statistika materjalid."
 bibliography: [book.bib, packages.bib]
+biblio-style: apalike
 site: bookdown::bookdown_site
 documentclass: book
 cover-image: img/cyclo.png
