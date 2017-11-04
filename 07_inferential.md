@@ -275,7 +275,7 @@ Too jutukas parun nimelt suutis end soomülkast iseenda patsi pidi välja tõmma
 Statistika tõmbas oma saapaid pidi mülkast välja Brad Efron 1979. aastal.
 
 <div class="figure" style="text-align: center">
-<img src="img/munchausen.jpg" alt="Nii nagu parun Münchausen tõmbas ennast patsi pidi mülkast välja, genereeritakse bootstrappimisega algse valimi põhjal teststatistiku jaotus." width=".7\linewidth" />
+<img src="img/munchausen.jpg" alt="Nii nagu parun Münchausen tõmbas ennast patsi pidi mülkast välja, genereeritakse bootstrappimisega algse valimi põhjal teststatistiku jaotus." width="50%" />
 <p class="caption">(\#fig:unnamed-chunk-12)Nii nagu parun Münchausen tõmbas ennast patsi pidi mülkast välja, genereeritakse bootstrappimisega algse valimi põhjal teststatistiku jaotus.</p>
 </div>
 

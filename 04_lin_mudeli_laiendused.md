@@ -364,7 +364,8 @@ dfr
 # simuleerime 1000 uut andmepunkti fititud mudelist
 simulated_data <- rnorm(1000, dfr$mean, dfr$sd)
 # arvutame simuleeritud andmete keskmise ja sd ning joonistame neist histogrammi
-hist(simulated_data)
+ggplot(tibble(simulated_data), aes(simulated_data)) +
+  geom_histogram(bins = 15)
 ```
 
 <div class="figure" style="text-align: center">

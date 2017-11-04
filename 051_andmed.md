@@ -26,9 +26,11 @@ Järgnevad nõuanded on rangelt soovituslikud:
 
 (3) Valimi kõige levinumat esindajat iseloomustab mood ehk jaotuse tipp. Seda on aga raskem täpselt määrata ja mitmetipulisel jaotusel on mitu moodi. Töötamisel posterioorsete jaotustega on mood sageli parim lahendus. 
 
+(ref:lognorm) Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete "keskväärtusest"? Miks?
+
 <div class="figure" style="text-align: center">
-<img src="051_andmed_files/figure-html/unnamed-chunk-2-1.png" alt="Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete &quot;keskväärtusest&quot;? Miks?" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-2)Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete "keskväärtusest"? Miks?</p>
+<img src="051_andmed_files/figure-html/unnamed-chunk-2-1.png" alt="(ref:lognorm)" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-2)(ref:lognorm)</p>
 </div>
 
 
@@ -185,7 +187,7 @@ Korrelatsioonimaatriksi saab niimoodi:
 # frequentist correction for mutliple testing:
 # print(psych::corr.test(iris[-5]))
 # only numeric cols allowed! Hence -Species
-knitr::kable(cor(iris[,-5]) )
+knitr::kable(cor(iris[,-5]))
 ```
 
                 Sepal.Length   Sepal.Width   Petal.Length   Petal.Width

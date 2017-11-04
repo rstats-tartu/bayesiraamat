@@ -1,7 +1,6 @@
 
 
-
-# (PART) Lisa {-}
+# (APPENDIX) Lisa {-}
 
 # Bayesi ja sagedusliku statistika võrdlus
 

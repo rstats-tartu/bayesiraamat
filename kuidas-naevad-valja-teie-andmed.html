@@ -197,8 +197,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="hierarhilised-mudelid.html"><a href="hierarhilised-mudelid.html#vabad-tousud-ja-interceptid"><i class="fa fa-check"></i>Vabad tõusud ja interceptid</a></li>
 <li class="chapter" data-level="" data-path="hierarhilised-mudelid.html"><a href="hierarhilised-mudelid.html#hierarhiline-mudel-pidevate-prediktoritega"><i class="fa fa-check"></i>Hierarhiline mudel pidevate prediktoritega</a></li>
 </ul></li>
-<li class="part"><span><b>III Lisa</b></span></li>
-<li class="chapter" data-level="12" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html"><i class="fa fa-check"></i><b>12</b> Bayesi ja sagedusliku statistika võrdlus</a><ul>
+<li class="appendix"><span><b>Lisa</b></span></li>
+<li class="chapter" data-level="A" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html"><i class="fa fa-check"></i><b>A</b> Bayesi ja sagedusliku statistika võrdlus</a><ul>
 <li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#kaks-statistikat-ajaloost-ja-toenaosusest"><i class="fa fa-check"></i>Kaks statistikat: ajaloost ja tõenäosusest</a></li>
 <li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#poleemika-kumbki-toenaosus-pole-paris-see-mida-uldiselt-arvatakse"><i class="fa fa-check"></i>Poleemika: kumbki tõenäosus pole päris see, mida üldiselt arvatakse</a></li>
 <li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#vordlev-naide-kahe-grupi-vordlus"><i class="fa fa-check"></i>Võrdlev näide: kahe grupi võrdlus</a><ul>
@@ -209,7 +209,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#kahe-paradigma-erinevused"><i class="fa fa-check"></i>Kahe paradigma erinevused</a></li>
 <li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#statistiline-ennustus-kui-mitmetasandiline-protsess"><i class="fa fa-check"></i>Statistiline ennustus kui mitmetasandiline protsess</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="sonastik.html"><a href="sonastik.html"><i class="fa fa-check"></i><b>13</b> Sõnastik</a></li>
+<li class="chapter" data-level="B" data-path="sonastik.html"><a href="sonastik.html"><i class="fa fa-check"></i><b>B</b> Sõnastik</a></li>
 </ul>
 
       </nav>
@@ -249,8 +249,9 @@ Milliseid summaarseid statistikuid arvutada ja milliseid vältida, sõltub stati
 <li><p>Muidu kasuta mediaani (median). Kui valim on liiga väike, et jaotust hinnata (aga &gt; 4), eelista mediaani. Mediaani saamiseks järjestatakse mõõdetud väärtused suuruse järgi ja võetakse selle rea keskmine liige. Mediaan on vähem tundlik ekstreemsete väärtuste (outlierite) suhtes kui mean.</p></li>
 <li><p>Valimi kõige levinumat esindajat iseloomustab mood ehk jaotuse tipp. Seda on aga raskem täpselt määrata ja mitmetipulisel jaotusel on mitu moodi. Töötamisel posterioorsete jaotustega on mood sageli parim lahendus.</p></li>
 </ol>
+
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
-<img src="051_andmed_files/figure-html/unnamed-chunk-2-1.png" alt="Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete &quot;keskväärtusest&quot;? Miks?" width="70%" />
+<img src="051_andmed_files/figure-html/unnamed-chunk-2-1.png" alt="Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete “keskväärtusest”? Miks?" width="70%" />
 <p class="caption">
 Joonis 1.1: Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete “keskväärtusest”? Miks?
 </p>
@@ -418,7 +419,7 @@ Joonis 2.3: Anscombe’i kvartett illustreerib korrelatsioonikordaja lineaarset 
 <span class="co"># frequentist correction for mutliple testing:</span>
 <span class="co"># print(psych::corr.test(iris[-5]))</span>
 <span class="co"># only numeric cols allowed! Hence -Species</span>
-knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">cor</span>(iris[,<span class="op">-</span><span class="dv">5</span>]) )</code></pre></div>
+knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">cor</span>(iris[,<span class="op">-</span><span class="dv">5</span>]))</code></pre></div>
 <table>
 <thead>
 <tr class="header">

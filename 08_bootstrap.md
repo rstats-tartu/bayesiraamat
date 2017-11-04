@@ -208,7 +208,7 @@ HPDI(sample_means_sum$Mean)
 Üldiselt ei soovita me parameetrilist bootstrappi väga soojalt, sest täisbayesiaanlik alternatiiv, mida me kohe õppima asume, on sellest paindlikum.
 
 <div class="figure" style="text-align: center">
-<img src="img/boot1.pdf" alt="Bootstrappimise meetodid." width="70%" />
+<img src="img/boot1.pdf" alt="Bootstrappimise meetodid." width="50%" />
 <p class="caption">(\#fig:unnamed-chunk-13)Bootstrappimise meetodid.</p>
 </div>
 

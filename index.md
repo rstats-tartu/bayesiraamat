@@ -36,7 +36,7 @@ Pingutus R õppimiseks tasub teile mitmel erineval viisil. R võimaldab palju ki
 
 xxx
 
-<img src="img/cyclo.png" width="70%" style="display: block; margin: auto;" />
+<img src="img/cyclo.png" width="50%" style="display: block; margin: auto;" />
 
 
 
