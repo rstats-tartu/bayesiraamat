@@ -22,7 +22,7 @@ y <- x
 ```
 
 Selle mudeli saame graafiliselt kujutada nii:
-```{r, fig.cap="Lihtne mudel y ~ x, mille intecept = 0 ja tõus = 1."}
+```{r, fig.cap="Lihtne mudel y ~ x, mille lõikepunkt = 0 ja tõus = 1."}
 plot(y ~ x, type = "l", xlab = "Weight in kg", ylab = "Heigth in cm", main = bquote(y == x))
 ```
 
@@ -45,7 +45,7 @@ y <- a + x
 ```
 
 
-```{r, fig.cap=paste0('Lineaarne mudel, mille intecept = ", a ," ja tõus = 1.. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = ', a,".")}
+```{r, fig.cap=paste0('Lineaarne mudel, mille lõikepunkt = ", a ," ja tõus = 1.. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = ', a,".")}
 plot(y ~ x, xlim = c(0, 100), ylim = c(0, 150), type = "l",
      main = bquote(y == a + x))
 abline(c(0, 1), lty = 2)
@@ -68,7 +68,7 @@ y <- b * x
 ```
 
 
-```{r, fig.cap=paste0('Lineaarne mudel, mille intercept = 0 ja tõus = ', b, '. Katkendjoon, tõus = 1. Pidevjoon, tõus = ', b, '.')}
+```{r, fig.cap=paste0('Lineaarne mudel, mille lõikepunkt = 0 ja tõus = ', b, '. Katkendjoon, tõus = 1. Pidevjoon, tõus = ', b, '.')}
 plot(y ~ x, xlim = c(0, 100), ylim = c(0, 100), type = "l", main = bquote(y == b %*% x))
 abline(c(0, 1), lty = 2)
 ```
