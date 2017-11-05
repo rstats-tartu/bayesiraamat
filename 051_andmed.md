@@ -167,7 +167,7 @@ Korrelatsioonikordaja väärtus sõltub mitte ainult andmete koos-varieeruvusest
 Lisaks, korrelatsioonikordaja mõõdab vaid andmete *lineaarset* koos-varieeruvust: kui andmed koos-varieeruvad mitte-lineaarselt, siis võivad ka väga tugevad koos-varieeruvused jääda märkamatuks.
 
 <div class="figure" style="text-align: center">
-<img src="img/Slide1.jpg" alt="Anscombe'i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: 4 andmestikku annavad identse nullilähedase korrelatsioonikordaja, ehkki tegelikud seosed andmete vahel on täiesti erinevad." width="\linewidth" />
+<img src="051_andmed_files/figure-html/unnamed-chunk-10-1.png" alt="Anscombe'i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: 4 andmestikku annavad identse nullilähedase korrelatsioonikordaja, ehkki tegelikud seosed andmete vahel on täiesti erinevad." width="70%" />
 <p class="caption">(\#fig:unnamed-chunk-10)Anscombe'i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: 4 andmestikku annavad identse nullilähedase korrelatsioonikordaja, ehkki tegelikud seosed andmete vahel on täiesti erinevad.</p>
 </div>
 
