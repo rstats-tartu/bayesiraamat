@@ -225,33 +225,83 @@ img {
 </div>
 <div class="row">
 <div class="col-sm-12">
-<div id="header">
-<h1 class="title">Bayesi statistika kasutades R keelt</h1>
-<h4 class="author"><em>Taavi Päll</em></h4>
-<h4 class="author"><em>Ülo Maiväli</em></h4>
+<div id="andmed-ei-ole-sama-mis-tegelikkus" class="section level2 unnumbered">
+<h2>Andmed ei ole sama, mis tegelikkus</h2>
+<p>Nüüd, kus me saame aru tõenäosusteooriast, on aeg asuda statistika kallale. Me oleme sunnitud kasutama statistikat, sest me usume, et kuigi meie andmed on sarnased tegelikkusega, ei ole need sellega identsed. Seega tasub alustada näitega sellest, kuidas andmed ja tegelikkus erinevad. Meie tööriistaks on siin simulatsioon. Simuleerimine on lahe sest simulatsioonid elavad mudeli väikeses maailmas, kus me teame täpselt, mida me teeme ja mida on selle tagajärjel oodata. Simulatsioonidega saame me hõlpsalt kontrollida, kas ja kuidas meie mudelid töötavad ning genereerida olukordi (parameetrite väärtuste kombinatsioone), mida suures maailmas kunagi ette ei tule. Selles mõttes on mudelid korraga nii väiksemad kui suuremad kui päris maailm.</p>
+<p>Alustuseks simuleerime juhuvalimi n=3 lõpmata suurest normaaljaotusega populatsioonist, mille keskmine on 100 ja sd on 20. Populatsioon (mis on statistiline mõiste) seisab siin tegelikkuse aseainena ja juhuvalim on meie andmete simulatsioon. Päris elus on korraliku juhuvalimi tõmbamine tehniliselt raske ettevõtmine ja, mis veelgi olulisem, me ei tea kunagi, milline on populatsiooni tõeline jaotus, keskmine ja sd. Elagu simulatsioon!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>) <span class="co"># makes random number generation reproducible</span>
+Sample &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">3</span>, <span class="dt">mean =</span> <span class="dv">100</span>, <span class="dt">sd =</span> <span class="dv">20</span>)
+Sample; <span class="kw">mean</span>(Sample); <span class="kw">sd</span>(Sample)
+<span class="co">#&gt; [1]  87.5 103.7  83.3</span>
+<span class="co">#&gt; [1] 91.5</span>
+<span class="co">#&gt; [1] 10.8</span></code></pre></div>
+<p>Nagu näha on meie valimi keskmine 10% väiksem kui peaks ja valimi sd lausa kaks korda väiksem. Seega peegeldab meie valim halvasti populatsiooni — aga me teame seda ainult tänu sellele, et tegu on simulatsiooniga.</p>
+<p>Kui juba simuleerida, siis robinal: tõmbame ühe valimi asemel 10 000, arvutame seejärel 10 000 keskmist ja 10 000 sd-d ning vaatame nende statistikute jaotusi ja keskväärtusi. Simulatsioon on nagu tselluliit — see on nii odav, et igaüks võib seda endale lubada.</p>
+<p>Meie lootus on, et kui meil on palju valimeid, millel kõigil on juhuslik viga, mis neid populatsiooni suhtes ühele või teisele poole kallutab, siis rohkem on valimeid, mis asuvad tõelisele populatsioonile pigem lähemal kui kaugemal. Samuti, kui valimiviga on juhuslik, siis satub umbkaudu sama palju valimeid tõelisest populatsiooniväärtusest ühele poole kui teisele poole ja vigade jaotus tuleb sümmeetriline.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">N &lt;-<span class="st"> </span><span class="dv">3</span>
+N_simulations &lt;-<span class="st"> </span><span class="dv">10000</span>
+df &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">a =</span> <span class="kw">rnorm</span>(N <span class="op">*</span><span class="st"> </span>N_simulations, <span class="dv">100</span>, <span class="dv">20</span>), 
+             <span class="dt">b =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span>N_simulations, <span class="dt">each =</span> N))
+Summary &lt;-<span class="st">  </span>df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(b) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Mean =</span> <span class="kw">mean</span>(a), <span class="dt">SD =</span> <span class="kw">sd</span>(a)) 
+Summary <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(Mean)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">40</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
+<img src="07_inferential_files/figure-html/unnamed-chunk-6-1.png" alt="Keskmiste jaotus 10 000 valimist." width="70%" />
+<p class="caption">
+Joonis 2.1: Keskmiste jaotus 10 000 valimist.
+</p>
 </div>
-<div id="saateks" class="section level1 unnumbered">
-<h1>Saateks</h1>
-<p>See õpik soovib anda praktilisi andmeanalüüsi oskusi töötamiseks reaalsete andmetega. See puudutab laias laastus kolme teemat:</p>
-<ol style="list-style-type: decimal">
-<li><p>Kuidas summeerida andmeid: keskmise, varieeruvuse ja kovarieeruvuse näitajad.</p></li>
-<li><p>Kuidas graafiliste meetodite abil kontrollida andmete kvaliteeti ja püstitada uusi hüpoteese.</p></li>
-<li><p>Kuidas teha andmete põhjal järeldusi protsessi kohta, mis neid andmeid genereerib, ühtlasi kirjeldades adekvaatselt neid järeldusi ümbritsevat ebakindlust.</p></li>
-</ol>
-<p>Kuna me püüame anda eeskätt praktilisi oskusi andmeanalüüsiks, mitte matemaatilist ega muidu teoreetilist haridust, siis keskendume moodsatele bayesi meetoditele. Need on küll arvuti jaoks töömahukamad kui klassikalised statistilisel olulisusel põhinevad testid, aga inimese jaoks kergemini õpitavad ning tõlgendatavad. Klassikalist ja bayesi statistikat võrdleme lisas 1. Bayesiaanliku lähenemise hind on, et kasutaja peab omandama vähemalt algtasemel R keele, mis võimaldab käsurealt anmdeid manipuleerida. R-i õppimine nõuab kahtlemata lisapingutust, aga me usume, et see tasub ära igaühele, kes töötab vähemalt keskmise suurusega andmekogudega. Me teeme sissejuhatuse R-i peatükkides …., keskendudes R-i tidyverse ökosüsteemile, mis on optimeeritud olema kergesti kasutatav ja õpitav inimestele, kelle põhitöö ei ole seotud koodi kirjutamisega.</p>
-<p>Pingutus R õppimiseks tasub teile mitmel erineval viisil. R võimaldab palju kiiremini andmetabeleid analüüsiks sobivasse vormi ajada kui spreadsheet programmid. R-i graafikasüsteem, eriti ggplot2, on võimas ning paindlik tööriist väga erinevate graafikute koostamiseks. R-s jooksevad praktiliselt kõik statistilised testid, mida inimmõistus on loonud – R on levinuim statistikaprogramm maailmas, mis on eriti hästi sobiv statistiliseks modelleerimiseks. See tähendab ka, et üle maailma on suur seltskond inimesi, kes R-i arendab ja on nõus vastama ka teie küsimustele. Lisaboonusena on juba kord salvestatud R-i koodi taaskasutades palju lihtsam oma analüüsi korrata ja vastavalt vajadustele muuta, kui spreadsheet programmide puhul.</p>
-<p>Õpiku kasutamise eeldused: - Arvuti. - Matemaatikaoskused, mis hõlmavad liitmist, lahutamist, korrutamist, jagamist, logaritmimist ja astendamist. - Kõrgemat matemaatikat me ei vaja.</p>
-<p>Õpiku struktuur:</p>
-<p>xxx</p>
-<p><img src="img/cyclo.png" width="50%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(Summary<span class="op">$</span>Mean) 
+<span class="co">#&gt; [1] 100</span>
+<span class="kw">mean</span>(Summary<span class="op">$</span>SD)
+<span class="co">#&gt; [1] 17.8</span></code></pre></div>
+<p>Oh-hooo. Paljude valimite keskmiste keskmine ennustab väga täpselt populatsiooni keskmist aga sd-de keskmise keskmine alahindab populatsiooni sd-d. Valem, millega sd-d arvutatakse tõõtab lihtsalt kallutatult, kui n on väike (&lt;10). Kui ei usu, korda eelnevat simulatsiooni valimiga, mille N=30.</p>
+<p>Ja nüüd 10 000 SD keskväärtused:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Summary <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(SD)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">40</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
+<img src="07_inferential_files/figure-html/unnamed-chunk-8-1.png" alt="SD-de jaotus 10 000 valimist." width="70%" />
+<p class="caption">
+Joonis 2.2: SD-de jaotus 10 000 valimist.
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mode &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">adjust =</span> <span class="dv">1</span>){
+  x &lt;-<span class="st"> </span><span class="kw">na.omit</span>(x)
+  dx &lt;-<span class="st"> </span><span class="kw">density</span>(x, <span class="dt">adjust =</span> adjust)
+  dx<span class="op">$</span>x[<span class="kw">which.max</span>(dx<span class="op">$</span>y)]
+}
+<span class="kw">mode</span>(Summary<span class="op">$</span>SD) 
+<span class="co">#&gt; [1] 14.1</span></code></pre></div>
+<p>SD-de jaotus on ebasümmeetriline ja mood ehk kõige tõenäolisem valimi sd väärtus, mida võiksime oodata, on u 14, samal ajal kui populatsiooni sd = 20. Lisaks on sd-de jaotusel paks saba, mis tagab, et tesest küljest pole ka vähetõenäoline, et meie valimi sd populatsiooni sd-d kõvasti üle hindab.</p>
+<p>Arvutame, mitu % valimite sd-e keskmistest on &gt; 25</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(Summary<span class="op">$</span>SD <span class="op">&gt;</span><span class="st"> </span><span class="dv">25</span>)
+<span class="co">#&gt; [1] 0.211</span></code></pre></div>
+<p>Me saame &gt;20% tõenäosusega pahasti ülehinnatud SD.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(Summary<span class="op">$</span>SD <span class="op">&lt;</span><span class="st"> </span><span class="dv">15</span>)
+<span class="co">#&gt; [1] 0.434</span></code></pre></div>
+<p>Ja me saame &gt;40% tõenäosusega pahasti alahinnatud sd. Selline on väikeste valimite traagika.</p>
+<p>Aga vähemalt populatsiooni keskmise saame me palju valimeid tõmmates ilusasti kätte — ka väga väikeste valimitega.</p>
+<p>Kahjuks pole meil ei vahendeid ega kannatust loodusest 10 000 valimi kogumiseks. Enamasti on meil üksainus valim. Õnneks pole sellest väga hullu, sest meil on olemas analoogne meetod, mis töötab üsna hästi ka ühe valimiga. Seda kutsutakse <em>bootstrappimiseks</em> ja selle võttis esimesena kasutusele parun von Münchausen. Too jutukas parun nimelt suutis end soomülkast iseenda patsi pidi välja tõmmata (koos hobusega), mis ongi bootstrappimise põhimõte. Statistika tõmbas oma saapaid pidi mülkast välja Brad Efron 1979. aastal.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
+<img src="img/munchausen.jpg" alt="Nii nagu parun Münchausen tõmbas ennast patsi pidi mülkast välja, genereeritakse bootstrappimisega algse valimi põhjal teststatistiku jaotus." width="50%" />
+<p class="caption">
+Joonis 2.4: Nii nagu parun Münchausen tõmbas ennast patsi pidi mülkast välja, genereeritakse bootstrappimisega algse valimi põhjal teststatistiku jaotus.
+</p>
+</div>
 
 </div>
+<!-- </div> -->
 
 
 
 <p style="text-align: center;">
-<a href="https://github.com/rstats-tartu/lectures/edit/master/index.Rmd"><button class="btn btn-default">Editeeri</button></a>
-<a href="1-sissejuhatus-maailm-teooria-ja-mudel.html"><button class="btn btn-default">Next</button></a>
+<a href="jareldav-statistika-on-toenaosusteooria-kaepikendus.html"><button class="btn btn-default">Previous</button></a>
+<a href="https://github.com/rstats-tartu/lectures/edit/master/07_inferential.Rmd"><button class="btn btn-default">Editeeri</button></a>
+<a href="8-bootstrappimine.html"><button class="btn btn-default">Next</button></a>
 </p>
 </div>
 </div>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="Bayesi statistika kasutades R keelt" />
+<meta property="og:type" content="book" />
+
+<meta property="og:image" content="img/cyclo.png" />
+<meta property="og:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
+<meta name="github-repo" content="rstats-tartu/bayesiraamat" />
+
+<meta name="author" content="Taavi Päll" />
+<meta name="author" content="Ülo Maiväli" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+
+<meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid.">
+
+<title>Bayesi statistika kasutades R keelt</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+
+<script src="https://use.fontawesome.com/e4ba4259a1.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="toc.css" type="text/css" />
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#saateks">Saateks</a></li>
+<li class="part"><span><b>I OSA</b></span></li>
+<li class="has-sub"><a href="1-sissejuhatus-maailm-teooria-ja-mudel.html#sissejuhatus-maailm-teooria-ja-mudel"><span class="toc-section-number">1</span> Sissejuhatus: maailm, teooria ja mudel</a><ul>
+<li><a href="suur-ja-vaike-maailm.html#suur-ja-vaike-maailm">Suur ja väike maailm</a></li>
+<li><a href="mudeli-vaike-maailm.html#mudeli-vaike-maailm">Mudeli väike maailm</a></li>
+</ul></li>
+<li class="has-sub"><a href="2-lineaarsed-mudelid.html#lineaarsed-mudelid"><span class="toc-section-number">2</span> Lineaarsed mudelid</a><ul>
+<li><a href="ennustus-lineaarsest-mudelist.html#ennustus-lineaarsest-mudelist">Ennustus lineaarsest mudelist</a></li>
+<li><a href="neli-moistet.html#neli-moistet">Neli mõistet</a></li>
+<li><a href="mudeli-fittimine.html#mudeli-fittimine">Mudeli fittimine</a></li>
+<li><a href="ule-ja-alafittimine.html#ule--ja-alafittimine">Üle- ja alafittimine</a></li>
+</ul></li>
+<li class="has-sub"><a href="3-kaks-lineaarse-mudeli-laiendust.html#kaks-lineaarse-mudeli-laiendust"><span class="toc-section-number">3</span> Kaks lineaarse mudeli laiendust</a><ul>
+<li><a href="mitme-soltumatu-prediktoriga-mudel.html#mitme-soltumatu-prediktoriga-mudel">Mitme sõltumatu prediktoriga mudel</a></li>
+<li><a href="interaktsioonimudel.html#interaktsioonimudel">Interaktsioonimudel</a></li>
+<li class="has-sub"><a href="veamudel.html#veamudel">Veamudel</a><ul>
+<li><a href="veamudel.html#enimkasutatud-veamudel-on-normaaljaotus">Enimkasutatud veamudel on normaaljaotus</a></li>
+<li><a href="veamudel.html#normaaljaotuse-mudel-vaikestel-valimitel">Normaaljaotuse mudel väikestel valimitel</a></li>
+<li><a href="veamudel.html#normaaljaotuse-ja-lognormaaljaotuse-erilisus">Normaaljaotuse ja lognormaaljaotuse erilisus</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="4-kusimused-mida-statistika-kusib.html#kusimused-mida-statistika-kusib"><span class="toc-section-number">4</span> Küsimused, mida statistika küsib</a><ul>
+<li><a href="jata-meelde.html#jata-meelde">Jäta meelde</a></li>
+</ul></li>
+<li class="has-sub"><a href="5-kuidas-naevad-valja-teie-andmed.html#kuidas-naevad-valja-teie-andmed"><span class="toc-section-number">5</span> Kuidas näevad välja teie andmed</a><ul>
+<li><a href="summaarsed-statistikud.html#summaarsed-statistikud">Summaarsed statistikud</a></li>
+<li><a href="keskvaartused.html#keskvaartused">Keskväärtused</a></li>
+<li><a href="muutuja-sisene-varieeruvus.html#muutuja-sisene-varieeruvus">Muutuja sisene varieeruvus</a></li>
+<li><a href="logaritmi-andmed.html#logaritmi-andmed">Logaritmi andmed</a></li>
+<li><a href="iseloomusta-andmeid-algses-skaalas-mediaan-mad.html#iseloomusta-andmeid-algses-skaalas-mediaan-mad">Iseloomusta andmeid algses skaalas: mediaan (MAD)</a></li>
+<li><a href="muutujate-koosvarieeruvus.html#muutujate-koosvarieeruvus">Muutujate koosvarieeruvus</a></li>
+</ul></li>
+<li class="has-sub"><a href="6-eda-eksploratoorne-andmeanaluus.html#eda-eksploratoorne-andmeanaluus"><span class="toc-section-number">6</span> EDA — eksploratoorne andmeanalüüs</a><ul>
+<li><a href="6-1-eda-kokkuvote.html#eda-kokkuvote"><span class="toc-section-number">6.1</span> EDA kokkuvõte</a></li>
+</ul></li>
+<li class="has-sub"><a href="7-jareldav-statistika.html#jareldav-statistika"><span class="toc-section-number">7</span> Järeldav statistika</a><ul>
+<li class="has-sub"><a href="jareldav-statistika-on-toenaosusteooria-kaepikendus.html#jareldav-statistika-on-toenaosusteooria-kaepikendus">Järeldav statistika on tõenäosusteooria käepikendus</a><ul>
+<li><a href="jareldav-statistika-on-toenaosusteooria-kaepikendus.html#formaalsed-tuletised-toenaosusteooria-aksioomidest">Formaalsed tuletised tõenäosusteooria aksioomidest</a></li>
+<li><a href="jareldav-statistika-on-toenaosusteooria-kaepikendus.html#naited-toenaosusteooria-tuletiste-rakendamisest">Näited tõenäosusteooria tuletiste rakendamisest</a></li>
+<li><a href="jareldav-statistika-on-toenaosusteooria-kaepikendus.html#toenaosuse-tolgendus">Tõenäosuse tõlgendus</a></li>
+<li><a href="jareldav-statistika-on-toenaosusteooria-kaepikendus.html#toenaosusteooriast-tulenevad-statistika-pohiprintsiibid">Tõenäosusteooriast tulenevad statistika põhiprintsiibid</a></li>
+</ul></li>
+<li><a href="andmed-ei-ole-sama-mis-tegelikkus.html#andmed-ei-ole-sama-mis-tegelikkus">Andmed ei ole sama, mis tegelikkus</a></li>
+</ul></li>
+<li class="part"><span><b>II OSA</b></span></li>
+<li class="has-sub"><a href="8-bootstrappimine.html#bootstrappimine"><span class="toc-section-number">8</span> Bootstrappimine</a><ul>
+<li><a href="veidi-keerulisem-bootstrap.html#veidi-keerulisem-bootstrap">Veidi keerulisem bootstrap</a></li>
+<li><a href="bayesboot.html#bayesboot">bayesboot()</a></li>
+<li><a href="parameetriline-bootstrap.html#parameetriline-bootstrap">Parameetriline bootstrap</a></li>
+<li><a href="bootstrappimine-ei-ole-kogu-tode.html#bootstrappimine-ei-ole-kogu-tode">Bootstrappimine ei ole kogu tõde</a></li>
+</ul></li>
+<li class="has-sub"><a href="9-bayesi-pohimote.html#bayesi-pohimote"><span class="toc-section-number">9</span> Bayesi põhimõte</a><ul>
+<li><a href="esimene-naide.html#esimene-naide">Esimene näide</a></li>
+<li><a href="teine-naide-sonastame-oma-probleemi-umber.html#teine-naide-sonastame-oma-probleemi-umber">Teine näide: sõnastame oma probleemi ümber</a></li>
+<li><a href="kui-n-1.html#kui-n-1">Kui n = 1</a></li>
+</ul></li>
+<li class="has-sub"><a href="10-mudelite-keel.html#mudelite-keel"><span class="toc-section-number">10</span> Mudelite keel</a><ul>
+<li><a href="beta-prior.html#beta-prior">Beta prior</a></li>
+<li><a href="prioritest-uldiselt.html#prioritest-uldiselt">Prioritest üldiselt</a></li>
+</ul></li>
+<li class="has-sub"><a href="ennustame-pidevat-suurust.html#ennustame-pidevat-suurust">Ennustame pidevat suurust</a><ul>
+<li class="has-sub"><a href="lihtne-normaaljaotuse-mudel.html#lihtne-normaaljaotuse-mudel">Lihtne normaaljaotuse mudel</a><ul>
+<li><a href="lihtne-normaaljaotuse-mudel.html#kui-lai-on-meie-toeparafunktsioon">Kui lai on meie tõepärafunktsioon?</a></li>
+<li><a href="lihtne-normaaljaotuse-mudel.html#lihtne-voi-robustne-normaalne-mudel">Lihtne või robustne normaalne mudel?</a></li>
+<li><a href="lihtne-normaaljaotuse-mudel.html#mcmc-ahelate-kvaliteet">MCMC ahelate kvaliteet</a></li>
+<li><a href="lihtne-normaaljaotuse-mudel.html#naide-usa-presidentide-keskmine-pikkus">Näide: USA presidentide keskmine pikkus</a></li>
+</ul></li>
+<li><a href="lineaarne-regressioon.html#lineaarne-regressioon">Lineaarne regressioon</a></li>
+<li><a href="lm-vahimruutude-meetodiga-fititud-lineaarsed-mudelid.html#lm---vahimruutude-meetodiga-fititud-lineaarsed-mudelid"><code>lm()</code> - vähimruutude meetodiga fititud lineaarsed mudelid</a></li>
+<li><a href="bayesi-meetodil-lineaarse-mudeli-fittimine.html#bayesi-meetodil-lineaarse-mudeli-fittimine">Bayesi meetodil lineaarse mudeli fittimine</a></li>
+<li class="has-sub"><a href="ennustused-mudelist.html#ennustused-mudelist">Ennustused mudelist</a><ul>
+<li><a href="ennustused-mudelist.html#lognormaalne-toeparamudel">Lognormaalne tõepäramudel</a></li>
+</ul></li>
+<li class="has-sub"><a href="mitme-prediktoriga-lineaarne-regressioon.html#mitme-prediktoriga-lineaarne-regressioon">Mitme prediktoriga lineaarne regressioon</a><ul>
+<li><a href="mitme-prediktoriga-lineaarne-regressioon.html#mudeldamine-standardiseeritud-andmetega">Mudeldamine standardiseeritud andmetega</a></li>
+</ul></li>
+<li class="has-sub"><a href="keerulisemate-mudelitega-tootamine.html#keerulisemate-mudelitega-tootamine">Keerulisemate mudelitega töötamine</a><ul>
+<li><a href="keerulisemate-mudelitega-tootamine.html#predictor-residual-plots">Predictor residual plots</a></li>
+<li><a href="keerulisemate-mudelitega-tootamine.html#ennustavad-plotid">Ennustavad plotid</a></li>
+<li><a href="keerulisemate-mudelitega-tootamine.html#posterior-prediction-plots">Posterior prediction plots</a></li>
+<li><a href="keerulisemate-mudelitega-tootamine.html#interaktsioonid-prediktorite-vahel">Interaktsioonid prediktorite vahel</a></li>
+<li><a href="keerulisemate-mudelitega-tootamine.html#interaktsioonid-pidevatele-tunnustele">Interaktsioonid pidevatele tunnustele</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="11-hierarhilised-mudelid.html#hierarhilised-mudelid"><span class="toc-section-number">11</span> Hierarhilised mudelid</a><ul>
+<li><a href="shrinkage.html#shrinkage">Shrinkage</a></li>
+<li><a href="anova-laadne-mudel.html#anova-laadne-mudel">ANOVA-laadne mudel</a></li>
+<li><a href="vabad-interceptid-klassikalises-regressioonimudelis.html#vabad-interceptid-klassikalises-regressioonimudelis">Vabad interceptid klassikalises regressioonimudelis</a></li>
+<li><a href="vabad-tousud-ja-interceptid.html#vabad-tousud-ja-interceptid">Vabad tõusud ja interceptid</a></li>
+<li><a href="hierarhiline-mudel-pidevate-prediktoritega.html#hierarhiline-mudel-pidevate-prediktoritega">Hierarhiline mudel pidevate prediktoritega</a></li>
+</ul></li>
+<li class="appendix"><span><b>Lisa</b></span></li>
+<li class="has-sub"><a href="A-bayesi-ja-sagedusliku-statistika-vordlus.html#bayesi-ja-sagedusliku-statistika-vordlus"><span class="toc-section-number">A</span> Bayesi ja sagedusliku statistika võrdlus</a><ul>
+<li><a href="kaks-statistikat-ajaloost-ja-toenaosusest.html#kaks-statistikat-ajaloost-ja-toenaosusest">Kaks statistikat: ajaloost ja tõenäosusest</a></li>
+<li><a href="poleemika-kumbki-toenaosus-pole-paris-see-mida-uldiselt-arvatakse.html#poleemika-kumbki-toenaosus-pole-paris-see-mida-uldiselt-arvatakse">Poleemika: kumbki tõenäosus pole päris see, mida üldiselt arvatakse</a></li>
+<li class="has-sub"><a href="vordlev-naide-kahe-grupi-vordlus.html#vordlev-naide-kahe-grupi-vordlus">Võrdlev näide: kahe grupi võrdlus</a><ul>
+<li><a href="vordlev-naide-kahe-grupi-vordlus.html#bayesiaan">Bayesiaan</a></li>
+<li><a href="vordlev-naide-kahe-grupi-vordlus.html#sageduslik-statistik">Sageduslik statistik</a></li>
+<li><a href="vordlev-naide-kahe-grupi-vordlus.html#tulemuste-tolgendamine">Tulemuste tõlgendamine</a></li>
+</ul></li>
+<li><a href="kahe-paradigma-erinevused.html#kahe-paradigma-erinevused">Kahe paradigma erinevused</a></li>
+<li><a href="statistiline-ennustus-kui-mitmetasandiline-protsess.html#statistiline-ennustus-kui-mitmetasandiline-protsess">Statistiline ennustus kui mitmetasandiline protsess</a></li>
+</ul></li>
+<li><a href="B-sonastik.html#sonastik"><span class="toc-section-number">B</span> Sõnastik</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="jareldav-statistika-on-toenaosusteooria-kaepikendus" class="section level2 unnumbered">
+<h2>Järeldav statistika on tõenäosusteooria käepikendus</h2>
+<p>See õpik õpetab Bayesi statistikat, mis põhineb tõenäosusteoorial. Tänu sellele moodustab Bayesi statistika sidusa terviku, mille abil saab teha kõike seda, mida saab teha tõenäosusteooria abil. Bayesi statistika põhineb Bayesi teoreemil, mis on triviaalne tuletus tõenäosusteooria aksioomidest. Tänu Cox-i teoreemile (1961) teame, et klassikaline lausearvutuslik loogika on tõenäosusteooria erijuht ning, et Bayesi teoreem on teoreetiliselt parim viis tõenäosustega töötamiseks. Seega, kui te olete kindel oma väidete tõesuses või vääruses, siis on klassikaline loogika parim viis nendega opereerida; aga kui te ei saa oma järeldustes päris kindel olla, siis on teoreetiliselt parim lahendus tõenäosusteooria ja Bayesi teoreem.</p>
+<p>Tõenäosusteooria on aksiomaatline süsteem, mille abil saame omistada numbriline väärtuse meie usu määrale mingisse hüpoteesi. Näiteks, kui me planeerime katset, kus me viskame kulli ja kirja ja teeme seda kaks korda, siis saame arvutada, millise tõenäosusega võime oodata katse tulemuseks kaht kirja. Aga seda tingimusel, et me võtame omaks mõned eeldused – näiteks et münt on aus ja et need kaks viset on üksteisest sõltumatud.</p>
+<p>Sellel katsel on 4 võimalikku tulemust: H-H, H-T, T-H, T-T (H -kull, T - kiri). Tõenäosus saada 2-l mündiviskel 2 kirja, P(2 kirja) = 1/4, P(0 kirja) = 1/4 ja P(1 kiri) = 2/4 = 1/2. Sellega oleme andnud oma katseplaanile täieliku tõenäosusliku kirjelduse (pane tähele, et 1/4 + 1/4 + 1/2 = 1). Ükskõik kui keeruline on teie katseplaan, põhimõtteliselt käib selle analüüs samamoodi. Tõenäosusteooria loomus seisneb kõikide võimalike sündmuste üleslugemises ning senikaua, kui me seda nüri järjekindlusega teeme, on vastus, mille me saame, tõsikindel.</p>
+<p>Ehkki Bayesi statistika põhineb tõenäosusteoorial ja on sellega kooskõlas, ei ole see sama asi, mis tõenäosusteooria. Statistikas pööratakse tõenäosusteoreetiline ülesanne pea peale ja küsitakse nii: kui me saime 2-l mündiviskel 2 kirja, siis millise tõenäosusega on münt aus (tasakaalus)? Erinevus tõenäosusteoreetilise ja statistilise lähenemise vahel seisneb selles, et kui tõenäosusteoorias me eeldame, et teame, kuidas süsteem on üles ehitatud, ja ennustame sellest lähtuvalt andmete tõenäosusi, siis statistikas me kontrollime neid eeldusi andmete põhjal. Seega annab tõenäosusteooria matemaatiliselt tõsikindlaid vastuseid ideaalmaailmade kohta, samas kui statistika püüab andmete põhjal teha järeldusi päris maailma kohta. Selleks kasutame Bayesi teoreemi (vt allpool).</p>
+<blockquote>
+<p>Tõenäosusteooria määrab kõikide võimalike sündmuste esinemise tõenäosused, eeldades, et hüpotees H kehtib (H on siin lihtsalt teine nimi “eeldusele”).</p>
+</blockquote>
+<blockquote>
+<p>Statistika arvutab H-i kehtimise tõenäosuse lähtuvalt kogutud andmetest, matemaatilistest mudelitest ning teaduslikest taustateadmistest.</p>
+</blockquote>
+<p><strong>Tõenäosusteooria aksioomid</strong> ütlevad tõlkes inimkeelde, et tõenäosused (P) jäävad 0 ja 1 vahele, et <em>P(A) = 1</em> tähendab, et A on tõene, et <em>P(A) = 0</em> tähendab, et A on väär, ning kui A ja B on hüpoteesiruumi ammendavad üksteist välistavad hüpoteesid, siis <em>P(A) + P(B) = 1</em>. Need aksioomid peaksid olema iseenesestmõistetavad ja ainult neist on tuletatud kogu tõenäosusteooria.</p>
+<p>Need aksioomid, mis oma matemaatilises vormis postuleeriti Andrei Kolmogorovi poolt ca 1930, on tuletatavad järgmistest eeldustest:</p>
+<ul>
+<li><p>ratsionaalne mõtlemine vastab kvalitatiivselt tervele mõistusele: lisatõendusmaterjal hüpoteesi kasuks tõstab selle hüpoteesi usutavust.</p></li>
+<li><p>mõtlemine peab olema konsistentne: kui me võime järeldusi teha rohkem kui ühel viisil, peame lõpuks ikkagi alati samale lõppjäreldusele jõudma</p></li>
+<li><p>kogu kättesaadav relevantne informatsioon tuleb järelduste tegemisel arvesse võtta (totaalse informatsiooni printsiip)</p></li>
+<li><p>ekvivalentsed teadmised on representeeritud ekvivalentsete numbritega.</p></li>
+</ul>
+<p>Kui tõenäosused on 0 või 1, siis taandub tõenäosusteooria matemaatliselt oma erijuhule, milleks on lausearvutuslik loogika. Lausearvutuse oluline erinevus tõenäosusteooriast on, et kui selle abil on saavutatud valiidne tulemus, on see tõsikindel ja uute andmete lisandumisel ei saa me seda tulemust muuta. Seevastu tõenäosusteoorias ja statstikas muudavad uued andmed alati tõenäosusi. Selles mõttes ei saa tõenäosuslik teadus kunagi valmis.</p>
+<div id="formaalsed-tuletised-toenaosusteooria-aksioomidest" class="section level3 unnumbered">
+<h3>Formaalsed tuletised tõenäosusteooria aksioomidest</h3>
+<p>Me anname siin 9 tuletust ilma tõestuskäikudeta, mis on aga lihtsad. Siin võib A ja B vaadelda erinevate sündmustena või hüpoteesidena. Me eeldame, et kummagi hüpoteesi tõenäosus &gt; 0.</p>
+<p>Sümbolite tähendused:</p>
+<ul>
+<li><p><span class="math inline">\(P(A~ \vert ~B)\)</span> on tinglik tõenäosus, mida tuleks lugeda: “A tõenäosus tingimusel, et kehtib B”. Pane tähele, et <span class="math inline">\(P(vihm~\vert~pilves~ilm)\)</span> ei ole sama, mis <span class="math inline">\(P(pilves~ilm~\vert~vihm)\)</span>.</p></li>
+<li><p><span class="math inline">\(A \land B\)</span> tähendab “A ja B”,</p></li>
+<li><p><span class="math inline">\(A \lor B\)</span> tähendab “A ja/või B” (loogiline “või” tähendab tavakeeles ja/või),</p></li>
+<li><p><span class="math inline">\(\lnot A\)</span> tähendab mitte-A, ehk A == FALSE.</p></li>
+</ul>
+<p>Tõenäosusteooria põhituletised:</p>
+<ol style="list-style-type: decimal">
+<li><p>Kui B sisaldab endas A-d, siis <span class="math inline">\(P(B) \leq P(A)\)</span></p></li>
+<li><p>A ja B on üksteisest sõltumatud siis ja ainult siis kui <span class="math inline">\(P(A~ \vert B) = P(A)\)</span></p></li>
+<li><p>Kui A ja B on üksteisest sõltumatud, siis <span class="math inline">\(P(A \land B) = P(A)P(B) = P(A~\vert~B)P(B)\)</span></p></li>
+<li><p>Kui A ja B on üksteist välistavad, siis <span class="math inline">\(P(A \lor B) = P(A) + P(B)\)</span>.</p></li>
+<li><p>Kui A ja B ei ole üksteist välistavad, siis <span class="math inline">\(P(A \lor B) = P(A) + P(B) - P(A \land B)\)</span></p></li>
+<li><p><span class="math inline">\(P(A~\vert~B) = P(A \land B)/P(B)\)</span> – tingliku tõenäosuse definitsioon</p></li>
+<li><p>Punktist 6 tuleneb totaalne tõenäosus: <span class="math inline">\(P(A) = P(A~\vert~B)P(B) + P(A~\vert~\lnot B)P(\lnot B)\)</span>.</p></li>
+<li><p>Punktist 6 tuleneb Bayesi teoreem: <span class="math inline">\(P(A~\vert~B) = P(A)P(B~\vert~A)/P(B)\)</span>, kus <span class="math inline">\(P(B) = P(A)P(B~\vert~A) + P(\lnot A)P(B~\vert~\lnot A)\)</span></p></li>
+</ol>
+<p>Bayesi teoreemi kasutatakse sageli määramaks hüpoteesi tõenäosuse pärast uute faktide (andmete) lisandumist olemasolevatele teadmistele. Kui A on H<sub>1</sub> ning mitte-A on ammendav ja välistav H<sub>2</sub> ja B tähistab andmeid (data), saame Bayesi teoreemi ümber kirjutada</p>
+<p><span class="math inline">\(P(H_1~\vert~data) = P(H_1)P(data~\vert~H_1) /( P(H_1)P(data~\vert~H_1) + P(H_2)P(data \vert H_2) )\)</span></p>
+<p><span class="math inline">\(P(H_1~\vert~data)\)</span> on <span class="math inline">\(H_1\)</span> kehtimise tõenäosus meie andmete korral – ehk posteerior,</p>
+<p><span class="math inline">\(P(H_1)\)</span> on <span class="math inline">\(H_1\)</span> kehtimise eelnev, ehk meie andmetest sõltumatu, tõenäosus – ehk prior,</p>
+<p><span class="math inline">\(P(data~\vert~H_1)\)</span> on andmete esinemise tõenäosus tingimusel, et H<sub>1</sub> kehtib – ehk tõepära.</p>
+<p>Jagamistehe tehakse ainult selle pärast, et normaliseerida 1-le kõikide hüpoteeside tõenäosuste summa meie andmete korral ja seega viia posteerior vastavusse tõenäosusteooria aksioomidega — kui meil on i ammendavat üksteist välistavat hüpoteesi, siis murrujoone alla läheb: <span class="math inline">\(\sum~P(data~\vert~H_i)P(H_i) = 1\)</span>. Bayesi teoreem on triviaalne tuletus tõenäosusteooria aksioomidest, milles pole mitte midagi maagilist. See ei ole automaatne meetod, mis tagaks inimkonna teadmiste kasvu, vaid lihtsalt parim võimalik viis andmemudeli ja taustateadmiste mudeli ühendamiseks ja normaliseerimiseks tinglikuks tõenäosuseks (hüpoteesi tõenäosus meie andmete ja taustateadmiste korral). Nüüd sõltub kõik mudelite, andmete ja taustateadmiste kvaliteedist.</p>
+</div>
+<div id="naited-toenaosusteooria-tuletiste-rakendamisest" class="section level3 unnumbered">
+<h3>Näited tõenäosusteooria tuletiste rakendamisest</h3>
+<p><strong>Punkt 6.</strong> Meil on kolm pannkooki, millest esimesel on mõlemad küljed moosised, teisel on üks külg moosine ja kolmandal pole üldse moosi. Kui meile lüüakse taldrikule pannkook, mille pealmine külg on moosine, siis millise tõenäosusega on moosine ka alumine külg? NB! Vastus ei ole 50%. Lahendus: Kui A - moos all, B - moos üleval, siis vastavalt tingliku tõenäosuse definitsioonile <span class="math inline">\(P(moos~ all~ \lvert ~moos~üleval ) = P(moos~all \land ~moos~üleval)/P(moos~all)\)</span> Tõenäosus, et moos on all ja üleval on 1/3 (me teame, et 1 pannkook 3st on mõlemalt küljelt moosine) ja tõenäosus, et moos on all, on keskmine kolmest tõenäosusest, millega me kolmel pannkoogil moosise külje saame: mean(c(1, 0.5, 0)) = 1/2. Seega, vastus on (1/3)/(1/2) = 2/3. Kui me saame moosise ülemise külje, siis on tõenäosus 2/3, et ka all on moos!</p>
+<p><strong>Punkt 7.</strong> Kui A tähistab sündmust “ma sain aru tõenäosusteooriast” ja B tähistab sündmust “ma tuubin nagu loom” ning meil on dihhotoomne valik: tuubid / ei tuubi, siis <span class="math inline">\(P(A) = P(tuubid)P(A~ \lvert ~tuubid) + P(ei~ tuubi)P(A~ \lvert ~ei ~ tuubi)\)</span>. Siit saad välja arvutada tõenäosuse, millega just sina saad kasu sellest õpikust.</p>
+<p><strong>Punkt8.</strong> Bayesi teoreemi rakendamine diskreetsetele hüpoteesidele: Oletame, et 45 aastane naine saab rinnavähi sõeluuringus mammograafias positiivse tulemuse. Millise tõenäosusega on tal rinnavähk? Kõigepealt jagame hüpoteesiruumi kahe diskreetse hüpoteesi vahel: H<sub>1</sub> - vähk ja H<sub>2</sub> - mitte vähk. Edasi on meil vaja omistada numbrilised väärtused järgmistele parameetritele:</p>
+<ol style="list-style-type: decimal">
+<li><p>H<sub>1</sub> tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil on rinnavähk <span class="math inline">\(P( +~\vert~H_1) = 0.9\)</span></p></li>
+<li><p>H<sub>2</sub> tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil ei ole rinnavähki <span class="math inline">\(P( +~\vert~H_2) = 0.08\)</span> (pane tähele, et 0.9 + 0.08 ei võrdu ühega, mis tähendab, et tõepära pole tõenäosusteooria mõttes päris tõenäosus).</p></li>
+<li><p>Eelnev tõenäosus, et patsiendil on rinnavähk <span class="math inline">\(P(H_1) = 0.01\)</span> (see on rinnavähi sagedus 45 a naiste populatsioonis; kui me teame patsiendi genoomi järjestust või rinnavähijuhte tema lähisugulastel, võib P(H~1) tulla väga erinev).</p></li>
+<li><p><span class="math inline">\(P(H_2) = 1 - P(H_2) = 0.99\)</span></p></li>
+</ol>
+<p>Nüüd arvutame posterioorse tõenäosuse <span class="math inline">\(P(H_1~\vert~+)\)</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">likelihood_H1 &lt;-<span class="st"> </span><span class="fl">0.9</span>
+likelihood_H2 &lt;-<span class="st"> </span><span class="fl">0.08</span>
+prior_H1 &lt;-<span class="st"> </span><span class="fl">0.01</span>
+prior_H2 &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>prior_H1
+posterior1 &lt;-<span class="st"> </span>likelihood_H1<span class="op">*</span>prior_H1<span class="op">/</span>(likelihood_H1<span class="op">*</span>prior_H1 <span class="op">+</span><span class="st"> </span>likelihood_H2<span class="op">*</span>prior_H2)
+posterior1
+<span class="co">#&gt; [1] 0.102</span></code></pre></div>
+<p>Nagu näha, postiivne tulemus rinnavähi sõeluuringus annab 10% tõenäosuse, et teil on vähk (ja 90% tõenäosuse, et olete terve). Selle mudeli parameetriväärtused vastavad enam-vähem tegelikele mammograafia veasagedustele ja tegelikule populatsiooni vähisagedusele.</p>
+<p>Mis juhtub, kui me teeme positiivsele patsiendile kordustesti? Nüüd on esimese testi posteerior meile prioriks, sest see kajastab definitsiooni järgi kogu teadmist, mis meil selle patsiendi vähiseisundist on (muidugi eeldusel, et me esimese mudeli kohusetundlikult koostasime).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">likelihood_H1 &lt;-<span class="st"> </span><span class="fl">0.9</span>
+likelihood_H2 &lt;-<span class="st"> </span><span class="fl">0.08</span>
+prior_H1 &lt;-<span class="st"> </span>posterior1
+prior_H2 &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>prior_H1
+posterior2 &lt;-<span class="st"> </span>likelihood_H1<span class="op">*</span>prior_H1<span class="op">/</span>(likelihood_H1<span class="op">*</span>prior_H1 <span class="op">+</span><span class="st"> </span>likelihood_H2<span class="op">*</span>prior_H2)
+posterior2
+<span class="co">#&gt; [1] 0.561</span></code></pre></div>
+<p>Patsiendile võib pärast kordustesti positiivset tulemust öelda, et ta on 44% tõenäosusega vähivaba. Eelduseks on, et me ei tea midagi selle patsiendi geneetikast ega keskkonnast põhjustatud vastuvõtlikusest vähile ning, et testi ja kordustesti vead on üksteisest sõltumatud (mitte korreleeritud).</p>
+</div>
+<div id="toenaosuse-tolgendus" class="section level3 unnumbered">
+<h3>Tõenäosuse tõlgendus</h3>
+<p>Bayesi statistika opereerib episteemilise tõenäosusega. See tähendab, et tõenäosus annab numbrilise mõõdu meie ebakindluse määrale mõne hüpoteesi ehk parameetriväärtuse kehtimise kohta. Seega mõõdab tõenäosus meie teadmiste kindlust (või ebakindlust). Näiteks, kui Bayesi arvutus väidab, et vihma tõenäosus homme on 60%, siis me oleme 60% kindlad, et homme tuleb vihma. Aga hoolimata sellest, mida me vihma kohta usume, homme kas sajab vihma või mitte, ja seega on objektiivne vihma tõenäosus meie akna taga 0% või 100% – mitte kunagi 60%.</p>
+<blockquote>
+<p>Tõenäosuse formaalne definitsioon tuleb otse kihlveokontorist. Kui sa arvutasid, et vihma tõenäosus homme on 60%, siis see tähendab, et sa oled ratsionaalse olendina nõus maksma mitte rohkem kui 60 senti kihlveo eest, mis võidu korral toob sulle sisse 1 EUR – ehk 40 senti kasumit.</p>
+</blockquote>
+<p>Selles mõttes on Bayesi tõenäosus subjektiivne. Kui me teaksime täpselt, mis homme juhtub, siis ei oleks meil selliseid tõenäosusi vaja. Seega, kui te usute, et teadus suudab tõestada väiteid maailma kohta, nagu seda teeb matemaatika formaalsete struktuuride kohta, siis pääsete sellega statistika õppimisest ja kasutamisest. Aga kui te siiski arvutate Bayesi tõenäosusi, siis ei ütle need midagi selle kohta, kas maailm on tõenäosuslik või deterministlik. Inimesed, kes vajavad tõenäosusi maailma seisundite kirjeldamiseks, ei kasuta enamasti Bayesi tõenäosustõlgendust (v.a. väike osa kvantfüüsikuid), vaid sagedusliku tõlgendust, mille kohta vt. Lisa xxx.</p>
+<p>Kui me mõõdame pidevat suurust, näiteks inimeste pikkusi, siis saame arvutuse tagajärjel tõenäosused kõigi võimalike parameetriväärtuste kohta, ehk igale mõeldavale pikkuse väärtusele. Kuna pideval suurusel on lõpmata hulk võimalikke väärtusi, avaldame me sellised tõenäosused pideva tõenäosusfunktsioonina, ehk posteeriorina. See näeb sageli välja nagu normaaljaotus ja me võime igast posteeriorist arvutada, kui suur osa summaarsest tõenäosusest, mis on 100%, jääb meid huvitavasse pikkustevahemikku. Kui näiteks 67% posteeriori pindalast jääb pikkuste vahemikku 178 kuni 180 cm, siis me usume 67%-se kindlusega, et tõde asub kuskil selles vahemikus.</p>
+</div>
+<div id="toenaosusteooriast-tulenevad-statistika-pohiprintsiibid" class="section level3 unnumbered">
+<h3>Tõenäosusteooriast tulenevad statistika põhiprintsiibid</h3>
+<ol style="list-style-type: decimal">
+<li><p>statistilise analüüsi kvaliteet sõltub mudeli eeldustest &amp; struktuurist. Kuna maailm ei koosne matemaatikast, teevad matemaatilised mudelid alati eeldusi maailma kohta, mis ei ole päris tõesed ja mida ei saa tingimata empiiriliselt kontrollida. Mündiviske näites eeldasime, et mündivisked olid üksteisest sõltumatud. Kui me sellest eeldusest loobume, läheb meie mudel keerulisemaks, sest me peame mudelisse lisama teavet visetevahelise korrelatsiooni kohta. Aga see keerulisem mudel toob sisse uued eeldused (vähemalt pool tosinat lisaeeldust). Üldiselt peaks mudeli struktuur kajastama katse struktuuri, mis kaasaegses statistikas tähendab sageli hierarhilisi mudeleid.</p></li>
+<li><p>statistilise analüüsi kvaliteet sõltub andmete hulgast. Kui kahe mündiviske asemel teeksime kakskümmend, siis saaksime samade eelduste põhjal teha oluliselt täpsemaid järeldusi mündi aususe kohta.</p></li>
+<li><p>statistilise analüüsi kvaliteet sõltub andmete kvaliteedist. Kui münt on aus, aga me viskame seda ebaausalt, siis, mida rohkem arv kordi me seda teeme, seda tugevamalt usub teadusüldsus selle tagajärjel millessegi, mis pole tõsi.</p></li>
+<li><p>statistilise analüüsi kvaliteet sõltub taustateadmiste kvaliteedist. Napid taustateadmised ei võimalda parandada andmete põhjal tehtud järeldusi juhul, kui andmed mingil põhjusel ei vasta tegelikkusele. Adekvaatsete taustateadmiste lisamine mudelisse aitab vältida mudelite üle-fittimist.</p></li>
+<li><p>Järeldused ühe hüpoteesi kohta mõjutavad järeldusi ka kõigi alternatiivsete hüpoteeside kohta. Relevantsete hüpoteeside eiramine viib ekslikele järeledustele kõigi teiste hüpoteeside kohta.</p></li>
+</ol>
+</div>
+</div>
+<p style="text-align: center;">
+<a href="7-jareldav-statistika.html"><button class="btn btn-default">Previous</button></a>
+<a href="https://github.com/rstats-tartu/lectures/edit/master/07_inferential.Rmd"><button class="btn btn-default">Editeeri</button></a>
+<a href="andmed-ei-ole-sama-mis-tegelikkus.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>

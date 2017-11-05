@@ -225,33 +225,88 @@ img {
 </div>
 <div class="row">
 <div class="col-sm-12">
-<div id="header">
-<h1 class="title">Bayesi statistika kasutades R keelt</h1>
-<h4 class="author"><em>Taavi Päll</em></h4>
-<h4 class="author"><em>Ülo Maiväli</em></h4>
+<div id="muutujate-koosvarieeruvus" class="section level2 unnumbered">
+<h2>Muutujate koosvarieeruvus</h2>
+<p>Andmete koos-varieeruvust mõõdetakse korrelatsiooni abil. Tulemuseks on üks number - korrelatsioonikordaja r, mis varieerub -1 ja 1 vahel.</p>
+<ul>
+<li>r = 0 – kahte tüüpi mõõtmised (x=pikkus, y=kaal) samadest mõõteobjektidest varieeruvad üksteisest sõltumatult.</li>
+<li>r = 1: kui ühe muutuja väärtus kasvab, kasvab ka teise muutuja väärtus alati täpselt samas proportsioonis.</li>
+<li>r = -1: kui ühe muutuja väärtus kasvab, kahaneb teise muutuja väärtus alati täpselt samas proportsioonis.</li>
+</ul>
+<p>Kui r on -1 või 1, saame me x väärtust teades täpselt ennustada y väärtuse (ja vastupidi, teades y väärrust saame täpselt ennustada x väärtuse).<br />
+Kuidas tõlgendame aga tulemust r = 0.9? Mitte kuidagi. Selle asemel tõlgendame r2 = 0.9**2 = 0.81 – mis tähendab, et x-i varieeruvus suudab seletada 81% y varieeruvusest ja vastupidi, et Y-i varieeruvus suudab seletada 81% X-i varieeruvusest.</p>
+<p>Korrelatsiooni saab mõõta mitmel viisil (?cor.test, method=). Kõige levinum on Pearsoni korrelatsioonikoefitsient, mis eeldab, <em>(i)</em> et me mõõdame pidevaid muutujaid, <em>(ii)</em> et valim on esinduslik populatsiooni suhtes, <em>(iii)</em> et populatsiooniandmed on normaaljaotusega ja <em>(iv)</em> et igal mõõteobjektil on mõõdetud 2 omadust (pikkus ja kaal, näiteks). Tuntuim alternatiiv on mitteparameetriline Spearmani korrelatsioon, mis ei eelda andmete normaaljaotust ega seda, et mõõdetakse pidevaid suurusi (ordinaalsed andmed käivad kah). Kui kõik Pearsoni korrelatsiooni eeldused on täidetud ja te kasutate siiski Spearmani korrelatsiooni, siis on teie arvutus ca. 10% vähemefektiivne.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Sepal.Width, <span class="dt">use =</span> <span class="st">&quot;complete.obs&quot;</span>)
+<span class="co">#&gt; [1] -0.118</span></code></pre></div>
+<p>Korrelatsioonikordaja väärtus sõltub mitte ainult andmete koosvarieeruvusest vaid ka andmete ulatusest. Suurema ulatusega andmed X ja/või Y teljel annavad keskeltläbi 0-st kaugemal oleva korrelatsioonikordaja. Selle pärast sobib korrelatsioon halvasti näiteks korduskatsete kooskõla mõõtmiseks.</p>
+<p>Lisaks, korrelatsioonikordaja mõõdab vaid andmete <em>lineaarset</em> koos-varieeruvust: kui andmed koos-varieeruvad mitte-lineaarselt, siis võivad ka väga tugevad koos-varieeruvused jääda märkamatuks.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:anscombe"></span>
+<img src="051_andmed_files/figure-html/anscombe-1.png" alt="Anscombe’i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: neli andmestikku annavad identse korrelatsioonikordaja (Pearsons’r), ehkki tegelikud seosed andmete vahel on täiesti erinevad." width="70%" />
+<p class="caption">
+Joonis 4.2: Anscombe’i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: neli andmestikku annavad identse korrelatsioonikordaja (Pearsons’r), ehkki tegelikud seosed andmete vahel on täiesti erinevad.
+</p>
 </div>
-<div id="saateks" class="section level1 unnumbered">
-<h1>Saateks</h1>
-<p>See õpik soovib anda praktilisi andmeanalüüsi oskusi töötamiseks reaalsete andmetega. See puudutab laias laastus kolme teemat:</p>
-<ol style="list-style-type: decimal">
-<li><p>Kuidas summeerida andmeid: keskmise, varieeruvuse ja kovarieeruvuse näitajad.</p></li>
-<li><p>Kuidas graafiliste meetodite abil kontrollida andmete kvaliteeti ja püstitada uusi hüpoteese.</p></li>
-<li><p>Kuidas teha andmete põhjal järeldusi protsessi kohta, mis neid andmeid genereerib, ühtlasi kirjeldades adekvaatselt neid järeldusi ümbritsevat ebakindlust.</p></li>
-</ol>
-<p>Kuna me püüame anda eeskätt praktilisi oskusi andmeanalüüsiks, mitte matemaatilist ega muidu teoreetilist haridust, siis keskendume moodsatele bayesi meetoditele. Need on küll arvuti jaoks töömahukamad kui klassikalised statistilisel olulisusel põhinevad testid, aga inimese jaoks kergemini õpitavad ning tõlgendatavad. Klassikalist ja bayesi statistikat võrdleme lisas 1. Bayesiaanliku lähenemise hind on, et kasutaja peab omandama vähemalt algtasemel R keele, mis võimaldab käsurealt anmdeid manipuleerida. R-i õppimine nõuab kahtlemata lisapingutust, aga me usume, et see tasub ära igaühele, kes töötab vähemalt keskmise suurusega andmekogudega. Me teeme sissejuhatuse R-i peatükkides …., keskendudes R-i tidyverse ökosüsteemile, mis on optimeeritud olema kergesti kasutatav ja õpitav inimestele, kelle põhitöö ei ole seotud koodi kirjutamisega.</p>
-<p>Pingutus R õppimiseks tasub teile mitmel erineval viisil. R võimaldab palju kiiremini andmetabeleid analüüsiks sobivasse vormi ajada kui spreadsheet programmid. R-i graafikasüsteem, eriti ggplot2, on võimas ning paindlik tööriist väga erinevate graafikute koostamiseks. R-s jooksevad praktiliselt kõik statistilised testid, mida inimmõistus on loonud – R on levinuim statistikaprogramm maailmas, mis on eriti hästi sobiv statistiliseks modelleerimiseks. See tähendab ka, et üle maailma on suur seltskond inimesi, kes R-i arendab ja on nõus vastama ka teie küsimustele. Lisaboonusena on juba kord salvestatud R-i koodi taaskasutades palju lihtsam oma analüüsi korrata ja vastavalt vajadustele muuta, kui spreadsheet programmide puhul.</p>
-<p>Õpiku kasutamise eeldused: - Arvuti. - Matemaatikaoskused, mis hõlmavad liitmist, lahutamist, korrutamist, jagamist, logaritmimist ja astendamist. - Kõrgemat matemaatikat me ei vaja.</p>
-<p>Õpiku struktuur:</p>
-<p>xxx</p>
-<p><img src="img/cyclo.png" width="50%" style="display: block; margin: auto;" /></p>
+<p>Moraal seisneb selles, et enne korrelatsioonikordaja arvutamist tasub alati plottida andmed, et veenduda võimaliku seose lineaarsuses. Lineaarsuse puudumine andmete koosvarieeruvuse mustris tähendab, et korrelatsioonikordaja tuleb kindlasti eksitav.</p>
+<p>Korrelatsioonikordaja mõõdab pelgalt määra, mil üks muutuja muutub siis, kui teine muutuja muutub. Seega ei ole suurt mõtet arvutada korrelatsioonikordajat juhul kui me teame ette seose olemasolust kahe muutuja vahel. Näiteks, kui sama entiteeti mõõdetakse kahel erineval viisil, või kahes korduses, või kui esimene muutuja arvutatakse teise muutuja kaudu.</p>
+<blockquote>
+<p>Kõik summaarsed statistikud kaotavad enamuse teie andmetes leiduvast infost – see kaotus on õigustatud ainult siis, kui teie poolt valitud statistik iseloomustab hästi andmete sügavamat olemust (näiteks tüüpilist mõõtmistulemust või andmete varieeruvust).</p>
+</blockquote>
+<p>Korrelatsioonimaatriksi saab niimoodi:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># numeric columns only!</span>
+<span class="co"># the following gives cor matrix with </span>
+<span class="co"># frequentist correction for mutliple testing:</span>
+<span class="co"># print(psych::corr.test(iris[-5]))</span>
+<span class="co"># only numeric cols allowed! Hence -Species</span>
+knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">cor</span>(iris[,<span class="op">-</span><span class="dv">5</span>]))</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">Sepal.Length</th>
+<th align="right">Sepal.Width</th>
+<th align="right">Petal.Length</th>
+<th align="right">Petal.Width</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sepal.Length</td>
+<td align="right">1.000</td>
+<td align="right">-0.118</td>
+<td align="right">0.872</td>
+<td align="right">0.818</td>
+</tr>
+<tr class="even">
+<td>Sepal.Width</td>
+<td align="right">-0.118</td>
+<td align="right">1.000</td>
+<td align="right">-0.428</td>
+<td align="right">-0.366</td>
+</tr>
+<tr class="odd">
+<td>Petal.Length</td>
+<td align="right">0.872</td>
+<td align="right">-0.428</td>
+<td align="right">1.000</td>
+<td align="right">0.963</td>
+</tr>
+<tr class="even">
+<td>Petal.Width</td>
+<td align="right">0.818</td>
+<td align="right">-0.366</td>
+<td align="right">0.963</td>
+<td align="right">1.000</td>
+</tr>
+</tbody>
+</table>
 
 </div>
-
-
-
+<!-- </div> -->
 <p style="text-align: center;">
-<a href="https://github.com/rstats-tartu/lectures/edit/master/index.Rmd"><button class="btn btn-default">Editeeri</button></a>
-<a href="1-sissejuhatus-maailm-teooria-ja-mudel.html"><button class="btn btn-default">Next</button></a>
+<a href="iseloomusta-andmeid-algses-skaalas-mediaan-mad.html"><button class="btn btn-default">Previous</button></a>
+<a href="https://github.com/rstats-tartu/lectures/edit/master/051_andmed.Rmd"><button class="btn btn-default">Editeeri</button></a>
+<a href="6-eda-eksploratoorne-andmeanaluus.html"><button class="btn btn-default">Next</button></a>
 </p>
 </div>
 </div>

@@ -225,33 +225,170 @@ img {
 </div>
 <div class="row">
 <div class="col-sm-12">
-<div id="header">
-<h1 class="title">Bayesi statistika kasutades R keelt</h1>
-<h4 class="author"><em>Taavi Päll</em></h4>
-<h4 class="author"><em>Ülo Maiväli</em></h4>
-</div>
-<div id="saateks" class="section level1 unnumbered">
-<h1>Saateks</h1>
-<p>See õpik soovib anda praktilisi andmeanalüüsi oskusi töötamiseks reaalsete andmetega. See puudutab laias laastus kolme teemat:</p>
+<div id="eda-eksploratoorne-andmeanaluus" class="section level1">
+<h1><span class="header-section-number">6</span> EDA — eksploratoorne andmeanalüüs</h1>
+<p>Kui ühenumbriline andmete summeerimine täidab eelkõige kokkuvõtliku kommunikatsiooni eesmärki, siis EDA on suunatud teadlasele endale. EDA eesmärk on andmeid eelkõige graafiliselt vaadata, et saada aimu 1) andmete kvaliteedist ja 2) lasta andmetel kõneleda “sellisena nagu nad on” ja sugereerida uudseid teaduslikke hüpoteese. Neid hüpoteese peaks siis testima formaalse statistilise analüüsi abil (ptk järeldav statistika). Näiteid erinevate graafiliste lahenduste kohta vt graafika peatükist.</p>
+<blockquote>
+<p>EDA: mida rohkem graafikuid, seda rohkem võimalusi uute mõtete tekkeks!</p>
+</blockquote>
+<p>EDA on rohkem kunst kui teadus selles mõttes, et teil on suur vabadus küsida selle abil erinevaid küsimusi oma andmete kohta. Ja seda nii tehnilisest aspektist lähtuvalt (milline on minu andmete kvaliteet?), kui teaduslikke küsimusi küsides (kas muutuja A võiks põhjustada muutusi muutujas B?).</p>
+<p>Mõned üldised soovitused võib siiski anda.</p>
 <ol style="list-style-type: decimal">
-<li><p>Kuidas summeerida andmeid: keskmise, varieeruvuse ja kovarieeruvuse näitajad.</p></li>
-<li><p>Kuidas graafiliste meetodite abil kontrollida andmete kvaliteeti ja püstitada uusi hüpoteese.</p></li>
-<li><p>Kuidas teha andmete põhjal järeldusi protsessi kohta, mis neid andmeid genereerib, ühtlasi kirjeldades adekvaatselt neid järeldusi ümbritsevat ebakindlust.</p></li>
+<li>alusta analüüsi tasemest, kus andmed on kõige inforikkamad — toorandmete plottimisest punktidena. Kui andmehulk ei ole väga massiivne, näitab see hästi nii andmete kvaliteeti, kui ka võimalikke sõltuvussuhteid erinevate muutujate vahel.</li>
 </ol>
-<p>Kuna me püüame anda eeskätt praktilisi oskusi andmeanalüüsiks, mitte matemaatilist ega muidu teoreetilist haridust, siis keskendume moodsatele bayesi meetoditele. Need on küll arvuti jaoks töömahukamad kui klassikalised statistilisel olulisusel põhinevad testid, aga inimese jaoks kergemini õpitavad ning tõlgendatavad. Klassikalist ja bayesi statistikat võrdleme lisas 1. Bayesiaanliku lähenemise hind on, et kasutaja peab omandama vähemalt algtasemel R keele, mis võimaldab käsurealt anmdeid manipuleerida. R-i õppimine nõuab kahtlemata lisapingutust, aga me usume, et see tasub ära igaühele, kes töötab vähemalt keskmise suurusega andmekogudega. Me teeme sissejuhatuse R-i peatükkides …., keskendudes R-i tidyverse ökosüsteemile, mis on optimeeritud olema kergesti kasutatav ja õpitav inimestele, kelle põhitöö ei ole seotud koodi kirjutamisega.</p>
-<p>Pingutus R õppimiseks tasub teile mitmel erineval viisil. R võimaldab palju kiiremini andmetabeleid analüüsiks sobivasse vormi ajada kui spreadsheet programmid. R-i graafikasüsteem, eriti ggplot2, on võimas ning paindlik tööriist väga erinevate graafikute koostamiseks. R-s jooksevad praktiliselt kõik statistilised testid, mida inimmõistus on loonud – R on levinuim statistikaprogramm maailmas, mis on eriti hästi sobiv statistiliseks modelleerimiseks. See tähendab ka, et üle maailma on suur seltskond inimesi, kes R-i arendab ja on nõus vastama ka teie küsimustele. Lisaboonusena on juba kord salvestatud R-i koodi taaskasutades palju lihtsam oma analüüsi korrata ja vastavalt vajadustele muuta, kui spreadsheet programmide puhul.</p>
-<p>Õpiku kasutamise eeldused: - Arvuti. - Matemaatikaoskused, mis hõlmavad liitmist, lahutamist, korrutamist, jagamist, logaritmimist ja astendamist. - Kõrgemat matemaatikat me ei vaja.</p>
-<p>Õpiku struktuur:</p>
-<p>xxx</p>
-<p><img src="img/cyclo.png" width="50%" style="display: block; margin: auto;" /></p>
-
+<p>Millised korrelatsioonid võiksid andmetes esineda?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(corrgram) <span class="co"># PCA for ordering</span>
+<span class="kw">corrgram</span>(iris, <span class="dt">order=</span><span class="ot">TRUE</span>, 
+         <span class="dt">lower.panel =</span> panel.pts,
+         <span class="dt">upper.panel =</span> panel.ellipse,
+         <span class="dt">diag.panel =</span> panel.density,
+         <span class="dt">main=</span><span class="st">&quot;Correlogram of Iris dataset&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
+<img src="06_EDA_files/figure-html/unnamed-chunk-2-1.png" alt="Korrelatstioonimaatriks joonisena." width="70%" />
+<p class="caption">
+Joonis .: Korrelatstioonimaatriks joonisena.
+</p>
 </div>
-
-
-
+<ol start="2" style="list-style-type: decimal">
+<li>vaata andmeid numbrilise kokkuvõttena.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(psych)
+<span class="kw">library</span>(knitr)
+<span class="kw">describe</span>(iris) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">vars</th>
+<th align="right">n</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">median</th>
+<th align="right">trimmed</th>
+<th align="right">mad</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">range</th>
+<th align="right">skew</th>
+<th align="right">kurtosis</th>
+<th align="right">se</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sepal.Length</td>
+<td align="right">1</td>
+<td align="right">150</td>
+<td align="right">5.84</td>
+<td align="right">0.828</td>
+<td align="right">5.80</td>
+<td align="right">5.81</td>
+<td align="right">1.038</td>
+<td align="right">4.3</td>
+<td align="right">7.9</td>
+<td align="right">3.6</td>
+<td align="right">0.309</td>
+<td align="right">-0.606</td>
+<td align="right">0.068</td>
+</tr>
+<tr class="even">
+<td>Sepal.Width</td>
+<td align="right">2</td>
+<td align="right">150</td>
+<td align="right">3.06</td>
+<td align="right">0.436</td>
+<td align="right">3.00</td>
+<td align="right">3.04</td>
+<td align="right">0.445</td>
+<td align="right">2.0</td>
+<td align="right">4.4</td>
+<td align="right">2.4</td>
+<td align="right">0.313</td>
+<td align="right">0.139</td>
+<td align="right">0.036</td>
+</tr>
+<tr class="odd">
+<td>Petal.Length</td>
+<td align="right">3</td>
+<td align="right">150</td>
+<td align="right">3.76</td>
+<td align="right">1.765</td>
+<td align="right">4.35</td>
+<td align="right">3.76</td>
+<td align="right">1.853</td>
+<td align="right">1.0</td>
+<td align="right">6.9</td>
+<td align="right">5.9</td>
+<td align="right">-0.269</td>
+<td align="right">-1.417</td>
+<td align="right">0.144</td>
+</tr>
+<tr class="even">
+<td>Petal.Width</td>
+<td align="right">4</td>
+<td align="right">150</td>
+<td align="right">1.20</td>
+<td align="right">0.762</td>
+<td align="right">1.30</td>
+<td align="right">1.18</td>
+<td align="right">1.038</td>
+<td align="right">0.1</td>
+<td align="right">2.5</td>
+<td align="right">2.4</td>
+<td align="right">-0.101</td>
+<td align="right">-1.358</td>
+<td align="right">0.062</td>
+</tr>
+<tr class="odd">
+<td>Species*</td>
+<td align="right">5</td>
+<td align="right">150</td>
+<td align="right">2.00</td>
+<td align="right">0.819</td>
+<td align="right">2.00</td>
+<td align="right">2.00</td>
+<td align="right">1.483</td>
+<td align="right">1.0</td>
+<td align="right">3.0</td>
+<td align="right">2.0</td>
+<td align="right">0.000</td>
+<td align="right">-1.520</td>
+<td align="right">0.067</td>
+</tr>
+</tbody>
+</table>
+<p>Siin pööra kindlasti tähelepanu tulpadele min ja max, mis annavad kiire võimalusi outliereid ära tunda. Kontrolli, kas andmete keskmised (mediaan, mean ja trimmed mean) on üksteisele piisavalt lähedal — kui ei ole, siis on andmete jaotus pika õlaga, ja kindlasti mitte normaalne. Kontrolli, kas erinevate muutujate keskväärtused ja hälbed on teaduslikus mõttes usutavas vahemikus. Ära unusta, et ka väga väike standardhälve võib tähendada, et teie valim ei peegelda bioloogilist varieeruvust populatsioonis, mis teile teaduslikku huvi pakub. NB! selles psych::describe() väljundis on mad läbi korrutatud konstandiga 1.4826, mis toob selle väärtuse lähemale sd-le. Seega on mad siin sd robustne analoog — kui mad on palju väiksem sd-st, siis on karta, et muutujas on outliereid.</p>
+<ol start="3" style="list-style-type: decimal">
+<li><p>kontrolli NA-de esinemist oma andmetes VIM paketi abil või käsitsi (vt esimene ptk). Kontrolli, et NA-d ei oleks tähistatud mingil muul viisil (näiteks 0-i või mõne muu numbriga). Kui vaja, rekodeeri NAd. Mõtle selle peale, millised protsessid looduses võiksid genreerida puuduvaid andmeid. Kui NA-d ei jaotu andmetes juhuslikult, võib olla hea mõte andmeid imputeerida (vt hilisemaid ptk, bayesiaanlik imputeerimine). Näiteks, kui ravimiuuringust kukuvad eeskätt välja patsiendid, kellel ravim ei tööta, on ilmselt halb mõte nende patsientide andmed lihtsalt uuringust välja vistata (muidugi, kui te ei esinda kasumit taotleva ettevõtte huve). Kui NA-d jaotuvad juhuslikult, mõtle sellele, kas sa tahad NA-dega read tabelist välja visata, või hoopis osad muutujad, mis sisaldavad liiga palju NA-sid, või mitte midagi välja vistata. NB! NA-dega andmed ei sobi hästi regresiooniks.</p></li>
+<li><p>Kui andmeid on nii palju, et üksikute andmepunktide vaatlemine paneb pea valutama, siis järgmine informatiivsuse tase on histogramm.</p></li>
+<li><p>kui tahame kõrvuti vaadata paljude erinevate muutujate varieeruvust ja keskväärtusi, siis on head valikud joyplot, violin plot, ja vähem hea valik (sest ta kaotab andmetest rohkem infot) on boxplot. Kui meil on vaid 2-4 jaotust, mida võrrelda, siis saab mängida histogramme facetisse või üksteise otsa pannes (vt ptk graphics).</p></li>
+<li><p>Tulpdiagramm on hea valik siis, kui tahate kõrvuti näidata proportsioonide erinevust. Näiteks, kui meil on 3 liiki kalu, millest igas on erinevas proporstioonis parasiidid, võime joonistada 3 tulpa, millest igas on näidatud ühe kalaliigi parasiitide omavaheline proportsioon.</p></li>
+<li><p>Tulpdiagramm on hädaga pooleks kasutuskõlblik, kui iga muutuja kohta on vaid üks number, mida plottida. Kuigi, siin on meil parem võimalus — Cleveland plot. Olukorras, kus te tahate plottida valimi keskväärtust ja usalduspiire või varieeruvusnäitajat (sd, mad), on olemas selgelt paremad meetodid kui tulpdiagramm. Samas, ehki tulpdiagrammide kasutamine teaduskirjanduses on pikas langustrendis, kasutatakse neid ikkagi liiga palju just sellel viisil.</p></li>
+<li><p>Ära piirdu muutuja tasemel varieeruvuse plottimisega. Teaduslikult on sageli huvitavam mimte muutuja koosvarieerumine. Järgmistes peatükkides modelleerime seda formaalselt regresioonanalüüsis aga alati tasub alustada lihtsatest plottidest. Scatterplot on lihtne viis kovarieeruvuse vaatamiseks.</p></li>
+<li><p>Kui erinevad muutujad on mõõdetud erinevates skaalades (ühikutes), siis võib nende koosvarieeruvust olla kergem võrrelda, kui nad eelnevalt normaliseerida (kõigi muutujate keskväärtus = 0, aga varieeruvus jääb algsesse skaalasse), või standardiseerida (kõik keskväärtused = 0-ga ja sd-d = 1-ga). Standardiseerida tohib ainult normaaljaotusega muutujaid (seega võib olla vajalik muutuja kõigepealt logaritmida). normaliseerimine: arvuta igale valimi väärtusele: <em>mean(x) - x</em>; standardiseerimine: <em>(mean(x) - x)/sd(x)</em>.</p></li>
+<li><p>Visualiseeringu valik sõltub valimi suurusest. Väikse valimi korral (N&lt;10) boxploti, histogrammi vms kasutamine on lihtsalt rumal. Ära mängi lolli ja ploti parem punkti kaupa.</p></li>
+</ol>
+<ul>
+<li><p>N &lt; 20 - ploti iga andmepunkt eraldi (stripchart(), plot()) ja keskmine või mediaan.</p></li>
+<li><p>20 &gt; N &gt; 100: geom_dotplot() histogrammi vaates</p></li>
+<li><p>N &gt; 100: geom_histogram(), geom_density() — nende abil saab ka 2 kuni 6 jaotust võrrelda</p></li>
+<li><p>Mitme jaotuse kõrvuti vaatamiseks, kui N &gt; 15: geom_boxplot(), or geom_violin(), geom_joy()</p></li>
+</ul>
+<ol start="11" style="list-style-type: decimal">
+<li>Nii saab plottida multiplikatiivse sd:</li>
+</ol>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
+<img src="06_EDA_files/figure-html/unnamed-chunk-4-1.png" alt="Multiplikatiivse sd joonistamine." width="70%" />
+<p class="caption">
+Joonis .: Multiplikatiivse sd joonistamine.
+</p>
+</div> 
+</div>
 <p style="text-align: center;">
-<a href="https://github.com/rstats-tartu/lectures/edit/master/index.Rmd"><button class="btn btn-default">Editeeri</button></a>
-<a href="1-sissejuhatus-maailm-teooria-ja-mudel.html"><button class="btn btn-default">Next</button></a>
+<a href="muutujate-koosvarieeruvus.html"><button class="btn btn-default">Previous</button></a>
+<a href="https://github.com/rstats-tartu/lectures/edit/master/06_EDA.Rmd"><button class="btn btn-default">Editeeri</button></a>
+<a href="6-1-eda-kokkuvote.html"><button class="btn btn-default">Next</button></a>
 </p>
 </div>
 </div>

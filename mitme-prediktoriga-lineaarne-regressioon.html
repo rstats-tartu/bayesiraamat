@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="Bayesi statistika kasutades R keelt" />
+<meta property="og:type" content="book" />
+
+<meta property="og:image" content="img/cyclo.png" />
+<meta property="og:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
+<meta name="github-repo" content="rstats-tartu/bayesiraamat" />
+
+<meta name="author" content="Taavi Päll" />
+<meta name="author" content="Ülo Maiväli" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+
+<meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid.">
+
+<title>Bayesi statistika kasutades R keelt</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+
+<script src="https://use.fontawesome.com/e4ba4259a1.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="toc.css" type="text/css" />
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#saateks">Saateks</a></li>
+<li class="part"><span><b>I OSA</b></span></li>
+<li class="has-sub"><a href="1-sissejuhatus-maailm-teooria-ja-mudel.html#sissejuhatus-maailm-teooria-ja-mudel"><span class="toc-section-number">1</span> Sissejuhatus: maailm, teooria ja mudel</a><ul>
+<li><a href="suur-ja-vaike-maailm.html#suur-ja-vaike-maailm">Suur ja väike maailm</a></li>
+<li><a href="mudeli-vaike-maailm.html#mudeli-vaike-maailm">Mudeli väike maailm</a></li>
+</ul></li>
+<li class="has-sub"><a href="2-lineaarsed-mudelid.html#lineaarsed-mudelid"><span class="toc-section-number">2</span> Lineaarsed mudelid</a><ul>
+<li><a href="ennustus-lineaarsest-mudelist.html#ennustus-lineaarsest-mudelist">Ennustus lineaarsest mudelist</a></li>
+<li><a href="neli-moistet.html#neli-moistet">Neli mõistet</a></li>
+<li><a href="mudeli-fittimine.html#mudeli-fittimine">Mudeli fittimine</a></li>
+<li><a href="ule-ja-alafittimine.html#ule--ja-alafittimine">Üle- ja alafittimine</a></li>
+</ul></li>
+<li class="has-sub"><a href="3-kaks-lineaarse-mudeli-laiendust.html#kaks-lineaarse-mudeli-laiendust"><span class="toc-section-number">3</span> Kaks lineaarse mudeli laiendust</a><ul>
+<li><a href="mitme-soltumatu-prediktoriga-mudel.html#mitme-soltumatu-prediktoriga-mudel">Mitme sõltumatu prediktoriga mudel</a></li>
+<li><a href="interaktsioonimudel.html#interaktsioonimudel">Interaktsioonimudel</a></li>
+<li class="has-sub"><a href="veamudel.html#veamudel">Veamudel</a><ul>
+<li><a href="veamudel.html#enimkasutatud-veamudel-on-normaaljaotus">Enimkasutatud veamudel on normaaljaotus</a></li>
+<li><a href="veamudel.html#normaaljaotuse-mudel-vaikestel-valimitel">Normaaljaotuse mudel väikestel valimitel</a></li>
+<li><a href="veamudel.html#normaaljaotuse-ja-lognormaaljaotuse-erilisus">Normaaljaotuse ja lognormaaljaotuse erilisus</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="4-kusimused-mida-statistika-kusib.html#kusimused-mida-statistika-kusib"><span class="toc-section-number">4</span> Küsimused, mida statistika küsib</a><ul>
+<li><a href="jata-meelde.html#jata-meelde">Jäta meelde</a></li>
+</ul></li>
+<li class="has-sub"><a href="5-kuidas-naevad-valja-teie-andmed.html#kuidas-naevad-valja-teie-andmed"><span class="toc-section-number">5</span> Kuidas näevad välja teie andmed</a><ul>
+<li><a href="summaarsed-statistikud.html#summaarsed-statistikud">Summaarsed statistikud</a></li>
+<li><a href="keskvaartused.html#keskvaartused">Keskväärtused</a></li>
+<li><a href="muutuja-sisene-varieeruvus.html#muutuja-sisene-varieeruvus">Muutuja sisene varieeruvus</a></li>
+<li><a href="logaritmi-andmed.html#logaritmi-andmed">Logaritmi andmed</a></li>
+<li><a href="iseloomusta-andmeid-algses-skaalas-mediaan-mad.html#iseloomusta-andmeid-algses-skaalas-mediaan-mad">Iseloomusta andmeid algses skaalas: mediaan (MAD)</a></li>
+<li><a href="muutujate-koosvarieeruvus.html#muutujate-koosvarieeruvus">Muutujate koosvarieeruvus</a></li>
+</ul></li>
+<li class="has-sub"><a href="6-eda-eksploratoorne-andmeanaluus.html#eda-eksploratoorne-andmeanaluus"><span class="toc-section-number">6</span> EDA — eksploratoorne andmeanalüüs</a><ul>
+<li><a href="6-1-eda-kokkuvote.html#eda-kokkuvote"><span class="toc-section-number">6.1</span> EDA kokkuvõte</a></li>
+</ul></li>
+<li class="has-sub"><a href="7-jareldav-statistika.html#jareldav-statistika"><span class="toc-section-number">7</span> Järeldav statistika</a><ul>
+<li class="has-sub"><a href="jareldav-statistika-on-toenaosusteooria-kaepikendus.html#jareldav-statistika-on-toenaosusteooria-kaepikendus">Järeldav statistika on tõenäosusteooria käepikendus</a><ul>
+<li><a href="jareldav-statistika-on-toenaosusteooria-kaepikendus.html#formaalsed-tuletised-toenaosusteooria-aksioomidest">Formaalsed tuletised tõenäosusteooria aksioomidest</a></li>
+<li><a href="jareldav-statistika-on-toenaosusteooria-kaepikendus.html#naited-toenaosusteooria-tuletiste-rakendamisest">Näited tõenäosusteooria tuletiste rakendamisest</a></li>
+<li><a href="jareldav-statistika-on-toenaosusteooria-kaepikendus.html#toenaosuse-tolgendus">Tõenäosuse tõlgendus</a></li>
+<li><a href="jareldav-statistika-on-toenaosusteooria-kaepikendus.html#toenaosusteooriast-tulenevad-statistika-pohiprintsiibid">Tõenäosusteooriast tulenevad statistika põhiprintsiibid</a></li>
+</ul></li>
+<li><a href="andmed-ei-ole-sama-mis-tegelikkus.html#andmed-ei-ole-sama-mis-tegelikkus">Andmed ei ole sama, mis tegelikkus</a></li>
+</ul></li>
+<li class="part"><span><b>II OSA</b></span></li>
+<li class="has-sub"><a href="8-bootstrappimine.html#bootstrappimine"><span class="toc-section-number">8</span> Bootstrappimine</a><ul>
+<li><a href="veidi-keerulisem-bootstrap.html#veidi-keerulisem-bootstrap">Veidi keerulisem bootstrap</a></li>
+<li><a href="bayesboot.html#bayesboot">bayesboot()</a></li>
+<li><a href="parameetriline-bootstrap.html#parameetriline-bootstrap">Parameetriline bootstrap</a></li>
+<li><a href="bootstrappimine-ei-ole-kogu-tode.html#bootstrappimine-ei-ole-kogu-tode">Bootstrappimine ei ole kogu tõde</a></li>
+</ul></li>
+<li class="has-sub"><a href="9-bayesi-pohimote.html#bayesi-pohimote"><span class="toc-section-number">9</span> Bayesi põhimõte</a><ul>
+<li><a href="esimene-naide.html#esimene-naide">Esimene näide</a></li>
+<li><a href="teine-naide-sonastame-oma-probleemi-umber.html#teine-naide-sonastame-oma-probleemi-umber">Teine näide: sõnastame oma probleemi ümber</a></li>
+<li><a href="kui-n-1.html#kui-n-1">Kui n = 1</a></li>
+</ul></li>
+<li class="has-sub"><a href="10-mudelite-keel.html#mudelite-keel"><span class="toc-section-number">10</span> Mudelite keel</a><ul>
+<li><a href="beta-prior.html#beta-prior">Beta prior</a></li>
+<li><a href="prioritest-uldiselt.html#prioritest-uldiselt">Prioritest üldiselt</a></li>
+</ul></li>
+<li class="has-sub"><a href="ennustame-pidevat-suurust.html#ennustame-pidevat-suurust">Ennustame pidevat suurust</a><ul>
+<li class="has-sub"><a href="lihtne-normaaljaotuse-mudel.html#lihtne-normaaljaotuse-mudel">Lihtne normaaljaotuse mudel</a><ul>
+<li><a href="lihtne-normaaljaotuse-mudel.html#kui-lai-on-meie-toeparafunktsioon">Kui lai on meie tõepärafunktsioon?</a></li>
+<li><a href="lihtne-normaaljaotuse-mudel.html#lihtne-voi-robustne-normaalne-mudel">Lihtne või robustne normaalne mudel?</a></li>
+<li><a href="lihtne-normaaljaotuse-mudel.html#mcmc-ahelate-kvaliteet">MCMC ahelate kvaliteet</a></li>
+<li><a href="lihtne-normaaljaotuse-mudel.html#naide-usa-presidentide-keskmine-pikkus">Näide: USA presidentide keskmine pikkus</a></li>
+</ul></li>
+<li><a href="lineaarne-regressioon.html#lineaarne-regressioon">Lineaarne regressioon</a></li>
+<li><a href="lm-vahimruutude-meetodiga-fititud-lineaarsed-mudelid.html#lm---vahimruutude-meetodiga-fititud-lineaarsed-mudelid"><code>lm()</code> - vähimruutude meetodiga fititud lineaarsed mudelid</a></li>
+<li><a href="bayesi-meetodil-lineaarse-mudeli-fittimine.html#bayesi-meetodil-lineaarse-mudeli-fittimine">Bayesi meetodil lineaarse mudeli fittimine</a></li>
+<li class="has-sub"><a href="ennustused-mudelist.html#ennustused-mudelist">Ennustused mudelist</a><ul>
+<li><a href="ennustused-mudelist.html#lognormaalne-toeparamudel">Lognormaalne tõepäramudel</a></li>
+</ul></li>
+<li class="has-sub"><a href="mitme-prediktoriga-lineaarne-regressioon.html#mitme-prediktoriga-lineaarne-regressioon">Mitme prediktoriga lineaarne regressioon</a><ul>
+<li><a href="mitme-prediktoriga-lineaarne-regressioon.html#mudeldamine-standardiseeritud-andmetega">Mudeldamine standardiseeritud andmetega</a></li>
+</ul></li>
+<li class="has-sub"><a href="keerulisemate-mudelitega-tootamine.html#keerulisemate-mudelitega-tootamine">Keerulisemate mudelitega töötamine</a><ul>
+<li><a href="keerulisemate-mudelitega-tootamine.html#predictor-residual-plots">Predictor residual plots</a></li>
+<li><a href="keerulisemate-mudelitega-tootamine.html#ennustavad-plotid">Ennustavad plotid</a></li>
+<li><a href="keerulisemate-mudelitega-tootamine.html#posterior-prediction-plots">Posterior prediction plots</a></li>
+<li><a href="keerulisemate-mudelitega-tootamine.html#interaktsioonid-prediktorite-vahel">Interaktsioonid prediktorite vahel</a></li>
+<li><a href="keerulisemate-mudelitega-tootamine.html#interaktsioonid-pidevatele-tunnustele">Interaktsioonid pidevatele tunnustele</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="11-hierarhilised-mudelid.html#hierarhilised-mudelid"><span class="toc-section-number">11</span> Hierarhilised mudelid</a><ul>
+<li><a href="shrinkage.html#shrinkage">Shrinkage</a></li>
+<li><a href="anova-laadne-mudel.html#anova-laadne-mudel">ANOVA-laadne mudel</a></li>
+<li><a href="vabad-interceptid-klassikalises-regressioonimudelis.html#vabad-interceptid-klassikalises-regressioonimudelis">Vabad interceptid klassikalises regressioonimudelis</a></li>
+<li><a href="vabad-tousud-ja-interceptid.html#vabad-tousud-ja-interceptid">Vabad tõusud ja interceptid</a></li>
+<li><a href="hierarhiline-mudel-pidevate-prediktoritega.html#hierarhiline-mudel-pidevate-prediktoritega">Hierarhiline mudel pidevate prediktoritega</a></li>
+</ul></li>
+<li class="appendix"><span><b>Lisa</b></span></li>
+<li class="has-sub"><a href="A-bayesi-ja-sagedusliku-statistika-vordlus.html#bayesi-ja-sagedusliku-statistika-vordlus"><span class="toc-section-number">A</span> Bayesi ja sagedusliku statistika võrdlus</a><ul>
+<li><a href="kaks-statistikat-ajaloost-ja-toenaosusest.html#kaks-statistikat-ajaloost-ja-toenaosusest">Kaks statistikat: ajaloost ja tõenäosusest</a></li>
+<li><a href="poleemika-kumbki-toenaosus-pole-paris-see-mida-uldiselt-arvatakse.html#poleemika-kumbki-toenaosus-pole-paris-see-mida-uldiselt-arvatakse">Poleemika: kumbki tõenäosus pole päris see, mida üldiselt arvatakse</a></li>
+<li class="has-sub"><a href="vordlev-naide-kahe-grupi-vordlus.html#vordlev-naide-kahe-grupi-vordlus">Võrdlev näide: kahe grupi võrdlus</a><ul>
+<li><a href="vordlev-naide-kahe-grupi-vordlus.html#bayesiaan">Bayesiaan</a></li>
+<li><a href="vordlev-naide-kahe-grupi-vordlus.html#sageduslik-statistik">Sageduslik statistik</a></li>
+<li><a href="vordlev-naide-kahe-grupi-vordlus.html#tulemuste-tolgendamine">Tulemuste tõlgendamine</a></li>
+</ul></li>
+<li><a href="kahe-paradigma-erinevused.html#kahe-paradigma-erinevused">Kahe paradigma erinevused</a></li>
+<li><a href="statistiline-ennustus-kui-mitmetasandiline-protsess.html#statistiline-ennustus-kui-mitmetasandiline-protsess">Statistiline ennustus kui mitmetasandiline protsess</a></li>
+</ul></li>
+<li><a href="B-sonastik.html#sonastik"><span class="toc-section-number">B</span> Sõnastik</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="mitme-prediktoriga-lineaarne-regressioon" class="section level2 unnumbered">
+<h2>Mitme prediktoriga lineaarne regressioon</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g2007 &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">2007</span> ) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">l_GDP =</span> <span class="kw">log10</span>(gdpPercap),
+         <span class="dt">l_pop =</span> <span class="kw">log10</span>(pop), 
+         <span class="dt">lpop_s =</span> (l_pop <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(l_pop )) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(l_pop),
+         <span class="dt">lGDP_s =</span> (l_GDP <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(l_GDP )) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(l_GDP)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">as.data.frame</span>()</code></pre></div>
+<p>Meil on võimalik lisada regressioonivõrrandisse lisaprediktoreid. Nüüd ei küsi me enam, kuidas mõjutab l_GDP varieeruvus keskmise eluea varieeruvust vaid: kuidas mõjutavad muutujad l_GDP, continent ja logaritm pop-ist (rahvaarvust) keskmist eluiga. Me modelleerime selle lineaarselt nii, et eeldusena varieeruvad need x-i muutujad üksteisest sõltumatult: <span class="math inline">\(y = a + b_1x_1 + b_2x_2 + b_3x_3\)</span></p>
+<p>Sellise mudeli tõlgendus on suhteliselt lihtne:</p>
+<blockquote>
+<p>koef b1 ütleb meile, kui mitme ühiku võrra tõuseb/langeb muutuja y (eluiga) kui muutuja x1 (l_GDP) tõuseb 1 ühiku võrra; tingimusel, et me hoiame kõigi teiste muutujate väärtused konstantsed.</p>
+</blockquote>
+<p>Sarnane definitsioon kehtib ka kõigi teiste prediktorite (x-de) kohta.</p>
+<p>Kui meil on mudelis SKP ja pop, siis saame küsida</p>
+<ol style="list-style-type: decimal">
+<li><p>kui me juba teame SKP-d, millist ennustuslikku lisaväärtust annab meile ka populatsiooni suuruse teadmine? ja</p></li>
+<li><p>kui me juba teame populatsiooni suurust, millist lisaväärtust annab meile ka SKP teadmine?</p></li>
+</ol>
+<p>Järgenval mudelil on 4 parameetrit (intercept + 3 betat).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m1 &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span>l_GDP <span class="op">+</span><span class="st"> </span>continent <span class="op">+</span><span class="st"> </span>l_pop, <span class="dt">data =</span> g2007)
+<span class="kw">summary</span>( m1 )
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Call:</span>
+<span class="co">#&gt; lm(formula = lifeExp ~ l_GDP + continent + l_pop, data = g2007)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Residuals:</span>
+<span class="co">#&gt;     Min      1Q  Median      3Q     Max </span>
+<span class="co">#&gt; -19.425  -2.246  -0.014   2.468  14.957 </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Coefficients:</span>
+<span class="co">#&gt;                   Estimate Std. Error t value Pr(&gt;|t|)    </span>
+<span class="co">#&gt; (Intercept)        19.4182     7.4557    2.60   0.0102 *  </span>
+<span class="co">#&gt; l_GDP              10.6876     1.2378    8.63  1.5e-14 ***</span>
+<span class="co">#&gt; continentAmericas  11.6564     1.6929    6.89  2.0e-10 ***</span>
+<span class="co">#&gt; continentAsia      10.0521     1.5776    6.37  2.7e-09 ***</span>
+<span class="co">#&gt; continentEurope    11.2320     1.9265    5.83  3.9e-08 ***</span>
+<span class="co">#&gt; continentOceania   12.8918     4.5493    2.83   0.0053 ** </span>
+<span class="co">#&gt; l_pop               0.0928     0.8076    0.11   0.9087    </span>
+<span class="co">#&gt; ---</span>
+<span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Residual standard error: 5.95 on 135 degrees of freedom</span>
+<span class="co">#&gt; Multiple R-squared:  0.767,  Adjusted R-squared:  0.757 </span>
+<span class="co">#&gt; F-statistic: 74.2 on 6 and 135 DF,  p-value: &lt;2e-16</span></code></pre></div>
+<p>loeme mudelis “+” märki nagu “või”. Ehk, “eluiga võib olla funktsioon SKP-st <strong>või</strong> rahvaarvust”.</p>
+<p>Intercept 19 ei tähenda tõlgenduslikult midagi. l-GDP tõus ühiku võrra tõstab eluiga 10.7 aasta võrra.</p>
+<p>võrdluseks lihtne mudel</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m2 &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span>l_GDP, <span class="dt">data =</span> g2007)
+<span class="kw">summary</span>( m2 )
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Call:</span>
+<span class="co">#&gt; lm(formula = lifeExp ~ l_GDP, data = g2007)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Residuals:</span>
+<span class="co">#&gt;    Min     1Q Median     3Q    Max </span>
+<span class="co">#&gt; -25.95  -2.66   1.22   4.47  13.12 </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Coefficients:</span>
+<span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span>
+<span class="co">#&gt; (Intercept)     4.95       3.86    1.28      0.2    </span>
+<span class="co">#&gt; l_GDP          16.59       1.02   16.28   &lt;2e-16 ***</span>
+<span class="co">#&gt; ---</span>
+<span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Residual standard error: 7.12 on 140 degrees of freedom</span>
+<span class="co">#&gt; Multiple R-squared:  0.654,  Adjusted R-squared:  0.652 </span>
+<span class="co">#&gt; F-statistic:  265 on 1 and 140 DF,  p-value: &lt;2e-16</span></code></pre></div>
+<p>Siin on l_GDP mõju suurem, 16.6 aastat. Millisel mudelil on siis õigus? Proovime veel ülejäänud variendid</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m3 &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span>l_GDP <span class="op">+</span><span class="st"> </span>continent, <span class="dt">data =</span> g2007)
+<span class="kw">summary</span>( m3 )
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Call:</span>
+<span class="co">#&gt; lm(formula = lifeExp ~ l_GDP + continent, data = g2007)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Residuals:</span>
+<span class="co">#&gt;     Min      1Q  Median      3Q     Max </span>
+<span class="co">#&gt; -19.492  -2.315  -0.043   2.550  14.882 </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Coefficients:</span>
+<span class="co">#&gt;                   Estimate Std. Error t value Pr(&gt;|t|)    </span>
+<span class="co">#&gt; (Intercept)          20.14       4.03    4.99  1.8e-06 ***</span>
+<span class="co">#&gt; l_GDP                10.66       1.21    8.78  6.1e-15 ***</span>
+<span class="co">#&gt; continentAmericas    11.69       1.65    7.07  7.5e-11 ***</span>
+<span class="co">#&gt; continentAsia        10.11       1.48    6.85  2.3e-10 ***</span>
+<span class="co">#&gt; continentEurope      11.27       1.89    5.95  2.1e-08 ***</span>
+<span class="co">#&gt; continentOceania     12.93       4.52    2.86   0.0049 ** </span>
+<span class="co">#&gt; ---</span>
+<span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Residual standard error: 5.93 on 136 degrees of freedom</span>
+<span class="co">#&gt; Multiple R-squared:  0.767,  Adjusted R-squared:  0.759 </span>
+<span class="co">#&gt; F-statistic: 89.7 on 5 and 136 DF,  p-value: &lt;2e-16</span>
+
+m4 &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span>l_GDP <span class="op">+</span><span class="st"> </span>l_pop, <span class="dt">data =</span> g2007)
+<span class="kw">AIC</span>(m1, m2, m3, m4)
+<span class="co">#&gt;    df AIC</span>
+<span class="co">#&gt; m1  8 918</span>
+<span class="co">#&gt; m2  3 965</span>
+<span class="co">#&gt; m3  7 916</span>
+<span class="co">#&gt; m4  4 962</span></code></pre></div>
+<p>Võitja mudel on hoopis m3, mis võtab arvesse kontinendi. Siin on l_GDP mõju samuti 10.7 aastat. Lisaks näeme, et kui riik ei asu Aafrikas, siis on l_GDP mõju elueale u 11 aasta võrra suurem. Seega elu Aafrika kisub alla keskmise eluea riigi rikkusest sõltumata. Võib olla on põhjuseks sõjad, võib-olla AIDS ja malaaria, võib-olla midagi muud.</p>
+<p>Millise mudeli me peaksime siis avaldama? Vastus on, et need kõik on olulised, et vastata küsimusele, millised faktorid kontrollivad keskmist eluiga? Mudelite võrdlusest näeme, et rahvaarvu mõju elueale on väike või olematu ning et SKP mõju avaldub log skaalas (viitab teatud tüüpi eksponentsiaalsetele protsessidele, kus rikkus tekitab uut rikkust) ning, et Aafrikaga on midagi pahasti ja teistmoodi kui teiste kontinentidega. Aafrikast tasub otsida midagi, mida meie senised mudelid ei kajasta.</p>
+<p>Miks ei ole mudeli summary tabelis Aafrikat? Põhjus on tehniline. Kategoorilisi muutujaid, nagu kontinent, vaatab mudel paariviisilises võrdluses, mis tähendab et k erineva tasemega muutujast tekitatakse k - 1 uut muutujat, millest igaühel on kaks taset (0 ja 1). See algne muutuja, mis üle jääb (antud juhul Africa), jääb ilma oma uue muutujata. Me saame teisi uusi kontinendi põhjal tehtud muutujaid tõlgendada selle järgi, kui palju nad erinevad Africa-st.</p>
+<div id="miks-multivariaatsed-mudelid-head-on" class="section level4 unnumbered">
+<h4>Miks multivariaatsed mudelid head on?</h4>
+<ol style="list-style-type: decimal">
+<li><p>nad aitavad kontrollida “confounding” muutujaid. Confounding muutuja võib olla korreleeritud mõne teise muutujaga, mis meile huvi pakub. See võib nii maskeerida signaali, kui tekitada võlts-signaali, kuni y ja x1 seose suuna muutmiseni välja.</p></li>
+<li><p>ühel tagajärjel võib olla mitu põhjust.</p></li>
+<li><p>Isegi kui muutujad ei ole omavahel üldse korreleeritud, võib ühe tähtsus sõltuda teise väärtusest. Näiteks taimed vajavad nii valgust kui vett. Aga kui ühte ei ole, siis pole ka teisel suurt tähtsust.</p></li>
+</ol>
+</div>
+<div id="mudeldamine-standardiseeritud-andmetega" class="section level3 unnumbered">
+<h3>Mudeldamine standardiseeritud andmetega</h3>
+<p>Kui me lahutame igast andmepunktist selle muutuja keskväärtuse siis saame 0-le tsentreeritud andmed. Kui me sellisel viisil saadud väärtused omakorda läbi jagame muutuja standardhälbega, siis saame standardiseeritud andmed, mille keskväärtus on null ja SD = 1.</p>
+<p><span class="math inline">\(Standard.andmed = (x - mean(x))/sd(x)\)</span></p>
+<p>Nii on lihtsam erinevas skaalas muutujaid omavahel võrrelda (1 ühikuline muutus võrdub alati muutusega 1 standardhäve võrra) ja mudeli arvutamine üle mcmc ahelate on ka lihtsam.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m5 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
+    <span class="kw">alist</span>(
+        lifeExp <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>( mu , sigma ) ,
+        mu &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b_GDP <span class="op">*</span><span class="st"> </span>lGDP_s <span class="op">+</span><span class="st"> </span>b_pop <span class="op">*</span><span class="st"> </span>lpop_s ,
+        a <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>( <span class="dv">0</span> , <span class="dv">10</span> ) ,
+        <span class="kw">c</span>(b_GDP, b_pop) <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>( <span class="dv">0</span> , <span class="dv">1</span> ) ,
+        sigma <span class="op">~</span><span class="st"> </span><span class="kw">dunif</span>( <span class="dv">0</span> , <span class="dv">10</span> )
+), <span class="dt">data =</span> g2007 )</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">precis</span>(m5)
+<span class="co">#&gt;        Mean StdDev lower 0.89 upper 0.89 n_eff Rhat</span>
+<span class="co">#&gt; a     66.74   0.64      65.77      67.79  1000    1</span>
+<span class="co">#&gt; b_GDP  6.95   0.58       6.06       7.84   775    1</span>
+<span class="co">#&gt; b_pop  0.80   0.55      -0.11       1.58   870    1</span>
+<span class="co">#&gt; sigma  7.64   0.50       6.82       8.40   876    1</span></code></pre></div>
+<p>kui l_GDP kasvab 1 sd võrra, siis eluiga kasvab 6.9 aasta võrra.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f1 &lt;-<span class="st"> </span><span class="kw">glimmer</span>(lifeExp <span class="op">~</span><span class="st"> </span>lGDP_s <span class="op">+</span><span class="st"> </span>lpop_s <span class="op">+</span><span class="st"> </span>continent, <span class="dt">data =</span> g2007)
+<span class="co">#&gt; alist(</span>
+<span class="co">#&gt;     lifeExp ~ dnorm( mu , sigma ),</span>
+<span class="co">#&gt;     mu &lt;- Intercept +</span>
+<span class="co">#&gt;         b_lGDP_s*lGDP_s +</span>
+<span class="co">#&gt;         b_lpop_s*lpop_s +</span>
+<span class="co">#&gt;         b_continentAmericas*continentAmericas +</span>
+<span class="co">#&gt;         b_continentAsia*continentAsia +</span>
+<span class="co">#&gt;         b_continentEurope*continentEurope +</span>
+<span class="co">#&gt;         b_continentOceania*continentOceania,</span>
+<span class="co">#&gt;     Intercept ~ dnorm(0,10),</span>
+<span class="co">#&gt;     b_lGDP_s ~ dnorm(0,10),</span>
+<span class="co">#&gt;     b_lpop_s ~ dnorm(0,10),</span>
+<span class="co">#&gt;     b_continentAmericas ~ dnorm(0,10),</span>
+<span class="co">#&gt;     b_continentAsia ~ dnorm(0,10),</span>
+<span class="co">#&gt;     b_continentEurope ~ dnorm(0,10),</span>
+<span class="co">#&gt;     b_continentOceania ~ dnorm(0,10),</span>
+<span class="co">#&gt;     sigma ~ dcauchy(0,2)</span>
+<span class="co">#&gt; )</span></code></pre></div>
+<p>See on mudeli struktuur, mis sisaldab uusi kategoorilisi muutujaid</p>
+<p>Siin on tähtis anda map2stan()-le ette glimmeri poolt eeltöödeldud andmed:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m6 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
+  f1<span class="op">$</span>f, 
+  <span class="dt">data =</span> f1<span class="op">$</span>d)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">precis</span>(m6)
+<span class="co">#&gt;                      Mean StdDev lower 0.89 upper 0.89 n_eff Rhat</span>
+<span class="co">#&gt; Intercept           59.92   0.97      58.31      61.42   344    1</span>
+<span class="co">#&gt; b_lGDP_s             6.29   0.68       5.20       7.31   450    1</span>
+<span class="co">#&gt; b_lpop_s             0.06   0.50      -0.75       0.79  1000    1</span>
+<span class="co">#&gt; b_continentAmericas 11.66   1.53       9.07      13.94   436    1</span>
+<span class="co">#&gt; b_continentAsia     10.11   1.47       7.87      12.51   428    1</span>
+<span class="co">#&gt; b_continentEurope   11.26   1.83       8.50      14.26   434    1</span>
+<span class="co">#&gt; b_continentOceania  11.18   4.00       4.87      17.50   784    1</span>
+<span class="co">#&gt; sigma                5.95   0.36       5.38       6.49   931    1</span></code></pre></div>
+</div>
+</div>
+<p style="text-align: center;">
+<a href="ennustused-mudelist.html"><button class="btn btn-default">Previous</button></a>
+<a href="https://github.com/rstats-tartu/lectures/edit/master/11_pidev.Rmd"><button class="btn btn-default">Editeeri</button></a>
+<a href="keerulisemate-mudelitega-tootamine.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>

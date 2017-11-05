@@ -225,33 +225,159 @@ img {
 </div>
 <div class="row">
 <div class="col-sm-12">
-<div id="header">
-<h1 class="title">Bayesi statistika kasutades R keelt</h1>
-<h4 class="author"><em>Taavi Päll</em></h4>
-<h4 class="author"><em>Ülo Maiväli</em></h4>
+<div id="kui-n-1" class="section level2 unnumbered">
+<h2>Kui n = 1</h2>
+<p>Bayes on lahe sest tema hinnangud väiksele N-le on loogiliselt sama pädevad kui suurele N-le. See ei ole nii klassikalises sageduslikus statistikas, kus paljud testid on välja töötatud N = Inf eeldusel ja töötavad halvasti väikeste valimitega.</p>
+<p>Hea küll, me arvutame jälle suremust.</p>
+<p>Bayes töötab andmepunkti kaupa (see et me talle ennist kõik andmed korraga ette andsime, on puhtalt mugavuse pärast).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define grid</span>
+x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">1</span>, <span class="dt">length.out =</span> <span class="dv">20</span>)
+
+<span class="co"># Define prior</span>
+prior &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">20</span>)
+
+<span class="co"># Compute likelihood at each value in grid</span>
+likelihood &lt;-<span class="st"> </span><span class="kw">dbinom</span>(<span class="dv">1</span>, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">prob =</span> x)
+posterior &lt;-<span class="st"> </span>likelihood <span class="op">*</span><span class="st"> </span>prior <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(likelihood <span class="op">*</span><span class="st"> </span>prior)
+
+<span class="kw">plot</span>(x, posterior, 
+     <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Mortality&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="st">&quot;Posterior probability&quot;</span> )</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-10"></span>
+<img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-10-1.png" alt="N=1, esimene patsient suri." width="70%" />
+<p class="caption">
+Joonis 2.3: N=1, esimene patsient suri.
+</p>
 </div>
-<div id="saateks" class="section level1 unnumbered">
-<h1>Saateks</h1>
-<p>See õpik soovib anda praktilisi andmeanalüüsi oskusi töötamiseks reaalsete andmetega. See puudutab laias laastus kolme teemat:</p>
+<p>Esimene patsient suri - 0 mortaalsus ei ole enam loogiliselt võimalik (välja arvatud siis kui prior selle koha peal = 0) ja mortaalsus 100% on andmetega (tegelikult andmega) parimini kooskõlas. Posteerior on nulli ja 100% vahel sirge sest vähene sissepandud informatsioon lihtsalt ei võimalda enamat.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define prior</span>
+prior &lt;-<span class="st"> </span>posterior
+
+<span class="co"># Compute likelihood at each value in grid</span>
+likelihood &lt;-<span class="st"> </span><span class="kw">dbinom</span>(<span class="dv">1</span> , <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">prob =</span> x)
+posterior1 &lt;-<span class="st"> </span>likelihood <span class="op">*</span><span class="st"> </span>prior <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(likelihood <span class="op">*</span><span class="st"> </span>prior)
+
+<span class="kw">plot</span>(x, posterior1, 
+     <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Mortality&quot;</span> , 
+     <span class="dt">ylab =</span> <span class="st">&quot;Posterior probability&quot;</span> )</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
+<img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-11-1.png" alt="N=2, teine patsient suri." width="70%" />
+<p class="caption">
+Joonis 2.9: N=2, teine patsient suri.
+</p>
+</div>
+<p>Teine patsient suri. Nüüd ei ole 0 ja 1 vahel enam sirge posteerior. Posteerior on kaldu 100 protsendi poole, mis on ikka kõige tõenäolisem väärtus.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define prior</span>
+prior &lt;-<span class="st"> </span>posterior1
+
+<span class="co"># Compute likelihood at each value in grid</span>
+likelihood &lt;-<span class="st"> </span><span class="kw">dbinom</span>(<span class="dv">0</span>, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">prob =</span> x)
+
+<span class="co"># Compute product of likelihood and prior</span>
+posterior2 &lt;-<span class="st"> </span>likelihood <span class="op">*</span><span class="st"> </span>prior <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(likelihood <span class="op">*</span><span class="st"> </span>prior)
+
+<span class="kw">plot</span>(x, posterior2, 
+     <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Mortality&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="st">&quot;Posterior probability&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
+<img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-12-1.png" alt="N=3, kolmas patsient jäi ellu." width="70%" />
+<p class="caption">
+Joonis 2.4: N=3, kolmas patsient jäi ellu.
+</p>
+</div>
+<p>Kolmas patsient jäi ellu - 0 ja 100% mortaalsus on seega võimaluste nimekirjast maas ning suremus on ikka kaldu valimi keskmise poole (75%).</p>
+<p>Teeme sedasama prioriga, mis ei ole tasane. See illustreerib tõsiasja, et kui N on väike siis domineerib prior posteerior jaotust. (Suure N korral on vastupidi, priori kuju on sageli vähetähtis.)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define prior</span>
+prior &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">seq</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>), <span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">10</span>, <span class="dt">to =</span> <span class="dv">1</span>))
+
+<span class="co"># Compute likelihood at each value in grid</span>
+likelihood &lt;-<span class="st"> </span><span class="kw">dbinom</span>(<span class="dv">1</span>, <span class="dt">size =</span> <span class="dv">1</span> , <span class="dt">prob =</span> x)
+posterior &lt;-<span class="st"> </span>likelihood <span class="op">*</span><span class="st"> </span>prior <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(likelihood <span class="op">*</span><span class="st"> </span>prior)
+
+def.par &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">no.readonly =</span> <span class="ot">TRUE</span>)
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, prior, 
+     <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, 
+     <span class="dt">main =</span> <span class="st">&quot;Prior&quot;</span>)
+<span class="kw">plot</span>(x, posterior, 
+     <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Mortality&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="st">&quot;Posterior probability&quot;</span>, 
+     <span class="dt">main =</span> <span class="st">&quot;Posterior&quot;</span>)
+<span class="kw">par</span>(def.par)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-13"></span>
+<img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-13-1.png" alt="N=1 informatiivse prioriga." width="70%" />
+<p class="caption">
+Joonis 2.10: N=1 informatiivse prioriga.
+</p>
+</div>
 <ol style="list-style-type: decimal">
-<li><p>Kuidas summeerida andmeid: keskmise, varieeruvuse ja kovarieeruvuse näitajad.</p></li>
-<li><p>Kuidas graafiliste meetodite abil kontrollida andmete kvaliteeti ja püstitada uusi hüpoteese.</p></li>
-<li><p>Kuidas teha andmete põhjal järeldusi protsessi kohta, mis neid andmeid genereerib, ühtlasi kirjeldades adekvaatselt neid järeldusi ümbritsevat ebakindlust.</p></li>
+<li>patsient suri</li>
 </ol>
-<p>Kuna me püüame anda eeskätt praktilisi oskusi andmeanalüüsiks, mitte matemaatilist ega muidu teoreetilist haridust, siis keskendume moodsatele bayesi meetoditele. Need on küll arvuti jaoks töömahukamad kui klassikalised statistilisel olulisusel põhinevad testid, aga inimese jaoks kergemini õpitavad ning tõlgendatavad. Klassikalist ja bayesi statistikat võrdleme lisas 1. Bayesiaanliku lähenemise hind on, et kasutaja peab omandama vähemalt algtasemel R keele, mis võimaldab käsurealt anmdeid manipuleerida. R-i õppimine nõuab kahtlemata lisapingutust, aga me usume, et see tasub ära igaühele, kes töötab vähemalt keskmise suurusega andmekogudega. Me teeme sissejuhatuse R-i peatükkides …., keskendudes R-i tidyverse ökosüsteemile, mis on optimeeritud olema kergesti kasutatav ja õpitav inimestele, kelle põhitöö ei ole seotud koodi kirjutamisega.</p>
-<p>Pingutus R õppimiseks tasub teile mitmel erineval viisil. R võimaldab palju kiiremini andmetabeleid analüüsiks sobivasse vormi ajada kui spreadsheet programmid. R-i graafikasüsteem, eriti ggplot2, on võimas ning paindlik tööriist väga erinevate graafikute koostamiseks. R-s jooksevad praktiliselt kõik statistilised testid, mida inimmõistus on loonud – R on levinuim statistikaprogramm maailmas, mis on eriti hästi sobiv statistiliseks modelleerimiseks. See tähendab ka, et üle maailma on suur seltskond inimesi, kes R-i arendab ja on nõus vastama ka teie küsimustele. Lisaboonusena on juba kord salvestatud R-i koodi taaskasutades palju lihtsam oma analüüsi korrata ja vastavalt vajadustele muuta, kui spreadsheet programmide puhul.</p>
-<p>Õpiku kasutamise eeldused: - Arvuti. - Matemaatikaoskused, mis hõlmavad liitmist, lahutamist, korrutamist, jagamist, logaritmimist ja astendamist. - Kõrgemat matemaatikat me ei vaja.</p>
-<p>Õpiku struktuur:</p>
-<p>xxx</p>
-<p><img src="img/cyclo.png" width="50%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define prior</span>
+prior &lt;-<span class="st"> </span>posterior
+
+<span class="co"># Compute likelihood at each value in grid</span>
+likelihood &lt;-<span class="st"> </span><span class="kw">dbinom</span>(<span class="dv">1</span>, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">prob =</span> x)
+
+<span class="co"># Compute product of likelihood and prior</span>
+posterior1 &lt;-<span class="st"> </span>likelihood <span class="op">*</span><span class="st"> </span>prior <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(likelihood <span class="op">*</span><span class="st"> </span>prior)
+
+def.par &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">no.readonly =</span> <span class="ot">TRUE</span>)
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, prior, 
+     <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, 
+     <span class="dt">main =</span> <span class="st">&quot;Prior&quot;</span>)
+<span class="kw">plot</span>(x, posterior1, 
+     <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Mortality&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="st">&quot;Posterior probability&quot;</span>, 
+     <span class="dt">main =</span> <span class="st">&quot;Posterior&quot;</span>)
+<span class="kw">par</span>(def.par)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-14"></span>
+<img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-14-1.png" alt="N=2 informatiivse prioriga." width="70%" />
+<p class="caption">
+Joonis 2.11: N=2 informatiivse prioriga.
+</p>
+</div>
+<p>Teine patsient suri.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define prior</span>
+prior2 &lt;-<span class="st"> </span>posterior1
+
+<span class="co"># Compute likelihood at each value in grid</span>
+likelihood &lt;-<span class="st"> </span><span class="kw">dbinom</span>(<span class="dv">0</span>, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">prob =</span> x)
+
+<span class="co"># Compute product of likelihood and prior</span>
+posterior2 &lt;-<span class="st"> </span>likelihood <span class="op">*</span><span class="st"> </span>prior2 <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(likelihood <span class="op">*</span><span class="st"> </span>prior2)
+
+def.par &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">no.readonly =</span> <span class="ot">TRUE</span>)
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, prior2, 
+     <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, 
+     <span class="dt">main =</span> <span class="st">&quot;Prior&quot;</span>)
+<span class="kw">plot</span>(x, posterior2, 
+     <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Mortality&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="st">&quot;Posterior probability&quot;</span>, 
+     <span class="dt">main =</span> <span class="st">&quot;Posterior&quot;</span>)
+<span class="kw">par</span>(def.par)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-15"></span>
+<img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-15-1.png" alt="N=3 informatiivse prioriga." width="70%" />
+<p class="caption">
+Joonis 2.5: N=3 informatiivse prioriga.
+</p>
+</div>
+<p>Kolmas patsient jäi ellu. Nüüd on posteeriori tipp mitte 75% juures nagu ennist, vaid kuskil 50% juures — tänu priorile.</p>
 
 </div>
-
-
-
+<!-- </div> -->
 <p style="text-align: center;">
-<a href="https://github.com/rstats-tartu/lectures/edit/master/index.Rmd"><button class="btn btn-default">Editeeri</button></a>
-<a href="1-sissejuhatus-maailm-teooria-ja-mudel.html"><button class="btn btn-default">Next</button></a>
+<a href="teine-naide-sonastame-oma-probleemi-umber.html"><button class="btn btn-default">Previous</button></a>
+<a href="https://github.com/rstats-tartu/lectures/edit/master/09_bayesi_printsiip.Rmd"><button class="btn btn-default">Editeeri</button></a>
+<a href="10-mudelite-keel.html"><button class="btn btn-default">Next</button></a>
 </p>
 </div>
 </div>

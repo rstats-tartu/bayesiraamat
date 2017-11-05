@@ -225,33 +225,51 @@ img {
 </div>
 <div class="row">
 <div class="col-sm-12">
-<div id="header">
-<h1 class="title">Bayesi statistika kasutades R keelt</h1>
-<h4 class="author"><em>Taavi Päll</em></h4>
-<h4 class="author"><em>Ülo Maiväli</em></h4>
+<div id="bayesboot" class="section level2 unnumbered">
+<h2>bayesboot()</h2>
+<p>See funktsioon pakub pisut moodsama meetodi — Bayesian bootstrap — mis töötab paremini väikeste valimite korral. Aga üldiselt on tulemused sarnased. Hea lihtsa seletuse Bayesian bootstrapi kohta saab siit <a href="https://www.youtube.com/watch?v=WMAgzr99PKE" class="uri">https://www.youtube.com/watch?v=WMAgzr99PKE</a> ja lihtsa r koodi selle meetodi rakendamiseks saab siit <a href="https://www.r-bloggers.com/simple-bayesian-bootstrap/" class="uri">https://www.r-bloggers.com/simple-bayesian-bootstrap/</a> Näited sellest, kuidas kasutada bayesbooti standardhälbe, korrelatsioonikoefitsiendi ja lineaarse mudeli koefitsientide usalduspiiride arvutamiseks leiate <code>?bayesboot</code> käsuga.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(bayesboot)
+heights_bb &lt;-<span class="st"> </span><span class="kw">bayesboot</span>(heights<span class="op">$</span>value, mean)
+<span class="kw">plot</span>(heights_bb, <span class="dt">compVal =</span> <span class="dv">185</span>)
+<span class="kw">HPDI</span>(heights_bb<span class="op">$</span>V1, <span class="dt">prob =</span> <span class="fl">0.95</span>)
+<span class="co">#&gt; |0.95 0.95| </span>
+<span class="co">#&gt;   183   187</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
+<img src="08_bootstrap_files/figure-html/unnamed-chunk-8-1.png" alt="Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele." width="70%" />
+<p class="caption">
+Joonis 2.2: Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele.
+</p>
 </div>
-<div id="saateks" class="section level1 unnumbered">
-<h1>Saateks</h1>
-<p>See õpik soovib anda praktilisi andmeanalüüsi oskusi töötamiseks reaalsete andmetega. See puudutab laias laastus kolme teemat:</p>
-<ol style="list-style-type: decimal">
-<li><p>Kuidas summeerida andmeid: keskmise, varieeruvuse ja kovarieeruvuse näitajad.</p></li>
-<li><p>Kuidas graafiliste meetodite abil kontrollida andmete kvaliteeti ja püstitada uusi hüpoteese.</p></li>
-<li><p>Kuidas teha andmete põhjal järeldusi protsessi kohta, mis neid andmeid genereerib, ühtlasi kirjeldades adekvaatselt neid järeldusi ümbritsevat ebakindlust.</p></li>
-</ol>
-<p>Kuna me püüame anda eeskätt praktilisi oskusi andmeanalüüsiks, mitte matemaatilist ega muidu teoreetilist haridust, siis keskendume moodsatele bayesi meetoditele. Need on küll arvuti jaoks töömahukamad kui klassikalised statistilisel olulisusel põhinevad testid, aga inimese jaoks kergemini õpitavad ning tõlgendatavad. Klassikalist ja bayesi statistikat võrdleme lisas 1. Bayesiaanliku lähenemise hind on, et kasutaja peab omandama vähemalt algtasemel R keele, mis võimaldab käsurealt anmdeid manipuleerida. R-i õppimine nõuab kahtlemata lisapingutust, aga me usume, et see tasub ära igaühele, kes töötab vähemalt keskmise suurusega andmekogudega. Me teeme sissejuhatuse R-i peatükkides …., keskendudes R-i tidyverse ökosüsteemile, mis on optimeeritud olema kergesti kasutatav ja õpitav inimestele, kelle põhitöö ei ole seotud koodi kirjutamisega.</p>
-<p>Pingutus R õppimiseks tasub teile mitmel erineval viisil. R võimaldab palju kiiremini andmetabeleid analüüsiks sobivasse vormi ajada kui spreadsheet programmid. R-i graafikasüsteem, eriti ggplot2, on võimas ning paindlik tööriist väga erinevate graafikute koostamiseks. R-s jooksevad praktiliselt kõik statistilised testid, mida inimmõistus on loonud – R on levinuim statistikaprogramm maailmas, mis on eriti hästi sobiv statistiliseks modelleerimiseks. See tähendab ka, et üle maailma on suur seltskond inimesi, kes R-i arendab ja on nõus vastama ka teie küsimustele. Lisaboonusena on juba kord salvestatud R-i koodi taaskasutades palju lihtsam oma analüüsi korrata ja vastavalt vajadustele muuta, kui spreadsheet programmide puhul.</p>
-<p>Õpiku kasutamise eeldused: - Arvuti. - Matemaatikaoskused, mis hõlmavad liitmist, lahutamist, korrutamist, jagamist, logaritmimist ja astendamist. - Kõrgemat matemaatikat me ei vaja.</p>
-<p>Õpiku struktuur:</p>
-<p>xxx</p>
-<p><img src="img/cyclo.png" width="50%" style="display: block; margin: auto;" /></p>
-
+<p>Bayesi bootstrap töötab veidi efektiivsemalt, kui me arvutame kaalutud statistikuid. Näiteks kaalutud keskmise saab niimoodi:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># it&#39;s more efficient to use the a weighted statistic (but you can use a normal statistic like mean() or median() as well - as above).</span>
+heights_bb_w &lt;-<span class="st"> </span><span class="kw">bayesboot</span>(heights<span class="op">$</span>value, 
+                         weighted.mean, 
+                         <span class="dt">use.weights =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>Tõenäosus, et keskmine on suurem kui 182 cm</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the probability that the mean is &gt; 182 cm.</span>
+<span class="kw">mean</span>(heights_bb[, <span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">182</span>)
+<span class="co">#&gt; [1] 0.992</span></code></pre></div>
+<p>Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+## Simulate two random normal distributions with mean 0. 
+## True difference is 0.
+dfr &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">a =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">1</span>), 
+              <span class="dt">b =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">1</span>),
+              <span class="dt">c =</span> a <span class="op">-</span><span class="st"> </span>b)
+dfr_bb &lt;-<span class="st"> </span><span class="kw">bayesboot</span>(dfr<span class="op">$</span>c, weighted.mean, <span class="dt">use.weights =</span> <span class="ot">TRUE</span> )
+<span class="kw">plot</span>(dfr_bb, <span class="dt">compVal =</span> <span class="dv">0</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
+<img src="08_bootstrap_files/figure-html/unnamed-chunk-11-1.png" alt="Bayesi bootstrap ES-le." width="70%" />
+<p class="caption">
+Joonis 2.9: Bayesi bootstrap ES-le.
+</p>
 </div>
-
-
-
+<p>BayesianFirstAid raamatukogu funktsioon bayes.t.test() annab kasutades t-jaotuse tõepäramudelit üsna täpselt sama vastuse. See raamatukogu eeldab JAGS mcmc sämpleri installeerimist. Abi saab siit <a href="https://github.com/rasmusab/bayesian_first_aid" class="uri">https://github.com/rasmusab/bayesian_first_aid</a> ja siit <a href="https://faculty.washington.edu/jmiyamot/p548/installing.jags.pdf" class="uri">https://faculty.washington.edu/jmiyamot/p548/installing.jags.pdf</a></p>
+</div>
 <p style="text-align: center;">
-<a href="https://github.com/rstats-tartu/lectures/edit/master/index.Rmd"><button class="btn btn-default">Editeeri</button></a>
-<a href="1-sissejuhatus-maailm-teooria-ja-mudel.html"><button class="btn btn-default">Next</button></a>
+<a href="veidi-keerulisem-bootstrap.html"><button class="btn btn-default">Previous</button></a>
+<a href="https://github.com/rstats-tartu/lectures/edit/master/08_bootstrap.Rmd"><button class="btn btn-default">Editeeri</button></a>
+<a href="parameetriline-bootstrap.html"><button class="btn btn-default">Next</button></a>
 </p>
 </div>
 </div>

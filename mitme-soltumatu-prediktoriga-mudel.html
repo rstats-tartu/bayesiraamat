@@ -225,33 +225,88 @@ img {
 </div>
 <div class="row">
 <div class="col-sm-12">
-<div id="header">
-<h1 class="title">Bayesi statistika kasutades R keelt</h1>
-<h4 class="author"><em>Taavi Päll</em></h4>
-<h4 class="author"><em>Ülo Maiväli</em></h4>
+<div id="mitme-soltumatu-prediktoriga-mudel" class="section level2 unnumbered">
+<h2>Mitme sõltumatu prediktoriga mudel</h2>
+<p>Esiteks vaatame mudelit, kus on mitu prediktorit x<sub>1</sub>, x<sub>2</sub>, … x<sub>n</sub>, mis on additiivse mõjuga. See tähendab, et me liidame nende mõjud, mis omakorda tähendab, et me usume, et x<sub>1</sub>…x<sub>n</sub> mõjud y-i väärtusele on üksteisest sõltumatud. Mudel on siis kujul</p>
+<p><span class="math display">\[y = a + b_1x_1~ + b_2x_2~ +~ ... +~ b_nx_n\]</span></p>
+<blockquote>
+<p>Mitme prediktoriga mudeli iga prediktori tõus (beta koefitsient) ütleb, mitme ühiku võrra ennustab mudel y muutumist juhul kui see prediktor muutub ühe ühiku võrra ja kõik teised prediktorid ei muutu üldse.</p>
+</blockquote>
+<p>Kui meie andmed on kolmedimensioonaalsed (me mõõdame igal mõõteobjektil kolme muutujat) ja me tahame ennnustada ühe muutuja väärtust kahe teise muutuja väärtuste põhjal (meil on 2 prediktorit), siis tuleb meie 3 parameetriga lineaarne regressioonimudel tasapinna kujul. Kui meil on 3 prediktoriga mudel, siis me liigume juba 4-mõõtmelisse ruumi.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
+<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-3-1.png" alt="Regressioonitasand 3D andmetele. Siin on Sepal.Length ja Petal.Length prediktorid ja Sepal.Width ennustatav muutuja." width="70%" />
+<p class="caption">
+Joonis .: Regressioonitasand 3D andmetele. Siin on Sepal.Length ja Petal.Length prediktorid ja Sepal.Width ennustatav muutuja.
+</p>
 </div>
-<div id="saateks" class="section level1 unnumbered">
-<h1>Saateks</h1>
-<p>See õpik soovib anda praktilisi andmeanalüüsi oskusi töötamiseks reaalsete andmetega. See puudutab laias laastus kolme teemat:</p>
-<ol style="list-style-type: decimal">
-<li><p>Kuidas summeerida andmeid: keskmise, varieeruvuse ja kovarieeruvuse näitajad.</p></li>
-<li><p>Kuidas graafiliste meetodite abil kontrollida andmete kvaliteeti ja püstitada uusi hüpoteese.</p></li>
-<li><p>Kuidas teha andmete põhjal järeldusi protsessi kohta, mis neid andmeid genereerib, ühtlasi kirjeldades adekvaatselt neid järeldusi ümbritsevat ebakindlust.</p></li>
-</ol>
-<p>Kuna me püüame anda eeskätt praktilisi oskusi andmeanalüüsiks, mitte matemaatilist ega muidu teoreetilist haridust, siis keskendume moodsatele bayesi meetoditele. Need on küll arvuti jaoks töömahukamad kui klassikalised statistilisel olulisusel põhinevad testid, aga inimese jaoks kergemini õpitavad ning tõlgendatavad. Klassikalist ja bayesi statistikat võrdleme lisas 1. Bayesiaanliku lähenemise hind on, et kasutaja peab omandama vähemalt algtasemel R keele, mis võimaldab käsurealt anmdeid manipuleerida. R-i õppimine nõuab kahtlemata lisapingutust, aga me usume, et see tasub ära igaühele, kes töötab vähemalt keskmise suurusega andmekogudega. Me teeme sissejuhatuse R-i peatükkides …., keskendudes R-i tidyverse ökosüsteemile, mis on optimeeritud olema kergesti kasutatav ja õpitav inimestele, kelle põhitöö ei ole seotud koodi kirjutamisega.</p>
-<p>Pingutus R õppimiseks tasub teile mitmel erineval viisil. R võimaldab palju kiiremini andmetabeleid analüüsiks sobivasse vormi ajada kui spreadsheet programmid. R-i graafikasüsteem, eriti ggplot2, on võimas ning paindlik tööriist väga erinevate graafikute koostamiseks. R-s jooksevad praktiliselt kõik statistilised testid, mida inimmõistus on loonud – R on levinuim statistikaprogramm maailmas, mis on eriti hästi sobiv statistiliseks modelleerimiseks. See tähendab ka, et üle maailma on suur seltskond inimesi, kes R-i arendab ja on nõus vastama ka teie küsimustele. Lisaboonusena on juba kord salvestatud R-i koodi taaskasutades palju lihtsam oma analüüsi korrata ja vastavalt vajadustele muuta, kui spreadsheet programmide puhul.</p>
-<p>Õpiku kasutamise eeldused: - Arvuti. - Matemaatikaoskused, mis hõlmavad liitmist, lahutamist, korrutamist, jagamist, logaritmimist ja astendamist. - Kõrgemat matemaatikat me ei vaja.</p>
-<p>Õpiku struktuur:</p>
-<p>xxx</p>
-<p><img src="img/cyclo.png" width="50%" style="display: block; margin: auto;" /></p>
-
+<p>Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Sepal.Length, Sepal.Width, <span class="dt">color =</span> Species)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlim</span>(<span class="dv">4</span>, <span class="dv">8</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> <span class="ot">TRUE</span>)
+p <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="kw">coef</span>(m2)[<span class="dv">1</span>], <span class="dt">slope =</span> <span class="kw">coef</span>(m2)[<span class="dv">2</span>]) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">deparse</span>(<span class="kw">formula</span>(m2)))
+m1 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Width <span class="op">~</span><span class="st"> </span>Sepal.Length, <span class="dt">data =</span> iris)
+p <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="kw">coef</span>(m1)[<span class="dv">1</span>], <span class="dt">slope =</span> <span class="kw">coef</span>(m1)[<span class="dv">2</span>]) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">deparse</span>(<span class="kw">formula</span>(m1)))</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:lin2d"></span>
+<img src="04_lin_mudeli_laiendused_files/figure-html/lin2d-1.png" alt="2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile." width="48%" /><img src="04_lin_mudeli_laiendused_files/figure-html/lin2d-2.png" alt="2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile." width="48%" />
+<p class="caption">
+Joonis 2.7: 2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile.
+</p>
 </div>
-
-
-
+<p>Siin on regressioonijoon hoopis teises kohas, kui lihtsas ühe prediktoriga mudelis.</p>
+<p>Nõnda võrdleme kahe mudeli koefitsiente.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(m1)
+<span class="co">#&gt;  (Intercept) Sepal.Length </span>
+<span class="co">#&gt;       3.4189      -0.0619</span>
+<span class="kw">coef</span>(m2)
+<span class="co">#&gt;  (Intercept) Sepal.Length Petal.Length </span>
+<span class="co">#&gt;        1.038        0.561       -0.335</span></code></pre></div>
+<p>Nagu näha, mudeli m2 b_1 koefitsient erineb oluliselt mudeli m1 vastavast koefitsiendist.</p>
+<p>Kumb mudel on siis parem? AIC-i järgi on m2 kõvasti parem, kui m1, lisakoefitsendi (Petal.Length) kaasamisel mudelisse paranes oluliselt selle ennustusvõime.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">AIC</span>(m1, m2)
+<span class="co">#&gt;    df   AIC</span>
+<span class="co">#&gt; m1  3 179.5</span>
+<span class="co">#&gt; m2  4  92.1</span></code></pre></div>
+<p><strong>Ennustused sõltumatute prediktoritega mudelist</strong></p>
+<p>Siin on idee kasutada fititud mudeli struktuuri enustamaks y keskmisi väärtusi erinevatel <span class="math inline">\(x_1\)</span> ja <span class="math inline">\(x_2\)</span> väärtustel. Kuna mudel on fititud, on parameetrite väärtused fikseeritud.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## New sepal length values
+Sepal_length &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(iris<span class="op">$</span>Sepal.Length), <span class="kw">max</span>(iris<span class="op">$</span>Sepal.Length), <span class="dt">length.out =</span> <span class="dv">10</span>)
+## Keep new petal length constant
+Petal_length &lt;-<span class="st"> </span><span class="kw">mean</span>(iris<span class="op">$</span>Petal.Length)
+## Extract model coeficents
+a &lt;-<span class="st"> </span><span class="kw">coef</span>(m2)[<span class="dv">1</span>]
+b1 &lt;-<span class="st"> </span><span class="kw">coef</span>(m2)[<span class="dv">2</span>]
+b2 &lt;-<span class="st"> </span><span class="kw">coef</span>(m2)[<span class="dv">3</span>]
+## Predict new sepal width values
+Sepal_width_predicted &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b1 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">+</span><span class="st"> </span>b2 <span class="op">*</span><span class="st"> </span>Petal_length</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(Sepal_width_predicted <span class="op">~</span><span class="st"> </span>Sepal_length, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
+<span class="co"># prediction from the single predictor model</span>
+<span class="kw">abline</span>(<span class="kw">c</span>(<span class="kw">coef</span>(m1)[<span class="dv">1</span>], <span class="kw">coef</span>(m1)[<span class="dv">2</span>]), <span class="dt">lty =</span> <span class="st">&quot;dashed&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
+<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-7-1.png" alt="Ennustatud y väärtused erinevatel x1 ja x2 väärtustel, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus." width="70%" />
+<p class="caption">
+Joonis 2.8: Ennustatud y väärtused erinevatel x1 ja x2 väärtustel, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus.
+</p>
+</div>
+<p>Nüüd joonistame 3D pildi olukorrast, kus nii <span class="math inline">\(x_1\)</span> kui <span class="math inline">\(x_2\)</span> omandavad rea väärtusi. Mudeli ennustus on ikkagi sirge kujul – mis sest, et 3D ruumis.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Petal_length &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(iris<span class="op">$</span>Petal.Length), <span class="kw">max</span>(iris<span class="op">$</span>Petal.Length), <span class="dt">length.out =</span> <span class="dv">10</span>)
+Sepal_width &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b1 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">+</span><span class="st"> </span>b2 <span class="op">*</span><span class="st"> </span>Petal_length
+dfr &lt;-<span class="st"> </span><span class="kw">data_frame</span>(Sepal_width, Sepal_length, Petal_length)
+<span class="kw">with</span>(dfr, <span class="kw">scatterplot3d</span>(Sepal_length, Petal_length, Sepal_width, <span class="dt">col.axis =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">col.grid =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>))</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
+<img src="04_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-8-1.png" alt="kahe prediktoriga mudeli ennustus 3D ruumis." width="70%" />
+<p class="caption">
+Joonis 2.2: kahe prediktoriga mudeli ennustus 3D ruumis.
+</p>
+</div>
+</div>
 <p style="text-align: center;">
-<a href="https://github.com/rstats-tartu/lectures/edit/master/index.Rmd"><button class="btn btn-default">Editeeri</button></a>
-<a href="1-sissejuhatus-maailm-teooria-ja-mudel.html"><button class="btn btn-default">Next</button></a>
+<a href="3-kaks-lineaarse-mudeli-laiendust.html"><button class="btn btn-default">Previous</button></a>
+<a href="https://github.com/rstats-tartu/lectures/edit/master/04_lin_mudeli_laiendused.Rmd"><button class="btn btn-default">Editeeri</button></a>
+<a href="interaktsioonimudel.html"><button class="btn btn-default">Next</button></a>
 </p>
 </div>
 </div>
