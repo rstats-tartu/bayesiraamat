@@ -229,13 +229,13 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="mudelite-keel" class="section level1">
 <h1><span class="header-section-number">10</span> Mudelite keel</h1>
-<p>Siin vaatame kuidas kirjeldada mudelit nii, et masin selle ära tunneb. Meie mudelid töötavad läbi rethinking() paketi. See raamatukogu pakub kaks võimalust, kuidas mudelit arvutada, mis mõlemad kasutavad sama notatsiooni. Mõlemad võimalused arvutavad posteeriori mitte Bayesi teoreemi kasutades (nagu me ennist tegime), vaid kasutades stohhastilisi meetodeid, mis iseloomustavad posteeriori umbkaudu (aga piisavalt täpselt). Põhjuseks on, et keerulisemate mudelite korral on Bayesi teoreemi kasutamine liialt arvutusmahukas.</p>
-<p>Esiteks rethinking::map() leiab posteeriori tipu ja selle lähedal funktsiooni tõusunurga. Siin on eelduseks, et posteerior on normaaljaotus. See eeldus kehtib alati, kui nii prior kui tõepära on modelleeritud normaaljaotusena (ja ka paljudel muudel juhtudel).</p>
-<p>Teine võimalus on rethinking::map2stan(), mis suunab teie kirjutatud mudeli Stan-i. Stan teeb <em>Hamilonian Monte Carlo</em> simulatsiooni, kasutades valget maagiat selleks, et tõmmata valim otse posteerioorsest jaotusest. See on väga moodne lähenemine statistikale, töötab oluliselt aeglasemalt kui map, aga ei sõltu normaaljaotustest ning suudab arvutada hierarhilisi mudeleid, mis map-le üle jõu käivad.</p>
+<p>Siin vaatame kuidas kirjeldada mudelit nii, et masin selle ära tunneb. Meie mudelid töötavad läbi “rethinking” paketi. See raamatukogu pakub kaks võimalust, kuidas mudelit arvutada, mis mõlemad kasutavad sama notatsiooni. Mõlemad võimalused arvutavad posteeriori mitte Bayesi teoreemi kasutades (nagu me ennist tegime), vaid kasutades stohhastilisi meetodeid, mis iseloomustavad posteeriori umbkaudu (aga piisavalt täpselt). Põhjuseks on, et keerulisemate mudelite korral on Bayesi teoreemi kasutamine liialt arvutusmahukas.</p>
+<p>Esiteks <code>rethinking::map()</code> leiab posteeriori tipu ja selle lähedal funktsiooni tõusunurga. Siin on eelduseks, et posteerior on normaaljaotus. See eeldus kehtib alati, kui nii prior kui tõepära on modelleeritud normaaljaotusena (ja ka paljudel muudel juhtudel).</p>
+<p>Teine võimalus on <code>rethinking::map2stan()</code>, mis suunab teie kirjutatud mudeli Stan-i. Stan teeb <em>Hamilonian Monte Carlo</em> simulatsiooni, kasutades valget maagiat selleks, et tõmmata valim otse posteerioorsest jaotusest. See on väga moodne lähenemine statistikale, töötab oluliselt aeglasemalt kui map, aga ei sõltu normaaljaotustest ning suudab arvutada hierarhilisi mudeleid, mis map-le üle jõu käivad.</p>
 <p>Me võime sama mudeli kirjelduse sõõta mõlemasse funktsiooni.</p>
 <p>Lihtne mudel näeb välja niimodi:</p>
-<p>dead ~ dbinom(9, p) , # binomial likelihood</p>
-<p>p ~ dunif(0, 1) # uniform prior</p>
+<pre><code>dead ~ dbinom(9, p) # binomial likelihood
+p ~ dunif(0, 1) # uniform prior</code></pre>
 <p>Tõepärafunktsioon on modeleeritud binoomjaotusena. Parameeter, mille väärtust määratakse on p, ehk suremus. See on ainus parameeter, mille väärtust me siin krutime. NB! igale parameetrile peab vastama oma prior. Meil on selles mudelis täpselt 1 parameeter ja 1 prior. Vastuseks saame selle ainsa parameetri posterioorse jaotuse. Hiljem näeme, et kui meil on näiteks 452 parameetrit, mille väärtusi me koos arvutame, siis on meil ka 452 priorit ja 452 posterioorset jaotust.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rethinking)
 <span class="co"># Fit model using rethinking</span>
@@ -289,19 +289,7 @@ Joonis 5.1: Veel üks valim posteeriorist (60 surma 90st).
 <h2>Beta prior</h2>
 <p>Nüüd anname sisse mõistlikuma struktuuriga priori: beta-jaotuse</p>
 <p>Beta-prior katab vahemiku 0st 1ni ja sellel on 2 parameetrit, a ja b.</p>
-<p>Siin mõned näited erinevatest beta parametriseeringutest</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length =</span> <span class="dv">1000</span>)
-def.par &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">no.readonly =</span> <span class="ot">TRUE</span>)
-<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>))
-<span class="kw">plot</span>(x, <span class="kw">dbeta</span>(x, <span class="fl">0.2</span>, <span class="fl">0.2</span>), <span class="dt">type=</span><span class="st">&quot;l&quot;</span>)
-<span class="kw">plot</span>(x, <span class="kw">dbeta</span>(x, <span class="dv">1</span>, <span class="fl">0.2</span>), <span class="dt">type=</span><span class="st">&quot;l&quot;</span>)
-<span class="kw">plot</span>(x, <span class="kw">dbeta</span>(x, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">type=</span><span class="st">&quot;l&quot;</span>)
-<span class="kw">plot</span>(x, <span class="kw">dbeta</span>(x, <span class="dv">2</span>, <span class="dv">1</span>), <span class="dt">type=</span><span class="st">&quot;l&quot;</span>)
-<span class="kw">plot</span>(x, <span class="kw">dbeta</span>(x, <span class="dv">4</span>, <span class="dv">1</span>), <span class="dt">type=</span><span class="st">&quot;l&quot;</span>)
-<span class="kw">plot</span>(x, <span class="kw">dbeta</span>(x, <span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">type=</span><span class="st">&quot;l&quot;</span>)
-<span class="kw">plot</span>(x, <span class="kw">dbeta</span>(x, <span class="dv">4</span>, <span class="dv">4</span>), <span class="dt">type=</span><span class="st">&quot;l&quot;</span>)
-<span class="kw">plot</span>(x, <span class="kw">dbeta</span>(x, <span class="dv">200</span>, <span class="dv">100</span>), <span class="dt">type=</span><span class="st">&quot;l&quot;</span>)
-<span class="kw">par</span>(def.par)</code></pre></div>
+Siin mõned näited erinevatest beta parametriseeringutest
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
 <img src="10_mudelite_keel_files/figure-html/unnamed-chunk-6-1.png" alt="Beta jaotuse parametriseeringuid." width="70%" />
 <p class="caption">
@@ -332,12 +320,12 @@ samples &lt;-<span class="st"> </span><span class="kw">extract.samples</span>(m3
 <span class="kw">precis</span>(m3)
 <span class="co">#&gt;   Mean StdDev 5.5% 94.5%</span>
 <span class="co">#&gt; p 0.67   0.03 0.62  0.71</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dens</span>(samples<span class="op">$</span>p)
-<span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt; 0.616 0.720</span></code></pre></div>
+<span class="co">#&gt; 0.616 0.720</span>
+<span class="kw">dens</span>(samples<span class="op">$</span>p)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
-<img src="10_mudelite_keel_files/figure-html/unnamed-chunk-8-1.png" alt="Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist." width="0.49\linewidth" />
+<img src="10_mudelite_keel_files/figure-html/unnamed-chunk-8-1.png" alt="Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist." width="70%" />
 <p class="caption">
 Joonis 2.2: Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist.
 </p>
