@@ -171,8 +171,8 @@ Lisaks, korrelatsioonikordaja mõõdab vaid andmete *lineaarset* koos-varieeruvu
 (fig:anscombe) Anscombe'i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: 4 andmestikku annavad identse nullilähedase korrelatsioonikordaja (Pearsons'r), ehkki tegelikud seosed andmete vahel on täiesti erinevad.
 
 <div class="figure" style="text-align: center">
-<img src="051_andmed_files/figure-html/unnamed-chunk-10-1.png" alt="(fig:anscombe)" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-10)(fig:anscombe)</p>
+<img src="051_andmed_files/figure-html/anscombe-1.png" alt="(fig:anscombe)" width="70%" />
+<p class="caption">(\#fig:anscombe)(fig:anscombe)</p>
 </div>
 
 
