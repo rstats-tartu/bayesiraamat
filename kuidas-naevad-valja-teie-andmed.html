@@ -402,14 +402,14 @@ Kuidas tõlgendame aga tulemust r = 0.9? Mitte kuidagi. Selle asemel tõlgendame
 <span class="co">#&gt; [1] -0.118</span></code></pre></div>
 <p>Korrelatsioonikordaja väärtus sõltub mitte ainult andmete koosvarieeruvusest vaid ka andmete ulatusest. Suurema ulatusega andmed X ja/või Y teljel annavad keskeltläbi 0-st kaugemal oleva korrelatsioonikordaja. Selle pärast sobib korrelatsioon halvasti näiteks korduskatsete kooskõla mõõtmiseks.</p>
 <p>Lisaks, korrelatsioonikordaja mõõdab vaid andmete <em>lineaarset</em> koos-varieeruvust: kui andmed koos-varieeruvad mitte-lineaarselt, siis võivad ka väga tugevad koos-varieeruvused jääda märkamatuks.</p>
-<p>(fig:anscombe) Anscombe’i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: 4 andmestikku annavad identse nullilähedase korrelatsioonikordaja (Pearsons’r), ehkki tegelikud seosed andmete vahel on täiesti erinevad.</p>
+
 <div class="figure" style="text-align: center"><span id="fig:anscombe"></span>
-<img src="051_andmed_files/figure-html/anscombe-1.png" alt="(fig:anscombe)" width="70%" />
+<img src="051_andmed_files/figure-html/anscombe-1.png" alt="Anscombe’i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: 4 andmestikku annavad identse nullilähedase korrelatsioonikordaja (Pearsons’r), ehkki tegelikud seosed andmete vahel on täiesti erinevad." width="70%" />
 <p class="caption">
-Joonis 5.2: (fig:anscombe)
+Joonis 5.2: Anscombe’i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: 4 andmestikku annavad identse nullilähedase korrelatsioonikordaja (Pearsons’r), ehkki tegelikud seosed andmete vahel on täiesti erinevad.
 </p>
 </div>
-<p>Moraal seisneb selles, et enne korrelatsioonikordaja arvutamist tasub alati plottida andmed, et veenduda võimaliku seose lineaarsuses. Lineaarsuse puudumine andmete koosvarieeruvuse mustris tähendab, et korrelatsioonikordaja tuleb kindlasti eksitav. Kordamisküsimus: miks on paneelil d) r ligikaudu 0?</p>
+<p>Moraal seisneb selles, et enne korrelatsioonikordaja arvutamist tasub alati plottida andmed, et veenduda võimaliku seose lineaarsuses. Lineaarsuse puudumine andmete koosvarieeruvuse mustris tähendab, et korrelatsioonikordaja tuleb kindlasti eksitav.</p>
 <p>Korrelatsioonikordaja mõõdab pelgalt määra, mil üks muutuja muutub siis, kui teine muutuja muutub. Seega ei ole suurt mõtet arvutada korrelatsioonikordajat juhul kui me teame ette seose olemasolust kahe muutuja vahel. Näiteks, kui sama entiteeti mõõdetakse kahel erineval viisil, või kahes korduses, või kui esimene muutuja arvutatakse teise muutuja kaudu.</p>
 <blockquote>
 <p>Kõik summaarsed statistikud kaotavad enamuse teie andmetes leiduvast infost – see kaotus on õigustatud ainult siis, kui teie poolt valitud statistik iseloomustab hästi andmete sügavamat olemust (näiteks tüüpilist mõõtmistulemust või andmete varieeruvust).</p>

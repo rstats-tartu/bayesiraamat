@@ -168,17 +168,16 @@ Selle pärast sobib korrelatsioon halvasti näiteks korduskatsete kooskõla mõ�
 
 Lisaks, korrelatsioonikordaja mõõdab vaid andmete *lineaarset* koos-varieeruvust: kui andmed koos-varieeruvad mitte-lineaarselt, siis võivad ka väga tugevad koos-varieeruvused jääda märkamatuks.
 
-(fig:anscombe) Anscombe'i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: 4 andmestikku annavad identse nullilähedase korrelatsioonikordaja (Pearsons'r), ehkki tegelikud seosed andmete vahel on täiesti erinevad.
+(ref:anscombe) Anscombe'i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: 4 andmestikku annavad identse nullilähedase korrelatsioonikordaja (Pearsons'r), ehkki tegelikud seosed andmete vahel on täiesti erinevad.
 
 <div class="figure" style="text-align: center">
-<img src="051_andmed_files/figure-html/anscombe-1.png" alt="(fig:anscombe)" width="70%" />
-<p class="caption">(\#fig:anscombe)(fig:anscombe)</p>
+<img src="051_andmed_files/figure-html/anscombe-1.png" alt="(ref:anscombe)" width="70%" />
+<p class="caption">(\#fig:anscombe)(ref:anscombe)</p>
 </div>
 
 
 Moraal seisneb selles, et enne korrelatsioonikordaja arvutamist tasub alati plottida andmed, et veenduda võimaliku seose lineaarsuses. 
 Lineaarsuse puudumine andmete koosvarieeruvuse mustris tähendab, et korrelatsioonikordaja tuleb kindlasti eksitav.
-Kordamisküsimus: miks on paneelil d) r ligikaudu 0?
 
 Korrelatsioonikordaja mõõdab pelgalt määra, mil üks muutuja muutub siis, kui teine muutuja muutub. 
 Seega ei ole suurt mõtet arvutada korrelatsioonikordajat juhul kui me teame ette seose olemasolust kahe muutuja vahel. 
