@@ -55,39 +55,38 @@
 div.sourceCode { overflow-x: auto; }
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
-pre, code { color: #cccccc; background-color: #303030; }
-code > span.kw { color: #f0dfaf; } /* Keyword */
-code > span.dt { color: #dfdfbf; } /* DataType */
-code > span.dv { color: #dcdccc; } /* DecVal */
-code > span.bn { color: #dca3a3; } /* BaseN */
-code > span.fl { color: #c0bed1; } /* Float */
-code > span.ch { color: #dca3a3; } /* Char */
-code > span.st { color: #cc9393; } /* String */
-code > span.co { color: #7f9f7f; } /* Comment */
-code > span.ot { color: #efef8f; } /* Other */
-code > span.al { color: #ffcfaf; } /* Alert */
-code > span.fu { color: #efef8f; } /* Function */
-code > span.er { color: #c3bf9f; } /* Error */
-code > span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
-code > span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
-code > span.sc { color: #dca3a3; } /* SpecialChar */
-code > span.vs { color: #cc9393; } /* VerbatimString */
-code > span.ss { color: #cc9393; } /* SpecialString */
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
 code > span.im { } /* Import */
-code > span.va { } /* Variable */
-code > span.cf { color: #f0dfaf; } /* ControlFlow */
-code > span.op { color: #f0efd0; } /* Operator */
-code > span.bu { } /* BuiltIn */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
 code > span.ex { } /* Extension */
-code > span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
-code > span.at { } /* Attribute */
-code > span.do { color: #7f9f7f; } /* Documentation */
-code > span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
-code > span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
-code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -243,9 +242,9 @@ y &lt;-<span class="st"> </span>x</code></pre></div>
 <p>Selle mudeli saame graafiliselt kujutada nii:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Weight in kg&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Heigth in cm&quot;</span>, <span class="dt">main =</span> <span class="kw">bquote</span>(y <span class="op">==</span><span class="st"> </span>x))</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
-<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-4-1.png" alt="Lihtne mudel y ~ x, mille intecept = 0 ja tõus = 1." width="70%" />
+<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-4-1.png" alt="Lihtne mudel y ~ x, mille lõikepunkt = 0 ja tõus = 1." width="70%" />
 <p class="caption">
-Joonis 1.3: Lihtne mudel y ~ x, mille intecept = 0 ja tõus = 1.
+Joonis 1.3: Lihtne mudel y ~ x, mille lõikepunkt = 0 ja tõus = 1.
 </p>
 </div>
 <p>Mudeli keeles tähistame me seda, mida me ennustame (antud juhul pikkus) Y-ga ja seda, mille väärtuse põhjal me ennustame (antud juhul kaal) X-ga. Seega sirge mudeli matemaatiline formalism on Y = X.</p>
@@ -260,9 +259,9 @@ y &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </s
      <span class="dt">main =</span> <span class="kw">bquote</span>(y <span class="op">==</span><span class="st"> </span>a <span class="op">+</span><span class="st"> </span>x))
 <span class="kw">abline</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
-<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-6-1.png" alt="Lineaarne mudel, mille intecept = &quot;, a ,&quot; ja tõus = 1.. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = 30." width="70%" />
+<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-6-1.png" alt="Lineaarne mudel, mille lõikepunkt = &quot;, a ,&quot; ja tõus = 1.. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = 30." width="70%" />
 <p class="caption">
-Joonis 2.1: Lineaarne mudel, mille intecept = “, a ,” ja tõus = 1.. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = 30.
+Joonis 2.1: Lineaarne mudel, mille lõikepunkt = “, a ,” ja tõus = 1.. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = 30.
 </p>
 </div>
 <p>Meie konstant a määrab <span class="math inline">\(y\)</span> väärtuse, kui <span class="math inline">\(x = 0\)</span>, ehk sirge lõikepunkti <span class="math inline">\(y\)</span> teljel. Teisisõnu, a = mudeli lõikepunkt (<em>intercept</em>).</p>
@@ -275,9 +274,9 @@ y &lt;-<span class="st"> </span>b <span class="op">*</span><span class="st"> </s
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">main =</span> <span class="kw">bquote</span>(y <span class="op">==</span><span class="st"> </span>b <span class="op">%*%</span><span class="st"> </span>x))
 <span class="kw">abline</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
-<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-8-1.png" alt="Lineaarne mudel, mille intercept = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3." width="70%" />
+<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-8-1.png" alt="Lineaarne mudel, mille lõikepunkt = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3." width="70%" />
 <p class="caption">
-Joonis 2.2: Lineaarne mudel, mille intercept = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3.
+Joonis 2.2: Lineaarne mudel, mille lõikepunkt = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3.
 </p>
 </div>
 <p>Nüüd muutub sirge tõusunurk, ehk kui palju me ootame <em>y</em>-t muutumas, kui <em>x</em> muutub näiteks ühe ühiku võrra. Kui b = 3, siis <em>x</em>-i tõustes ühe ühiku võrra suureneb <em>y</em> kolme ühiku võrra. Proovi järgi, mis juhtub, kui b = -3.</p>

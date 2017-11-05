@@ -31,8 +31,8 @@ plot(y ~ x, type = "l", xlab = "Weight in kg", ylab = "Heigth in cm", main = bqu
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-4-1.png" alt="Lihtne mudel y ~ x, mille intecept = 0 ja tõus = 1." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-4)Lihtne mudel y ~ x, mille intecept = 0 ja tõus = 1.</p>
+<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-4-1.png" alt="Lihtne mudel y ~ x, mille lõikepunkt = 0 ja tõus = 1." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-4)Lihtne mudel y ~ x, mille lõikepunkt = 0 ja tõus = 1.</p>
 </div>
 
 Mudeli keeles tähistame me seda, mida me ennustame (antud juhul pikkus) Y-ga ja seda, mille väärtuse põhjal me ennustame (antud juhul kaal) X-ga. Seega sirge mudeli matemaatiline formalism on Y = X. 
@@ -63,8 +63,8 @@ abline(c(0, 1), lty = 2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-6-1.png" alt="Lineaarne mudel, mille intecept = &quot;, a ,&quot; ja tõus = 1.. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = 30." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-6)Lineaarne mudel, mille intecept = ", a ," ja tõus = 1.. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = 30.</p>
+<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-6-1.png" alt="Lineaarne mudel, mille lõikepunkt = &quot;, a ,&quot; ja tõus = 1.. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = 30." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-6)Lineaarne mudel, mille lõikepunkt = ", a ," ja tõus = 1.. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = 30.</p>
 </div>
 
 
@@ -92,8 +92,8 @@ abline(c(0, 1), lty = 2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-8-1.png" alt="Lineaarne mudel, mille intercept = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-8)Lineaarne mudel, mille intercept = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3.</p>
+<img src="03_lineaarsed_mudelid_files/figure-html/unnamed-chunk-8-1.png" alt="Lineaarne mudel, mille lõikepunkt = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-8)Lineaarne mudel, mille lõikepunkt = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3.</p>
 </div>
 
 
