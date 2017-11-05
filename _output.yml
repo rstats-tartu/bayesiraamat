@@ -1,5 +1,6 @@
 bookdown::gitbook:
-  highlight: zenburn
+  highlight: tango
+  theme: sketchy
   includes:
     in_header: ["fa.html"]
   css: [style.css, toc.css]
