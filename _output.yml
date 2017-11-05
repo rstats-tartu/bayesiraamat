@@ -2,7 +2,7 @@ bookdown::gitbook:
   highlight: tango
   includes:
     in_header: ["fa.html"]
-  css: [style.css, toc.css]
+  css: style.css
   config:
     toc:
       collapse: section
