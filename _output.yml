@@ -2,7 +2,6 @@ bookdown::gitbook:
   highlight: tango
   includes:
     in_header: ["fa.html"]
-  toc: yes
   css: [style.css, toc.css]
   config:
     toc:
