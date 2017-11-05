@@ -1,6 +1,5 @@
-bookdown::html_book:
+bookdown::gitbook:
   highlight: tango
-  theme: united
   includes:
     in_header: ["fa.html"]
   toc: yes
