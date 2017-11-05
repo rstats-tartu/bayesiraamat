@@ -1,8 +1,9 @@
-bookdown::gitbook:
+bookdown::html_book:
   highlight: tango
-  theme: sketchy
+  theme: united
   includes:
     in_header: ["fa.html"]
+  toc: yes
   css: [style.css, toc.css]
   config:
     toc:
