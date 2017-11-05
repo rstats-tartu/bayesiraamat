@@ -180,8 +180,17 @@ Korrelatsioonikordaja väärtus sõltub mitte ainult andmete koos-varieeruvusest
 
 Lisaks, korrelatsioonikordaja mõõdab vaid andmete *lineaarset* koos-varieeruvust: kui andmed koos-varieeruvad mitte-lineaarselt, siis võivad ka väga tugevad koos-varieeruvused jääda märkamatuks.
 
-```{r,fig.cap="Anscombe'i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: 4 andmestikku annavad identse nullilähedase korrelatsioonikordaja, ehkki tegelikud seosed andmete vahel on täiesti erinevad.",fig.align='center',out.width='\\linewidth', echo=FALSE}
-knitr::include_graphics("img/Slide1.jpg")
+```{r,fig.cap="Anscombe'i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: 4 andmestikku annavad identse nullilähedase korrelatsioonikordaja, ehkki tegelikud seosed andmete vahel on täiesti erinevad.", echo=FALSE}
+library(stringr)
+bind_cols(id = 1:11, anscombe) %>% 
+  gather(key, value, -id) %>% 
+  mutate(axis = str_extract(key, "[xy]"),
+         q = letters[as.numeric(str_extract(key, "[0-9]"))]) %>%
+  select(-key) %>% 
+  spread(axis, value) %>% 
+  ggplot(aes(x, y)) +
+  geom_point() +
+  facet_wrap(~q)
 ```
 
 
