@@ -4,7 +4,8 @@ set.seed(19)
 
 options(digits = 3,
         dplyr.print_min = 6,
-        dplyr.print_max = 6)
+        dplyr.print_max = 6,
+        booktabs = TRUE)
 
 knitr::opts_chunk$set(
   message = FALSE,

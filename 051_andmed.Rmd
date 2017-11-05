@@ -214,7 +214,7 @@ Näiteks, kui sama entiteeti mõõdetakse kahel erineval viisil, või kahes kord
 > Kõik summaarsed statistikud kaotavad enamuse teie andmetes leiduvast infost – see kaotus on õigustatud ainult siis, kui teie poolt valitud statistik iseloomustab hästi andmete sügavamat olemust (näiteks tüüpilist mõõtmistulemust või andmete varieeruvust).
 
 Korrelatsioonimaatriksi saab niimoodi:
-```{r }
+```{r}
 # numeric columns only!
 # the following gives cor matrix with 
 # frequentist correction for mutliple testing:
