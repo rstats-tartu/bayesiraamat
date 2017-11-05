@@ -185,9 +185,6 @@ prior <- rep(1 , 20)
 # Compute likelihood at each value in grid
 likelihood <- dbinom(6, size = 9 , prob = x)
 
-def.par <- par(no.readonly = TRUE)
-par(mfrow = c(1, 3))
-
 # Plot prior
 plot(x, prior, type = "b", main = "Prior")
 
@@ -202,12 +199,11 @@ plot(x, posterior,
      type = "b", 
      xlab = "Mortality" , 
      ylab = "Posterior probability", 
-     main = "Posterior distribution" )
-par(def.par)
+     main = "Posterior distribution")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-9-1.png" alt="Prior, tõepära ja posteerior." width="70%" />
+<img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-9-1.png" alt="Prior, tõepära ja posteerior." width="30%" /><img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-9-2.png" alt="Prior, tõepära ja posteerior." width="30%" /><img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-9-3.png" alt="Prior, tõepära ja posteerior." width="30%" />
 <p class="caption">(\#fig:unnamed-chunk-9)Prior, tõepära ja posteerior.</p>
 </div>
 

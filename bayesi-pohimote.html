@@ -349,9 +349,6 @@ prior &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv"
 <span class="co"># Compute likelihood at each value in grid</span>
 likelihood &lt;-<span class="st"> </span><span class="kw">dbinom</span>(<span class="dv">6</span>, <span class="dt">size =</span> <span class="dv">9</span> , <span class="dt">prob =</span> x)
 
-def.par &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">no.readonly =</span> <span class="ot">TRUE</span>)
-<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))
-
 <span class="co"># Plot prior</span>
 <span class="kw">plot</span>(x, prior, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Prior&quot;</span>)
 
@@ -366,10 +363,9 @@ posterior &lt;-<span class="st"> </span>likelihood <span class="op">*</span><spa
      <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, 
      <span class="dt">xlab =</span> <span class="st">&quot;Mortality&quot;</span> , 
      <span class="dt">ylab =</span> <span class="st">&quot;Posterior probability&quot;</span>, 
-     <span class="dt">main =</span> <span class="st">&quot;Posterior distribution&quot;</span> )
-<span class="kw">par</span>(def.par)</code></pre></div>
+     <span class="dt">main =</span> <span class="st">&quot;Posterior distribution&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-9"></span>
-<img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-9-1.png" alt="Prior, tõepära ja posteerior." width="70%" />
+<img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-9-1.png" alt="Prior, tõepära ja posteerior." width="30%" /><img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-9-2.png" alt="Prior, tõepära ja posteerior." width="30%" /><img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-9-3.png" alt="Prior, tõepära ja posteerior." width="30%" />
 <p class="caption">
 Joonis 9.1: Prior, tõepära ja posteerior.
 </p>
