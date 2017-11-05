@@ -1,4 +1,5 @@
 bookdown::gitbook:
+  highlight: zenburn
   includes:
     in_header: ["fa.html"]
   css: [style.css, toc.css]
