@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="eda-eksploratoorne-andmeanaluus.html">
-<link rel="next" href="bootstrappimine.html">
+<link rel="next" href="bootstrap.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -149,12 +149,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#andmed-ei-ole-sama-mis-tegelikkus"><i class="fa fa-check"></i>Andmed ei ole sama, mis tegelikkus</a></li>
 </ul></li>
-<li class="part"><span><b>II OSA</b></span></li>
-<li class="chapter" data-level="8" data-path="bootstrappimine.html"><a href="bootstrappimine.html"><i class="fa fa-check"></i><b>8</b> Bootstrappimine</a><ul>
-<li class="chapter" data-level="" data-path="bootstrappimine.html"><a href="bootstrappimine.html#veidi-keerulisem-bootstrap"><i class="fa fa-check"></i>Veidi keerulisem bootstrap</a></li>
-<li class="chapter" data-level="" data-path="bootstrappimine.html"><a href="bootstrappimine.html#bayesboot"><i class="fa fa-check"></i>bayesboot()</a></li>
-<li class="chapter" data-level="" data-path="bootstrappimine.html"><a href="bootstrappimine.html#parameetriline-bootstrap"><i class="fa fa-check"></i>Parameetriline bootstrap</a></li>
-<li class="chapter" data-level="" data-path="bootstrappimine.html"><a href="bootstrappimine.html#bootstrappimine-ei-ole-kogu-tode"><i class="fa fa-check"></i>Bootstrappimine ei ole kogu tõde</a></li>
+<li class="part"><span><b>II Praktika</b></span></li>
+<li class="chapter" data-level="8" data-path="bootstrap.html"><a href="bootstrap.html"><i class="fa fa-check"></i><b>8</b> Bootstrap</a><ul>
+<li class="chapter" data-level="" data-path="bootstrap.html"><a href="bootstrap.html#veidi-keerulisem-bootstrap"><i class="fa fa-check"></i>Veidi keerulisem bootstrap</a></li>
+<li class="chapter" data-level="" data-path="bootstrap.html"><a href="bootstrap.html#bayesboot"><i class="fa fa-check"></i>bayesboot()</a></li>
+<li class="chapter" data-level="" data-path="bootstrap.html"><a href="bootstrap.html#parameetriline-bootstrap"><i class="fa fa-check"></i>Parameetriline bootstrap</a></li>
+<li class="chapter" data-level="" data-path="bootstrap.html"><a href="bootstrap.html#bootstrappimine-ei-ole-kogu-tode"><i class="fa fa-check"></i>Bootstrappimine ei ole kogu tõde</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="bayesi-pohimote.html"><a href="bayesi-pohimote.html"><i class="fa fa-check"></i><b>9</b> Bayesi põhimõte</a><ul>
 <li class="chapter" data-level="" data-path="bayesi-pohimote.html"><a href="bayesi-pohimote.html#esimene-naide"><i class="fa fa-check"></i>Esimene näide</a></li>
@@ -261,37 +261,37 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <ul>
 <li><p><span class="math inline">\(P(A~ \vert ~B)\)</span> on tinglik tõenäosus, mida tuleks lugeda: “A tõenäosus tingimusel, et kehtib B”. Pane tähele, et <span class="math inline">\(P(vihm~\vert~pilves~ilm)\)</span> ei ole sama, mis <span class="math inline">\(P(pilves~ilm~\vert~vihm)\)</span>.</p></li>
 <li><p><span class="math inline">\(A \land B\)</span> tähendab “A ja B”,</p></li>
-<li><p><span class="math inline">\(A \lor B\)</span> tähendab “A ja/või B” (loogiline “või” tähendab tavakeeles ja/või),</p></li>
+<li><p><span class="math inline">\(A \lor B\)</span> tähendab “A või B”,</p></li>
 <li><p><span class="math inline">\(\lnot A\)</span> tähendab mitte-A, ehk A == FALSE.</p></li>
 </ul>
 <p>Tõenäosusteooria põhituletised:</p>
 <ol style="list-style-type: decimal">
 <li><p>Kui B sisaldab endas A-d, siis <span class="math inline">\(P(B) \leq P(A)\)</span></p></li>
-<li><p>A ja B on üksteisest sõltumatud siis ja ainult siis kui <span class="math inline">\(P(A~ \vert B) = P(A)\)</span></p></li>
+<li><p>Def: A ja B on üksteisest sõltumatud siis ja ainult siis kui <span class="math inline">\(P(A~ \vert B) = P(A)\)</span></p></li>
 <li><p>Kui A ja B on üksteisest sõltumatud, siis <span class="math inline">\(P(A \land B) = P(A)P(B) = P(A~\vert~B)P(B)\)</span></p></li>
 <li><p>Kui A ja B on üksteist välistavad, siis <span class="math inline">\(P(A \lor B) = P(A) + P(B)\)</span>.</p></li>
 <li><p>Kui A ja B ei ole üksteist välistavad, siis <span class="math inline">\(P(A \lor B) = P(A) + P(B) - P(A \land B)\)</span></p></li>
-<li><p><span class="math inline">\(P(A~\vert~B) = P(A \land B)/P(B)\)</span> – tingliku tõenäosuse definitsioon</p></li>
-<li><p>Punktist 6 tuleneb totaalne tõenäosus: <span class="math inline">\(P(A) = P(A~\vert~B)P(B) + P(A~\vert~\lnot B)P(\lnot B)\)</span>.</p></li>
-<li><p>Punktist 6 tuleneb Bayesi teoreem: <span class="math inline">\(P(A~\vert~B) = P(A)P(B~\vert~A)/P(B)\)</span>, kus <span class="math inline">\(P(B) = P(A)P(B~\vert~A) + P(\lnot A)P(B~\vert~\lnot A)\)</span></p></li>
+<li><p>Def: <span class="math inline">\(P(A~\vert~B) = P(A \land B)/P(B)\)</span> – Tinglik tõenäosus</p></li>
+<li><p>Totaalne tõenäosus: <span class="math inline">\(P(A) = P(A~\vert~B)P(B) + P(A~\vert~\lnot B)P(\lnot B)\)</span> – , tuletatud 6. punktist.</p></li>
+<li><p>Bayesi teoreem: <span class="math inline">\(P(A~\vert~B) = P(A)P(B~\vert~A)/P(B)\)</span> – tuletatud 6. punktist –, kus <span class="math inline">\(P(B) = P(A)P(B~\vert~A) + P(\lnot A)P(B~\vert~\lnot A)\)</span> – 7. punktist.</p></li>
 </ol>
-<p>Bayesi teoreemi kasutatakse sageli määramaks hüpoteesi tõenäosuse pärast uute faktide (andmete) lisandumist olemasolevatele teadmistele. Kui A on H<sub>1</sub> ning mitte-A on ammendav ja välistav H<sub>2</sub> ja B tähistab andmeid (data), saame Bayesi teoreemi ümber kirjutada</p>
-<p><span class="math inline">\(P(H_1~\vert~data) = P(H_1)P(data~\vert~H_1) /( P(H_1)P(data~\vert~H_1) + P(H_2)P(data \vert H_2) )\)</span></p>
+<p>Bayesi teoreemi kasutatakse määramaks hüpoteesi tõenäosuse pärast uute faktide (andmete) lisandumist olemasolevatele teadmistele. Selleks peab hüpoteesiruum olema jagatud vähemalt kaheks ammendavaks ja üksteist välistavaks hüpoteesiks. Kui A on H<sub>1</sub> ning mitte-A on ammendav ja välistav H<sub>2</sub> ja B tähistab andmeid (data), saame Bayesi teoreemi ümber kirjutada</p>
+<p><span class="math inline">\(P(H_1~\vert~data) = P(H_1)P(data~\vert~H_1) /( P(H_1)P(data~\vert~H_1) + P(H_2)P(data~ \vert ~H_2) )\)</span></p>
 <p><span class="math inline">\(P(H_1~\vert~data)\)</span> on <span class="math inline">\(H_1\)</span> kehtimise tõenäosus meie andmete korral – ehk posteerior,</p>
 <p><span class="math inline">\(P(H_1)\)</span> on <span class="math inline">\(H_1\)</span> kehtimise eelnev, ehk meie andmetest sõltumatu, tõenäosus – ehk prior,</p>
 <p><span class="math inline">\(P(data~\vert~H_1)\)</span> on andmete esinemise tõenäosus tingimusel, et H<sub>1</sub> kehtib – ehk tõepära.</p>
-<p>Jagamistehe tehakse ainult selle pärast, et normaliseerida 1-le kõikide hüpoteeside tõenäosuste summa meie andmete korral ja seega viia posteerior vastavusse tõenäosusteooria aksioomidega — kui meil on i ammendavat üksteist välistavat hüpoteesi, siis murrujoone alla läheb: <span class="math inline">\(\sum~P(data~\vert~H_i)P(H_i) = 1\)</span>. Bayesi teoreem on triviaalne tuletus tõenäosusteooria aksioomidest, milles pole mitte midagi maagilist. See ei ole automaatne meetod, mis tagaks inimkonna teadmiste kasvu, vaid lihtsalt parim võimalik viis andmemudeli ja taustateadmiste mudeli ühendamiseks ja normaliseerimiseks tinglikuks tõenäosuseks (hüpoteesi tõenäosus meie andmete ja taustateadmiste korral). Nüüd sõltub kõik mudelite, andmete ja taustateadmiste kvaliteedist.</p>
+<p>Jagamistehe tehakse ainult selle pärast, et normaliseerida 1-le kõikide hüpoteeside tõenäosuste summa meie andmete korral ja seega viia posteerior vastavusse tõenäosusteooria aksioomidega — kui meil on i ammendavat üksteist välistavat hüpoteesi, siis murrujoone alla läheb <span class="math inline">\(\sum~P(data~\vert~H_i)P(H_i) = 1\)</span>. Bayesi teoreem on triviaalne tuletus tõenäosusteooria aksioomidest, milles pole midagi maagilist. See ei ole automaatne meetod, mis tagaks inimkonna teadmiste kasvu, vaid lihtsalt parim võimalik viis andmemudeli ja taustateadmiste mudeli ühendamiseks ja normaliseerimiseks tinglikuks tõenäosuseks (hüpoteesi tõenäosus meie andmete ja taustateadmiste korral). Edasi sõltub kõik mudelite, andmete ja taustateadmiste kvaliteedist.</p>
 </div>
 <div id="naited-toenaosusteooria-tuletiste-rakendamisest" class="section level3 unnumbered">
 <h3>Näited tõenäosusteooria tuletiste rakendamisest</h3>
 <p><strong>Punkt 6.</strong> Meil on kolm pannkooki, millest esimesel on mõlemad küljed moosised, teisel on üks külg moosine ja kolmandal pole üldse moosi. Kui meile lüüakse taldrikule pannkook, mille pealmine külg on moosine, siis millise tõenäosusega on moosine ka alumine külg? NB! Vastus ei ole 50%. Lahendus: Kui A - moos all, B - moos üleval, siis vastavalt tingliku tõenäosuse definitsioonile <span class="math inline">\(P(moos~ all~ \lvert ~moos~üleval ) = P(moos~all \land ~moos~üleval)/P(moos~all)\)</span> Tõenäosus, et moos on all ja üleval on 1/3 (me teame, et 1 pannkook 3st on mõlemalt küljelt moosine) ja tõenäosus, et moos on all, on keskmine kolmest tõenäosusest, millega me kolmel pannkoogil moosise külje saame: mean(c(1, 0.5, 0)) = 1/2. Seega, vastus on (1/3)/(1/2) = 2/3. Kui me saame moosise ülemise külje, siis on tõenäosus 2/3, et ka all on moos!</p>
-<p><strong>Punkt 7.</strong> Kui A tähistab sündmust “ma sain aru tõenäosusteooriast” ja B tähistab sündmust “ma tuubin nagu loom” ning meil on dihhotoomne valik: tuubid / ei tuubi, siis <span class="math inline">\(P(A) = P(tuubid)P(A~ \lvert ~tuubid) + P(ei~ tuubi)P(A~ \lvert ~ei ~ tuubi)\)</span>. Siit saad välja arvutada tõenäosuse, millega just sina saad kasu sellest õpikust.</p>
-<p><strong>Punkt8.</strong> Bayesi teoreemi rakendamine diskreetsetele hüpoteesidele: Oletame, et 45 aastane naine saab rinnavähi sõeluuringus mammograafias positiivse tulemuse. Millise tõenäosusega on tal rinnavähk? Kõigepealt jagame hüpoteesiruumi kahe diskreetse hüpoteesi vahel: H<sub>1</sub> - vähk ja H<sub>2</sub> - mitte vähk. Edasi on meil vaja omistada numbrilised väärtused järgmistele parameetritele:</p>
+<p><strong>Punkt 7.</strong> Kui A tähistab sündmust “ma saan aru tõenäosusteooriast” ja B tähistab sündmust “ma tuubin nagu loom”, ning meil on dihhotoomne valik: tuubid / ei tuubi, siis <span class="math inline">\(P(A) = P(tuubid)P(A~ \lvert ~tuubid) + P(ei~ tuubi)P(A~ \lvert ~ei ~ tuubi)\)</span>. Siit saad välja arvutada tõenäosuse, millega just sina saad kasu sellest õpikust. P(tuubid) on tõenäosus, millega sa leiad end tuupimas.</p>
+<p><strong>Punkt8.</strong> Bayesi teoreemi rakendamine diskreetsetele hüpoteesidele: Oletame, et 45 aastane naine saab rinnavähi sõeluuringus mammograafias positiivse tulemuse. Millise tõenäosusega on tal rinnavähk? Kõigepealt jagame hüpoteesiruumi kahe diskreetse hüpoteesi vahel: H<sub>1</sub> - vähk ja H<sub>2</sub> - mitte vähk. Edasi omistame numbrilised väärtused järgmistele parameetritele:</p>
 <ol style="list-style-type: decimal">
-<li><p>H<sub>1</sub> tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil on rinnavähk <span class="math inline">\(P( +~\vert~H_1) = 0.9\)</span></p></li>
-<li><p>H<sub>2</sub> tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil ei ole rinnavähki <span class="math inline">\(P( +~\vert~H_2) = 0.08\)</span> (pane tähele, et 0.9 + 0.08 ei võrdu ühega, mis tähendab, et tõepära pole tõenäosusteooria mõttes päris tõenäosus).</p></li>
+<li><p>H<sub>1</sub> tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil on rinnavähk (testi sensitiivsus): <span class="math inline">\(P( +~\vert~H_1) = 0.9\)</span></p></li>
+<li><p>H<sub>2</sub> tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil ei ole rinnavähki (1 - testi spetsiifilisus): <span class="math inline">\(P( +~\vert~H_2) = 0.08\)</span>. Pane tähele, et 0.9 + 0.08 ei võrdu ühega, mis tähendab, et tõepära pole tõenäosusteooria mõttes päris tõenäosus.</p></li>
 <li><p>Eelnev tõenäosus, et patsiendil on rinnavähk <span class="math inline">\(P(H_1) = 0.01\)</span> (see on rinnavähi sagedus 45 a naiste populatsioonis; kui me teame patsiendi genoomi järjestust või rinnavähijuhte tema lähisugulastel, võib P(H~1) tulla väga erinev).</p></li>
-<li><p><span class="math inline">\(P(H_2) = 1 - P(H_2) = 0.99\)</span></p></li>
+<li><p><span class="math inline">\(P(H_2) = 1 - P(H_1) = 0.99\)</span></p></li>
 </ol>
 <p>Nüüd arvutame posterioorse tõenäosuse <span class="math inline">\(P(H_1~\vert~+)\)</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">likelihood_H1 &lt;-<span class="st"> </span><span class="fl">0.9</span>
@@ -325,7 +325,7 @@ posterior2
 <h3>Tõenäosusteooriast tulenevad statistika põhiprintsiibid</h3>
 <ol style="list-style-type: decimal">
 <li><p>statistilise analüüsi kvaliteet sõltub mudeli eeldustest &amp; struktuurist. Kuna maailm ei koosne matemaatikast, teevad matemaatilised mudelid alati eeldusi maailma kohta, mis ei ole päris tõesed ja mida ei saa tingimata empiiriliselt kontrollida. Mündiviske näites eeldasime, et mündivisked olid üksteisest sõltumatud. Kui me sellest eeldusest loobume, läheb meie mudel keerulisemaks, sest me peame mudelisse lisama teavet visetevahelise korrelatsiooni kohta. Aga see keerulisem mudel toob sisse uued eeldused (vähemalt pool tosinat lisaeeldust). Üldiselt peaks mudeli struktuur kajastama katse struktuuri, mis kaasaegses statistikas tähendab sageli hierarhilisi mudeleid.</p></li>
-<li><p>statistilise analüüsi kvaliteet sõltub andmete hulgast. Kui kahe mündiviske asemel teeksime kakskümmend, siis saaksime samade eelduste põhjal teha oluliselt täpsemaid järeldusi mündi aususe kohta.</p></li>
+<li><p>statistilise analüüsi täpsus sõltub andmete hulgast. Kui kahe mündiviske asemel teeksime kakskümmend, siis saaksime samade eelduste põhjal teha oluliselt väiksema ebakindluse määraga järeldusi mündi aususe kohta.</p></li>
 <li><p>statistilise analüüsi kvaliteet sõltub andmete kvaliteedist. Kui münt on aus, aga me viskame seda ebaausalt, siis, mida rohkem arv kordi me seda teeme, seda tugevamalt usub teadusüldsus selle tagajärjel millessegi, mis pole tõsi.</p></li>
 <li><p>statistilise analüüsi kvaliteet sõltub taustateadmiste kvaliteedist. Napid taustateadmised ei võimalda parandada andmete põhjal tehtud järeldusi juhul, kui andmed mingil põhjusel ei vasta tegelikkusele. Adekvaatsete taustateadmiste lisamine mudelisse aitab vältida mudelite üle-fittimist.</p></li>
 <li><p>Järeldused ühe hüpoteesi kohta mõjutavad järeldusi ka kõigi alternatiivsete hüpoteeside kohta. Relevantsete hüpoteeside eiramine viib ekslikele järeledustele kõigi teiste hüpoteeside kohta.</p></li>
@@ -334,8 +334,8 @@ posterior2
 </div>
 <div id="andmed-ei-ole-sama-mis-tegelikkus" class="section level2 unnumbered">
 <h2>Andmed ei ole sama, mis tegelikkus</h2>
-<p>Nüüd, kus me saame aru tõenäosusteooriast, on aeg asuda statistika kallale. Me oleme sunnitud kasutama statistikat, sest me usume, et kuigi meie andmed on sarnased tegelikkusega, ei ole need sellega identsed. Seega tasub alustada näitega sellest, kuidas andmed ja tegelikkus erinevad. Meie tööriistaks on siin simulatsioon. Simuleerimine on lahe sest simulatsioonid elavad mudeli väikeses maailmas, kus me teame täpselt, mida me teeme ja mida on selle tagajärjel oodata. Simulatsioonidega saame me hõlpsalt kontrollida, kas ja kuidas meie mudelid töötavad ning genereerida olukordi (parameetrite väärtuste kombinatsioone), mida suures maailmas kunagi ette ei tule. Selles mõttes on mudelid korraga nii väiksemad kui suuremad kui päris maailm.</p>
-<p>Alustuseks simuleerime juhuvalimi n=3 lõpmata suurest normaaljaotusega populatsioonist, mille keskmine on 100 ja sd on 20. Populatsioon (mis on statistiline mõiste) seisab siin tegelikkuse aseainena ja juhuvalim on meie andmete simulatsioon. Päris elus on korraliku juhuvalimi tõmbamine tehniliselt raske ettevõtmine ja, mis veelgi olulisem, me ei tea kunagi, milline on populatsiooni tõeline jaotus, keskmine ja sd. Elagu simulatsioon!</p>
+<p>Nüüd, kus me saame aru tõenäosusteooriast, on aeg asuda statistika kallale. Me ei kasuta statistikat kunagi vabatahtlikult, vaid teeme seda ainult siis, kui usume kahte asja: ühest küljest, et meie andmed on piisavalt tõetruud, et nende põhjal saaks teha adekvaatseid oletusi päris maailma kohta. Ja teisest küljest, et meie andmed ei ole piisavalt sarnased tõetruud, et neid järeldusi saaks teha lihtsalt ja intuitiivselt. Seega tasub alustada näitega sellest, kuidas andmed ja tegelikkus erinevad. Meie tööriistaks on siin simulatsioon. Simuleerimine on lahe sest simulatsioonid elavad mudeli väikeses maailmas, kus me teame täpselt, mida me teeme ja mida on selle tagajärjel oodata. Simulatsioonidega saame me hõlpsalt kontrollida, kas ja kuidas meie mudelid töötavad ning genereerida olukordi (parameetrite väärtuste kombinatsioone), mida suures maailmas kunagi ette ei tule. Selles mõttes on mudelid korraga nii väiksemad kui suuremad kui päris maailm.</p>
+<p>Alustuseks simuleerime juhuvalimi n = 3 lõpmata suurest normaaljaotusega populatsioonist, mille keskmine on 100 ja sd on 20. Populatsioon (mis on statistiline mõiste) seisab siin tegelikkuse aseainena ja juhuvalim on meie andmete simulatsioon. Päris elus on korraliku juhuvalimi tõmbamine tehniliselt raske ettevõtmine ja, mis veelgi olulisem, me ei tea kunagi, milline on populatsiooni tõeline jaotus, keskmine ja sd. Elagu simulatsioon!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>) <span class="co"># makes random number generation reproducible</span>
 Sample &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">3</span>, <span class="dt">mean =</span> <span class="dv">100</span>, <span class="dt">sd =</span> <span class="dv">20</span>)
 Sample; <span class="kw">mean</span>(Sample); <span class="kw">sd</span>(Sample)
@@ -365,7 +365,7 @@ Joonis 3.2: Keskmiste jaotus 10 000 valimist.
 <span class="co">#&gt; [1] 100</span>
 <span class="kw">mean</span>(Summary<span class="op">$</span>SD)
 <span class="co">#&gt; [1] 17.8</span></code></pre></div>
-<p>Oh-hooo. Paljude valimite keskmiste keskmine ennustab väga täpselt populatsiooni keskmist aga sd-de keskmise keskmine alahindab populatsiooni sd-d. Valem, millega sd-d arvutatakse tõõtab lihtsalt kallutatult, kui n on väike (&lt;10). Kui ei usu, korda eelnevat simulatsiooni valimiga, mille N=30.</p>
+<p>Oh-hooo. Paljude valimite keskmiste keskmine ennustab väga täpselt populatsiooni keskmist aga sd-de keskmise keskmine alahindab populatsiooni sd-d. Valem, millega sd-d arvutatakse, tõõtab lihtsalt kallutatult, kui n on väike (&lt;10). Kes ei usu, kordab simulatsiooni valimiga, mille N=30.</p>
 <p>Ja nüüd 10 000 SD keskväärtused:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Summary <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(SD)) <span class="op">+</span><span class="st"> </span>
@@ -405,13 +405,14 @@ Joonis 4.3: Nii nagu parun Münchausen tõmbas ennast patsi pidi mülkast välja
 
 
 
+</div>
             </section>
 
           </div>
         </div>
       </div>
 <a href="eda-eksploratoorne-andmeanaluus.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="bootstrappimine.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="bootstrap.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -1,8 +1,15 @@
 
 
+
+
+# (PART) Praktika {-}
+
+
+=======
 # (PART) OSA {-}
 
-# Bootstrappimine
+# Bootstrap
+
 
 > Populatsioon on valimile sama, mis on valim bootstrappitud valimile. 
 

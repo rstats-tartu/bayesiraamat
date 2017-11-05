@@ -54,7 +54,7 @@ Sümbolite tähendused:
 
 + $A \land B$ tähendab "A ja B", 
 
-+ $A \lor B$ tähendab "A ja/või B" (loogiline "või" tähendab tavakeeles ja/või), 
++ $A \lor B$ tähendab "A või B", 
 
 + $\lnot A$ tähendab mitte-A, ehk A == FALSE.
 
@@ -62,7 +62,7 @@ Tõenäosusteooria põhituletised:
 
 1. Kui B sisaldab endas A-d, siis $P(B) \leq P(A)$ 
 
-2. A ja B on üksteisest sõltumatud siis ja ainult siis kui $P(A~ \vert B) = P(A)$ 
+2. Def: A ja B on üksteisest sõltumatud siis ja ainult siis kui $P(A~ \vert B) = P(A)$ 
 
 3. Kui A ja B on üksteisest sõltumatud, siis $P(A \land B) = P(A)P(B) = P(A~\vert~B)P(B)$ 
 
@@ -70,16 +70,16 @@ Tõenäosusteooria põhituletised:
 
 5. Kui A ja B ei ole üksteist välistavad, siis $P(A \lor B) = P(A) + P(B) - P(A \land B)$
 
-6. $P(A~\vert~B) = P(A \land B)/P(B)$ -- tingliku tõenäosuse definitsioon
+6. Def: $P(A~\vert~B) = P(A \land B)/P(B)$ -- Tinglik tõenäosus
 
-7. Punktist 6 tuleneb totaalne tõenäosus: $P(A) = P(A~\vert~B)P(B) + P(A~\vert~\lnot B)P(\lnot B)$.
+7. Totaalne tõenäosus: $P(A) = P(A~\vert~B)P(B) + P(A~\vert~\lnot B)P(\lnot B)$ -- , tuletatud 6. punktist.  
 
-8. Punktist 6 tuleneb Bayesi teoreem: $P(A~\vert~B) = P(A)P(B~\vert~A)/P(B)$, kus $P(B) = P(A)P(B~\vert~A) + P(\lnot A)P(B~\vert~\lnot A)$  
+8. Bayesi teoreem: $P(A~\vert~B) = P(A)P(B~\vert~A)/P(B)$ -- tuletatud 6. punktist --, kus $P(B) = P(A)P(B~\vert~A) + P(\lnot A)P(B~\vert~\lnot A)$ -- 7. punktist.     
 
-Bayesi teoreemi kasutatakse sageli määramaks hüpoteesi tõenäosuse pärast uute faktide (andmete) lisandumist olemasolevatele teadmistele. 
+Bayesi teoreemi kasutatakse määramaks hüpoteesi tõenäosuse pärast uute faktide (andmete) lisandumist olemasolevatele teadmistele. Selleks peab hüpoteesiruum olema jagatud vähemalt kaheks ammendavaks ja üksteist välistavaks hüpoteesiks. 
 Kui A on H~1~ ning mitte-A on ammendav ja välistav H~2~ ja B tähistab andmeid (data), saame Bayesi teoreemi ümber kirjutada 
 
-$P(H_1~\vert~data) =  P(H_1)P(data~\vert~H_1) /( P(H_1)P(data~\vert~H_1) + P(H_2)P(data \vert H_2) )$
+$P(H_1~\vert~data) =  P(H_1)P(data~\vert~H_1) /( P(H_1)P(data~\vert~H_1) + P(H_2)P(data~ \vert ~H_2) )$
 
 $P(H_1~\vert~data)$ on $H_1$ kehtimise tõenäosus meie andmete korral -- ehk posteerior, 
 
@@ -87,25 +87,25 @@ $P(H_1)$ on $H_1$ kehtimise eelnev, ehk meie andmetest sõltumatu, tõenäosus -
 
 $P(data~\vert~H_1)$ on andmete esinemise tõenäosus tingimusel, et H~1~ kehtib -- ehk tõepära.
 
-Jagamistehe tehakse ainult selle pärast, et normaliseerida 1-le kõikide hüpoteeside tõenäosuste summa meie andmete korral ja seega viia posteerior vastavusse tõenäosusteooria aksioomidega --- kui meil on i ammendavat üksteist välistavat hüpoteesi, siis murrujoone alla läheb: $\sum~P(data~\vert~H_i)P(H_i) = 1$. 
-Bayesi teoreem on triviaalne tuletus tõenäosusteooria aksioomidest, milles pole mitte midagi maagilist. See ei ole automaatne meetod, mis tagaks inimkonna teadmiste kasvu, vaid lihtsalt parim võimalik viis andmemudeli ja taustateadmiste mudeli ühendamiseks ja normaliseerimiseks tinglikuks tõenäosuseks (hüpoteesi tõenäosus meie andmete ja taustateadmiste korral). Nüüd sõltub kõik mudelite, andmete ja taustateadmiste kvaliteedist.
+Jagamistehe tehakse ainult selle pärast, et normaliseerida 1-le kõikide hüpoteeside tõenäosuste summa meie andmete korral ja seega viia posteerior vastavusse tõenäosusteooria aksioomidega --- kui meil on i ammendavat üksteist välistavat hüpoteesi, siis murrujoone alla läheb $\sum~P(data~\vert~H_i)P(H_i) = 1$. 
+Bayesi teoreem on triviaalne tuletus tõenäosusteooria aksioomidest, milles pole midagi maagilist. See ei ole automaatne meetod, mis tagaks inimkonna teadmiste kasvu, vaid lihtsalt parim võimalik viis andmemudeli ja taustateadmiste mudeli ühendamiseks ja normaliseerimiseks tinglikuks tõenäosuseks (hüpoteesi tõenäosus meie andmete ja taustateadmiste korral). Edasi sõltub kõik mudelite, andmete ja taustateadmiste kvaliteedist.
 
 ### Näited tõenäosusteooria tuletiste rakendamisest {-}
 
 **Punkt 6.** Meil on kolm pannkooki, millest esimesel on mõlemad küljed moosised, teisel on üks külg moosine ja kolmandal pole üldse moosi. Kui meile lüüakse taldrikule pannkook, mille pealmine külg on moosine, siis millise tõenäosusega on moosine ka alumine külg? NB! Vastus ei ole 50%. Lahendus: Kui A - moos all, B - moos üleval, siis vastavalt tingliku tõenäosuse definitsioonile $P(moos~ all~ \lvert ~moos~üleval ) = P(moos~all \land ~moos~üleval)/P(moos~all)$ Tõenäosus, et moos on all ja üleval on 1/3 (me teame, et 1 pannkook 3st on mõlemalt küljelt moosine) ja tõenäosus, et moos on all, on keskmine kolmest tõenäosusest, millega me kolmel pannkoogil moosise külje saame: mean(c(1, 0.5, 0)) = 1/2. Seega, vastus on (1/3)/(1/2) = 2/3. Kui me saame moosise ülemise külje, siis on tõenäosus 2/3, et ka all on moos!
 
-**Punkt 7.** Kui A tähistab sündmust "ma sain aru tõenäosusteooriast" ja B tähistab sündmust "ma tuubin nagu loom" ning meil on dihhotoomne valik: tuubid / ei tuubi, siis $P(A) = P(tuubid)P(A~ \lvert ~tuubid) + P(ei~ tuubi)P(A~ \lvert ~ei ~ tuubi)$. Siit saad välja arvutada tõenäosuse, millega just sina saad kasu sellest õpikust. 
+**Punkt 7.** Kui A tähistab sündmust "ma saan aru tõenäosusteooriast" ja B tähistab sündmust "ma tuubin nagu loom", ning meil on dihhotoomne valik: tuubid / ei tuubi, siis $P(A) = P(tuubid)P(A~ \lvert ~tuubid) + P(ei~ tuubi)P(A~ \lvert ~ei ~ tuubi)$. Siit saad välja arvutada tõenäosuse, millega just sina saad kasu sellest õpikust. P(tuubid) on tõenäosus, millega sa leiad end tuupimas. 
 
 **Punkt8.** Bayesi teoreemi rakendamine diskreetsetele hüpoteesidele:
-Oletame, et 45 aastane naine saab rinnavähi sõeluuringus mammograafias positiivse tulemuse. Millise tõenäosusega on tal rinnavähk? Kõigepealt jagame hüpoteesiruumi kahe diskreetse hüpoteesi vahel: H~1~ - vähk ja H~2~ - mitte vähk. Edasi on meil vaja omistada numbrilised väärtused järgmistele parameetritele: 
+Oletame, et 45 aastane naine saab rinnavähi sõeluuringus mammograafias positiivse tulemuse. Millise tõenäosusega on tal rinnavähk? Kõigepealt jagame hüpoteesiruumi kahe diskreetse hüpoteesi vahel: H~1~ - vähk ja H~2~ - mitte vähk. Edasi omistame numbrilised väärtused järgmistele parameetritele: 
 
-1. H~1~ tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil on rinnavähk $P( +~\vert~H_1) = 0.9$
+1. H~1~ tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil on rinnavähk (testi sensitiivsus): $P( +~\vert~H_1) = 0.9$
 
-2. H~2~ tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil ei ole rinnavähki $P( +~\vert~H_2) = 0.08$ (pane tähele, et 0.9 + 0.08 ei võrdu ühega, mis tähendab, et tõepära pole tõenäosusteooria mõttes päris tõenäosus).
+2. H~2~ tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil ei ole rinnavähki (1 - testi spetsiifilisus): $P( +~\vert~H_2) = 0.08$. Pane tähele, et 0.9 + 0.08 ei võrdu ühega, mis tähendab, et tõepära pole tõenäosusteooria mõttes päris tõenäosus.
 
 3. Eelnev tõenäosus, et patsiendil on rinnavähk $P(H_1) = 0.01$ (see on rinnavähi sagedus 45 a naiste populatsioonis; kui me teame patsiendi genoomi järjestust või rinnavähijuhte tema lähisugulastel, võib P(H~1) tulla väga erinev).
 
-4. $P(H_2) = 1 - P(H_2) = 0.99$
+4. $P(H_2) = 1 - P(H_1) = 0.99$
 
 Nüüd arvutame posterioorse tõenäosuse $P(H_1~\vert~+)$
 
@@ -153,7 +153,7 @@ Kui me mõõdame pidevat suurust, näiteks inimeste pikkusi, siis saame arvutuse
 
  1. statistilise analüüsi kvaliteet sõltub mudeli eeldustest & struktuurist. Kuna maailm ei koosne matemaatikast, teevad matemaatilised mudelid alati eeldusi maailma kohta, mis ei ole päris tõesed ja mida ei saa tingimata empiiriliselt kontrollida. Mündiviske näites eeldasime, et mündivisked olid üksteisest sõltumatud. Kui me sellest eeldusest loobume, läheb meie mudel keerulisemaks, sest me peame mudelisse lisama teavet visetevahelise korrelatsiooni kohta. Aga see keerulisem mudel toob sisse uued eeldused (vähemalt pool tosinat lisaeeldust). Üldiselt peaks mudeli struktuur kajastama katse struktuuri, mis kaasaegses statistikas tähendab sageli hierarhilisi mudeleid.
  
- 2. statistilise analüüsi kvaliteet sõltub andmete hulgast. Kui kahe mündiviske asemel teeksime kakskümmend, siis saaksime samade eelduste põhjal teha oluliselt täpsemaid järeldusi mündi aususe kohta. 
+ 2. statistilise analüüsi täpsus sõltub andmete hulgast. Kui kahe mündiviske asemel teeksime kakskümmend, siis saaksime samade eelduste põhjal teha oluliselt väiksema ebakindluse määraga järeldusi mündi aususe kohta. 
 
  3. statistilise analüüsi kvaliteet sõltub andmete  kvaliteedist. Kui münt on aus, aga me viskame seda ebaausalt, siis, mida rohkem arv kordi me seda teeme, seda tugevamalt usub teadusüldsus selle tagajärjel millessegi, mis pole tõsi.
 
@@ -163,7 +163,7 @@ Kui me mõõdame pidevat suurust, näiteks inimeste pikkusi, siis saame arvutuse
 
 ## Andmed ei ole sama, mis tegelikkus {-}
 
-Nüüd, kus me saame aru tõenäosusteooriast, on aeg asuda statistika kallale. Me oleme sunnitud kasutama statistikat, sest me usume, et kuigi meie andmed on sarnased tegelikkusega, ei ole need sellega identsed. 
+Nüüd, kus me saame aru tõenäosusteooriast, on aeg asuda statistika kallale. Me ei kasuta statistikat kunagi vabatahtlikult, vaid teeme seda ainult siis, kui usume kahte asja: ühest küljest, et meie andmed on piisavalt tõetruud, et nende põhjal saaks teha adekvaatseid oletusi päris maailma kohta. Ja teisest küljest, et meie andmed ei ole piisavalt sarnased tõetruud, et neid järeldusi saaks teha lihtsalt ja intuitiivselt. 
 Seega tasub alustada näitega sellest, kuidas andmed ja tegelikkus erinevad. Meie tööriistaks on siin simulatsioon.
 Simuleerimine on lahe sest simulatsioonid elavad mudeli väikeses maailmas, kus me teame 
 täpselt, mida me teeme ja mida on selle tagajärjel oodata. Simulatsioonidega saame me 
@@ -171,7 +171,7 @@ hõlpsalt kontrollida, kas ja kuidas meie mudelid töötavad ning genereerida ol
 (parameetrite väärtuste kombinatsioone), mida suures maailmas kunagi ette ei tule. 
 Selles mõttes on mudelid korraga nii väiksemad kui suuremad kui päris maailm. 
 
-Alustuseks simuleerime juhuvalimi n=3 lõpmata suurest normaaljaotusega populatsioonist, mille keskmine on 100 ja sd on 20. Populatsioon (mis on statistiline mõiste) seisab siin tegelikkuse aseainena ja juhuvalim on meie andmete simulatsioon. Päris elus on korraliku juhuvalimi tõmbamine tehniliselt raske ettevõtmine ja, mis veelgi olulisem, me ei tea kunagi, milline on populatsiooni tõeline jaotus, keskmine ja sd. Elagu simulatsioon!
+Alustuseks simuleerime juhuvalimi n = 3 lõpmata suurest normaaljaotusega populatsioonist, mille keskmine on 100 ja sd on 20. Populatsioon (mis on statistiline mõiste) seisab siin tegelikkuse aseainena ja juhuvalim on meie andmete simulatsioon. Päris elus on korraliku juhuvalimi tõmbamine tehniliselt raske ettevõtmine ja, mis veelgi olulisem, me ei tea kunagi, milline on populatsiooni tõeline jaotus, keskmine ja sd. Elagu simulatsioon!
 
 
 ```r
@@ -216,7 +216,7 @@ mean(Summary$SD)
 #> [1] 17.8
 ```
 
-Oh-hooo. Paljude valimite keskmiste keskmine ennustab väga täpselt populatsiooni keskmist aga sd-de keskmise keskmine alahindab populatsiooni sd-d. Valem, millega sd-d arvutatakse tõõtab lihtsalt kallutatult, kui n on väike (<10). Kui ei usu, korda eelnevat simulatsiooni valimiga, mille N=30.
+Oh-hooo. Paljude valimite keskmiste keskmine ennustab väga täpselt populatsiooni keskmist aga sd-de keskmise keskmine alahindab populatsiooni sd-d. Valem, millega sd-d arvutatakse, tõõtab lihtsalt kallutatult, kui n on väike (<10). Kes ei usu, kordab simulatsiooni valimiga, mille N=30.
 
 Ja nüüd 10 000 SD keskväärtused:
 
