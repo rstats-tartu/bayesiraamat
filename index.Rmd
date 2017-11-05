@@ -1,36 +1,17 @@
 --- 
+knit: "bookdown::render_book"
 title: "Bayesi statistika kasutades R keelt"
-author: "Taavi Päll, Ülo Maiväli"
-date: "`r Sys.Date()`"
-site: bookdown::bookdown_site
-output: bookdown::gitbook
-documentclass: book
-bibliography: [book.bib]
+author: ["Taavi Päll", "Ülo Maiväli"]
+github-repo: rstats-tartu/bayesiraamat
+description: "Praktilise kursuse 'Reprodutseeritav andmeanalüüs R keeles' Bayesi statistika materjalid."
+bibliography: [book.bib, packages.bib]
 biblio-style: apalike
-link-citations: yes
-colorlinks: yes
-github-repo: rstats-tartu/lectures
-description: "Praktilise kursuse 'Reprodutseeritav andmeanalüüs R keeles' materjalid."
+site: bookdown::bookdown_site
+documentclass: book
 cover-image: img/cyclo.png
 ---
 
-
-```{r setup, include=FALSE}
-# knitr::write_bib(c(.packages(), 'bookdown', 'knitr', 'rmarkdown'), 'packages.bib')
-knitr::opts_chunk$set(dev = 'pdf', fig.align = 'center')
-options(htmltools.dir.version = FALSE, 
-        formatR.indent = 2, 
-        width = 55, 
-        digits = 4, 
-        warnPartialMatchAttr = FALSE, 
-        warnPartialMatchDollar = FALSE)
-```
-
 # Saateks {-}
-
-```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html')}
-knitr::include_graphics('img/cyclo.png', dpi = NA)
-```
 
 See õpik soovib anda praktilisi andmeanalüüsi oskusi töötamiseks reaalsete andmetega. See puudutab laias laastus kolme teemat: 
 
@@ -45,14 +26,21 @@ Kuna me püüame anda eeskätt praktilisi oskusi andmeanalüüsiks, mitte matema
 Pingutus R õppimiseks tasub teile mitmel erineval viisil. R võimaldab palju kiiremini andmetabeleid analüüsiks sobivasse vormi  ajada kui spreadsheet programmid. R-i graafikasüsteem, eriti ggplot2, on võimas ning paindlik tööriist väga erinevate graafikute koostamiseks. R-s jooksevad praktiliselt kõik statistilised testid, mida inimmõistus on loonud -- R on levinuim statistikaprogramm maailmas, mis on eriti hästi sobiv statistiliseks modelleerimiseks. See tähendab ka, et üle maailma on suur seltskond inimesi, kes R-i arendab ja on nõus vastama ka teie küsimustele. Lisaboonusena on juba kord salvestatud R-i koodi taaskasutades palju lihtsam oma analüüsi korrata ja vastavalt vajadustele muuta, kui spreadsheet programmide puhul.    
 
 Õpiku kasutamise eeldused:
-Arvuti.
-Matemaatikaoskused, mis hõlmavad liitmist, lahutamist, korrutamist, jagamist, logaritmimist ja astendamist. Kõrgemat matemaatikat me ei vaja. 
+- Arvuti.
+- Matemaatikaoskused, mis hõlmavad liitmist, lahutamist, korrutamist, jagamist, logaritmimist ja astendamist. 
+- Kõrgemat matemaatikat me ei vaja. 
 
 Õpiku struktuur:
 
 
 xxx
 
+```{r echo=FALSE, include=identical(knitr:::pandoc_to(), 'html'), out.width='50%'}
+knitr::include_graphics('img/cyclo.png', dpi = NA)
+```
 
 
+```{r, include=FALSE}
+knitr::write_bib(c(.packages(), 'bookdown', 'knitr', 'rmarkdown', 'tidyverse', 'broom', 'modelr', 'viridis', 'scatterplot3d', 'rstan', 'rethinking', 'brms', 'car', 'corrgram', 'boot', 'bayesboot', 'gapminder', 'devtools', 'ggthemes', 'grid', 'gridExtra'), 'packages.bib')
+```
 

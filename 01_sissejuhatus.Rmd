@@ -1,5 +1,5 @@
 
-# (PART) Teooria {-}
+# (PART) OSA {-}
 
 # Sissejuhatus: maailm, teooria ja mudel
 
@@ -9,16 +9,16 @@ Kuna maailmas on kõik kõigega seotud, on seda raske otse uurida.
 Teadus töötab tänu sellele, et teadlased lõikavad reaalsuse väikesteks tükkideks, kasutades tordilabidana teaduslike hüpoteese, ning uurivad seda tükikaupa lootuses, et kui kõik tükid on korralikult läbi nätsutatud, saab sellest taas tordi kokku panna. Tüüpiline bioloogiline hüpotees pakub välja tavakeelse (mitte matemaatilise) seletuse mõnele piiritletud loodusnähtusele. 
   
 Näiteks antibiootikume uuritakse keemilise sideme tasemel kasutades orgaanilise keemia meetodeid. Antibiootikumide molekulaarseid märklaudu uuritakse molekulaarbioloogiliste meetoditega, nende toimet uuritakse rakubioloogia ja füsioloogia meetoditega, aga kaasajal on väga olulised ka ökoloogilised, evolutsioonilised, meditsiinilised, põllumajanduslikud, majanduslikud ja psühholoogilised aspektid. Kõigil neil tasanditel on loodud palju hüpoteese, millest kokku moodustub meie teadmine antibiootikumide kohta. Neid väga erinevaid asju, mida me kutsume hüpoteesideks, ühendab see, et neist igaüht võib võrrelda empiiriliste andmetega. Samuti, enamust neist saab omakorda jagada osadeks, mida saab omakorda osaliselt kirjeldada matemaatiliste formalismide ehk mudelite abil. Ja neid mudeleid saab võrrelda andmetega. Kuigi erinevate tasemete hüpoteesid on tavakeeles üksteisest väga erinevad, on neid kirjeldavad mudelid sageli matemaatiliselt sarnased.
-  
+
+ 
 > Kui mudel on teooria lihtsustus, siis teooria on maailma lihtsustus.
-  
+
 Mudeliteks nimetatakse bioloogias väga erinevaid asju: skeeme, diagramme, füüsikalisi mudeleid (näit Watsoni ja Cricki poolt kasutatud nukleotiidimudelid), mudelorganisme, katsesüsteeme, matemaatilisi mudeleid jms. Üldiselt, mudelid asendavad selle, mida uuritakse millegagi, mida on lihtsam kui päris maailma mõista, manipuleerida või uurida. Meie räägime edaspidi ainult matemaatilisest mudelist ja eriti selle erijuhust, statistilisest e stohhastilisest mudelist. 
   
 Mis juhtub, kui teie hüpotees on andmetega kooskõlas? Kas see tähendab, et see hüpotees vastab tõele? Või, et see on tõenäoliselt tõene? Kahjuks on vastus mõlemale küsimusele eitav. Põhjuseks on asjaolu, et enamasti leiab iga nähtuse seletamiseks rohkem kui ühe alternatiivse teadusliku hüpoteesi ning rohkem kui üks üksteist välistav hüpotees võib olla olemasolevate andmetega võrdses kooskõlas. Asja teeb veelgi hullemaks, et teoreetiliselt on võimalik sõnastada lõpmata palju erinevaid teooriaid, mis kõik pakuvad alternatiivseid ja üksteist välistavaid seletusi samale nähtusele. Kuna hüpoteese on lõpmatu hulk, aga andmeid on alalti lõplik hulk, siis saab igas teaduslikus faktis kahelda.  
 Kunagi ei või kindel olla, et parimad teooriad ei ole täiesti tähelepanuta jäänud ning, et meie poolt kogutud vähesed andmed kajastavad hästi kõiki võimalikke andmeid.
 
 > Ca. 1910 mõtlesid Bertrand Russell ja G.E. Moore välja tõe vastavusteooria, mille kohaselt tõest lausungit eristab väärast vastavus füüsikalisele maailmale. Seega on tõesed ainult need laused, mis vastavad asjadele. Ehkki keegi ei oska siiani öelda, mida vastavus selles kontekstis tähendab või kuidas seda saavutada, on vastavusteooria senini kõige populaarsem tõeteooria filosoofide hulgas (mis on kõnekas alternatiivide kohta). Samamoodi, kui lausete vastavusest maailmaga, võime rääkida ka võrrandite (ehk mudelite) vastavusest lausetega. Vastavusest lausetaga sellepärast, et mudelid on loodud kirjeldama teaduslikke teooriaid, mitte otse maailma. Seega ei pea me muretsema mudelite tõeväärtuse pärast. Võib isegi väita, et mudeli tõeväärtusest rääkimine on kohatu.
-
 
 (@politoloogia) Näide: politoloogia
 Meil on hüpotees (H1), mille kohaselt demokraatlikus süsteemis käituvad valijad ratsionaalselt ehk lähtuvalt endi huvidest [@achen2016democracy]. 
@@ -88,7 +88,7 @@ Seega on kogu liikumine eetri sfäärides ühtlane ja ringikujuline ja see liiku
 Kaasa arvatud sündimine, elukäik ja surm. 
 Kõik, mis maapeal huvitavat, ehk kogu liikumine, on algselt põhjustatud esimese liikumise poolt, mille käivitab kõige välimises sfääris paiknev meie jaoks mõistetamatu intellektiga "olend".  
 
-```{r, fig.cap="Keskaegne aristotellik maailm.", out.width='\\linewidth', fig.align='center', echo=FALSE, fig.height=4, fig.width=4}
+```{r, fig.cap="Keskaegne aristotellik maailm.", out.width='50%', echo=FALSE}
 knitr::include_graphics("img/arist.jpg")
 ```
 
@@ -101,7 +101,7 @@ Aristotelese suur teooria ühendab kogu maailmapildi alates meie mõistes keemia
 
 Ptolemaiosel ja tema järgijatel oli tegelikult mitu erinevat mudelit. Osad neist ei sisaldanud epitsükleid ja maakera ei asunud tema mudelites universumi keskel, vaid oli sellest punktist eemale nihutatud --- nii et päike ei teinud ringe ümber maakera vaid ümber tühja punkti. Kuna leidus epitsüklitega mudel ja ilma epitsükliteta mudel, mis andsid identseid ennustusi, on selge, et Aristotelese teooria ja fenomenide päästmise mudelid on põhimõtteliselt erinevad asjad. Samal ajal, kui Aritoteles **seletas** maailma põhiolemust põhjuslike seoste jadana (mitte matemaatiliselt), **kirjeldas/ennustas** Ptolemaios sellesama maailma käitumist matemaatiliste (mitte põhjuslike) struktuuride abil.
 
-```{r, fig.cap="Ilma epitsükliteta ptolemailine mudel.", fig.align='center',out.width='\\linewidth', echo=FALSE, fig.height=4, fig.width=4}
+```{r, fig.cap="Ilma epitsükliteta ptolemailine mudel.",out.width='50%', echo=FALSE}
 knitr::include_graphics("img/pt2.jpg")
 ```
 
@@ -109,7 +109,7 @@ Nii tekkis olukord, kus maailma mõistmiseks kasutati Aristotelese ühendteooria
 
 See toob meid Kopernikuse (1473 – 1543) juurde, kes teadusajaloolaste arvates vallandas 17. sajandi teadusliku revolutsiooni, avaldades raamatu, kus ta asetab päikese universumi keskele ja paneb maa selle ümber ringtrajektooril tiirlema. Kas Kopernikus tõrjus sellega kõrvale Aristotelese, Ptolemaiose või mõlemad? Tubdub, et Kopernikus soovis kolmandat, suutis esimest, ning et tolleaegsete lugejate arvates üritas ta teha teist --- ehk välja pakkuda alternatiivi ptolemailistele mudelitele, mis selleks ajaks olid muutunud väga keerukaks (aga ka samavõrra ennustustäpseks). Kuna Kopernikuse raamat läks trükki ajal, mil selle autor oli juba oma surivoodil, kirjutas sellele eessõna üks tema vaimulikust sõber, kes püüdis oodatavat kiriklikku pahameelt leevendada vihjates, et päikese keskele viimine on vaid mudeldamise trikk, millest ei tasu järeldada, et maakera ka tegelikult ümber päikese tiirleb (piibel räägib, kuidas jumal peatas taevavõlvil päikese, mitte maa). Ja kuna eessõna oli anonüümne, eeldasid lugejad muidugi, et selle kirjutas autor. Lisaks, kuigi Kopernikus tõstis päikese keskele, jäi ta planeetide ringikujuliste trajektooride juurde, mis tähendas, et selleks, et tema teooria fenomenide päästmisel hätta ei jääks, oli ta sunnitud maad ja planeete liigutama ümber päikese mõõda epitsükleid. Kokkuvõttes oli Kopernikuse mudel umbes sama keeruline kui Ptolemailikud mudelid ja selle abil tehtud ennustused planeetide liikumise kohta olid väiksema täpsusega. Seega, ennustava mudelina ei olnud sel suuri eeliseid.
 
-```{r, fig.cap="Ptolemaiose ja Kopernikuse mudelid on üllatavalt sarnased.", fig.align='center',out.width='\\linewidth', echo=FALSE, fig.height=4, fig.width=5}
+```{r, fig.cap="Ptolemaiose ja Kopernikuse mudelid on üllatavalt sarnased.", out.width='50%', echo=FALSE}
 knitr::include_graphics("img/kop.jpg")
 ```
 

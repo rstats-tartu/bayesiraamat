@@ -1,17 +1,16 @@
 
-# Ennustame pidevat suurust {-}
+# Ennustame pidevat suurust
 
-Selles peatükis saab "rethinking" library hullult kuuma.
+## Lihtne normaaljaotuse mudel {-}
+
+Kui me eelmises peatükis modelleerisime diskreetseid binaarseid sündmusi (elus või surnud) üle binoomjaotuse, siis edasi tegeleme pidevate suurustega ehk parameetritega, millele saab omistada iga väärtuse vahemikus -Inf kuni Inf. 
+
 ```{r}
 library(rethinking)
 library(tidyverse)
 library(gridExtra)
 ```
 
-
-## Lihtne normaaljaotuse mudel {-}
-
-Kui me eelmises peatükis modelleerisime diskreetseid binaarseid sündmusi (elus või surnud) üle binoomjaotuse, siis edasi tegeleme pidevate suurustega ehk parameetritega, millele saab omistada iga väärtuse vahemikus -Inf kuni Inf. 
 
 Proovime veelkord USA presidentide keskmist pikkust ennustada (sama näide oli bootstrappimisel). 
 Selleks on meil on vaja kahte asja: (1) tõepära mudelit ning (2) igale tõepära mudeli parameetrile oma priorit.
@@ -37,20 +36,17 @@ y <- dcauchy(x, 0, 20)
 plot(y ~ x, type = "l" , main = "Cauchy prior for sd")
 ```
 
-```{r fig.cap="Normaaljaptuse prior"}
+```{r fig.cap="Kaks normaaljaotuse prior", out.width='48%'}
 x <- 150:200
 y <- dnorm(x, 0, 200)
-plot(y ~ x, type = "l", main = "Normal prior for mu")
-```
-
-
-```{r fig.cap="veel üks Normaaljaptuse prior."}
+plot(y ~ x, type = "l", main = "Normal prior for mean = 0 and sd = 200")
 x <- 150:200
 y <- dnorm(x, 178, 10)
-plot(y ~ x, type = "l", main = "Another normal prior for mu")
+plot(y ~ x, type = "l", main = "Normal prior for mean = 178 and sd = 10")
 ```
 
-Siin on valida kahe priori vahel mu-le. Võib-olla eelistaksid sina mõnda kolmandat? 
+Siin on valida kahe priori vahel mu-le. 
+Võib-olla eelistaksid sina mõnda kolmandat? 
 Kui jah, siis pole muud kui tee valmis ja kasuta!
 
 Sama hästi võiksime tõepära modelleerida ka mõne muu jaotusega (Studenti t jaotus, eksponentsiaalne jaotus, lognormaaljaotus jne). 
@@ -60,12 +56,12 @@ Bayes on modulaarne --- kui sa põhimõtet tead, pole tehniliselt suurt vahet, m
 Näiteks:
 ```
 heights ~ student_t(nu, mu, sigma) # t likelihood
-nu ~ dunif( 1, 100) # uniform prior for the shape parameter
+nu ~ dunif(1, 100) # uniform prior for the shape parameter
 mu ~ dnorm(mean = 0, sd = 200) # normal prior for mean
 sigma ~ dcauchy(0, 20) # half-cauchy prior for sd
 ```
 
-Normaaljaotusel on 2 parameetrit, millele posteerior arvutada: mu (mean) ja sigma (sd). 
+Normaaljaotusel on kaks parameetrit, millele posteerior arvutada: mu (mean) ja sigma (sd). 
 Seega on vaja ka kahte priorit, üks mu-le ja teine sigma-le.
 Studenti t jaotuse korral lisandub veel üks parameeter: nu ehk jaotuse kuju määrav parameeter. 
 nu-d saab tuunida 1 ja lõpmatuse vahel. 
@@ -460,11 +456,11 @@ dens(samplespm2$ES)
 
 ```{r}
 median(samplespm2$ES)
-HPDI(samplespm2$ES, prob = 0.9)
+rethinking::HPDI(samplespm2$ES, prob = 0.9)
 mean(samplespm2$ES < 0)
 ```
 
-Võrdse SD-ga mudeli järgi on USA presidendid keskeltläbi `r round(median(samplespm2$ES), 1)` cm pikemad, ebakindlus selle hinnangu ümber on suur -- 90% HDI on `r paste(round(HPDI(samplespm2$ES, prob = 0.9), 1), collapse = " kuni ")` ja tõenäosus et pikkuste erinevus on väiksem kui 0 on `r round(mean(samplespm2$ES < 0), 2)`.
+Võrdse SD-ga mudeli järgi on USA presidendid keskeltläbi `r round(median(samplespm2$ES), 1)` cm pikemad, ebakindlus selle hinnangu ümber on suur -- 90% HDI on `r paste(round(rethinking::HPDI(samplespm2$ES, prob = 0.9), 1), collapse = " kuni ")` ja tõenäosus et pikkuste erinevus on väiksem kui 0 on `r round(mean(samplespm2$ES < 0), 2)`.
 
 ```{r}
 samplesm2.1 <- extract.samples(potusm2.1) %>% 
@@ -475,7 +471,7 @@ HPDI(samplesm2.1$ES, prob = 0.9)
 mean(samplesm2.1$ES < 0)
 ```
 
-Erineva SD-ga mudeli järgi on riigijuhtide pikkuste vahe `r round(median(samplesm2.1$ES), 1)` cm, ebakindlus väiksem -- 90% HDI on `r paste(round(HPDI(samplesm2.1$ES, prob = 0.9), 1), collapse = " kuni ")` ja tõenäosus et pikkuste erinevus on väiksem kui 0 on `r round(mean(samplesm2.1$ES < 0), 2)`.
+Erineva SD-ga mudeli järgi on riigijuhtide pikkuste vahe `r round(median(samplesm2.1$ES), 1)` cm, ebakindlus väiksem -- 90% HDI on `r paste(round(rethinking::HPDI(samplesm2.1$ES, prob = 0.9), 1), collapse = " kuni ")` ja tõenäosus et pikkuste erinevus on väiksem kui 0 on `r round(mean(samplesm2.1$ES < 0), 2)`.
 
 See ei tähenda tingimata, et me peaksime eelistama teist mudelit. Oluline on, mida me teoreetiliselt usume, kas seda, et tegelik presidentide varieeruvus on USAs ja Euroopas võrdne, või mitte.
 
@@ -1139,7 +1135,7 @@ Siin on ennustus ja seda ümbritsev ebakindlus iga riigi keskmisele elueale.
 
 Järgnev plot annab ennustusvea igale riigile. Siin tähistab 89% CI näiteks Vietnamile eluigade vahemikku, millese jääb mudeli ennustuse kohaselt 89% kõikvõimalike fiktsionaalsete riikide keskmistest eluigadest, mille SKP ja rahvaarv võrdub Vietnami omaga. Kuna me tsentreerime CI Vietnami tegeliku keskmise eluea residuaalile (erinevusele mudeli ennustusest), näitab see, kui palju erineb Vietnami eluiga mudeli ennustusest riikidele, nagu Vietnam. See plot annab meile riigid, mille suhtes mudel jänni jääb. Enamasti leiame need riigid Aafrikast.
  
-```{r, fig.cap="Ennustused riigi kaupa."}
+```{r, fig.height=9,fig.cap="Ennustused riigi kaupa."}
 # compute residuals
 life.resid <- g2007$lifeExp - mu.mean
 
@@ -1357,5 +1353,5 @@ Interaktsiooni koefitsiendi määramine võib suurendada ebakindlust teiste para
 
 Isegi kui interaktsiooniparameetri posteerior hõlmab 0-i, tuleb interaktsiooni parameetrit mudelisse pannes arvestada, et individuaalsete prediktorite mõju ei saa summeerida pelgalt läbi nende koefitsientide. Selle asemel tuleb vaadata sirge tõusu erinevatel teiste prediktorite väärtustel (nagu eelneval joonisel)
 
-Kui tavaline interaktsioonimudel on $y = a + b1x1 + b2x2 + b3x1x2$, siis mis juhtub, kui meie mudel on $y = b1x1 + b3x1x2$? See tähendab, et me surume b2 väärtuse nulli, mis võib ära rikkuda mudeli teiste parameetrite posteeriorid! Kui teil on alust arvata, et b2-l puudub otsene mõju y väärtusele (kuid tal on mõju b1 väärtusele), siis võib muidugi ka sellist mudelit kasutada. Aga see on haruldane juhtum.
+Kui tavaline interaktsioonimudel on $y = a + b_1x_1 + b_2x_2 + b_3x_1x_2$, siis mis juhtub, kui meie mudel on $y = b_1x_1 + b_3x_1x_2$? See tähendab, et me surume b2 väärtuse nulli, mis võib ära rikkuda mudeli teiste parameetrite posteeriorid! Kui teil on alust arvata, et b2-l puudub otsene mõju y väärtusele (kuid tal on mõju b1 väärtusele), siis võib muidugi ka sellist mudelit kasutada. Aga see on haruldane juhtum.
 

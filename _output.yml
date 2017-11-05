@@ -1,4 +1,5 @@
 bookdown::gitbook:
+  highlight: tango
   includes:
     in_header: ["fa.html"]
   css: style.css
@@ -7,14 +8,10 @@ bookdown::gitbook:
       collapse: section
       before: |
         <li><a href="./">Bayesi statistika kasutades R keelt</a></li>
-    edit:
-      link: https://github.com/rstats-tartu/lectures/edit/master/%s
-      text: "Editeeri"
-    download: ["pdf", "epub"]
+    download: ["pdf"]
 bookdown::pdf_book:
   includes:
     in_header: ["preamble.tex"]
-  latex_engine: pdflatex
+  latex_engine: xelatex
   citation_package: natbib
   keep_tex: no
-bookdown::epub_book: default

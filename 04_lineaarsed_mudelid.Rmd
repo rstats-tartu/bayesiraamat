@@ -1,9 +1,7 @@
 
 # Lineaarsed mudelid
 
-
-```{r, echo=FALSE, message=FALSE, error=FALSE}
-
+```{r}
 library(tidyverse)
 library(broom)
 library(modelr)
@@ -24,7 +22,7 @@ y <- x
 ```
 
 Selle mudeli saame graafiliselt kujutada nii:
-```{r, fig.cap="Lihtne mudel y ~ x, mille intecept = 0 ja tõus = 1."}
+```{r, fig.cap="Lihtne mudel y ~ x, mille lõikepunkt = 0 ja tõus = 1."}
 plot(y ~ x, type = "l", xlab = "Weight in kg", ylab = "Heigth in cm", main = bquote(y == x))
 ```
 
@@ -47,7 +45,7 @@ y <- a + x
 ```
 
 
-```{r, fig.cap=paste0('Lineaarne mudel, mille intecept = ", a ," ja tõus = 1.. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = ', a,".")}
+```{r, fig.cap=paste0('Lineaarne mudel, mille lõikepunkt = ", a ," ja tõus = 1.. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = ', a,".")}
 plot(y ~ x, xlim = c(0, 100), ylim = c(0, 150), type = "l",
      main = bquote(y == a + x))
 abline(c(0, 1), lty = 2)
@@ -70,7 +68,7 @@ y <- b * x
 ```
 
 
-```{r, fig.cap=paste0('Lineaarne mudel, mille intercept = 0 ja tõus = ', b, '. Katkendjoon, tõus = 1. Pidevjoon, tõus = ', b, '.')}
+```{r, fig.cap=paste0('Lineaarne mudel, mille lõikepunkt = 0 ja tõus = ', b, '. Katkendjoon, tõus = 1. Pidevjoon, tõus = ', b, '.')}
 plot(y ~ x, xlim = c(0, 100), ylim = c(0, 100), type = "l", main = bquote(y == b %*% x))
 abline(c(0, 1), lty = 2)
 ```
@@ -133,7 +131,8 @@ augment(m, iris) %>%
   ggplot(aes(Petal.Length, Sepal.Length, color = Species)) +
   geom_point() +
   geom_line(aes(y = .fitted), color = 1) +
-  labs(title = "Sepal.Length ~ Petal.Length")
+  labs(title = "Sepal.Length ~ Petal.Length") +
+  scale_color_viridis(discrete = TRUE)
 ```
 
 Mudeli fittimine tähendab siin lihtsalt, et sirge on 2D ruumi asetatud nii, et see oleks võimalikult lähedal kõikidele punktidele.
@@ -271,7 +270,9 @@ tib %>%
 Vähimruutude meetodil fititud mudeleid saame võrrelda AIC-i näitaja järgi. AIC  - Akaike Informatsiooni Kriteerium - vaatab mudeli sobivust andmetega ja mudeli parameetrite arvu. 
 Väikseim AIC tähitab parimat fitti väikseima parameetrite arvu juures (kompromissi) ja väikseima AIC-ga mudel on eelistatuim mudel. Aga seda ainult võrreldud mudelite hulgas. AIC-i absoluutväärtus ei loe - see on suhteline näitaja.
 ```{r echo=FALSE}
-tib %>% select(model_formula, aic) %>% knitr::kable()
+tib %>% 
+  select(model_formula, aic) %>% 
+  knitr::kable(booktabs = TRUE)
 ```
 
 AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel? Mis siis, kui 3-s andmepunkt on andmesisestaja näpuviga?

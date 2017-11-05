@@ -364,7 +364,7 @@ pred.p.PI <- apply(schools_sim, 2, PI)
 pred.p.PI
 ```
 
-Esimeses koolis jääb keskmine poiste skoor 89% tõenäosusega vahemikku `r str_c(round(pred.p.PI[,1]), collapse = " kuni ")` punkti.
+Esimeses koolis jääb keskmine poiste skoor 89% tõenäosusega vahemikku `r paste0(round(pred.p.PI[,1]), collapse = " kuni ")` punkti.
 
 ```{r}
 compare(schools_m1, schools_m2)

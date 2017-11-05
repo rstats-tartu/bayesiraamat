@@ -25,7 +25,9 @@ Järgnevad nõuanded on rangelt soovituslikud:
 
 (3) Valimi kõige levinumat esindajat iseloomustab mood ehk jaotuse tipp. Seda on aga raskem täpselt määrata ja mitmetipulisel jaotusel on mitu moodi. Töötamisel posterioorsete jaotustega on mood sageli parim lahendus. 
 
-```{r echo=FALSE, fig.cap='Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete "keskväärtusest"? Miks?'}
+(ref:lognorm) Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete "keskväärtusest"? Miks?
+
+```{r echo=FALSE, fig.cap='(ref:lognorm)'}
 andmed <- rlnorm(100)
 mode <-  function(x, adjust = 1) {
   x <- na.omit(x)
@@ -79,23 +81,22 @@ multiplicative_sd <- function(x) {
   upper3 <- mean(x) + sd(x)
   lower4 <- mean(x) - sd(x)*2
   upper4 <- mean(x) + sd(x)*2
-  results <- tibble(SD=c("multiplicative_SD", 
-                         "multiplicative_2_SD", 
-                         "additive_SD", 
-                         "additive_2_SD"), 
-                    MEAN=c(geom_mean, 
-                           geom_mean, 
-                           Mean, 
-                           Mean), 
-                    lower=c(lower1, 
-                            lower2, 
-                            lower3, 
-                            lower4), 
-                    upper=c(upper1, 
-                            upper2, 
-                            upper3, 
-                            upper4) )
-  results
+  tibble(SD = c("multiplicative_SD", 
+                "multiplicative_2_SD", 
+                "additive_SD", 
+                "additive_2_SD"), 
+         MEAN = c(geom_mean, 
+                  geom_mean, 
+                  Mean, 
+                  Mean), 
+         lower = c(lower1, 
+                   lower2, 
+                   lower3, 
+                   lower4), 
+         upper = c(upper1, 
+                   upper2, 
+                   upper3, 
+                   upper4))
 }
 
 multiplicative_sd(andmed) %>% knitr::kable()
@@ -119,14 +120,14 @@ Vahest tekkib teil vajadus empiiriliselt määrata, kas teie andmed on normaalja
 Enne kui seda tegema asute, peaksite mõistma, et see, et teie valim ei ole normaalne, ei tähenda automaatselt, et populatsioon, millest see valim tõmmati, ei oleks normaaljaotusega.
 Igal juhul, valimiandmete normaalsuse määramiseks on kõige mõistlikum kasutada qq-plotti. 
 QQ-plot (kvantiil-kvantiil plot) võrdleb andmete jaotust ideaalse normaaljaotusega andmepunkti haaval. Kui empiiriline jaotus kattub referentsjaotusega, siis on tulemuseks sirgel paiknevad punktid. Järgneval qq plotil on näha, mis juhtub, kui plottida lognormaalseid andmeid normaaljaotuse vastu: 
-```{r message=FALSE, fig.height=4, fig.width=4, fig.cap="QQ-plot lognormaalsetele andmetele."}
+```{r, fig.cap="QQ-plot lognormaalsetele andmetele."}
 library(car)
 qqPlot(andmed)
 ```
 
 Nüüd joonistame qq-ploti logaritmitud andmetele. 
 
-```{r fig.height=4, fig.width=4, fig.cap="QQ-plot normaalsetele andmetele."}
+```{r, fig.cap="QQ-plot normaalsetele andmetele."}
 qqPlot(log2(andmed))
 ```
 
@@ -175,29 +176,50 @@ cor(iris$Sepal.Length, iris$Sepal.Width, use = "complete.obs")
 ```
 
 
-Korrelatsioonikordaja väärtus sõltub mitte ainult andmete koos-varieeruvusest vaid ka andmete ulatusest. Suurema ulatusega andmed X ja/või Y teljel annavad keskeltläbi 0-st kaugemal oleva korrelatsioonikordaja. Selle pärast sobib korrelatsioon halvasti näiteks korduskatsete kooskõla mõõtmiseks. 
+Korrelatsioonikordaja väärtus sõltub mitte ainult andmete koosvarieeruvusest vaid ka andmete ulatusest. 
+Suurema ulatusega andmed X ja/või Y teljel annavad keskeltläbi 0-st kaugemal oleva korrelatsioonikordaja. 
+Selle pärast sobib korrelatsioon halvasti näiteks korduskatsete kooskõla mõõtmiseks. 
 
 Lisaks, korrelatsioonikordaja mõõdab vaid andmete *lineaarset* koos-varieeruvust: kui andmed koos-varieeruvad mitte-lineaarselt, siis võivad ka väga tugevad koos-varieeruvused jääda märkamatuks.
 
-```{r,fig.cap="Anscombe'i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: 4 andmestikku annavad identse nullilähedase korrelatsioonikordaja, ehkki tegelikud seosed andmete vahel on täiesti erinevad.",fig.align='center',out.width='\\linewidth', echo=FALSE}
-knitr::include_graphics("img/Slide1.jpg")
+(ref:anscombe) Anscombe'i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: neli andmestikku annavad identse korrelatsioonikordaja (Pearsons'r), ehkki tegelikud seosed andmete vahel on täiesti erinevad.
+
+```{r anscombe, fig.cap='(ref:anscombe)', echo=FALSE}
+library(stringr)
+anscombe_long <- bind_cols(id = 1:11, anscombe) %>% 
+  gather(key, value, -id) %>% 
+  mutate(axis = str_extract(key, "[xy]"),
+         q = letters[as.numeric(str_extract(key, "[0-9]"))]) %>%
+  select(-key) %>% 
+  spread(axis, value)
+anscombe_r <- anscombe_long %>%
+  group_by(q) %>%
+  summarise(R = round(cor(x, y), 2))
+anscombe_long %>% 
+  ggplot(aes(x, y)) +
+  geom_point() +
+  annotate("text", x = 10, y = 12, label = sprintf("r = %s", anscombe_r$R)) +
+  facet_wrap(~q) +
+  theme(strip.text = element_text(hjust = 0))
 ```
 
 
-Moraal seisneb selles, et enne korrelatsioonikordaja arvutamist tasub alati plottida andmed, et veenduda võimaliku seose lineaarsuses. Lineaarsuse puudumine andmete koosvarieeruvuse mustris tähendab, et korrelatsioonikordaja tuleb kindlasti eksitav.
-Kordamisküsimus: miks on paneelil a) r ligikaudu 0?
+Moraal seisneb selles, et enne korrelatsioonikordaja arvutamist tasub alati plottida andmed, et veenduda võimaliku seose lineaarsuses. 
+Lineaarsuse puudumine andmete koosvarieeruvuse mustris tähendab, et korrelatsioonikordaja tuleb kindlasti eksitav.
 
-Korrelatsioonikordaja mõõdab pelgalt määra, mil üks muutuja muutub siis, kui teine muutuja muutub. Seega ei ole suurt mõtet arvutada korrelatsioonikordajat juhul kui me teame ette seose olemasolust kahe muutuja vahel. Näiteks, kui sama entiteeti mõõdetakse kahel erineval viisil, või kahes korduses, või kui esimene muutuja arvutatakse teise muutuja kaudu.
+Korrelatsioonikordaja mõõdab pelgalt määra, mil üks muutuja muutub siis, kui teine muutuja muutub. 
+Seega ei ole suurt mõtet arvutada korrelatsioonikordajat juhul kui me teame ette seose olemasolust kahe muutuja vahel. 
+Näiteks, kui sama entiteeti mõõdetakse kahel erineval viisil, või kahes korduses, või kui esimene muutuja arvutatakse teise muutuja kaudu.
 
 > Kõik summaarsed statistikud kaotavad enamuse teie andmetes leiduvast infost – see kaotus on õigustatud ainult siis, kui teie poolt valitud statistik iseloomustab hästi andmete sügavamat olemust (näiteks tüüpilist mõõtmistulemust või andmete varieeruvust).
 
 Korrelatsioonimaatriksi saab niimoodi:
-```{r }
+```{r}
 # numeric columns only!
 # the following gives cor matrix with 
 # frequentist correction for mutliple testing:
 # print(psych::corr.test(iris[-5]))
 # only numeric cols allowed! Hence -Species
-knitr::kable(cor(iris[,-5]) )
+knitr::kable(cor(iris[,-5]))
 ```
 
