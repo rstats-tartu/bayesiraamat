@@ -55,7 +55,7 @@ x <- seq(from = 0, to = 3)
 y <- c(1, 3, 3, 1)
 ```
 
-```{r fig.cap="Tõepärafunktsioon.", fig.height=4, fig.width=5}
+```{r fig.cap="Tõepärafunktsioon."}
 plot(x, y, 
      ylab = "Number of possibilities", 
      xlab = "Number of deaths", 
@@ -73,7 +73,7 @@ Me saame sama tulemuse kasutades formaalsel viisil binoomjaotuse mudelit. Ainus 
 y <- dbinom(x, 3, 0.5)
 ```
 
-```{r fig.cap="Tõepärafunktsioon binoomjaotuse mudelist.", fig.height=4, fig.width=5}
+```{r fig.cap="Tõepärafunktsioon binoomjaotuse mudelist."}
 plot(x, y, 
      type = "b",
      xlab = "Number of deaths",
@@ -89,7 +89,7 @@ x <- seq(from = 0, to = 9)
 y <- dbinom(x, 9, 0.67)
 ```
 
-```{r fig.cap="Veel üks tõepärafunktsioon.", fig.height=4, fig.width=5}
+```{r fig.cap="Veel üks tõepärafunktsioon."}
 plot(x, y, 
      type = "b", 
      xlab = "Number of deaths", 
@@ -102,7 +102,7 @@ Lisame sellele tõepärafunktsioonile tasase priori (lihtsuse huvides) ja arvuta
 
 Me defineerime X telje kui rea 10-st arvust (0 kuni 9 surma) ja arvutame tõepära igale neist 10-st arvust. Sellega ammendame me kõik loogiliselt võimalikud parameetri väärtused.
 
-```{r fig.cap="Posteerior.", fig.height=4, fig.width=5}
+```{r fig.cap="Posteerior."}
 # Define grid
 x <- seq(from = 0 , to = 9)
 # Define flat prior
@@ -145,7 +145,7 @@ Seega on meil
     
 > Tehniliselt on sinu andmete tõepärafunktsioon agregeeritud iga üksiku andmepunkti tõepärafunktsioonist. Seega vaatab Bayes igat andmepunkti eraldi (andmete sisestamise järjekord ei loe).
 
-```{r fig.cap="Prior, tõepära ja posteerior."}
+```{r, fig.cap="Prior, tõepära ja posteerior.", out.width='30%'}
 # Define grid (mortality at 20 evenly spaced probabilities from 0 to 1)
 x <- seq(from = 0 , to = 1, length.out = 20)
 
@@ -154,9 +154,6 @@ prior <- rep(1 , 20)
 
 # Compute likelihood at each value in grid
 likelihood <- dbinom(6, size = 9 , prob = x)
-
-def.par <- par(no.readonly = TRUE)
-par(mfrow = c(1, 3))
 
 # Plot prior
 plot(x, prior, type = "b", main = "Prior")
@@ -172,8 +169,7 @@ plot(x, posterior,
      type = "b", 
      xlab = "Mortality" , 
      ylab = "Posterior probability", 
-     main = "Posterior distribution" )
-par(def.par)
+     main = "Posterior distribution")
 ```
 
 Nüüd on meil posterioorne tõenäosusfunktsioon, mis summeerub 1-le ja mis sisaldab kogu meie teadmist suremuse kohta.
@@ -190,7 +186,7 @@ Hea küll, me arvutame jälle suremust.
 Bayes töötab andmepunkti kaupa (see et me talle ennist kõik andmed korraga ette andsime, on puhtalt mugavuse pärast).
 
 
-```{r fig.cap="N=1, esimene patsient suri.", fig.height=4, fig.width=5}
+```{r fig.cap="N=1, esimene patsient suri."}
 # Define grid
 x <- seq(from = 0, to = 1, length.out = 20)
 
@@ -210,7 +206,7 @@ plot(x, posterior,
 Esimene patsient suri - 0 mortaalsus ei ole enam loogiliselt võimalik (välja arvatud siis kui prior selle koha peal = 0) ja mortaalsus 100% on andmetega (tegelikult andmega) parimini kooskõlas. Posteerior on nulli ja 100% vahel sirge sest vähene sissepandud informatsioon lihtsalt ei võimalda enamat.
 
 
-```{r fig.cap="N=2, teine patsient suri.", fig.height=4, fig.width=5}
+```{r fig.cap="N=2, teine patsient suri."}
 # Define prior
 prior <- posterior
 
@@ -228,7 +224,7 @@ Teine patsient suri.
 Nüüd ei ole 0 ja 1 vahel enam sirge posteerior. 
 Posteerior on kaldu 100 protsendi poole, mis on ikka kõige tõenäolisem väärtus.
 
-```{r fig.cap="N=3, kolmas patsient jäi ellu.", fig.height=4, fig.width=5}
+```{r fig.cap="N=3, kolmas patsient jäi ellu."}
 # Define prior
 prior <- posterior1
 
