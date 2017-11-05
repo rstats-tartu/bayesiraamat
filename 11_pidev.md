@@ -1,6 +1,6 @@
 
 
-# Ennustame pidevat suurust {-}
+# Ennustame pidevat suurust
 
 ## Lihtne normaaljaotuse mudel {-}
 
