@@ -1,11 +1,5 @@
 
 
-
-
-# (PART) Praktika {-}
-
-
-=======
 # (PART) OSA {-}
 
 # Bootstrap
