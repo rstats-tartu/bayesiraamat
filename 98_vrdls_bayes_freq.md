@@ -15,15 +15,14 @@ library(brms)
 ## Kaks statistikat: ajaloost ja tõenäosusest {-}
 
 Bayesiaanlik ja sageduslik statistika leiutati üksteise järel Pierre-Simon Laplace poolt, kes arendas välja kõigepealt bayesiaanliku statistika alused ning seejärel sagedusliku statistika omad (ca. 1800 - 1812). 
-Sagedusliku statistika tekkimise ja õitsengu, mis kulmineerus 20. sajandil, põhjusteks olid arvutuslik lihtsus ning tõenäosuse sagedusliku tõlgenduse sobivus 20 saj esimeses pooles käibinud teadusfilosoofiatega - eeskätt loogilise postivismiga. 
+Sagedusliku statistika õitsengu põhjusteks 20. sajandil olid arvutuslik lihtsus ning tõenäosuse sagedusliku tõlgenduse sobivus 20 saj esimeses pooles käibinud teadusfilosoofiatega - eeskätt loogilise postivismiga. 
 1930-1980-ndatel valitses akadeemiliste statistikute seas seisukoht, et Bayesi statistika on surnud ja maha maetud, ning selle arendamisega tegelesid vaid üksikud inimesed, kes sageli olid füüsikaliste teaduste taustaga (Jeffreys, Jaynes). 
 
 
 Alates 1960-e keskpaigast arendati bayesiaanlust USA sõjaväe egiidi all, kuna seal oli piisav juurdepääs arvutivõimsusele, kuid seda tehti paljuski salastatult. 
 Bayesi meetoditega ei olnud võimalik korralikult tsiviilteadust teha enne 1990-ndaid aastaid, mil personaalarvutite levik algatas buumi nende meetodite arendamises. 
 Praegu on maailmas bayesiaanlikku ja sageduslikku statistikat umbes pooleks (vähemalt uute meetodite arendustöö poole pealt). 
-
-> Eestis bayesiaanlik statistika 2017 aasta seisuga peaaegu, et puudub. 
+Eestis bayesiaanlik statistika 2017 aasta seisuga peaaegu, et puudub. 
 
 1930ndatel kodifitseeris Andrei Kolmogorov tõenäosusteooria aksioomid (3 aksioomi), mis ütlevad lühidalt, et tõenäosused jäävad 0 ja 1 vahele ning, et üksteist välistavate ja hüpoteesiruumi ammendavate hüpoteeside tõenäosused summeeruvad ühele. 
 Selgus, et Bayesi teoreem on lihtsa aritmeetika abil tuletatav Kolmogorovi aksioomidest. 
@@ -45,6 +44,9 @@ Kui Bayesi arvutus annab selle hüpoteesi tõenäosuseks 0.57, siis oleme me sel
 Sageduslikud teoreetikud usuvad, et selline tõenäosuse tõlgendus on ebateaduslik, kuna see on "subjektiivne". 
 Nimelt on võimalik, et n teadlast arvutavad korrektselt samade andmete põhjal n erinevat tõenäosust ja usuvad seega samade tõendite põhjal erinevaid asju. 
 Kui nad lähtuvad väga erinevatest taustauskumustest oma hüpoteeside kehtimise kohta, võivad nad lõpuks uskuda väga erinevaid asju. 
+
+> Sellise olukorra analoog poliitikas on elanikkond, kus üks pool kannavad konservatiivseid väärtusi (perekond, rahvusühtsus) ja teine pool liberaalseid (multikultuursus, üldinimlikud väärtused). Seega priorid on erinevad. Niikaua, kui mõlemad pooled saavad oma uudised samast usaldusväärsest allikast (sama tõepära), ei ole demokraatia siiski ohus. Aga siis, kui konservatiivid ja liberaalid hakkavad erinevatest allikatest hankima erinevaid fakte, mis kummagi ideoloogiat kinnitavad, toimub arvamuste polariseerumine ning demokraatia sattub ohtu.
+
 Seega, kui te usute, et teie taustateadmised ei tohi mõjutada järeldusi, mis te oma andmete põhjal teete, siis te ei ole bayesiaan. 
 Siinkohal pakub alternatiivi tõenäosuse sageduslik tõlgendus. 
 Sageduslik tõenäosus on defineeritud kui teatud tüüpi andmete esinemise pikaajaline suhteline sagedus. 
@@ -247,8 +249,16 @@ Tüüpiline tulemuse kirjeldus artiklis:
 
 5. bayesi statistika ei fikseeri tüüp 1 vigade sagedust. See-eest võitleb see nn valehäirete vastu, milleks kaasajal kasutatakse enim hierarhilisi shrinkage mudeleid. See on bayesi vaste sageduslikus statistikas kasutatavatele multiple testingu korrektsioonidele. Kui sageduslik statistik võitleb valehäiretega p väärtusi adjusteerides ja selle läbi olulisusnivood nihutades, siis bayesiaan kasutab shrinkage mudelit, et parandada hinnanguid üksikute efektide keskväärtustele ja nende sd-le, kasutades paindlikult kogu andmesetis leiduvat infot.
 
-See on kõik, mida me sagedusliku statistika kohta ütleme. 
-Mitte miski, mis järgneb, ei eelda sagedusliku paradigma tundmist.
+
+### Sageduslik ja teaduslik hüpoteesitestimine. 
+
+Teaduslik lähenemine tõendusmaterjalile on sarnane kohtuliku uurimisega: me kogume tõendusmaterjali senikaua, kuni oleme veendunud, et saame selle põhjal eelistada ühte hüpoteesi kõikide teiste arvelt. Seega, kui faktid meile piisavat survet avaldavad, võtame vastu pluss-miinus otsuse, et kohtualune süüdi või teaduslik hüpotees õigeks mõista. See otsus on meie tegevuse eesmärk ja meie tegevus oli suunatud selle eesmärgi täitmisele.
+
+Sageduslik statistika võtab samuti vastu dihhotoomseid otsuseid, aga hoopis teisel moel. Seal ei ole otsus eesmärk, vaid vahend. Kui me lükkame tagasi teatud null hüpoteesid, aga mitte teised, saame me sellisel viisil fikseerida pikaajalise 1. tüüpi vigade sageduse. Me võtame vastu otsuseid, eesmärgiga tagada katsesüsteemi pikaajaline kvaliteet. Need otsused ei eelda, et me usuksime, et mõni konkreetne null hüpotees on tõene või väär ning matemaatilised protseduurid, mille alusel me neid otsuseid langetame, ei püüa määrata individuaalse null hüpoteesi tõelähedust või tõenäosust, et see H0 ei kehti. Seega ei tähenda fakt, et me lükkasime ümber konkreetse nullhüpoteesi seda, et me usume, et see null hüpotees on väär. 
+
+H0-i ümberlükkamisel põhineva statistikaga kaasnevad järelmid, millest ehk olulisim on vajadus fikseerida andmete kogumise ja analüüsi meetodid enne, kui andmed on kogutud. See on nii tehnilistel põhjustel, mis on seotud puhtalt meie sooviga fikseerida 1. tüüpi vigade sagedus. Sellise veasageduste fikseerimise hind on, et andmeanalüüsi valikud ei saa sõltuda tegelikest andmetest (nende kvaliteedist, jaotusest jms), mida analüüsitakse. Siinkohal tuleb eraldi rõhutada, et tegemist ei ole üldise teadusliku meetodi omadusega. Teaduses (ja bayesi statistikas) on mitte ainult täiesti normaalne vaid lausa vajalik vaadata andmeid kriitilise pilguga ja kujundada oma analüüs vastavalt andmete kvaliteedile. Ning kui andmed ei paku piisavalt tõendusmaterjali, et me saaksime otsustada oma hüpoteesi kasuks või kahjuks, siis on igati mõistlik andmeid juurde korjata senikaua, kuni oleme veendunud ühte või teistpidi. 
+
+Oluline erinevus sagedusliku ja bayesi statistika vahel on, et kui sageduslik meetod fikseerib pikaajalise veasageduse aga ei arvuta üksikute hüpoteeside tõenäosust, siis bayesi meetod vastupidi arvutab üksikute hüpoteeside tõenäosused, aga ei fikseeri pikaajalisi veasagedusi. Kui meid ikkagi huvitavad veasagedused ja statistiline võimsus, saab neid ka bayesiaanlikult leida, arvutades oma mudeleid simuleeritud andmetega.
 
 ## Statistiline ennustus kui mitmetasandiline protsess {-}
 
