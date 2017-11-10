@@ -2,6 +2,14 @@
 
 #  Kuidas näevad välja teie andmed
 
+
+```r
+library(tidyverse)
+library(stringr)
+library(car)
+```
+
+
 ## Summaarsed statistikud {-}
 
 Summaarne statistik püüab iseloomustada teie valimit ühe numbri abil.  
@@ -29,8 +37,8 @@ Järgnevad nõuanded on rangelt soovituslikud:
 (ref:lognorm) Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete "keskväärtusest"? Miks?
 
 <div class="figure" style="text-align: center">
-<img src="03_andmed_files/figure-html/unnamed-chunk-2-1.png" alt="(ref:lognorm)" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-2)(ref:lognorm)</p>
+<img src="03_andmed_files/figure-html/lognorm-1.png" alt="(ref:lognorm)" width="70%" />
+<p class="caption">(\#fig:lognorm)(ref:lognorm)</p>
 </div>
 
 
@@ -83,19 +91,23 @@ Nagu näha, on multiplikatiivse sd kasutamine normaalsete andmetega pigem ohutu 
 Vahest tekkib teil vajadus empiiriliselt määrata, kas teie andmed on normaaljaotusega. 
 Enne kui seda tegema asute, peaksite mõistma, et see, et teie valim ei ole normaalne, ei tähenda automaatselt, et populatsioon, millest see valim tõmmati, ei oleks normaaljaotusega.
 Igal juhul, valimiandmete normaalsuse määramiseks on kõige mõistlikum kasutada qq-plotti. 
-QQ-plot (kvantiil-kvantiil plot) võrdleb andmete jaotust ideaalse normaaljaotusega andmepunkti haaval. Kui empiiriline jaotus kattub referentsjaotusega, siis on tulemuseks sirgel paiknevad punktid. Järgneval qq plotil on näha, mis juhtub, kui plottida lognormaalseid andmeid normaaljaotuse vastu: 
+QQ-plot (kvantiil-kvantiil plot) võrdleb andmete jaotust ideaalse normaaljaotusega andmepunkti haaval. Kui empiiriline jaotus kattub referentsjaotusega, siis on tulemuseks sirgel paiknevad punktid. Järgneval qq plotil on näha, mis juhtub, kui plottida lognormaalseid andmeid normaaljaotuse vastu:
+
+(ref:qqnorm) QQ-plot normaalsetele andmetele.
+
 
 ```r
-library(car)
 qqPlot(andmed)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03_andmed_files/figure-html/unnamed-chunk-5-1.png" alt="QQ-plot lognormaalsetele andmetele." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-5)QQ-plot lognormaalsetele andmetele.</p>
+<img src="03_andmed_files/figure-html/qqnorm-1.png" alt="(ref:qqnorm)" width="70%" />
+<p class="caption">(\#fig:qqnorm)(ref:qqnorm)</p>
 </div>
 
 Nüüd joonistame qq-ploti logaritmitud andmetele. 
+
+(ref:qqlognorm) QQ-plot normaalsetele andmetele.
 
 
 ```r
@@ -103,8 +115,8 @@ qqPlot(log2(andmed))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03_andmed_files/figure-html/unnamed-chunk-6-1.png" alt="QQ-plot normaalsetele andmetele." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-6)QQ-plot normaalsetele andmetele.</p>
+<img src="03_andmed_files/figure-html/qqlognorm-1.png" alt="(ref:qqlognorm)" width="70%" />
+<p class="caption">(\#fig:qqlognorm)(ref:qqlognorm)</p>
 </div>
 
 Pole kahtlust, andmed on logaritmitud kujul normaaljaotusega.

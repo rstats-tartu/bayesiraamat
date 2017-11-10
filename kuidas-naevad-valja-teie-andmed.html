@@ -230,6 +230,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="kuidas-naevad-valja-teie-andmed" class="section level1">
 <h1><span class="header-section-number">3</span> Kuidas näevad välja teie andmed</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(stringr)
+<span class="kw">library</span>(car)</code></pre></div>
 <div id="summaarsed-statistikud" class="section level2 unnumbered">
 <h2>Summaarsed statistikud</h2>
 <p>Summaarne statistik püüab iseloomustada teie valimit ühe numbri abil.<br />
@@ -251,10 +254,10 @@ Milliseid summaarseid statistikuid arvutada ja milliseid vältida, sõltub stati
 <li><p>Valimi kõige levinumat esindajat iseloomustab mood ehk jaotuse tipp. Seda on aga raskem täpselt määrata ja mitmetipulisel jaotusel on mitu moodi. Töötamisel posterioorsete jaotustega on mood sageli parim lahendus.</p></li>
 </ol>
 
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
-<img src="03_andmed_files/figure-html/unnamed-chunk-2-1.png" alt="Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete “keskväärtusest”? Miks?" width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:lognorm"></span>
+<img src="03_andmed_files/figure-html/lognorm-1.png" alt="Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete “keskväärtusest”? Miks?" width="70%" />
 <p class="caption">
-Joonis 1.1: Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete “keskväärtusest”? Miks?
+Joonis 3.1: Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete “keskväärtusest”? Miks?
 </p>
 </div>
 </div>
@@ -349,20 +352,21 @@ Sageli on aga negatiivsed muutuja väärtused võimatud (näiteks nädalas suits
 <p>kui n &lt; 10, siis mõlemad SD-d alahindavad süstemaatiliselt tegelikku sd-d.Et tevaatust väikeste valimitega!</p>
 </blockquote>
 <p>Vahest tekkib teil vajadus empiiriliselt määrata, kas teie andmed on normaaljaotusega. Enne kui seda tegema asute, peaksite mõistma, et see, et teie valim ei ole normaalne, ei tähenda automaatselt, et populatsioon, millest see valim tõmmati, ei oleks normaaljaotusega. Igal juhul, valimiandmete normaalsuse määramiseks on kõige mõistlikum kasutada qq-plotti. QQ-plot (kvantiil-kvantiil plot) võrdleb andmete jaotust ideaalse normaaljaotusega andmepunkti haaval. Kui empiiriline jaotus kattub referentsjaotusega, siis on tulemuseks sirgel paiknevad punktid. Järgneval qq plotil on näha, mis juhtub, kui plottida lognormaalseid andmeid normaaljaotuse vastu:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
-<span class="kw">qqPlot</span>(andmed)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
-<img src="03_andmed_files/figure-html/unnamed-chunk-5-1.png" alt="QQ-plot lognormaalsetele andmetele." width="70%" />
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqPlot</span>(andmed)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:qqnorm"></span>
+<img src="03_andmed_files/figure-html/qqnorm-1.png" alt="QQ-plot normaalsetele andmetele." width="70%" />
 <p class="caption">
-Joonis 3.1: QQ-plot lognormaalsetele andmetele.
+Joonis 3.2: QQ-plot normaalsetele andmetele.
 </p>
 </div>
 <p>Nüüd joonistame qq-ploti logaritmitud andmetele.</p>
+
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqPlot</span>(<span class="kw">log2</span>(andmed))</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
-<img src="03_andmed_files/figure-html/unnamed-chunk-6-1.png" alt="QQ-plot normaalsetele andmetele." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:qqlognorm"></span>
+<img src="03_andmed_files/figure-html/qqlognorm-1.png" alt="QQ-plot normaalsetele andmetele." width="70%" />
 <p class="caption">
-Joonis 3.2: QQ-plot normaalsetele andmetele.
+Joonis 3.3: QQ-plot normaalsetele andmetele.
 </p>
 </div>
 <p>Pole kahtlust, andmed on logaritmitud kujul normaaljaotusega.</p>
@@ -407,7 +411,7 @@ Kuidas tõlgendame aga tulemust r = 0.9? Mitte kuidagi. Selle asemel tõlgendame
 <div class="figure" style="text-align: center"><span id="fig:anscombe"></span>
 <img src="03_andmed_files/figure-html/anscombe-1.png" alt="Anscombe’i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: neli andmestikku annavad identse korrelatsioonikordaja (Pearsons’r), ehkki tegelikud seosed andmete vahel on täiesti erinevad." width="70%" />
 <p class="caption">
-Joonis 3.3: Anscombe’i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: neli andmestikku annavad identse korrelatsioonikordaja (Pearsons’r), ehkki tegelikud seosed andmete vahel on täiesti erinevad.
+Joonis 3.4: Anscombe’i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: neli andmestikku annavad identse korrelatsioonikordaja (Pearsons’r), ehkki tegelikud seosed andmete vahel on täiesti erinevad.
 </p>
 </div>
 <p>Moraal seisneb selles, et enne korrelatsioonikordaja arvutamist tasub alati plottida andmed, et veenduda võimaliku seose lineaarsuses. Lineaarsuse puudumine andmete koosvarieeruvuse mustris tähendab, et korrelatsioonikordaja tuleb kindlasti eksitav.</p>
