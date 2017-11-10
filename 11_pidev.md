@@ -1,8 +1,7 @@
 
 
-# Ennustame pidevat suurust
 
-## Lihtne normaaljaotuse mudel {-}
+# Lihtne normaaljaotuse mudel
 
 Kui me eelmises peatükis modelleerisime diskreetseid binaarseid sündmusi (elus või surnud) üle binoomjaotuse, siis edasi tegeleme pidevate suurustega ehk parameetritega, millele saab omistada iga väärtuse vahemikus -Inf kuni Inf. 
 
@@ -96,7 +95,7 @@ Seevastu t jaotuse sabasid saab nu abil üles-alla liigutada vastavalt sellele, 
 Outlierid toovad meile paksema sabaga jaotuse, mis tipu ümber ei lähe aga kaugeltki nii laiaks, kui samade andmetega fititud normaaljaotus.
     
     
-### Kui lai on meie tõepärafunktsioon? {-}
+## Kui lai on meie tõepärafunktsioon? {-}
 
 Normaaljaotusega modelleeritud tõepärafunktsioon on normaaljaotus, mille `keskväärtus = mean(valim)` ja mille `standardhälve = sd(valim) / sqrt(N)`, kus N on valimi suurus. 
 See tõepärafunktsioon modelleerib meie valimi keskväärtuse kohtamise tõenäosust igal võimalikul parameetriväärtusel. 
@@ -104,7 +103,7 @@ Kui oleme huvitatud USA presidentide keskmisest pikkusest, siis tõepärafunktsi
 Sigma, mille posteeriori me mudelist arvutame, on aga standardhälve algsete andmepunktide tasemel. 
 See on väga oluline eristus, sest sigma kaudu saab simueerida uusi andmepunkte.  
 
-### Lihtne või robustne normaalne mudel? {-}
+## Lihtne või robustne normaalne mudel? {-}
 
 Proovime mudeldada simuleeritud andmete keskväärtust.
 
@@ -257,7 +256,7 @@ Paljud teised mudelid ei ole nii lahked.
 Siin on meil mõõdukas korrelatsioon nu ja sigma vahel. 
 See on igati loogiline ja ei häiri meid.
 
-### MCMC ahelate kvaliteet {-}
+## MCMC ahelate kvaliteet {-}
 
 Kui Rhat on 1, siis see tähendab, et MCMC ahelad on ilusti jooksnud ja posteeriori sämplinud. 
 Kui Rhat > 1.1, siis on probleem.
@@ -786,7 +785,7 @@ See ei tähenda, et võitnud mudel oleks hea mudel --- alati on võimalik, et k�
 
 Seega parim mudel on gapmod3 ja kõige kehvem on gapmod2, mille lõikepunkt on realistlikult nulli fikseeritud! 
 
-## Bayesi meetodil lineaarse mudeli fittimine {-}
+# Bayesi meetodil lineaarse mudeli fittimine
 
 Nüüd Bayesi mudelid. 
 "rethinking" paketi `glimmer()` on abivahend, mis konverteerib `lm()` mudeli kirjelduse Bayesi mudeli kirjelduseks kasutades normaaljaotusega tõepära mudelit.
@@ -1065,7 +1064,7 @@ HPDI(sim.length$V10, prob = 0.95)
 
 Nagu näha, võib mudeli kohaselt sellise riigi keskmine eluiga tulla nii madal, kui 40 aastat ja nii kõrge kui 67 aastat.
 
-### Lognormaalne tõepäramudel {-}
+## Lognormaalne tõepäramudel {-}
 
 See mudel on alternatiiv andmete logaritmimisele, kui Y-muutuja (see muutuja, mille väärtust te ennustate) on lognormaalse jaotusega. 
 
@@ -1185,7 +1184,7 @@ ggplot(g2007, aes(lifeExp, gdpPercap)) +
 
 Ka see mudel jääb hätta Aafrika outlieritega, mille eluiga ei suuda ennustada rikkust.
 
-## Mitme prediktoriga lineaarne regressioon {-}
+# Mitme prediktoriga lineaarne regressioon
 
 
 ```r
@@ -1321,15 +1320,17 @@ Millise mudeli me peaksime siis avaldama? Vastus on, et need kõik on olulised, 
 
 Miks ei ole mudeli summary tabelis Aafrikat? Põhjus on tehniline. Kategoorilisi muutujaid, nagu kontinent, vaatab mudel paariviisilises võrdluses, mis tähendab et k erineva tasemega muutujast tekitatakse k - 1 uut muutujat, millest igaühel on kaks taset (0 ja 1). See algne muutuja, mis üle jääb (antud juhul Africa), jääb ilma oma uue muutujata. Me saame teisi uusi kontinendi põhjal tehtud muutujaid tõlgendada selle järgi, kui palju nad erinevad Africa-st.
 
-#### Miks multivariaatsed mudelid head on? {-}
+## Miks multivariaatsed mudelid head on? {-}
 
-1) nad aitavad kontrollida "confounding" muutujaid. Confounding muutuja võib olla korreleeritud mõne teise muutujaga, mis meile huvi pakub. See võib nii maskeerida signaali, kui tekitada võlts-signaali, kuni y ja x1 seose suuna muutmiseni välja.
+1) nad aitavad kontrollida "confounding" muutujaid. 
+Confounding muutuja võib olla korreleeritud mõne teise muutujaga, mis meile huvi pakub. 
+See võib nii maskeerida signaali, kui tekitada võlts-signaali, kuni y ja x1 seose suuna muutmiseni välja.
 
 2) ühel tagajärjel võib olla mitu põhjust.
 
 3) Isegi kui muutujad ei ole omavahel üldse korreleeritud, võib ühe tähtsus sõltuda teise väärtusest. Näiteks taimed vajavad nii valgust kui vett. Aga kui ühte ei ole, siis pole ka teisel suurt tähtsust.
 
-### Mudeldamine standardiseeritud andmetega {-}
+## Mudeldamine standardiseeritud andmetega {-}
 
 Kui me lahutame igast andmepunktist selle muutuja keskväärtuse siis saame 0-le tsentreeritud andmed. Kui me sellisel viisil saadud väärtused omakorda läbi jagame muutuja standardhälbega, siis saame standardiseeritud andmed, mille keskväärtus on null ja SD = 1.
 
@@ -1415,12 +1416,12 @@ precis(m6)
 #> sigma                5.95   0.36       5.38       6.49   931    1
 ```
 
-## Keerulisemate mudelitega töötamine {-}
+# Keerulisemate mudelitega töötamine
 
 Kasuta graafilisi meetodeid. 
 Mudeli koefitsientide jõllitamine üksi ei päästa.
 
-### Predictor residual plots {-}
+## Predictor residual plots {-}
 
 Plotime varieeruvuse, mida mudel ei oota ega seleta.
 
@@ -1474,7 +1475,7 @@ ggplot(g2007, aes(lifeExp, m.resid)) +
 
 Horisontaalne punktiirjoon näitab, kus mudel vastab täpselt andmetele. 
 
-###  Ennustavad plotid  {-}
+##  Ennustavad plotid  {-}
 
 Plot, kus me ennustame keskmise eluea sõltuvust SKP-st nii riikide kaupa eraldi (andmepunktide paupa) kui üldiselt kõikide riikide keskmisena, millel on mingi kindel SKP (mudeli parima ennustuse ehk sirge asendi ümber valitsevat ebakindlust). Et seda teha, hoiame rahvaarvu konstantsena oma keskväärtusel, mis standardiseeritud andmetl võrdub alati nulliga. link() funktsioon annab meile keskmiste eluigade ennustused meie poolt ette antud X1 ja X2 väärtustel, ning sim() annab meile eluigade ennustused fiktsionaalsete riikide kaupa samadel X1 ja X2 väärtustel. Nagu näha, on meie mudeli arvates riikide kaupa ennustamine palju laiema varieeruvusega kui üle kõikväimalike riikide kesmise kaupa ennustamine.
 
@@ -1512,7 +1513,7 @@ ggplot(pred.data, aes(lGDP_s, mu.mean)) +
 Näeme, kuidas ennustus sobib/ei sobi andmetega. Võrdle eelneva ennustuspildiga, kus mudel ei sisalda rahvaarvu. Ennustuse intervallid on originaalandmete skaalas (aastates), mis on hea.
 
 
-### Posterior prediction plots {-}
+## Posterior prediction plots {-}
 
 Posterioorsed ennustusplotid panevad kõrvuti (või üksteise otsa) Y-i algandmed ja mudeli ennustused Y-väärtustele. Kui meie valimi suurus on N, siis me tõmbame mudelist näiteks 5 valimit, igaüks suurusega N ja plotime need kõrvuti valimiandmete plotiga. Siis me vaatame sellele plotile peale ja otsustame, kas mudeli ennustused on piisavalt lähedal valimi andmetele. Kui ei, siis on tõenäoline, et meie mudelis on midagi mäda ja me peame hakkama sealt vigu otsima. Tõsi küll, keerulisemate hierarhiliste mudelite korral on vahest raske otsustada, millised peaksid tulema eduka mudeli ennustused võrreldes algandmetega --- aga siiski, see on arvatavasti kõige tähtsam plot, mida oma mudelist teha!
 
@@ -1601,7 +1602,7 @@ ggplot( g2007, aes( x = life.resid, y = reorder( country, life.resid ) ) ) +
 
 punased jooned näitavad 89% ennustuspiire igale residuaalile riigi tasemel (89% kõikvõimalike riikide keskmiste eluigade residuaalidest sellel SKPl jääb punasesse vahemikku).
 
-### Interaktsioonid prediktorite vahel {-}
+## Interaktsioonid prediktorite vahel {-}
 
 Eelnevad mudelid eeldavad, et prediktorite varieeruvused on üksteisest sõltumatud. Aga mis siis, kui see nii ei ole ja ühe prediktori mõju suurus sõltub teisest prediktorist, ehk prediktorite vahel on interaktsioon? Lihtsaim viis sellist interaktsiooni modelleerida on lisades interaktsiooni aditiivsele mudelile korrutamisetehtena:
 
@@ -1724,7 +1725,7 @@ ggplot(data=dd1, aes(lGDP_s, lifeExp)) +
 
 Nagu näha, on meil nüüd üsna erinevad sirge tõusunurgad.
 
-### Interaktsioonid pidevatele tunnustele {-}
+## Interaktsioonid pidevatele tunnustele {-}
 
 Kasutame standardiseeritud prediktoreid, sest nende koefitsiente saab paremini tõlgendada (tegelikult piisab prediktorite tsentreerimisest). Meie andmed käsitlevad diabeedimarkereid Ameerika lõunaosariikide neegritel 1960-ndatel. Me ennustame siin sõltuvalt vanusest ja vööümbermõõdust hdl-i --- high density cholesterol --- mis on nn hea kolesterool.
 
