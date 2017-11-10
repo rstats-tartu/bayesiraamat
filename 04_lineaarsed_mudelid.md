@@ -15,24 +15,25 @@ Oletame, et me mõõtsime N inimese pikkuse cm-s ja kaalu kg-s ning meid huvitab
 Lihtsaim mudel pikkuse sõltuvusest kaalust on pikkus = kaal (formaliseeritult: y = x) ja see mudel ennustab, et kui Juhani kaal = 80 kg, siis Juhan on 80 cm pikkune. 
 Siin on pikkus muutuja, mille väärtust ennustatakse ja kaal muutuja, mille väärtuste põhjal ennustatakse pikkusi. 
 
-Genereerime andmed:
+Genereerime andmed, x = pikkus ja y = kaal:
 
 ```r
-# y = kaal
 x <- 0:100
-# x = pikkus
 y <- x
 ```
 
 Selle mudeli saame graafiliselt kujutada nii:
+
+(ref:lihtnemudel) Lihtne mudel y ~ x, mille lõikepunkt = 0 ja tõus = 1.
+
 
 ```r
 plot(y ~ x, type = "l", xlab = "Weight in kg", ylab = "Heigth in cm", main = bquote(y == x))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-4-1.png" alt="Lihtne mudel y ~ x, mille lõikepunkt = 0 ja tõus = 1." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-4)Lihtne mudel y ~ x, mille lõikepunkt = 0 ja tõus = 1.</p>
+<img src="04_lineaarsed_mudelid_files/figure-html/lihtnemudel-1.png" alt="(ref:lihtnemudel)" width="70%" />
+<p class="caption">(\#fig:lihtnemudel)(ref:lihtnemudel)</p>
 </div>
 
 Mudeli keeles tähistame me seda, mida me ennustame (antud juhul pikkus) Y-ga ja seda, mille väärtuse põhjal me ennustame (antud juhul kaal) X-ga. Seega sirge mudeli matemaatiline formalism on Y = X. 
@@ -54,6 +55,7 @@ a <- 30
 y <- a + x
 ```
 
+(ref:intercept) Lineaarne mudel, mille lõikepunkt = 30 ja tõus = 1. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = 30
 
 
 ```r
@@ -63,8 +65,8 @@ abline(c(0, 1), lty = 2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-6-1.png" alt="Lineaarne mudel, mille lõikepunkt = &quot;, a ,&quot; ja tõus = 1.. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = 30." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-6)Lineaarne mudel, mille lõikepunkt = ", a ," ja tõus = 1.. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = 30.</p>
+<img src="04_lineaarsed_mudelid_files/figure-html/intercept-1.png" alt="(ref:intercept)" width="70%" />
+<p class="caption">(\#fig:intercept)(ref:intercept)</p>
 </div>
 
 
@@ -92,8 +94,8 @@ abline(c(0, 1), lty = 2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-8-1.png" alt="Lineaarne mudel, mille lõikepunkt = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-8)Lineaarne mudel, mille lõikepunkt = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3.</p>
+<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-6-1.png" alt="Lineaarne mudel, mille lõikepunkt = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-6)Lineaarne mudel, mille lõikepunkt = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3.</p>
 </div>
 
 
@@ -133,8 +135,8 @@ plot(y ~ x, xlab = "Weight in kg", ylab = "Heigth in cm", ylim = c(50, 200), typ
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-10-1.png" alt="Lineaarne mudel, millel on tuunitud nii lõikepunkt kui tõus." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-10)Lineaarne mudel, millel on tuunitud nii lõikepunkt kui tõus.</p>
+<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-8-1.png" alt="Lineaarne mudel, millel on tuunitud nii lõikepunkt kui tõus." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-8)Lineaarne mudel, millel on tuunitud nii lõikepunkt kui tõus.</p>
 </div>
 
 
@@ -173,8 +175,8 @@ augment(m, iris) %>%
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-12-1.png" alt="Fititud mudel, kus muutuja Petal.Length järgi ennustatakse muutuja Sepal.Length väärtusi." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-12)Fititud mudel, kus muutuja Petal.Length järgi ennustatakse muutuja Sepal.Length väärtusi.</p>
+<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-10-1.png" alt="Fititud mudel, kus muutuja Petal.Length järgi ennustatakse muutuja Sepal.Length väärtusi." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-10)Fititud mudel, kus muutuja Petal.Length järgi ennustatakse muutuja Sepal.Length väärtusi.</p>
 </div>
 
 Mudeli fittimine tähendab siin lihtsalt, et sirge on 2D ruumi asetatud nii, et see oleks võimalikult lähedal kõikidele punktidele.
@@ -222,8 +224,8 @@ plot(Sepal_length ~ Petal_length, type = "b")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-15-1.png" alt="Siin ennustasime kümme y väärtust x väärtuste põhjal.." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-15)Siin ennustasime kümme y väärtust x väärtuste põhjal..</p>
+<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-13-1.png" alt="Siin ennustasime kümme y väärtust x väärtuste põhjal.." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-13)Siin ennustasime kümme y väärtust x väärtuste põhjal..</p>
 </div>
 
 
@@ -297,8 +299,8 @@ Selline mudel on täpselt sama informatiivne kui andmed, mille põhjal see fitit
 
 
 <div class="figure" style="text-align: center">
-<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-17-1.png" alt="Kasvava paindlikusega polünoomsed mudelid." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-17)Kasvava paindlikusega polünoomsed mudelid.</p>
+<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-15-1.png" alt="Kasvava paindlikusega polünoomsed mudelid." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-15)Kasvava paindlikusega polünoomsed mudelid.</p>
 </div>
 
 
