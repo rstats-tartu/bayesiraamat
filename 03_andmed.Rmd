@@ -129,7 +129,7 @@ QQ-plot (kvantiil-kvantiil plot) võrdleb andmete jaotust ideaalse normaaljaotus
 
 (ref:qqnorm) QQ-plot normaalsetele andmetele.
 
-```{r qqlognorm, fig.cap="(ref:qqlognorm)"}
+```{r qqnorm, fig.cap="(ref:qqnorm)"}
 qqPlot(andmed)
 ```
 
