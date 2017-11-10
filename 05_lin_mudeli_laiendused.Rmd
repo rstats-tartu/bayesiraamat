@@ -25,7 +25,9 @@ Kui meil on 3 prediktoriga mudel, siis me liigume juba 4-mõõtmelisse ruumi.
 m2 <- lm(Sepal.Width ~ Sepal.Length + Petal.Length, data = iris)
 ```
 
-```{r, echo=FALSE, fig.cap="Regressioonitasand 3D andmetele. Siin on Sepal.Length ja Petal.Length prediktorid ja Sepal.Width ennustatav muutuja."}
+(ref:regressioonitasand) Regressioonitasand 3D andmetele. Siin on Sepal.Length ja Petal.Length prediktorid ja Sepal.Width ennustatav muutuja.
+
+```{r regressioonitasand, echo=FALSE, fig.cap='(ref:regressioonitasand)'}
 s3d <- with(iris, scatterplot3d(Sepal.Length, Petal.Length, Sepal.Width, pch = 20, color = rep(viridis(3), table(iris$Species)), col.axis = "blue", col.grid = "lightblue"))
 s3d$plane3d(m2, lty.box = "solid")
 ```
@@ -33,7 +35,9 @@ s3d$plane3d(m2, lty.box = "solid")
 
 Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile.
 
-```{r lin2d, fig.cap='2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile.', out.width='48%'}
+(ref:lin2d) 2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile.
+ 
+```{r lin2d, fig.cap='(ref:lin2d)', out.width='48%'}
 p <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   geom_point() +
   xlim(4, 8) +
@@ -88,7 +92,9 @@ abline(c(coef(m1)[1], coef(m1)[2]), lty = "dashed")
 
 Nüüd joonistame 3D pildi olukorrast, kus nii $x_1$ kui $x_2$ omandavad rea väärtusi. Mudeli ennustus on ikkagi sirge kujul -- mis sest, et 3D ruumis.
 
-```{r, fig.cap='kahe prediktoriga mudeli ennustus 3D ruumis.'}
+(ref:kaksprediktorit) Kahe prediktoriga mudeli ennustus 3D ruumis.
+
+```{r kaksprediktorit, fig.cap='(ref:kaksprediktorit)'}
 Petal_length <- seq(min(iris$Petal.Length), max(iris$Petal.Length), length.out = 10)
 Sepal_width <- a + b1 * Sepal_length + b2 * Petal_length
 dfr <- data_frame(Sepal_width, Sepal_length, Petal_length)
@@ -122,7 +128,9 @@ AIC(m1, m2, m3)
 
 Kõigepealt anname rea väärtusi x_1-le ja hoiame x_2 konstantsena. 
 
-```{r, fig.cap='Ennustus interaktsioonimudelist, kus x1 on antud rida väärtusi ja x2 hoitakse konstantsena.'}
+(ref:ennustus-interaktsioonimudelist) Ennustus interaktsioonimudelist, kus x1 on antud rida väärtusi ja x2 hoitakse konstantsena.
+
+```{r ennustus-interaktsioonimudelist, fig.cap='(ref:ennustus-interaktsioonimudelist)'}
 Petal_length <-  mean(iris$Petal.Length)
 a <- coef(m3)[1]
 b1 <- coef(m3)[2]
@@ -140,7 +148,9 @@ Nagu näha, korrutamistehe viib selleni, et interaktsioonimudeli tõus erineb il
 
 Kui aga interaktsioonimudel plottida välja 3D-s üle paljude x_1 ja x_2 väärtuste, saame me regressioonikurvi (mitte sirge), kus b_3 annab kurvatuuri.
 
-```{r, fig.cap='Ennustused 3D interaktsioonimudelist üle paljude x1 ja x2 väärtuste.'}
+(ref:ennustused3d-interaktsioonimudelist) Ennustused 3D interaktsioonimudelist üle paljude x1 ja x2 väärtuste.
+
+```{r ennustused3d-interaktsioonimudelist, fig.cap='(ref:ennustused3d-interaktsioonimudelist)'}
 Petal_length <-  seq(min(iris$Petal.Length), 
                      max(iris$Petal.Length), 
                      length.out = 100)
