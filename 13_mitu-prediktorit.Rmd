@@ -7,12 +7,12 @@ library(gapminder)
 library(rethinking)
 ```
 
-
+Vaatame jälle gapminderi andmeid aastast 2007. 
 Meil on võimalik lisada regressioonivõrrandisse lisaprediktoreid. 
 Nüüd ei küsi me enam, kuidas mõjutab l_GDP varieeruvus keskmise eluea varieeruvust vaid: kuidas mõjutavad muutujad l_GDP, continent ja logaritm pop-ist (rahvaarvust) keskmist eluiga. 
 Me modelleerime selle lineaarselt nii, et eeldusena varieeruvad need x-i muutujad üksteisest sõltumatult: $y = a + b_1x_1 + b_2x_2 + b_3x_3$
 
-```{r }
+```{r}
 g2007 <- gapminder %>% 
   filter(year == 2007)
 g2007 <- g2007 %>% 
