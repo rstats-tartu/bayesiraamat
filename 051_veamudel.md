@@ -67,6 +67,7 @@ Seejärel liidame need 12 arvu.
 Nüüd võtame uue 12-se valimi ja kordame eelnevat. 
 Me teeme seda 10 000 korda järjest ja plotime saadud 10 000 arvu (10 000 liitmistehte tulemust) tihedusfuntksioonina. 
 
+(ref:normaaljaotus-tekib) Normaaljaotus tekib sõltumatutest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi summa tihedusdiagramm.
 
 
 ```r
@@ -76,8 +77,8 @@ p
 ```
 
 <div class="figure" style="text-align: center">
-<img src="051_veamudel_files/figure-html/unnamed-chunk-3-1.png" alt="Normaaljaotus tekib sõltumatutest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi summa tihedusdiagramm." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-3)Normaaljaotus tekib sõltumatutest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi summa tihedusdiagramm.</p>
+<img src="051_veamudel_files/figure-html/normaaljaotus-tekib-1.png" alt="(ref:normaaljaotus-tekib)" width="70%" />
+<p class="caption">(\#fig:normaaljaotus-tekib)(ref:normaaljaotus-tekib)</p>
 </div>
 
 Selles näites võrdub iga andmepunkt 10 000st ühe bakteritüve kasvukiiruse mõõtmisega. Seega, antud eelduste korral on bakteritüvede kasvukiirused normaaljaotusega.
@@ -88,6 +89,8 @@ Seekord genreerime 12 juhuslikku arvu 1 ja 1.1 vahel.
 Siin tähendab arv 1.1 kasvu tõusu 10% võrra. 
 Seejärel korrutame need 12 arvu, misjärel kordame eelnevat 10 000 korda. 
 
+(ref:soltuvatest-efektidest) Normaaljaotus tekib väikestest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Ühegi geeni mõju ei domineeri teiste üle.
+
 
 ```r
 kasv <- replicate(10000, prod(runif(12, 1, 1.1))) 
@@ -95,13 +98,15 @@ p %+% tibble(kasv)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="051_veamudel_files/figure-html/unnamed-chunk-4-1.png" alt="Normaaljaotus tekib väikestest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Ühegi geeni mõju ei domineeri teiste üle." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-4)Normaaljaotus tekib väikestest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Ühegi geeni mõju ei domineeri teiste üle.</p>
+<img src="051_veamudel_files/figure-html/soltuvatest-efektidest-1.png" alt="(ref:soltuvatest-efektidest)" width="70%" />
+<p class="caption">(\#fig:soltuvatest-efektidest)(ref:soltuvatest-efektidest)</p>
 </div>
 
 Tulemuseks on jällegi normaaljaotus.
 Selles näites olid üksikud interakteeruvad geenid ükshaaval väikeste mõjudega ja ühegi geeni mõju ei domineerinud teiste üle. 
 Mis juhtub, kui mõnel geenil on kuni 2 korda suurem mõju kui teisel?
+
+(ref:lognormaal) Lognormaaljaotus tekib suurematest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel.
 
 
 ```r
@@ -110,8 +115,8 @@ p %+% tibble(kasv)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="051_veamudel_files/figure-html/unnamed-chunk-5-1.png" alt="Lognormaaljaotus tekib suurematest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-5)Lognormaaljaotus tekib suurematest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel.</p>
+<img src="051_veamudel_files/figure-html/lognormaal-1.png" alt="(ref:lognormaal)" width="70%" />
+<p class="caption">(\#fig:lognormaal)(ref:lognormaal)</p>
 </div>
 
 Nüüd on tulemuseks log-normaaljaotus. Mis teie arvate, kas teie poolt uuritavat tunnust mõjutavad faktorid, mis omavahel ei interakteeru või kui interakteeruvad, on kõik ühtlaselt väikeste efektidega? 
@@ -121,6 +126,8 @@ Või on tegu vastasmõjudes olevate faktoritega, millest osad on palju suuremate
 Kui me vaatame samu andmeid logaritmilises skaalas, avastame, et need andmed on normaaljaotusega. 
 See ongi andmete logaritmimise mõte.
 
+(ref:logskaalas) Logaritmilises skaalas lognormaalsed efektid on normaaljaotusega. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel.
+
 
 ```r
 kasv <- replicate(10000, log10(prod(runif(12, 1, 2))))
@@ -128,8 +135,8 @@ p %+% tibble(kasv) + labs(x = "kasv, log10")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="051_veamudel_files/figure-html/unnamed-chunk-6-1.png" alt="Logaritmilises skaalas lognormaalsed efektid on normaaljaotusega. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-6)Logaritmilises skaalas lognormaalsed efektid on normaaljaotusega. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel.</p>
+<img src="051_veamudel_files/figure-html/logskaalas-1.png" alt="(ref:logskaalas)" width="70%" />
+<p class="caption">(\#fig:logskaalas)(ref:logskaalas)</p>
 </div>
 
 ### Normaaljaotuse mudel väikestel valimitel {-}
@@ -145,9 +152,11 @@ Eelnev ei kehti Bayesi mudelite kohta, mis toovad priorite kaudu sisse lisainfot
 Kuidas panna skeptik uskuma, et statistilised meetodid töötavad halvasti väikestel valimitel? Siin aitab simulatsioon, kus me tõmbame 3-se valimi etteantud populatsioonist ning üritame selle valimi põhjal ennustada selleasama populatsiooni struktuuri. Kuna tegemist on simulatsiooniga, teame täpselt, et populatsioon, kust me tõmbame oma kolmese valimi, on normaaljaotusega, et tema keskväärtus = 0 ja et tema sd = 1. 
 Me fitime oma valimi andmetega 2 erinevat mudelit: normaaljaotuse ja Studenti t jaotuse. 
 
+(ref:juhuvalim-normaaljaotusest) Juhuvalim normaaljaotusest, mille keskmine = 0 ja sd = 1 (n=3; andmepunktid on näidatud mustade munadena). Sinine joon - populatsioon, millest tõmmati valim; punane joon - normaaljaotuse mudel, mis on fititud valimi andmetel; must joon - Studenti t jaotuse mudel, mis on fititud samade andmetega. Mustad punktid, valim. Katkendjoon, populatsiooni keskmine, millest valim tõmmati.
+
 <div class="figure" style="text-align: center">
-<img src="051_veamudel_files/figure-html/unnamed-chunk-7-1.png" alt="Juhuvalim normaaljaotusest, mille keskmine = 0 ja sd = 1 (n=3; andmepunktid on näidatud mustade munadena). Sinine joon - populatsioon, millest tõmmati valim; punane joon - normaaljaotuse mudel, mis on fititud valimi andmetel; must joon - Studenti t jaotuse mudel, mis on fititud samade andmetega. Mustad punktid, valim. Katkendjoon, populatsiooni keskmine, millest valim tõmmati." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-7)Juhuvalim normaaljaotusest, mille keskmine = 0 ja sd = 1 (n=3; andmepunktid on näidatud mustade munadena). Sinine joon - populatsioon, millest tõmmati valim; punane joon - normaaljaotuse mudel, mis on fititud valimi andmetel; must joon - Studenti t jaotuse mudel, mis on fititud samade andmetega. Mustad punktid, valim. Katkendjoon, populatsiooni keskmine, millest valim tõmmati.</p>
+<img src="051_veamudel_files/figure-html/juhuvalim-normaaljaotusest-1.png" alt="(ref:juhuvalim-normaaljaotusest)" width="70%" />
+<p class="caption">(\#fig:juhuvalim-normaaljaotusest)(ref:juhuvalim-normaaljaotusest)</p>
 </div>
 
 Siin saame hinnata mudelite fitte jumala positsioonilt, võrreldes fititud mudelite jaotusi "tõese" sinise jaotusega.
@@ -156,6 +165,8 @@ Mõlemad mudelid on süstemaatiliselt nihutatud väiksemate väärtuste poole ja
 Igal juhul, mõni teine juhuvalim annaks meile hoopis teistsugused mudelid, mis rohkem või vähem erinevad algsest populatsioonist.
 
 Mis juhtub kui me kasutame oma normaaljaotuse mudelit uute andmete simuleerimiseks? Kui lähedased on need simuleeritud andmed populatsiooni andmetega ja kui lähedased valimi andmetega, millega me normaaljaotuse mudeli fittisime?
+
+(ref:kasutame-fititud) Kasutame fititud mudeleid uute andmete simuleerimiseks.
 
 
 ```r
@@ -175,8 +186,8 @@ ggplot(tibble(simulated_data), aes(simulated_data)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="051_veamudel_files/figure-html/unnamed-chunk-8-1.png" alt="Kasutame fititud mudeleid uute andmete simuleerimiseks." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-8)Kasutame fititud mudeleid uute andmete simuleerimiseks.</p>
+<img src="051_veamudel_files/figure-html/kasutame-fititud-1.png" alt="(ref:kasutame-fititud)" width="70%" />
+<p class="caption">(\#fig:kasutame-fititud)(ref:kasutame-fititud)</p>
 </div>
 
 Nagu näha, on uute (simuleeritud) andmete keskväärtus ja SD väga sarnased algsete andmete omale, mida kasutasime mudeli fittimisel. 
