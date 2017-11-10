@@ -5,6 +5,7 @@
 library(tidyverse)
 library(gapminder)
 library(rethinking)
+library(bayesplot)
 ```
 
 
