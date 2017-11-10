@@ -189,6 +189,8 @@ Kui juba simuleerida, siis robinal: tõmbame ühe valimi asemel 10 000, arvutame
 
 Meie lootus on, et kui meil on palju valimeid, millel kõigil on juhuslik viga, mis neid populatsiooni suhtes ühele või teisele poole kallutab, siis rohkem on valimeid, mis asuvad tõelisele populatsioonile pigem lähemal kui kaugemal. Samuti, kui valimiviga on juhuslik, siis satub umbkaudu sama palju valimeid tõelisest populatsiooniväärtusest ühele poole kui teisele poole ja vigade jaotus tuleb sümmeetriline. 
 
+(ref:jaotus) Keskmiste jaotus 10 000 valimist.
+
 
 ```r
 N <- 3
@@ -204,8 +206,8 @@ Summary %>%
 ```
 
 <div class="figure" style="text-align: center">
-<img src="07_inferential_files/figure-html/unnamed-chunk-6-1.png" alt="Keskmiste jaotus 10 000 valimist." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-6)Keskmiste jaotus 10 000 valimist.</p>
+<img src="07_inferential_files/figure-html/jaotus-1.png" alt="(ref:jaotus)" width="70%" />
+<p class="caption">(\#fig:jaotus)(ref:jaotus)</p>
 </div>
 
 
@@ -220,6 +222,8 @@ Oh-hooo. Paljude valimite keskmiste keskmine ennustab väga täpselt populatsioo
 
 Ja nüüd 10 000 SD keskväärtused:
 
+(ref:sdjaotus) SD-de jaotus 10 000 valimist.
+
 
 ```r
 Summary %>% 
@@ -228,8 +232,8 @@ Summary %>%
 ```
 
 <div class="figure" style="text-align: center">
-<img src="07_inferential_files/figure-html/unnamed-chunk-8-1.png" alt="SD-de jaotus 10 000 valimist." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-8)SD-de jaotus 10 000 valimist.</p>
+<img src="07_inferential_files/figure-html/sdjaotus-1.png" alt="(ref:sdjaotus)" width="70%" />
+<p class="caption">(\#fig:sdjaotus)(ref:sdjaotus)</p>
 </div>
 
 
@@ -274,8 +278,10 @@ Seda kutsutakse *bootstrappimiseks* ja selle võttis esimesena kasutusele parun 
 Too jutukas parun nimelt suutis end soomülkast iseenda patsi pidi välja tõmmata (koos hobusega), mis ongi bootstrappimise põhimõte.
 Statistika tõmbas oma saapaid pidi mülkast välja Brad Efron 1979. aastal.
 
+(ref:parun) Nii nagu parun Münchausen tõmbas ennast patsi pidi mülkast välja, genereeritakse bootstrappimisega algse valimi põhjal teststatistiku jaotus.
+
 <div class="figure" style="text-align: center">
-<img src="img/munchausen.jpg" alt="Nii nagu parun Münchausen tõmbas ennast patsi pidi mülkast välja, genereeritakse bootstrappimisega algse valimi põhjal teststatistiku jaotus." width="50%" />
-<p class="caption">(\#fig:unnamed-chunk-12)Nii nagu parun Münchausen tõmbas ennast patsi pidi mülkast välja, genereeritakse bootstrappimisega algse valimi põhjal teststatistiku jaotus.</p>
+<img src="img/munchausen.jpg" alt="(ref:parun)" width="50%" />
+<p class="caption">(\#fig:parun)(ref:parun)</p>
 </div>
 

@@ -14,6 +14,9 @@ Mõned üldised soovitused võib siiski anda.
 
 Millised korrelatsioonid võiksid andmetes esineda?
 
+(ref:korrmaatriks) Korrelatstioonimaatriks joonisena.
+
+
 ```r
 library(corrgram) # PCA for ordering
 corrgram(iris, order=TRUE, 
@@ -24,8 +27,8 @@ corrgram(iris, order=TRUE,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="06_EDA_files/figure-html/unnamed-chunk-2-1.png" alt="Korrelatstioonimaatriks joonisena." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-2)Korrelatstioonimaatriks joonisena.</p>
+<img src="06_EDA_files/figure-html/korrmaatriks-1.png" alt="(ref:korrmaatriks)" width="70%" />
+<p class="caption">(\#fig:korrmaatriks)(ref:korrmaatriks)</p>
 </div>
 
 2. vaata andmeid numbrilise kokkuvõttena.
@@ -76,9 +79,11 @@ NB! selles psych::describe() väljundis on mad läbi korrutatud konstandiga 1.48
 
 11. Nii saab plottida multiplikatiivse sd:
 
+(ref:multisd) Multiplikatiivse sd joonistamine.
+
 <div class="figure" style="text-align: center">
-<img src="06_EDA_files/figure-html/unnamed-chunk-4-1.png" alt="Multiplikatiivse sd joonistamine." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-4)Multiplikatiivse sd joonistamine.</p>
+<img src="06_EDA_files/figure-html/multisd-1.png" alt="(ref:multisd)" width="70%" />
+<p class="caption">(\#fig:multisd)(ref:multisd)</p>
 </div>
 
 

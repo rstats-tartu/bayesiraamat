@@ -240,16 +240,17 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li>alusta analüüsi tasemest, kus andmed on kõige inforikkamad — toorandmete plottimisest punktidena. Kui andmehulk ei ole väga massiivne, näitab see hästi nii andmete kvaliteeti, kui ka võimalikke sõltuvussuhteid erinevate muutujate vahel.</li>
 </ol>
 <p>Millised korrelatsioonid võiksid andmetes esineda?</p>
+
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(corrgram) <span class="co"># PCA for ordering</span>
 <span class="kw">corrgram</span>(iris, <span class="dt">order=</span><span class="ot">TRUE</span>, 
          <span class="dt">lower.panel =</span> panel.pts,
          <span class="dt">upper.panel =</span> panel.ellipse,
          <span class="dt">diag.panel =</span> panel.density,
          <span class="dt">main=</span><span class="st">&quot;Correlogram of Iris dataset&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
-<img src="06_EDA_files/figure-html/unnamed-chunk-2-1.png" alt="Korrelatstioonimaatriks joonisena." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:korrmaatriks"></span>
+<img src="06_EDA_files/figure-html/korrmaatriks-1.png" alt="Korrelatstioonimaatriks joonisena." width="70%" />
 <p class="caption">
-Joonis 1.1: Korrelatstioonimaatriks joonisena.
+Joonis 7.1: Korrelatstioonimaatriks joonisena.
 </p>
 </div>
 <ol start="2" style="list-style-type: decimal">
@@ -381,10 +382,11 @@ Joonis 1.1: Korrelatstioonimaatriks joonisena.
 <ol start="11" style="list-style-type: decimal">
 <li>Nii saab plottida multiplikatiivse sd:</li>
 </ol>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
-<img src="06_EDA_files/figure-html/unnamed-chunk-4-1.png" alt="Multiplikatiivse sd joonistamine." width="70%" />
+
+<div class="figure" style="text-align: center"><span id="fig:multisd"></span>
+<img src="06_EDA_files/figure-html/multisd-1.png" alt="Multiplikatiivse sd joonistamine." width="70%" />
 <p class="caption">
-Joonis 1.3: Multiplikatiivse sd joonistamine.
+Joonis 7.2: Multiplikatiivse sd joonistamine.
 </p>
 </div>
 <div id="eda-kokkuvote" class="section level2">

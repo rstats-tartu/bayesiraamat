@@ -5,6 +5,13 @@
 # Bootstrap
 
 
+```r
+library(tidyverse)
+library(rethinking)
+library(bayesboot)
+```
+
+
 > Populatsioon on valimile sama, mis on valim bootstrappitud valimile. 
 
 Nüüd alustame ühestainsast empiirilisest valimist ja genereerime sellest 1000 virtuaalset valimit. 
@@ -30,9 +37,10 @@ Bootstrap empiirilisele valimile suurusega n töötab nii:
 
 Mis on USA presidentide keskmine pikkus? Meil on valim 11 presidendi pikkusega.
 
+(ref:bootpost) Bootstrapitud posteerior USA presidentide keskmisele pikkusele.
+
 
 ```r
-library(tidyverse)
 heights <- tibble(value = c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185, 188))
 boot_mean <- heights %>% 
   broom::bootstrap(1000) %>% 
@@ -41,8 +49,8 @@ ggplot(boot_mean, aes(Mean)) + geom_density()
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08_bootstrap_files/figure-html/unnamed-chunk-2-1.png" alt="Bootstrapitud posteerior USA presidentide keskmisele pikkusele." width=".49\linewidth" />
-<p class="caption">(\#fig:unnamed-chunk-2)Bootstrapitud posteerior USA presidentide keskmisele pikkusele.</p>
+<img src="08_bootstrap_files/figure-html/bootpost-1.png" alt="(ref:bootpost)" width="70%" />
+<p class="caption">(\#fig:bootpost)(ref:bootpost)</p>
 </div>
 
 Mida selline keskväärtuste jaotus tähendab? Me võime seda vaadelda posterioorse tõenäosusjaotusena. Selle tõlgenduse kohaselt iseloomustab see jaotus täpselt meie usku presidentide keskmise pikkuse kohta, niipalju kui see usk põhineb bootstrappimises kasutatud andmetel. Senikaua, kui meil pole muud relevantset teavet, on kõik, mida me usume teadvat USA presidentide keskmise pikkuse kohta, peidus selles jaotuses. Need pikkused, mille kohal jaotus on kõrgem, sisaldavad meie jaoks tõenäolisemalt tegelikku USA presidentide keskmist pikkust kui need pikkused, mille kohal posterioorne jaotus on madalam.   
@@ -59,7 +67,6 @@ Miks just 92% usaldusinterval? Vastus on, et miks mitte? Meil pole ühtegi unive
 
 
 ```r
-library(rethinking)
 HPDI(heights$value, prob = 0.92)
 #> |0.92 0.92| 
 #>   177   192
@@ -95,6 +102,8 @@ See lihtne meetod on küll populaarne ja annab sageli häid tulemusi, aga ei ole
 Empiiriline bootstrap on sellest ainult veidi keerulisem, aga annab robustsemaid tulemusi. 
 Selles ei ploti me enam mitte 1000 statistiku väärtust vaid 1000 erinevust bootstrapitud statistiku väärtuse ja empiirilise valimi põhjal arvutatud statistiku väärtuse vahel.
 
+(ref:empboot) Empiirilise bootstrapi posteerior USA presidentide keskmisele pikkusele.
+
 
 ```r
 boot_mean <- boot_mean %>% 
@@ -104,8 +113,8 @@ ggplot(boot_mean, aes(Diff)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08_bootstrap_files/figure-html/unnamed-chunk-6-1.png" alt="Empiirilise bootstrapi posteerior USA presidentide keskmisele pikkusele." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-6)Empiirilise bootstrapi posteerior USA presidentide keskmisele pikkusele.</p>
+<img src="08_bootstrap_files/figure-html/empboot-1.png" alt="(ref:empboot)" width="70%" />
+<p class="caption">(\#fig:empboot)(ref:empboot)</p>
 </div>
 
 Ja usaldusinterval tuleb niiviisi
@@ -124,9 +133,10 @@ See funktsioon pakub pisut moodsama meetodi --- Bayesian bootstrap --- mis töö
 Hea lihtsa seletuse Bayesian bootstrapi kohta saab siit https://www.youtube.com/watch?v=WMAgzr99PKE ja lihtsa r koodi selle meetodi rakendamiseks saab siit https://www.r-bloggers.com/simple-bayesian-bootstrap/
 Näited sellest, kuidas kasutada bayesbooti standardhälbe, korrelatsioonikoefitsiendi ja lineaarse mudeli koefitsientide usalduspiiride arvutamiseks leiate `?bayesboot` käsuga.
 
+(ref:bayesboot) Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele.
+
 
 ```r
-library(bayesboot)
 heights_bb <- bayesboot(heights$value, mean)
 plot(heights_bb, compVal = 185)
 HPDI(heights_bb$V1, prob = 0.95)
@@ -135,8 +145,8 @@ HPDI(heights_bb$V1, prob = 0.95)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08_bootstrap_files/figure-html/unnamed-chunk-8-1.png" alt="Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-8)Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele.</p>
+<img src="08_bootstrap_files/figure-html/bayesboot-1.png" alt="(ref:bayesboot)" width="70%" />
+<p class="caption">(\#fig:bayesboot)(ref:bayesboot)</p>
 </div>
 
 Bayesi bootstrap töötab veidi efektiivsemalt, kui me arvutame kaalutud statistikuid. Näiteks kaalutud keskmise saab niimoodi:
@@ -158,6 +168,9 @@ mean(heights_bb[, 1] > 182)
 
 Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):
 
+(ref:bayeses) Bayesi bootstrap ES-le.
+
+
 ```r
 set.seed(1)
 ## Simulate two random normal distributions with mean 0. 
@@ -170,8 +183,8 @@ plot(dfr_bb, compVal = 0)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08_bootstrap_files/figure-html/unnamed-chunk-11-1.png" alt="Bayesi bootstrap ES-le." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-11)Bayesi bootstrap ES-le.</p>
+<img src="08_bootstrap_files/figure-html/bayeses-1.png" alt="(ref:bayeses)" width="70%" />
+<p class="caption">(\#fig:bayeses)(ref:bayeses)</p>
 </div>
 
 
@@ -182,6 +195,9 @@ BayesianFirstAid raamatukogu funktsioon bayes.t.test() annab kasutades t-jaotuse
 
 Kui me arvame, et me teame, mis jaotusega on meie andmed, ja meil on suhteliselt vähe andmepunkte, võib olla mõistlik lisada bootstrapile andmete jaotuse mudel. Näiteks, meie USA presidentide pikkused võiksid olla umbkaudu normaaljaotusega (sest me teame, et USA meeste pikkused on seda). Seega fitime kõigepealt presidentide pikkusandmetega normaaljaotuse ja seejärel tõmbame bootsrap valimid sellest normaaljaotuse mudelist.
 Normaaljaotuse mudelil on 2 parameetrit: keskmine (mu) ja standardhälve (sigma), mida saame fittida valimiandmete põhjal:
+
+(ref:paramboot) Parameetrilise bootstrapi posteerior USA presidentide keskmisele pikkusele.
+
 
 ```r
 mu <- mean(heights$value)
@@ -202,15 +218,17 @@ HPDI(sample_means_sum$Mean)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08_bootstrap_files/figure-html/unnamed-chunk-12-1.png" alt="Parameetrilise bootstrapi posteerior USA presidentide keskmisele pikkusele." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-12)Parameetrilise bootstrapi posteerior USA presidentide keskmisele pikkusele.</p>
+<img src="08_bootstrap_files/figure-html/paramboot-1.png" alt="(ref:paramboot)" width="70%" />
+<p class="caption">(\#fig:paramboot)(ref:paramboot)</p>
 </div>
 
 Üldiselt ei soovita me parameetrilist bootstrappi väga soojalt, sest täisbayesiaanlik alternatiiv, mida me kohe õppima asume, on sellest paindlikum.
 
+(ref:bootmeth) Bootstrappimise meetodid.
+
 <div class="figure" style="text-align: center">
-<img src="img/boot1.pdf" alt="Bootstrappimise meetodid." width="50%" />
-<p class="caption">(\#fig:unnamed-chunk-13)Bootstrappimise meetodid.</p>
+<img src="img/boot1.pdf" alt="(ref:bootmeth)" width="50%" />
+<p class="caption">(\#fig:bootmeth)(ref:bootmeth)</p>
 </div>
 
 ## Bootstrappimine ei ole kogu tõde {-}
