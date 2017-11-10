@@ -6,8 +6,9 @@
 Kui me eelmises peatükis modelleerisime diskreetseid binaarseid sündmusi (elus või surnud) üle binoomjaotuse, siis edasi tegeleme pidevate suurustega ehk parameetritega, millele saab omistada iga väärtuse vahemikus -Inf kuni Inf. 
 
 ```{r}
-library(rethinking)
 library(tidyverse)
+library(rethinking)
+library(bayesplot)
 library(gridExtra)
 ```
 
@@ -30,13 +31,17 @@ Sama hästi võiksime kasutada ka priorit `mu ~ dnorm(mean = 178, sd = 10)`, kus
 
 Alati tasub mudeli priorid välja plottida, et veenduda, et nad tõesti kajastavad meile taustateadmisi ja on sobivas parameetrivahemikus (bayesi programmide default priorid on sageli kas liiga laiad või vastupidi eeldavad, et parameetriväärtused jäävad alla 10 ühiku).
 
-```{r fig.cap="Cauchy prior"}
+(ref:cauchy-prior) Cauchy prior.
+
+```{r cauchy-prior, fig.cap="(ref:cauchy-prior)"}
 x <- 0:100
 y <- dcauchy(x, 0, 20)
 plot(y ~ x, type = "l" , main = "Cauchy prior for sd")
 ```
 
-```{r fig.cap="Kaks normaaljaotuse prior", out.width='48%'}
+(ref:kaks-priorit) Kaks normaaljaotuse priorit.
+
+```{r kaks-priorit, fig.cap="(ref:kaks-priorit)", out.width='48%'}
 x <- 150:200
 y <- dnorm(x, 0, 200)
 plot(y ~ x, type = "l", main = "Normal prior for mean = 0 and sd = 200")
@@ -192,7 +197,9 @@ m3@stanfit
 Üks esimesi asju mida koos parameetrite vaatamisega teha on lisaks vaadata, kas ka ahelad konvergeerusid.
 Selleks saab mugavalt kasutada `rethinking::tracerplot()` funktsiooni.
 
-```{r fig.cap="Traceplot markovi ahelate inspekteerimiseks"}
+(ref:traceplot) Traceplot markovi ahelate inspekteerimiseks.
+
+```{r traceplot, fig.cap="(ref:traceplot)"}
 tracerplot(m2)
 ```
 
@@ -201,7 +208,9 @@ Pildilt on näha, et neli ahelat (4 värvi) on hästi konvergeerunud. Hall ala o
 Kui näit sigma kõrgema väärtusega kaasneb keskeltäbi kõrgem (või madalam) mu väärtus, on sigma ja mu omavahel korreleeritud. 
 Et kontrollida parameetrite posterioorsete väärtuste korrelatsioone kasutame funktsiooni `rethinking::pairs()`:
 
-```{r fig.cap="korrelatsiooniplot mudeli parameetritele."}
+(ref:korrelatsiooniplot) Korrelatsiooniplot mudeli parameetritele.
+
+```{r korrelatsiooniplot, fig.cap="(ref:korrelatsiooniplot)"}
 pairs(m2)
 ```
 
@@ -235,8 +244,10 @@ Halvad WARNING-ud: divergent transitions (too many), BMFI too low --- võivad t�
 Ilusamad parameetriplotid saab kasutades "bayesplot" raamatukogu funktsioone.
 
 Esiteks usalduspiirid:
-```{r fig.cap="Posteeriorite CI plot"}
-library(bayesplot)
+
+(ref:postciplot) Posteeriorite CI plot.
+
+```{r postciplot, fig.cap="(ref:postciplot)"}
 fit2d <- as.data.frame(m2@stanfit)
 pars <- names(fit2d)
 
@@ -1135,7 +1146,7 @@ Siin on ennustus ja seda ümbritsev ebakindlus iga riigi keskmisele elueale.
 
 Järgnev plot annab ennustusvea igale riigile. Siin tähistab 89% CI näiteks Vietnamile eluigade vahemikku, millese jääb mudeli ennustuse kohaselt 89% kõikvõimalike fiktsionaalsete riikide keskmistest eluigadest, mille SKP ja rahvaarv võrdub Vietnami omaga. Kuna me tsentreerime CI Vietnami tegeliku keskmise eluea residuaalile (erinevusele mudeli ennustusest), näitab see, kui palju erineb Vietnami eluiga mudeli ennustusest riikidele, nagu Vietnam. See plot annab meile riigid, mille suhtes mudel jänni jääb. Enamasti leiame need riigid Aafrikast.
  
-```{r, fig.height=9,fig.cap="Ennustused riigi kaupa."}
+```{r, fig.height=9, fig.cap="Ennustused riigi kaupa."}
 # compute residuals
 life.resid <- g2007$lifeExp - mu.mean
 

@@ -48,7 +48,9 @@ precis(m1)
 
 Nüüd tõmbame posteerioroorsest jaotusest valimi n=10 000. Selleks on funktsioon extract.samples()
 
-```{r fig.cap="tõmbame valimi posteeriorist.", fig.height=2, fig.width=3}
+(ref:pullpost) Tõmbame valimi posteeriorist.
+
+```{r pullpost, fig.cap="(ref:pullpost)"}
 samples <- extract.samples(m1)
 # hist(samples$p)
 dens(samples$p)
@@ -68,7 +70,9 @@ m2 <- map(
 precis(m2)
 ```
 
-```{r fig.cap="Veel üks valim posteeriorist (60 surma 90st).", fig.height=2, fig.width=3}
+(ref:perse) Veel üks valim posteeriorist (60 surma 90st).
+
+```{r perse, fig.cap="(ref:perse)"}
 samples <- extract.samples(m2)
 dens(samples$p)
 #PI(samples$p, prob = 0.95) # Leaves out equal 2.5% at both sides
@@ -83,8 +87,11 @@ Nüüd anname sisse mõistlikuma struktuuriga priori: beta-jaotuse
 
 Beta-prior katab vahemiku 0st 1ni ja sellel on 2 parameetrit, a ja b.
 
-Siin mõned näited erinevatest beta parametriseeringutest
-```{r fig.cap="Beta jaotuse parametriseeringuid.", echo=FALSE}
+Siin mõned näited erinevatest beta parametriseeringutest.
+
+(ref:betaparm) Beta jaotuse parametriseeringuid.
+
+```{r betaparm, fig.cap="(ref:betaparm)", echo=FALSE}
 x <- seq(0, 1, length = 1000)
 def.par <- par(no.readonly = TRUE)
 par(mfrow = c(2, 4))
