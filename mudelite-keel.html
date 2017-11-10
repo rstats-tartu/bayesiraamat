@@ -251,16 +251,17 @@ m1 &lt;-<span class="st"> </span><span class="kw">map</span>(
 <span class="co">#&gt;   Mean StdDev 5.5% 94.5%</span>
 <span class="co">#&gt; p 0.67   0.16 0.42  0.92</span></code></pre></div>
 <p>Nüüd tõmbame posteerioroorsest jaotusest valimi n=10 000. Selleks on funktsioon extract.samples()</p>
+
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">samples &lt;-<span class="st"> </span><span class="kw">extract.samples</span>(m1)
 <span class="co"># hist(samples$p)</span>
 <span class="kw">dens</span>(samples<span class="op">$</span>p)
 <span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
 <span class="co">#&gt; |0.95 0.95| </span>
 <span class="co">#&gt; 0.354 0.962</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
-<img src="10_mudelite_keel_files/figure-html/unnamed-chunk-3-1.png" alt="tõmbame valimi posteeriorist." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:pullpost"></span>
+<img src="10_mudelite_keel_files/figure-html/pullpost-1.png" alt="Tõmbame valimi posteeriorist." width="70%" />
 <p class="caption">
-Joonis 1.2: tõmbame valimi posteeriorist.
+Joonis 11.1: Tõmbame valimi posteeriorist.
 </p>
 </div>
 <p>Kuus patsienti üheksast surid ja nüüd me usume, et tegelik suremus võib olla nii madal kui 37% ja nii kõrge kui 97%. Kui me tahame paremat hinnangut on meil vaja kas rohkem patsiente või informatiivsemat priorit (paremat taustainfot).</p>
@@ -273,16 +274,17 @@ Joonis 1.2: tõmbame valimi posteeriorist.
 <span class="kw">precis</span>(m2)
 <span class="co">#&gt;   Mean StdDev 5.5% 94.5%</span>
 <span class="co">#&gt; p 0.67   0.05 0.59  0.75</span></code></pre></div>
+
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">samples &lt;-<span class="st"> </span><span class="kw">extract.samples</span>(m2)
 <span class="kw">dens</span>(samples<span class="op">$</span>p)
 <span class="co">#PI(samples$p, prob = 0.95) # Leaves out equal 2.5% at both sides</span>
 <span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
 <span class="co">#&gt; |0.95 0.95| </span>
 <span class="co">#&gt; 0.572 0.764</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
-<img src="10_mudelite_keel_files/figure-html/unnamed-chunk-5-1.png" alt="Veel üks valim posteeriorist (60 surma 90st)." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:perse"></span>
+<img src="10_mudelite_keel_files/figure-html/perse-1.png" alt="Veel üks valim posteeriorist (60 surma 90st)." width="70%" />
 <p class="caption">
-Joonis 11.1: Veel üks valim posteeriorist (60 surma 90st).
+Joonis 11.2: Veel üks valim posteeriorist (60 surma 90st).
 </p>
 </div>
 <p>10 korda rohkem andmeid: nüüd on suremus määratud kuskile 57% ja 77% vahele (suure tõenäosusega)</p>
@@ -290,11 +292,12 @@ Joonis 11.1: Veel üks valim posteeriorist (60 surma 90st).
 <h2>Beta prior</h2>
 <p>Nüüd anname sisse mõistlikuma struktuuriga priori: beta-jaotuse</p>
 <p>Beta-prior katab vahemiku 0st 1ni ja sellel on 2 parameetrit, a ja b.</p>
-Siin mõned näited erinevatest beta parametriseeringutest
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
-<img src="10_mudelite_keel_files/figure-html/unnamed-chunk-6-1.png" alt="Beta jaotuse parametriseeringuid." width="70%" />
+<p>Siin mõned näited erinevatest beta parametriseeringutest.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:betaparm"></span>
+<img src="10_mudelite_keel_files/figure-html/betaparm-1.png" alt="Beta jaotuse parametriseeringuid." width="70%" />
 <p class="caption">
-Joonis 4.3: Beta jaotuse parametriseeringuid.
+Joonis 11.3: Beta jaotuse parametriseeringuid.
 </p>
 </div>
 <p><span class="math inline">\(beta(\theta~\vert~a,b)\)</span> jaotuse keskväärtus on</p>
@@ -325,10 +328,10 @@ samples &lt;-<span class="st"> </span><span class="kw">extract.samples</span>(m3
 <span class="co">#&gt; |0.95 0.95| </span>
 <span class="co">#&gt; 0.616 0.720</span>
 <span class="kw">dens</span>(samples<span class="op">$</span>p)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
-<img src="10_mudelite_keel_files/figure-html/unnamed-chunk-8-1.png" alt="Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
+<img src="10_mudelite_keel_files/figure-html/unnamed-chunk-5-1.png" alt="Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist." width="70%" />
 <p class="caption">
-Joonis 4.4: Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist.
+Joonis 11.4: Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist.
 </p>
 </div>
 <p>Nagu näha on ka kitsa priori mõju üsna väika, isegi kui kui n = 9.</p>

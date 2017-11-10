@@ -52,6 +52,8 @@ precis(m1)
 
 Nüüd tõmbame posteerioroorsest jaotusest valimi n=10 000. Selleks on funktsioon extract.samples()
 
+(ref:pullpost) Tõmbame valimi posteeriorist.
+
 
 ```r
 samples <- extract.samples(m1)
@@ -63,8 +65,8 @@ HPDI(samples$p, prob = 0.95) # Highest density 95% at the center
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10_mudelite_keel_files/figure-html/unnamed-chunk-3-1.png" alt="tõmbame valimi posteeriorist." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-3)tõmbame valimi posteeriorist.</p>
+<img src="10_mudelite_keel_files/figure-html/pullpost-1.png" alt="(ref:pullpost)" width="70%" />
+<p class="caption">(\#fig:pullpost)(ref:pullpost)</p>
 </div>
 
 Kuus patsienti üheksast surid ja nüüd me usume, et tegelik suremus võib olla nii madal kui 37% ja nii kõrge kui 97%. Kui me tahame paremat hinnangut on meil vaja kas rohkem patsiente või informatiivsemat priorit (paremat taustainfot).
@@ -83,6 +85,8 @@ precis(m2)
 #> p 0.67   0.05 0.59  0.75
 ```
 
+(ref:perse) Veel üks valim posteeriorist (60 surma 90st).
+
 
 ```r
 samples <- extract.samples(m2)
@@ -94,8 +98,8 @@ HPDI(samples$p, prob = 0.95) # Highest density 95% at the center
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10_mudelite_keel_files/figure-html/unnamed-chunk-5-1.png" alt="Veel üks valim posteeriorist (60 surma 90st)." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-5)Veel üks valim posteeriorist (60 surma 90st).</p>
+<img src="10_mudelite_keel_files/figure-html/perse-1.png" alt="(ref:perse)" width="70%" />
+<p class="caption">(\#fig:perse)(ref:perse)</p>
 </div>
 
 10 korda rohkem andmeid: nüüd on suremus määratud kuskile 57% ja 77% vahele (suure tõenäosusega)
@@ -106,10 +110,13 @@ Nüüd anname sisse mõistlikuma struktuuriga priori: beta-jaotuse
 
 Beta-prior katab vahemiku 0st 1ni ja sellel on 2 parameetrit, a ja b.
 
-Siin mõned näited erinevatest beta parametriseeringutest
+Siin mõned näited erinevatest beta parametriseeringutest.
+
+(ref:betaparm) Beta jaotuse parametriseeringuid.
+
 <div class="figure" style="text-align: center">
-<img src="10_mudelite_keel_files/figure-html/unnamed-chunk-6-1.png" alt="Beta jaotuse parametriseeringuid." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-6)Beta jaotuse parametriseeringuid.</p>
+<img src="10_mudelite_keel_files/figure-html/betaparm-1.png" alt="(ref:betaparm)" width="70%" />
+<p class="caption">(\#fig:betaparm)(ref:betaparm)</p>
 </div>
 
 $beta(\theta~\vert~a,b)$ jaotuse keskväärtus on 
@@ -169,8 +176,8 @@ dens(samples$p)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10_mudelite_keel_files/figure-html/unnamed-chunk-8-1.png" alt="Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-8)Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist.</p>
+<img src="10_mudelite_keel_files/figure-html/unnamed-chunk-5-1.png" alt="Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-5)Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist.</p>
 </div>
 
 Nagu näha on ka kitsa priori mõju üsna väika, isegi kui kui n = 9.
