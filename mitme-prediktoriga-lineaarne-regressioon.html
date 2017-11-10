@@ -230,14 +230,18 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="mitme-prediktoriga-lineaarne-regressioon" class="section level1">
 <h1><span class="header-section-number">14</span> Mitme prediktoriga lineaarne regressioon</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(gapminder)
+<span class="kw">library</span>(rethinking)</code></pre></div>
+<p>Meil on võimalik lisada regressioonivõrrandisse lisaprediktoreid. Nüüd ei küsi me enam, kuidas mõjutab l_GDP varieeruvus keskmise eluea varieeruvust vaid: kuidas mõjutavad muutujad l_GDP, continent ja logaritm pop-ist (rahvaarvust) keskmist eluiga. Me modelleerime selle lineaarselt nii, et eeldusena varieeruvad need x-i muutujad üksteisest sõltumatult: <span class="math inline">\(y = a + b_1x_1 + b_2x_2 + b_3x_3\)</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g2007 &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">2007</span> ) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>)
+g2007 &lt;-<span class="st"> </span>g2007 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">l_GDP =</span> <span class="kw">log10</span>(gdpPercap),
          <span class="dt">l_pop =</span> <span class="kw">log10</span>(pop), 
          <span class="dt">lpop_s =</span> (l_pop <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(l_pop )) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(l_pop),
          <span class="dt">lGDP_s =</span> (l_GDP <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(l_GDP )) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(l_GDP)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">as.data.frame</span>()</code></pre></div>
-<p>Meil on võimalik lisada regressioonivõrrandisse lisaprediktoreid. Nüüd ei küsi me enam, kuidas mõjutab l_GDP varieeruvus keskmise eluea varieeruvust vaid: kuidas mõjutavad muutujad l_GDP, continent ja logaritm pop-ist (rahvaarvust) keskmist eluiga. Me modelleerime selle lineaarselt nii, et eeldusena varieeruvad need x-i muutujad üksteisest sõltumatult: <span class="math inline">\(y = a + b_1x_1 + b_2x_2 + b_3x_3\)</span></p>
 <p>Sellise mudeli tõlgendus on suhteliselt lihtne:</p>
 <blockquote>
 <p>koef b1 ütleb meile, kui mitme ühiku võrra tõuseb/langeb muutuja y (eluiga) kui muutuja x1 (l_GDP) tõuseb 1 ühiku võrra; tingimusel, et me hoiame kõigi teiste muutujate väärtused konstantsed.</p>
@@ -250,7 +254,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ol>
 <p>Järgenval mudelil on 4 parameetrit (intercept + 3 betat).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m1 &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span>l_GDP <span class="op">+</span><span class="st"> </span>continent <span class="op">+</span><span class="st"> </span>l_pop, <span class="dt">data =</span> g2007)
-<span class="kw">summary</span>( m1 )
+<span class="kw">summary</span>(m1)
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm(formula = lifeExp ~ l_GDP + continent + l_pop, data = g2007)</span>
@@ -276,9 +280,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <span class="co">#&gt; F-statistic: 74.2 on 6 and 135 DF,  p-value: &lt;2e-16</span></code></pre></div>
 <p>loeme mudelis “+” märki nagu “või”. Ehk, “eluiga võib olla funktsioon SKP-st <strong>või</strong> rahvaarvust”.</p>
 <p>Intercept 19 ei tähenda tõlgenduslikult midagi. l-GDP tõus ühiku võrra tõstab eluiga 10.7 aasta võrra.</p>
-<p>võrdluseks lihtne mudel</p>
+<p>Võrdluseks lihtne mudel</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m2 &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span>l_GDP, <span class="dt">data =</span> g2007)
-<span class="kw">summary</span>( m2 )
+<span class="kw">summary</span>(m2)
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm(formula = lifeExp ~ l_GDP, data = g2007)</span>
@@ -395,6 +399,7 @@ m4 &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class=
 <span class="co">#&gt; b_continentEurope   11.26   1.83       8.50      14.26   434    1</span>
 <span class="co">#&gt; b_continentOceania  11.18   4.00       4.87      17.50   784    1</span>
 <span class="co">#&gt; sigma                5.95   0.36       5.38       6.49   931    1</span></code></pre></div>
+
 </div>
 </div>
             </section>
@@ -432,7 +437,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstats-tartu/lectures/edit/master/11_pidev.Rmd",
+"link": "https://github.com/rstats-tartu/lectures/edit/master/13_mitu-prediktorit.Rmd",
 "text": "Editeeri"
 },
 "download": ["_main.pdf"],

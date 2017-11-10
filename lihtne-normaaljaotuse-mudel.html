@@ -232,6 +232,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">12</span> Lihtne normaaljaotuse mudel</h1>
 <p>Kui me eelmises peatükis modelleerisime diskreetseid binaarseid sündmusi (elus või surnud) üle binoomjaotuse, siis edasi tegeleme pidevate suurustega ehk parameetritega, millele saab omistada iga väärtuse vahemikus -Inf kuni Inf.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(stringr)
+<span class="kw">library</span>(gapminder)
 <span class="kw">library</span>(rethinking)
 <span class="kw">library</span>(bayesplot)
 <span class="kw">library</span>(gridExtra)</code></pre></div>
@@ -790,6 +792,7 @@ Joonis 12.15: Täismudeliga regressioon.
 </table>
 <p>AIC on <em>Aikake informatsiooni kriteerium</em>, mis võtab arvesse nii mudeli fiti headuse kui mudeli parameetrite arvu. Kuna R saab parameetreid lisades ainult kasvada ja me teame, et mingist hetkest oleme niikuinii oma mudeli üle fittinud, siis otsime AIC-i abil kompromissi: võimalult hea fit võimalikult väikese parameetrite arvuga. AIC on suhteline mõõt, selle absoluutnäit ei oma mingit tähendust. Me eelistame väiksema AIC-ga mudelit nende mudelite seast, mida me võrdleme. See ei tähenda, et võitnud mudel oleks hea mudel — alati on võimalik, et kõik head mudelid jäid võrdlusest välja.</p>
 <p>Seega parim mudel on gapmod3 ja kõige kehvem on gapmod2, mille lõikepunkt on realistlikult nulli fikseeritud!</p>
+
 </div>
 </div>
             </section>
