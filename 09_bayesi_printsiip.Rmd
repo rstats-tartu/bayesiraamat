@@ -21,29 +21,31 @@ Alustame siiski lihtsa näitega, mida saab käsitsi läbi arvutada.
 
 ## Esimene näide {-}
 
-Me teame, et suremus haigusesse on 50% ja meil on palatis 3 patsienti, kes seda haigust põevad. Seega on meil kaks andmetükki (50% ja n=3). Küsimus: mitu meie patsienti oodatavalt hinge heidavad? Eeldusel, et meie patsiendid on iseseisvad (näiteks ei ole sugulased), on meil tüüpiline mündiviske olukord.
+Me teame, et suremus haigusesse on 50% ja meil on palatis 3 patsienti, kes seda haigust põevad. 
+Seega on meil kaks andmetükki (50% ja n=3). 
+Küsimus: mitu meie patsienti oodatavalt hinge heidavad? Eeldusel, et meie patsiendid on iseseisvad (näiteks ei ole sugulased), on meil tüüpiline mündiviske olukord.
 
 Parameetriruum on neljaliikmeline: 0 surnud, 1 surnud, 2 surnud ja 3 surnud. 
 Edasi loeme üles kõik võimalikud sündmusteahelad, mis loogiliselt saavad juhtuda, et saada tõepärafunktsioon.
 
-Me viskame kulli-kirja 3 korda: H - kiri, T - kull
+Me viskame kulli-kirja 3 korda: kiri = elus, kull = surnud
 
 Võimalikud sündmused on:
-HHH,
-HTH,
-THH,
-HHT,
-HTT,
-TTH,
-THT,
-TTT,
+| kull kull kull 
+| kull kiri kull 
+| kiri kull kull 
+| kull kull kiri
+| kull kiri kiri
+| kiri kiri kull 
+| kiri kull kiri
+| kiri kiri kiri
 
-Kui P(H) = 0.5 ning H = elus ja T = surnud, siis lugedes kokku kõik võimalikud sündmused:
+Kui P(kull) = 0.5, siis lugedes kokku kõik võimalikud sündmused:
 
-+ 0 surnud - 1,
-+ 1 surnud - 3,
-+ 2 surnud - 3,
-+ 3 surnud - 1
++ 0 kulli ehk surnud - 1,
++ 1 kulli ehk surnud - 3,
++ 2 kulli ehk surnud - 3,
++ 3 kulli ehk surnud - 1
 
 Nüüd teame parameetriruumi iga liikme kohta, kui suure tõenäosusega me ootame selle realiseerumist. Näiteks, P(0 surnud) = 1/8, P(1 surnud) = 3/8, P(1 või 2 surnud) = 6/8 jne
 Selle teadmise konverteerime tõepärafunktsiooniks.
@@ -55,7 +57,9 @@ x <- seq(from = 0, to = 3)
 y <- c(1, 3, 3, 1)
 ```
 
-```{r fig.cap="Tõepärafunktsioon."}
+(ref:prob) Tõepärafunktsioon.
+
+```{r prob, fig.cap="(ref:prob)"}
 plot(x, y, 
      ylab = "Number of possibilities", 
      xlab = "Number of deaths", 
@@ -73,7 +77,9 @@ Me saame sama tulemuse kasutades formaalsel viisil binoomjaotuse mudelit. Ainus 
 y <- dbinom(x, 3, 0.5)
 ```
 
-```{r fig.cap="Tõepärafunktsioon binoomjaotuse mudelist."}
+(ref:binom) Tõepärafunktsioon binoomjaotuse mudelist.
+
+```{r binom, fig.cap="(ref:binom)"}
 plot(x, y, 
      type = "b",
      xlab = "Number of deaths",
@@ -89,7 +95,9 @@ x <- seq(from = 0, to = 9)
 y <- dbinom(x, 9, 0.67)
 ```
 
-```{r fig.cap="Veel üks tõepärafunktsioon."}
+(ref:veelyks) Veel üks tõepärafunktsioon.
+
+```{r veelyks, fig.cap="(ref:veelyks)"}
 plot(x, y, 
      type = "b", 
      xlab = "Number of deaths", 
@@ -102,7 +110,9 @@ Lisame sellele tõepärafunktsioonile tasase priori (lihtsuse huvides) ja arvuta
 
 Me defineerime X telje kui rea 10-st arvust (0 kuni 9 surma) ja arvutame tõepära igale neist 10-st arvust. Sellega ammendame me kõik loogiliselt võimalikud parameetri väärtused.
 
-```{r fig.cap="Posteerior."}
+(ref:posterior) Posteerior.
+
+```{r posterior, fig.cap="(ref:posterior)"}
 # Define grid
 x <- seq(from = 0 , to = 9)
 # Define flat prior
@@ -145,7 +155,9 @@ Seega on meil
     
 > Tehniliselt on sinu andmete tõepärafunktsioon agregeeritud iga üksiku andmepunkti tõepärafunktsioonist. Seega vaatab Bayes igat andmepunkti eraldi (andmete sisestamise järjekord ei loe).
 
-```{r, fig.cap="Prior, tõepära ja posteerior.", out.width='30%'}
+(ref:trinity) Prior, tõepära ja posteerior.
+
+```{r trinity, fig.cap="(ref:trinity)", out.width='30%'}
 # Define grid (mortality at 20 evenly spaced probabilities from 0 to 1)
 x <- seq(from = 0 , to = 1, length.out = 20)
 
@@ -185,8 +197,9 @@ Hea küll, me arvutame jälle suremust.
 
 Bayes töötab andmepunkti kaupa (see et me talle ennist kõik andmed korraga ette andsime, on puhtalt mugavuse pärast).
 
+(ref:esimene-patsient) N=1, esimene patsient suri.
 
-```{r fig.cap="N=1, esimene patsient suri."}
+```{r esimene-patsient, fig.cap="(ref:esimene-patsient)"}
 # Define grid
 x <- seq(from = 0, to = 1, length.out = 20)
 
@@ -205,8 +218,9 @@ plot(x, posterior,
 
 Esimene patsient suri - 0 mortaalsus ei ole enam loogiliselt võimalik (välja arvatud siis kui prior selle koha peal = 0) ja mortaalsus 100% on andmetega (tegelikult andmega) parimini kooskõlas. Posteerior on nulli ja 100% vahel sirge sest vähene sissepandud informatsioon lihtsalt ei võimalda enamat.
 
+(ref:teine-patsient) N=2, teine patsient suri.
 
-```{r fig.cap="N=2, teine patsient suri."}
+```{r teine-patsient, fig.cap="(ref:teine-patsient)"}
 # Define prior
 prior <- posterior
 
@@ -224,7 +238,9 @@ Teine patsient suri.
 Nüüd ei ole 0 ja 1 vahel enam sirge posteerior. 
 Posteerior on kaldu 100 protsendi poole, mis on ikka kõige tõenäolisem väärtus.
 
-```{r fig.cap="N=3, kolmas patsient jäi ellu."}
+(ref:kolmas-patsient) N=3, kolmas patsient jäi ellu.
+
+```{r kolmas-patsient, fig.cap="(ref:kolmas-patsient)"}
 # Define prior
 prior <- posterior1
 
@@ -244,8 +260,9 @@ Kolmas patsient jäi ellu - 0 ja 100% mortaalsus on seega võimaluste nimekirjas
 
 Teeme sedasama prioriga, mis ei ole tasane. See illustreerib tõsiasja, et kui N on väike siis domineerib prior posteerior jaotust. (Suure N korral on vastupidi, priori kuju on sageli vähetähtis.)
 
+(ref:informatiivse-prioriga) N=1 informatiivse prioriga.
 
-```{r fig.cap="N=1 informatiivse prioriga."}
+```{r informatiivse-prioriga, fig.cap="(ref:informatiivse-prioriga)"}
 # Define prior
 prior <- c(seq(1:10), seq(from = 10, to = 1))
 
@@ -267,7 +284,9 @@ par(def.par)
 ```
 1. patsient suri
 
-```{r fig.cap="N=2 informatiivse prioriga."}
+(ref:fuck) N=2 informatiivse prioriga.
+
+```{r fuck, fig.cap="(ref:fuck)"}
 # Define prior
 prior <- posterior
 
@@ -292,7 +311,9 @@ par(def.par)
 
 Teine patsient suri.
 
-```{r fig.cap="N=3 informatiivse prioriga."}
+(ref:omg) N=3 informatiivse prioriga.
+
+```{r omg, fig.cap="(ref:omg)"}
 # Define prior
 prior2 <- posterior1
 
