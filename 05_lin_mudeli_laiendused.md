@@ -25,14 +25,18 @@ Kui meil on 3 prediktoriga mudel, siis me liigume juba 4-mõõtmelisse ruumi.
 
 
 
+(ref:regressioonitasand) Regressioonitasand 3D andmetele. Siin on Sepal.Length ja Petal.Length prediktorid ja Sepal.Width ennustatav muutuja.
+
 <div class="figure" style="text-align: center">
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-4-1.png" alt="Regressioonitasand 3D andmetele. Siin on Sepal.Length ja Petal.Length prediktorid ja Sepal.Width ennustatav muutuja." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-4)Regressioonitasand 3D andmetele. Siin on Sepal.Length ja Petal.Length prediktorid ja Sepal.Width ennustatav muutuja.</p>
+<img src="05_lin_mudeli_laiendused_files/figure-html/regressioonitasand-1.png" alt="(ref:regressioonitasand)" width="70%" />
+<p class="caption">(\#fig:regressioonitasand)(ref:regressioonitasand)</p>
 </div>
 
 
 Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile.
 
+(ref:lin2d) 2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile.
+ 
 
 ```r
 p <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
@@ -47,8 +51,8 @@ p + geom_abline(intercept = coef(m1)[1], slope = coef(m1)[2]) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05_lin_mudeli_laiendused_files/figure-html/lin2d-1.png" alt="2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile." width="48%" /><img src="05_lin_mudeli_laiendused_files/figure-html/lin2d-2.png" alt="2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile." width="48%" />
-<p class="caption">(\#fig:lin2d)2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile.</p>
+<img src="05_lin_mudeli_laiendused_files/figure-html/lin2d-1.png" alt="(ref:lin2d)" width="48%" /><img src="05_lin_mudeli_laiendused_files/figure-html/lin2d-2.png" alt="(ref:lin2d)" width="48%" />
+<p class="caption">(\#fig:lin2d)(ref:lin2d)</p>
 </div>
 
 Siin on regressioonijoon hoopis teises kohas, kui lihtsas ühe prediktoriga mudelis.
@@ -104,11 +108,13 @@ abline(c(coef(m1)[1], coef(m1)[2]), lty = "dashed")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-8-1.png" alt="Ennustatud y väärtused erinevatel x1 ja x2 väärtustel, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-8)Ennustatud y väärtused erinevatel x1 ja x2 väärtustel, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus.</p>
+<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-7-1.png" alt="Ennustatud y väärtused erinevatel x1 ja x2 väärtustel, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-7)Ennustatud y väärtused erinevatel x1 ja x2 väärtustel, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus.</p>
 </div>
 
 Nüüd joonistame 3D pildi olukorrast, kus nii $x_1$ kui $x_2$ omandavad rea väärtusi. Mudeli ennustus on ikkagi sirge kujul -- mis sest, et 3D ruumis.
+
+(ref:kaksprediktorit) Kahe prediktoriga mudeli ennustus 3D ruumis.
 
 
 ```r
@@ -119,8 +125,8 @@ with(dfr, scatterplot3d(Sepal_length, Petal_length, Sepal_width, col.axis = "blu
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-9-1.png" alt="kahe prediktoriga mudeli ennustus 3D ruumis." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-9)kahe prediktoriga mudeli ennustus 3D ruumis.</p>
+<img src="05_lin_mudeli_laiendused_files/figure-html/kaksprediktorit-1.png" alt="(ref:kaksprediktorit)" width="70%" />
+<p class="caption">(\#fig:kaksprediktorit)(ref:kaksprediktorit)</p>
 </div>
 
 ## Interaktsioonimudel {-}
@@ -155,6 +161,8 @@ AIC(m1, m2, m3)
 
 Kõigepealt anname rea väärtusi x_1-le ja hoiame x_2 konstantsena. 
 
+(ref:ennustus-interaktsioonimudelist) Ennustus interaktsioonimudelist, kus x1 on antud rida väärtusi ja x2 hoitakse konstantsena.
+
 
 ```r
 Petal_length <-  mean(iris$Petal.Length)
@@ -170,8 +178,8 @@ abline(m2, lty = "dashed")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-11-1.png" alt="Ennustus interaktsioonimudelist, kus x1 on antud rida väärtusi ja x2 hoitakse konstantsena." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-11)Ennustus interaktsioonimudelist, kus x1 on antud rida väärtusi ja x2 hoitakse konstantsena.</p>
+<img src="05_lin_mudeli_laiendused_files/figure-html/ennustus-interaktsioonimudelist-1.png" alt="(ref:ennustus-interaktsioonimudelist)" width="70%" />
+<p class="caption">(\#fig:ennustus-interaktsioonimudelist)(ref:ennustus-interaktsioonimudelist)</p>
 </div>
 
 Tulemuseks on sirge, mis on paraleelne ilma interaktsioonita mudeli ennustusele (katkendjoon)
@@ -180,6 +188,8 @@ Tulemuseks on sirge, mis on paraleelne ilma interaktsioonita mudeli ennustusele 
 Nagu näha, korrutamistehe viib selleni, et interaktsioonimudeli tõus erineb ilma interaktsioonita mudeli tõusust. 
 
 Kui aga interaktsioonimudel plottida välja 3D-s üle paljude x_1 ja x_2 väärtuste, saame me regressioonikurvi (mitte sirge), kus b_3 annab kurvatuuri.
+
+(ref:ennustused3d-interaktsioonimudelist) Ennustused 3D interaktsioonimudelist üle paljude x1 ja x2 väärtuste.
 
 
 ```r
@@ -197,8 +207,8 @@ with(dfr, scatterplot3d(Sepal_length, Petal_length, Sepal_width, pch = 20, col.a
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-12-1.png" alt="Ennustused 3D interaktsioonimudelist üle paljude x1 ja x2 väärtuste." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-12)Ennustused 3D interaktsioonimudelist üle paljude x1 ja x2 väärtuste.</p>
+<img src="05_lin_mudeli_laiendused_files/figure-html/ennustused3d-interaktsioonimudelist-1.png" alt="(ref:ennustused3d-interaktsioonimudelist)" width="70%" />
+<p class="caption">(\#fig:ennustused3d-interaktsioonimudelist)(ref:ennustused3d-interaktsioonimudelist)</p>
 </div>
 
 Vau! See on alles ennustus!

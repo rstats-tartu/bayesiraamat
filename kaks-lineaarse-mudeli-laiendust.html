@@ -241,13 +241,15 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>Mitme prediktoriga mudeli iga prediktori tõus (beta koefitsient) ütleb, mitme ühiku võrra ennustab mudel y muutumist juhul kui see prediktor muutub ühe ühiku võrra ja kõik teised prediktorid ei muutu üldse.</p>
 </blockquote>
 <p>Kui meie andmed on kolmedimensioonaalsed (me mõõdame igal mõõteobjektil kolme muutujat) ja me tahame ennnustada ühe muutuja väärtust kahe teise muutuja väärtuste põhjal (meil on 2 prediktorit), siis tuleb meie 3 parameetriga lineaarne regressioonimudel tasapinna kujul. Kui meil on 3 prediktoriga mudel, siis me liigume juba 4-mõõtmelisse ruumi.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-4-1.png" alt="Regressioonitasand 3D andmetele. Siin on Sepal.Length ja Petal.Length prediktorid ja Sepal.Width ennustatav muutuja." width="70%" />
+
+<div class="figure" style="text-align: center"><span id="fig:regressioonitasand"></span>
+<img src="05_lin_mudeli_laiendused_files/figure-html/regressioonitasand-1.png" alt="Regressioonitasand 3D andmetele. Siin on Sepal.Length ja Petal.Length prediktorid ja Sepal.Width ennustatav muutuja." width="70%" />
 <p class="caption">
-Joonis 1.3: Regressioonitasand 3D andmetele. Siin on Sepal.Length ja Petal.Length prediktorid ja Sepal.Width ennustatav muutuja.
+Joonis 5.1: Regressioonitasand 3D andmetele. Siin on Sepal.Length ja Petal.Length prediktorid ja Sepal.Width ennustatav muutuja.
 </p>
 </div>
 <p>Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile.</p>
+
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Sepal.Length, Sepal.Width, <span class="dt">color =</span> Species)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">xlim</span>(<span class="dv">4</span>, <span class="dv">8</span>) <span class="op">+</span>
@@ -260,7 +262,7 @@ p <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline
 <div class="figure" style="text-align: center"><span id="fig:lin2d"></span>
 <img src="05_lin_mudeli_laiendused_files/figure-html/lin2d-1.png" alt="2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile." width="48%" /><img src="05_lin_mudeli_laiendused_files/figure-html/lin2d-2.png" alt="2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile." width="48%" />
 <p class="caption">
-Joonis 5.1: 2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile.
+Joonis 5.2: 2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile.
 </p>
 </div>
 <p>Siin on regressioonijoon hoopis teises kohas, kui lihtsas ühe prediktoriga mudelis.</p>
@@ -292,21 +294,22 @@ Sepal_width_predicted &lt;-<span class="st"> </span>a <span class="op">+</span><
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(Sepal_width_predicted <span class="op">~</span><span class="st"> </span>Sepal_length, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
 <span class="co"># prediction from the single predictor model</span>
 <span class="kw">abline</span>(<span class="kw">c</span>(<span class="kw">coef</span>(m1)[<span class="dv">1</span>], <span class="kw">coef</span>(m1)[<span class="dv">2</span>]), <span class="dt">lty =</span> <span class="st">&quot;dashed&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-8-1.png" alt="Ennustatud y väärtused erinevatel x1 ja x2 väärtustel, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
+<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-7-1.png" alt="Ennustatud y väärtused erinevatel x1 ja x2 väärtustel, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus." width="70%" />
 <p class="caption">
-Joonis 4.4: Ennustatud y väärtused erinevatel x1 ja x2 väärtustel, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus.
+Joonis 5.3: Ennustatud y väärtused erinevatel x1 ja x2 väärtustel, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus.
 </p>
 </div>
 <p>Nüüd joonistame 3D pildi olukorrast, kus nii <span class="math inline">\(x_1\)</span> kui <span class="math inline">\(x_2\)</span> omandavad rea väärtusi. Mudeli ennustus on ikkagi sirge kujul – mis sest, et 3D ruumis.</p>
+
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Petal_length &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(iris<span class="op">$</span>Petal.Length), <span class="kw">max</span>(iris<span class="op">$</span>Petal.Length), <span class="dt">length.out =</span> <span class="dv">10</span>)
 Sepal_width &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b1 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">+</span><span class="st"> </span>b2 <span class="op">*</span><span class="st"> </span>Petal_length
 dfr &lt;-<span class="st"> </span><span class="kw">data_frame</span>(Sepal_width, Sepal_length, Petal_length)
 <span class="kw">with</span>(dfr, <span class="kw">scatterplot3d</span>(Sepal_length, Petal_length, Sepal_width, <span class="dt">col.axis =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">col.grid =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>))</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-9"></span>
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-9-1.png" alt="kahe prediktoriga mudeli ennustus 3D ruumis." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:kaksprediktorit"></span>
+<img src="05_lin_mudeli_laiendused_files/figure-html/kaksprediktorit-1.png" alt="Kahe prediktoriga mudeli ennustus 3D ruumis." width="70%" />
 <p class="caption">
-Joonis 5.2: kahe prediktoriga mudeli ennustus 3D ruumis.
+Joonis 5.4: Kahe prediktoriga mudeli ennustus 3D ruumis.
 </p>
 </div>
 </div>
@@ -328,6 +331,7 @@ Joonis 5.2: kahe prediktoriga mudeli ennustus 3D ruumis.
 <span class="co">#&gt; m3  5  93.4</span></code></pre></div>
 <p><strong>Ennustused interaktsioonimudelist</strong></p>
 <p>Kõigepealt anname rea väärtusi x_1-le ja hoiame x_2 konstantsena.</p>
+
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Petal_length &lt;-<span class="st">  </span><span class="kw">mean</span>(iris<span class="op">$</span>Petal.Length)
 a &lt;-<span class="st"> </span><span class="kw">coef</span>(m3)[<span class="dv">1</span>]
 b1 &lt;-<span class="st"> </span><span class="kw">coef</span>(m3)[<span class="dv">2</span>]
@@ -338,15 +342,16 @@ Sepal_width &lt;-<span class="st"> </span>a <span class="op">+</span><span class
 <span class="kw">abline</span>(m2, <span class="dt">lty =</span> <span class="st">&quot;dashed&quot;</span>)
 <span class="co">#&gt; Warning in abline(m2, lty = &quot;dashed&quot;): only using the first two of 3</span>
 <span class="co">#&gt; regression coefficients</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-11-1.png" alt="Ennustus interaktsioonimudelist, kus x1 on antud rida väärtusi ja x2 hoitakse konstantsena." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:ennustus-interaktsioonimudelist"></span>
+<img src="05_lin_mudeli_laiendused_files/figure-html/ennustus-interaktsioonimudelist-1.png" alt="Ennustus interaktsioonimudelist, kus x1 on antud rida väärtusi ja x2 hoitakse konstantsena." width="70%" />
 <p class="caption">
-Joonis 5.3: Ennustus interaktsioonimudelist, kus x1 on antud rida väärtusi ja x2 hoitakse konstantsena.
+Joonis 5.5: Ennustus interaktsioonimudelist, kus x1 on antud rida väärtusi ja x2 hoitakse konstantsena.
 </p>
 </div>
 <p>Tulemuseks on sirge, mis on paraleelne ilma interaktsioonita mudeli ennustusele (katkendjoon)</p>
 <p>Nagu näha, korrutamistehe viib selleni, et interaktsioonimudeli tõus erineb ilma interaktsioonita mudeli tõusust.</p>
 <p>Kui aga interaktsioonimudel plottida välja 3D-s üle paljude x_1 ja x_2 väärtuste, saame me regressioonikurvi (mitte sirge), kus b_3 annab kurvatuuri.</p>
+
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Petal_length &lt;-<span class="st">  </span><span class="kw">seq</span>(<span class="kw">min</span>(iris<span class="op">$</span>Petal.Length), 
                      <span class="kw">max</span>(iris<span class="op">$</span>Petal.Length), 
                      <span class="dt">length.out =</span> <span class="dv">100</span>)
@@ -358,10 +363,10 @@ b3 &lt;-<span class="st"> </span><span class="kw">coef</span>(m3)[<span class="d
 Sepal_width &lt;-<span class="st">   </span>a <span class="op">+</span><span class="st"> </span>b1 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">+</span><span class="st"> </span>b2 <span class="op">*</span><span class="st"> </span>Petal_length <span class="op">+</span><span class="st">  </span>b3 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">*</span><span class="st"> </span>Petal_length
 dfr &lt;-<span class="st"> </span><span class="kw">data.frame</span>(Sepal_width, Sepal_length, Petal_length)
 <span class="kw">with</span>(dfr, <span class="kw">scatterplot3d</span>(Sepal_length, Petal_length, Sepal_width, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col.axis =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">col.grid =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>))</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-12-1.png" alt="Ennustused 3D interaktsioonimudelist üle paljude x1 ja x2 väärtuste." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:ennustused3d-interaktsioonimudelist"></span>
+<img src="05_lin_mudeli_laiendused_files/figure-html/ennustused3d-interaktsioonimudelist-1.png" alt="Ennustused 3D interaktsioonimudelist üle paljude x1 ja x2 väärtuste." width="70%" />
 <p class="caption">
-Joonis 5.4: Ennustused 3D interaktsioonimudelist üle paljude x1 ja x2 väärtuste.
+Joonis 5.6: Ennustused 3D interaktsioonimudelist üle paljude x1 ja x2 väärtuste.
 </p>
 </div>
 <p>Vau! See on alles ennustus!</p>
