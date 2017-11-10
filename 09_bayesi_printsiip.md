@@ -22,29 +22,31 @@ Alustame siiski lihtsa näitega, mida saab käsitsi läbi arvutada.
 
 ## Esimene näide {-}
 
-Me teame, et suremus haigusesse on 50% ja meil on palatis 3 patsienti, kes seda haigust põevad. Seega on meil kaks andmetükki (50% ja n=3). Küsimus: mitu meie patsienti oodatavalt hinge heidavad? Eeldusel, et meie patsiendid on iseseisvad (näiteks ei ole sugulased), on meil tüüpiline mündiviske olukord.
+Me teame, et suremus haigusesse on 50% ja meil on palatis 3 patsienti, kes seda haigust põevad. 
+Seega on meil kaks andmetükki (50% ja n=3). 
+Küsimus: mitu meie patsienti oodatavalt hinge heidavad? Eeldusel, et meie patsiendid on iseseisvad (näiteks ei ole sugulased), on meil tüüpiline mündiviske olukord.
 
 Parameetriruum on neljaliikmeline: 0 surnud, 1 surnud, 2 surnud ja 3 surnud. 
 Edasi loeme üles kõik võimalikud sündmusteahelad, mis loogiliselt saavad juhtuda, et saada tõepärafunktsioon.
 
-Me viskame kulli-kirja 3 korda: H - kiri, T - kull
+Me viskame kulli-kirja 3 korda: kiri = elus, kull = surnud
 
 Võimalikud sündmused on:
-HHH,
-HTH,
-THH,
-HHT,
-HTT,
-TTH,
-THT,
-TTT,
+| kull kull kull 
+| kull kiri kull 
+| kiri kull kull 
+| kull kull kiri
+| kull kiri kiri
+| kiri kiri kull 
+| kiri kull kiri
+| kiri kiri kiri
 
-Kui P(H) = 0.5 ning H = elus ja T = surnud, siis lugedes kokku kõik võimalikud sündmused:
+Kui P(kull) = 0.5, siis lugedes kokku kõik võimalikud sündmused:
 
-+ 0 surnud - 1,
-+ 1 surnud - 3,
-+ 2 surnud - 3,
-+ 3 surnud - 1
++ 0 kulli ehk surnud - 1,
++ 1 kulli ehk surnud - 3,
++ 2 kulli ehk surnud - 3,
++ 3 kulli ehk surnud - 1
 
 Nüüd teame parameetriruumi iga liikme kohta, kui suure tõenäosusega me ootame selle realiseerumist. Näiteks, P(0 surnud) = 1/8, P(1 surnud) = 3/8, P(1 või 2 surnud) = 6/8 jne
 Selle teadmise konverteerime tõepärafunktsiooniks.
@@ -57,6 +59,8 @@ x <- seq(from = 0, to = 3)
 y <- c(1, 3, 3, 1)
 ```
 
+(ref:prob) Tõepärafunktsioon.
+
 
 ```r
 plot(x, y, 
@@ -67,8 +71,8 @@ plot(x, y,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-3-1.png" alt="Tõepärafunktsioon." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-3)Tõepärafunktsioon.</p>
+<img src="09_bayesi_printsiip_files/figure-html/prob-1.png" alt="(ref:prob)" width="70%" />
+<p class="caption">(\#fig:prob)(ref:prob)</p>
 </div>
 
 
@@ -82,6 +86,8 @@ Me saame sama tulemuse kasutades formaalsel viisil binoomjaotuse mudelit. Ainus 
 y <- dbinom(x, 3, 0.5)
 ```
 
+(ref:binom) Tõepärafunktsioon binoomjaotuse mudelist.
+
 
 ```r
 plot(x, y, 
@@ -92,8 +98,8 @@ plot(x, y,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-5-1.png" alt="Tõepärafunktsioon binoomjaotuse mudelist." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-5)Tõepärafunktsioon binoomjaotuse mudelist.</p>
+<img src="09_bayesi_printsiip_files/figure-html/binom-1.png" alt="(ref:binom)" width="70%" />
+<p class="caption">(\#fig:binom)(ref:binom)</p>
 </div>
 
 
@@ -105,6 +111,8 @@ x <- seq(from = 0, to = 9)
 y <- dbinom(x, 9, 0.67)
 ```
 
+(ref:veelyks) Veel üks tõepärafunktsioon.
+
 
 ```r
 plot(x, y, 
@@ -115,14 +123,16 @@ plot(x, y,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-7-1.png" alt="Veel üks tõepärafunktsioon." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-7)Veel üks tõepärafunktsioon.</p>
+<img src="09_bayesi_printsiip_files/figure-html/veelyks-1.png" alt="(ref:veelyks)" width="70%" />
+<p class="caption">(\#fig:veelyks)(ref:veelyks)</p>
 </div>
 
 
 Lisame sellele tõepärafunktsioonile tasase priori (lihtsuse huvides) ja arvutame posterioorse jaotuse kasutades Bayesi teoreemi. Igale parameetri väärtusele on tõepära * prior proportsionaalne posterioorse tõenäosusega, et just see parameetri väärtus on see ainus tõene väärtus. Posterioorsed tõenäosused normaliseeritakse nii, et nad summeeruksid 1-le.
 
 Me defineerime X telje kui rea 10-st arvust (0 kuni 9 surma) ja arvutame tõepära igale neist 10-st arvust. Sellega ammendame me kõik loogiliselt võimalikud parameetri väärtused.
+
+(ref:posterior) Posteerior.
 
 
 ```r
@@ -150,8 +160,8 @@ plot(x, posterior,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-8-1.png" alt="Posteerior." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-8)Posteerior.</p>
+<img src="09_bayesi_printsiip_files/figure-html/posterior-1.png" alt="(ref:posterior)" width="70%" />
+<p class="caption">(\#fig:posterior)(ref:posterior)</p>
 </div>
 
 See on parim võimalik teadmine, mitu kirstu tasuks tellida, arvestades meie priori ja likelihoodi mudelitega. Näiteks, sedapalju, kui surmad ei ole üksteisest sõltumatud, on meie tõepäramudel (binoomjaotus) vale. 
@@ -173,6 +183,8 @@ Seega on meil
 **Tõepära parameetri väärtusel x on tõenäosus kohata meie andmeid, kui x on juhtumisi parameetri tegelik väärtus.**  Meie näites koosneb tõepärafunktsioon tõenäosustest, et kuus üheksast patsiendist surid igal võimalikul suremuse väärtusel (0...1). Kuna see on lõpmatu rida, teeme natuke sohki ja arvutame tõepära 20-l valitud suremuse väärtusel. 
     
 > Tehniliselt on sinu andmete tõepärafunktsioon agregeeritud iga üksiku andmepunkti tõepärafunktsioonist. Seega vaatab Bayes igat andmepunkti eraldi (andmete sisestamise järjekord ei loe).
+
+(ref:trinity) Prior, tõepära ja posteerior.
 
 
 ```r
@@ -203,8 +215,8 @@ plot(x, posterior,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-9-1.png" alt="Prior, tõepära ja posteerior." width="30%" /><img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-9-2.png" alt="Prior, tõepära ja posteerior." width="30%" /><img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-9-3.png" alt="Prior, tõepära ja posteerior." width="30%" />
-<p class="caption">(\#fig:unnamed-chunk-9)Prior, tõepära ja posteerior.</p>
+<img src="09_bayesi_printsiip_files/figure-html/trinity-1.png" alt="(ref:trinity)" width="30%" /><img src="09_bayesi_printsiip_files/figure-html/trinity-2.png" alt="(ref:trinity)" width="30%" /><img src="09_bayesi_printsiip_files/figure-html/trinity-3.png" alt="(ref:trinity)" width="30%" />
+<p class="caption">(\#fig:trinity)(ref:trinity)</p>
 </div>
 
 Nüüd on meil posterioorne tõenäosusfunktsioon, mis summeerub 1-le ja mis sisaldab kogu meie teadmist suremuse kohta.
@@ -220,6 +232,7 @@ Hea küll, me arvutame jälle suremust.
 
 Bayes töötab andmepunkti kaupa (see et me talle ennist kõik andmed korraga ette andsime, on puhtalt mugavuse pärast).
 
+(ref:esimene-patsient) N=1, esimene patsient suri.
 
 
 ```r
@@ -240,12 +253,13 @@ plot(x, posterior,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-10-1.png" alt="N=1, esimene patsient suri." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-10)N=1, esimene patsient suri.</p>
+<img src="09_bayesi_printsiip_files/figure-html/esimene-patsient-1.png" alt="(ref:esimene-patsient)" width="70%" />
+<p class="caption">(\#fig:esimene-patsient)(ref:esimene-patsient)</p>
 </div>
 
 Esimene patsient suri - 0 mortaalsus ei ole enam loogiliselt võimalik (välja arvatud siis kui prior selle koha peal = 0) ja mortaalsus 100% on andmetega (tegelikult andmega) parimini kooskõlas. Posteerior on nulli ja 100% vahel sirge sest vähene sissepandud informatsioon lihtsalt ei võimalda enamat.
 
+(ref:teine-patsient) N=2, teine patsient suri.
 
 
 ```r
@@ -263,13 +277,15 @@ plot(x, posterior1,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-11-1.png" alt="N=2, teine patsient suri." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-11)N=2, teine patsient suri.</p>
+<img src="09_bayesi_printsiip_files/figure-html/teine-patsient-1.png" alt="(ref:teine-patsient)" width="70%" />
+<p class="caption">(\#fig:teine-patsient)(ref:teine-patsient)</p>
 </div>
 
 Teine patsient suri. 
 Nüüd ei ole 0 ja 1 vahel enam sirge posteerior. 
 Posteerior on kaldu 100 protsendi poole, mis on ikka kõige tõenäolisem väärtus.
+
+(ref:kolmas-patsient) N=3, kolmas patsient jäi ellu.
 
 
 ```r
@@ -289,14 +305,15 @@ plot(x, posterior2,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-12-1.png" alt="N=3, kolmas patsient jäi ellu." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-12)N=3, kolmas patsient jäi ellu.</p>
+<img src="09_bayesi_printsiip_files/figure-html/kolmas-patsient-1.png" alt="(ref:kolmas-patsient)" width="70%" />
+<p class="caption">(\#fig:kolmas-patsient)(ref:kolmas-patsient)</p>
 </div>
 
 Kolmas patsient jäi ellu - 0 ja 100% mortaalsus on seega võimaluste nimekirjast maas ning suremus on ikka kaldu valimi keskmise poole (75%).
 
 Teeme sedasama prioriga, mis ei ole tasane. See illustreerib tõsiasja, et kui N on väike siis domineerib prior posteerior jaotust. (Suure N korral on vastupidi, priori kuju on sageli vähetähtis.)
 
+(ref:informatiivse-prioriga) N=1 informatiivse prioriga.
 
 
 ```r
@@ -321,10 +338,12 @@ par(def.par)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-13-1.png" alt="N=1 informatiivse prioriga." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-13)N=1 informatiivse prioriga.</p>
+<img src="09_bayesi_printsiip_files/figure-html/informatiivse-prioriga-1.png" alt="(ref:informatiivse-prioriga)" width="70%" />
+<p class="caption">(\#fig:informatiivse-prioriga)(ref:informatiivse-prioriga)</p>
 </div>
 1. patsient suri
+
+(ref:fuck) N=2 informatiivse prioriga.
 
 
 ```r
@@ -351,11 +370,13 @@ par(def.par)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-14-1.png" alt="N=2 informatiivse prioriga." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-14)N=2 informatiivse prioriga.</p>
+<img src="09_bayesi_printsiip_files/figure-html/fuck-1.png" alt="(ref:fuck)" width="70%" />
+<p class="caption">(\#fig:fuck)(ref:fuck)</p>
 </div>
 
 Teine patsient suri.
+
+(ref:omg) N=3 informatiivse prioriga.
 
 
 ```r
@@ -382,7 +403,7 @@ par(def.par)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09_bayesi_printsiip_files/figure-html/unnamed-chunk-15-1.png" alt="N=3 informatiivse prioriga." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-15)N=3 informatiivse prioriga.</p>
+<img src="09_bayesi_printsiip_files/figure-html/omg-1.png" alt="(ref:omg)" width="70%" />
+<p class="caption">(\#fig:omg)(ref:omg)</p>
 </div>
 Kolmas patsient jäi ellu. Nüüd on posteeriori tipp mitte 75% juures nagu ennist, vaid kuskil 50% juures --- tänu priorile.
