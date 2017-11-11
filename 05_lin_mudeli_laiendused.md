@@ -12,20 +12,21 @@ library(viridis)
 
 ## Mitme sõltumatu prediktoriga mudel {-}
 
-Esiteks vaatame mudelit, kus on mitu prediktorit x~1~, x~2~, ... x~n~, mis on additiivse mõjuga. See tähendab, et me liidame nende mõjud, mis omakorda tähendab, et me usume, et x~1~...x~n~ mõjud y-i väärtusele on üksteisest sõltumatud. Mudel on siis kujul 
+Esiteks vaatame mudelit, kus on mitu prediktorit $x_1$, $x_2$, ... $x_n$, mis on aditiivse mõjuga.
+See tähendab, et me liidame nende mõjud, mis omakorda tähendab, et me usume, et $x_1$ ... $x_n$ mõjud y-i väärtusele on üksteisest sõltumatud. 
+Mudel on siis kujul 
 
 $$y = a + b_1x_1~ + b_2x_2~ +~ ... +~ b_nx_n$$
-
 
 > Mitme prediktoriga mudeli iga prediktori tõus (beta koefitsient) ütleb, mitme ühiku võrra ennustab mudel y muutumist juhul kui see prediktor muutub ühe ühiku võrra ja kõik teised prediktorid ei muutu üldse. 
 
 
-Kui meie andmed on kolmedimensioonaalsed (me mõõdame igal mõõteobjektil kolme muutujat) ja me tahame ennnustada ühe muutuja väärtust kahe teise muutuja väärtuste põhjal (meil on 2 prediktorit), siis tuleb meie 3 parameetriga lineaarne regressioonimudel tasapinna kujul. 
-Kui meil on 3 prediktoriga mudel, siis me liigume juba 4-mõõtmelisse ruumi.
+Kui meie andmed on kolmedimensionaalsed (me mõõdame igal mõõteobjektil kolme muutujat) ja me tahame ennnustada ühe muutuja väärtust kahe teise muutuja väärtuste põhjal (meil on kaks prediktorit), siis tuleb meie kolme parameetriga lineaarne regressioonimudel tasapinna kujul. 
+Kui meil on kolme prediktoriga mudel, siis me liigume juba neljamõõtmelisse ruumi.
 
 
 
-(ref:regressioonitasand) Regressioonitasand 3D andmetele. Siin on Sepal.Length ja Petal.Length prediktorid ja Sepal.Width ennustatav muutuja.
+(ref:regressioonitasand) Regressioonitasand 3D andmetele. Kahe prediktoriga mudel, kus Sepal.Length ja Petal.Length on prediktorid ja Sepal.Width ennustatav muutuja.
 
 <div class="figure" style="text-align: center">
 <img src="05_lin_mudeli_laiendused_files/figure-html/regressioonitasand-1.png" alt="(ref:regressioonitasand)" width="70%" />
@@ -35,7 +36,7 @@ Kui meil on 3 prediktoriga mudel, siis me liigume juba 4-mõõtmelisse ruumi.
 
 Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile.
 
-(ref:lin2d) 2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile.
+(ref:lin2d) 2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Vasemal, muutuja Petal.Length on kollapseeritud konstandile. Siin on regressioonijoon hoopis teises kohas, kui lihtsas ühe prediktoriga mudelis (paremal).
  
 
 ```r
@@ -55,9 +56,8 @@ p + geom_abline(intercept = coef(m1)[1], slope = coef(m1)[2]) +
 <p class="caption">(\#fig:lin2d)(ref:lin2d)</p>
 </div>
 
-Siin on regressioonijoon hoopis teises kohas, kui lihtsas ühe prediktoriga mudelis.
 
-Nõnda võrdleme kahe mudeli koefitsiente.
+Võrreldes mudelite m1 (üks prediktor) ja m2 (kaks prediktorit) Sepal.Length ($b_1$) koefitsienti on näha, et need erinevad oluliselt.
 
 
 ```r
@@ -69,10 +69,8 @@ coef(m2)
 #>        1.038        0.561       -0.335
 ```
 
-Nagu näha, mudeli m2 b_1 koefitsient erineb oluliselt mudeli m1 vastavast koefitsiendist.
-
 Kumb mudel on siis parem? 
-AIC-i järgi on m2 kõvasti parem, kui m1, lisakoefitsendi (Petal.Length) kaasamisel mudelisse paranes oluliselt selle ennustusvõime.
+AIC-i järgi on m2 kõvasti parem kui m1, lisakoefitsendi (Petal.Length) kaasamisel mudelisse paranes oluliselt selle ennustusvõime.
 
 ```r
 AIC(m1, m2)
@@ -83,7 +81,7 @@ AIC(m1, m2)
 
 **Ennustused sõltumatute prediktoritega mudelist**
 
-Siin on idee kasutada fititud mudeli struktuuri enustamaks y keskmisi väärtusi erinevatel $x_1$ ja $x_2$ väärtustel. 
+Siin on idee kasutada fititud mudeli struktuuri ennustamaks y keskmisi väärtusi erinevatel $x_1$ ja $x_2$ väärtustel.
 Kuna mudel on fititud, on parameetrite väärtused fikseeritud. 
 
 
@@ -93,35 +91,37 @@ Sepal_length <- seq(min(iris$Sepal.Length), max(iris$Sepal.Length), length.out =
 ## Keep new petal length constant
 Petal_length <- mean(iris$Petal.Length)
 ## Extract model coeficents
-a <- coef(m2)[1]
-b1 <- coef(m2)[2]
-b2 <- coef(m2)[3]
+a <- coef(m2)["(Intercept)"]
+b1 <- coef(m2)["Sepal.Length"]
+b2 <- coef(m2)["Petal.Length"]
 ## Predict new sepal width values
 Sepal_width_predicted <- a + b1 * Sepal_length + b2 * Petal_length
 ```
 
+(ref:yksversuskaks) Ennustatud y väärtused erinevatel $x_1$ väärtustel kui $x_2$ on konstantne, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus.
+
 
 ```r
 plot(Sepal_width_predicted ~ Sepal_length, type = "b", ylim = c(0, 5), col = "red")
-# prediction from the single predictor model
-abline(c(coef(m1)[1], coef(m1)[2]), lty = "dashed")
+# Prediction from the single predictor model
+abline(m1, lty = "dashed")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-7-1.png" alt="Ennustatud y väärtused erinevatel x1 ja x2 väärtustel, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-7)Ennustatud y väärtused erinevatel x1 ja x2 väärtustel, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus.</p>
+<img src="05_lin_mudeli_laiendused_files/figure-html/yksversuskaks-1.png" alt="(ref:yksversuskaks)" width="70%" />
+<p class="caption">(\#fig:yksversuskaks)(ref:yksversuskaks)</p>
 </div>
 
-Nüüd joonistame 3D pildi olukorrast, kus nii $x_1$ kui $x_2$ omandavad rea väärtusi. Mudeli ennustus on ikkagi sirge kujul -- mis sest, et 3D ruumis.
+Nüüd joonistame 3D pildi olukorrast, kus nii x~1~ kui x~2~ omandavad rea väärtusi. Mudeli ennustus on ikkagi sirge kujul -- mis sest, et 3D ruumis.
 
 (ref:kaksprediktorit) Kahe prediktoriga mudeli ennustus 3D ruumis.
 
 
 ```r
 Petal_length <- seq(min(iris$Petal.Length), max(iris$Petal.Length), length.out = 10)
-Sepal_width <- a + b1 * Sepal_length + b2 * Petal_length
-dfr <- data_frame(Sepal_width, Sepal_length, Petal_length)
-with(dfr, scatterplot3d(Sepal_length, Petal_length, Sepal_width, col.axis = "blue", col.grid = "lightblue", type = "l", lwd = 2))
+Sepal_width_predicted <- a + b1 * Sepal_length + b2 * Petal_length
+dfr <- data_frame(Sepal_width_predicted, Sepal_length, Petal_length)
+with(dfr, scatterplot3d(Sepal_length, Petal_length, Sepal_width_predicted, col.axis = "blue", col.grid = "lightblue", type = "l", lwd = 2, zlim = c(3.1, 3.18)))
 ```
 
 <div class="figure" style="text-align: center">
@@ -131,7 +131,7 @@ with(dfr, scatterplot3d(Sepal_length, Petal_length, Sepal_width, col.axis = "blu
 
 ## Interaktsioonimudel {-}
 
-Interaktsioonimudelis sõltub ühe prediktori mõju sõltub teise prediktori väärtusest:
+Interaktsioonimudelis sõltub ühe prediktori mõju teise prediktori väärtusest:
 
 $$y = a + b_1x_1 + b_2x_2 + b_3x_1x_2$$
 
@@ -144,7 +144,7 @@ Mudeli koefitsientide otse tõlgendamine ei ole siin sageli perspektiivikas.
 
 Interaktsioonimudeli 2D avaldus on kurvatuuriga tasapind, kusjuures kurvatuuri määrab b~3~. 
 
-Interaktsiooniga mudel on AIC-i järgi pisut vähem eelistatud võrreldes m2-ga. 
+Interaktsiooniga mudel on AIC-i järgi pisut vähem eelistatud võrreldes kahe prediktoriga mudeliga m2. 
 Seega, eriti lihtsuse huvides, eelistame m2-e.
 
 ```r
@@ -161,17 +161,17 @@ AIC(m1, m2, m3)
 
 Kõigepealt anname rea väärtusi x~1~-le ja hoiame x~2~ konstantsena. 
 
-(ref:ennustus-interaktsioonimudelist) Ennustus interaktsioonimudelist, kus x1 on antud rida väärtusi ja x2 hoitakse konstantsena.
+(ref:ennustus-interaktsioonimudelist) Ennustus interaktsioonimudelist, kus x~1~ (Sepal_Length) on antud rida väärtusi ja x~2~ (Petal_length) hoitakse konstantsena (pidevjoon). Interaktsioonimudeli regressioonijoon on paraleelne ilma interaktsioonita mudeli ennustusele (katkendjoon).
 
 
 ```r
 Petal_length <-  mean(iris$Petal.Length)
-a <- coef(m3)[1]
-b1 <- coef(m3)[2]
-b2 <- coef(m3)[3]
-b3 <- coef(m3)[4]
-Sepal_width <- a + b1 * Sepal_length + b2 * Petal_length + b3 * Sepal_length * Petal_length
-plot(Sepal_width ~ Sepal_length, type = "l", ylim = c(2, 6))
+a <- coef(m3)["(Intercept)"]
+b1 <- coef(m3)["Sepal.Length"]
+b2 <- coef(m3)["Petal.Length"]
+b3 <- coef(m3)["Sepal.Length:Petal.Length"]
+Sepal_width_predicted <- a + b1 * Sepal_length + b2 * Petal_length + b3 * Sepal_length * Petal_length
+plot(Sepal_width_predicted ~ Sepal_length, type = "l", ylim = c(2, 6))
 abline(m2, lty = "dashed")
 #> Warning in abline(m2, lty = "dashed"): only using the first two of 3
 #> regression coefficients
@@ -182,28 +182,18 @@ abline(m2, lty = "dashed")
 <p class="caption">(\#fig:ennustus-interaktsioonimudelist)(ref:ennustus-interaktsioonimudelist)</p>
 </div>
 
-Tulemuseks on sirge, mis on paraleelne ilma interaktsioonita mudeli ennustusele (katkendjoon)
-
-
-Nagu näha, korrutamistehe viib selleni, et interaktsioonimudeli tõus erineb ilma interaktsioonita mudeli tõusust. 
+Nagu näha viib korrutamistehe selleni, et interaktsioonimudeli tõus erineb ilma interaktsioonita mudeli tõusust. 
 
 Kui aga interaktsioonimudel plottida välja 3D-s üle paljude x~1~ ja x~2~ väärtuste, saame me regressioonikurvi (mitte sirge), kus b~3~ annab kurvatuuri.
 
-(ref:ennustused3d-interaktsioonimudelist) Ennustused 3D interaktsioonimudelist üle paljude x1 ja x2 väärtuste.
+(ref:ennustused3d-interaktsioonimudelist) Ennustused 3D interaktsioonimudelist üle paljude x~1~ (Sepal_Length) ja x~2~ (Petal_length) väärtuste.
 
 
 ```r
-Petal_length <-  seq(min(iris$Petal.Length), 
-                     max(iris$Petal.Length), 
-                     length.out = 100)
-a <- coef(m3)[1]
-b1 <- coef(m3)[2]
-b2 <- coef(m3)[3]
-b3 <- coef(m3)[4]
-
-Sepal_width <-   a + b1 * Sepal_length + b2 * Petal_length +  b3 * Sepal_length * Petal_length
-dfr <- data.frame(Sepal_width, Sepal_length, Petal_length)
-with(dfr, scatterplot3d(Sepal_length, Petal_length, Sepal_width, pch = 20, col.axis = "blue", col.grid = "lightblue", lwd = 2))
+Petal_length <-  seq(min(iris$Petal.Length), max(iris$Petal.Length), length.out = 10)
+Sepal_width_predicted <- a + b1 * Sepal_length + b2 * Petal_length +  b3 * Sepal_length * Petal_length
+dfr <- data.frame(Sepal_width_predicted, Sepal_length, Petal_length)
+with(dfr, scatterplot3d(Sepal_length, Petal_length, Sepal_width_predicted, pch = 20, col.axis = "blue", col.grid = "lightblue", lwd = 2, zlim = c(3.1, 3.3)))
 ```
 
 <div class="figure" style="text-align: center">

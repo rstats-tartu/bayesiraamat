@@ -235,17 +235,17 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">library</span>(viridis)</code></pre></div>
 <div id="mitme-soltumatu-prediktoriga-mudel" class="section level2 unnumbered">
 <h2>Mitme sõltumatu prediktoriga mudel</h2>
-<p>Esiteks vaatame mudelit, kus on mitu prediktorit x<sub>1</sub>, x<sub>2</sub>, … x<sub>n</sub>, mis on additiivse mõjuga. See tähendab, et me liidame nende mõjud, mis omakorda tähendab, et me usume, et x<sub>1</sub>…x<sub>n</sub> mõjud y-i väärtusele on üksteisest sõltumatud. Mudel on siis kujul</p>
+<p>Esiteks vaatame mudelit, kus on mitu prediktorit <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, … <span class="math inline">\(x_n\)</span>, mis on aditiivse mõjuga. See tähendab, et me liidame nende mõjud, mis omakorda tähendab, et me usume, et <span class="math inline">\(x_1\)</span> … <span class="math inline">\(x_n\)</span> mõjud y-i väärtusele on üksteisest sõltumatud. Mudel on siis kujul</p>
 <p><span class="math display">\[y = a + b_1x_1~ + b_2x_2~ +~ ... +~ b_nx_n\]</span></p>
 <blockquote>
 <p>Mitme prediktoriga mudeli iga prediktori tõus (beta koefitsient) ütleb, mitme ühiku võrra ennustab mudel y muutumist juhul kui see prediktor muutub ühe ühiku võrra ja kõik teised prediktorid ei muutu üldse.</p>
 </blockquote>
-<p>Kui meie andmed on kolmedimensioonaalsed (me mõõdame igal mõõteobjektil kolme muutujat) ja me tahame ennnustada ühe muutuja väärtust kahe teise muutuja väärtuste põhjal (meil on 2 prediktorit), siis tuleb meie 3 parameetriga lineaarne regressioonimudel tasapinna kujul. Kui meil on 3 prediktoriga mudel, siis me liigume juba 4-mõõtmelisse ruumi.</p>
+<p>Kui meie andmed on kolmedimensionaalsed (me mõõdame igal mõõteobjektil kolme muutujat) ja me tahame ennnustada ühe muutuja väärtust kahe teise muutuja väärtuste põhjal (meil on kaks prediktorit), siis tuleb meie kolme parameetriga lineaarne regressioonimudel tasapinna kujul. Kui meil on kolme prediktoriga mudel, siis me liigume juba neljamõõtmelisse ruumi.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:regressioonitasand"></span>
-<img src="05_lin_mudeli_laiendused_files/figure-html/regressioonitasand-1.png" alt="Regressioonitasand 3D andmetele. Siin on Sepal.Length ja Petal.Length prediktorid ja Sepal.Width ennustatav muutuja." width="70%" />
+<img src="05_lin_mudeli_laiendused_files/figure-html/regressioonitasand-1.png" alt="Regressioonitasand 3D andmetele. Kahe prediktoriga mudel, kus Sepal.Length ja Petal.Length on prediktorid ja Sepal.Width ennustatav muutuja." width="70%" />
 <p class="caption">
-Joonis 5.1: Regressioonitasand 3D andmetele. Siin on Sepal.Length ja Petal.Length prediktorid ja Sepal.Width ennustatav muutuja.
+Joonis 5.1: Regressioonitasand 3D andmetele. Kahe prediktoriga mudel, kus Sepal.Length ja Petal.Length on prediktorid ja Sepal.Width ennustatav muutuja.
 </p>
 </div>
 <p>Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile.</p>
@@ -260,52 +260,51 @@ m1 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Width <span cl
 p <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="kw">coef</span>(m1)[<span class="dv">1</span>], <span class="dt">slope =</span> <span class="kw">coef</span>(m1)[<span class="dv">2</span>]) <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">deparse</span>(<span class="kw">formula</span>(m1)))</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:lin2d"></span>
-<img src="05_lin_mudeli_laiendused_files/figure-html/lin2d-1.png" alt="2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile." width="48%" /><img src="05_lin_mudeli_laiendused_files/figure-html/lin2d-2.png" alt="2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile." width="48%" />
+<img src="05_lin_mudeli_laiendused_files/figure-html/lin2d-1.png" alt="2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Vasemal, muutuja Petal.Length on kollapseeritud konstandile. Siin on regressioonijoon hoopis teises kohas, kui lihtsas ühe prediktoriga mudelis (paremal)." width="48%" /><img src="05_lin_mudeli_laiendused_files/figure-html/lin2d-2.png" alt="2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Vasemal, muutuja Petal.Length on kollapseeritud konstandile. Siin on regressioonijoon hoopis teises kohas, kui lihtsas ühe prediktoriga mudelis (paremal)." width="48%" />
 <p class="caption">
-Joonis 5.2: 2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Muutuja Petal.Length on kollapseeritud konstandile.
+Joonis 5.2: 2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Vasemal, muutuja Petal.Length on kollapseeritud konstandile. Siin on regressioonijoon hoopis teises kohas, kui lihtsas ühe prediktoriga mudelis (paremal).
 </p>
 </div>
-<p>Siin on regressioonijoon hoopis teises kohas, kui lihtsas ühe prediktoriga mudelis.</p>
-<p>Nõnda võrdleme kahe mudeli koefitsiente.</p>
+<p>Võrreldes mudelite m1 (üks prediktor) ja m2 (kaks prediktorit) Sepal.Length (<span class="math inline">\(b_1\)</span>) koefitsienti on näha, et need erinevad oluliselt.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(m1)
 <span class="co">#&gt;  (Intercept) Sepal.Length </span>
 <span class="co">#&gt;       3.4189      -0.0619</span>
 <span class="kw">coef</span>(m2)
 <span class="co">#&gt;  (Intercept) Sepal.Length Petal.Length </span>
 <span class="co">#&gt;        1.038        0.561       -0.335</span></code></pre></div>
-<p>Nagu näha, mudeli m2 b_1 koefitsient erineb oluliselt mudeli m1 vastavast koefitsiendist.</p>
-<p>Kumb mudel on siis parem? AIC-i järgi on m2 kõvasti parem, kui m1, lisakoefitsendi (Petal.Length) kaasamisel mudelisse paranes oluliselt selle ennustusvõime.</p>
+<p>Kumb mudel on siis parem? AIC-i järgi on m2 kõvasti parem kui m1, lisakoefitsendi (Petal.Length) kaasamisel mudelisse paranes oluliselt selle ennustusvõime.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">AIC</span>(m1, m2)
 <span class="co">#&gt;    df   AIC</span>
 <span class="co">#&gt; m1  3 179.5</span>
 <span class="co">#&gt; m2  4  92.1</span></code></pre></div>
 <p><strong>Ennustused sõltumatute prediktoritega mudelist</strong></p>
-<p>Siin on idee kasutada fititud mudeli struktuuri enustamaks y keskmisi väärtusi erinevatel <span class="math inline">\(x_1\)</span> ja <span class="math inline">\(x_2\)</span> väärtustel. Kuna mudel on fititud, on parameetrite väärtused fikseeritud.</p>
+<p>Siin on idee kasutada fititud mudeli struktuuri ennustamaks y keskmisi väärtusi erinevatel <span class="math inline">\(x_1\)</span> ja <span class="math inline">\(x_2\)</span> väärtustel. Kuna mudel on fititud, on parameetrite väärtused fikseeritud.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## New sepal length values
 Sepal_length &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(iris<span class="op">$</span>Sepal.Length), <span class="kw">max</span>(iris<span class="op">$</span>Sepal.Length), <span class="dt">length.out =</span> <span class="dv">10</span>)
 ## Keep new petal length constant
 Petal_length &lt;-<span class="st"> </span><span class="kw">mean</span>(iris<span class="op">$</span>Petal.Length)
 ## Extract model coeficents
-a &lt;-<span class="st"> </span><span class="kw">coef</span>(m2)[<span class="dv">1</span>]
-b1 &lt;-<span class="st"> </span><span class="kw">coef</span>(m2)[<span class="dv">2</span>]
-b2 &lt;-<span class="st"> </span><span class="kw">coef</span>(m2)[<span class="dv">3</span>]
+a &lt;-<span class="st"> </span><span class="kw">coef</span>(m2)[<span class="st">&quot;(Intercept)&quot;</span>]
+b1 &lt;-<span class="st"> </span><span class="kw">coef</span>(m2)[<span class="st">&quot;Sepal.Length&quot;</span>]
+b2 &lt;-<span class="st"> </span><span class="kw">coef</span>(m2)[<span class="st">&quot;Petal.Length&quot;</span>]
 ## Predict new sepal width values
 Sepal_width_predicted &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b1 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">+</span><span class="st"> </span>b2 <span class="op">*</span><span class="st"> </span>Petal_length</code></pre></div>
+
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(Sepal_width_predicted <span class="op">~</span><span class="st"> </span>Sepal_length, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
-<span class="co"># prediction from the single predictor model</span>
-<span class="kw">abline</span>(<span class="kw">c</span>(<span class="kw">coef</span>(m1)[<span class="dv">1</span>], <span class="kw">coef</span>(m1)[<span class="dv">2</span>]), <span class="dt">lty =</span> <span class="st">&quot;dashed&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-7-1.png" alt="Ennustatud y väärtused erinevatel x1 ja x2 väärtustel, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus." width="70%" />
+<span class="co"># Prediction from the single predictor model</span>
+<span class="kw">abline</span>(m1, <span class="dt">lty =</span> <span class="st">&quot;dashed&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:yksversuskaks"></span>
+<img src="05_lin_mudeli_laiendused_files/figure-html/yksversuskaks-1.png" alt="Ennustatud y väärtused erinevatel \(x_1\) väärtustel kui \(x_2\) on konstantne, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus." width="70%" />
 <p class="caption">
-Joonis 5.3: Ennustatud y väärtused erinevatel x1 ja x2 väärtustel, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus.
+Joonis 5.3: Ennustatud y väärtused erinevatel <span class="math inline">\(x_1\)</span> väärtustel kui <span class="math inline">\(x_2\)</span> on konstantne, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus.
 </p>
 </div>
-<p>Nüüd joonistame 3D pildi olukorrast, kus nii <span class="math inline">\(x_1\)</span> kui <span class="math inline">\(x_2\)</span> omandavad rea väärtusi. Mudeli ennustus on ikkagi sirge kujul – mis sest, et 3D ruumis.</p>
+<p>Nüüd joonistame 3D pildi olukorrast, kus nii x<sub>1</sub> kui x<sub>2</sub> omandavad rea väärtusi. Mudeli ennustus on ikkagi sirge kujul – mis sest, et 3D ruumis.</p>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Petal_length &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(iris<span class="op">$</span>Petal.Length), <span class="kw">max</span>(iris<span class="op">$</span>Petal.Length), <span class="dt">length.out =</span> <span class="dv">10</span>)
-Sepal_width &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b1 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">+</span><span class="st"> </span>b2 <span class="op">*</span><span class="st"> </span>Petal_length
-dfr &lt;-<span class="st"> </span><span class="kw">data_frame</span>(Sepal_width, Sepal_length, Petal_length)
-<span class="kw">with</span>(dfr, <span class="kw">scatterplot3d</span>(Sepal_length, Petal_length, Sepal_width, <span class="dt">col.axis =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">col.grid =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>))</code></pre></div>
+Sepal_width_predicted &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b1 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">+</span><span class="st"> </span>b2 <span class="op">*</span><span class="st"> </span>Petal_length
+dfr &lt;-<span class="st"> </span><span class="kw">data_frame</span>(Sepal_width_predicted, Sepal_length, Petal_length)
+<span class="kw">with</span>(dfr, <span class="kw">scatterplot3d</span>(Sepal_length, Petal_length, Sepal_width_predicted, <span class="dt">col.axis =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">col.grid =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">zlim =</span> <span class="kw">c</span>(<span class="fl">3.1</span>, <span class="fl">3.18</span>)))</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:kaksprediktorit"></span>
 <img src="05_lin_mudeli_laiendused_files/figure-html/kaksprediktorit-1.png" alt="Kahe prediktoriga mudeli ennustus 3D ruumis." width="70%" />
 <p class="caption">
@@ -315,14 +314,14 @@ Joonis 5.4: Kahe prediktoriga mudeli ennustus 3D ruumis.
 </div>
 <div id="interaktsioonimudel" class="section level2 unnumbered">
 <h2>Interaktsioonimudel</h2>
-<p>Interaktsioonimudelis sõltub ühe prediktori mõju sõltub teise prediktori väärtusest:</p>
+<p>Interaktsioonimudelis sõltub ühe prediktori mõju teise prediktori väärtusest:</p>
 <p><span class="math display">\[y = a + b_1x_1 + b_2x_2 + b_3x_1x_2\]</span></p>
 <p>Interaktsioonimudeli koefitsientide tõlgendamine on keerulisem. b<sub>1</sub> on otse tõlgendatav ainult siis, kui x<sub>2</sub> = 0 (ja b<sub>2</sub> ainult siis, kui x<sub>1</sub> = 0). Edaspidi õpime selliseid mudeleid graafiliselt tõlgendama. Mudeli koefitsientide otse tõlgendamine ei ole siin sageli perspektiivikas.</p>
 <blockquote>
 <p>Interaktsioonimudelis sõltub x<sub>1</sub> mõju tugevus y-le x<sub>2</sub> väärtusest. Selle sõltuvuse määra kirjeldab b<sub>3</sub> (x<sub>1</sub> ja x<sub>2</sub> interaktsiooni tugevus). Samamoodi ja sümmeetriliselt erineb ka x<sub>2</sub> mõju erinevatel x<sub>1</sub> väärtustel. Ainult siis, kui x<sub>2</sub> = 0, ennustab x<sub>1</sub> tõus 1 ühiku võrra y muutust b<sub>1</sub> ühiku võrra.</p>
 </blockquote>
 <p>Interaktsioonimudeli 2D avaldus on kurvatuuriga tasapind, kusjuures kurvatuuri määrab b<sub>3</sub>.</p>
-<p>Interaktsiooniga mudel on AIC-i järgi pisut vähem eelistatud võrreldes m2-ga. Seega, eriti lihtsuse huvides, eelistame m2-e.</p>
+<p>Interaktsiooniga mudel on AIC-i järgi pisut vähem eelistatud võrreldes kahe prediktoriga mudeliga m2. Seega, eriti lihtsuse huvides, eelistame m2-e.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m3 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Width <span class="op">~</span><span class="st"> </span>Sepal.Length <span class="op">+</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>Sepal.Length <span class="op">*</span><span class="st"> </span>Petal.Length, <span class="dt">data =</span> iris)
 <span class="kw">AIC</span>(m1, m2, m3)
 <span class="co">#&gt;    df   AIC</span>
@@ -333,40 +332,32 @@ Joonis 5.4: Kahe prediktoriga mudeli ennustus 3D ruumis.
 <p>Kõigepealt anname rea väärtusi x<sub>1</sub>-le ja hoiame x<sub>2</sub> konstantsena.</p>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Petal_length &lt;-<span class="st">  </span><span class="kw">mean</span>(iris<span class="op">$</span>Petal.Length)
-a &lt;-<span class="st"> </span><span class="kw">coef</span>(m3)[<span class="dv">1</span>]
-b1 &lt;-<span class="st"> </span><span class="kw">coef</span>(m3)[<span class="dv">2</span>]
-b2 &lt;-<span class="st"> </span><span class="kw">coef</span>(m3)[<span class="dv">3</span>]
-b3 &lt;-<span class="st"> </span><span class="kw">coef</span>(m3)[<span class="dv">4</span>]
-Sepal_width &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b1 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">+</span><span class="st"> </span>b2 <span class="op">*</span><span class="st"> </span>Petal_length <span class="op">+</span><span class="st"> </span>b3 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">*</span><span class="st"> </span>Petal_length
-<span class="kw">plot</span>(Sepal_width <span class="op">~</span><span class="st"> </span>Sepal_length, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">6</span>))
+a &lt;-<span class="st"> </span><span class="kw">coef</span>(m3)[<span class="st">&quot;(Intercept)&quot;</span>]
+b1 &lt;-<span class="st"> </span><span class="kw">coef</span>(m3)[<span class="st">&quot;Sepal.Length&quot;</span>]
+b2 &lt;-<span class="st"> </span><span class="kw">coef</span>(m3)[<span class="st">&quot;Petal.Length&quot;</span>]
+b3 &lt;-<span class="st"> </span><span class="kw">coef</span>(m3)[<span class="st">&quot;Sepal.Length:Petal.Length&quot;</span>]
+Sepal_width_predicted &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b1 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">+</span><span class="st"> </span>b2 <span class="op">*</span><span class="st"> </span>Petal_length <span class="op">+</span><span class="st"> </span>b3 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">*</span><span class="st"> </span>Petal_length
+<span class="kw">plot</span>(Sepal_width_predicted <span class="op">~</span><span class="st"> </span>Sepal_length, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">6</span>))
 <span class="kw">abline</span>(m2, <span class="dt">lty =</span> <span class="st">&quot;dashed&quot;</span>)
 <span class="co">#&gt; Warning in abline(m2, lty = &quot;dashed&quot;): only using the first two of 3</span>
 <span class="co">#&gt; regression coefficients</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:ennustus-interaktsioonimudelist"></span>
-<img src="05_lin_mudeli_laiendused_files/figure-html/ennustus-interaktsioonimudelist-1.png" alt="Ennustus interaktsioonimudelist, kus x1 on antud rida väärtusi ja x2 hoitakse konstantsena." width="70%" />
+<img src="05_lin_mudeli_laiendused_files/figure-html/ennustus-interaktsioonimudelist-1.png" alt="Ennustus interaktsioonimudelist, kus x1 (Sepal_Length) on antud rida väärtusi ja x2 (Petal_length) hoitakse konstantsena (pidevjoon). Interaktsioonimudeli regressioonijoon on paraleelne ilma interaktsioonita mudeli ennustusele (katkendjoon)." width="70%" />
 <p class="caption">
-Joonis 5.5: Ennustus interaktsioonimudelist, kus x1 on antud rida väärtusi ja x2 hoitakse konstantsena.
+Joonis 5.5: Ennustus interaktsioonimudelist, kus x<sub>1</sub> (Sepal_Length) on antud rida väärtusi ja x<sub>2</sub> (Petal_length) hoitakse konstantsena (pidevjoon). Interaktsioonimudeli regressioonijoon on paraleelne ilma interaktsioonita mudeli ennustusele (katkendjoon).
 </p>
 </div>
-<p>Tulemuseks on sirge, mis on paraleelne ilma interaktsioonita mudeli ennustusele (katkendjoon)</p>
-<p>Nagu näha, korrutamistehe viib selleni, et interaktsioonimudeli tõus erineb ilma interaktsioonita mudeli tõusust.</p>
+<p>Nagu näha viib korrutamistehe selleni, et interaktsioonimudeli tõus erineb ilma interaktsioonita mudeli tõusust.</p>
 <p>Kui aga interaktsioonimudel plottida välja 3D-s üle paljude x<sub>1</sub> ja x<sub>2</sub> väärtuste, saame me regressioonikurvi (mitte sirge), kus b<sub>3</sub> annab kurvatuuri.</p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Petal_length &lt;-<span class="st">  </span><span class="kw">seq</span>(<span class="kw">min</span>(iris<span class="op">$</span>Petal.Length), 
-                     <span class="kw">max</span>(iris<span class="op">$</span>Petal.Length), 
-                     <span class="dt">length.out =</span> <span class="dv">100</span>)
-a &lt;-<span class="st"> </span><span class="kw">coef</span>(m3)[<span class="dv">1</span>]
-b1 &lt;-<span class="st"> </span><span class="kw">coef</span>(m3)[<span class="dv">2</span>]
-b2 &lt;-<span class="st"> </span><span class="kw">coef</span>(m3)[<span class="dv">3</span>]
-b3 &lt;-<span class="st"> </span><span class="kw">coef</span>(m3)[<span class="dv">4</span>]
-
-Sepal_width &lt;-<span class="st">   </span>a <span class="op">+</span><span class="st"> </span>b1 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">+</span><span class="st"> </span>b2 <span class="op">*</span><span class="st"> </span>Petal_length <span class="op">+</span><span class="st">  </span>b3 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">*</span><span class="st"> </span>Petal_length
-dfr &lt;-<span class="st"> </span><span class="kw">data.frame</span>(Sepal_width, Sepal_length, Petal_length)
-<span class="kw">with</span>(dfr, <span class="kw">scatterplot3d</span>(Sepal_length, Petal_length, Sepal_width, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col.axis =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">col.grid =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Petal_length &lt;-<span class="st">  </span><span class="kw">seq</span>(<span class="kw">min</span>(iris<span class="op">$</span>Petal.Length), <span class="kw">max</span>(iris<span class="op">$</span>Petal.Length), <span class="dt">length.out =</span> <span class="dv">10</span>)
+Sepal_width_predicted &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b1 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">+</span><span class="st"> </span>b2 <span class="op">*</span><span class="st"> </span>Petal_length <span class="op">+</span><span class="st">  </span>b3 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">*</span><span class="st"> </span>Petal_length
+dfr &lt;-<span class="st"> </span><span class="kw">data.frame</span>(Sepal_width_predicted, Sepal_length, Petal_length)
+<span class="kw">with</span>(dfr, <span class="kw">scatterplot3d</span>(Sepal_length, Petal_length, Sepal_width_predicted, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col.axis =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">col.grid =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">zlim =</span> <span class="kw">c</span>(<span class="fl">3.1</span>, <span class="fl">3.3</span>)))</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:ennustused3d-interaktsioonimudelist"></span>
-<img src="05_lin_mudeli_laiendused_files/figure-html/ennustused3d-interaktsioonimudelist-1.png" alt="Ennustused 3D interaktsioonimudelist üle paljude x1 ja x2 väärtuste." width="70%" />
+<img src="05_lin_mudeli_laiendused_files/figure-html/ennustused3d-interaktsioonimudelist-1.png" alt="Ennustused 3D interaktsioonimudelist üle paljude x1 (Sepal_Length) ja x2 (Petal_length) väärtuste." width="70%" />
 <p class="caption">
-Joonis 5.6: Ennustused 3D interaktsioonimudelist üle paljude x1 ja x2 väärtuste.
+Joonis 5.6: Ennustused 3D interaktsioonimudelist üle paljude x<sub>1</sub> (Sepal_Length) ja x<sub>2</sub> (Petal_length) väärtuste.
 </p>
 </div>
 <p>Vau! See on alles ennustus!</p>
