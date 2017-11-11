@@ -12,7 +12,10 @@ Mõned üldised soovitused võib siiski anda.
 1. alusta analüüsi tasemest, kus andmed on kõige inforikkamad --- toorandmete plottimisest punktidena. Kui andmehulk ei ole väga massiivne, näitab see hästi nii andmete kvaliteeti, kui ka võimalikke sõltuvussuhteid erinevate muutujate vahel.
 
 Millised korrelatsioonid võiksid andmetes esineda?
-```{r fig.cap="Korrelatstioonimaatriks joonisena."}
+
+(ref:korrmaatriks) Korrelatstioonimaatriks joonisena.
+
+```{r korrmaatriks, fig.cap='(ref:korrmaatriks)'}
 library(corrgram) # PCA for ordering
 corrgram(iris, order=TRUE, 
          lower.panel = panel.pts,
@@ -60,7 +63,9 @@ NB! selles psych::describe() väljundis on mad läbi korrutatud konstandiga 1.48
 
 11. Nii saab plottida multiplikatiivse sd:
 
-```{r, fig.cap='Multiplikatiivse sd joonistamine.', echo=FALSE}
+(ref:multisd) Multiplikatiivse sd joonistamine.
+
+```{r multisd, fig.cap='(ref:multisd)', echo=FALSE}
 # Function to produce summary statistics (geometric mean and multipülicative sd)
 multi_sd <- function(x) {
   x <- na.omit(x)

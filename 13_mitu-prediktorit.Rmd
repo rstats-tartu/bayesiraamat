@@ -1,0 +1,139 @@
+
+# Mitme prediktoriga lineaarne regressioon
+
+```{r}
+library(tidyverse)
+library(gapminder)
+library(rethinking)
+```
+
+Vaatame jälle gapminderi andmeid aastast 2007. 
+Meil on võimalik lisada regressioonivõrrandisse lisaprediktoreid. 
+Nüüd ei küsi me enam, kuidas mõjutab l_GDP varieeruvus keskmise eluea varieeruvust vaid: kuidas mõjutavad muutujad l_GDP, continent ja logaritm pop-ist (rahvaarvust) keskmist eluiga. 
+Me modelleerime selle lineaarselt nii, et eeldusena varieeruvad need x-i muutujad üksteisest sõltumatult: $y = a + b_1x_1 + b_2x_2 + b_3x_3$
+
+```{r}
+g2007 <- gapminder %>% 
+  filter(year == 2007)
+g2007 <- g2007 %>% 
+  mutate(l_GDP = log10(gdpPercap),
+         l_pop = log10(pop), 
+         lpop_s = (l_pop - mean(l_pop )) / sd(l_pop),
+         lGDP_s = (l_GDP - mean(l_GDP )) / sd(l_GDP)) %>% 
+  as.data.frame()
+```
+
+Sellise mudeli tõlgendus on suhteliselt lihtne: 
+
+> koef b1 ütleb meile, 
+      kui mitme ühiku võrra tõuseb/langeb muutuja y (eluiga) 
+      kui muutuja x1 (l_GDP) tõuseb 1 ühiku võrra; 
+      tingimusel, et me hoiame kõigi teiste muutujate väärtused konstantsed. 
+      
+      
+Sarnane definitsioon kehtib ka kõigi teiste prediktorite (x-de) kohta.
+
+Kui meil on mudelis SKP ja pop, siis saame küsida 
+
+1) kui me juba teame SKP-d, millist ennustuslikku lisaväärtust annab meile ka populatsiooni suuruse teadmine? ja
+
+2) kui me juba teame populatsiooni suurust, millist lisaväärtust annab meile ka SKP teadmine?
+
+Järgenval mudelil on 4 parameetrit (intercept + 3 betat).
+
+```{r}
+m1 <- lm(lifeExp ~ l_GDP + continent + l_pop, data = g2007)
+summary(m1)
+```
+
+loeme mudelis "+" märki nagu "või". Ehk, "eluiga võib olla funktsioon SKP-st **või** rahvaarvust".
+
+Intercept 19 ei tähenda tõlgenduslikult midagi. l-GDP tõus ühiku võrra tõstab eluiga 10.7 aasta võrra. 
+
+Võrdluseks lihtne mudel
+```{r}
+m2 <- lm(lifeExp ~ l_GDP, data = g2007)
+summary(m2)
+```
+
+Siin on l_GDP mõju suurem, 16.6 aastat. Millisel mudelil on siis õigus? Proovime veel ülejäänud variendid
+
+```{r}
+m3 <- lm(lifeExp ~ l_GDP + continent, data = g2007)
+summary( m3 )
+
+m4 <- lm(lifeExp ~ l_GDP + l_pop, data = g2007)
+AIC(m1, m2, m3, m4)
+```
+
+Võitja mudel on hoopis m3, mis võtab arvesse kontinendi. Siin on l_GDP mõju samuti 10.7 aastat. Lisaks näeme, et kui riik ei asu Aafrikas, siis on l_GDP mõju elueale u 11 aasta võrra suurem. Seega elu Aafrika kisub alla keskmise eluea riigi rikkusest sõltumata. Võib olla on põhjuseks sõjad, võib-olla AIDS ja malaaria, võib-olla midagi muud. 
+
+Millise mudeli me peaksime siis avaldama? Vastus on, et need kõik on olulised, et vastata küsimusele, millised faktorid kontrollivad keskmist eluiga? Mudelite võrdlusest näeme, et rahvaarvu mõju elueale on väike või olematu ning et SKP mõju avaldub log skaalas (viitab teatud tüüpi eksponentsiaalsetele protsessidele, kus rikkus tekitab uut rikkust) ning, et Aafrikaga on midagi pahasti ja teistmoodi kui teiste kontinentidega. Aafrikast tasub otsida midagi, mida meie senised mudelid ei kajasta.
+
+Miks ei ole mudeli summary tabelis Aafrikat? Põhjus on tehniline. Kategoorilisi muutujaid, nagu kontinent, vaatab mudel paariviisilises võrdluses, mis tähendab et k erineva tasemega muutujast tekitatakse k - 1 uut muutujat, millest igaühel on kaks taset (0 ja 1). See algne muutuja, mis üle jääb (antud juhul Africa), jääb ilma oma uue muutujata. Me saame teisi uusi kontinendi põhjal tehtud muutujaid tõlgendada selle järgi, kui palju nad erinevad Africa-st.
+
+## Miks multivariaatsed mudelid head on? {-}
+
+1) nad aitavad kontrollida "confounding" muutujaid. 
+Confounding muutuja võib olla korreleeritud mõne teise muutujaga, mis meile huvi pakub. 
+See võib nii maskeerida signaali, kui tekitada võlts-signaali, kuni y ja x1 seose suuna muutmiseni välja.
+
+2) ühel tagajärjel võib olla mitu põhjust.
+
+3) Isegi kui muutujad ei ole omavahel üldse korreleeritud, võib ühe tähtsus sõltuda teise väärtusest. Näiteks taimed vajavad nii valgust kui vett. Aga kui ühte ei ole, siis pole ka teisel suurt tähtsust.
+
+## Mudeldamine standardiseeritud andmetega {-}
+
+Kui me lahutame igast andmepunktist selle muutuja keskväärtuse siis saame 0-le tsentreeritud andmed. Kui me sellisel viisil saadud väärtused omakorda läbi jagame muutuja standardhälbega, siis saame standardiseeritud andmed, mille keskväärtus on null ja SD = 1.
+
+$Standard.andmed = (x - mean(x))/sd(x)$ 
+
+Nii on lihtsam erinevas skaalas muutujaid omavahel võrrelda (1 ühikuline muutus võrdub alati muutusega 1 standardhäve võrra) ja mudeli arvutamine üle mcmc ahelate on ka lihtsam.
+
+```{r eval=FALSE}
+m5 <- map2stan(
+    alist(
+        lifeExp ~ dnorm( mu , sigma ) ,
+        mu <- a + b_GDP * lGDP_s + b_pop * lpop_s ,
+        a ~ dnorm( 0 , 10 ) ,
+        c(b_GDP, b_pop) ~ dnorm( 0 , 1 ) ,
+        sigma ~ dunif( 0 , 10 )
+), data = g2007 )
+```
+
+
+```{r, include=FALSE}
+# saveRDS(m5, file = "data/gapmod_m5.rds")
+m5 <- readRDS("data/gapmod_m5.rds")
+```
+
+
+```{r}
+precis(m5)
+```
+
+kui l_GDP kasvab 1 sd võrra, siis eluiga kasvab 6.9 aasta võrra. 
+
+```{r}
+f1 <- glimmer(lifeExp ~ lGDP_s + lpop_s + continent, data = g2007)
+```
+See on mudeli struktuur, mis sisaldab uusi kategoorilisi muutujaid
+
+Siin on tähtis anda map2stan()-le ette glimmeri poolt eeltöödeldud andmed:
+```{r, eval=FALSE}
+m6 <- map2stan(
+  f1$f, 
+  data = f1$d)
+```
+
+
+```{r, include=FALSE}
+# saveRDS(m6, file = "data/gapmod_m6.rds")
+m6 <- readRDS("data/gapmod_m6.rds")
+```
+
+
+```{r}
+precis(m6)
+```
+

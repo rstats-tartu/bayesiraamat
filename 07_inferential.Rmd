@@ -186,7 +186,9 @@ Kui juba simuleerida, siis robinal: tõmbame ühe valimi asemel 10 000, arvutame
 
 Meie lootus on, et kui meil on palju valimeid, millel kõigil on juhuslik viga, mis neid populatsiooni suhtes ühele või teisele poole kallutab, siis rohkem on valimeid, mis asuvad tõelisele populatsioonile pigem lähemal kui kaugemal. Samuti, kui valimiviga on juhuslik, siis satub umbkaudu sama palju valimeid tõelisest populatsiooniväärtusest ühele poole kui teisele poole ja vigade jaotus tuleb sümmeetriline. 
 
-```{r fig.cap="Keskmiste jaotus 10 000 valimist.", fig.height=3, fig.width=4}
+(ref:jaotus) Keskmiste jaotus 10 000 valimist.
+
+```{r jaotus, fig.cap="(ref:jaotus)"}
 N <- 3
 N_simulations <- 10000
 df <- tibble(a = rnorm(N * N_simulations, 100, 20), 
@@ -208,7 +210,9 @@ Oh-hooo. Paljude valimite keskmiste keskmine ennustab väga täpselt populatsioo
 
 Ja nüüd 10 000 SD keskväärtused:
 
-```{r fig.cap="SD-de jaotus 10 000 valimist.", , fig.height=3, fig.width=4}
+(ref:sdjaotus) SD-de jaotus 10 000 valimist.
+
+```{r sdjaotus, fig.cap="(ref:sdjaotus)"}
 Summary %>% 
   ggplot(aes(SD)) + 
   geom_histogram(bins = 40)
@@ -251,7 +255,9 @@ Seda kutsutakse *bootstrappimiseks* ja selle võttis esimesena kasutusele parun 
 Too jutukas parun nimelt suutis end soomülkast iseenda patsi pidi välja tõmmata (koos hobusega), mis ongi bootstrappimise põhimõte.
 Statistika tõmbas oma saapaid pidi mülkast välja Brad Efron 1979. aastal.
 
-```{r echo=FALSE, fig.cap='Nii nagu parun Münchausen tõmbas ennast patsi pidi mülkast välja, genereeritakse bootstrappimisega algse valimi põhjal teststatistiku jaotus.', out.width='50%'}
+(ref:parun) Nii nagu parun Münchausen tõmbas ennast patsi pidi mülkast välja, genereeritakse bootstrappimisega algse valimi põhjal teststatistiku jaotus.
+
+```{r parun, echo=FALSE, fig.cap='(ref:parun)', out.width='50%'}
 knitr::include_graphics("img/munchausen.jpg")
 ```
 

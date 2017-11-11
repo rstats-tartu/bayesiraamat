@@ -13,16 +13,17 @@ Oletame, et me mõõtsime N inimese pikkuse cm-s ja kaalu kg-s ning meid huvitab
 Lihtsaim mudel pikkuse sõltuvusest kaalust on pikkus = kaal (formaliseeritult: y = x) ja see mudel ennustab, et kui Juhani kaal = 80 kg, siis Juhan on 80 cm pikkune. 
 Siin on pikkus muutuja, mille väärtust ennustatakse ja kaal muutuja, mille väärtuste põhjal ennustatakse pikkusi. 
 
-Genereerime andmed:
+Genereerime andmed, x = pikkus ja y = kaal:
 ```{r}
-# y = kaal
 x <- 0:100
-# x = pikkus
 y <- x
 ```
 
 Selle mudeli saame graafiliselt kujutada nii:
-```{r, fig.cap="Lihtne mudel y ~ x, mille lõikepunkt = 0 ja tõus = 1."}
+
+(ref:lihtnemudel) Lihtne mudel y ~ x, mille lõikepunkt = 0 ja tõus = 1.
+
+```{r lihtnemudel, fig.cap='(ref:lihtnemudel)'}
 plot(y ~ x, type = "l", xlab = "Weight in kg", ylab = "Heigth in cm", main = bquote(y == x))
 ```
 
@@ -44,8 +45,9 @@ a <- 30
 y <- a + x
 ```
 
+(ref:intercept) `r sprintf("Lineaarne mudel, mille lõikepunkt = %s ja tõus = 1. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = %s", a, a)`
 
-```{r, fig.cap=paste0('Lineaarne mudel, mille lõikepunkt = ", a ," ja tõus = 1.. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = ', a,".")}
+```{r intercept, fig.cap='(ref:intercept)'}
 plot(y ~ x, xlim = c(0, 100), ylim = c(0, 150), type = "l",
      main = bquote(y == a + x))
 abline(c(0, 1), lty = 2)

@@ -58,9 +58,9 @@ Kahjuks on see loogiline paratamatus; alternatiiviks on olukord, kus meie üksik
 
 Ok, aitab mulast, laadime vajalikud raamatukogud ja andmed ning vaatame mis saab.
 ```{r}
-library(rethinking)
 library(tidyverse)
 library(stringr)
+library(rethinking)
 library(psych)
 ```
 
@@ -152,13 +152,13 @@ Nagu näha on sigma_school < sigma, mis tähendab, et koolide vaheline varieeruv
 Ning veel üks hierarhiline mudel, mis teab nii koolide skooride keskmiste varieeruvust kui koolide vahelist varieeruvust.
 
 Võrdleme mudeleid.
-```{r, eval=F}
+```{r, eval=FALSE}
 compare(schoolm2, schoolm3)
 ```
 
 Siit nähtub, et m3 on parim mudel, aga ka m2 omab mingit kaalu.
 
-```{r, fig.cap="mudelite koefitsiendid."}
+```{r, fig.cap="Mudelite koefitsiendid."}
 plot(coeftab(schoolm2, schoolm3))
 ```
 
@@ -172,8 +172,6 @@ Ennustame score1 sõltuvust sex-ist. Küsimus: kui palju poiste ja tüdrukute ma
 ```{r}
 describe(schools)
 ```
-
-
 
 Me kasutame prediktorina binaarset kategoorilist muutujat. See on analoogiline olukord ANOVA mudelile, mis võtab arvesse multiple testingu olukorra, mis meil siin on.
 ```{r}
@@ -235,7 +233,7 @@ Ja poiste-tüdrukute erinevus skooripunktides võrdub
 
 
 Arvutame siis kooli nr 2 tüdrukute keskmise skoori posteeriori.
-```{r fig.cap="Tüdrukute skoori posteerior", fig.height=2, fig.width=3}
+```{r fig.cap="Tüdrukute skoori posteerior"}
 schools_m1_samples <- as.data.frame(schools_m1@stanfit)
 school_2_girls <- schools_m1_samples$Intercept + 
   schools_m1_samples$b_sex1 + 
@@ -246,7 +244,7 @@ dens(school_2_girls)
 
 
 Ja Poiste oma
-```{r fig.cap="Poiste skoori posteerior.", fig.height=2, fig.width=3}
+```{r fig.cap="Poiste skoori posteerior."}
 school_2_boys <- schools_m1_samples$Intercept + 
   schools_m1_samples$`v_Intercept[2]`
 ## Plot density histogram of intercepts
@@ -270,11 +268,10 @@ Prior korrelatsioonile Interceptide ja tõusude vahel on `rethinking::lkjcorr()`
 Selle ainus parameeter on K.
 Mida suurem K, seda rohkem on prior konsentreeritud 0 korrelatsiooni ümber. K = 1 annab tasase priori. 
 Meie kasutame K = 2, mis töötab laia vahemiku mudelitega.
-```{r, fig.cap="Korrelatsiooni prior on nõrgalt informatiivne -- suunab posteeriori eemale ekstreemsetest korrelatsioonidest.", fig.height=2, fig.width=3}
+```{r, fig.cap="Korrelatsiooni prior on nõrgalt informatiivne -- suunab posteeriori eemale ekstreemsetest korrelatsioonidest."}
 R <- rlkjcorr(1e4, K = 2, eta = 2)
 dens(R[, 1, 2] , xlab = "correlation")
 ```
-
 
 
 ```{r, eval=FALSE}
@@ -299,14 +296,14 @@ schools_m2 <- readRDS("data/schools_m2.rds")
 ```
 
 
-```{r, fig.height=5, fig.width= 5, fig.cap="Mudeli m2 koefitsiendid."}
+```{r, fig.cap="Mudeli m2 koefitsiendid."}
 plot(precis(schools_m2, depth = 2))
 ```
 
 
 Posteerior korrelatsioonile intercepti ja tõusu vahel:
 
-```{r fig.cap="Posteerior korrelatsioonile intercepti ja tõusu vahel.", fig.height=2, fig.width=3}
+```{r fig.cap="Posteerior korrelatsioonile intercepti ja tõusu vahel."}
 schools_m2_samples <- extract.samples(schools_m2)
 df1 <- schools_m2_samples$Rho_school %>% as.data.frame()
 #df1 #corr matrix- we need only the V2 col
@@ -376,7 +373,7 @@ Aga miks peaks erinevates Inglismaa koolides olema erinev vahe poiste ja tüdruk
 Kas olukorras kus meil on hea kool, läheb see vahe väiksemaks või suuremaks? 
 Tehke kindlaks!!! võrrelge graafiku slope vs. intercept.
 
-```{r fig.cap="mida suurem on koolis poiste skoor, seda väiksem on poiste ja tüdrukute erinevus", echo=FALSE, fig.height=3, fig.width=4}
+```{r fig.cap="mida suurem on koolis poiste skoor, seda väiksem on poiste ja tüdrukute erinevus", echo=FALSE}
 ## convert stanfit matrix to data.frame
 schools_m2_samples <- as.data.frame(schools_m2@stanfit)
 ## calculate mean for each coefficient, apply outputs named vector
@@ -411,7 +408,7 @@ Arvutage nüüd poiste ja tüdrukute keskmine skoor kooli kaupa ja vaadake uuest
 
 Siin püüame ennustada score1 mõju score2 väärtusele.
 
-```{r fig.cap="score1 vs. score2", fig.height=3, fig.width=4}
+```{r fig.cap="score1 vs. score2"}
 plot(schools$score2, schools$score1)
 abline(lm(score1 ~ score2, data = schools))
 ```
@@ -516,5 +513,4 @@ compare(schoolm7, schoolm6, schoolm5)
 ```{r eval=FALSE}
 precis(schoolm7, depth = 2)
 ```
-
 

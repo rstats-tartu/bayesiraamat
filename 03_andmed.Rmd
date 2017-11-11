@@ -1,6 +1,13 @@
 
 #  Kuidas näevad välja teie andmed
 
+```{r}
+library(tidyverse)
+library(stringr)
+library(car)
+```
+
+
 ## Summaarsed statistikud {-}
 
 Summaarne statistik püüab iseloomustada teie valimit ühe numbri abil.  
@@ -27,7 +34,7 @@ Järgnevad nõuanded on rangelt soovituslikud:
 
 (ref:lognorm) Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete "keskväärtusest"? Miks?
 
-```{r echo=FALSE, fig.cap='(ref:lognorm)'}
+```{r lognorm, echo=FALSE, fig.cap='(ref:lognorm)'}
 andmed <- rlnorm(100)
 mode <-  function(x, adjust = 1) {
   x <- na.omit(x)
@@ -64,7 +71,6 @@ Sageli on aga negatiivsed muutuja väärtused võimatud (näiteks nädalas suits
 logaritmimise kaudu avaldatud multiplikatsiivse SD arvutamiseks kasutame enda kirjutatud funktsiooni mulitplicative_sd(). Esiteks arvutame multiplikatiivse ja aditiivse sd lognoirmaalsetele andmetele, mida kujutasime eelmisel joonisel: 
 
 ```{r echo=FALSE, message=FALSE}
-library(tidyverse)
 multiplicative_sd <- function(x) {
   x <- na.omit(x)
   log_data <- log10(x)
@@ -119,15 +125,19 @@ Nagu näha, on multiplikatiivse sd kasutamine normaalsete andmetega pigem ohutu 
 Vahest tekkib teil vajadus empiiriliselt määrata, kas teie andmed on normaaljaotusega. 
 Enne kui seda tegema asute, peaksite mõistma, et see, et teie valim ei ole normaalne, ei tähenda automaatselt, et populatsioon, millest see valim tõmmati, ei oleks normaaljaotusega.
 Igal juhul, valimiandmete normaalsuse määramiseks on kõige mõistlikum kasutada qq-plotti. 
-QQ-plot (kvantiil-kvantiil plot) võrdleb andmete jaotust ideaalse normaaljaotusega andmepunkti haaval. Kui empiiriline jaotus kattub referentsjaotusega, siis on tulemuseks sirgel paiknevad punktid. Järgneval qq plotil on näha, mis juhtub, kui plottida lognormaalseid andmeid normaaljaotuse vastu: 
-```{r, fig.cap="QQ-plot lognormaalsetele andmetele."}
-library(car)
+QQ-plot (kvantiil-kvantiil plot) võrdleb andmete jaotust ideaalse normaaljaotusega andmepunkti haaval. Kui empiiriline jaotus kattub referentsjaotusega, siis on tulemuseks sirgel paiknevad punktid. Järgneval qq plotil on näha, mis juhtub, kui plottida lognormaalseid andmeid normaaljaotuse vastu:
+
+(ref:qqnorm) QQ-plot normaalsetele andmetele.
+
+```{r qqnorm, fig.cap="(ref:qqnorm)"}
 qqPlot(andmed)
 ```
 
 Nüüd joonistame qq-ploti logaritmitud andmetele. 
 
-```{r, fig.cap="QQ-plot normaalsetele andmetele."}
+(ref:qqlognorm) QQ-plot normaalsetele andmetele.
+
+```{r qqlognorm, fig.cap="(ref:qqlognorm)"}
 qqPlot(log2(andmed))
 ```
 
@@ -185,7 +195,6 @@ Lisaks, korrelatsioonikordaja mõõdab vaid andmete *lineaarset* koos-varieeruvu
 (ref:anscombe) Anscombe'i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: neli andmestikku annavad identse korrelatsioonikordaja (Pearsons'r), ehkki tegelikud seosed andmete vahel on täiesti erinevad.
 
 ```{r anscombe, fig.cap='(ref:anscombe)', echo=FALSE}
-library(stringr)
 anscombe_long <- bind_cols(id = 1:11, anscombe) %>% 
   gather(key, value, -id) %>% 
   mutate(axis = str_extract(key, "[xy]"),

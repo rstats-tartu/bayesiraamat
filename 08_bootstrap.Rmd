@@ -3,6 +3,12 @@
 
 # Bootstrap
 
+```{r}
+library(tidyverse)
+library(rethinking)
+library(bayesboot)
+```
+
 
 > Populatsioon on valimile sama, mis on valim bootstrappitud valimile. 
 
@@ -29,8 +35,9 @@ Bootstrap empiirilisele valimile suurusega n töötab nii:
 
 Mis on USA presidentide keskmine pikkus? Meil on valim 11 presidendi pikkusega.
 
-```{r, out.width='.49\\linewidth', fig.cap="Bootstrapitud posteerior USA presidentide keskmisele pikkusele."}
-library(tidyverse)
+(ref:bootpost) Bootstrapitud posteerior USA presidentide keskmisele pikkusele.
+
+```{r bootpost, fig.cap="(ref:bootpost)"}
 heights <- tibble(value = c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185, 188))
 boot_mean <- heights %>% 
   broom::bootstrap(1000) %>% 
@@ -51,7 +58,6 @@ Miks just 92% usaldusinterval? Vastus on, et miks mitte? Meil pole ühtegi unive
 1. HPDI --- Highest Density Probability Interval --- alustab jaotuse tipust (tippudest) ja katab 92% jaotuse kõrgema(te) osa(de) pindalast
 
 ```{r}
-library(rethinking)
 HPDI(heights$value, prob = 0.92)
 ```
 
@@ -80,7 +86,9 @@ See lihtne meetod on küll populaarne ja annab sageli häid tulemusi, aga ei ole
 Empiiriline bootstrap on sellest ainult veidi keerulisem, aga annab robustsemaid tulemusi. 
 Selles ei ploti me enam mitte 1000 statistiku väärtust vaid 1000 erinevust bootstrapitud statistiku väärtuse ja empiirilise valimi põhjal arvutatud statistiku väärtuse vahel.
 
-```{r fig.cap="Empiirilise bootstrapi posteerior USA presidentide keskmisele pikkusele."}
+(ref:empboot) Empiirilise bootstrapi posteerior USA presidentide keskmisele pikkusele.
+
+```{r empboot, fig.cap="(ref:empboot)"}
 boot_mean <- boot_mean %>% 
   mutate(Diff = Mean - mean(heights$value))
 ggplot(boot_mean, aes(Diff)) +
@@ -100,8 +108,9 @@ See funktsioon pakub pisut moodsama meetodi --- Bayesian bootstrap --- mis töö
 Hea lihtsa seletuse Bayesian bootstrapi kohta saab siit https://www.youtube.com/watch?v=WMAgzr99PKE ja lihtsa r koodi selle meetodi rakendamiseks saab siit https://www.r-bloggers.com/simple-bayesian-bootstrap/
 Näited sellest, kuidas kasutada bayesbooti standardhälbe, korrelatsioonikoefitsiendi ja lineaarse mudeli koefitsientide usalduspiiride arvutamiseks leiate `?bayesboot` käsuga.
 
-```{r fig.cap="Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele."}
-library(bayesboot)
+(ref:bayesboot) Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele.
+
+```{r bayesboot, fig.cap="(ref:bayesboot)"}
 heights_bb <- bayesboot(heights$value, mean)
 plot(heights_bb, compVal = 185)
 HPDI(heights_bb$V1, prob = 0.95)
@@ -122,7 +131,10 @@ mean(heights_bb[, 1] > 182)
 ```
 
 Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):
-```{r fig.cap="Bayesi bootstrap ES-le.", fig.height=4, fig.width=5}
+
+(ref:bayeses) Bayesi bootstrap ES-le.
+
+```{r bayeses, fig.cap='(ref:bayeses)'}
 set.seed(1)
 ## Simulate two random normal distributions with mean 0. 
 ## True difference is 0.
@@ -141,7 +153,10 @@ BayesianFirstAid raamatukogu funktsioon bayes.t.test() annab kasutades t-jaotuse
 
 Kui me arvame, et me teame, mis jaotusega on meie andmed, ja meil on suhteliselt vähe andmepunkte, võib olla mõistlik lisada bootstrapile andmete jaotuse mudel. Näiteks, meie USA presidentide pikkused võiksid olla umbkaudu normaaljaotusega (sest me teame, et USA meeste pikkused on seda). Seega fitime kõigepealt presidentide pikkusandmetega normaaljaotuse ja seejärel tõmbame bootsrap valimid sellest normaaljaotuse mudelist.
 Normaaljaotuse mudelil on 2 parameetrit: keskmine (mu) ja standardhälve (sigma), mida saame fittida valimiandmete põhjal:
-```{r fig.height=4, fig.width=5, fig.cap="Parameetrilise bootstrapi posteerior USA presidentide keskmisele pikkusele."}
+
+(ref:paramboot) Parameetrilise bootstrapi posteerior USA presidentide keskmisele pikkusele.
+
+```{r paramboot, fig.cap="(ref:paramboot)"}
 mu <- mean(heights$value)
 sigma <- sd(heights$value)
 N <- length(heights$value)
@@ -159,7 +174,9 @@ HPDI(sample_means_sum$Mean)
 
 Üldiselt ei soovita me parameetrilist bootstrappi väga soojalt, sest täisbayesiaanlik alternatiiv, mida me kohe õppima asume, on sellest paindlikum.
 
-```{r, echo=FALSE, fig.cap="Bootstrappimise meetodid.", out.width='50%'}
+(ref:bootmeth) Bootstrappimise meetodid.
+
+```{r bootmeth, echo=FALSE, out.width='50%', fig.cap="(ref:bootmeth)"}
 knitr::include_graphics("img/boot1.pdf")
 ```
 
