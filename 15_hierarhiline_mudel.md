@@ -161,7 +161,9 @@ Siit nähtub, et m3 on parim mudel, aga ka m2 omab mingit kaalu.
 
 
 ```r
-plot(coeftab(schoolm2, schoolm3))
+plot(coeftab(schoolm2, schoolm3)) + 
+  theme(axis.text.x = element_text(size = 8))
+#> NULL
 ```
 
 <div class="figure" style="text-align: center">
@@ -241,7 +243,9 @@ Alternatiivne viis seda mudelit kirjutada oleks `mu <- Intercept[school] + b_sex
 
 
 ```r
-plot(precis(schools_m1, depth = 2))
+plot(precis(schools_m1, depth = 2)) + 
+  theme(axis.text.x = element_text(size = 8))
+#> NULL
 ```
 
 <div class="figure" style="text-align: center">
