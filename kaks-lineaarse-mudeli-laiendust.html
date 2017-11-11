@@ -254,7 +254,7 @@ Joonis 5.1: Regressioonitasand 3D andmetele. Kahe prediktoriga mudel, kus Sepal.
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">xlim</span>(<span class="dv">4</span>, <span class="dv">8</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> <span class="ot">TRUE</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">6</span>))
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">8</span>))
 p1 &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="kw">coef</span>(m2)[<span class="dv">1</span>], <span class="dt">slope =</span> <span class="kw">coef</span>(m2)[<span class="dv">2</span>]) <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">deparse</span>(<span class="kw">formula</span>(m2)))
 m1 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Width <span class="op">~</span><span class="st"> </span>Sepal.Length, <span class="dt">data =</span> iris)
