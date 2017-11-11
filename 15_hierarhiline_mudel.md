@@ -161,9 +161,7 @@ Siit nähtub, et m3 on parim mudel, aga ka m2 omab mingit kaalu.
 
 
 ```r
-plot(coeftab(schoolm2, schoolm3)) + 
-  theme(axis.text.x = element_text(size = 8))
-#> NULL
+coeftab_plot(coeftab(schoolm2, schoolm3), cex = 0.5)
 ```
 
 <div class="figure" style="text-align: center">
@@ -375,7 +373,7 @@ schools_m2 <- map2stan(alist(
 
 
 ```r
-plot(precis(schools_m2, depth = 2))
+plot(precis(schools_m2, depth = 2), cex = 0.5)
 ```
 
 <div class="figure" style="text-align: center">

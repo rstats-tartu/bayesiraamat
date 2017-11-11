@@ -306,9 +306,7 @@ schools &lt;-<span class="st"> </span>schools <span class="op">%&gt;%</span>
 <p>Võrdleme mudeleid.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">compare</span>(schoolm2, schoolm3)</code></pre></div>
 <p>Siit nähtub, et m3 on parim mudel, aga ka m2 omab mingit kaalu.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">coeftab</span>(schoolm2, schoolm3)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">8</span>))
-<span class="co">#&gt; NULL</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coeftab_plot</span>(<span class="kw">coeftab</span>(schoolm2, schoolm3), <span class="dt">cex =</span> <span class="fl">0.5</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
 <img src="15_hierarhiline_mudel_files/figure-html/unnamed-chunk-11-1.png" alt="Mudelite koefitsiendid." width="70%" />
 <p class="caption">
@@ -448,7 +446,7 @@ Joonis 16.1: Korrelatsiooni prior on nõrgalt informatiivne – suunab posteerio
     Rho_school <span class="op">~</span><span class="st"> </span><span class="kw">dlkjcorr</span>(<span class="dv">2</span>),
     sigma <span class="op">~</span><span class="st"> </span><span class="kw">dcauchy</span>(<span class="dv">0</span>,<span class="dv">2</span>)
 ), schools_f2<span class="op">$</span>d)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">precis</span>(schools_m2, <span class="dt">depth =</span> <span class="dv">2</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">precis</span>(schools_m2, <span class="dt">depth =</span> <span class="dv">2</span>), <span class="dt">cex =</span> <span class="fl">0.5</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-25"></span>
 <img src="15_hierarhiline_mudel_files/figure-html/unnamed-chunk-25-1.png" alt="Mudeli m2 koefitsiendid." width="70%" />
 <p class="caption">
