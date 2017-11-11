@@ -37,9 +37,9 @@ s3d$plane3d(m2, lty.box = "solid")
 Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile.
 
 ```{r include=FALSE}
-devtools::source_gist("8b4d6ab6a333ef1cd14e8067c3badbae")
+devtools::source_gist("8b4d6ab6a333ef1cd14e8067c3badbae", 
+                      filename = "grid_arrange_shared_legend.R")
 ```
-
 
 (ref:lin2d) 2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Vasemal, muutuja Petal.Length on kollapseeritud konstandile. Siin on regressioonijoon hoopis teises kohas, kui lihtsas ühe prediktoriga mudelis (paremal).
 
