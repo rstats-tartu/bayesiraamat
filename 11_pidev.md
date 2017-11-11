@@ -745,7 +745,7 @@ summary(gapmod3)
 
 
 ```r
-p + geom_line(aes(y = .fitted), data = gapmod3, color = "#FDE725FF")
+p + geom_line(aes(y = .fitted), data = gapmod3, color = "blue")
 ```
 
 <div class="figure" style="text-align: center">
