@@ -136,13 +136,13 @@ Interaktsioonimudelis sõltub ühe prediktori mõju sõltub teise prediktori vä
 $$y = a + b_1x_1 + b_2x_2 + b_3x_1x_2$$
 
 Interaktsioonimudeli koefitsientide tõlgendamine on keerulisem. 
-b_1 on otse tõlgendatav ainult siis, kui x_2 = 0 (ja b_2 ainult siis, kui x_1 = 0).
+b~1~ on otse tõlgendatav ainult siis, kui x~2~ = 0 (ja b~2~ ainult siis, kui x~1~ = 0).
 Edaspidi õpime selliseid mudeleid graafiliselt tõlgendama. 
 Mudeli koefitsientide otse tõlgendamine ei ole siin sageli perspektiivikas.
 
-> Interaktsioonimudelis sõltub x_1 mõju tugevus y-le x_2 väärtusest. Selle sõltuvuse määra kirjeldab b_3 (x_1 ja x_2 interaktsiooni tugevus). Samamoodi ja sümmeetriliselt erineb ka x_2 mõju erinevatel x_1 väärtustel. Ainult siis, kui x_2 = 0, ennustab x_1 tõus 1 ühiku võrra y muutust b_1 ühiku võrra.
+> Interaktsioonimudelis sõltub x~1~ mõju tugevus y-le x~2~ väärtusest. Selle sõltuvuse määra kirjeldab b~3~ (x~1~ ja x~2~ interaktsiooni tugevus). Samamoodi ja sümmeetriliselt erineb ka x~2~ mõju erinevatel x~1~ väärtustel. Ainult siis, kui x~2~ = 0, ennustab x~1~ tõus 1 ühiku võrra y muutust b~1~ ühiku võrra.
 
-Interaktsioonimudeli 2D avaldus on kurvatuuriga tasapind, kusjuures kurvatuuri määrab b_3. 
+Interaktsioonimudeli 2D avaldus on kurvatuuriga tasapind, kusjuures kurvatuuri määrab b~3~. 
 
 Interaktsiooniga mudel on AIC-i järgi pisut vähem eelistatud võrreldes m2-ga. 
 Seega, eriti lihtsuse huvides, eelistame m2-e.
@@ -159,7 +159,7 @@ AIC(m1, m2, m3)
 
 **Ennustused interaktsioonimudelist**  
 
-Kõigepealt anname rea väärtusi x_1-le ja hoiame x_2 konstantsena. 
+Kõigepealt anname rea väärtusi x~1~-le ja hoiame x~2~ konstantsena. 
 
 (ref:ennustus-interaktsioonimudelist) Ennustus interaktsioonimudelist, kus x1 on antud rida väärtusi ja x2 hoitakse konstantsena.
 
@@ -187,7 +187,7 @@ Tulemuseks on sirge, mis on paraleelne ilma interaktsioonita mudeli ennustusele 
 
 Nagu näha, korrutamistehe viib selleni, et interaktsioonimudeli tõus erineb ilma interaktsioonita mudeli tõusust. 
 
-Kui aga interaktsioonimudel plottida välja 3D-s üle paljude x_1 ja x_2 väärtuste, saame me regressioonikurvi (mitte sirge), kus b_3 annab kurvatuuri.
+Kui aga interaktsioonimudel plottida välja 3D-s üle paljude x~1~ ja x~2~ väärtuste, saame me regressioonikurvi (mitte sirge), kus b~3~ annab kurvatuuri.
 
 (ref:ennustused3d-interaktsioonimudelist) Ennustused 3D interaktsioonimudelist üle paljude x1 ja x2 väärtuste.
 
