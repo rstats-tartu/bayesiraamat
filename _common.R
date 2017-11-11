@@ -1,5 +1,5 @@
 
-rm(list = ls(all = TRUE))
+rm(list = ls(all.names = TRUE))
 set.seed(19)
 
 options(digits = 3,
