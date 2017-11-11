@@ -55,7 +55,7 @@ grid_arrange_shared_legend(p1, p2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05_lin_mudeli_laiendused_files/figure-html/lin2d-1.png" alt="(ref:lin2d)" width="70%" />
+<img src="05_lin_mudeli_laiendused_files/figure-html/lin2d-1.png" alt="(ref:lin2d)" width="100%" />
 <p class="caption">(\#fig:lin2d)(ref:lin2d)</p>
 </div>
 
