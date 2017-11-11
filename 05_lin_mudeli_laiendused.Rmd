@@ -37,22 +37,23 @@ s3d$plane3d(m2, lty.box = "solid")
 Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile.
 
 ```{r include=FALSE}
-devtools::source_gist("8b4d6ab6a333ef1cd14e8067c3badbae", 
-                      filename = "grid_arrange_shared_legend.R")
+
 ```
 
 (ref:lin2d) 2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Vasemal, muutuja Petal.Length on kollapseeritud konstandile. Siin on regressioonijoon hoopis teises kohas, kui lihtsas ühe prediktoriga mudelis (paremal).
 
-```{r lin2d, fig.cap='(ref:lin2d)', out.width='100%'}
+```{r lin2d, fig.cap='(ref:lin2d)'}
 p <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   geom_point() +
   xlim(4, 8) +
-  scale_color_viridis(discrete = TRUE)
+  scale_color_viridis(discrete = TRUE) +
+  theme(title = element_text(size = 9))
 p1 <- p + geom_abline(intercept = coef(m2)[1], slope = coef(m2)[2]) +
   labs(title = deparse(formula(m2)))
 m1 <- lm(Sepal.Width ~ Sepal.Length, data = iris)
 p2 <- p + geom_abline(intercept = coef(m1)[1], slope = coef(m1)[2]) +
   labs(title = deparse(formula(m1)))
+devtools::source_gist("8b4d6ab6a333ef1cd14e8067c3badbae", filename = "grid_arrange_shared_legend.R")
 grid_arrange_shared_legend(p1, p2)
 ```
 
