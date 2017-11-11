@@ -129,7 +129,7 @@ $\omega= (a-1)/(a + b-2)$ (kui $a > 1$ ja $b > 1$).
 
 Seega, kui a = b, siis on keskmine ja mood 0.5. Kui a > b, on keskmine ja mood > 0.5 ja kuid a < b, on mõlemad < 0.5. 
 
-Beta jaotuse "laiuse" annab "konsentratsioon" $\kappa = a + b$. 
+Beta jaotuse "laiuse" annab "kontsentratsioon" $\kappa = a + b$. 
 Mida suurem $\kappa$, seda kitsam jaotus.
 
 $a = \mu\kappa$  
