@@ -161,7 +161,7 @@ b3 <- coef(m3)[4]
 
 Sepal_width <-   a + b1 * Sepal_length + b2 * Petal_length +  b3 * Sepal_length * Petal_length
 dfr <- data.frame(Sepal_width, Sepal_length, Petal_length)
-with(dfr, scatterplot3d(Sepal_length, Petal_length, Sepal_width, pch = 20, col.axis = "blue", col.grid = "lightblue", lwd = 2))
+with(dfr, scatterplot3d(Sepal_length, Petal_length, Sepal_width, pch = 20, col.axis = "blue", col.grid = "lightblue", lwd = 2, type="l"))
 ```
 
 Vau! See on alles ennustus!
