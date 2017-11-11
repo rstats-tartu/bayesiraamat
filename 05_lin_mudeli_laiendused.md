@@ -121,14 +121,6 @@ Nüüd joonistame 3D pildi olukorrast, kus nii x~1~ kui x~2~ omandavad rea vää
 
 (ref:kaksprediktorit) Kahe prediktoriga mudeli ennustus 3D ruumis.
 
-
-```r
-Petal_length <- seq(min(iris$Petal.Length), max(iris$Petal.Length), length.out = 10)
-Sepal_width_predicted <- a + b1 * Sepal_length + b2 * Petal_length
-dfr <- data_frame(Sepal_width_predicted, Sepal_length, Petal_length)
-with(dfr, scatterplot3d(Sepal_length, Petal_length, Sepal_width_predicted, col.axis = "blue", col.grid = "lightblue", type = "l", lwd = 2, zlim = c(3.1, 3.18)))
-```
-
 <div class="figure" style="text-align: center">
 <img src="05_lin_mudeli_laiendused_files/figure-html/kaksprediktorit-1.png" alt="(ref:kaksprediktorit)" width="70%" />
 <p class="caption">(\#fig:kaksprediktorit)(ref:kaksprediktorit)</p>
@@ -192,14 +184,6 @@ Nagu näha viib korrutamistehe selleni, et interaktsioonimudeli tõus erineb ilm
 Kui aga interaktsioonimudel plottida välja 3D-s üle paljude x~1~ ja x~2~ väärtuste, saame me regressioonikurvi (mitte sirge), kus b~3~ annab kurvatuuri.
 
 (ref:ennustused3d-interaktsioonimudelist) Ennustused 3D interaktsioonimudelist üle paljude x~1~ (Sepal_Length) ja x~2~ (Petal_length) väärtuste.
-
-
-```r
-Petal_length <-  seq(min(iris$Petal.Length), max(iris$Petal.Length), length.out = 10)
-Sepal_width_predicted <- a + b1 * Sepal_length + b2 * Petal_length +  b3 * Sepal_length * Petal_length
-dfr <- data.frame(Sepal_width_predicted, Sepal_length, Petal_length)
-with(dfr, scatterplot3d(Sepal_length, Petal_length, Sepal_width_predicted, pch = 20, col.axis = "blue", col.grid = "lightblue", lwd = 2, zlim = c(3.1, 3.3)))
-```
 
 <div class="figure" style="text-align: center">
 <img src="05_lin_mudeli_laiendused_files/figure-html/ennustused3d-interaktsioonimudelist-1.png" alt="(ref:ennustused3d-interaktsioonimudelist)" width="70%" />

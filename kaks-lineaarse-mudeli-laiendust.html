@@ -304,10 +304,6 @@ Joonis 5.3: Ennustatud y väärtused erinevatel <span class="math inline">\(x_1\
 </div>
 <p>Nüüd joonistame 3D pildi olukorrast, kus nii x<sub>1</sub> kui x<sub>2</sub> omandavad rea väärtusi. Mudeli ennustus on ikkagi sirge kujul – mis sest, et 3D ruumis.</p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Petal_length &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(iris<span class="op">$</span>Petal.Length), <span class="kw">max</span>(iris<span class="op">$</span>Petal.Length), <span class="dt">length.out =</span> <span class="dv">10</span>)
-Sepal_width_predicted &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b1 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">+</span><span class="st"> </span>b2 <span class="op">*</span><span class="st"> </span>Petal_length
-dfr &lt;-<span class="st"> </span><span class="kw">data_frame</span>(Sepal_width_predicted, Sepal_length, Petal_length)
-<span class="kw">with</span>(dfr, <span class="kw">scatterplot3d</span>(Sepal_length, Petal_length, Sepal_width_predicted, <span class="dt">col.axis =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">col.grid =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">zlim =</span> <span class="kw">c</span>(<span class="fl">3.1</span>, <span class="fl">3.18</span>)))</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:kaksprediktorit"></span>
 <img src="05_lin_mudeli_laiendused_files/figure-html/kaksprediktorit-1.png" alt="Kahe prediktoriga mudeli ennustus 3D ruumis." width="70%" />
 <p class="caption">
@@ -353,10 +349,6 @@ Joonis 5.5: Ennustus interaktsioonimudelist, kus x<sub>1</sub> (Sepal_Length) on
 <p>Nagu näha viib korrutamistehe selleni, et interaktsioonimudeli tõus erineb ilma interaktsioonita mudeli tõusust.</p>
 <p>Kui aga interaktsioonimudel plottida välja 3D-s üle paljude x<sub>1</sub> ja x<sub>2</sub> väärtuste, saame me regressioonikurvi (mitte sirge), kus b<sub>3</sub> annab kurvatuuri.</p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Petal_length &lt;-<span class="st">  </span><span class="kw">seq</span>(<span class="kw">min</span>(iris<span class="op">$</span>Petal.Length), <span class="kw">max</span>(iris<span class="op">$</span>Petal.Length), <span class="dt">length.out =</span> <span class="dv">10</span>)
-Sepal_width_predicted &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b1 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">+</span><span class="st"> </span>b2 <span class="op">*</span><span class="st"> </span>Petal_length <span class="op">+</span><span class="st">  </span>b3 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">*</span><span class="st"> </span>Petal_length
-dfr &lt;-<span class="st"> </span><span class="kw">data.frame</span>(Sepal_width_predicted, Sepal_length, Petal_length)
-<span class="kw">with</span>(dfr, <span class="kw">scatterplot3d</span>(Sepal_length, Petal_length, Sepal_width_predicted, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col.axis =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">col.grid =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">zlim =</span> <span class="kw">c</span>(<span class="fl">3.1</span>, <span class="fl">3.3</span>)))</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:ennustused3d-interaktsioonimudelist"></span>
 <img src="05_lin_mudeli_laiendused_files/figure-html/ennustused3d-interaktsioonimudelist-1.png" alt="Ennustused 3D interaktsioonimudelist üle paljude x1 (Sepal_Length) ja x2 (Petal_length) väärtuste." width="70%" />
 <p class="caption">
