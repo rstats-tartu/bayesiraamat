@@ -422,7 +422,7 @@ Joonis 13.3: Ennustus mudelist kindlale log GDP väärtusele.
 Joonis 13.4: SKP-de jaotus
 </p>
 </div>
-<p>Mustaga on näidatud empiiriline SKP jaotus, punasega fititud lognormaalne mudel sellest samast jaotusest. Järgnevalt ennustame SKP-d keskmise eluea põhjal, milleks fitime lognormaalse tõepäramudeli, kus mu on ümber defineeritud regressioonivõrrandiga:</p>
+<p>Mustaga on näidatud empiiriline SKP jaotus, rohelisega fititud lognormaalne mudel sellest samast jaotusest. Järgnevalt ennustame SKP-d keskmise eluea põhjal, milleks fitime lognormaalse tõepäramudeli, kus mu on ümber defineeritud regressioonivõrrandiga:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m_ln1 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
   <span class="kw">alist</span>(
    gdpPercap  <span class="op">~</span><span class="st"> </span><span class="kw">dlnorm</span>( mu , sigma ),

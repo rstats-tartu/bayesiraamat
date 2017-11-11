@@ -302,7 +302,7 @@ Seekord ennustame GDP-d keskmise eluea põhjal (mis, nagu näha jooniselt, ei ol
 <p class="caption">(\#fig:unnamed-chunk-26)SKP-de jaotus</p>
 </div>
 
-Mustaga on näidatud empiiriline SKP jaotus, punasega fititud lognormaalne mudel sellest samast jaotusest. Järgnevalt ennustame SKP-d keskmise eluea põhjal, milleks fitime lognormaalse tõepäramudeli, kus mu on ümber defineeritud regressioonivõrrandiga:
+Mustaga on näidatud empiiriline SKP jaotus, rohelisega fititud lognormaalne mudel sellest samast jaotusest. Järgnevalt ennustame SKP-d keskmise eluea põhjal, milleks fitime lognormaalse tõepäramudeli, kus mu on ümber defineeritud regressioonivõrrandiga:
 
 
 ```r
