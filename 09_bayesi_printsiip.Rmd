@@ -141,7 +141,7 @@ See on parim võimalik teadmine, mitu kirstu tasuks tellida, arvestades meie pri
 
 Mis siis, kui me ei tea suremust ja tahaksime seda välja arvutada?
 Kõik, mida me teame on, et 6 patsienti 9st surid.
-Nüüd koosnevad andmed 9 patsiendi morbiidsusinfost (parameeter, mille väärtust me eelmises näites arvutasime) ja parameeter, mille väärtust me ei tea, on surmade üldine sagedus (see parameeter oli eelmises näites fikseeritud, ja seega kuulus andmete hulka).
+Nüüd koosnevad andmed 9 patsiendi mortaalsusinfost (parameeter, mille väärtust me eelmises näites arvutasime) ja parameeter, mille väärtust me ei tea, on surmade üldine sagedus (see parameeter oli eelmises näites fikseeritud, ja seega kuulus andmete hulka).
 
 Seega on meil
 
