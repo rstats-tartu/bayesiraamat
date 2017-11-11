@@ -45,17 +45,19 @@ Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile.
 p <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   geom_point() +
   xlim(4, 8) +
-  scale_color_viridis(discrete = TRUE)
+  scale_color_viridis(discrete = TRUE) +
+  theme(title = element_text(size = 9))
 p1 <- p + geom_abline(intercept = coef(m2)[1], slope = coef(m2)[2]) +
   labs(title = deparse(formula(m2)))
 m1 <- lm(Sepal.Width ~ Sepal.Length, data = iris)
 p2 <- p + geom_abline(intercept = coef(m1)[1], slope = coef(m1)[2]) +
   labs(title = deparse(formula(m1)))
+devtools::source_gist("8b4d6ab6a333ef1cd14e8067c3badbae", filename = "grid_arrange_shared_legend.R")
 grid_arrange_shared_legend(p1, p2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05_lin_mudeli_laiendused_files/figure-html/lin2d-1.png" alt="(ref:lin2d)" width="100%" />
+<img src="05_lin_mudeli_laiendused_files/figure-html/lin2d-1.png" alt="(ref:lin2d)" width="70%" />
 <p class="caption">(\#fig:lin2d)(ref:lin2d)</p>
 </div>
 
