@@ -47,7 +47,7 @@ p <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   geom_point() +
   xlim(4, 8) +
   scale_color_viridis(discrete = TRUE) +
-  theme(title = element_text(size = 9))
+  theme(title = element_text(size = 6))
 p1 <- p + geom_abline(intercept = coef(m2)[1], slope = coef(m2)[2]) +
   labs(title = deparse(formula(m2)))
 m1 <- lm(Sepal.Width ~ Sepal.Length, data = iris)
