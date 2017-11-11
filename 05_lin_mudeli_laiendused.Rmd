@@ -43,7 +43,7 @@ devtools::source_gist("8b4d6ab6a333ef1cd14e8067c3badbae")
 
 (ref:lin2d) 2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Vasemal, muutuja Petal.Length on kollapseeritud konstandile. Siin on regressioonijoon hoopis teises kohas, kui lihtsas ühe prediktoriga mudelis (paremal).
 
-```{r lin2d, fig.cap='(ref:lin2d)', out.width='48%'}
+```{r lin2d, fig.cap='(ref:lin2d)'}
 p <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   geom_point() +
   xlim(4, 8) +
