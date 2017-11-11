@@ -337,9 +337,7 @@ b2 &lt;-<span class="st"> </span><span class="kw">coef</span>(m3)[<span class="s
 b3 &lt;-<span class="st"> </span><span class="kw">coef</span>(m3)[<span class="st">&quot;Sepal.Length:Petal.Length&quot;</span>]
 Sepal_width_predicted &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b1 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">+</span><span class="st"> </span>b2 <span class="op">*</span><span class="st"> </span>Petal_length <span class="op">+</span><span class="st"> </span>b3 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">*</span><span class="st"> </span>Petal_length
 <span class="kw">plot</span>(Sepal_width_predicted <span class="op">~</span><span class="st"> </span>Sepal_length, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">6</span>))
-<span class="kw">abline</span>(m2, <span class="dt">lty =</span> <span class="st">&quot;dashed&quot;</span>)
-<span class="co">#&gt; Warning in abline(m2, lty = &quot;dashed&quot;): only using the first two of 3</span>
-<span class="co">#&gt; regression coefficients</span></code></pre></div>
+<span class="kw">abline</span>(<span class="kw">coef</span>(m2)[<span class="kw">c</span>(<span class="st">&quot;(Intercept)&quot;</span>, <span class="st">&quot;Sepal.Length&quot;</span>)], <span class="dt">lty =</span> <span class="st">&quot;dashed&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:ennustus-interaktsioonimudelist"></span>
 <img src="05_lin_mudeli_laiendused_files/figure-html/ennustus-interaktsioonimudelist-1.png" alt="Ennustus interaktsioonimudelist, kus x1 (Sepal_Length) on antud rida väärtusi ja x2 (Petal_length) hoitakse konstantsena (pidevjoon). Interaktsioonimudeli regressioonijoon on paraleelne ilma interaktsioonita mudeli ennustusele (katkendjoon)." width="70%" />
 <p class="caption">

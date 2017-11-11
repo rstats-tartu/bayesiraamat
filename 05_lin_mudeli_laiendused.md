@@ -36,8 +36,6 @@ Kui meil on kolme prediktoriga mudel, siis me liigume juba neljamõõtmelisse ru
 
 Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile.
 
-
-
 (ref:lin2d) 2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Vasemal, muutuja Petal.Length on kollapseeritud konstandile. Siin on regressioonijoon hoopis teises kohas, kui lihtsas ühe prediktoriga mudelis (paremal).
 
 
@@ -169,9 +167,7 @@ b2 <- coef(m3)["Petal.Length"]
 b3 <- coef(m3)["Sepal.Length:Petal.Length"]
 Sepal_width_predicted <- a + b1 * Sepal_length + b2 * Petal_length + b3 * Sepal_length * Petal_length
 plot(Sepal_width_predicted ~ Sepal_length, type = "l", ylim = c(2, 6))
-abline(m2, lty = "dashed")
-#> Warning in abline(m2, lty = "dashed"): only using the first two of 3
-#> regression coefficients
+abline(coef(m2)[c("(Intercept)", "Sepal.Length")], lty = "dashed")
 ```
 
 <div class="figure" style="text-align: center">
