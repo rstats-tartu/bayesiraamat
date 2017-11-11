@@ -208,7 +208,7 @@ schools_m1 <- readRDS("data/schools_m1.rds")
 Siin on v_Intercept kooli-spetsiifiline korrektsioonifaktor, mis tuleb liita üldisele Interceptile. mean(v_Intercept) == 0. Me eeldame, et korrektsioonid on normaaljaotusega.
 Alternatiivne viis seda mudelit kirjutada oleks `mu <- Intercept[school] + b_sex1*sex1` ja see töötab smamoodi (nüüd on iga kooli intercept kohe eraldi). 
 
-```{r, fig.cap="Mudeli koefitsiendid", fig.height=9}
+```{r, fig.cap="Mudeli koefitsiendid", fig.asp=1.5}
 plot(precis(schools_m1, depth = 2))
 ```
 
@@ -296,7 +296,7 @@ schools_m2 <- readRDS("data/schools_m2.rds")
 ```
 
 
-```{r, fig.cap="Mudeli m2 koefitsiendid."}
+```{r, fig.cap="Mudeli m2 koefitsiendid.", fig.asp=1.5}
 plot(precis(schools_m2, depth = 2))
 ```
 
