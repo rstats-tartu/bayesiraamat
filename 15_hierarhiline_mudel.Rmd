@@ -158,8 +158,8 @@ compare(schoolm2, schoolm3)
 
 Siit nähtub, et m3 on parim mudel, aga ka m2 omab mingit kaalu.
 
-```{r, fig.cap="Mudelite koefitsiendid.", fig.height=9}
-plot(coeftab(schoolm2, schoolm3))
+```{r, fig.cap="Mudelite koefitsiendid.", fig.asp=2.5}
+coeftab_plot(coeftab(schoolm2, schoolm3), cex = 0.5)
 ```
 
 Siin on hästi näha shrinkage m3 puhul võrreldes m2-ga, mis ei tee multiple testingu korrektsiooni. 
@@ -209,7 +209,7 @@ Siin on v_Intercept kooli-spetsiifiline korrektsioonifaktor, mis tuleb liita ül
 Alternatiivne viis seda mudelit kirjutada oleks `mu <- Intercept[school] + b_sex1*sex1` ja see töötab smamoodi (nüüd on iga kooli intercept kohe eraldi). 
 
 ```{r, fig.cap="Mudeli koefitsiendid", fig.asp=1.5}
-plot(precis(schools_m1, depth = 2))
+plot(precis(schools_m1, depth = 2), cex = 0.5)
 ```
 
 ```{r}
@@ -297,7 +297,7 @@ schools_m2 <- readRDS("data/schools_m2.rds")
 
 
 ```{r, fig.cap="Mudeli m2 koefitsiendid.", fig.asp=1.5}
-plot(precis(schools_m2, depth = 2))
+plot(precis(schools_m2, depth = 2), cex = 0.5)
 ```
 
 
