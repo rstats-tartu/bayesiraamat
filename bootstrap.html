@@ -243,11 +243,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>Bootstrappimine on üldiselt väga hea meetod, mis sõltub väiksemast arvust eeldustest kui statistikas tavaks. Bootstrap ei eelda, et andmed on normaaljaotusega või mõne muu matemaatiliselt lihtsa jaotusega. Tema põhiline eeldus on, et valim peegeldab populatsiooni – mis ei pruugi kehtida väikeste valimite korral ja kallutatud (mitte-juhuslike) valimite korral. Lisaks, tavaline bootstrap ei sobi hierarhiliste andmestruktuuride analüüsiks ega näiteks aegridade analüüsiks.</p>
 <p>Bootstrap empiirilisele valimile suurusega n töötab nii:</p>
 <ol style="list-style-type: decimal">
-<li>tõmba empiirilisest valimist k uut virtuaalset valimit, igaüks suurusega n</li>
+<li>tõmba (asendusega) empiirilisest valimist k uut virtuaalset valimit, igaüks suurusega n.</li>
 <li>arvuta keskmine, sd või mistahes muu statistik igale bootstrapi valimile. Tee seda k korda.</li>
 <li>joonista oma statistiku väärtustest histogramm või density plot</li>
-<li>nende andmete põhjal saab küsida palju toreidaid küsimusi — vt allpool.</li>
 </ol>
+<p>Nende andmete põhjal saab küsida palju toreidaid küsimusi — vt allpool.</p>
 <p>Mis on USA presidentide keskmine pikkus? Meil on valim 11 presidendi pikkusega.</p>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">heights &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">value =</span> <span class="kw">c</span>(<span class="dv">183</span>, <span class="dv">192</span>, <span class="dv">182</span>, <span class="dv">183</span>, <span class="dv">177</span>, <span class="dv">185</span>, <span class="dv">188</span>, <span class="dv">188</span>, <span class="dv">182</span>, <span class="dv">185</span>, <span class="dv">188</span>))
@@ -256,9 +256,9 @@ boot_mean &lt;-<span class="st"> </span>heights <span class="op">%&gt;%</span><s
 <span class="st">  </span><span class="kw">do</span>(<span class="kw">summarise</span>(., <span class="dt">Mean =</span> <span class="kw">mean</span>(value)))
 <span class="kw">ggplot</span>(boot_mean, <span class="kw">aes</span>(Mean)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:bootpost"></span>
-<img src="08_bootstrap_files/figure-html/bootpost-1.png" alt="Bootstrapitud posteerior USA presidentide keskmisele pikkusele." width="70%" />
+<img src="08_bootstrap_files/figure-html/bootpost-1.png" alt="Bootstrapitud posteerior USA presidentide keskmisele pikkusele. Järgnevas koodis ütleme me kõigepealt, et k = 1000 (et me võtame 1000 bootstrap valimit) kasutades selleks broom paketi käsku boot(), millele on lihtne lisada dplyri funktsioon summarise(). Siiski peame seda tegema dplyr::do() abil. Pane tähele, et “tänu” do() kasutamisele peame me summarise() funktsioonis näitama punktiga koha, kuhu lähevad %&gt;% torust tulnud bootstrap valimid. Aga muidu on kõik tavapärane tidyverse." width="70%" />
 <p class="caption">
-Joonis 9.1: Bootstrapitud posteerior USA presidentide keskmisele pikkusele.
+Joonis 9.1: Bootstrapitud posteerior USA presidentide keskmisele pikkusele. Järgnevas koodis ütleme me kõigepealt, et k = 1000 (et me võtame 1000 bootstrap valimit) kasutades selleks broom paketi käsku boot(), millele on lihtne lisada dplyri funktsioon summarise(). Siiski peame seda tegema dplyr::do() abil. Pane tähele, et “tänu” do() kasutamisele peame me summarise() funktsioonis näitama punktiga koha, kuhu lähevad %&gt;% torust tulnud bootstrap valimid. Aga muidu on kõik tavapärane tidyverse.
 </p>
 </div>
 <p>Mida selline keskväärtuste jaotus tähendab? Me võime seda vaadelda posterioorse tõenäosusjaotusena. Selle tõlgenduse kohaselt iseloomustab see jaotus täpselt meie usku presidentide keskmise pikkuse kohta, niipalju kui see usk põhineb bootstrappimises kasutatud andmetel. Senikaua, kui meil pole muud relevantset teavet, on kõik, mida me usume teadvat USA presidentide keskmise pikkuse kohta, peidus selles jaotuses. Need pikkused, mille kohal jaotus on kõrgem, sisaldavad meie jaoks tõenäolisemalt tegelikku USA presidentide keskmist pikkust kui need pikkused, mille kohal posterioorne jaotus on madalam.</p>

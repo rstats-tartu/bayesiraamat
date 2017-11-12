@@ -30,14 +30,15 @@ Tüüpiliselt kasutatakse bootstrapitud statistikuid selleks, et arvutada usaldu
 
 Bootstrap empiirilisele valimile suurusega n töötab nii:
 
-1. tõmba empiirilisest valimist k uut virtuaalset valimit, igaüks suurusega n
+1. tõmba (asendusega) empiirilisest valimist k uut virtuaalset valimit, igaüks suurusega n.
 2. arvuta keskmine, sd või mistahes muu statistik igale bootstrapi valimile. Tee seda k korda.
 3. joonista oma statistiku väärtustest histogramm või density plot
-4. nende andmete põhjal saab küsida palju toreidaid küsimusi --- vt allpool.
+
+Nende andmete põhjal saab küsida palju toreidaid küsimusi --- vt allpool.
 
 Mis on USA presidentide keskmine pikkus? Meil on valim 11 presidendi pikkusega.
 
-(ref:bootpost) Bootstrapitud posteerior USA presidentide keskmisele pikkusele.
+(ref:bootpost) Bootstrapitud posteerior USA presidentide keskmisele pikkusele. Järgnevas koodis ütleme me kõigepealt, et k = 1000 (et me võtame 1000 bootstrap valimit) kasutades selleks broom paketi käsku boot(), millele on lihtne lisada dplyri funktsioon summarise(). Siiski peame seda tegema dplyr::do() abil. Pane tähele, et "tänu" do() kasutamisele peame me summarise() funktsioonis näitama punktiga koha, kuhu lähevad %>% torust tulnud bootstrap valimid. Aga muidu on kõik tavapärane tidyverse.
 
 
 ```r
