@@ -103,7 +103,7 @@ make_stancode(rating ~ treat + period + carry + (1|subject),
 
 
 
-    A special shrinkage prior to be applied on population-level effects is the horseshoe prior. It is symmetric around zero with fat tails and an infinitely large spike at zero. This makes it ideal for sparse models that have many re- gression coefficients, although only a minority of them is non-zero. It can be applied on all population-level effects at once (excluding the intercept) by using set_prior("horseshoe(1)"). The 1 implies that the Student-t prior of the local shrink- age parameters has 1 degrees of freedom.
+    A special shrinkage prior to be applied on population-level effects is the horseshoe prior. It is symmetric around zero with fat tails and an infinitely large spike at zero. This makes it ideal for sparse models that have many regression coefficients, although only a minority of them is non-zero. It can be applied on all population-level effects at once (excluding the intercept) by using set_prior("horseshoe(1)"). The 1 implies that the Student-t prior of the local shrinkage parameters has 1 degrees of freedom.
     
 Each group-level effect of each grouping factor has a standard deviation parameter, which is restricted to be non-negative and, by default, has a half Student-t prior with 3 degrees of freedom and a scale parameter that is minimally 10.
 
@@ -191,7 +191,7 @@ aaa <- as.data.frame(aaa$l_GDP)
 ```
 
 
-####the posterior predictive check
+### the posterior predictive check
 
 the dark line represents the density of the observed response, while each light blue line represents draws from the posterior-predictive distribution, that is the distribution of the response as predicted by the model. 
 
@@ -212,7 +212,7 @@ yrep <- posterior_predict(fit3, draws = 500)
 ppc_hist(g2007$lifeExp, yrep[1:5,])
 ```
 
-####Visualizing the posteriors
+### Visualizing the posteriors
 
 ```{r}
 fit3d <- as.data.frame(fit3$fit)
@@ -227,7 +227,7 @@ mcmc_areas(fit3d, pars= c("b_l_GDP", "r_continent[Africa,Intercept]"))
 ```
 
 
-####control the sampling process
+## control the sampling process
 
 In addition to choosing the number of iterations, warmup samples, and chains, the **control argument**. The most important reason to use control is to decrease the number of divergent transitions that cause a bias in the posterior. If you see the warning "There were x divergent transitions after warmup.", you should increase adapt_delta. To do this, write **control = list(adapt_delta = <x>)**, where <x> should be a value between 0.8 (current default) and 1. 
 
@@ -335,7 +335,7 @@ summary(fit_smooth1)
 plot(marginal_effects(fit_smooth1), points = TRUE, ask = FALSE)
 ```
 
-##Kui x on ordered factor
+## Kui x on ordered factor
 
 monotooniline mudel - X-i väärtused on järjestatud kuid ei asu üksteisest ühekaugusel. Kui me tähistame need integer numbritega 1, 2 ja 3 siis 1 ja 3 võivad olla 2-st erineval kaugusel. brms-s töötavad nii ordered factor kui integer. 
 
@@ -385,6 +385,10 @@ dat$ls <- dat$ls + var_city[dat$city]
 fit5 <- brm(ls ~ mo(income) + (1 | city) + (mo(income) | city), data = dat)
 ```
 
+
+
+
+## rstanarm
 
 The goal of the rstanarm package is to make Bayesian estimation routine for the most common regression models. The default priors in rstanarm are designed to be weakly informative, by which we mean that they avoid placing unwarranted prior weight on nonsensical parameter values and provide some regularization to avoid overfitting, but also do allow for extreme values if warranted by the data. If additional information is available, the weakly informative defaults can be replaced with more informative priors.
 
@@ -530,7 +534,7 @@ out of 100 women who have a college degree versus 100 women with only a high sch
 24 and 16, a one-in-four chance that it is greater, and one-in-four chance that it is less.
 
 
-#rstanarm
+
 
 
 ###Troubleshooting
