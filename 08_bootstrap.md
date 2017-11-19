@@ -128,15 +128,18 @@ ci
 #>   183   187
 ```
 
-## bayesboot() {-}
+## Bayesi bootstrap {-}
 
-See funktsioon pakub pisut moodsama meetodi^[Kui klassikalise bootstrap meetodi pakkus välja B. Efron aastal 1979, siis selle Bayesi versioon avaldati DB. Rubini poolt 1981. a, nii et paar aastat moodsam.] --- Bayesian bootstrap --- mis töötab paremini väikeste valimite korral. 
-Aga üldiselt on tulemused sarnased.
-Hea lihtsa seletuse Bayesian bootstrapi kohta saab siit https://www.youtube.com/watch?v=WMAgzr99PKE ja lihtsa r koodi selle meetodi rakendamiseks saab siit https://www.r-bloggers.com/simple-bayesian-bootstrap/. 
-Lühidalt, erinevalt eelkirjeldatud tava-bootstrapist simuleeritakse Bayesi bootstrapis posterioorjaotus, näiteks arvutatakse kaalutud keskmine, kus kaalud on prioriks ja pärinevad ühtlasest jaotusest. 
+Kui klassikalise bootstrap meetodi pakkus välja B. Efron aastal 1979, siis selle Bayesi versioon avaldati D.B. Rubini poolt 1981. a.
+Bayesi versioon bootstrapist on implementeeritud "bayesboot" paketis funktsioonis `bayesboot()`.
+Hea lihtsa seletuse Bayesi bootstrapi kohta saab siit https://www.youtube.com/watch?v=WMAgzr99PKE ja lihtsa r koodi selle meetodi rakendamiseks saab siit https://www.r-bloggers.com/simple-bayesian-bootstrap/. 
+
+Lühidalt, erinevalt eelkirjeldatud tava-bootstrapist simuleeritakse Bayesi bootstrapis posterioorjaotused, näiteks arvutatakse kaalutud keskmine, kus ühtlasest jaotusest pärit kaalud on prioriks. 
+
 Näited sellest, kuidas kasutada bayesbooti standardhälbe, korrelatsioonikoefitsiendi ja lineaarse mudeli koefitsientide usalduspiiride arvutamiseks leiate `?bayesboot` käsuga.
 
-(ref:bayesboot) Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele.
+
+(ref:bayesboot) Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele. Vaikimisi pannakse siin kaalud (prior) valimi indeksile.
 
 
 ```r
@@ -152,10 +155,11 @@ HPDI(heights_bb$V1, prob = 0.95)
 <p class="caption">(\#fig:bayesboot)(ref:bayesboot)</p>
 </div>
 
-Bayesi bootstrap töötab veidi efektiivsemalt, kui me arvutame kaalutud statistikuid. Näiteks kaalutud keskmise saab niimoodi:
+Vaikimisi pannakse `bayesboot()` funktsioonis statistiku arvutamisel kaalud (prior) valimi indeksile, mis annab erineva tulemuse kui näiteks kaalutud keskmise arvutamisel kui kaalud (prior) pannakse valimi väärtustele.
+ 
+Aritmeetilise keskmise Bayesi bootstrap väärtused kasutades kaalutud keskmise funktsiooni `weighted.mean` saab niimoodi:
 
 ```r
-# it's more efficient to use the a weighted statistic (but you can use a normal statistic like mean() or median() as well - as above).
 heights_bb_w <- bayesboot(heights$value, 
                          weighted.mean, 
                          use.weights = TRUE)
@@ -164,7 +168,6 @@ heights_bb_w <- bayesboot(heights$value,
 Tõenäosus, et keskmine on suurem kui 182 cm
 
 ```r
-# the probability that the mean is > 182 cm.
 mean(heights_bb[, 1] > 182)
 #> [1] 0.992
 ```
@@ -190,9 +193,9 @@ plot(dfr_bb, compVal = 0)
 <p class="caption">(\#fig:bayeses)(ref:bayeses)</p>
 </div>
 
-
-BayesianFirstAid raamatukogu funktsioon bayes.t.test() annab kasutades t-jaotuse tõepäramudelit üsna täpselt sama vastuse. See raamatukogu eeldab JAGS mcmc sämpleri installeerimist. Abi saab siit https://github.com/rasmusab/bayesian_first_aid ja siit https://faculty.washington.edu/jmiyamot/p548/installing.jags.pdf
-
+BayesianFirstAid raamatukogu funktsioon bayes.t.test() annab kasutades t-jaotuse tõepäramudelit üsna täpselt sama vastuse. 
+See raamatukogu eeldab JAGS mcmc sämpleri installeerimist. 
+Abi saab siit https://github.com/rasmusab/bayesian_first_aid ja siit https://faculty.washington.edu/jmiyamot/p548/installing.jags.pdf.
 
 ## Parameetriline bootstrap {-}
 

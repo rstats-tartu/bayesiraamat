@@ -152,7 +152,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="part"><span><b>II OSA</b></span></li>
 <li class="chapter" data-level="9" data-path="bootstrap.html"><a href="bootstrap.html"><i class="fa fa-check"></i><b>9</b> Bootstrap</a><ul>
 <li class="chapter" data-level="" data-path="bootstrap.html"><a href="bootstrap.html#veidi-keerulisem-bootstrap"><i class="fa fa-check"></i>Veidi keerulisem bootstrap</a></li>
-<li class="chapter" data-level="" data-path="bootstrap.html"><a href="bootstrap.html#bayesboot"><i class="fa fa-check"></i>bayesboot()</a></li>
+<li class="chapter" data-level="" data-path="bootstrap.html"><a href="bootstrap.html#bayesi-bootstrap"><i class="fa fa-check"></i>Bayesi bootstrap</a></li>
 <li class="chapter" data-level="" data-path="bootstrap.html"><a href="bootstrap.html#parameetriline-bootstrap"><i class="fa fa-check"></i>Parameetriline bootstrap</a></li>
 <li class="chapter" data-level="" data-path="bootstrap.html"><a href="bootstrap.html#bootstrappimine-ei-ole-kogu-tode"><i class="fa fa-check"></i>Bootstrappimine ei ole kogu tõde</a></li>
 </ul></li>
@@ -304,9 +304,11 @@ ci
 <span class="co">#&gt; |0.95 0.95| </span>
 <span class="co">#&gt;   183   187</span></code></pre></div>
 </div>
-<div id="bayesboot" class="section level2 unnumbered">
-<h2>bayesboot()</h2>
-<p>See funktsioon pakub pisut moodsama meetodi<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> — Bayesian bootstrap — mis töötab paremini väikeste valimite korral. Aga üldiselt on tulemused sarnased. Hea lihtsa seletuse Bayesian bootstrapi kohta saab siit <a href="https://www.youtube.com/watch?v=WMAgzr99PKE" class="uri">https://www.youtube.com/watch?v=WMAgzr99PKE</a> ja lihtsa r koodi selle meetodi rakendamiseks saab siit <a href="https://www.r-bloggers.com/simple-bayesian-bootstrap/" class="uri">https://www.r-bloggers.com/simple-bayesian-bootstrap/</a>. Lühidalt, erinevalt eelkirjeldatud tava-bootstrapist simuleeritakse Bayesi bootstrapis posterioorjaotus, näiteks arvutatakse kaalutud keskmine, kus kaalud on prioriks ja pärinevad ühtlasest jaotusest. Näited sellest, kuidas kasutada bayesbooti standardhälbe, korrelatsioonikoefitsiendi ja lineaarse mudeli koefitsientide usalduspiiride arvutamiseks leiate <code>?bayesboot</code> käsuga.</p>
+<div id="bayesi-bootstrap" class="section level2 unnumbered">
+<h2>Bayesi bootstrap</h2>
+<p>Kui klassikalise bootstrap meetodi pakkus välja B. Efron aastal 1979, siis selle Bayesi versioon avaldati D.B. Rubini poolt 1981. a. Bayesi versioon bootstrapist on implementeeritud “bayesboot” paketis funktsioonis <code>bayesboot()</code>. Hea lihtsa seletuse Bayesi bootstrapi kohta saab siit <a href="https://www.youtube.com/watch?v=WMAgzr99PKE" class="uri">https://www.youtube.com/watch?v=WMAgzr99PKE</a> ja lihtsa r koodi selle meetodi rakendamiseks saab siit <a href="https://www.r-bloggers.com/simple-bayesian-bootstrap/" class="uri">https://www.r-bloggers.com/simple-bayesian-bootstrap/</a>.</p>
+<p>Lühidalt, erinevalt eelkirjeldatud tava-bootstrapist simuleeritakse Bayesi bootstrapis posterioorjaotused, näiteks arvutatakse kaalutud keskmine, kus ühtlasest jaotusest pärit kaalud on prioriks.</p>
+<p>Näited sellest, kuidas kasutada bayesbooti standardhälbe, korrelatsioonikoefitsiendi ja lineaarse mudeli koefitsientide usalduspiiride arvutamiseks leiate <code>?bayesboot</code> käsuga.</p>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">heights_bb &lt;-<span class="st"> </span><span class="kw">bayesboot</span>(heights<span class="op">$</span>value, mean)
 <span class="kw">plot</span>(heights_bb, <span class="dt">compVal =</span> <span class="dv">185</span>)
@@ -314,19 +316,18 @@ ci
 <span class="co">#&gt; |0.95 0.95| </span>
 <span class="co">#&gt;   183   187</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:bayesboot"></span>
-<img src="08_bootstrap_files/figure-html/bayesboot-1.png" alt="Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele." width="70%" />
+<img src="08_bootstrap_files/figure-html/bayesboot-1.png" alt="Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele. Vaikimisi pannakse siin kaalud (prior) valimi indeksile." width="70%" />
 <p class="caption">
-Joonis 9.3: Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele.
+Joonis 9.3: Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele. Vaikimisi pannakse siin kaalud (prior) valimi indeksile.
 </p>
 </div>
-<p>Bayesi bootstrap töötab veidi efektiivsemalt, kui me arvutame kaalutud statistikuid. Näiteks kaalutud keskmise saab niimoodi:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># it&#39;s more efficient to use the a weighted statistic (but you can use a normal statistic like mean() or median() as well - as above).</span>
-heights_bb_w &lt;-<span class="st"> </span><span class="kw">bayesboot</span>(heights<span class="op">$</span>value, 
+<p>Vaikimisi pannakse <code>bayesboot()</code> funktsioonis statistiku arvutamisel kaalud (prior) valimi indeksile, mis annab erineva tulemuse kui näiteks kaalutud keskmise arvutamisel kui kaalud (prior) pannakse valimi väärtustele.</p>
+<p>Aritmeetilise keskmise Bayesi bootstrap väärtused kasutades kaalutud keskmise funktsiooni <code>weighted.mean</code> saab niimoodi:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">heights_bb_w &lt;-<span class="st"> </span><span class="kw">bayesboot</span>(heights<span class="op">$</span>value, 
                          weighted.mean, 
                          <span class="dt">use.weights =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>Tõenäosus, et keskmine on suurem kui 182 cm</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the probability that the mean is &gt; 182 cm.</span>
-<span class="kw">mean</span>(heights_bb[, <span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">182</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(heights_bb[, <span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">182</span>)
 <span class="co">#&gt; [1] 0.992</span></code></pre></div>
 <p>Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):</p>
 
@@ -344,7 +345,7 @@ dfr_bb &lt;-<span class="st"> </span><span class="kw">bayesboot</span>(dfr<span 
 Joonis 9.4: Bayesi bootstrap ES-le.
 </p>
 </div>
-<p>BayesianFirstAid raamatukogu funktsioon bayes.t.test() annab kasutades t-jaotuse tõepäramudelit üsna täpselt sama vastuse. See raamatukogu eeldab JAGS mcmc sämpleri installeerimist. Abi saab siit <a href="https://github.com/rasmusab/bayesian_first_aid" class="uri">https://github.com/rasmusab/bayesian_first_aid</a> ja siit <a href="https://faculty.washington.edu/jmiyamot/p548/installing.jags.pdf" class="uri">https://faculty.washington.edu/jmiyamot/p548/installing.jags.pdf</a></p>
+<p>BayesianFirstAid raamatukogu funktsioon bayes.t.test() annab kasutades t-jaotuse tõepäramudelit üsna täpselt sama vastuse. See raamatukogu eeldab JAGS mcmc sämpleri installeerimist. Abi saab siit <a href="https://github.com/rasmusab/bayesian_first_aid" class="uri">https://github.com/rasmusab/bayesian_first_aid</a> ja siit <a href="https://faculty.washington.edu/jmiyamot/p548/installing.jags.pdf" class="uri">https://faculty.washington.edu/jmiyamot/p548/installing.jags.pdf</a>.</p>
 </div>
 <div id="parameetriline-bootstrap" class="section level2 unnumbered">
 <h2>Parameetriline bootstrap</h2>
@@ -391,12 +392,6 @@ Joonis 9.6: Bootstrappimise meetodid.
 <p>Ehkki bootstrappimine ei arvesta taustateadmistega, ei tee seda olulisel määral ka paljud Bayesi mudelid (mudeldaja vaba valiku tõttu, mitte selle pärast, et mudel ei suudaks taustainfot inkorporeerida). Bayesi meetodite väljatöötajad ei tea sageli ette, milliste teaduslike probleemide lahendamiseks nende mudeleid hakatakse kasutama, ja seega ei kirjuta nad mudelisse ka väga ranget eelteadmist. Nende mudelite teadlastest kasutajad lepivad sageli selllega ja lasevad oma mudelite kaudu “andmetel kõneleda” enam-vähem sellistena, nagu need juhtuvad olema. Sellist lähenemist ei saa alati hukka mõista, sest vahest ei olegi meil palju eelteadmisi oma probleemi kohta, küll aga tuleb mainida, et sellistel juhtudel annab bootstrappimine sageli lihtsama vaevaga väga sarnase tulemuse, kui Bayesi täismäng.</p>
 
 </div>
-</div>
-<div class="footnotes">
-<hr />
-<ol start="1">
-<li id="fn1"><p>Kui klassikalise bootstrap meetodi pakkus välja B. Efron aastal 1979, siis selle Bayesi versioon avaldati DB. Rubini poolt 1981. a, nii et paar aastat moodsam.<a href="bootstrap.html#fnref1">↩</a></p></li>
-</ol>
 </div>
             </section>
 
