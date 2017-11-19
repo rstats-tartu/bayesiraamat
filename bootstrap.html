@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Bayesi statistika kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid.">
-  <meta name="generator" content="bookdown 0.5.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.5.10 and GitBook 2.6.7">
 
   <meta property="og:title" content="Bayesi statistika kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -306,7 +306,7 @@ ci
 </div>
 <div id="bayesboot" class="section level2 unnumbered">
 <h2>bayesboot()</h2>
-<p>See funktsioon pakub pisut moodsama meetodi — Bayesian bootstrap — mis töötab paremini väikeste valimite korral. Aga üldiselt on tulemused sarnased. Hea lihtsa seletuse Bayesian bootstrapi kohta saab siit <a href="https://www.youtube.com/watch?v=WMAgzr99PKE" class="uri">https://www.youtube.com/watch?v=WMAgzr99PKE</a> ja lihtsa r koodi selle meetodi rakendamiseks saab siit <a href="https://www.r-bloggers.com/simple-bayesian-bootstrap/" class="uri">https://www.r-bloggers.com/simple-bayesian-bootstrap/</a> Näited sellest, kuidas kasutada bayesbooti standardhälbe, korrelatsioonikoefitsiendi ja lineaarse mudeli koefitsientide usalduspiiride arvutamiseks leiate <code>?bayesboot</code> käsuga.</p>
+<p>See funktsioon pakub pisut moodsama meetodi<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> — Bayesian bootstrap — mis töötab paremini väikeste valimite korral. Aga üldiselt on tulemused sarnased. Hea lihtsa seletuse Bayesian bootstrapi kohta saab siit <a href="https://www.youtube.com/watch?v=WMAgzr99PKE" class="uri">https://www.youtube.com/watch?v=WMAgzr99PKE</a> ja lihtsa r koodi selle meetodi rakendamiseks saab siit <a href="https://www.r-bloggers.com/simple-bayesian-bootstrap/" class="uri">https://www.r-bloggers.com/simple-bayesian-bootstrap/</a>. Lühidalt, erinevalt eelkirjeldatud tava-bootstrapist simuleeritakse Bayesi bootstrapis posterioorjaotus, näiteks arvutatakse kaalutud keskmine, kus kaalud on prioriks ja pärinevad ühtlasest jaotusest. Näited sellest, kuidas kasutada bayesbooti standardhälbe, korrelatsioonikoefitsiendi ja lineaarse mudeli koefitsientide usalduspiiride arvutamiseks leiate <code>?bayesboot</code> käsuga.</p>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">heights_bb &lt;-<span class="st"> </span><span class="kw">bayesboot</span>(heights<span class="op">$</span>value, mean)
 <span class="kw">plot</span>(heights_bb, <span class="dt">compVal =</span> <span class="dv">185</span>)
@@ -391,6 +391,12 @@ Joonis 9.6: Bootstrappimise meetodid.
 <p>Ehkki bootstrappimine ei arvesta taustateadmistega, ei tee seda olulisel määral ka paljud Bayesi mudelid (mudeldaja vaba valiku tõttu, mitte selle pärast, et mudel ei suudaks taustainfot inkorporeerida). Bayesi meetodite väljatöötajad ei tea sageli ette, milliste teaduslike probleemide lahendamiseks nende mudeleid hakatakse kasutama, ja seega ei kirjuta nad mudelisse ka väga ranget eelteadmist. Nende mudelite teadlastest kasutajad lepivad sageli selllega ja lasevad oma mudelite kaudu “andmetel kõneleda” enam-vähem sellistena, nagu need juhtuvad olema. Sellist lähenemist ei saa alati hukka mõista, sest vahest ei olegi meil palju eelteadmisi oma probleemi kohta, küll aga tuleb mainida, et sellistel juhtudel annab bootstrappimine sageli lihtsama vaevaga väga sarnase tulemuse, kui Bayesi täismäng.</p>
 
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Kui klassikalise bootstrap meetodi pakkus välja B. Efron aastal 1979, siis selle Bayesi versioon avaldati DB. Rubini poolt 1981. a, nii et paar aastat moodsam.<a href="bootstrap.html#fnref1">↩</a></p></li>
+</ol>
 </div>
             </section>
 

@@ -130,8 +130,10 @@ ci
 
 ## bayesboot() {-}
 
-See funktsioon pakub pisut moodsama meetodi --- Bayesian bootstrap --- mis töötab paremini väikeste valimite korral. Aga üldiselt on tulemused sarnased.
-Hea lihtsa seletuse Bayesian bootstrapi kohta saab siit https://www.youtube.com/watch?v=WMAgzr99PKE ja lihtsa r koodi selle meetodi rakendamiseks saab siit https://www.r-bloggers.com/simple-bayesian-bootstrap/
+See funktsioon pakub pisut moodsama meetodi^[Kui klassikalise bootstrap meetodi pakkus välja B. Efron aastal 1979, siis selle Bayesi versioon avaldati DB. Rubini poolt 1981. a, nii et paar aastat moodsam.] --- Bayesian bootstrap --- mis töötab paremini väikeste valimite korral. 
+Aga üldiselt on tulemused sarnased.
+Hea lihtsa seletuse Bayesian bootstrapi kohta saab siit https://www.youtube.com/watch?v=WMAgzr99PKE ja lihtsa r koodi selle meetodi rakendamiseks saab siit https://www.r-bloggers.com/simple-bayesian-bootstrap/. 
+Lühidalt, erinevalt eelkirjeldatud tava-bootstrapist simuleeritakse Bayesi bootstrapis posterioorjaotus, näiteks arvutatakse kaalutud keskmine, kus kaalud on prioriks ja pärinevad ühtlasest jaotusest. 
 Näited sellest, kuidas kasutada bayesbooti standardhälbe, korrelatsioonikoefitsiendi ja lineaarse mudeli koefitsientide usalduspiiride arvutamiseks leiate `?bayesboot` käsuga.
 
 (ref:bayesboot) Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele.
