@@ -355,3 +355,17 @@ Siit tuleb ka seletus nähtusele, mida kutsutakse regressiooniks keskmisele (*re
 ### pidev või diskreetne muutuja?
 
 Tavaliselt on mõistlik fittida mudel pidevale y muutujale ka siis, kui tahame lõpuks tõlgenada tulemusi diskreetsel skaalal. Pidev muutuja sisaldab lihtsalt rohkem informatsiooni ja seetöttu on meil lootust saada parem fit. Erandiks on pidevad x muutujad, mille mõju y-le on mittelineaarne (näiteks vanuse mõju suremusele). Siin on vahest mõistlik vastupidi konverteerida pidev muutuja faktormuutujaks ja saada hinnang näiteks igale vanuseklassile eraldi kasutades skeemi $eluiga~vanus + vanus^2$. 
+
+## Üldised printsiibid
+
+1. võta sisse kõik teaduslikku huvi poakkuvad muutujad
+
+2. kontrolli, ega muutujate vahel ei esine väga tugevaid korrelatsioone (kollineaarsus). Kui jah, siis kombineeri kollineaarsed muutujad üheks või transformeeri neid või viska mõni muutuja välja.
+
+3. muutujad, mis ei varieeru, ei oma ka regressioonis mõju.
+
+4. tugeva mõjuga muutujate puhul võib olla vajalik sisse tuua interkatsiooniga mudelid (vt ptk ...).
+
+5. muutujad, mida sa reaalselt mõõtsid ei pruugi olla need muutujad, mis mudelisse lähevad -- näiteks arvuta kehamassiindeks mõõdetud muutujate põhjal.
+
+6. kui pidevad x-id transformeerida log skaalasse, siis on lineaarsesse mudelisse pandud efektid multiplikatiivsed, mitte aditiivsed.
