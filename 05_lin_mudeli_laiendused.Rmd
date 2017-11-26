@@ -110,6 +110,8 @@ Interaktsioonimudelis sõltub ühe prediktori mõju teise prediktori väärtuses
 
 $$y = a + b_1x_1 + b_2x_2 + b_3x_1x_2$$
 
+Sageli on nii, et prediktoreid, mille mõju y-le on suur, tasub mudeldada ka interaktsioonimudelis (näiteks suitsetamise mõju vähimudelites kipub olema interaktsiooniga). 
+
 Interaktsioonimudeli koefitsientide tõlgendamine on keerulisem. 
 b~1~ on otse tõlgendatav ainult siis, kui x~2~ = 0 (ja b~2~ ainult siis, kui x~1~ = 0).
 Edaspidi õpime selliseid mudeleid graafiliselt tõlgendama. 
