@@ -266,7 +266,5 @@ oodatud väärtus = variance = λ
 
 $sd = sqrt(λ)$
 
-$\lambda -\ln 2\leq median <\lambda +{\frac {1}{3}}$.
-
-
+Millal kasutada Poissoni jaotust, ja millal binoomjaotust? Kui iga andmepunkti saab vaadelda kui edukate katsete arvu suhet kõikide katsete arvule, siis kasuta binoomjaotust/logistilist regressiooni. Kui aga andmepunkti väärtusel pole loomulikku piiri (see on lihtsalt mingit tüüpi sündmuste arv), kasuta Poissoni/logaritmilist regressiooni. 
 
