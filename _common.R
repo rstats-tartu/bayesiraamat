@@ -5,8 +5,9 @@ set.seed(19)
 options(digits = 3,
         dplyr.print_min = 6,
         dplyr.print_max = 6,
-        booktabs = TRUE)
-
+        booktabs = TRUE,
+        mc.cores = parallel::detectCores())
+rstan::rstan_options(auto_write = TRUE)
 knitr::opts_chunk$set(
   message = FALSE,
   comment = "#>",
