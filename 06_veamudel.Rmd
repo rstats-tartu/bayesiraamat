@@ -247,6 +247,13 @@ Siin on siis $\mu$ ja $\sigma$ arvutatud logaritmitud andmete pealt.
 
 ### Binoomjaotus
 
+Kui teil on binaarne muutuja (sellel saab olla ainult kaks väärtust, näiteks edukas/edutu), mis kajastab sõltumatuid sündmusi, siis modelleerib seda binoomjaotus $y ∼ Binomial(n, p)$.
+Kus *n* on edukate sündmuste arv ja *p* on nende suhteline sagedus (p = n / N, kus *N* on kõikide sündmuste kopguarv). 
+Sõltumatud sündmused on sellised, kus ühe sündmuse esinemise järgi ei saa ennustada teise sündmuse esinemist (st puudub korrelatsioon sündmuste esinemise vahel). 
+Tehniliselt on binoomjaotusel veel omadus, et valim võetakse replacementiga, mis tähendab, et iga sündmus pannakse populatsiooni tagasi, kus seda saab uuesti valimisse tõmmata. 
+Siit tuleb, et binoomjaotuse mudel kehtib päris maailmas mõõndustega ja et seda mudelit on kindlam kasutada siis, kui N >> n. 
+Kui N on suur, siis meenutab binoomjaotus normaaljaotust (läheneb selle kujule).
+
 ```{r}
 n <- 10 # sündmuste koguarv
 x <- seq(0, n) # kõik võimalikud õnnestumiste arvud 10st sündmusest
@@ -254,13 +261,6 @@ p <- 0.3 # 30% õnnestumisi (sagedus)
 y <- dbinom(x, n, p)
 plot(x, y)
 ```
-
-
-Kui teil on binaarne muutuja (sellel saab olla ainult kaks väärtust, n. edukas/edutu), mis kajastab sõltumatuid sündmusi, siis modelleerib seda binoomjaotus $y ∼ Binomial(n, p)$, kus n on edukate sündmuste arv ja p on nende suhteline sagedus (p = n/N, kus N on kõikide sündmuste kopguarv). 
-Sõltumatud sündmused on sellised, kus ühe sündmuse esinemise järgi ei saa ennustada teise sündmuse esinemist (st puudub korrelatsioon sündmuste esinemise vahel). 
-Tehniliselt on binoomjaotusel veel omadus, et valim võetakse replacementiga, mis tähendab, et iga sündmus pannakse populatsiooni tagasi, kus seda saab uuesti valimisse tõmmata. 
-Siit tuleb, et binoomjaotuse mudel kehtib päris maailmas mõõndustega ja et seda mudelit on kindlam kasutada siis, kui N >> n. 
-Kui N on suur, siis meenutab binoomjaotus normaaljaotust (läheneb selle kujule).
 
 $$keskv\ddot{a}\ddot{a}rtus = N \times p$$
 
