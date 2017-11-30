@@ -1,6 +1,12 @@
 
 # EDA --- eksploratoorne andmeanalüüs
 
+```{r}
+library(tidyverse)
+library(corrgram)
+```
+
+
 Kui ühenumbriline andmete summeerimine täidab eelkõige kokkuvõtliku kommunikatsiooni eesmärki, siis EDA on suunatud teadlasele endale. EDA eesmärk on andmeid eelkõige graafiliselt vaadata, et saada aimu 1) andmete kvaliteedist ja 2) lasta andmetel kõneleda "sellisena nagu nad on" ja sugereerida uudseid teaduslikke hüpoteese. Neid hüpoteese peaks siis testima formaalse statistilise analüüsi abil (ptk järeldav statistika). Näiteid erinevate graafiliste lahenduste kohta vt graafika peatükist.
 
 > EDA: mida rohkem graafikuid, seda rohkem võimalusi uute mõtete tekkeks!
@@ -16,26 +22,25 @@ Millised korrelatsioonid võiksid andmetes esineda?
 (ref:korrmaatriks) Korrelatstioonimaatriks joonisena.
 
 ```{r korrmaatriks, fig.cap='(ref:korrmaatriks)'}
-library(corrgram) # PCA for ordering
-corrgram(iris, order=TRUE, 
+corrgram(iris, 
+         order = TRUE, 
          lower.panel = panel.pts,
          upper.panel = panel.ellipse,
          diag.panel = panel.density,
-         main="Correlogram of Iris dataset")
+         main = "Correlogram of Iris dataset")
 ```
 
 2. vaata andmeid numbrilise kokkuvõttena.
 
 ```{r}
-library(tidyverse)
-library(psych)
-library(knitr)
-describe(iris) %>% kable()
+psych::describe(iris) %>% knitr::kable()
 ```
 
 Siin pööra kindlasti tähelepanu tulpadele min ja max, mis annavad kiire võimalusi outliereid ära tunda. Kontrolli, kas andmete keskmised (mediaan, mean ja trimmed mean) on üksteisele piisavalt lähedal --- kui ei ole, siis on andmete jaotus pika õlaga, ja kindlasti mitte normaalne. 
-Kontrolli, kas erinevate muutujate keskväärtused ja hälbed on teaduslikus mõttes usutavas vahemikus. Ära unusta, et ka väga väike standardhälve võib tähendada, et teie valim ei peegelda bioloogilist varieeruvust populatsioonis, mis teile teaduslikku huvi pakub. 
-NB! selles psych::describe() väljundis on mad läbi korrutatud konstandiga 1.4826, mis toob selle väärtuse lähemale sd-le. Seega on mad siin sd robustne analoog --- kui mad on palju väiksem sd-st, siis on karta, et muutujas on outliereid.
+Kontrolli, kas erinevate muutujate keskväärtused ja hälbed on teaduslikus mõttes usutavas vahemikus. 
+Ära unusta, et ka väga väike standardhälve võib tähendada, et teie valim ei peegelda bioloogilist varieeruvust populatsioonis, mis teile teaduslikku huvi pakub. 
+NB! selles `psych::describe()` funktsiooni väljundis on mad läbi korrutatud konstandiga `1.4826`, mis toob selle väärtuse lähemale sd-le. 
+Seega on mad siin sd robustne analoog --- kui mad on palju väiksem sd-st, siis on karta, et muutujas on outliereid.
 
 3. kontrolli NA-de esinemist oma andmetes VIM paketi abil või käsitsi (vt esimene ptk). Kontrolli, et NA-d ei oleks tähistatud mingil muul viisil (näiteks 0-i või mõne muu numbriga). Kui vaja, rekodeeri NAd. Mõtle selle peale, millised protsessid looduses võiksid genreerida puuduvaid andmeid. Kui NA-d ei jaotu andmetes juhuslikult, võib olla hea mõte andmeid imputeerida (vt hilisemaid ptk, bayesiaanlik imputeerimine). Näiteks, kui ravimiuuringust kukuvad eeskätt välja patsiendid, kellel ravim ei tööta, on ilmselt halb mõte nende patsientide andmed lihtsalt uuringust välja vistata (muidugi, kui te ei esinda kasumit taotleva ettevõtte huve). Kui NA-d jaotuvad juhuslikult, mõtle sellele, kas sa tahad NA-dega read tabelist välja visata, või hoopis osad muutujad, mis sisaldavad liiga palju NA-sid, või mitte midagi välja vistata. NB! NA-dega andmed ei sobi hästi regresiooniks.
 
@@ -49,17 +54,19 @@ NB! selles psych::describe() väljundis on mad läbi korrutatud konstandiga 1.48
 
 8. Ära piirdu muutuja tasemel varieeruvuse plottimisega. Teaduslikult on sageli huvitavam mimte muutuja koosvarieerumine. Järgmistes peatükkides modelleerime seda formaalselt regresioonanalüüsis aga alati tasub alustada lihtsatest plottidest. Scatterplot on lihtne viis kovarieeruvuse vaatamiseks. 
 
-9. Kui erinevad muutujad on mõõdetud erinevates skaalades (ühikutes), siis võib nende koosvarieeruvust olla kergem võrrelda, kui nad eelnevalt normaliseerida (kõigi muutujate keskväärtus = 0, aga varieeruvus jääb algsesse skaalasse), või standardiseerida (kõik keskväärtused = 0-ga ja sd-d = 1-ga). Standardiseerida tohib ainult normaaljaotusega muutujaid (seega võib olla vajalik muutuja kõigepealt logaritmida). normaliseerimine: arvuta igale valimi väärtusele: *mean(x) - x*; standardiseerimine: *(mean(x) - x)/sd(x)*.
+9. Kui erinevad muutujad on mõõdetud erinevates skaalades (ühikutes), siis võib nende koosvarieeruvust olla kergem võrrelda, kui nad eelnevalt normaliseerida (kõigi muutujate keskväärtus = 0, aga varieeruvus jääb algsesse skaalasse) või standardiseerida (kõik keskväärtused = 0-ga ja sd-d = 1-ga). 
+Standardiseerida tohib ainult normaaljaotusega muutujaid (seega võib olla vajalik muutuja kõigepealt logaritmida). 
+Normaliseerimine: arvuta igale valimi väärtusele: `mean(x) - x`; standardiseerimine: `(mean(x) - x) / sd(x)`.
 
 10. Visualiseeringu valik sõltub valimi suurusest. Väikse valimi korral (N<10) boxploti, histogrammi vms kasutamine on lihtsalt rumal. Ära mängi lolli ja ploti parem punkti kaupa.
 
-+ N < 20 - ploti iga andmepunkt eraldi (stripchart(), plot()) ja keskmine või mediaan. 
++ N < 20 - ploti iga andmepunkt eraldi (`stripchart()`, `plot()`) ja keskmine või mediaan. 
 
-+ 20 > N > 100: geom_dotplot() histogrammi vaates
++ 20 > N > 100: `geom_dotplot()` histogrammi vaates
 
-+ N > 100: geom_histogram(), geom_density() --- nende abil saab ka 2 kuni 6 jaotust võrrelda
++ N > 100: `geom_histogram()`, `geom_density()` --- nende abil saab ka 2 kuni 6 jaotust võrrelda
 
-+ Mitme jaotuse kõrvuti vaatamiseks, kui N > 15: geom_boxplot(), or geom_violin(), geom_joy() 
++ Mitme jaotuse kõrvuti vaatamiseks, kui N > 15: `geom_boxplot()`, or `geom_violin()`, `geom_joy()` 
 
 11. Nii saab plottida multiplikatiivse sd:
 
@@ -76,15 +83,15 @@ multi_sd <- function(x) {
   msd <- 10^c
   ymin <- g_mean / msd
   ymax <- g_mean * msd
- return(c(y = g_mean, ymin = ymin, ymax = ymax)) 
+ c(y = g_mean, ymin = ymin, ymax = ymax)
 }
 
-ToothGrowth$dose <- as.factor(ToothGrowth$dose)
-
-ggplot(ToothGrowth, aes(dose, len)) + 
+ggplot(ToothGrowth, aes(as.factor(dose), len)) + 
   geom_dotplot(binaxis = 'y', stackdir = 'center',
-               stackratio = 1.5, dotsize = 0.6, fill = "grey") + 
-  stat_summary(fun.data = multi_sd, color = "blue", size = 0.6)
+               stackratio = 1.5, dotsize = 0.6, fill = "grey", bins = 30) + 
+  stat_summary(fun.data = multi_sd, color = "blue", size = 0.6) +
+  labs(title = "The Effect of Vitamin C on Tooth Growth in Guinea Pigs",
+       x = "Vitamin C dose in mg/day", y = "Length of odontoblasts")
 ```
 
 
