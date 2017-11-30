@@ -265,7 +265,7 @@ plot(log(x), y, type = "l")
 
 <img src="06_veamudel_files/figure-html/unnamed-chunk-6-1.png" width="70%" style="display: block; margin: auto;" />
 
-Lognormaaljaotuse $$keskväärtus = \exp(\mu + 1/2 * σ^2)$$ 
+Lognormaaljaotuse $$keskv\ddot{a}\ddot{a}rtus = \exp(\mu + 1/2 \times σ^2)$$ 
 
 $$sd = \exp(\mu + 1/2 \times \sigma^2) \times \sqrt{\exp(\sigma^2) − 1}$$
 $$mood = e^{\mu - \sigma^2}$$
@@ -293,7 +293,7 @@ Tehniliselt on binoomjaotusel veel omadus, et valim võetakse replacementiga, mi
 Siit tuleb, et binoomjaotuse mudel kehtib päris maailmas mõõndustega ja et seda mudelit on kindlam kasutada siis, kui N >> n. 
 Kui N on suur, siis meenutab binoomjaotus normaaljaotust (läheneb selle kujule).
 
-$$keskväärtus = N \times p$$
+$$keskv\ddot{a}\ddot{a}rtus = N \times p$$
 
 kui Np võrdub täisarvuga, siis mediaan = mood = keskväärtus
 
