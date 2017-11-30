@@ -277,6 +277,13 @@ Siin on siis $\mu$ ja $\sigma$ arvutatud logaritmitud andmete pealt.
 
 ### Binoomjaotus
 
+Kui teil on binaarne muutuja (sellel saab olla ainult kaks väärtust, näiteks sees/väljas, 1/0), mis kajastab sõltumatuid sündmusi, siis modelleerib seda binoomjaotus $y ∼ Binomial(n, p)$.
+Kus *n* on edukate sündmuste arv ja *p* on nende suhteline sagedus (p = n / N, kus *N* on kõikide sündmuste kopguarv). 
+Sõltumatud sündmused on sellised, kus ühe sündmuse esinemise järgi ei saa ennustada teise sündmuse esinemist (st puudub korrelatsioon sündmuste esinemise vahel). 
+Tehniliselt on binoomjaotusel veel omadus, et valim võetakse replacementiga, mis tähendab, et iga sündmus pannakse populatsiooni tagasi, kus seda saab uuesti valimisse tõmmata. 
+Siit tuleb, et binoomjaotuse mudel kehtib päris maailmas mõõndustega ja et seda mudelit on kindlam kasutada siis, kui N >> n. 
+Kui N on suur, siis meenutab binoomjaotus normaaljaotust (läheneb selle kujule).
+
 
 ```r
 n <- 10 # sündmuste koguarv
@@ -287,13 +294,6 @@ plot(x, y)
 ```
 
 <img src="06_veamudel_files/figure-html/unnamed-chunk-7-1.png" width="70%" style="display: block; margin: auto;" />
-
-
-Kui teil on binaarne muutuja (sellel saab olla ainult kaks väärtust, n. edukas/edutu), mis kajastab sõltumatuid sündmusi, siis modelleerib seda binoomjaotus $y ∼ Binomial(n, p)$, kus n on edukate sündmuste arv ja p on nende suhteline sagedus (p = n/N, kus N on kõikide sündmuste kopguarv). 
-Sõltumatud sündmused on sellised, kus ühe sündmuse esinemise järgi ei saa ennustada teise sündmuse esinemist (st puudub korrelatsioon sündmuste esinemise vahel). 
-Tehniliselt on binoomjaotusel veel omadus, et valim võetakse replacementiga, mis tähendab, et iga sündmus pannakse populatsiooni tagasi, kus seda saab uuesti valimisse tõmmata. 
-Siit tuleb, et binoomjaotuse mudel kehtib päris maailmas mõõndustega ja et seda mudelit on kindlam kasutada siis, kui N >> n. 
-Kui N on suur, siis meenutab binoomjaotus normaaljaotust (läheneb selle kujule).
 
 $$keskv\ddot{a}\ddot{a}rtus = N \times p$$
 
