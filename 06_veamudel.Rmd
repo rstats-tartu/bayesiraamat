@@ -237,7 +237,7 @@ plot(log(x), y, type = "l")
 
 Lognormaaljaotuse $$keskväärtus = \exp(\mu + 1/2 * σ^2)$$ 
 
-$$sd = \exp(\mu + 1/2 * \sigma^2) \times \sqrt{\exp(\sigma^2) − 1}$$
+$$sd = \exp(\mu + 1/2 \times \sigma^2) \times \sqrt{\exp(\sigma^2) − 1}$$
 $$mood = e^{\mu - \sigma^2}$$
 
 $$mediaan = e^\mu$$
@@ -246,8 +246,8 @@ Siin on siis $\mu$ ja $\sigma$ arvutatud logaritmitud andmete pealt.
 ### Binoomjaotus
 
 ```{r}
-x <- seq(0, n) # kõik võimalikud õnnestumiste arvud 10st sündmusest
 n <- 10 # sündmuste koguarv
+x <- seq(0, n) # kõik võimalikud õnnestumiste arvud 10st sündmusest
 p <- 0.3 # 30% õnnestumisi (sagedus)
 y <- dbinom(x, n, p)
 plot(x, y)
