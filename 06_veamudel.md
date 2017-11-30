@@ -265,7 +265,9 @@ plot(log(x), y, type = "l")
 
 <img src="06_veamudel_files/figure-html/unnamed-chunk-6-1.png" width="70%" style="display: block; margin: auto;" />
 
-Lognormaaljaotuse $$keskv\ddot{a}\ddot{a}rtus = \exp(\mu + 1/2 \times σ^2)$$ 
+Lognormaaljaotuse keskväärtus, standardhälve, mood ja mediaan:
+
+$$keskv\ddot{a}\ddot{a}rtus = \exp(\mu + 1/2 \times σ^2)$$ 
 
 $$sd = \exp(\mu + 1/2 \times \sigma^2) \times \sqrt{\exp(\sigma^2) − 1}$$
 $$mood = e^{\mu - \sigma^2}$$
@@ -295,7 +297,7 @@ Kui N on suur, siis meenutab binoomjaotus normaaljaotust (läheneb selle kujule)
 
 $$keskv\ddot{a}\ddot{a}rtus = N \times p$$
 
-kui Np võrdub täisarvuga, siis mediaan = mood = keskväärtus
+Kui Np võrdub täisarvuga, siis mediaan = mood = keskväärtus
 
 $$sd = sqrt(N \times p(1 - p))$$
 

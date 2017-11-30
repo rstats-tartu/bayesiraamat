@@ -386,7 +386,8 @@ y &lt;-<span class="st"> </span><span class="kw">dlnorm</span>(x)
 <p>Seda jaotust, mis ei ulatu kunagi teisele poole nulli, iseloomustab, et x-i logaritmimine annab tulemuseks normaaljaotuse.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">log</span>(x), y, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>)</code></pre></div>
 <p><img src="06_veamudel_files/figure-html/unnamed-chunk-6-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>Lognormaaljaotuse <span class="math display">\[keskv\ddot{a}\ddot{a}rtus = \exp(\mu + 1/2 \times σ^2)\]</span></p>
+<p>Lognormaaljaotuse keskväärtus, standardhälve, mood ja mediaan:</p>
+<p><span class="math display">\[keskv\ddot{a}\ddot{a}rtus = \exp(\mu + 1/2 \times σ^2)\]</span></p>
 <p><span class="math display">\[sd = \exp(\mu + 1/2 \times \sigma^2) \times \sqrt{\exp(\sigma^2) − 1}\]</span> <span class="math display">\[mood = e^{\mu - \sigma^2}\]</span></p>
 <p><span class="math display">\[mediaan = e^\mu\]</span> Siin on siis <span class="math inline">\(\mu\)</span> ja <span class="math inline">\(\sigma\)</span> arvutatud logaritmitud andmete pealt.</p>
 </div>
@@ -400,7 +401,7 @@ y &lt;-<span class="st"> </span><span class="kw">dbinom</span>(x, n, p)
 <p><img src="06_veamudel_files/figure-html/unnamed-chunk-7-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Kui teil on binaarne muutuja (sellel saab olla ainult kaks väärtust, n. edukas/edutu), mis kajastab sõltumatuid sündmusi, siis modelleerib seda binoomjaotus <span class="math inline">\(y ∼ Binomial(n, p)\)</span>, kus n on edukate sündmuste arv ja p on nende suhteline sagedus (p = n/N, kus N on kõikide sündmuste kopguarv). Sõltumatud sündmused on sellised, kus ühe sündmuse esinemise järgi ei saa ennustada teise sündmuse esinemist (st puudub korrelatsioon sündmuste esinemise vahel). Tehniliselt on binoomjaotusel veel omadus, et valim võetakse replacementiga, mis tähendab, et iga sündmus pannakse populatsiooni tagasi, kus seda saab uuesti valimisse tõmmata. Siit tuleb, et binoomjaotuse mudel kehtib päris maailmas mõõndustega ja et seda mudelit on kindlam kasutada siis, kui N &gt;&gt; n. Kui N on suur, siis meenutab binoomjaotus normaaljaotust (läheneb selle kujule).</p>
 <p><span class="math display">\[keskv\ddot{a}\ddot{a}rtus = N \times p\]</span></p>
-<p>kui Np võrdub täisarvuga, siis mediaan = mood = keskväärtus</p>
+<p>Kui Np võrdub täisarvuga, siis mediaan = mood = keskväärtus</p>
 <p><span class="math display">\[sd = sqrt(N \times p(1 - p))\]</span></p>
 <p>Standardviga proportsioonile <span class="math inline">\(p = \sqrt{\frac{p(1 − p)}{N}}\)</span> See standardviga (<em>standard error</em>) on teiste sõnadega standardhälve meie hinangule proportsiooni väärtusele. Kui n = 0 või N - n = 0, siis on selline SE arvutus eksitav.</p>
 </div>
