@@ -1,5 +1,6 @@
 
 
+
 # Lineaarsed mudelid
 
 
@@ -94,8 +95,8 @@ abline(c(0, 1), lty = 2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-6-1.png" alt="Lineaarne mudel, mille lõikepunkt = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-6)Lineaarne mudel, mille lõikepunkt = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3.</p>
+<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-7-1.png" alt="Lineaarne mudel, mille lõikepunkt = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-7)Lineaarne mudel, mille lõikepunkt = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3.</p>
 </div>
 
 
@@ -135,8 +136,8 @@ plot(y ~ x, xlab = "Weight in kg", ylab = "Heigth in cm", ylim = c(50, 200), typ
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-8-1.png" alt="Lineaarne mudel, millel on tuunitud nii lõikepunkt kui tõus." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-8)Lineaarne mudel, millel on tuunitud nii lõikepunkt kui tõus.</p>
+<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-9-1.png" alt="Lineaarne mudel, millel on tuunitud nii lõikepunkt kui tõus." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-9)Lineaarne mudel, millel on tuunitud nii lõikepunkt kui tõus.</p>
 </div>
 
 
@@ -167,16 +168,11 @@ augment(m, iris) %>%
   geom_line(aes(y = .fitted), color = 1) +
   labs(title = "Sepal.Length ~ Petal.Length") +
   scale_color_viridis(discrete = TRUE)
-#> Warning: Deprecated: please use `purrr::possibly()` instead
-#> Warning: Deprecated: please use `purrr::possibly()` instead
-#> Warning: Deprecated: please use `purrr::possibly()` instead
-#> Warning: Deprecated: please use `purrr::possibly()` instead
-#> Warning: Deprecated: please use `purrr::possibly()` instead
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-10-1.png" alt="Fititud mudel, kus muutuja Petal.Length järgi ennustatakse muutuja Sepal.Length väärtusi." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-10)Fititud mudel, kus muutuja Petal.Length järgi ennustatakse muutuja Sepal.Length väärtusi.</p>
+<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-11-1.png" alt="Fititud mudel, kus muutuja Petal.Length järgi ennustatakse muutuja Sepal.Length väärtusi." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-11)Fititud mudel, kus muutuja Petal.Length järgi ennustatakse muutuja Sepal.Length väärtusi.</p>
 </div>
 
 Mudeli fittimine tähendab siin lihtsalt, et sirge on 2D ruumi asetatud nii, et see oleks võimalikult lähedal kõikidele punktidele.
@@ -224,8 +220,8 @@ plot(Sepal_length ~ Petal_length, type = "b")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-13-1.png" alt="Siin ennustasime kümme y väärtust x väärtuste põhjal.." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-13)Siin ennustasime kümme y väärtust x väärtuste põhjal..</p>
+<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-14-1.png" alt="Siin ennustasime kümme y väärtust x väärtuste põhjal.." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-14)Siin ennustasime kümme y väärtust x väärtuste põhjal..</p>
 </div>
 
 
@@ -299,8 +295,8 @@ Selline mudel on täpselt sama informatiivne kui andmed, mille põhjal see fitit
 
 
 <div class="figure" style="text-align: center">
-<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-15-1.png" alt="Kasvava paindlikusega polünoomsed mudelid." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-15)Kasvava paindlikusega polünoomsed mudelid.</p>
+<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-16-1.png" alt="Kasvava paindlikusega polünoomsed mudelid." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-16)Kasvava paindlikusega polünoomsed mudelid.</p>
 </div>
 
 
@@ -319,3 +315,91 @@ AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel?
 
 
 > Ülefittimise vältimiseks kasutavad Bayesi mudelid informatiivseid prioreid, mis välistavad ekstreemsed parameetriväärtused. Vt http://elevanth.org/blog/2017/08/22/there-is-always-prior-information/
+
+## Regressioonimudelite eeldused
+
+Tähtsuse järjekorras:
+
+1. valiidsus -- sa mõõdad asju, mis on teaduslikult olulised ja relevantsed teaduslikule küsimusele. Näiteks, kui soovite mõõta kolesterooli alandava ravimi mõju, on kaasaegne soovitus mõõta suremust, mitte pelgalt kolesterooli taset veres.
+
+2. esinduslikkus -- andmed peaksid olema esinduslikud laiema populatsiooni suhtes. Väikesed ja kallutatud valimid ei ole sageli esinduslikud.
+
+3. aditiivsus ja lineaarsus. Väga tähtis on, et lineaarse regressiooniga mõõdetavad seosed oleks ka tõesti lineaarsed. Y-i deterministlik komponent peab olema lineaarne funktsioon prediktoritest  $y = β_1x_1 + β_2x_2 +···$. Kui sellega on probleeme, siis võib aidata prediktorite transformeerimine (log(x) või 1/x) või uute prediktorite mudelisse lisamine. Samuti on võimalik prediktoritena lisada nii $x$ kui $x^2$. Näiteks kui me paneme mudelisse nii muutuja $vanus$ kui $vanus^2$, siis saame modelleerida seost kus y vanuse kasvades alguses kasvab ja siis kahaneb (aga ka U kujulist seost vanusega). Sellisel juhul võib olla mõistlik rekodeerida vanus kategooriliseks muutujaks (näit 4 vanuseklassi), mille tasemeid saab siis ükshaaval vaadata.
+
+4. vigade sõltumatus
+
+5. vigade unequal variance ja vigade normaalsus on vähetähtsad. Neid eeldusi ei tasu tavaliselt kontrollida (kuigi meetodid selleks on olemas).
+
+## Andmete transformeerimine
+
+Lineaarsed transformatsioonid ei mõjuta mudeli fitti. Küll aga võivad nad hõlbustada mudeli koefitsientide tõlgendamist (kas x on millimeetrites, meetrites vms). Mittelineaarsed transformatsioonid muudavad mudeli fitti ja võivad olla kasulikud mudeli aditiivsuse/lineaarsuse oarandamisel. 
+
+### Logaritmimine
+
+Kui x-l saavad olla ainult positiivsed väärtused, siis on logaritmimine sageli hea mõte. Samas, andmetest peab kaotama nullid (või asendama mingi nullilähedase positiivse väärtusega). Näiteks seost sissetuleku ja oodatava eluea vahel on lihtsam ette kujutada kui eluiga ~ log(sissetulek). Log skaalas on beeta koefitsiendid peaaegu alati < 1. Kui naturaallogaritmitud (aga mitte kümnend või kahendlogaritm) andmete peal fititud beta on väike (nullile lähedal), siis saab seda otse tõlgendada kui suhtelist erinevust. Näiteks, kui beta = 0.06, siis võime seda tõlgendada nii: ühe ühikuline x-i muutus viib 6%-sele y muutusele. Sedamõõda kui beeta kaugeneb nullist (näiteks beta = 0.4), hakkab selline kiire hinnang tõsiselt alahindama tegelikku x-i mõju y väärtusele. 
+
+Erinevus naturaallogaritmi (log, põõrdlogaritm = exp(log(x))) ja log10 või log2 vahel on, et esimesel juhul on kergesti tõlgendatav beeta (aga mitte logaritmitud x-i väärtused) ja teisel juhul (log10 v log2) on kergesti tõlgendatavad logaritmitud x-i väärtused (aga mitte beeta).
+
+logaritmimine ja antilogaritmimine:
+
++ log(100) = 4.60517
++ exp(4.60517) = 100
++ log10(100) = 2
++ 10**2 = 100
++ log2(100) = 6.643856
++ 2**6.643856 = 100
+
+Kui logaritmime nii x-i kui y-i, siis saab beetat tõlgendada oodatava y suhtelise muutusena vastusena x-i suhtelisele muutusele. Näiteks kui b = 1.4, siis x-i muutus 1% võrra viib muutuseni y-s 1.4% võrra.
+ 
+
+### Standardiseerimine
+
+$x.z = (x - mean(x))/sd(x)$
+
+Sellisel viisil standardiseeritud andmete keskväärtus on 0 ja sd = 1. Seega on kõik predikorid samas skaalas ja me mõõdame efekte sd ühikutes. See muudab lihtsaks algeslt erinevas skaalas prediktorite võrdlemise. Intecept tähendab nüüd keskmist ennustust juhul kui kõik prediktorid on fikseeritud oma keskväärtustel. 
+
+Kui meie mudel sisaldab binaarseid muutujaid, siis on kasulikum standardiseerida üle 2xSD, jättes binaarsed muutujad muutmata.
+
+$x.z2 = (x - mean(x))/(2 * sd(x))$
+
+Nüüd tähendab 1 ühikuline muutus efekti -1 SD-st kuni 1 SD-ni üle keskväärtuse. 
+
+### tsentreerimine
+
+x.c1 = x - mean(x), mis annab keskväärtuseks nulli aga jätab varieeruvused algsesse skaalasse
+
+Teine võimalus on tsentreerida mõnele teaduslikult mõistlikule väärtusele. Näiteks IQ-d saab tsentreerida 100-le (x - 100). 
+
+### mudeli koefitsientide transformeerimine
+
+Ilma interaktsioonideta mudeli korral saab sama tulemuse, mis prediktoreid tsentreerides, kui me ei tee midagi enne kui saame fititud keofitsiendid. Nüüd reskaleerime need korrutades iga beta oma prediktori kahekordse sd-ga ($β.x = β * 2* sd(x)$). Nende β.x-de pealt näeb hästi iga muutuja suhtelist tähtsust mudelis. 
+ 
+### korrelatsioonikoefitsiendi arvutamine regressioonikoefitsientidest
+
+Kui standardiseerime nii y kui x-i
+
+`x <- (x-mean(x))/sd(x)`
+`y <- (y-mean(y))/sd(y)`
+
+siis y~x regressiooni intercept = 0 ja tõus on sama, mis x ja y vaheline korrelatsioonikoefitsient r.
+Seega jääb tõus alati -1 ja 1 vahele (tähtis: tõus on pea alati < 1). 
+
+Siit tuleb ka seletus nähtusele, mida kutsutakse regressiooniks keskmisele (*regression to the mean*). Fakti, et y on sellises mudelis alati 0-le lähemal kui x, kutsutaksegi regressiooniks keskmisele. Näiteks, kui olete 20 cm keskmisest pikem ja pikkuse päritavus on 0.5, siis on oodata, et teie järglased on keskeltläbi 10 cm võrra keskmisest pikemad (ja teist lühemad). Selle pseudo-põhjusliku nähtuse avastas Francis Galton. 
+
+### pidev või diskreetne muutuja?
+
+Tavaliselt on mõistlik fittida mudel pidevale y muutujale ka siis, kui tahame lõpuks tõlgenada tulemusi diskreetsel skaalal. Pidev muutuja sisaldab lihtsalt rohkem informatsiooni ja seetöttu on meil lootust saada parem fit. Erandiks on pidevad x muutujad, mille mõju y-le on mittelineaarne (näiteks vanuse mõju suremusele). Siin on vahest mõistlik vastupidi konverteerida pidev muutuja faktormuutujaks ja saada hinnang näiteks igale vanuseklassile eraldi kasutades skeemi $eluiga~vanus + vanus^2$. 
+
+## Üldised printsiibid
+
+1. võta sisse kõik teaduslikku huvi poakkuvad muutujad
+
+2. kontrolli, ega muutujate vahel ei esine väga tugevaid korrelatsioone (kollineaarsus). Kui jah, siis kombineeri kollineaarsed muutujad üheks või transformeeri neid või viska mõni muutuja välja.
+
+3. muutujad, mis ei varieeru, ei oma ka regressioonis mõju.
+
+4. tugeva mõjuga muutujate puhul võib olla vajalik sisse tuua interkatsiooniga mudelid (vt ptk ...).
+
+5. muutujad, mida sa reaalselt mõõtsid ei pruugi olla need muutujad, mis mudelisse lähevad -- näiteks arvuta kehamassiindeks mõõdetud muutujate põhjal.
+
+6. kui pidevad x-id transformeerida log skaalasse, siis on lineaarsesse mudelisse pandud efektid multiplikatiivsed, mitte aditiivsed.
