@@ -7,7 +7,12 @@ library(brms)
 ```
 
 
-Eelpool kirjeldatud mudelid on deterministlikud --- nad ei sisalda hinnangut andmete varieeruvusele ennustuse ümber. Neid kutsutakse ka **protsessi mudeliteks** sest nad modelleerivad protsessi täpselt. Ehk, kui mudel ennustab, et 160 cm inimene kaalub keskmiselt 80 kg, siis protsessi mudel ei ütle, kui suurt pikkusest sõltumatut kaalude varieeruvust võime oodata 160 cm-ste inimeste hulgas. Selle hinnangu andmiseks tuleb mudelile lisada veel üks komponent, **veamudel** ehk veakomponent, mis sageli tuuakse sisse normaaljaotuse kujul. Veakomponent modelleerib üksikute inimeste kaalude varieeruvust (mitte keskmise kaalu varieeruvust) igal mõeldaval ja mittemõeldaval pikkusel. Tänu sellele ei ole mudeli ennustused enam deterministlikud, vaid tõenäosuslikud. 
+Eelpool kirjeldatud mudelid on deterministlikud --- nad ei sisalda hinnangut andmete varieeruvusele ennustuse ümber. 
+Neid kutsutakse ka **protsessi mudeliteks** sest nad modelleerivad protsessi täpselt. 
+Ehk, kui mudel ennustab, et 160 cm inimene kaalub keskmiselt 80 kg, siis protsessi mudel ei ütle, kui suurt pikkusest sõltumatut kaalude varieeruvust võime oodata 160 cm-ste inimeste hulgas. 
+Selle hinnangu andmiseks tuleb mudelile lisada veel üks komponent, **veamudel** ehk veakomponent, mis sageli tuuakse sisse normaaljaotuse kujul. 
+Veakomponent modelleerib üksikute inimeste kaalude varieeruvust (mitte keskmise kaalu varieeruvust) igal mõeldaval ja mittemõeldaval pikkusel. 
+Tänu sellele ei ole mudeli ennustused enam deterministlikud, vaid tõenäosuslikud. 
 
   > Bioloogid, erinevalt füüsikutest, usuvad, et valimisisene andmete varieeruvus on
    tingitud pigem bioloogilisest varieeruvusest, kui mõõtmisveast. Aga loomulikult sisaldub selles ka mõõtmisviga. Lihtsuse huvides räägime
@@ -198,11 +203,19 @@ Samad ennustused t jaotusest on isegi paremad! Aga kumb on ikkagi parem mudel po
 
 Normaaljaotus ja lognormaaljaotus on erilised sest 
 
-(1) kesksest piirteoreemist (*central limit theorem*) tuleneb, et olgu teie valim ükskõik millise jaotusega, paljudest valimitest arvutatud **aritmeetilised keskmised** on alati enam-vähem normaaljaotusega. See kehtib enamuse andmejaotuste korral, kui n>30. Selle matemaatilise tõe peegeldus füüsikalisse maailma on "elementaarsete vigade hüpotees", mille kohaselt paljude väikeste üksteisest sõltumatute juhuslike efektide (vigade) summa annab tulemuseks normaaljaotuse. 
-Paraku enamus bioloogilisi mõõtmisi annavad tulemuseks eranditult mitte-negatiivseid väärtusi. Sageli on selliste väärtuste jaotused ebasümmeetrilised (v.a. siis, kui cv = sd/mean on väike), ja kui nii, siis on meil sageli tegu lognormaaljaotusega, mis tekkib log-normaalsete muutujate korrutamisest. 
-Siit tuleb Keskne piirteoreem 2, mille kohaselt suvalise jaotusega muutujate **geomeetrilised keskmised** on enam-vähem lognormaaljaotusega, ning elementaarsete vigade hüpotees 2: Kui juhuslik varieeruvus tekib paljude juhuslike efektide korrutamisel, on tulemuseks lognormaaljaotus. Lognormaaljaotusega väärtuste logaritmimine annab normaaljaotuse. 
+(1) kesksest piirteoreemist (*central limit theorem*) tuleneb, et olgu teie valim ükskõik millise jaotusega, paljudest valimitest arvutatud **aritmeetilised keskmised** on alati enam-vähem normaaljaotusega. See kehtib enamuse andmejaotuste korral, kui n>30. 
+Selle matemaatilise tõe peegeldus füüsikalisse maailma on "elementaarsete vigade hüpotees", mille kohaselt paljude väikeste üksteisest sõltumatute juhuslike efektide (vigade) summa annab tulemuseks normaaljaotuse. 
+Paraku enamus bioloogilisi mõõtmisi annavad tulemuseks eranditult mitte-negatiivseid väärtusi. 
+Sageli on selliste väärtuste jaotused ebasümmeetrilised (v.a. siis, kui cv = sd/mean on väike), ja kui nii, siis on meil sageli tegu lognormaaljaotusega, mis tekkib log-normaalsete muutujate korrutamisest. 
+Siit tuleb Keskne piirteoreem 2, mille kohaselt suvalise jaotusega muutujate **geomeetrilised keskmised** on enam-vähem lognormaaljaotusega, ning elementaarsete vigade hüpotees 2: Kui juhuslik varieeruvus tekib paljude juhuslike efektide korrutamisel, on tulemuseks lognormaaljaotus. 
+Lognormaaljaotusega väärtuste logaritmimine annab normaaljaotuse. 
 
-(2) Nii normaal- kui lognormaaljaotus on maksimaalse entroopiaga jaotused. Entroopiat vaadeldakse siin informatsiooni & müra kaudu --- maksimaalse entroopiaga süsteem sisaldab maksimaalselt müra ja minimaalselt informatsiooni (Shannoni informatsiooniteooria). See tähendab, et väljaspool oma parameetrite tuunitud väärtusi on normaal- ja lognormaaljaotused minimaalselt informatiivsed. Näiteks normaaljaotusel on kaks parameetrit, mu ja sigma (ehk keskmine ja standardhälve). Seega, andes normaaljaotusele ette keskväärtuse ja standardhälbe fikseerime üheselt jaotuse ehk mudeli kuju ja samas lisame sinna minimaalselt muud (sooviamtut) informatsiooni. Teised maksimaalse entroopiaga jaotused on eksponentsiaalne jaotus, binoomjaotus ja poissoni jaotus. Maksimaalse entroopiaga jaotused sobivad hästi Bayesi prioriteks sest me suudame kontrollida, millist informatsiooni me neisse surume.
+(2) Nii normaal- kui lognormaaljaotus on maksimaalse entroopiaga jaotused. 
+Entroopiat vaadeldakse siin informatsiooni & müra kaudu --- maksimaalse entroopiaga süsteem sisaldab maksimaalselt müra ja minimaalselt informatsiooni (Shannoni informatsiooniteooria). See tähendab, et väljaspool oma parameetrite tuunitud väärtusi on normaal- ja lognormaaljaotused minimaalselt informatiivsed. 
+Näiteks normaaljaotusel on kaks parameetrit, mu ja sigma (ehk keskmine ja standardhälve). 
+Seega, andes normaaljaotusele ette keskväärtuse ja standardhälbe fikseerime üheselt jaotuse ehk mudeli kuju ja samas lisame sinna minimaalselt muud (sooviamtut) informatsiooni. 
+Teised maksimaalse entroopiaga jaotused on eksponentsiaalne jaotus, binoomjaotus ja poissoni jaotus. 
+Maksimaalse entroopiaga jaotused sobivad hästi Bayesi prioriteks sest me suudame kontrollida, millist informatsiooni me neisse surume.
 
 > Kui meil on tegu nullist suuremate andmetega, on andmete logaritmimine sageli hea mõte. Logaritmitud andmete pealt arvutatud keskmise ja sd tagasi transformeerimine annab meile geomeetrilise keskmise ja geomeetrilise sd.
 
@@ -210,61 +223,69 @@ Siit tuleb Keskne piirteoreem 2, mille kohaselt suvalise jaotusega muutujate **g
 ### Lognormaaljaotus
 
 ```{r}
-x <-seq(0,10, length.out = 1000)
+x <- seq(0, 10, length.out = 1000)
 y <- dlnorm(x)
-plot(x,y, type="l")
+plot(x, y, typ = "l")
 ```
 
 
 Seda jaotust, mis ei ulatu kunagi teisele poole nulli, iseloomustab, et x-i logaritmimine annab tulemuseks normaaljaotuse. 
 
-```{r warning=FALSE, message=FALSE}
-plot(log(x),y, type="l")
+```{r}
+plot(log(x), y, type = "l")
 ```
 
-Lognormaaljaotuse $$keskväärtus = exp(μ + 1 /2 * σ^2)$$ 
+Lognormaaljaotuse keskväärtus, standardhälve, mood ja mediaan:
 
-$$sd = exp(μ + 1/2 * σ^2) * sqrt(exp(σ^2) − 1)$$
-$$mood = e^{μ - σ^2}$$
+$$keskv\ddot{a}\ddot{a}rtus = \exp(\mu + 1/2 \times σ^2)$$ 
 
-$$mediaan = e^μ$$
-Siin on siis μ ja σ arvutatud logaritmitud andmete pealt.
+$$sd = \exp(\mu + 1/2 \times \sigma^2) \times \sqrt{\exp(\sigma^2) − 1}$$
+$$mood = e^{\mu - \sigma^2}$$
+
+$$mediaan = e^\mu$$
+Siin on siis $\mu$ ja $\sigma$ arvutatud logaritmitud andmete pealt.
 
 ### Binoomjaotus
 
-```{r}
-x <- seq(0,n) #kõik võimalikud õnnestumiste arvud 10st sündmusest
-n <- 10 #sündmuste koguarv
-p <- 0.3 #30% õnnestumisi (sagedus)
-y <- dbinom(x, n, p)
-plot(x,y)
+Kui teil on binaarne muutuja (sellel saab olla ainult kaks väärtust, näiteks sees/väljas, 1/0), mis kajastab sõltumatuid sündmusi, siis modelleerib seda binoomjaotus $y ∼ Binomial(n, p)$.
+Kus *n* on edukate sündmuste arv ja *p* on nende suhteline sagedus (p = n / N, kus *N* on kõikide sündmuste kopguarv). 
+Sõltumatud sündmused on sellised, kus ühe sündmuse esinemise järgi ei saa ennustada teise sündmuse esinemist (st puudub korrelatsioon sündmuste esinemise vahel). 
+Tehniliselt on binoomjaotusel veel omadus, et valim võetakse replacementiga, mis tähendab, et iga sündmus pannakse populatsiooni tagasi, kus seda saab uuesti valimisse tõmmata. 
+Siit tuleb, et binoomjaotuse mudel kehtib päris maailmas mõõndustega ja et seda mudelit on kindlam kasutada siis, kui N >> n. 
+Kui N on suur, siis meenutab binoomjaotus normaaljaotust (läheneb selle kujule).
 
+```{r}
+n <- 10 # sündmuste koguarv
+x <- seq(0, n) # kõik võimalikud õnnestumiste arvud 10st sündmusest
+p <- 0.3 # 30% õnnestumisi (sagedus)
+y <- dbinom(x, n, p)
+plot(x, y)
 ```
 
+$$keskv\ddot{a}\ddot{a}rtus = N \times p$$
 
-Kui teil on binaarne muutuja (sellel saab olla ainult kaks väärtust, n. edukas/edutu), mis kajastab sõltumatuid sündmusi, siis modelleerib seda binoomjaotus $y ∼ Binomial(n, p)$, kus n on edukate sündmuste arv ja p on nende suhteline sagedus (p = n/N, kus N on kõikide sündmuste kopguarv). Sõltumatud sündmused on sellised, kus ühe sündmuse esinemise järgi ei saa ennustada teise sündmuse esinemist (st puudub korrelatsioon sündmuste esinemise vahel). Tehniliselt on binoomjaotusel veel omadus, et valim võetakse replacementiga, mis tähendab, et iga sündmus pannakse populatsiooni tagasi, kus seda saab uuesti valimisse tõmmata. Siit tuleb, et binoomjaotuse mudel kehtib päris maailmas mõõndustega ja et seda mudelit on kindlam kasutada siis, kui N >> n. Kui N on suur, siis meenutab binoomjaotus normaaljaotust (läheneb selle kujule).
+Kui Np võrdub täisarvuga, siis mediaan = mood = keskväärtus
 
-$keskväärtus = Np$
+$$sd = sqrt(N \times p(1 - p))$$
 
-kui Np võrdub täisarvuga, siis mediaan = mood = keskväärtus
-
-$sd = sqrt(Np(1-p))$
-
-standardviga proportsioonile $p =  sqrt(p(1 − p)/N)$
-See standardviga (*standard error*) on teiste sõnadega standardhälve meie hinangule proportsiooni väärtusele. Kui n = 0 või N - n = 0, siis on selline SE arvutus eksitav. 
+Standardviga proportsioonile $p = \sqrt{\frac{p(1 − p)}{N}}$
+See standardviga (*standard error*) on teiste sõnadega standardhälve meie hinangule proportsiooni väärtusele. 
+Kui n = 0 või N - n = 0, siis on selline SE arvutus eksitav. 
 
 ### Poissoni jaotus
 
-See jaotus modelleerib üksikuid haruldasi ja sõltumatuid diskreetseid sündmusi, mille arvu me saame üles lugeda. Näiteks surmi ajaühiku kohta või pommitabamusi pindalaühiku kohta. See on sisuliselt binoomjaotuse erijuht. Lisaeeldused on, et sündmuste toimumise sagedus ei muutu, et kaks sündmust ei saa toimuda täpselt samal ajal/kohas, et sündmuse toimumise tõenäosus on proportsionaalne intervalli pikkusega/suurusega (ajas v ruumis) ja et N >> n.
+See jaotus modelleerib üksikuid haruldasi ja sõltumatuid diskreetseid sündmusi, mille arvu me saame üles lugeda.
+Näiteks surmi ajaühiku kohta või pommitabamusi pindalaühiku kohta. See on sisuliselt binoomjaotuse erijuht.
+Lisaeeldused on, et sündmuste toimumise sagedus ei muutu, et kaks sündmust ei saa toimuda täpselt samal ajal/kohas, et sündmuse toimumise tõenäosus on proportsionaalne intervalli pikkusega/suurusega (ajas või ruumis) ja et N >> n.
 
-Kui keskmine sündmuste arv intevallis on λ  (lambda), siis
+Kui keskmine sündmuste arv intevallis on $\lambda$ (lambda), siis
 
-$P(k ~events ~in ~interval) = e^{λ} {\frac {\lambda ^{k}}{k!}$
+$$P(k~events~in~interval) = e^{\lambda} \times \frac{\lambda ^{k}}{k!}$$
 
 
-oodatud väärtus = variance = λ
+Oodatud väärtus = variance = $\lambda$
 
-$sd = sqrt(λ)$
+$sd = \sqrt{\lambda}$
 
-Millal kasutada Poissoni jaotust, ja millal binoomjaotust? Kui iga andmepunkti saab vaadelda kui edukate katsete arvu suhet kõikide katsete arvule, siis kasuta binoomjaotust/logistilist regressiooni. Kui aga andmepunkti väärtusel pole loomulikku piiri (see on lihtsalt mingit tüüpi sündmuste arv), kasuta Poissoni/logaritmilist regressiooni. 
-
+Millal kasutada Poissoni jaotust, ja millal binoomjaotust? Kui iga andmepunkti saab vaadelda kui edukate katsete arvu suhet kõikide katsete arvule, siis kasuta binoomjaotust/logistilist regressiooni.
+Kui aga andmepunkti väärtusel pole loomulikku piiri (see on lihtsalt mingit tüüpi sündmuste arv), kasuta Poissoni/logaritmilist regressiooni.

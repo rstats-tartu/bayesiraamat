@@ -1,11 +1,11 @@
 
 rm(list = ls(all.names = TRUE))
-set.seed(19)
 
 options(digits = 3,
         dplyr.print_min = 6,
         dplyr.print_max = 6,
-        booktabs = TRUE)
+        booktabs = TRUE,
+        mc.cores = parallel::detectCores())
 
 knitr::opts_chunk$set(
   message = FALSE,
@@ -18,6 +18,6 @@ knitr::opts_chunk$set(
   fig.show = "hold"
 )
 
-library(ggplot2)
-library(ggthemes)
-old <- theme_set(theme_tufte())
+rstan::rstan_options(auto_write = TRUE)
+
+old <- ggplot2::theme_set(ggthemes::theme_tufte())
