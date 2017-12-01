@@ -1,6 +1,8 @@
 
 
 # Mitmetasemelised, k.a. hierarhilised,  mudelid 
+# Mitmetasemelised, k.a. hierarhilised,  mudelid 
+
 
 > Mitmetasemeline mudel on regressioonimudel kus andmed on struktureeritud gruppidesse ja mudeli koefitsiendid võivad erineda grupist gruppi. 
 

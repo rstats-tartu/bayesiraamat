@@ -204,12 +204,13 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html#interaktsioonid-prediktorite-vahel"><i class="fa fa-check"></i>Interaktsioonid prediktorite vahel</a></li>
 <li class="chapter" data-level="" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html#interaktsioonid-pidevatele-tunnustele"><i class="fa fa-check"></i>Interaktsioonid pidevatele tunnustele</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="mitmetasemelised-k-a-hierarhilised-mudelid.html"><a href="mitmetasemelised-k-a-hierarhilised-mudelid.html"><i class="fa fa-check"></i><b>16</b> Mitmetasemelised, k.a. hierarhilised, mudelid</a><ul>
-<li class="chapter" data-level="" data-path="mitmetasemelised-k-a-hierarhilised-mudelid.html"><a href="mitmetasemelised-k-a-hierarhilised-mudelid.html#shrinkage"><i class="fa fa-check"></i>Shrinkage</a></li>
-<li class="chapter" data-level="" data-path="mitmetasemelised-k-a-hierarhilised-mudelid.html"><a href="mitmetasemelised-k-a-hierarhilised-mudelid.html#anova-laadne-mudel"><i class="fa fa-check"></i>ANOVA-laadne mudel</a></li>
-<li class="chapter" data-level="" data-path="mitmetasemelised-k-a-hierarhilised-mudelid.html"><a href="mitmetasemelised-k-a-hierarhilised-mudelid.html#vabad-interceptid-klassikalises-regressioonimudelis"><i class="fa fa-check"></i>Vabad interceptid klassikalises regressioonimudelis</a></li>
-<li class="chapter" data-level="" data-path="mitmetasemelised-k-a-hierarhilised-mudelid.html"><a href="mitmetasemelised-k-a-hierarhilised-mudelid.html#vabad-tousud-ja-interceptid"><i class="fa fa-check"></i>Vabad tõusud ja interceptid</a></li>
-<li class="chapter" data-level="" data-path="mitmetasemelised-k-a-hierarhilised-mudelid.html"><a href="mitmetasemelised-k-a-hierarhilised-mudelid.html#hierarhiline-mudel-pidevate-prediktoritega"><i class="fa fa-check"></i>Hierarhiline mudel pidevate prediktoritega</a></li>
+<li class="chapter" data-level="16" data-path="mitmetasemelised-k-a-hierarhilised-mudelid.html"><a href="mitmetasemelised-k-a-hierarhilised-mudelid.html"><i class="fa fa-check"></i><b>16</b> Mitmetasemelised, k.a. hierarhilised, mudelid</a></li>
+<li class="chapter" data-level="17" data-path="mitmetasemelised-k-a-hierarhilised-mudelid-1.html"><a href="mitmetasemelised-k-a-hierarhilised-mudelid-1.html"><i class="fa fa-check"></i><b>17</b> Mitmetasemelised, k.a. hierarhilised, mudelid</a><ul>
+<li class="chapter" data-level="" data-path="mitmetasemelised-k-a-hierarhilised-mudelid-1.html"><a href="mitmetasemelised-k-a-hierarhilised-mudelid-1.html#shrinkage"><i class="fa fa-check"></i>Shrinkage</a></li>
+<li class="chapter" data-level="" data-path="mitmetasemelised-k-a-hierarhilised-mudelid-1.html"><a href="mitmetasemelised-k-a-hierarhilised-mudelid-1.html#anova-laadne-mudel"><i class="fa fa-check"></i>ANOVA-laadne mudel</a></li>
+<li class="chapter" data-level="" data-path="mitmetasemelised-k-a-hierarhilised-mudelid-1.html"><a href="mitmetasemelised-k-a-hierarhilised-mudelid-1.html#vabad-interceptid-klassikalises-regressioonimudelis"><i class="fa fa-check"></i>Vabad interceptid klassikalises regressioonimudelis</a></li>
+<li class="chapter" data-level="" data-path="mitmetasemelised-k-a-hierarhilised-mudelid-1.html"><a href="mitmetasemelised-k-a-hierarhilised-mudelid-1.html#vabad-tousud-ja-interceptid"><i class="fa fa-check"></i>Vabad tõusud ja interceptid</a></li>
+<li class="chapter" data-level="" data-path="mitmetasemelised-k-a-hierarhilised-mudelid-1.html"><a href="mitmetasemelised-k-a-hierarhilised-mudelid-1.html#hierarhiline-mudel-pidevate-prediktoritega"><i class="fa fa-check"></i>Hierarhiline mudel pidevate prediktoritega</a></li>
 </ul></li>
 <li class="appendix"><span><b>Lisa</b></span></li>
 <li class="chapter" data-level="A" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html"><i class="fa fa-check"></i><b>A</b> Bayesi ja sagedusliku statistika võrdlus</a><ul>
@@ -272,7 +273,7 @@ m1 &lt;-<span class="st"> </span><span class="kw">map</span>(
 <span class="kw">dens</span>(samples<span class="op">$</span>p)
 <span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt; 0.353 0.966</span></code></pre></div>
+<span class="co">#&gt; 0.357 0.975</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:pullpost"></span>
 <img src="11_mudelite_keel_files/figure-html/pullpost-1.png" alt="Tõmbame valimi posteeriorist." width="70%" />
 <p class="caption">
@@ -295,7 +296,7 @@ Joonis 11.1: Tõmbame valimi posteeriorist.
 <span class="co">#PI(samples$p, prob = 0.95) # Leaves out equal 2.5% at both sides</span>
 <span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt; 0.570 0.763</span></code></pre></div>
+<span class="co">#&gt; 0.566 0.761</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:perse"></span>
 <img src="11_mudelite_keel_files/figure-html/perse-1.png" alt="Veel üks valim posteeriorist (60 surma 90st)." width="70%" />
 <p class="caption">
@@ -341,7 +342,7 @@ samples &lt;-<span class="st"> </span><span class="kw">extract.samples</span>(m3
 <span class="co">#&gt; p 0.67   0.03 0.62  0.71</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt; 0.616 0.719</span>
+<span class="co">#&gt; 0.617 0.722</span>
 <span class="kw">dens</span>(samples<span class="op">$</span>p)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
 <img src="11_mudelite_keel_files/figure-html/unnamed-chunk-5-1.png" alt="Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist." width="70%" />
