@@ -65,12 +65,12 @@ Sageli on aga negatiivsed muutuja väärtused võimatud (näiteks nädalas suits
 logaritmimise kaudu avaldatud multiplikatsiivse SD arvutamiseks kasutame enda kirjutatud funktsiooni mulitplicative_sd(). Esiteks arvutame multiplikatiivse ja aditiivse sd lognoirmaalsetele andmetele, mida kujutasime eelmisel joonisel: 
 
 
-SD                     MEAN    lower   upper
---------------------  -----  -------  ------
-multiplicative_SD      1.15    0.410    3.21
-multiplicative_2_SD    1.15    0.147    8.99
-additive_SD            1.90   -0.254    4.06
-additive_2_SD          1.90   -2.411    6.21
+SD                      MEAN    lower   upper
+--------------------  ------  -------  ------
+multiplicative_SD      0.965    0.367    2.53
+multiplicative_2_SD    0.965    0.140    6.65
+additive_SD            1.596   -0.609    3.80
+additive_2_SD          1.596   -2.814    6.01
 
 Tavalise aritmeetitilise keskmise asemel on meil nüüd geomeetriline keskmine.  Võrdluseks on antud ka tavaline (aritmeetiline) keskmine ja (aditiivne) SD. Additiivne SD on selle jaotuse kirjeldamiseks selgelt ebaadekvaatne (vt jaotuse pilti ülalpool ja võrdle mulitplikatiivse SD-ga).
 
@@ -134,17 +134,17 @@ Lognormaalsete andmetega:
 
 ```r
 mad(andmed, constant = 1); sd(andmed); mad(andmed)
-#> [1] 0.622
-#> [1] 2.16
-#> [1] 0.923
+#> [1] 0.561
+#> [1] 2.21
+#> [1] 0.832
 ```
 
 
 ```r
 mad(log10(andmed), constant = 1); sd(log10(andmed)); mad(log10(andmed))
-#> [1] 0.295
-#> [1] 0.447
-#> [1] 0.438
+#> [1] 0.31
+#> [1] 0.419
+#> [1] 0.459
 ```
 
 mad = median(abs(median(x) - x)), mida on väga lihtne mõista. Samas R-i funktsioon mad() korrutab default-ina mad-i läbi konstandiga 1.4826, mis muudab mad()-i tulemuse võrreldavaks sd-ga, tehes sellest sd robustse analoogi. Robustse sellepärast, et mad-i arvutuskäik, mis sõltub mediaanist, mitte aritmeetilisest keskmisest, ei ole tundlik outlierite suhtes. Seega, kui tahate arvutada mad-i, siis fikseerige mad() funktsioonis argument *constant* ühele.
