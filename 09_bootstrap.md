@@ -125,7 +125,7 @@ bm_hdi <- HPDI(boot_mean$Diff, prob = 0.95)
 ci <- mean(heights$value) + bm_hdi
 ci
 #> |0.95 0.95| 
-#>   183   187
+#>   182   187
 ```
 
 ## Bayesi bootstrap {-}
@@ -169,7 +169,7 @@ Tõenäosus, et keskmine on suurem kui 182 cm
 
 ```r
 mean(heights_bb[, 1] > 182)
-#> [1] 0.992
+#> [1] 0.99
 ```
 
 Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):
