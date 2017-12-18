@@ -167,6 +167,13 @@ mad = median(abs(median(x) - x)), mida on väga lihtne mõista. Samas R-i funkts
   Korrektne vorm on mean (SD) või median (MAD).
 
 
+Veel üks viis andmejaotuse summeerimiseks on kasutada kvantiile. Siin saame me tüüpiliselt rohkem kui ühe numbri, aga sageli on selline viis informatiivsem, kui ühenumbrilised summaarsed statistikud. 
+Funktsioon quantile võimaldab valida, milliseid kvantiile soovite näha. Järgnevas koodist saame teada, millisest vektori "andmed" väärtusest allapoole jääb 2.5%, 25%, 50%, 75% ja 95% väärtusi.
+```{r}
+quantile(andmed, c(0.025, 0.25, 0.5, 0.75, 0.95))
+```
+
+
 ## Muutujate koosvarieeruvus {-}
 
 Andmete koos-varieeruvust mõõdetakse korrelatsiooni abil. Tulemuseks on üks number - korrelatsioonikordaja r, mis varieerub -1 ja 1 vahel. 
