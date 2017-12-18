@@ -67,10 +67,10 @@ logaritmimise kaudu avaldatud multiplikatsiivse SD arvutamiseks kasutame enda ki
 
 SD                     MEAN    lower   upper
 --------------------  -----  -------  ------
-multiplicative_SD      1.12    0.373    3.37
-multiplicative_2_SD    1.12    0.124   10.12
-additive_SD            2.04   -0.852    4.92
-additive_2_SD          2.04   -3.739    7.81
+multiplicative_SD      1.25    0.436    3.58
+multiplicative_2_SD    1.25    0.152   10.26
+additive_SD            2.15   -0.705    5.01
+additive_2_SD          2.15   -3.564    7.87
 
 Tavalise aritmeetitilise keskmise asemel on meil nüüd geomeetriline keskmine.  Võrdluseks on antud ka tavaline (aritmeetiline) keskmine ja (aditiivne) SD. Additiivne SD on selle jaotuse kirjeldamiseks selgelt ebaadekvaatne (vt jaotuse pilti ülalpool ja võrdle mulitplikatiivse SD-ga).
 
@@ -134,23 +134,33 @@ Lognormaalsete andmetega:
 
 ```r
 mad(andmed, constant = 1); sd(andmed); mad(andmed)
-#> [1] 0.701
-#> [1] 2.89
-#> [1] 1.04
+#> [1] 0.844
+#> [1] 2.86
+#> [1] 1.25
 ```
 
 
 ```r
 mad(log10(andmed), constant = 1); sd(log10(andmed)); mad(log10(andmed))
-#> [1] 0.311
-#> [1] 0.478
-#> [1] 0.461
+#> [1] 0.323
+#> [1] 0.457
+#> [1] 0.479
 ```
 
 mad = median(abs(median(x) - x)), mida on väga lihtne mõista. Samas R-i funktsioon mad() korrutab default-ina mad-i läbi konstandiga 1.4826, mis muudab mad()-i tulemuse võrreldavaks sd-ga, tehes sellest sd robustse analoogi. Robustse sellepärast, et mad-i arvutuskäik, mis sõltub mediaanist, mitte aritmeetilisest keskmisest, ei ole tundlik outlierite suhtes. Seega, kui tahate arvutada mad-i, siis fikseerige mad() funktsioonis argument *constant* ühele.
 
 > Ära kunagi avalda andmeid vormis: mean (MAD) või median (SD). 
   Korrektne vorm on mean (SD) või median (MAD).
+
+
+Veel üks viis andmejaotuse summeerimiseks on kasutada kvantiile. Siin saame me tüüpiliselt rohkem kui ühe numbri, aga sageli on selline viis informatiivsem, kui ühenumbrilised summaarsed statistikud. 
+Funktsioon quantile võimaldab valida, milliseid kvantiile soovite näha. Järgnevas koodist saame teada, millisest vektori "andmed" väärtusest allapoole jääb 2.5%, 25%, 50%, 75% ja 95% väärtusi.
+
+```r
+quantile(andmed, c(0.025, 0.25, 0.5, 0.75, 0.95))
+#>  2.5%   25%   50%   75%   95% 
+#> 0.159 0.622 1.278 2.790 6.719
+```
 
 
 ## Muutujate koosvarieeruvus {-}
