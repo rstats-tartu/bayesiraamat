@@ -127,7 +127,7 @@ Enne kui seda tegema asute, peaksite mõistma, et see, et teie valim ei ole norm
 Igal juhul, valimiandmete normaalsuse määramiseks on kõige mõistlikum kasutada qq-plotti. 
 QQ-plot (kvantiil-kvantiil plot) võrdleb andmete jaotust ideaalse normaaljaotusega andmepunkti haaval. Kui empiiriline jaotus kattub referentsjaotusega, siis on tulemuseks sirgel paiknevad punktid. Järgneval qq plotil on näha, mis juhtub, kui plottida lognormaalseid andmeid normaaljaotuse vastu:
 
-(ref:qqnorm) QQ-plot normaalsetele andmetele.
+(ref:qqnorm) QQ-plot lognormaalsetele andmetele. Plotil võrreldakse lognormaalsete andmete jaotust referentsjaotusega, milleks on antud juhul normaaljaotus. Punased katkendjooned annavad standardveapõhise usaldusvahemiku (arvutatud simuleeritud juhuvalimist normaaljaotusega referentspopulatsioonist), millesse peaks jääma enamus andmepunkte juhul kui andmepunktid pärineksid normaaljaotusest.
 
 ```{r qqnorm, fig.cap="(ref:qqnorm)"}
 qqPlot(andmed)
@@ -135,15 +135,15 @@ qqPlot(andmed)
 
 Nüüd joonistame qq-ploti logaritmitud andmetele. 
 
-(ref:qqlognorm) QQ-plot normaalsetele andmetele.
+(ref:qqlognorm) QQ-plot normaalsetele andmetele (logaritmitud lognormaalsed andmed).
 
 ```{r qqlognorm, fig.cap="(ref:qqlognorm)"}
-qqPlot(log2(andmed))
+qqPlot(log(andmed))
 ```
 
 Pole kahtlust, andmed on logaritmitud kujul normaaljaotusega.
 
-> qqPlot() võimaldab võrrelda teie andmeid ükskõik millise R-is leiduva jaotusega (?car::qqPlot). 
+> qqPlot() võimaldab võrrelda teie andmeid ükskõik millise R-is defineeritud jaotusega (?car::qqPlot). 
 
 Normaaljaotuse kindlakstegemiseks on loodud ka peotäis sageduslikke teste, mis annavad väljundina p väärtuse. Nende kasutamisest soovitame siiski hoiduda, sest tulemused on sageli ebakindlad, eriti väikestel ja suurtel valimitel. Mõistlikum on vaadata kõikide andmepunktide plotti normaaljaotuse vastu, kui jõllitada ühte numbrit (p), mille väärtus, muuseas, monotooniliselt langeb koos valimi suuruse kasvuga.
 
