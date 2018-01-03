@@ -97,9 +97,10 @@ Järgnevatel näidetel on ühist kaks asja: need on matemaatiliselt triviaalselt
 
 **Punkt 3.** Kui me viskame täringut 3 korda, kui suure tõenäosusega saame vähemalt ühe kuue? Naiivselt võiks arvata, et see tõenäosus on 50%. Kuid rakendades tõenäosusteooriat saame teistsuguse vastuse. Lihtsuse huvides defineerime küsimuse ümber: kui suure tõenäosusega ei saa me 3-l viskel ühtegi kuute? Vastus: kui igal viskel on 0 kuue tõenäosus 1/6, siis $(5/6)*(5/6)*(5/6) = 0.58$ ja $1 - 0.58 = 0.42$, mis tähendab, et vähemalt 1 kuue (või ükskõik mis numbri ühest kuueni) saame 42% tõenäosusega. Teine näide (NYT 03-12-2017): te ostate maja Texases Hustonis, millele müüja annab garantii, et üleujutuse tõenäosus on 1% aastas. Seadus nimetab seda näidikut "100 aasta suurvee-tasemeks". 1% näidu puhul ei pea te seaduse järgi ostma üleujutusekindlustust. Kui suure tõenäosusega tabab teie maja üleujutus pangalaenu perioodi vältel (30 aastat)? Vastus: $1 - (99/100)^{30} = 0.26$.
 
-**Punkt 6.** Meil on kolm pannkooki, millest esimesel on mõlemad küljed moosised, teisel on üks külg moosine ja kolmandal pole üldse moosi. Kui meile lüüakse taldrikule pannkook, mille pealmine külg on moosine, siis millise tõenäosusega on moosine ka alumine külg? NB! Vastus ei ole 50%. Lahendus: Kui A - moos all, B - moos üleval, siis vastavalt tingliku tõenäosuse definitsioonile $P(moos~ all~ \lvert ~moos~üleval ) = P(moos~all \land ~moos~üleval)/P(moos~all)$ Tõenäosus, et moos on all ja üleval on 1/3 (me teame, et 1 pannkook 3st on mõlemalt küljelt moosine) ja tõenäosus, et moos on all, on keskmine kolmest tõenäosusest, millega me kolmel pannkoogil moosise külje saame: mean(c(1, 0.5, 0)) = 1/2. Seega, vastus on $(1/3)/(1/2) = 2/3$. Kui me saame moosise ülemise külje, siis on tõenäosus 2/3, et ka all on moos!
+**Punkt 6.** Meil on kolm pannkooki, millest esimesel on mõlemad küljed moosised, teisel on üks külg moosine ja kolmandal pole üldse moosi. Juhtus nii, et meile pandi taldrikule pannkook, mille pealmine külg on moosine. Millise tõenäosusega on moosine ka selle pannkoogi alumine külg? NB! Vastus ei ole 50%. Lahendus: Kui A - moos all, B - moos üleval, siis vastavalt tingliku tõenäosuse definitsioonile $P(moos~ all~ \lvert ~moos~üleval ) = P(moos~all \land ~moos~üleval)/P(moos~all)$ Tõenäosus, et moos on all ja üleval on 1/3 (me teame, et 1 pannkook 3st on mõlemalt küljelt moosine) ja tõenäosus, et moos on all, on keskmine kolmest tõenäosusest, millega me kolmel pannkoogil moosise külje saame: mean(c(1, 0.5, 0)) = 1/2. Seega, vastus on $(1/3)/(1/2) = 2/3$. Kui me saame moosise ülemise külje, siis on tõenäosus 2/3, et ka all on moos!
 
-**Punkt 7.** Kui A tähistab sündmust "ma saan aru tõenäosusteooriast" ja B tähistab sündmust "ma tuubin nagu loom", ning meil on dihhotoomne valik: tuubid / ei tuubi, siis $P(A) = P(tuubid)P(A~ \lvert ~tuubid) + P(ei~ tuubi)P(A~ \lvert ~ei ~ tuubi)$. Siit saad välja arvutada tõenäosuse, millega just sina saad kasu sellest õpikust. P(tuubid) on tõenäosus, millega sa leiad end tuupimas. 
+**Punkt 7.** Kui A tähistab sündmust "ma sooritan eksami edukalt" ja B tähistab sündmust "ma õpin eksamiks", ning meil on dihhotoomne valik: õpin / ei õpi, siis $P(hea~hinne) = P(õpin)P(hea~hinne~ \lvert ~õpin) + P(ei~ õpi)P(hea~hinne~ \lvert ~ei~õpi)$. Ehk sõnadega kirjutatult: Hea hinde tõenäosus võrdub korrutisega kahest tõenäosusest -- tõenäosus, et ma eksamiks õpin, ja tõenäosus, et ma saan hea hinde siis kui ma õpin --, millele tuleb liita teine korrutis kahest tõenäosustest -- tõenäosus, et ma ei õpi, ja tõenäosus, et ma saan hea hinde ka ilma õppimata.  
+Siit saad ise enda jaoks välja arvutada ennustuse, millise tõenäosusega just sina selle kursuse edukalt läbid. 
 
 **Punkt8.** Bayesi teoreemi rakendamine diskreetsetele hüpoteesidele:
 Oletame, et 45 aastane naine saab rinnavähi sõeluuringus mammograafias positiivse tulemuse. Millise tõenäosusega on tal rinnavähk? Kõigepealt jagame hüpoteesiruumi kahe diskreetse hüpoteesi vahel: H~1~ - vähk ja H~2~ - mitte vähk. Edasi omistame numbrilised väärtused järgmistele parameetritele: 
@@ -185,7 +186,7 @@ hõlpsalt kontrollida, kas ja kuidas meie mudelid töötavad ning genereerida ol
 (parameetrite väärtuste kombinatsioone), mida suures maailmas kunagi ette ei tule. 
 Selles mõttes on mudelid korraga nii väiksemad kui suuremad kui päris maailm. 
 
-Alustuseks simuleerime juhuvalimi n = 3 lõpmata suurest normaaljaotusega populatsioonist, mille keskmine on 100 ja sd on 20. Populatsioon (mis on statistiline mõiste) seisab siin tegelikkuse aseainena ja juhuvalim on meie andmete simulatsioon. Päris elus on korraliku juhuvalimi tõmbamine tehniliselt raske ettevõtmine ja, mis veelgi olulisem, me ei tea kunagi, milline on populatsiooni tõeline jaotus, keskmine ja sd. Elagu simulatsioon!
+Alustuseks simuleerime juhuvalimi n = 3 lõpmata suurest normaaljaotusega populatsioonist, mille keskmine on 100 ja sd on 20. See on põhimõtteliselt sama simulatsioon, millise me tegime eelnevalt peatükis "Normaaljaotuse mudel väikestel valimitel". Jällegi, tähtis ei ole konkreetne juhuvalim, vaid valimi kui sellise erinevus populatsioonist. Päris elus on korraliku juhuvalimi tõmbamine tehniliselt raske ettevõtmine ja, mis veelgi olulisem, me ei tea kunagi, milline on populatsiooni tõeline jaotus, keskmine ja sd. Seega, elagu simulatsioon!
 
 
 ```r
@@ -197,9 +198,9 @@ Sample; mean(Sample); sd(Sample)
 #> [1] 10.8
 ```
 
-Nagu näha on meie valimi keskmine 10% väiksem kui peaks ja valimi sd lausa kaks korda väiksem. Seega peegeldab meie valim halvasti populatsiooni --- aga me teame seda ainult tänu sellele, et tegu on simulatsiooniga.
+Nagu näha on meie konkreetse valimi keskmine 10% väiksem kui peaks ja valimi sd lausa kaks korda väiksem. Seega peegeldab meie valim halvasti populatsiooni --- aga me teame seda ainult tänu sellele, et tegu on simulatsiooniga.
 
-Kui juba simuleerida, siis robinal: tõmbame ühe valimi asemel 10 000, arvutame seejärel 10 000 keskmist ja 10 000 sd-d ning vaatame nende statistikute jaotusi ja keskväärtusi. Simulatsioon on nagu tselluliit --- see on nii odav, et igaüks võib seda endale lubada. 
+Kui juba simuleerida, siis robinal: tõmbame ühe juhuvalimi asemel 10 000, arvutame seejärel 10 000 keskmist ja 10 000 sd-d ning vaatame nende statistikute jaotusi ja keskväärtusi. Simulatsioon on nagu tselluliit --- see on nii odav, et igaüks võib seda endale lubada. 
 
 Meie lootus on, et kui meil on palju valimeid, millel kõigil on juhuslik viga, mis neid populatsiooni suhtes ühele või teisele poole kallutab, siis rohkem on valimeid, mis asuvad tõelisele populatsioonile pigem lähemal kui kaugemal. Samuti, kui valimiviga on juhuslik, siis satub umbkaudu sama palju valimeid tõelisest populatsiooniväärtusest ühele poole kui teisele poole ja vigade jaotus tuleb sümmeetriline. 
 
@@ -232,7 +233,7 @@ mean(Summary$SD)
 #> [1] 17.8
 ```
 
-Oh-hooo. Paljude valimite keskmiste keskmine ennustab väga täpselt populatsiooni keskmist aga sd-de keskmise keskmine alahindab populatsiooni sd-d. Valem, millega sd-d arvutatakse, tõõtab lihtsalt kallutatult, kui n on väike (<10). Kes ei usu, kordab simulatsiooni valimiga, mille N=30.
+Oh-hooo. Paljude valimite keskmiste keskmine ennustab väga täpselt populatsiooni keskmist aga sd-de keskmise keskmine alahindab populatsiooni sd-d. Valem, millega sd-d arvutatakse, töötab lihtsalt kallutatult, kui n on väike (<10). Kes ei usu, kordab simulatsiooni valimiga, mille N=30.
 
 Ja nüüd 10 000 SD keskväärtused:
 
@@ -264,7 +265,7 @@ mode(Summary$SD)
 
 
 SD-de jaotus on ebasümmeetriline ja mood ehk kõige tõenäolisem valimi sd väärtus, mida võiksime oodata, on u 14, samal ajal kui populatsiooni sd = 20. 
-Lisaks on sd-de jaotusel paks saba, mis tagab, et tesest küljest pole ka vähetõenäoline, et meie valimi sd populatsiooni sd-d kõvasti üle hindab.
+Lisaks on sd-de jaotusel paks saba, mis tagab, et teisest küljest pole ka vähetõenäoline, et meie valimi sd populatsiooni sd-d kõvasti üle hindab.
 
 Arvutame, mitu % valimite sd-e keskmistest on > 25
 

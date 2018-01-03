@@ -67,10 +67,10 @@ logaritmimise kaudu avaldatud multiplikatsiivse SD arvutamiseks kasutame enda ki
 
 SD                     MEAN    lower   upper
 --------------------  -----  -------  ------
-multiplicative_SD      1.02    0.380    2.74
-multiplicative_2_SD    1.02    0.141    7.36
-additive_SD            1.62   -0.107    3.34
-additive_2_SD          1.62   -1.831    5.07
+multiplicative_SD      0.91    0.322    2.57
+multiplicative_2_SD    0.91    0.114    7.27
+additive_SD            1.44    0.037    2.85
+additive_2_SD          1.44   -1.369    4.25
 
 Tavalise aritmeetitilise keskmise asemel on meil nüüd geomeetriline keskmine.  Võrdluseks on antud ka tavaline (aritmeetiline) keskmine ja (aditiivne) SD. Additiivne SD on selle jaotuse kirjeldamiseks selgelt ebaadekvaatne (vt jaotuse pilti ülalpool ja võrdle mulitplikatiivse SD-ga).
 
@@ -107,7 +107,7 @@ qqPlot(andmed)
 
 Nüüd joonistame qq-ploti logaritmitud andmetele. 
 
-(ref:qqlognorm) QQ-plot normaalsetele andmetele (logaritmitud lognormaalsed andmed).
+(ref:qqlognorm) QQ-plot normaalsetele andmetele (logaritmitud lognormaalsed andmed). 
 
 
 ```r
@@ -134,17 +134,17 @@ Lognormaalsete andmetega:
 
 ```r
 mad(andmed, constant = 1); sd(andmed); mad(andmed)
-#> [1] 0.617
-#> [1] 1.72
-#> [1] 0.915
+#> [1] 0.737
+#> [1] 1.41
+#> [1] 1.09
 ```
 
 
 ```r
 mad(log10(andmed), constant = 1); sd(log10(andmed)); mad(log10(andmed))
-#> [1] 0.318
-#> [1] 0.429
-#> [1] 0.471
+#> [1] 0.335
+#> [1] 0.451
+#> [1] 0.496
 ```
 
 mad = median(abs(median(x) - x)), mida on väga lihtne mõista. Samas R-i funktsioon mad() korrutab default-ina mad-i läbi konstandiga 1.4826, mis muudab mad()-i tulemuse võrreldavaks sd-ga, tehes sellest sd robustse analoogi. Robustse sellepärast, et mad-i arvutuskäik, mis sõltub mediaanist, mitte aritmeetilisest keskmisest, ei ole tundlik outlierite suhtes. Seega, kui tahate arvutada mad-i, siis fikseerige mad() funktsioonis argument *constant* ühele.
@@ -159,7 +159,7 @@ Funktsioon quantile võimaldab valida, milliseid kvantiile soovite näha. Järgn
 ```r
 quantile(andmed, c(0.025, 0.25, 0.5, 0.75, 0.95))
 #>  2.5%   25%   50%   75%   95% 
-#> 0.152 0.488 1.002 2.079 4.604
+#> 0.136 0.444 1.129 1.905 4.217
 ```
 
 
