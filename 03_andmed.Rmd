@@ -135,7 +135,7 @@ qqPlot(andmed)
 
 Nüüd joonistame qq-ploti logaritmitud andmetele. 
 
-(ref:qqlognorm) QQ-plot normaalsetele andmetele (logaritmitud lognormaalsed andmed).
+(ref:qqlognorm) QQ-plot normaalsetele andmetele (logaritmitud lognormaalsed andmed). 
 
 ```{r qqlognorm, fig.cap="(ref:qqlognorm)"}
 qqPlot(log(andmed))
