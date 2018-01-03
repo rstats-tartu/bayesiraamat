@@ -32,7 +32,7 @@ Seega kujutab sageduslik statistika endast kogumit *ad hoc* meetodeid, mis ei t�
 Küll aga tähendab see, et kuigi sageduslike mudeleid on lihtsam arvutada, on neid raskem ehitada ja mõista ning, et sageduslike testide, milliseid on viimase saja aasta jooksul loodud 10 000 ringis, tulemusi on raskem tõlgendada.  
 
 
-> Kahe statistika põhiline erinevus ei tulene matemaatikast vaid tõenäosuse tõlgendusest.
+> Kahe statistika põhiline erinevus ei tulene tõenäosusteooria matemaatikast, vaid erinevatest tõenäosuse tõlgendusest.
 
 
 Bayesi tõlgenduses on tõenäosus teadlase usu määr mingi hüpoteesi kehtimisse.
@@ -59,7 +59,7 @@ Seega omistatakse sagedus ehk tõenäosus andmetele, mitte hüpoteesile.
 Bayesi tõenäosus ei anna tegelikult seda tõenäosusnumbrit, mida me reaalselt peaksime kihlveokontoris kasutama. 
 Ta annab numbri, millest me lähtuksime juhul, kui me usuksime, et selle numbri arvutamisel kasutatud statistilised mudelid kirjeldavad täpselt maailma. 
 Paraku, kuna mudeldamine on oma olemuselt kompromiss mudeli lihtsuse ja ennustusvõime vahel, ei ole meil põhjust sellist asja uskuda. 
-Seega ei peaks me bayesi tõenäosusi otse maailma üle kandma, vähemalt mitte automaatselt. 
+Seega ei peaks me bayesi tõenäosusi otse maailma üle kandma, vähemasti mitte automaatselt. 
 Bayes ei ütle meile, mida me reaalselt usume. 
 Ta ei ütle, mida me peaksime uskuma. Ta ütleb, mida me peaksime uskuma tingimuslikult.
 
@@ -331,3 +331,44 @@ Eeldus: meil on andemtest sõltumatuid teadmisi populatsiooni jaotuse kohta
 
 Valimiviga ja andmete esinduslikus on erinevad ja üksteisest sõltumatud pseudo-protsessid, ehkki mõlemad on juhuslikud protsessid, mille tõenäosus muutub proportsionaalselt andmete hulga kasvuga (täpsemalt sqrt(N)-ga). Kui valim on piisavalt suur, siis võime olla piisavalt kindlad, et andmed on esinduslikud ning klassikalise statistika hinnangud ebakindlusele punktväärtuse ümber muutuvad selle võrra usutavamaks.  
 Samas, sedamõõda kui valimi suurus kasvab, muutub tõepärafunktsioon üha kitsamaks, mis tõstab omakorda tõenäosust, et tegelik parameetri väärtus jääb tõepärafunktsiooni kõrgema osa alt välja tingituna süstemmatilisest veast, mille suurus ei sõltu valimi suurusest. Seega töötab klassikaline statistika parimini keskmiselt suurte valimite (ja keskmiselt suure andmete varieeruvuse) korral.
+
+### Ajaloolist juttu: normaaljaotus, Bayes ja sageduslik statistika
+
+(Anders Hald; A History of Parametric Statistical Inference from Bernoulli to Fisher, 1713-1935, Springer 2000)
+
+Laplace sõnastas 1774. aastal statistiku tööpõllu järgmiselt: kirjeldamaks andmeid (vigade jaotust) tõenäosusfunktsioonina leia selline matemaatiline mudel, millel oleks lõplik arv parameetreid. Seejärel leia algoritm, mille kasutamine minimeeriks vead meie hinnagutele nende parameetrite väärtuste kohta. Seega oli eesmärk konverteerida algoritmiliselt andmete (mõõtmisvigade) jaotus posterioorseks tõenäosusjaotuseks, mille pealt saaks omakorda arvutada usaldusintervallid meie hinnagu täpsusele. 
+
+Laplace, kes tegeles palju astronoomilste mõõtmiste analüüsiga, lootis näidata, et mõõtmisandmete aritmeetiline keskmine on parim viis arvutada sellise posterioorse jaotuse kõige tõenäolisemat väärtust (lokatsiooniparameetrit). 
+Parim viis selles mõttes, et teoreetiliselt parima lokalisatsiooniparameetri ümber on võimalik arvutada kitsaimad veapiirid. 
+Aritmeetilise keskmise selle pärast, et selle kasutamine oli laialt levinud, tundus intuitiivselt mõistlik ning oli arvutuslikult lihtne. Laplace probleemi lahendas Gauss ca. 1809, võttes kasutusele nii uue tõenäosusjaotuse -- normaaljaotuse -- kui ka uue lokatsiooniparameetri arvutusmeetodi -- vähimruutude meetodi. Tema küsitud küsimus oli: millist jaotust ja hindamismeetodit oleks vaja kasutada, et lokatsiooniparameeter tuleks just aritmeetiline keskmine? 
+Rõhutades normaaljaotuse tähtsust, leidis Laplace 1812. aastal, et kõikidest sümmetrilistest andmejaotustest viib ainult normaaljaotus olukorrani, kus aritmeetiline keskmine kattub posterioorse jaotuse tipuga.
+
+Kuna Laplace ei teadnud midagi tegelike veajaotuste kohta astronoomilistel mõõtmistel, oli tal raskusi andmejaotuse spetsifitseerimisega, mille pealt Bayesi teoreemiga posterioorne hinnanguvigade jaotus arvutada. Mõõtmisvigu tavatseti mudeldada nelinurksete, kolmnurksete või kvadraat-jaotustega ja polnud ühtki teaduslikku põhjust eelistada üht jaotust teistele! See oli üks põhjuseid, miks Laplace hakkas arendama sageduslikku statistikat ja kasutas alates 1811 üha vähem Bayesi teoreemi. (Alles 1818 näitas Bessel empiiriliselt, et astronoomilised mõõtmised on normaaljaotusega.) Teine põhjus hüljata Bayesi statistika oli seotud tolle aja tehniliste raskustega priorite mudeldamisel, mistõttu Laplace oli sunnitud kasutama tasaseid prioreid, mis omistasid igale sündmusele/hüpoteesile võrdse eeltõenäosuse -- ja oma ilmses absurdsuses tegid elu lihtsaks tema kriitikutele. 
+
+Sageduslik statistika kasutab oma alusena keskset piirteoreemi (Laplace 1810, 1812), mille kohaselt on paljude andmevalimite *aritmeetilised keskmised* normaaljaotusega, ja seda hoolimata andmete tegelikust jaotusest (eeldusel, et valimid on piisavalt suured; vt 6. ptk). Seega, senikaua kui me ei modelleeri mitte ühe valimi empiirilist andemte jaotust (mida vajab Bayesi teoreem), vaid hoopis paljude virtuaalsete valimite pealt arvutatud *keskväärtuste jaotust*, ei pea me teadma, milline on andmete tegelik jaotus. Sellelt pinnalt ongi välja töötatud nullhüpoteesi testimine, millel põhineb suur osa 20. sajandi statistikast. 
+1908 näitas Edgeworth, et suurte valimite ja mitteinformatiivsete priorite korral annavad mõlemad meetodid (Bayes ja sageduslik) sama hinnangu parameetriväärtusele ja numbriliselt sama usaldusintervalli vahemiku.   
+
+**Sagedusliku statistika põhiprintsiibid: Fisher 1922**
+Statistilisete meetodite eesmärk on andmete redutseerimine. Selleks on vaja vaadelda andmeid juhuvalimina hüpoteetilisest lõpmata suurest populatsioonist, mille jaotust saab kirjeldada suhteliselt väheste parameetritega mudeli abil. (Valimit iseloomustab "statistik", populatsiooni aga "parameeter")
+
+Statistik puutub kokku 3 sorti probleemidega: 
+
+1. Spetsifikatsiooni probleemid kerkivad esile seoses populatsiooni jaotusmudeli spetsifitseerimisega. 
+
+2. Estimatsiooni probleemid kerkivad esile seoses algoritmidega, mille abil määratakse hüpoteetilise populatsioonimudeli parameetrite väärtused.
+
+3. Jaotuse probleemid kerkivad üles seoses valimite põhjal arvutatud statistikute jaotuste matemaatilise kirjeldamisega.
+
+Heal estimatsioonil on omakorda 3 kriteeriumit:
+
+1. Konsistentsus --- statistik on kosnsistentne siis kui arvutatuna lõpmata suurest valimist, mis võrdub populatsiooniga, tuleb selle statistiku väärtus täpselt õige.
+
+2. Efektiivsus --- statistiku efektiivsus on suhe (protsent) selle sisemisest täpsusest võrrelduna teoreetiliselt efektiivseima statistikuga. Efektiivsus väljendab, kui suurt osa kogu kättesaadavast informatsioonist meie statistik kasutab. Efektiivsuse kriteerium: statistik, arvutatuna suurest valimist, annab vähima võimaliku standardhälbega normaaljaotuse.
+
+3. Piisavus (sufficiency) --- kriteerium: statistik on piisav kui ükski teine statistik, mida saab samast valimist arvutada, ei lisa informatsiooni hinnatava parameetri väärtuse kohta. 
+
+Fisheri poolt juurutatud sageduslik terminoloogia: parameeter, statistik, tõepära, dispersioon (variance; ANOVA), konsistentsus, efektiivsus, piisavus, informatsioon, null hüpotees, statistiline olulisus, p väärtus, olulisuse test, protsendipunkt, randomiseerimine, interaktsioon, faktoriaalne disain. 
+
+Tänu kesksele piirteoreemile on sageduslik statistika arvutuslikult palju lihtsam kui Bayesi statistika (arvutused saab teha paberi ja pliiatsiga), aga kuna me ei saa enam rääkida tegelike empiiriliste andmete jaotusest, vaid peame selle asemel kasutama lõpmata hulka virtuaalseid valimeid, ei saa me enam Bayesi teoreemi abil tõenäosusi pöörata (konverteerida meie andmete tõenäosus parameetriväärtuse x kehtimise korral, parameetriväärtuse x kehtimise tõenäosuseks meie andmete korral). Veelgi enam, me ei saa isegi rääkida meie andmete tõenäosusest parameetriväärtuse x kehtimise korral, vaid oleme sunnitud oma keelt ja meelt murdes rääkima "meie andmete või neist ekstreemsemate andmete pikajalisest suhtelisest sagedusest nullhüpoteesi (aga kahjuks mitte ühegi teise parameetriväärtuse) kehtimise korral" (Fisher ca. 1920). Nagu näha, on siin arvutuslikul lihtsusel kõrge kontseptuaalne hind. 
+Bayesi ja sagedusliku statistika võrdlust vt lisa 1.
+

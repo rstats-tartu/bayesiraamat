@@ -64,4 +64,4 @@ Teisalt, mida paindlikum on meetod, seda vähem automaatne on selle mõistlik ka
 
 5. Tõenäosus omistab numbrilise väärtuse sellele, kui palju me usuksime hüpoteesi x kehtimisse, juhul kui me usuksime, et selle tõenäosuse arvutamiseks kasutatud statistilised mudelid vastavad tegelikkusele.
 
-6. Ükski statistiline mudel ei vasta tegelikkusele.
+6. Ükski statistiline mudel ei vasta tegelikkusele. Mudelivaba statistikat ei ole olemas (ka kirjeldav statistika kasutab vähemalt kaudselt mudeleid).

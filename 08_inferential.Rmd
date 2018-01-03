@@ -19,6 +19,7 @@ Kui andmed = tegelikkus, siis pole mõtet keerulisi mudeleid kasutada -- piisab 
 Ja kui andmetel pole midagi ühist tegelikkusega, siis on need lihtsalt ebarelevatsed. 
 Seega on järeldava statistika abil tehtud järeldused alati rohkem või vähem ebamäärased ning meil on vaja meetodit selle ebamäärasuse mõõtmiseks. Selle meetodi annab tõenäosusteooria.
 
+
 ## Järeldav statistika on tõenäosusteooria käepikendus {-}
 
 See õpik õpetab Bayesi statistikat, mis põhineb tõenäosusteoorial. Tänu sellele moodustab Bayesi statistika sidusa terviku, mille abil saab teha kõike seda, mida saab teha tõenäosusteooria abil. Bayesi statistika põhineb Bayesi teoreemil, mis on triviaalne tuletus tõenäosusteooria aksioomidest. Tänu Cox-i teoreemile (1961) teame, et klassikaline lausearvutuslik loogika on tõenäosusteooria erijuht ning, et Bayesi teoreem on teoreetiliselt parim viis tõenäosustega töötamiseks. Seega, kui te olete kindel oma väidete tõesuses või vääruses, siis on klassikaline loogika parim viis nendega opereerida; aga kui te ei saa oma järeldustes päris kindel olla, siis on teoreetiliselt parim lahendus tõenäosusteooria ja Bayesi teoreem.
@@ -144,6 +145,10 @@ posterior2
 
 Patsiendile võib pärast kordustesti positiivset tulemust öelda, et ta on 44% tõenäosusega vähivaba. Eelduseks on, et me ei tea midagi selle patsiendi geneetikast ega keskkonnast põhjustatud vastuvõtlikusest vähile ning, et testi ja kordustesti vead on üksteisest sõltumatud (mitte korreleeritud). 
 
+Bayesi teoreemi kasutamine pideva suuruse (näiteks keskväärtuse või standardhälbe) hindamiseks on põhimõtteliselt samasugune, ainult et nüüd on meil lõpmata suur arv hüpoteese (iga teoreetiliselt võimalik parameetri väärtus on siin "hüpotees"), mis tähendab, et vastavalt Bayesi teoreemile on meil vaja ka lõpmata hulka tõepärasid ja lõpmata hulka prioreid. Lõpmata hulk tõepärasid ja prioreid tähendab lihtsalt, et me avaldame need kahe pideva funktsioonina, misjärel saame neist kahest funktsioonist arvutada kolmanda pideva funktsiooni, posteeriori. Posteeriorist saab omakorda arvutada iga mõeldava parameetriväärtuste vahemiku tõenäosuse või usalduspiirid, milles mingi meie poolt etteantud tõenäosusega paikneb parameetri tegelik väärtus (vt ptk 10). Ja posterioorse funktsiooni tipp (mood) vastab kõige tõenäolisemale parameetriväärtusele. 
+
+Mida kitsam on posteerior, seda kitsamad tulevad sellest arvutatud usalduspiirid. Siit tuleneb, et kui võimalik peaksime oma mudelitesse panema parameetreid (statistikuid), mille posteeriorid tulevad maksimaalselt kitsad (vt allpool ptk "ajalooline vahepala" selle kohta, kuidas aritmeetiline keskmine on selline statistik).  
+
 ### Tõenäosuse tõlgendus {-}
 
 Kolmogorovi aksioomid õpetavad meid tõenäosustega matemaatiliselt ümber käima, aga nad ei anna meile seost matemaatiliste tõenäosuste ja päris maailma vahel, ega ei ütle, mida tõenäosus teaduses tähendab.
@@ -155,7 +160,9 @@ Bayesiaanlik statistika opereerib episteemilise tõenäosusega. See tähendab, e
 
 Selles mõttes on Bayesi tõenäosus subjektiivne. Kui me teaksime täpselt, mis homme juhtub, siis ei oleks meil selliseid tõenäosusi vaja. Seega, kui te usute, et teadus suudab tõestada väiteid maailma kohta, nagu seda teeb matemaatika formaalsete struktuuride kohta, siis pääsete sellega statistika õppimisest ja kasutamisest. Aga kui te siiski arvutate Bayesi tõenäosusi, siis ei ütle need midagi selle kohta, kas maailm on tõenäosuslik või deterministlik. Inimesed, kes vajavad tõenäosusi maailma seisundite kirjeldamiseks, ei kasuta enamasti Bayesi tõenäosustõlgendust, vaid sagedusliku tõlgendust.
 
-Kui me mõõdame pidevat suurust, näiteks inimeste pikkusi, siis saame arvutuse tagajärjel tõenäosused kõigi võimalike parameetriväärtuste kohta, ehk igale mõeldavale pikkuse väärtusele. Kuna pideval suurusel on lõpmata hulk võimalikke väärtusi, avaldame me sellised tõenäosused pideva tõenäosusfunktsioonina, ehk posteeriorina. See näeb sageli välja nagu normaaljaotus ja me võime igast posteeriorist arvutada, kui suur osa summaarsest tõenäosusest, mis on 100%, jääb meid huvitavasse pikkustevahemikku. Kui näiteks 67% posteeriori pindalast jääb pikkuste vahemikku 178 kuni 180 cm, siis me usume 67%-se kindlusega, et tõde asub kuskil selles vahemikus.  
+Kui me mõõdame pidevat suurust, näiteks inimeste pikkusi, siis saame arvutuse tagajärjel tõenäosused kõigi võimalike parameetriväärtuste kohta, ehk igale mõeldavale pikkuse väärtusele. Kuna pideval suurusel on lõpmata hulk võimalikke väärtusi, avaldame me sellised tõenäosused pideva tõenäosusfunktsioonina, ehk posteeriorina. See näeb sageli välja nagu normaaljaotus ja me võime igast posteeriorist arvutada, kui suur osa summaarsest tõenäosusest, mis on 100%, jääb meid huvitavasse pikkustevahemikku. Kui näiteks 67% posteeriori pindalast jääb pikkuste vahemikku 178 kuni 180 cm, siis me usume 67%-se kindlusega, et tõde asub kuskil selles vahemikus. 
+
+
 
 ### Tõenäosusteooriast tulenevad statistika põhiprintsiibid {-}
 
