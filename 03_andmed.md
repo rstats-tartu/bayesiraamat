@@ -67,10 +67,10 @@ logaritmimise kaudu avaldatud multiplikatsiivse SD arvutamiseks kasutame enda ki
 
 SD                     MEAN    lower   upper
 --------------------  -----  -------  ------
-multiplicative_SD      1.10    0.375    3.24
-multiplicative_2_SD    1.10    0.128    9.52
-additive_SD            2.04   -0.833    4.92
-additive_2_SD          2.04   -3.708    7.79
+multiplicative_SD      1.02    0.380    2.74
+multiplicative_2_SD    1.02    0.141    7.36
+additive_SD            1.62   -0.107    3.34
+additive_2_SD          1.62   -1.831    5.07
 
 Tavalise aritmeetitilise keskmise asemel on meil nüüd geomeetriline keskmine.  Võrdluseks on antud ka tavaline (aritmeetiline) keskmine ja (aditiivne) SD. Additiivne SD on selle jaotuse kirjeldamiseks selgelt ebaadekvaatne (vt jaotuse pilti ülalpool ja võrdle mulitplikatiivse SD-ga).
 
@@ -93,7 +93,7 @@ Enne kui seda tegema asute, peaksite mõistma, et see, et teie valim ei ole norm
 Igal juhul, valimiandmete normaalsuse määramiseks on kõige mõistlikum kasutada qq-plotti. 
 QQ-plot (kvantiil-kvantiil plot) võrdleb andmete jaotust ideaalse normaaljaotusega andmepunkti haaval. Kui empiiriline jaotus kattub referentsjaotusega, siis on tulemuseks sirgel paiknevad punktid. Järgneval qq plotil on näha, mis juhtub, kui plottida lognormaalseid andmeid normaaljaotuse vastu:
 
-(ref:qqnorm) QQ-plot normaalsetele andmetele.
+(ref:qqnorm) QQ-plot lognormaalsetele andmetele. Plotil võrreldakse lognormaalsete andmete jaotust referentsjaotusega, milleks on antud juhul normaaljaotus. Punased katkendjooned annavad standardveapõhise usaldusvahemiku (arvutatud simuleeritud juhuvalimist normaaljaotusega referentspopulatsioonist), millesse peaks jääma enamus andmepunkte juhul kui andmepunktid pärineksid normaaljaotusest.
 
 
 ```r
@@ -107,11 +107,11 @@ qqPlot(andmed)
 
 Nüüd joonistame qq-ploti logaritmitud andmetele. 
 
-(ref:qqlognorm) QQ-plot normaalsetele andmetele.
+(ref:qqlognorm) QQ-plot normaalsetele andmetele (logaritmitud lognormaalsed andmed).
 
 
 ```r
-qqPlot(log2(andmed))
+qqPlot(log(andmed))
 ```
 
 <div class="figure" style="text-align: center">
@@ -121,7 +121,7 @@ qqPlot(log2(andmed))
 
 Pole kahtlust, andmed on logaritmitud kujul normaaljaotusega.
 
-> qqPlot() võimaldab võrrelda teie andmeid ükskõik millise R-is leiduva jaotusega (?car::qqPlot). 
+> qqPlot() võimaldab võrrelda teie andmeid ükskõik millise R-is defineeritud jaotusega (?car::qqPlot). 
 
 Normaaljaotuse kindlakstegemiseks on loodud ka peotäis sageduslikke teste, mis annavad väljundina p väärtuse. Nende kasutamisest soovitame siiski hoiduda, sest tulemused on sageli ebakindlad, eriti väikestel ja suurtel valimitel. Mõistlikum on vaadata kõikide andmepunktide plotti normaaljaotuse vastu, kui jõllitada ühte numbrit (p), mille väärtus, muuseas, monotooniliselt langeb koos valimi suuruse kasvuga.
 
@@ -134,17 +134,17 @@ Lognormaalsete andmetega:
 
 ```r
 mad(andmed, constant = 1); sd(andmed); mad(andmed)
-#> [1] 0.567
-#> [1] 2.88
-#> [1] 0.841
+#> [1] 0.617
+#> [1] 1.72
+#> [1] 0.915
 ```
 
 
 ```r
 mad(log10(andmed), constant = 1); sd(log10(andmed)); mad(log10(andmed))
-#> [1] 0.331
-#> [1] 0.468
-#> [1] 0.491
+#> [1] 0.318
+#> [1] 0.429
+#> [1] 0.471
 ```
 
 mad = median(abs(median(x) - x)), mida on väga lihtne mõista. Samas R-i funktsioon mad() korrutab default-ina mad-i läbi konstandiga 1.4826, mis muudab mad()-i tulemuse võrreldavaks sd-ga, tehes sellest sd robustse analoogi. Robustse sellepärast, et mad-i arvutuskäik, mis sõltub mediaanist, mitte aritmeetilisest keskmisest, ei ole tundlik outlierite suhtes. Seega, kui tahate arvutada mad-i, siis fikseerige mad() funktsioonis argument *constant* ühele.
@@ -159,7 +159,7 @@ Funktsioon quantile võimaldab valida, milliseid kvantiile soovite näha. Järgn
 ```r
 quantile(andmed, c(0.025, 0.25, 0.5, 0.75, 0.95))
 #>  2.5%   25%   50%   75%   95% 
-#> 0.192 0.530 0.931 2.406 6.442
+#> 0.152 0.488 1.002 2.079 4.604
 ```
 
 

@@ -254,9 +254,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">library</span>(broom)
 <span class="kw">library</span>(modelr)
 <span class="kw">library</span>(viridis)</code></pre></div>
-<p>Oletame, et me mõõtsime N inimese pikkuse cm-s ja kaalu kg-s ning meid huvitab, kuidas inimeste pikkus sõltub nende kaalust. Lihtsaim mudel pikkuse sõltuvusest kaalust on pikkus = kaal (formaliseeritult: y = x) ja see mudel ennustab, et kui Juhani kaal = 80 kg, siis Juhan on 80 cm pikkune. Siin on pikkus muutuja, mille väärtust ennustatakse ja kaal muutuja, mille väärtuste põhjal ennustatakse pikkusi.</p>
-<p>Genereerime andmed, x = pikkus ja y = kaal:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">100</span>
+<p>Oletame, et me mõõtsime N inimese pikkuse cm-s ja kaalu kg-s ning meid huvitab, kuidas inimeste pikkus sõltub nende kaalust. Lihtsaim mudel pikkuse sõltuvusest kaalust on pikkus = kaal (formaliseeritult: y = x) ja see mudel ennustab, et kui Juhani kaal = 80 kg, siis Juhan on 80 cm pikkune. Siin on pikkus muutuja, mille väärtust ennustatakse (y) ja kaal muutuja x, mille väärtuste põhjal ennustatakse pikkusi. Muidugi, sama hästi võiksime ennustada kaalu pikkuste põhjal, ja kumma ennustuse valime sõltub siinkohal eeskätt meie teaduslikest huvidest.</p>
+<p>Veelgi enam, sama mudel ennustab, et kui Juhani kaal = 80 tonni, siis on Juhan samuti 80 cm pikkune (eeldusel, et me avaldame x muutuja tonnides ja y muutuja sentimeetrites). Seega, mudeli ennustuse täpsus sõltub ühikutest, milles me andmed mudelisse sisse anname.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Genereerime andmed: x = pikkus ja y = kaal:</span>
+
+x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">100</span>
 y &lt;-<span class="st"> </span>x</code></pre></div>
 <p>Selle mudeli saame graafiliselt kujutada nii:</p>
 
@@ -267,8 +269,10 @@ y &lt;-<span class="st"> </span>x</code></pre></div>
 Joonis 4.1: Lihtne mudel y ~ x, mille lõikepunkt = 0 ja tõus = 1.
 </p>
 </div>
-<p>Mudeli keeles tähistame me seda, mida me ennustame (antud juhul pikkus) Y-ga ja seda, mille väärtuse põhjal me ennustame (antud juhul kaal) X-ga. Seega sirge mudeli matemaatiline formalism on Y = X.</p>
-<p>See on äärmiselt jäik mudel: sirge, mille asukoht on rangelt fikseeritud. Sirge lõikab y telge alati 0-s (mudeli keeles: sirge intercept ehk lõikepunkt Y teljel = 0) ja tema tõusunurk saab olla ainult 45 kraadi (mudeli keeles: mudeli slope ehk tõus = 1). Selle mudeli jäikus tuleneb sellest, et temas ei ole parameetreid, mille väärtusi me saaksime vabalt muuta ehk tuunida.</p>
+<blockquote>
+<p>Üldistatult, mudeli keeles tähistame me seda muutujat, mille väärtusi me ennustame, Y-ga ja seda muutujat, mille väärtuse põhjal me ennustame, X-ga.</p>
+</blockquote>
+<p>Sirge mudeli lihtsaim matemaatiline formalism on Y = X. See on äärmiselt jäik mudel: sirge, mille asukoht on rangelt fikseeritud. Sirge lõikab y telge alati 0-s (mudeli keeles: sirge intercept ehk lõikepunkt Y teljel = 0) ja tema tõusunurk saab olla ainult 45 kraadi (mudeli keeles: mudeli slope ehk tõus = 1). Selle mudeli jäikus tuleneb sellest, et temas ei ole parameetreid, mille väärtusi me saaksime vabalt muuta ehk tuunida.</p>
 <p>Mis juhtub, kui me lisame mudelisse konstandi, mille liidame x-i väärtustele?</p>
 <p><span class="math display">\[y = a + x\]</span></p>
 <p>See konstant on mudeli parameeter, mille väärtuse võime vabalt valida. Järgnevalt anname talle väärtuse 30 (ilma konkreetse põhjuseta).</p>
@@ -317,7 +321,13 @@ y &lt;-<span class="st">  </span>a <span class="op">+</span><span class="st"> </
 Joonis 4.4: Lineaarne mudel, millel on tuunitud nii lõikepunkt kui tõus.
 </p>
 </div>
-<p>See mudel ennustab, et 0 kaalu juures on pikku 102 cm, mis on rumal, aga mudelite puhul tavaline olukord. Me tuunime mudelit andmete peal, mis ei sisalda 0-kaalu. Meie valimiandmed ei peegelda täpselt inimpopulatsiooni. Sirge mudel ei peegelda täpselt pikkuse-kaalu suhteid vahemikus, kus meil on reaalseid kaaluandmeid; ja ta teeb seda veelgi vähem seal, kus meil mõõdetud kaalusid ei ole. Seega pole mõtet imestada, miks mudeli intercept meie üle irvitab.</p>
+<p>See mudel ennustab, et 0 kaalu juures on pikku 102 cm, mis on rumal, aga mudelite puhul tavaline olukord. Sellel olukorral on mitmeid põhjusi:</p>
+<ul>
+<li><p>Me tuunime mudelit andmete peal, mis ei sisalda 0-kaalu.</p></li>
+<li><p>Meie valimiandmed ei peegelda täpselt inimpopulatsiooni.</p></li>
+<li><p>Sirge mudel ei peegelda täpselt pikkuse-kaalu suhteid vahemikus, kus meil on reaalseid kaaluandmeid; ja ta teeb seda veelgi vähem seal, kus meil mõõdetud kaalusid ei ole.</p></li>
+</ul>
+<p>Seega pole mõtet imestada, miks mudeli intercept meie üle irvitab.</p>
 <p>Kahe parameetriga sirge mudel ongi see, mida me fitime kahedimensiooniliste andmetega.</p>
 <p>Näiteks nii, kasutame R-i “iris” andmesetti:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Fit a linear model and name the model object as m</span>
@@ -365,6 +375,12 @@ Sepal_length &lt;-<span class="st">  </span>a <span class="op">+</span><span cla
 Joonis 4.6: Siin ennustasime kümme y väärtust x väärtuste põhjal..
 </p>
 </div>
+<blockquote>
+<p>Mudelist saab kahte tüüpi ennustusi: interpolatsioone (ennustus on samas skaalas, mis andmed, mille peal mudel fititi) ja ekstrapoleerimine (ennustus jääb väljaspoole andmeid). Sõltuvalt erialast me kas vaatame ekstrapoleerimisele viltu või leiame, et selline tegevus on otsesõnu keelatud.</p>
+</blockquote>
+<blockquote>
+<p>Mudelist saab kahte tüüpi ennustusi: (1) saame ennustada Y keskmist väärtust X-i konkreetsel väärtusel ja (2) saame ennustada individuaalseid Y väärtusi X-i konkreetsel väärtusel. Viimase kohta vt ptk…</p>
+</blockquote>
 </div>
 <div id="neli-moistet" class="section level2 unnumbered">
 <h2>Neli mõistet</h2>
@@ -401,7 +417,7 @@ Joonis 4.6: Siin ennustasime kümme y väärtust x väärtuste põhjal..
 </div>
 <div id="ule--ja-alafittimine" class="section level2 unnumbered">
 <h2>Üle- ja alafittimine</h2>
-<p>Osad mudelite tüübid on vähem paindlikud kui teised (parameetreid tuunides on neil vähem liikumisruumi). Kuigi sellised mudelid sobituvad halvemini andmetega, võivad need ikkagi paremini kui mõni paindlikum mudel välja tuua andmete peidetud olemuse. Mudeldamine eeldab, et me usume, et meie andmetes leidub nii müra (mida mudel võiks ignoreerida), kui signaal (mida mudel püüab tabada). Kuna mudeli jaoks näeb müra samamoodi välja, kui signaal, on iga mudel kompromiss üle- ja alafittimise vahel. Me lihtsalt loodame, et meie mudel on piisavalt jäik, et mitte liiga palju müra modelleerida ja samas piisavalt paindlik, et piisaval määral signaali tabada.</p>
+<p>Osad mudelite tüübid on vähem paindlikud kui teised (parameetreid tuunides on neil vähem liikumisruumi). Kuigi sellised mudelid sobituvad halvemini andmetega, võivad need ikkagi paremini kui mõni paindlikum mudel välja tuua andmete peidetud olemuse. Statistiline mudeldamine eeldab, et me usume, et meie andmetes leidub nii müra (mida mudel võiks ignoreerida), kui signaal (mida mudel püüab tabada). Ilma signaalita süsteemi poleks arusaadavatel põhjustel mõtekas mudeldada ja ilma mürata süsteemi mudel tuleks ilma varieeruvuse (vea) komponendita, ehk deterministlik. Kuna mudeli jaoks näeb müra samamoodi välja kui signaal, on iga mudel kompromiss üle- ja alafittimise vahel. Me lihtsalt loodame, et meie mudel on piisavalt jäik, et mitte liiga palju müra modelleerida ja samas piisavalt paindlik, et piisaval määral signaali tabada.</p>
 <p>Üks kõige jäigemaid mudeleid on sirge, mis tähendab, et sirge mudel on suure tõenäosusega alafittitud. Keera sirget kuipalju tahad, ikka ei sobitu ta enamiku andmekogudega. Ja need vähesed andmekogud, mis sirge mudeliga sobivad, on genereeritud teatud tüüpi lineaarsete protsesside poolt. Sirge on seega üks kõige paremini tõlgendatavaid mudeleid. Teises äärmuses on polünoomsed mudelid, mis on väga paindlikud, mida on väga raske tõlgendada ja mille puhul esineb suur mudeli ülefittimise oht. Ülefititud mudel järgib nii täpselt valimiandmeid, et sobitub hästi valimis leiduva juhusliku müraga ning seetõttu sobitub halvasti järgmise valimiga samast populatsioonist (igal valimil on oma juhuslik müra). Üldiselt, mida rohkem on mudelis tuunitavaid parameetreid, seda paindlikum on mudel, seda kergem on seda valimiandmetega sobitada ja seda raskem on seda tõlgendada. Veelgi enam, alati on võimalik konstrueerida mudel, mis sobitub täiuslikult kõikide andmepunktidega (selle mudeli parameetrite arv = N). Selline mudel on täpselt sama informatiivne kui andmed, mille põhjal see fititi — ja täiesti kasutu.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-16"></span>
 <img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-16-1.png" alt="Kasvava paindlikusega polünoomsed mudelid." width="70%" />
