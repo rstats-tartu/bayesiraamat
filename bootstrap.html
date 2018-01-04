@@ -256,29 +256,32 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <blockquote>
 <p>Populatsioon on valimile sama, mis on valim bootstrappitud valimile.</p>
 </blockquote>
-<p>Nüüd alustame ühestainsast empiirilisest valimist ja genereerime sellest 1000 virtuaalset valimit. Selleks tõmbame me oma valimist virtuaalselt 1000 uut juhuvalimit (bootstrap valimit), millest igaüks on sama suur kui algne valim. Trikk seisneb selles, et bootstrap valimite tõmbamine käib asendusega, st iga empiirilise valimi element, mis bootstrap valimisse tõmmatakse, pannakse kohe algsesse valimisse tagasi. Seega saab seda elementi kohe uuesti samasse bootstrap valimisse tõmmata (kui juhus nii tahab). Seega sisaldab tüüpiline bootstrap valim osasid algse valimi numbreid mitmes korduses ja teisi üldse mitte. Iga bootstrap valimi põhjal arvutatakse meid huvitav statistik (näiteks keskväärtus) ja kõik need 1000 bootstrapitud statistikut plotitakse samamoodi, nagu me ennist tegime valimitega lõpmata suurest populatsioonist. Ainsad erinevused on, et bootstrapis võrdub andmekogu suurus, millest valimeid tõmmatakse, valimi suurusega ning, et iga bootstrapi valim on sama suur kui algne andmekogu (sest meie statistiku varieeruvus sõltub valimi suurusest ja me tahame seda varieeruvust oma bootstrapvalimiga tabada). Tüüpiliselt kasutatakse bootstrapitud statistikuid selleks, et arvutada usaldusintervall statistiku väärtusele.</p>
+<p>Nüüd alustame ühestainsast empiirilisest valimist ja genereerime sellest 2000 virtuaalset valimit. Selleks tõmbame me oma valimist virtuaalselt 2000 uut juhuvalimit (bootstrap valimit), millest igaüks on sama suur kui algne valim. Trikk seisneb selles, et bootstrap valimite tõmbamine käib asendusega, st iga empiirilise valimi element, mis bootstrap valimisse tõmmatakse, pannakse kohe algsesse valimisse tagasi. Seega saab seda elementi kohe uuesti samasse bootstrap valimisse tõmmata (kui juhus nii tahab). Seega sisaldab tüüpiline bootstrap valim osasid algse valimi numbreid mitmes korduses ja teisi üldse mitte. Iga bootstrap valimi põhjal arvutatakse meid huvitav statistik (näiteks keskväärtus) ja kõik need 2000 bootstrapitud statistikut plotitakse samamoodi, nagu me ennist tegime valimitega lõpmata suurest populatsioonist. Ainsad erinevused on, et bootstrapis võrdub andmekogu suurus, millest valimeid tõmmatakse, valimi suurusega ning, et iga bootstrapi valim on sama suur kui algne andmekogu (sest meie statistiku varieeruvus sõltub valimi suurusest ja me tahame seda varieeruvust oma bootstrapvalimiga tabada). Tüüpiliselt kasutatakse bootstrapitud statistikuid selleks, et arvutada usaldusintervall statistiku väärtusele.</p>
 <blockquote>
 <p>Bootstrap ei muuda meie hinnangut statistiku punktväärtusele. Ta annab hinnangu ebakindluse määrale, mida me oma valimi põhjal peaksime tundma selle punkthinnangu kohta.</p>
 </blockquote>
 <p>Bootstrappimine on üldiselt väga hea meetod, mis sõltub väiksemast arvust eeldustest kui statistikas tavaks. Bootstrap ei eelda, et andmed on normaaljaotusega või mõne muu matemaatiliselt lihtsa jaotusega. Tema põhiline eeldus on, et valim peegeldab populatsiooni – mis ei pruugi kehtida väikeste valimite korral ja kallutatud (mitte-juhuslike) valimite korral. Lisaks, tavaline bootstrap ei sobi hierarhiliste andmestruktuuride analüüsiks ega näiteks aegridade analüüsiks.</p>
 <p>Bootstrap empiirilisele valimile suurusega n töötab nii:</p>
 <ol style="list-style-type: decimal">
-<li>tõmba (asendusega) empiirilisest valimist k uut virtuaalset valimit, igaüks suurusega n.</li>
-<li>arvuta keskmine, sd või mistahes muu statistik igale bootstrapi valimile. Tee seda k korda.</li>
+<li>tõmba (asendusega) empiirilisest valimist B uut virtuaalset valimit (B bootstrap valimit), igaüks suurusega n.</li>
+<li>arvuta keskmine, sd või mistahes muu statistik igale bootstrapi valimile. Tee seda B korda.</li>
 <li>joonista oma statistiku väärtustest histogramm või density plot</li>
 </ol>
 <p>Nende andmete põhjal saab küsida palju toreidaid küsimusi — vt allpool.</p>
-<p>Mis on USA presidentide keskmine pikkus? Meil on valim 11 presidendi pikkusega.</p>
+<p>Mis on USA presidentide keskmine pikkus? Meil on viimase 11 presidendi pikkused.</p>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">heights &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">value =</span> <span class="kw">c</span>(<span class="dv">183</span>, <span class="dv">192</span>, <span class="dv">182</span>, <span class="dv">183</span>, <span class="dv">177</span>, <span class="dv">185</span>, <span class="dv">188</span>, <span class="dv">188</span>, <span class="dv">182</span>, <span class="dv">185</span>, <span class="dv">188</span>))
+B &lt;-<span class="st"> </span><span class="dv">2000</span> <span class="co">#the number of bootstrap samples</span>
+
 boot_mean &lt;-<span class="st"> </span>heights <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span>broom<span class="op">::</span><span class="kw">bootstrap</span>(<span class="dv">1000</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>broom<span class="op">::</span><span class="kw">bootstrap</span>(B) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">do</span>(<span class="kw">summarise</span>(., <span class="dt">Mean =</span> <span class="kw">mean</span>(value)))
+
 <span class="kw">ggplot</span>(boot_mean, <span class="kw">aes</span>(Mean)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:bootpost"></span>
-<img src="09_bootstrap_files/figure-html/bootpost-1.png" alt="Bootstrapitud posteerior USA presidentide keskmisele pikkusele. Järgnevas koodis ütleme me kõigepealt, et k = 1000 (et me võtame 1000 bootstrap valimit) kasutades selleks broom paketi käsku boot(), millele on lihtne lisada dplyri funktsioon summarise(). Siiski peame seda tegema dplyr::do() abil. Pane tähele, et “tänu” do() kasutamisele peame me summarise() funktsioonis näitama punktiga koha, kuhu lähevad %&gt;% torust tulnud bootstrap valimid. Aga muidu on kõik tavapärane tidyverse." width="70%" />
+<img src="09_bootstrap_files/figure-html/bootpost-1.png" alt="Bootstrapitud posteerior USA presidentide keskmisele pikkusele. Järgnevas koodis ütleme me kõigepealt, et B = 2000 (et me võtame 2000 bootstrap valimit) kasutades selleks broom paketi käsku boot(), millele on lihtne lisada dplyri funktsioon summarise(). Siiski peame seda tegema dplyr::do() abil. Pane tähele, et “tänu” do() kasutamisele peame me summarise() funktsioonis näitama punktiga koha, kuhu lähevad %&gt;% torust tulnud bootstrap valimid. Aga muidu on kõik tavapärane tidyverse." width="70%" />
 <p class="caption">
-Joonis 9.1: Bootstrapitud posteerior USA presidentide keskmisele pikkusele. Järgnevas koodis ütleme me kõigepealt, et k = 1000 (et me võtame 1000 bootstrap valimit) kasutades selleks broom paketi käsku boot(), millele on lihtne lisada dplyri funktsioon summarise(). Siiski peame seda tegema dplyr::do() abil. Pane tähele, et “tänu” do() kasutamisele peame me summarise() funktsioonis näitama punktiga koha, kuhu lähevad %&gt;% torust tulnud bootstrap valimid. Aga muidu on kõik tavapärane tidyverse.
+Joonis 9.1: Bootstrapitud posteerior USA presidentide keskmisele pikkusele. Järgnevas koodis ütleme me kõigepealt, et B = 2000 (et me võtame 2000 bootstrap valimit) kasutades selleks broom paketi käsku boot(), millele on lihtne lisada dplyri funktsioon summarise(). Siiski peame seda tegema dplyr::do() abil. Pane tähele, et “tänu” do() kasutamisele peame me summarise() funktsioonis näitama punktiga koha, kuhu lähevad %&gt;% torust tulnud bootstrap valimid. Aga muidu on kõik tavapärane tidyverse.
 </p>
 </div>
 <p>Mida selline keskväärtuste jaotus tähendab? Me võime seda vaadelda posterioorse tõenäosusjaotusena. Selle tõlgenduse kohaselt iseloomustab see jaotus täpselt meie usku presidentide keskmise pikkuse kohta, niipalju kui see usk põhineb bootstrappimises kasutatud andmetel. Senikaua, kui meil pole muud relevantset teavet, on kõik, mida me usume teadvat USA presidentide keskmise pikkuse kohta, peidus selles jaotuses. Need pikkused, mille kohal jaotus on kõrgem, sisaldavad meie jaoks tõenäolisemalt tegelikku USA presidentide keskmist pikkust kui need pikkused, mille kohal posterioorne jaotus on madalam.</p>
@@ -303,9 +306,16 @@ Joonis 9.1: Bootstrapitud posteerior USA presidentide keskmisele pikkusele. Jär
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(heights<span class="op">$</span>value <span class="op">&gt;</span><span class="st"> </span><span class="fl">178.3</span>)
 <span class="co">#&gt; [1] 0.909</span></code></pre></div>
 <p>Ligikaudu 100% tõenäosusega (valimis on 1 mees alla 182 cm, ja tema on 177 cm). Lühikesed jupatsid ei saa Ameerikamaal presidendiks!</p>
+<p><strong>Kuidas lahendada bootstrap, kui mei tahame usaldusintervalle kahe ebavõrdse grupi erinevusele?</strong> Näiteks kui meil on katsegrupis N = 25 ja kontrollgrupis N = 20, ja me tahame arvutada statistikut ES = katsegrupi keskmine - kontrollgrupi keskmine.</p>
+<ol style="list-style-type: decimal">
+<li><p>tõbma katsegrupist N = 25 bootstrapvalim</p></li>
+<li><p>tõmba kontrollgrupist N = 20 bootsrapvalim</p></li>
+<li><p>lahuta kontrollgrupi bootstrapvalimi mediaan katsegrupi omast (või aritmeetriline keskmine või ükskõik mis muu keskmise näitaja, mida hing ihaldab)</p></li>
+<li><p>korda punkte 1-3 B korda ja tööta edasi bootstrapjaptusega, nagu eespool näidatud.</p></li>
+</ol>
 <div id="veidi-keerulisem-bootstrap" class="section level2 unnumbered">
 <h2>Veidi keerulisem bootstrap</h2>
-<p>Eelnevalt tutvustasime nn protsentiilmeetodit bootstrapi arvutamiseks. See lihtne meetod on küll populaarne ja annab sageli häid tulemusi, aga ei ole parim meetod bootstrappimiseks. Empiiriline bootstrap on sellest ainult veidi keerulisem, aga annab robustsemaid tulemusi. Selles ei ploti me enam mitte 1000 statistiku väärtust vaid 1000 erinevust bootstrapitud statistiku väärtuse ja empiirilise valimi põhjal arvutatud statistiku väärtuse vahel.</p>
+<p>Eelnevalt tutvustasime nn protsentiilmeetodit bootstrapi arvutamiseks. See meetod eeldab vähemalt 2000 bootstrap valimi kasutamist. See lihtne meetod on küll populaarne ja annab sageli häid tulemusi, aga ei ole parim meetod bootstrappimiseks. Empiiriline bootstrap on sellest ainult veidi keerulisem, aga annab robustsemaid tulemusi. Selles ei ploti me enam mitte 2000 statistiku väärtust vaid 2000 erinevust bootstrapitud statistiku väärtuse ja empiirilise valimi põhjal arvutatud statistiku väärtuse vahel.</p>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">boot_mean &lt;-<span class="st"> </span>boot_mean <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Diff =</span> Mean <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(heights<span class="op">$</span>value))
@@ -322,7 +332,7 @@ Joonis 9.2: Empiirilise bootstrapi posteerior USA presidentide keskmisele pikkus
 ci &lt;-<span class="st"> </span><span class="kw">mean</span>(heights<span class="op">$</span>value) <span class="op">+</span><span class="st"> </span>bm_hdi
 ci
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt;   182   187</span></code></pre></div>
+<span class="co">#&gt;   183   187</span></code></pre></div>
 </div>
 <div id="bayesi-bootstrap" class="section level2 unnumbered">
 <h2>Bayesi bootstrap</h2>
@@ -348,7 +358,7 @@ Joonis 9.3: Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele. 
                          <span class="dt">use.weights =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>Tõenäosus, et keskmine on suurem kui 182 cm</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(heights_bb[, <span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">182</span>)
-<span class="co">#&gt; [1] 0.993</span></code></pre></div>
+<span class="co">#&gt; [1] 0.99</span></code></pre></div>
 <p>Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):</p>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)

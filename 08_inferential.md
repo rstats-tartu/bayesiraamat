@@ -288,10 +288,10 @@ Aga vähemalt populatsiooni keskmise saame me palju valimeid tõmmates ilusasti 
 
 Kahjuks pole meil ei vahendeid ega kannatust loodusest 10 000 valimi kogumiseks. 
 Enamasti on meil üksainus valim. 
-Õnneks pole sellest väga hullu, sest meil on olemas analoogne meetod, mis töötab üsna hästi ka ühe valimiga. 
-Seda kutsutakse *bootstrappimiseks* ja selle võttis esimesena kasutusele parun von Münchausen. 
-Too jutukas parun nimelt suutis end soomülkast iseenda patsi pidi välja tõmmata (koos hobusega), mis ongi bootstrappimise põhimõte.
-Statistika tõmbas oma saapaid pidi mülkast välja Brad Efron 1979. aastal.
+Õnneks pole sellest väga hullu, sest meil on olemas analoogne meetod, mis töötab üsna hästi ka ühe valimiga. Me teeme lihtsalt ühest valimist mitu, mis meenutab pisut mittemillegist midagi tegemist, aga veidi üllatuslikult töötab selles kontekstis üsna hästi.
+Seda metoodikat kutsutakse *bootstrappimiseks* ja selle võttis esimesena kasutusele parun von Münchausen. 
+Too jutukas parun nimelt suutis end soomülkast iseenda patsi pidi välja tõmmata (koos hobusega), mis ongi bootstrappimise põhimõte. (Inglise kultuuriruumis tõmbab bootstrappija ennast mülkast välja oma saapaserva, mitte patsi pidi -- siit ka meetodi nimi.)
+Statistika tõmbas oma saapaid pidi mülkast välja Brad Efron 1979. aastal. 
 
 (ref:parun) Nii nagu parun Münchausen tõmbas ennast patsi pidi mülkast välja, genereeritakse bootstrappimisega algse valimi põhjal teststatistiku jaotus.
 

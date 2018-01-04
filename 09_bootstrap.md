@@ -14,12 +14,12 @@ library(bayesboot)
 
 > Populatsioon on valimile sama, mis on valim bootstrappitud valimile. 
 
-Nüüd alustame ühestainsast empiirilisest valimist ja genereerime sellest 1000 virtuaalset valimit. 
-Selleks tõmbame me oma valimist virtuaalselt 1000 uut juhuvalimit (bootstrap valimit), millest igaüks on sama suur kui algne valim. 
+Nüüd alustame ühestainsast empiirilisest valimist ja genereerime sellest 2000 virtuaalset valimit. 
+Selleks tõmbame me oma valimist virtuaalselt 2000 uut juhuvalimit (bootstrap valimit), millest igaüks on sama suur kui algne valim. 
 Trikk seisneb selles, et bootstrap valimite tõmbamine käib asendusega, st iga empiirilise valimi element, mis bootstrap valimisse tõmmatakse, pannakse kohe algsesse valimisse tagasi. 
 Seega saab seda elementi kohe uuesti samasse bootstrap valimisse tõmmata (kui juhus nii tahab). 
 Seega sisaldab tüüpiline bootstrap valim osasid algse valimi numbreid mitmes korduses ja teisi üldse mitte. 
-Iga bootstrap valimi põhjal arvutatakse meid huvitav statistik (näiteks keskväärtus) ja kõik need 1000 bootstrapitud statistikut plotitakse samamoodi, nagu me ennist tegime valimitega lõpmata suurest populatsioonist. 
+Iga bootstrap valimi põhjal arvutatakse meid huvitav statistik (näiteks keskväärtus) ja kõik need 2000 bootstrapitud statistikut plotitakse samamoodi, nagu me ennist tegime valimitega lõpmata suurest populatsioonist. 
 Ainsad erinevused on, et bootstrapis võrdub andmekogu suurus, millest valimeid tõmmatakse, valimi suurusega ning, et iga bootstrapi valim on sama suur kui algne andmekogu (sest meie statistiku varieeruvus sõltub valimi suurusest ja me tahame seda varieeruvust oma bootstrapvalimiga tabada). 
 Tüüpiliselt kasutatakse bootstrapitud statistikuid selleks, et arvutada usaldusintervall statistiku väärtusele.
 
@@ -27,25 +27,29 @@ Tüüpiliselt kasutatakse bootstrapitud statistikuid selleks, et arvutada usaldu
     ebakindluse määrale, mida me oma valimi põhjal peaksime tundma selle punkthinnangu kohta.
     
  Bootstrappimine on üldiselt väga hea meetod, mis sõltub väiksemast arvust eeldustest kui statistikas tavaks. Bootstrap ei eelda, et andmed on normaaljaotusega või mõne muu matemaatiliselt lihtsa jaotusega. Tema põhiline eeldus on, et valim peegeldab populatsiooni -- mis ei pruugi kehtida väikeste valimite korral ja kallutatud (mitte-juhuslike) valimite korral. Lisaks, tavaline bootstrap ei sobi hierarhiliste andmestruktuuride analüüsiks ega näiteks aegridade analüüsiks.
+ 
 
 Bootstrap empiirilisele valimile suurusega n töötab nii:
 
-1. tõmba (asendusega) empiirilisest valimist k uut virtuaalset valimit, igaüks suurusega n.
-2. arvuta keskmine, sd või mistahes muu statistik igale bootstrapi valimile. Tee seda k korda.
+1. tõmba (asendusega) empiirilisest valimist B uut virtuaalset valimit (B bootstrap valimit), igaüks suurusega n. 
+2. arvuta keskmine, sd või mistahes muu statistik igale bootstrapi valimile. Tee seda B korda.
 3. joonista oma statistiku väärtustest histogramm või density plot
 
 Nende andmete põhjal saab küsida palju toreidaid küsimusi --- vt allpool.
 
-Mis on USA presidentide keskmine pikkus? Meil on valim 11 presidendi pikkusega.
+Mis on USA presidentide keskmine pikkus? Meil on viimase 11 presidendi pikkused.
 
-(ref:bootpost) Bootstrapitud posteerior USA presidentide keskmisele pikkusele. Järgnevas koodis ütleme me kõigepealt, et k = 1000 (et me võtame 1000 bootstrap valimit) kasutades selleks broom paketi käsku boot(), millele on lihtne lisada dplyri funktsioon summarise(). Siiski peame seda tegema dplyr::do() abil. Pane tähele, et "tänu" do() kasutamisele peame me summarise() funktsioonis näitama punktiga koha, kuhu lähevad %>% torust tulnud bootstrap valimid. Aga muidu on kõik tavapärane tidyverse.
+(ref:bootpost) Bootstrapitud posteerior USA presidentide keskmisele pikkusele. Järgnevas koodis ütleme me kõigepealt, et B = 2000 (et me võtame 2000 bootstrap valimit) kasutades selleks broom paketi käsku boot(), millele on lihtne lisada dplyri funktsioon summarise(). Siiski peame seda tegema dplyr::do() abil. Pane tähele, et "tänu" do() kasutamisele peame me summarise() funktsioonis näitama punktiga koha, kuhu lähevad %>% torust tulnud bootstrap valimid. Aga muidu on kõik tavapärane tidyverse.
 
 
 ```r
 heights <- tibble(value = c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185, 188))
+B <- 2000 #the number of bootstrap samples
+
 boot_mean <- heights %>% 
-  broom::bootstrap(1000) %>% 
+  broom::bootstrap(B) %>% 
   do(summarise(., Mean = mean(value)))
+
 ggplot(boot_mean, aes(Mean)) + geom_density()
 ```
 
@@ -96,12 +100,22 @@ mean(heights$value > 178.3)
 
 Ligikaudu 100% tõenäosusega (valimis on 1 mees alla 182 cm, ja tema on 177 cm). Lühikesed jupatsid ei saa Ameerikamaal presidendiks!
 
+**Kuidas lahendada bootstrap, kui mei tahame usaldusintervalle kahe ebavõrdse grupi erinevusele?** Näiteks kui meil on katsegrupis N = 25 ja kontrollgrupis N = 20, ja me tahame arvutada statistikut ES = katsegrupi keskmine - kontrollgrupi keskmine. 
+
+1. tõbma katsegrupist N = 25 bootstrapvalim
+
+2. tõmba kontrollgrupist N = 20 bootsrapvalim
+
+3. lahuta kontrollgrupi bootstrapvalimi mediaan katsegrupi omast (või aritmeetriline keskmine või ükskõik mis muu keskmise näitaja, mida hing ihaldab)
+
+4. korda punkte 1-3 B korda ja tööta edasi bootstrapjaptusega, nagu eespool näidatud.
+
 ## Veidi keerulisem bootstrap {-}
 
-Eelnevalt tutvustasime nn protsentiilmeetodit bootstrapi arvutamiseks. 
+Eelnevalt tutvustasime nn protsentiilmeetodit bootstrapi arvutamiseks. See meetod eeldab vähemalt 2000 bootstrap valimi kasutamist.
 See lihtne meetod on küll populaarne ja annab sageli häid tulemusi, aga ei ole parim meetod bootstrappimiseks. 
 Empiiriline bootstrap on sellest ainult veidi keerulisem, aga annab robustsemaid tulemusi. 
-Selles ei ploti me enam mitte 1000 statistiku väärtust vaid 1000 erinevust bootstrapitud statistiku väärtuse ja empiirilise valimi põhjal arvutatud statistiku väärtuse vahel.
+Selles ei ploti me enam mitte 2000 statistiku väärtust vaid 2000 erinevust bootstrapitud statistiku väärtuse ja empiirilise valimi põhjal arvutatud statistiku väärtuse vahel.
 
 (ref:empboot) Empiirilise bootstrapi posteerior USA presidentide keskmisele pikkusele.
 
@@ -125,7 +139,7 @@ bm_hdi <- HPDI(boot_mean$Diff, prob = 0.95)
 ci <- mean(heights$value) + bm_hdi
 ci
 #> |0.95 0.95| 
-#>   182   187
+#>   183   187
 ```
 
 ## Bayesi bootstrap {-}
@@ -169,7 +183,7 @@ Tõenäosus, et keskmine on suurem kui 182 cm
 
 ```r
 mean(heights_bb[, 1] > 182)
-#> [1] 0.993
+#> [1] 0.99
 ```
 
 Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):
