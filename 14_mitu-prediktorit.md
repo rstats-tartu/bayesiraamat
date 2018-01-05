@@ -36,7 +36,7 @@ Sellise mudeli tõlgendus on suhteliselt lihtne:
       
 Sarnane definitsioon kehtib ka kõigi teiste prediktorite (x-de) kohta.
 
-Kui meil on mudelis SKP ja pop, siis saame küsida 
+Kui meil on mudelis SKP ja pop (rahvaarv), siis saame küsida 
 
 1) kui me juba teame SKP-d, millist ennustuslikku lisaväärtust annab meile ka populatsiooni suuruse teadmine? ja
 
@@ -102,7 +102,7 @@ summary(m2)
 #> F-statistic:  265 on 1 and 140 DF,  p-value: <2e-16
 ```
 
-Siin on l_GDP mõju suurem, 16.6 aastat. Millisel mudelil on siis õigus? Proovime veel ülejäänud variendid
+Siin on l_GDP mõju suurem, 16.6 aastat. Millisel mudelil on siis õigus? Proovime veel ülejäänud variandid
 
 
 ```r
@@ -148,8 +148,8 @@ Miks ei ole mudeli summary tabelis Aafrikat? Põhjus on tehniline. Kategoorilisi
 
 ## Miks multivariaatsed mudelid head on? {-}
 
-1) nad aitavad kontrollida "confounding" muutujaid. 
-Confounding muutuja võib olla korreleeritud mõne teise muutujaga, mis meile huvi pakub. 
+1) nad aitavad kontrollida nn kaasnevaid (*confounding*) muutujaid. 
+Kaasnev muutuja võib olla korreleeritud mõne teise muutujaga, mis meile huvi pakub. 
 See võib nii maskeerida signaali, kui tekitada võlts-signaali, kuni y ja x1 seose suuna muutmiseni välja.
 
 2) ühel tagajärjel võib olla mitu põhjust.

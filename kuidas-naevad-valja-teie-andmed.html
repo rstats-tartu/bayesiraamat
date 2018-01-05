@@ -305,27 +305,27 @@ Sageli on aga negatiivsed muutuja väärtused võimatud (näiteks nädalas suits
 <tbody>
 <tr class="odd">
 <td align="left">multiplicative_SD</td>
-<td align="right">1.06</td>
-<td align="right">0.338</td>
-<td align="right">3.33</td>
+<td align="right">0.915</td>
+<td align="right">0.367</td>
+<td align="right">2.28</td>
 </tr>
 <tr class="even">
 <td align="left">multiplicative_2_SD</td>
-<td align="right">1.06</td>
-<td align="right">0.108</td>
-<td align="right">10.46</td>
+<td align="right">0.915</td>
+<td align="right">0.147</td>
+<td align="right">5.70</td>
 </tr>
 <tr class="odd">
 <td align="left">additive_SD</td>
-<td align="right">1.88</td>
-<td align="right">-0.352</td>
-<td align="right">4.10</td>
+<td align="right">1.338</td>
+<td align="right">0.118</td>
+<td align="right">2.56</td>
 </tr>
 <tr class="even">
 <td align="left">additive_2_SD</td>
-<td align="right">1.88</td>
-<td align="right">-2.579</td>
-<td align="right">6.33</td>
+<td align="right">1.338</td>
+<td align="right">-1.102</td>
+<td align="right">3.78</td>
 </tr>
 </tbody>
 </table>
@@ -400,21 +400,21 @@ Joonis 3.3: QQ-plot normaalsetele andmetele (logaritmitud lognormaalsed andmed).
 <p>MAD –– median absolute deviation — on vähem tundlik outlierite suhtes ja ei eelda normaaljaotust. Puuduseks on, et MAD ei oma tõlgendust, mille kohaselt ta hõlmaks kindlat protsenti populatsiooni või valimi andmejaotusest. Seevastu sd puhul võime olla kindlad, et isegi kõige hullema jaotuse korral jäävad vähemalt 75% andmetest 2 SD piiridesse.</p>
 <p>Lognormaalsete andmetega:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mad</span>(andmed, <span class="dt">constant =</span> <span class="dv">1</span>); <span class="kw">sd</span>(andmed); <span class="kw">mad</span>(andmed)
-<span class="co">#&gt; [1] 0.811</span>
-<span class="co">#&gt; [1] 2.23</span>
-<span class="co">#&gt; [1] 1.2</span></code></pre></div>
+<span class="co">#&gt; [1] 0.521</span>
+<span class="co">#&gt; [1] 1.22</span>
+<span class="co">#&gt; [1] 0.773</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mad</span>(<span class="kw">log10</span>(andmed), <span class="dt">constant =</span> <span class="dv">1</span>); <span class="kw">sd</span>(<span class="kw">log10</span>(andmed)); <span class="kw">mad</span>(<span class="kw">log10</span>(andmed))
-<span class="co">#&gt; [1] 0.353</span>
-<span class="co">#&gt; [1] 0.497</span>
-<span class="co">#&gt; [1] 0.524</span></code></pre></div>
+<span class="co">#&gt; [1] 0.251</span>
+<span class="co">#&gt; [1] 0.397</span>
+<span class="co">#&gt; [1] 0.372</span></code></pre></div>
 <p>mad = median(abs(median(x) - x)), mida on väga lihtne mõista. Samas R-i funktsioon mad() korrutab default-ina mad-i läbi konstandiga 1.4826, mis muudab mad()-i tulemuse võrreldavaks sd-ga, tehes sellest sd robustse analoogi. Robustse sellepärast, et mad-i arvutuskäik, mis sõltub mediaanist, mitte aritmeetilisest keskmisest, ei ole tundlik outlierite suhtes. Seega, kui tahate arvutada mad-i, siis fikseerige mad() funktsioonis argument <em>constant</em> ühele.</p>
 <blockquote>
 <p>Ära kunagi avalda andmeid vormis: mean (MAD) või median (SD). Korrektne vorm on mean (SD) või median (MAD).</p>
 </blockquote>
 <p>Veel üks viis andmejaotuse summeerimiseks on kasutada kvantiile. Siin saame me tüüpiliselt rohkem kui ühe numbri, aga sageli on selline viis informatiivsem, kui ühenumbrilised summaarsed statistikud. Funktsioon quantile võimaldab valida, milliseid kvantiile soovite näha. Järgnevas koodist saame teada, millisest vektori “andmed” väärtusest allapoole jääb 2.5%, 25%, 50%, 75% ja 95% väärtusi.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">quantile</span>(andmed, <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.95</span>))
-<span class="co">#&gt;   2.5%    25%    50%    75%    95% </span>
-<span class="co">#&gt; 0.0855 0.4484 1.2342 2.2202 5.7626</span></code></pre></div>
+<span class="co">#&gt;  2.5%   25%   50%   75%   95% </span>
+<span class="co">#&gt; 0.161 0.550 0.961 1.778 3.678</span></code></pre></div>
 </div>
 <div id="muutujate-koosvarieeruvus" class="section level2 unnumbered">
 <h2>Muutujate koosvarieeruvus</h2>

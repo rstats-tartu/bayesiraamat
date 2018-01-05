@@ -278,7 +278,7 @@ Kuidas saada ennustusi kindlale l_GDP väärtusele? Näiteks tulp V10 vastab l_G
 dens(sim.length$V10)
 HPDI(sim.length$V10, prob = 0.95)
 #> |0.95 0.95| 
-#>  39.5  67.4
+#>  40.3  68.6
 ```
 
 <div class="figure" style="text-align: center">
@@ -370,7 +370,7 @@ dens(beta)
 <p class="caption">(\#fig:unnamed-chunk-32)Mudeli tõusude (beta) posteerior.</p>
 </div>
 
-Lognormaaljaotusega mudelis täidab normaaljaotusega mudeli intercepti rolli eelkõige meedian, mis on defineeritud kui exp(a), aga arvutada saab ka keskmise:
+Lognormaaljaotusega mudelis täidab normaaljaotusega mudeli intercepti rolli eelkõige mediaan, mis on defineeritud kui exp(a), aga arvutada saab ka keskmise:
 
 ```r
 i_median <- exp(s_ln1$a)

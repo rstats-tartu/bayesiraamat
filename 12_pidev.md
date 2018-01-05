@@ -755,7 +755,7 @@ p + geom_line(aes(y = .fitted), data = gapmod3, color = "blue")
 
 
 Kuidas me seda m3 mudelit tõlgendame?
-Esiteks, Intercept on 59.6, mis tähendab, et mudel ennustab, et kui riigi SKP = 0 USD, siis selle riigi elanime keskmine euliga on ligi 60 aastat. 
+Esiteks, Intercept on 59.6, mis tähendab, et mudel ennustab, et kui riigi SKP = 0 USD, siis selle riigi elanike keskmine euliga on ligi 60 aastat. 
 See on selgelt imelik, sest ühegi riigi SKP ei ole null, ja kui oleks, oleks seal ka eluiga 0 (selle järgi peaksime eelistama mudelit gapmod2, kus me oleme intercepti nulli surunud).
 
 

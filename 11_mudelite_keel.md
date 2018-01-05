@@ -16,7 +16,7 @@ Teine võimalus on `rethinking::map2stan()`, mis suunab teie kirjutatud mudeli S
 Stan teeb *Hamilonian Monte Carlo* simulatsiooni, kasutades valget maagiat selleks, et tõmmata valim otse posteerioorsest jaotusest. 
 See on väga moodne lähenemine statistikale, töötab oluliselt aeglasemalt kui map, aga ei sõltu normaaljaotustest ning suudab arvutada hierarhilisi mudeleid, mis map-le üle jõu käivad. 
 
-Me võime sama mudeli kirjelduse sõõta mõlemasse funktsiooni.
+Me võime sama mudeli kirjelduse sööta mõlemasse funktsiooni.
 
 Lihtne mudel näeb välja niimodi:
 
@@ -61,7 +61,7 @@ samples <- extract.samples(m1)
 dens(samples$p)
 HPDI(samples$p, prob = 0.95) # Highest density 95% at the center
 #> |0.95 0.95| 
-#> 0.356 0.970
+#> 0.365 0.978
 ```
 
 <div class="figure" style="text-align: center">
@@ -94,7 +94,7 @@ dens(samples$p)
 #PI(samples$p, prob = 0.95) # Leaves out equal 2.5% at both sides
 HPDI(samples$p, prob = 0.95) # Highest density 95% at the center
 #> |0.95 0.95| 
-#> 0.569 0.766
+#> 0.575 0.770
 ```
 
 <div class="figure" style="text-align: center">
@@ -171,7 +171,7 @@ precis(m3)
 ```r
 HPDI(samples$p, prob = 0.95) # Highest density 95% at the center
 #> |0.95 0.95| 
-#> 0.615 0.722
+#> 0.616 0.722
 dens(samples$p)
 ```
 

@@ -420,7 +420,7 @@ Joonis 13.3: Ennustused mudelist.
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dens</span>(sim.length<span class="op">$</span>V10)
 <span class="kw">HPDI</span>(sim.length<span class="op">$</span>V10, <span class="dt">prob =</span> <span class="fl">0.95</span>)
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt;  39.5  67.4</span></code></pre></div>
+<span class="co">#&gt;  40.3  68.6</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-25"></span>
 <img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-25-1.png" alt="Ennustus mudelist kindlale log GDP väärtusele." width="70%" />
 <p class="caption">
@@ -485,7 +485,7 @@ beta &lt;-<span class="st"> </span><span class="kw">exp</span>(s_ln1<span class=
 Joonis 13.6: Mudeli tõusude (beta) posteerior.
 </p>
 </div>
-<p>Lognormaaljaotusega mudelis täidab normaaljaotusega mudeli intercepti rolli eelkõige meedian, mis on defineeritud kui exp(a), aga arvutada saab ka keskmise:</p>
+<p>Lognormaaljaotusega mudelis täidab normaaljaotusega mudeli intercepti rolli eelkõige mediaan, mis on defineeritud kui exp(a), aga arvutada saab ka keskmise:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">i_median &lt;-<span class="st"> </span><span class="kw">exp</span>(s_ln1<span class="op">$</span>a)
 <span class="kw">mean</span>(i_median)
 <span class="co">#&gt; [1] 12.8</span>
