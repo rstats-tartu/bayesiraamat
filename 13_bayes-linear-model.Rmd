@@ -301,7 +301,7 @@ beta <- exp(s_ln1$a + s_ln1$b) - exp(s_ln1$a)
 dens(beta)
 ```
 
-Lognormaaljaotusega mudelis täidab normaaljaotusega mudeli intercepti rolli eelkõige meedian, mis on defineeritud kui exp(a), aga arvutada saab ka keskmise:
+Lognormaaljaotusega mudelis täidab normaaljaotusega mudeli intercepti rolli eelkõige mediaan, mis on defineeritud kui exp(a), aga arvutada saab ka keskmise:
 ```{r}
 i_median <- exp(s_ln1$a)
 mean(i_median)

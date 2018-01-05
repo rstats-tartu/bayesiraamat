@@ -15,7 +15,7 @@ Teine võimalus on `rethinking::map2stan()`, mis suunab teie kirjutatud mudeli S
 Stan teeb *Hamilonian Monte Carlo* simulatsiooni, kasutades valget maagiat selleks, et tõmmata valim otse posteerioorsest jaotusest. 
 See on väga moodne lähenemine statistikale, töötab oluliselt aeglasemalt kui map, aga ei sõltu normaaljaotustest ning suudab arvutada hierarhilisi mudeleid, mis map-le üle jõu käivad. 
 
-Me võime sama mudeli kirjelduse sõõta mõlemasse funktsiooni.
+Me võime sama mudeli kirjelduse sööta mõlemasse funktsiooni.
 
 Lihtne mudel näeb välja niimodi:
 
