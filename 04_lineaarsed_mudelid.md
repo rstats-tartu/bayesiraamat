@@ -241,8 +241,8 @@ plot(Sepal_length ~ Petal_length, type = "b")
 ## Neli mõistet {-}
 
 Mudelis $y = a + bx$ on $x$ ja $y$ muutujad, ning $a$ ja $b$ on parameetrid. 
-Muutujate väärtused fikseeritakse andmete poolt, parameetrid fititakse andmete põhjal. 
-Fititud mudel ennustab igale $x$-i väärtusele vastava kõige tõenäolisema $y$ väärtuse ($y$ keskväärtuse sellel $x$-i väärtusel).
+Muutujate väärtused fikseeritakse andmetega, parameetrid fititakse andmete põhjal. 
+Fititud mudel valib kõikide võimalike seda tüüpi mudelite hulgast välja täpselt ühe unikaalse mudeli ja ennustab igale $x$-i väärtusele vastava kõige tõenäolisema $y$ väärtuse ($y$ keskväärtuse sellel $x$-i väärtusel).
  
 - Y --- mida me ennustame (*dependent variable, predicted variable*).
  
