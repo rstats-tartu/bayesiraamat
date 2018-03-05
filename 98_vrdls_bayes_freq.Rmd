@@ -239,15 +239,15 @@ Sageduslik lähenemine sisaldab ainult ühte mudelit, mida võrreldakse valimi a
 Sageduslik statistik alustab selles lihtsas näites täpselt samamoodi nagu bayesiaan, tekitades eelmisega identse andmemudeli, mis on keskendatud valimi keskväärtusele \@ref(fig:vrdlsse).
 Seejärel nihutab ta oma andmemudelit niipalju, et normaaljaotuse tipp ei ole enam valimi keskväärtuse kohal vaid hoopis 0-efekti kohal. Jaotuse laius nihutamisel ei muutu. 
 
-```{r vrdlsnull, fig.cap="Nullhüpotees (must kõver) ja tõepärafunktsioon (punane kõver).", echo=FALSE, fig.height=3, fig.width=4}
+```{r vrdlsnull, fig.cap="Nullhüpotees (must kõver) ja tõepärafunktsioon (punane kõver).", echo=FALSE}
 p + stat_function(fun = densfun,
                 args = list(data = a, se = TRUE),
-                colour = "red", alpha = 0.5) +
+                colour = "red", alpha = 0.1) +
   stat_function(fun = dnorm,
                 args = list(mean = 0, sd = sd(a)/sqrt(length(a)))) +
   scale_y_continuous(NULL, breaks = NULL, 
                      limits = c(0, densfun(mean(a), a, se = TRUE))) +
-  xlim(-5, 5)
+  xlim(-5, 5)+ theme_classic()
 ```
 
 
