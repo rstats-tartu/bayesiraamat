@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Bayesi statistika kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid.">
-  <meta name="generator" content="bookdown 0.5.15 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7.1 and GitBook 2.6.7">
 
   <meta property="og:title" content="Bayesi statistika kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -436,19 +436,19 @@ Joonis 4.7: Kasvava paindlikusega polünoomsed mudelid.
 <tbody>
 <tr class="odd">
 <td align="left">y ~ x</td>
-<td align="right">28.5</td>
+<td align="right">35.0</td>
 </tr>
 <tr class="even">
 <td align="left">y ~ poly(x, 2)</td>
-<td align="right">30.5</td>
+<td align="right">37.0</td>
 </tr>
 <tr class="odd">
 <td align="left">y ~ poly(x, 3)</td>
-<td align="right">28.2</td>
+<td align="right">36.1</td>
 </tr>
 <tr class="even">
 <td align="left">y ~ poly(x, 4)</td>
-<td align="right">28.6</td>
+<td align="right">32.5</td>
 </tr>
 <tr class="odd">
 <td align="left">y ~ poly(x, 5)</td>
@@ -469,7 +469,7 @@ Joonis 4.7: Kasvava paindlikusega polünoomsed mudelid.
 <li><p>esinduslikkus – andmed peaksid olema esinduslikud laiema populatsiooni suhtes. Väikesed ja kallutatud valimid ei ole sageli esinduslikud.</p></li>
 <li><p>aditiivsus ja lineaarsus. Väga tähtis on, et lineaarse regressiooniga mõõdetavad seosed oleks ka tõesti lineaarsed. Y-i deterministlik komponent peab olema lineaarne funktsioon prediktoritest <span class="math inline">\(y = β_1x_1 + β_2x_2 +···\)</span>. Kui sellega on probleeme, siis võib aidata prediktorite transformeerimine (log(x) või 1/x) või uute prediktorite mudelisse lisamine. Samuti on võimalik prediktoritena lisada nii <span class="math inline">\(x\)</span> kui <span class="math inline">\(x^2\)</span>. Näiteks kui me paneme mudelisse nii muutuja <span class="math inline">\(vanus\)</span> kui <span class="math inline">\(vanus^2\)</span>, siis saame modelleerida seost kus y vanuse kasvades alguses kasvab ja siis kahaneb (aga ka U kujulist seost vanusega). Sellisel juhul võib olla mõistlik rekodeerida vanus kategooriliseks muutujaks (näit 4 vanuseklassi), mille tasemeid saab siis ükshaaval vaadata.</p></li>
 <li><p>vigade sõltumatus</p></li>
-<li><p>vigade unequal variance ja vigade normaalsus on vähetähtsad. Neid eeldusi ei tasu tavaliselt kontrollida (kuigi meetodid selleks on olemas).</p></li>
+<li><p>vigade võrdne varieeruvus (equal variance) ja vigade normaalsus on vähetähtsad. Neid eeldusi ei tasu tavaliselt kontrollida (kuigi meetodid selleks on olemas).</p></li>
 </ol>
 </div>
 <div id="andmete-transformeerimine" class="section level2">
@@ -556,10 +556,11 @@ gitbook.start({
 "facebook": true,
 "twitter": true,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",

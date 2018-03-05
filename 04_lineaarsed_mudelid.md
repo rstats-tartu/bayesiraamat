@@ -145,6 +145,7 @@ plot(y ~ x, xlab = "Weight in kg", ylab = "Heigth in cm", ylim = c(50, 200), typ
 </div>
 
 
+
 See mudel ennustab, et 0 kaalu juures on pikku 102 cm, mis on rumal, aga mudelite puhul tavaline olukord. Sellel olukorral on mitmeid põhjusi:
 
 + Me tuunime mudelit andmete peal, mis ei sisalda 0-kaalu. 
@@ -317,10 +318,10 @@ Väikseim AIC tähitab parimat fitti väikseima parameetrite arvu juures (kompro
 
 model_formula      aic
 ---------------  -----
-y ~ x             28.5
-y ~ poly(x, 2)    30.5
-y ~ poly(x, 3)    28.2
-y ~ poly(x, 4)    28.6
+y ~ x             35.0
+y ~ poly(x, 2)    37.0
+y ~ poly(x, 3)    36.1
+y ~ poly(x, 4)    32.5
 y ~ poly(x, 5)    -Inf
 
 AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel? Mis siis, kui 3-s andmepunkt on andmesisestaja näpuviga?
@@ -340,7 +341,7 @@ Tähtsuse järjekorras:
 
 4. vigade sõltumatus
 
-5. vigade unequal variance ja vigade normaalsus on vähetähtsad. Neid eeldusi ei tasu tavaliselt kontrollida (kuigi meetodid selleks on olemas).
+5. vigade võrdne varieeruvus (equal variance) ja vigade normaalsus on vähetähtsad. Neid eeldusi ei tasu tavaliselt kontrollida (kuigi meetodid selleks on olemas).
 
 ## Andmete transformeerimine
 

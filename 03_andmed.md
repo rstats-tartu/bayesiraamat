@@ -67,10 +67,10 @@ logaritmimise kaudu avaldatud multiplikatsiivse SD arvutamiseks kasutame enda ki
 
 SD                      MEAN    lower   upper
 --------------------  ------  -------  ------
-multiplicative_SD      0.954    0.367    2.48
-multiplicative_2_SD    0.954    0.141    6.45
-additive_SD            1.538   -0.370    3.45
-additive_2_SD          1.538   -2.278    5.35
+multiplicative_SD      0.817    0.321    2.08
+multiplicative_2_SD    0.817    0.126    5.28
+additive_SD            1.293   -0.230    2.82
+additive_2_SD          1.293   -1.753    4.34
 
 Tavalise aritmeetitilise keskmise asemel on meil nüüd geomeetriline keskmine.  Võrdluseks on antud ka tavaline (aritmeetiline) keskmine ja (aditiivne) SD. Additiivne SD on selle jaotuse kirjeldamiseks selgelt ebaadekvaatne (vt jaotuse pilti ülalpool ja võrdle mulitplikatiivse SD-ga).
 
@@ -134,17 +134,17 @@ Lognormaalsete andmetega:
 
 ```r
 mad(andmed, constant = 1); sd(andmed); mad(andmed)
-#> [1] 0.543
-#> [1] 1.91
-#> [1] 0.805
+#> [1] 0.441
+#> [1] 1.52
+#> [1] 0.654
 ```
 
 
 ```r
 mad(log10(andmed), constant = 1); sd(log10(andmed)); mad(log10(andmed))
-#> [1] 0.315
-#> [1] 0.415
-#> [1] 0.467
+#> [1] 0.267
+#> [1] 0.405
+#> [1] 0.395
 ```
 
 mad = median(abs(median(x) - x)), mida on väga lihtne mõista. Samas R-i funktsioon mad() korrutab default-ina mad-i läbi konstandiga 1.4826, mis muudab mad()-i tulemuse võrreldavaks sd-ga, tehes sellest sd robustse analoogi. Robustse sellepärast, et mad-i arvutuskäik, mis sõltub mediaanist, mitte aritmeetilisest keskmisest, ei ole tundlik outlierite suhtes. Seega, kui tahate arvutada mad-i, siis fikseerige mad() funktsioonis argument *constant* ühele.
@@ -159,7 +159,7 @@ Funktsioon quantile võimaldab valida, milliseid kvantiile soovite näha. Järgn
 ```r
 quantile(andmed, c(0.025, 0.25, 0.5, 0.75, 0.95))
 #>  2.5%   25%   50%   75%   95% 
-#> 0.189 0.462 0.922 1.901 4.893
+#> 0.170 0.423 0.770 1.418 4.140
 ```
 
 

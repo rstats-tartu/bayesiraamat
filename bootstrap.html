@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Bayesi statistika kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid.">
-  <meta name="generator" content="bookdown 0.5.15 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7.1 and GitBook 2.6.7">
 
   <meta property="og:title" content="Bayesi statistika kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -332,7 +332,7 @@ Joonis 9.2: Empiirilise bootstrapi posteerior USA presidentide keskmisele pikkus
 ci &lt;-<span class="st"> </span><span class="kw">mean</span>(heights<span class="op">$</span>value) <span class="op">+</span><span class="st"> </span>bm_hdi
 ci
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt;   182   187</span></code></pre></div>
+<span class="co">#&gt;   183   187</span></code></pre></div>
 </div>
 <div id="bayesi-bootstrap" class="section level2 unnumbered">
 <h2>Bayesi bootstrap</h2>
@@ -358,7 +358,7 @@ Joonis 9.3: Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele. 
                          <span class="dt">use.weights =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>Tõenäosus, et keskmine on suurem kui 182 cm</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(heights_bb[, <span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">182</span>)
-<span class="co">#&gt; [1] 0.995</span></code></pre></div>
+<span class="co">#&gt; [1] 0.993</span></code></pre></div>
 <p>Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):</p>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
@@ -447,10 +447,11 @@ gitbook.start({
 "facebook": true,
 "twitter": true,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
