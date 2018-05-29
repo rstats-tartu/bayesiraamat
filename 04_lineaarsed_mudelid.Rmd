@@ -396,7 +396,7 @@ Tavaliselt on mõistlik fittida mudel pidevale y muutujale ka siis, kui tahame l
 
 ## Üldised printsiibid
 
-1. võta sisse kõik teaduslikku huvi poakkuvad muutujad
+1. võta sisse kõik teaduslikku huvi pakkuvad muutujad
 
 2. kontrolli, ega muutujate vahel ei esine väga tugevaid korrelatsioone (kollineaarsus). Kui jah, siis kombineeri kollineaarsed muutujad üheks või transformeeri neid või viska mõni muutuja välja.
 
