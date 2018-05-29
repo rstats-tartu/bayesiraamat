@@ -27,5 +27,4 @@ Imports:
     inline,
     skimr,
     kable
-
 Remotes: rstudio/bookdown
