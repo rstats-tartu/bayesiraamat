@@ -24,5 +24,6 @@ Imports:
     ggthemes, 
     grid,
     gridExtra,
-    inline
+    inline,
+    skimr
 Remotes: rstudio/bookdown
