@@ -25,6 +25,5 @@ Imports:
     grid,
     gridExtra,
     inline,
-    skimr,
-    kable
+    skimr
 Remotes: rstudio/bookdown
