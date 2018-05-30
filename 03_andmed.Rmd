@@ -68,7 +68,7 @@ Kui kõik andmeväärtused on positiivsed ja andmed on lognormaaljaotusega, siis
 Kui lognormaalsetele andmetele arvutada tavaline sd lineaarses skaalas kasutades sd() funktsiooni, siis tuleb SD sageli palju laiem kui peaks ja hõlmab ka negatiivseid väärtusi (pea meeles, et SD definitsiooni järgi jääb 96% populatsioonist 2 SD vahemikku).   
 Sageli on aga negatiivsed muutuja väärtused võimatud (näiteks nädalas suitsetatud sigarettide arv). See on näide halvast mudelist! 
 
-logaritmimise kaudu avaldatud multiplikatsiivse SD arvutamiseks kasutame enda kirjutatud funktsiooni mulitplicative_sd(). Esiteks arvutame multiplikatiivse ja aditiivse sd lognoirmaalsetele andmetele, mida kujutasime eelmisel joonisel: 
+logaritmimise kaudu avaldatud multiplikatsiivse SD arvutamiseks kasutame enda kirjutatud funktsiooni mulitplicative_sd(). Esiteks arvutame multiplikatiivse ja aditiivse sd lognormaalsetele andmetele, mida kujutasime eelmisel joonisel: 
 
 ```{r echo=FALSE, message=FALSE}
 multiplicative_sd <- function(x) {
