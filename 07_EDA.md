@@ -53,6 +53,70 @@ Petal.Length       3   150   3.76   1.765     4.35      3.76   1.853   1.0   6.9
 Petal.Width        4   150   1.20   0.762     1.30      1.18   1.038   0.1   2.5     2.4   -0.101     -1.358   0.062
 Species*           5   150   2.00   0.819     2.00      2.00   1.483   1.0   3.0     2.0    0.000     -1.520   0.067
 
+
+
+```r
+skimr::skim(iris) %>% knitr::kable()
+```
+
+
+
+variable       type      stat         level           value  formatted 
+-------------  --------  -----------  -----------  --------  ----------
+Sepal.Length   numeric   missing      .all            0.000  0         
+Sepal.Length   numeric   complete     .all          150.000  150       
+Sepal.Length   numeric   n            .all          150.000  150       
+Sepal.Length   numeric   mean         .all            5.843  5.84      
+Sepal.Length   numeric   sd           .all            0.828  0.83      
+Sepal.Length   numeric   p0           .all            4.300  4.3       
+Sepal.Length   numeric   p25          .all            5.100  5.1       
+Sepal.Length   numeric   p50          .all            5.800  5.8       
+Sepal.Length   numeric   p75          .all            6.400  6.4       
+Sepal.Length   numeric   p100         .all            7.900  7.9       
+Sepal.Length   numeric   hist         .all               NA  ▂▇▅▇▆▅▂▂  
+Sepal.Width    numeric   missing      .all            0.000  0         
+Sepal.Width    numeric   complete     .all          150.000  150       
+Sepal.Width    numeric   n            .all          150.000  150       
+Sepal.Width    numeric   mean         .all            3.057  3.06      
+Sepal.Width    numeric   sd           .all            0.436  0.44      
+Sepal.Width    numeric   p0           .all            2.000  2         
+Sepal.Width    numeric   p25          .all            2.800  2.8       
+Sepal.Width    numeric   p50          .all            3.000  3         
+Sepal.Width    numeric   p75          .all            3.300  3.3       
+Sepal.Width    numeric   p100         .all            4.400  4.4       
+Sepal.Width    numeric   hist         .all               NA  ▁▂▅▇▃▂▁▁  
+Petal.Length   numeric   missing      .all            0.000  0         
+Petal.Length   numeric   complete     .all          150.000  150       
+Petal.Length   numeric   n            .all          150.000  150       
+Petal.Length   numeric   mean         .all            3.758  3.76      
+Petal.Length   numeric   sd           .all            1.765  1.77      
+Petal.Length   numeric   p0           .all            1.000  1         
+Petal.Length   numeric   p25          .all            1.600  1.6       
+Petal.Length   numeric   p50          .all            4.350  4.35      
+Petal.Length   numeric   p75          .all            5.100  5.1       
+Petal.Length   numeric   p100         .all            6.900  6.9       
+Petal.Length   numeric   hist         .all               NA  ▇▁▁▂▅▅▃▁  
+Petal.Width    numeric   missing      .all            0.000  0         
+Petal.Width    numeric   complete     .all          150.000  150       
+Petal.Width    numeric   n            .all          150.000  150       
+Petal.Width    numeric   mean         .all            1.199  1.2       
+Petal.Width    numeric   sd           .all            0.762  0.76      
+Petal.Width    numeric   p0           .all            0.100  0.1       
+Petal.Width    numeric   p25          .all            0.300  0.3       
+Petal.Width    numeric   p50          .all            1.300  1.3       
+Petal.Width    numeric   p75          .all            1.800  1.8       
+Petal.Width    numeric   p100         .all            2.500  2.5       
+Petal.Width    numeric   hist         .all               NA  ▇▁▁▅▃▃▂▂  
+Species        factor    missing      .all            0.000  0         
+Species        factor    complete     .all          150.000  150       
+Species        factor    n            .all          150.000  150       
+Species        factor    n_unique     .all            3.000  3         
+Species        factor    top_counts   setosa         50.000  set: 50   
+Species        factor    top_counts   versicolor     50.000  ver: 50   
+Species        factor    top_counts   virginica      50.000  vir: 50   
+Species        factor    top_counts   NA              0.000  NA: 0     
+Species        factor    ordered      .all            0.000  FALSE     
+
 Siin pööra kindlasti tähelepanu tulpadele min ja max, mis annavad kiire võimalusi outliereid ära tunda. Kontrolli, kas andmete keskmised (mediaan, mean ja trimmed mean) on üksteisele piisavalt lähedal --- kui ei ole, siis on andmete jaotus pika õlaga, ja kindlasti mitte normaalne. 
 Kontrolli, kas erinevate muutujate keskväärtused ja hälbed on teaduslikus mõttes usutavas vahemikus. 
 Ära unusta, et ka väga väike standardhälve võib tähendada, et teie valim ei peegelda bioloogilist varieeruvust populatsioonis, mis teile teaduslikku huvi pakub. 
