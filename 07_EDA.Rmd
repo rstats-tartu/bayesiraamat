@@ -38,7 +38,7 @@ psych::describe(iris) %>% knitr::kable()
 
 
 ```{r}
-skimr::skim(iris) %>% kable()
+skimr::skim(iris) %>% knitr::kable()
 ```
 
 Siin pööra kindlasti tähelepanu tulpadele min ja max, mis annavad kiire võimalusi outliereid ära tunda. Kontrolli, kas andmete keskmised (mediaan, mean ja trimmed mean) on üksteisele piisavalt lähedal --- kui ei ole, siis on andmete jaotus pika õlaga, ja kindlasti mitte normaalne. 
@@ -78,7 +78,7 @@ Normaliseerimine: arvuta igale valimi väärtusele: `mean(x) - x`; standardiseer
 (ref:multisd) Multiplikatiivse sd joonistamine.
 
 ```{r multisd, fig.cap='(ref:multisd)', echo=FALSE}
-# Function to produce summary statistics (geometric mean and multipülicative sd)
+# Function to produce summary statistics (geometric mean and multiplicative sd)
 multi_sd <- function(x) {
   x <- na.omit(x)
   a <- log10(x)
