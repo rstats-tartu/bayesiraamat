@@ -27,6 +27,7 @@ Tüüpiliselt kasutatakse bootstrapitud statistikuid selleks, et arvutada usaldu
     ebakindluse määrale, mida me oma valimi põhjal peaksime tundma selle punkthinnangu kohta.
     
  Bootstrappimine on üldiselt väga hea meetod, mis sõltub väiksemast arvust eeldustest kui statistikas tavaks. Bootstrap ei eelda, et andmed on normaaljaotusega või mõne muu matemaatiliselt lihtsa jaotusega. Tema põhiline eeldus on, et valim peegeldab populatsiooni -- mis ei pruugi kehtida väikeste valimite korral ja kallutatud (mitte-juhuslike) valimite korral. Lisaks, tavaline bootstrap ei sobi hierarhiliste andmestruktuuride analüüsiks ega näiteks aegridade analüüsiks.
+Bootstrappida saab edukalt enamusi statistikuid, mida te võiksite elu jooksul arvutada, aga on siiski erandeid: näiteks valimi maksimum ja miinimumväärtused.
  
 
 Bootstrap empiirilisele valimile suurusega n töötab nii:
@@ -49,6 +50,8 @@ B <- 2000 #the number of bootstrap samples
 boot_mean <- heights %>% 
   broom::bootstrap(B) %>% 
   do(summarise(., Mean = mean(value)))
+#> Warning: 'broom::bootstrap' is deprecated.
+#> See help("Deprecated")
 
 ggplot(boot_mean, aes(Mean)) + geom_density()
 ```
@@ -64,7 +67,7 @@ Kuidas selle jaotusega edasi töötada? See on lihtne: meil on 2000 arvu (2000 b
 
 Näiteks me võime arvutada, millisesse pikkuste vahemikku jääb 92% meie usust USA presidentide tõelise keskmise pikkuse kohta. See tähendab, et teades seda vahemikku peaksime olema valmis maksma mitte rohkem kui 92 senti pileti eest, mis juhul kui USA presidentide keskmine pikkus tõesti jääb sinna vahemikku, toob meile võidu suuruses 1 EUR (ja 8 senti kasumit). Selline kihlveokontor on täiesti respektaabel ja akadeemiline tõenäosuse tõlgendus; see on paljude arvates lausa parim tõlgendus, mis meil on. 
 
-Miks just 92% usaldusinterval? Vastus on, et miks mitte? Meil pole ühtegi universaalset põhjust eelistada üht usaldusvahemiku suurust teisele. Olgu meil usaldusinteval 90%, 92% või 95% --- tõlgendus on ikka sama. Nimelt, et me usume, et suure tõenäosusega jääb tegelik keskväärtus meie poolt arvutatud vahemikku. Mudeli ja maailma erinevused tingivad niikuinii selle, et konkreetne number ei kandu mudelist otse üle pärismaailma. Eelnevalt mainitud kihlveokontor töötab mudeli maailmas, mitte teie kodu lähedasel hipodroomil.  
+Miks just 92% usaldusinterval? Vastus on, et miks mitte? Meil pole ühtegi universaalset põhjust eelistada üht usaldusvahemiku suurust teisele. Olgu meil usaldusinteval 90%, 92% või 95% --- tõlgendus on ikka sama. Nimelt, et me usume, et suure tõenäosusega jääb tegelik keskväärtus meie poolt arvutatud vahemikku. Mudeli ja maailma erinevused tingivad niikuinii selle, et konkreetne number ei kandu mudelist otse üle pärismaailma. Eelnevalt mainitud kihlveokontor töötab mudeli maailmas, mitte teie kodulähedasel hipodroomil.  
 
 92% usaldusintervalli arvutamiseks on kaks meetodit, mis enamasti annavad vaid veidi erinevaid tulemusi.
 
@@ -78,13 +81,14 @@ HPDI(heights$value, prob = 0.92)
 ```
 
 
-2. PI --- Probability Interval --- alustab jaotuse servadest ja katab kummagist servast 4% jaotuse pindalast. See on sama, mis arvutada 4% ja 96% kvantiilid
+2. PI --- Probability Interval --- alustab jaotuse servadest ja katab kummagist servast 4% jaotuse pindalast. PI 90%-le on sama, mis arvutada 5% ja 95% kvantiilid (jne).
 
 
 ```r
-PI(heights$value, prob = 0.92)
-#>  4% 96% 
-#> 179 190
+PI(heights$value, prob = 0.90)
+#>  5% 95% 
+#> 180 190
+# quantile(heights$value, probs = c(0.05, 0.95)) teeb sama asja
 ```
 
 
@@ -110,37 +114,11 @@ Ligikaudu 100% tõenäosusega (valimis on 1 mees alla 182 cm, ja tema on 177 cm)
 
 4. korda punkte 1-3 B korda ja tööta edasi bootstrapjaptusega, nagu eespool näidatud.
 
-## Veidi keerulisem bootstrap {-}
+## Mõned tava-bootstrapi paketid
 
-Eelnevalt tutvustasime nn protsentiilmeetodit bootstrapi arvutamiseks. See meetod eeldab vähemalt 2000 bootstrap valimi kasutamist.
-See lihtne meetod on küll populaarne ja annab sageli häid tulemusi, aga ei ole parim meetod bootstrappimiseks. 
-Empiiriline bootstrap on sellest ainult veidi keerulisem, aga annab robustsemaid tulemusi. 
-Selles ei ploti me enam mitte 2000 statistiku väärtust vaid 2000 erinevust bootstrapitud statistiku väärtuse ja empiirilise valimi põhjal arvutatud statistiku väärtuse vahel.
+Professionaalid kasutavad boot paketti, mis on suhteliselt ebameeldiva süntaksiga, aga väga laialt rakendatav. Boot paketi peale on ehitatud tavainimesele hästi kasutatav pakett bootES (Kirby and Gelranc, 2013, Behav Res 45:905–927), mis teeb lihtsaks usalduspiiride leidmise erinevat tüüpi efekti suurustele, kaasa arvatud lihtsad hierarhilised ja ühefaktorilise ANOVA tüüpi katseskeemid. Nendes pakettides tasub üldjuhul kasutada meetodit nimega BCa (bias-corrected-and-accelerated) usalduspiiride arvutamiseks. See meetod püüab parandada  bootstrap-valimite võimalikku kallutatust (esineb sedavõrd, kui bootstrap-jaotuse tipp ei ole samas kohas kui oleks paljude päris-valimite pealt arvutatud statistikute jaotuse tipp) ja olukorda, kus statistiku väärtuse varieeruvuse määr sõltub statistiku väärtusest. BCa edukaks arvutamiseks peab bootstrap valimite arv tuntavalt ületama valimi suurust. Simulatsioonidega on näidatud, et BCa (ja teisi) usalduspiire saab mõistlikult arvutada valimitelt, mille suurus on > 15.  Sellest väiksemate valimite korral peate eeldama, et teie usaldusinetvallid valetavad. 
+Aegridade, kus esineb järjestikuste ajapunktide vahelisi sõltuvusi, tuleks kasutada nn block bootstrappi, mida implementerrib näiteks boot::tsboot(). 
 
-(ref:empboot) Empiirilise bootstrapi posteerior USA presidentide keskmisele pikkusele.
-
-
-```r
-boot_mean <- boot_mean %>% 
-  mutate(Diff = Mean - mean(heights$value))
-ggplot(boot_mean, aes(Diff)) +
-  geom_density()
-```
-
-<div class="figure" style="text-align: center">
-<img src="09_bootstrap_files/figure-html/empboot-1.png" alt="(ref:empboot)" width="70%" />
-<p class="caption">(\#fig:empboot)(ref:empboot)</p>
-</div>
-
-Ja usaldusinterval tuleb niiviisi
-
-```r
-bm_hdi <- HPDI(boot_mean$Diff, prob = 0.95)
-ci <- mean(heights$value) + bm_hdi
-ci
-#> |0.95 0.95| 
-#>   182   187
-```
 
 ## Bayesi bootstrap {-}
 
@@ -152,9 +130,7 @@ Lühidalt, erinevalt eelkirjeldatud tava-bootstrapist simuleeritakse Bayesi boot
 
 Näited sellest, kuidas kasutada bayesbooti standardhälbe, korrelatsioonikoefitsiendi ja lineaarse mudeli koefitsientide usalduspiiride arvutamiseks leiate `?bayesboot` käsuga.
 
-
-(ref:bayesboot) Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele. Vaikimisi pannakse siin kaalud (prior) valimi indeksile.
-
+(ref:bayesboot) Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele. 
 
 ```r
 heights_bb <- bayesboot(heights$value, mean)
@@ -169,7 +145,7 @@ HPDI(heights_bb$V1, prob = 0.95)
 <p class="caption">(\#fig:bayesboot)(ref:bayesboot)</p>
 </div>
 
-Vaikimisi pannakse `bayesboot()` funktsioonis statistiku arvutamisel kaalud (prior) valimi indeksile, mis annab erineva tulemuse kui näiteks kaalutud keskmise arvutamisel kui kaalud (prior) pannakse valimi väärtustele.
+Vaikimisi pannakse `bayesboot()` funktsioonis statistiku arvutamisel kaalud (prior) valimi indeksile, mis annab erineva tulemuse kui näiteks kaalutud keskmise arvutamisel, kus kaalud (prior) pannakse valimi väärtustele.
  
 Aritmeetilise keskmise Bayesi bootstrap väärtused kasutades kaalutud keskmise funktsiooni `weighted.mean` saab niimoodi:
 
@@ -183,7 +159,7 @@ Tõenäosus, et keskmine on suurem kui 182 cm
 
 ```r
 mean(heights_bb[, 1] > 182)
-#> [1] 0.992
+#> [1] 0.989
 ```
 
 Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):
