@@ -13,6 +13,94 @@ Mitmetasemelised mudelid on eriti kasulikud, kui teil on osades klastrites vähe
 
 Tavapärane regressioonimudel on sageli vaadeldav mitmetasandilise mudeli erijuhuna. Näiteks kujutage ette mudelit, kus laste õppedukust on mõõdetud mitmes koolis. Kui gruppide (koolide) vaheline varieeruvus on väga madal, siis annab mitmetasemeline mudel sarnase tulemuse lihtsa mudeliga, kus kõik koolid on ühte patta kokku pandud. Ja vastupidi, kui koolide vaheline varieeruvus on väga suur, võrreldes koolide sisese varieeruvusega, siis võime sama hästi modelleerida iga kooli eraldi ja teistest sõltumatult. Samuti, kui meil on andmeid väga väheste koolide kohta, siis võib mitmetasandilsest mudelist saadav kasu olla tagasihoidlik, sest meil pole piisavalt andmeid, et modelleerida koolide vahelist varieeruvust. Samuti, kui meil on iga kooli kohta piisavalt palju andmeid, siis saame iga kooli eraldi modelleerides praktiliselt sama tulemuse kui mitmetasemelisest mudelist. Muudel juhtudel on tõenäoliselt mõistlikum modelleerida õppedukust kahetasemelises mudelis, korraga õpilase tasemel ja kooli tasemel. 
 
+## kahetasemeline mudel agebra keeles
+
+1. tase on õpilse tase, 2. tase on klassi tase.
+meil on J klassi, milles on erinev arv nj õpilasi. Iga õpilase kohta teame populaarsusindeksit (y - muutuja) ja sugu (x - muutuja). Klassi tasemel teame õpetaja staazi aastates (z - muutuja).
+Alustuseks on meil eraldi regressioonivõrrand igale klassile. 
+
+$$y_ij = b_0j + b_1j x X_ij + e_ij$$
+
+kus subskript j tähistab klassi ja i tähistab õpilast. Näit bi1 tähendab, et me fitime iga klassi kohta ühe b1 koefitsiendi. Seega eeldame, et igal klassil on erinev b0 ja b1 koefitsient. Residuaalvigadele eeldame, et mean = 0 ja e varieeruvus tuleb meil hinnata. Enamasti eeldame, et kõikide klasside varieeruvus on sama. b0 ja b1 omavad jaotust üle kõikide klasside, milledel on keskväärtus ja sd. Me modelleerime b0 ja b1 jaotusi tuues sisse klassi tasemel muutuja z:
+
+b0j = gamma00 + gamma01 x Zj + u0j
+
+b1j = gamma10 + gamma11 x Zj + u1j
+
+2. võrrand ennustab klassi keskmist populaarsusindeksit vastavalt õpetaja staazile.
+3. võrrand ütleb, et populaarsuse ja soo seose tugevus sõltub õpetaja staazist. kui y11 > 0, siis on seos seda tugevam, mida staazikam on õpetaja. u0j ja u1j on residuaalide vead klassi tasemel, mille kohta me eeldame, et mean = 0 ja sõltuamtust residuaalide vigadest õpilase tasemel (eij). u0j residuaalide vigade variance on sigma_sq_u0 jne. u0j ja u1j covariance on sigma_sq_u01 ja me ei eelda, et see = 0. Gamma koefitsiendid ei varieeru klasside vahel.
+
+Asendades 1. võrrandis b0j ja b1j, saame oma võrrandisüsteemi muuta üheks pikaks võrrandiks. 
+
+Yij = gamma00 + gamma10 x Xij + gamma01 x Zj + gamma11 x Xij x Zj + u1j x Xij + u0j + eij
+
+
+Siis näeme uues võrrandis liiget gamma1 x Zj x Xij, mis on interaktsiooniliige.
+Ilma interaktsioonita mudel näeb välja niimodi
+
+Yij = gamma00 + gamma10 x Xij + gamma01 x Zj + u1j x Xij + u0j + eij
+
+juhusliku vealiige uij korrutub Xij-ga, mistõttu sellest tulenev totaalne viga on erinev erinevatel Xij väärtistel. Seega on meie mudel heteroskedastiline ja erineb selle poolest tavalistest lineaarsetest mudelitest, mis eeldavad homoskedastilisust e residuaalvea sõltumatust X-i väärtusest. 
+
+Teine oluline erinevus tavalisest lin mudelist on, et gupeeritud andmete puhul ei ole täidetud andmete iseseisvuse eeldus (gruppide sees modelleeritakse andmed korreleerituna - klassisisene korrelatsioon), mis muudab veapiirid liiga kitsaks. Klassisisese korrelatsiooni saame intercept-only mudelist 
+
+Yij = gamma00 + uoj + eij
+
+(selle mudeli saad, kui viskad pikast mudelist välja kõik X ja Z sisaldavad liikmed.) See mudel ajab varieeruvuse lahku kahe iseseisva komponendi vahel: sigma_sq_e (1. taseme vigade variance eij) ja sigma_sq_u0 (2. taseme vigade variance u0j). 
+
+Klassisisene korrelatsioon: 
+
+rho = sigma_sq_u0/(sigma_sq_u0 + sigma_sq_e)
+
+rho annab grupistruktuuri poolt seletatud variace proportsiooni, mida võib tõlgendada kui kahe sama grupi juhusliku liikme vahelist oodatavat korrelatsiooni. 
+
+Üldiselt on kasulik töötada standardiseeritud regressioonikoefitsientidega, mida saab tõlgendada sd ühikutes. Erandiks on olukord, kus anaöüüsi eesmärk on võrrelda erinevaid sampleid omavahel. Enamasti on kasulik standardiseerida andmed, mis mudelisse sisse lähevad, aga on võimalik ka standardiseerida koefitsiente kui selliseid. 
+
+st_coef = (unstand_coef x sd(X))/sd(Y)
+
+Standardiseeritud andmete kasutamine muudab totaalselt varieeruvuskompnmentide fitte, aga jätab b koefitsientide fitid olemuselt samaks (see kehtib X-muutujate suvaliste lineaarsete transformatsioonide korral). Kui me jagame X-muutuja 2-ga, siis uus b1 = vana b1 x 2. Mudeli poolt seletamata varieeruvuse proportsioon ei muutu. Eelnev kehtib aga ainult niikaua, kui mudeli tõusud (b1) ei ole vabaks lastud - st need ei varieeru klassist klassi. 
+
+Tsentreerimine (xi - mean(x)) mõjutab b0, aga mitte b1 koefitsiente, mis võib rääkida selle meetodi kasuks üle standardiseerimise ((xi - mean(x))/sd(x)), mis tekitab X muutujate jaotused, mille mean = 0 ja sd = 1. 
+
+NB! grupi tasemel tsentreerimine, ehki vahest kasulik, töötab hoopis teistmoodi kui üle kõikide gruppide tsentreerimine ja viib täiesti erineva mudelini - sellest tuleks hoiduda, senikaua kui te ei tea täpselt, mida te teete.
+
+### Aegread
+
+Aegridasid saab analüüsida mitmetasemilisena, kus korduvad mõõtmised (1. tase) on grupeeritud indiviidide sisse (2. tase). Nii saab analüüsida ka ebaühtlase ajavahemiku järel tehtud mõõtmisi.
+
+$Y_ti$ - indiviidi i õpitulemus ajapunktis t.
+
+$T_ti$ - ajapunkt
+
+$X_ti$ - ajas muutuv covariaat - kas õpilane töötab
+
+$Z_t$ - ajast mittesõltuv kovariaat - sugu
+
+1. tase (indiviidi tase):
+
+$Y_ti = \pi_0i + \pi_1i x T_ti + \pi_2i x X_ti + e_ti $
+
+2. tase (üle indiviidie): 
+
+$\pi_0i = \beta_00 + \beta_01 x Z_t + u_01$
+
+$\pi_1i =\beta_10 + \beta_11 x Z_t + u_1i$
+
+$\pi_2i = \beta_20 + \beta_21 x Z_t + u_21$
+
+Oluline punkt: aegridade modelleerimisel pakub meile sageli huvi ka kaoorelatsioon mudeli slope ja intercepti vahel. Kahjuks sõltub see näitaja sellest, millises skaalas me ajamuutuja sisse anname. Oluline on tagada, et ajaskaala nullpunkt on selgelt mõtekas.
+
+To model growth - polynomial, logistic curve (first slow change, then quick, then slow again S curve).logistic parameters have meaning! cubic polynomial approximates logistic and exponential curves  - but here interpretation is on the level of some predicted growth curves.
+
+https://facebook.github.io/prophet
+sessoonsete andmete fittimine ennustavasse mudelisse
+
+https://github.com/nwfsc-timeseries
+kogu aegridade analüüsi pakette
+
+
+
+
 ## mitmetasemeline mudel R-i mudelikeeles
 
 Kui meie muutujad andmetabelis "data" on  y = õpilase testiskoor, x = katsetingimus (binaarne faktor katse-kontroll, kalamaksaöli - platseebo), ja kool, siis "ühepajamudel" väljendub R-i mudelikeeles:
@@ -84,7 +172,9 @@ Oletame, et te plaanite reisi Kopenhaagenisse ja soovite sellega seoses teada, k
 
 > Kui teil on olukord, kus te mõõdate erinevaid gruppe, mis küll omavahel erinevad, aga on ka teatud määral sarnased (näiteks testitulemused grupeerituna kooli kaupa), siis on mõistlik kasutada kõikide gruppide andmeid, et adjusteerida iga grupi spetsiifilisi parameetreid. Seda adjusteerimise määra kutsutakse "shrinkage". 
 
-Shrinkage toimub parameetri keskväärtuse suunas ja mingi grupi shrinkage on seda suurem, mida vähem on selles grupis liikmeid ja mida kaugemal asub see grupp kõikide gruppide keskväärtusest. Shrinkage on põhimõtteliselt sama nähtus, mis juba Francis Galtoni poolt avastatud regressioon keskmisele.
+Shrinkage toimub parameetri keskväärtuse suunas ja mingi grupi shrinkage on seda suurem, mida vähem on selles grupis liikmeid ja mida kaugemal asub see grupp kõikide gruppide keskväärtusest. See viib shrinkage koefitsientide kallutatusele (bias), aga samas ka suuremale täpsusele (precision). See tähendab, et shrinkage koefitsiendi hinnang on keskeltläbi lähemal tõelisele koefitsiendi väärtusele kui hannang tavalisele ühetasandilise mudeli koefitsiendile.
+
+Shrinkage on põhimõtteliselt sama nähtus, mis juba Francis Galtoni poolt avastatud regressioon keskmisele.
 Regressioon keskmisele on stohhastiline protsess kus, olles sooritanud n mõõtmist ja arvutanud nende tulemuste põhjal efekti suuruse, see valimi ES peegeldab nii tegelikku ES-i kui juhuslikku valimiviga. Kui valimivea osakaal ES-s on suur, siis lisamõõtmised vähendavad keskeltläbi efekti suurust. Shrinkage erineb sellest ainult selle poolest, et lisamõõtmised meenutavad ainult **osaliselt** algseid mõõtmisi. 
 
 Kasutades hierarhilisi mudeleid saab võidelda ka valehäirete ehk mitmese testimise probleemiga. 
