@@ -401,7 +401,7 @@ Siit tuleb ka seletus nähtusele, mida kutsutakse regressiooniks keskmisele (*re
 
 ### pidev või diskreetne muutuja?
 
-Tavaliselt on mõistlik fittida mudel pidevale y muutujale ka siis, kui tahame lõpuks tõlgenada tulemusi diskreetsel skaalal. Pidev muutuja sisaldab lihtsalt rohkem informatsiooni ja seetöttu on meil lootust saada parem fit. Erandiks on pidevad x muutujad, mille mõju y-le on mittelineaarne (näiteks vanuse mõju suremusele). Siin on vahest mõistlik vastupidi konverteerida pidev muutuja faktormuutujaks ja saada hinnang näiteks igale vanuseklassile eraldi kasutades skeemi $eluiga~vanus + vanus^2$. 
+Tavaliselt on mõistlik fittida mudel pidevale y muutujale ka siis, kui tahame lõpuks tõlgenada tulemusi diskreetsel skaalal. Pidev muutuja sisaldab lihtsalt rohkem informatsiooni ja seetöttu on meil lootust saada parem fit. Erandiks on pidevad x muutujad, mille mõju y-le on mittelineaarne (näiteks vanuse mõju suremusele). Siin on vahest mõistlik vastupidi konverteerida pidev muutuja faktormuutujaks ja saada hinnang näiteks igale vanuseklassile eraldi kasutades skeemi $eluiga = vanus + vanus^2$. 
 
 ## Üldised printsiibid
 

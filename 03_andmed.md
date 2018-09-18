@@ -67,10 +67,10 @@ logaritmimise kaudu avaldatud multiplikatsiivse SD arvutamiseks kasutame enda ki
 
 SD                     MEAN    lower   upper
 --------------------  -----  -------  ------
-multiplicative_SD      1.02    0.398    2.61
-multiplicative_2_SD    1.02    0.155    6.70
-additive_SD            1.58   -0.425    3.58
-additive_2_SD          1.58   -2.428    5.58
+multiplicative_SD      1.09    0.416    2.85
+multiplicative_2_SD    1.09    0.159    7.47
+additive_SD            1.73   -0.435    3.89
+additive_2_SD          1.73   -2.595    6.05
 
 Tavalise aritmeetitilise keskmise asemel on meil nüüd geomeetriline keskmine.  Võrdluseks on antud ka tavaline (aritmeetiline) keskmine ja (aditiivne) SD. Additiivne SD on selle jaotuse kirjeldamiseks selgelt ebaadekvaatne (vt jaotuse pilti ülalpool ja võrdle mulitplikatiivse SD-ga).
 
@@ -98,7 +98,7 @@ QQ-plot (kvantiil-kvantiil plot) võrdleb andmete jaotust ideaalse normaaljaotus
 
 ```r
 qqPlot(andmed)
-#> [1]  7 39
+#> [1] 12 91
 ```
 
 <div class="figure" style="text-align: center">
@@ -113,7 +113,7 @@ Nüüd joonistame qq-ploti logaritmitud andmetele.
 
 ```r
 qqPlot(log(andmed))
-#> [1] 36  7
+#> [1] 12 67
 ```
 
 <div class="figure" style="text-align: center">
@@ -136,17 +136,17 @@ Lognormaalsete andmetega:
 
 ```r
 mad(andmed, constant = 1); sd(andmed); mad(andmed)
-#> [1] 0.516
-#> [1] 2
-#> [1] 0.765
+#> [1] 0.588
+#> [1] 2.16
+#> [1] 0.872
 ```
 
 
 ```r
 mad(log10(andmed), constant = 1); sd(log10(andmed)); mad(log10(andmed))
-#> [1] 0.26
-#> [1] 0.409
-#> [1] 0.386
+#> [1] 0.262
+#> [1] 0.418
+#> [1] 0.389
 ```
 
 mad = median(abs(median(x) - x)), mida on väga lihtne mõista. Samas R-i funktsioon mad() korrutab default-ina mad-i läbi konstandiga 1.4826, mis muudab mad()-i tulemuse võrreldavaks sd-ga, tehes sellest sd robustse analoogi. Robustse sellepärast, et mad-i arvutuskäik, mis sõltub mediaanist, mitte aritmeetilisest keskmisest, ei ole tundlik outlierite suhtes. Seega, kui tahate arvutada mad-i, siis fikseerige mad() funktsioonis argument *constant* ühele.
@@ -161,7 +161,7 @@ Funktsioon quantile võimaldab valida, milliseid kvantiile soovite näha. Järgn
 ```r
 quantile(andmed, c(0.025, 0.25, 0.5, 0.75, 0.95))
 #>  2.5%   25%   50%   75%   95% 
-#> 0.143 0.573 1.013 1.956 4.082
+#> 0.152 0.616 1.076 2.173 4.400
 ```
 
 

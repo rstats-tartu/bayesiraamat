@@ -205,9 +205,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html#interaktsioonid-pidevatele-tunnustele"><i class="fa fa-check"></i>Interaktsioonid pidevatele tunnustele</a></li>
 </ul></li>
 <li class="chapter" data-level="16" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html"><i class="fa fa-check"></i><b>16</b> Mitmetasemelised mudelid</a><ul>
-<li class="chapter" data-level="16.1" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeline-mudel-r-i-mudelikeeles"><i class="fa fa-check"></i><b>16.1</b> mitmetasemeline mudel R-i mudelikeeles</a></li>
-<li class="chapter" data-level="16.2" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeliste-mudelite-lisaeeldused"><i class="fa fa-check"></i><b>16.2</b> Mitmetasemeliste mudelite lisaeeldused</a></li>
-<li class="chapter" data-level="16.3" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeline-mudel-tootab-korraga-mitmel-tasmel"><i class="fa fa-check"></i><b>16.3</b> Mitmetasemeline mudel töötab korraga mitmel tasmel</a></li>
+<li class="chapter" data-level="16.1" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#kahetasemeline-mudel-agebra-keeles"><i class="fa fa-check"></i><b>16.1</b> kahetasemeline mudel agebra keeles</a><ul>
+<li class="chapter" data-level="16.1.1" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#aegread"><i class="fa fa-check"></i><b>16.1.1</b> Aegread</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeline-mudel-r-i-mudelikeeles"><i class="fa fa-check"></i><b>16.2</b> mitmetasemeline mudel R-i mudelikeeles</a></li>
+<li class="chapter" data-level="16.3" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeliste-mudelite-lisaeeldused"><i class="fa fa-check"></i><b>16.3</b> Mitmetasemeliste mudelite lisaeeldused</a></li>
+<li class="chapter" data-level="16.4" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeline-mudel-tootab-korraga-mitmel-tasmel"><i class="fa fa-check"></i><b>16.4</b> Mitmetasemeline mudel töötab korraga mitmel tasmel</a></li>
 <li class="chapter" data-level="" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#shrinkage"><i class="fa fa-check"></i>Shrinkage</a></li>
 <li class="chapter" data-level="" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#anova-laadne-mudel"><i class="fa fa-check"></i>ANOVA-laadne mudel</a></li>
 <li class="chapter" data-level="" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#vabad-interceptid-klassikalises-regressioonimudelis"><i class="fa fa-check"></i>Vabad interceptid klassikalises regressioonimudelis</a></li>
@@ -257,8 +260,60 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>Tavapärane lähenemine oleks kõigepealt keskmistada andmed iga klassi sees ning seejärel keskmistada iga kooli sees (võtta igale koolile 5 klassi keskmine). Ning seejärel, võttes iga kooli keskmise üheks andmepunktiks, teha soovitud statistiline test (N = 10, sest meil on 10 kooli). Paraku, sellisel viisil talitades alahindame varieeruvust, mistõttu meie statistiline test alahindab ebakindluse määra arvutatud statistiku ümber. Hierarhilised mudelid, mis kajastavad adekvaatselt katse struktuuri, aitavad sellest murest üle saada. Üldine soovitus on, et kui teie katse struktuur seda võimaldab, siis peaksite alustama modelleerimist hierarhilistest mudelitest.</p>
 <p>Mitmetasemelised mudelid on eriti kasulikud, kui teil on osades klastrites vähem andmepunkte kui teistes, sest nad vaatavad andmeid korraga nii klastrite vahel kui klastrite sees ning kannavad informatsiooni üle klastritest, kus on rohkem andmepunkte, nendesse klastritesse, kus on vähe andmeid. See parandab hinnangute täpsust.</p>
 <p>Tavapärane regressioonimudel on sageli vaadeldav mitmetasandilise mudeli erijuhuna. Näiteks kujutage ette mudelit, kus laste õppedukust on mõõdetud mitmes koolis. Kui gruppide (koolide) vaheline varieeruvus on väga madal, siis annab mitmetasemeline mudel sarnase tulemuse lihtsa mudeliga, kus kõik koolid on ühte patta kokku pandud. Ja vastupidi, kui koolide vaheline varieeruvus on väga suur, võrreldes koolide sisese varieeruvusega, siis võime sama hästi modelleerida iga kooli eraldi ja teistest sõltumatult. Samuti, kui meil on andmeid väga väheste koolide kohta, siis võib mitmetasandilsest mudelist saadav kasu olla tagasihoidlik, sest meil pole piisavalt andmeid, et modelleerida koolide vahelist varieeruvust. Samuti, kui meil on iga kooli kohta piisavalt palju andmeid, siis saame iga kooli eraldi modelleerides praktiliselt sama tulemuse kui mitmetasemelisest mudelist. Muudel juhtudel on tõenäoliselt mõistlikum modelleerida õppedukust kahetasemelises mudelis, korraga õpilase tasemel ja kooli tasemel.</p>
+<div id="kahetasemeline-mudel-agebra-keeles" class="section level2">
+<h2><span class="header-section-number">16.1</span> kahetasemeline mudel agebra keeles</h2>
+<ol style="list-style-type: decimal">
+<li>tase on õpilse tase, 2. tase on klassi tase. meil on J klassi, milles on erinev arv nj õpilasi. Iga õpilase kohta teame populaarsusindeksit (y - muutuja) ja sugu (x - muutuja). Klassi tasemel teame õpetaja staazi aastates (z - muutuja). Alustuseks on meil eraldi regressioonivõrrand igale klassile.</li>
+</ol>
+<p><span class="math display">\[y_ij = b_0j + b_1j x X_ij + e_ij\]</span></p>
+<p>kus subskript j tähistab klassi ja i tähistab õpilast. Näit bi1 tähendab, et me fitime iga klassi kohta ühe b1 koefitsiendi. Seega eeldame, et igal klassil on erinev b0 ja b1 koefitsient. Residuaalvigadele eeldame, et mean = 0 ja e varieeruvus tuleb meil hinnata. Enamasti eeldame, et kõikide klasside varieeruvus on sama. b0 ja b1 omavad jaotust üle kõikide klasside, milledel on keskväärtus ja sd. Me modelleerime b0 ja b1 jaotusi tuues sisse klassi tasemel muutuja z:</p>
+<p>b0j = gamma00 + gamma01 x Zj + u0j</p>
+<p>b1j = gamma10 + gamma11 x Zj + u1j</p>
+<ol start="2" style="list-style-type: decimal">
+<li>võrrand ennustab klassi keskmist populaarsusindeksit vastavalt õpetaja staazile.</li>
+<li>võrrand ütleb, et populaarsuse ja soo seose tugevus sõltub õpetaja staazist. kui y11 &gt; 0, siis on seos seda tugevam, mida staazikam on õpetaja. u0j ja u1j on residuaalide vead klassi tasemel, mille kohta me eeldame, et mean = 0 ja sõltuamtust residuaalide vigadest õpilase tasemel (eij). u0j residuaalide vigade variance on sigma_sq_u0 jne. u0j ja u1j covariance on sigma_sq_u01 ja me ei eelda, et see = 0. Gamma koefitsiendid ei varieeru klasside vahel.</li>
+</ol>
+<p>Asendades 1. võrrandis b0j ja b1j, saame oma võrrandisüsteemi muuta üheks pikaks võrrandiks.</p>
+<p>Yij = gamma00 + gamma10 x Xij + gamma01 x Zj + gamma11 x Xij x Zj + u1j x Xij + u0j + eij</p>
+<p>Siis näeme uues võrrandis liiget gamma1 x Zj x Xij, mis on interaktsiooniliige. Ilma interaktsioonita mudel näeb välja niimodi</p>
+<p>Yij = gamma00 + gamma10 x Xij + gamma01 x Zj + u1j x Xij + u0j + eij</p>
+<p>juhusliku vealiige uij korrutub Xij-ga, mistõttu sellest tulenev totaalne viga on erinev erinevatel Xij väärtistel. Seega on meie mudel heteroskedastiline ja erineb selle poolest tavalistest lineaarsetest mudelitest, mis eeldavad homoskedastilisust e residuaalvea sõltumatust X-i väärtusest.</p>
+<p>Teine oluline erinevus tavalisest lin mudelist on, et gupeeritud andmete puhul ei ole täidetud andmete iseseisvuse eeldus (gruppide sees modelleeritakse andmed korreleerituna - klassisisene korrelatsioon), mis muudab veapiirid liiga kitsaks. Klassisisese korrelatsiooni saame intercept-only mudelist</p>
+<p>Yij = gamma00 + uoj + eij</p>
+<p>(selle mudeli saad, kui viskad pikast mudelist välja kõik X ja Z sisaldavad liikmed.) See mudel ajab varieeruvuse lahku kahe iseseisva komponendi vahel: sigma_sq_e (1. taseme vigade variance eij) ja sigma_sq_u0 (2. taseme vigade variance u0j).</p>
+<p>Klassisisene korrelatsioon:</p>
+<p>rho = sigma_sq_u0/(sigma_sq_u0 + sigma_sq_e)</p>
+<p>rho annab grupistruktuuri poolt seletatud variace proportsiooni, mida võib tõlgendada kui kahe sama grupi juhusliku liikme vahelist oodatavat korrelatsiooni.</p>
+<p>Üldiselt on kasulik töötada standardiseeritud regressioonikoefitsientidega, mida saab tõlgendada sd ühikutes. Erandiks on olukord, kus anaöüüsi eesmärk on võrrelda erinevaid sampleid omavahel. Enamasti on kasulik standardiseerida andmed, mis mudelisse sisse lähevad, aga on võimalik ka standardiseerida koefitsiente kui selliseid.</p>
+<p>st_coef = (unstand_coef x sd(X))/sd(Y)</p>
+<p>Standardiseeritud andmete kasutamine muudab totaalselt varieeruvuskompnmentide fitte, aga jätab b koefitsientide fitid olemuselt samaks (see kehtib X-muutujate suvaliste lineaarsete transformatsioonide korral). Kui me jagame X-muutuja 2-ga, siis uus b1 = vana b1 x 2. Mudeli poolt seletamata varieeruvuse proportsioon ei muutu. Eelnev kehtib aga ainult niikaua, kui mudeli tõusud (b1) ei ole vabaks lastud - st need ei varieeru klassist klassi.</p>
+<p>Tsentreerimine (xi - mean(x)) mõjutab b0, aga mitte b1 koefitsiente, mis võib rääkida selle meetodi kasuks üle standardiseerimise ((xi - mean(x))/sd(x)), mis tekitab X muutujate jaotused, mille mean = 0 ja sd = 1.</p>
+<p>NB! grupi tasemel tsentreerimine, ehki vahest kasulik, töötab hoopis teistmoodi kui üle kõikide gruppide tsentreerimine ja viib täiesti erineva mudelini - sellest tuleks hoiduda, senikaua kui te ei tea täpselt, mida te teete.</p>
+<div id="aegread" class="section level3">
+<h3><span class="header-section-number">16.1.1</span> Aegread</h3>
+<p>Aegridasid saab analüüsida mitmetasemilisena, kus korduvad mõõtmised (1. tase) on grupeeritud indiviidide sisse (2. tase). Nii saab analüüsida ka ebaühtlase ajavahemiku järel tehtud mõõtmisi.</p>
+<p><span class="math inline">\(Y_ti\)</span> - indiviidi i õpitulemus ajapunktis t.</p>
+<p><span class="math inline">\(T_ti\)</span> - ajapunkt</p>
+<p><span class="math inline">\(X_ti\)</span> - ajas muutuv covariaat - kas õpilane töötab</p>
+<p><span class="math inline">\(Z_t\)</span> - ajast mittesõltuv kovariaat - sugu</p>
+<ol style="list-style-type: decimal">
+<li>tase (indiviidi tase):</li>
+</ol>
+<p>$Y_ti = _0i + _1i x T_ti + _2i x X_ti + e_ti $</p>
+<ol start="2" style="list-style-type: decimal">
+<li>tase (üle indiviidie):</li>
+</ol>
+<p><span class="math inline">\(\pi_0i = \beta_00 + \beta_01 x Z_t + u_01\)</span></p>
+<p><span class="math inline">\(\pi_1i =\beta_10 + \beta_11 x Z_t + u_1i\)</span></p>
+<p><span class="math inline">\(\pi_2i = \beta_20 + \beta_21 x Z_t + u_21\)</span></p>
+<p>Oluline punkt: aegridade modelleerimisel pakub meile sageli huvi ka kaoorelatsioon mudeli slope ja intercepti vahel. Kahjuks sõltub see näitaja sellest, millises skaalas me ajamuutuja sisse anname. Oluline on tagada, et ajaskaala nullpunkt on selgelt mõtekas.</p>
+<p>To model growth - polynomial, logistic curve (first slow change, then quick, then slow again S curve).logistic parameters have meaning! cubic polynomial approximates logistic and exponential curves - but here interpretation is on the level of some predicted growth curves.</p>
+<p><a href="https://facebook.github.io/prophet" class="uri">https://facebook.github.io/prophet</a> sessoonsete andmete fittimine ennustavasse mudelisse</p>
+<p><a href="https://github.com/nwfsc-timeseries" class="uri">https://github.com/nwfsc-timeseries</a> kogu aegridade analüüsi pakette</p>
+</div>
+</div>
 <div id="mitmetasemeline-mudel-r-i-mudelikeeles" class="section level2">
-<h2><span class="header-section-number">16.1</span> mitmetasemeline mudel R-i mudelikeeles</h2>
+<h2><span class="header-section-number">16.2</span> mitmetasemeline mudel R-i mudelikeeles</h2>
 <p>Kui meie muutujad andmetabelis “data” on y = õpilase testiskoor, x = katsetingimus (binaarne faktor katse-kontroll, kalamaksaöli - platseebo), ja kool, siis “ühepajamudel” väljendub R-i mudelikeeles:</p>
 <p><code>mudel &lt;- lm(y ~ x, data=data)</code></p>
 <p>ja mudel, kus iga kool on eraldi modelleeritud:</p>
@@ -282,11 +337,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </blockquote>
 </div>
 <div id="mitmetasemeliste-mudelite-lisaeeldused" class="section level2">
-<h2><span class="header-section-number">16.2</span> Mitmetasemeliste mudelite lisaeeldused</h2>
+<h2><span class="header-section-number">16.3</span> Mitmetasemeliste mudelite lisaeeldused</h2>
 <p>Mitmetasandilised mudelid toovad sisse lisaeelduse, et lineaarsuse/normaalsuse jm eeldused kehtivad igal mudeli tasemel. Samuti, et kõik grupid tulevad samast statistilisest populatsioonist, ja vastavalt sellele on nad mudelis koondatud ühise priori alla. Mitmetasemelises mudelis töötab grupi tasemel mudel priorina indiviidi tasemel mudelile.</p>
 </div>
 <div id="mitmetasemeline-mudel-tootab-korraga-mitmel-tasmel" class="section level2">
-<h2><span class="header-section-number">16.3</span> Mitmetasemeline mudel töötab korraga mitmel tasmel</h2>
+<h2><span class="header-section-number">16.4</span> Mitmetasemeline mudel töötab korraga mitmel tasmel</h2>
 <p>Mudeli muudab mitmetasemeliseks see, et me määrame veamudelit kasutades mitte ainult indiviidi tasemel koefitsiente (1. tase), vaid anname neile koefitsientidele omakorda veamudeli (2. tase), mis modelleerib koefitsientide varieeruvust gruppide vahel. Selliseid tasemeid võib lisada põhimõtteliselt ükskõik kui palju. Kõrgema taseme mudel, lisaks sellele, et modelleerida gruppide vahelist varieeruvust, töötab ka priorina madalama taseme suhtes. Seega saab mudeli fittimisel 2. tase informatsiooni 1. tasemelt (andmete näol) ja samal ajal annab informatsiooni esimesele tasemele (priori kujul).</p>
 <ol style="list-style-type: decimal">
 <li><p>Mitmetasemelised mudelid modelleerivad eksplitsiitselt varieeruvust klasrtite sees ja klastrite vahel.</p></li>
@@ -305,7 +360,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <blockquote>
 <p>Kui teil on olukord, kus te mõõdate erinevaid gruppe, mis küll omavahel erinevad, aga on ka teatud määral sarnased (näiteks testitulemused grupeerituna kooli kaupa), siis on mõistlik kasutada kõikide gruppide andmeid, et adjusteerida iga grupi spetsiifilisi parameetreid. Seda adjusteerimise määra kutsutakse “shrinkage”.</p>
 </blockquote>
-<p>Shrinkage toimub parameetri keskväärtuse suunas ja mingi grupi shrinkage on seda suurem, mida vähem on selles grupis liikmeid ja mida kaugemal asub see grupp kõikide gruppide keskväärtusest. Shrinkage on põhimõtteliselt sama nähtus, mis juba Francis Galtoni poolt avastatud regressioon keskmisele. Regressioon keskmisele on stohhastiline protsess kus, olles sooritanud n mõõtmist ja arvutanud nende tulemuste põhjal efekti suuruse, see valimi ES peegeldab nii tegelikku ES-i kui juhuslikku valimiviga. Kui valimivea osakaal ES-s on suur, siis lisamõõtmised vähendavad keskeltläbi efekti suurust. Shrinkage erineb sellest ainult selle poolest, et lisamõõtmised meenutavad ainult <strong>osaliselt</strong> algseid mõõtmisi.</p>
+<p>Shrinkage toimub parameetri keskväärtuse suunas ja mingi grupi shrinkage on seda suurem, mida vähem on selles grupis liikmeid ja mida kaugemal asub see grupp kõikide gruppide keskväärtusest. See viib shrinkage koefitsientide kallutatusele (bias), aga samas ka suuremale täpsusele (precision). See tähendab, et shrinkage koefitsiendi hinnang on keskeltläbi lähemal tõelisele koefitsiendi väärtusele kui hannang tavalisele ühetasandilise mudeli koefitsiendile.</p>
+<p>Shrinkage on põhimõtteliselt sama nähtus, mis juba Francis Galtoni poolt avastatud regressioon keskmisele. Regressioon keskmisele on stohhastiline protsess kus, olles sooritanud n mõõtmist ja arvutanud nende tulemuste põhjal efekti suuruse, see valimi ES peegeldab nii tegelikku ES-i kui juhuslikku valimiviga. Kui valimivea osakaal ES-s on suur, siis lisamõõtmised vähendavad keskeltläbi efekti suurust. Shrinkage erineb sellest ainult selle poolest, et lisamõõtmised meenutavad ainult <strong>osaliselt</strong> algseid mõõtmisi.</p>
 <p>Kasutades hierarhilisi mudeleid saab võidelda ka valehäirete ehk mitmese testimise probleemiga. See probleem on lihtsalt sõnastatav: kui te sooritate palju võrdluskatseid ja statistilisi teste olukorras, kus tegelik katseefekt on tühine, siis tänu valimiveale annavad osad teie paljudest testidest ülehinnatud efekti. Seega, kui meil on kahtlus, et enamus võrdlusi on “mõttetud” ja me ei oska ette ennustada, millised võrdlused neist (kui üldse mõni) võiks anda tõelise teaduslikult mõtteka efekti, siis on lahendus kõiki saadud efekte kunstlikult pisendada kõikide efektide keskmise suunas. Mudeli kontekstis kutsutakse sellist lähenemist <em>shrinkage</em>-ks. Aga kui suurel määral seda teha? See sõltub nii sellest, kui palju teste me teeme, valimi suurusest, kui ka sellest, kuidas jaotuvad mõõdetud efektisuurused (milline on efektisuuruste varieeruvus testide vahel).</p>
 <p>Bayesi lahendus on, et me lisame mudelisse veel ühe hierarhilise priori, mis kõrgub üle gruppide-spetsiifilise priori. Seega anname me olemasolevale priorile uue kõrgema taseme meta-priori, mis tagab, et informatsiooni jagatakse gruppide vahel ja samal ajal ka gruppide sees. Sellise lahenduse õigustus on, et me usume, et erinevad alam-grupid pärinevad samast üli-jaotusest ja neil on omavahel midagi ühist (ehkki alam-gruppide vahel võib olla ka reaalseid erinevusi). Näiteks, et kõik klassid saavad oma lapsed samast lastepopulatsioonist, aga siiski, et leidub ka eriklasse eriti andekatele.</p>
 <p>Selline mudel tagab, et samamoodi nagu mudeli ennustused individaalsete andmepunktide kohta iga alam-grupi sees “liiguvad lähemale” oma alam-grupi keskmisele, samamoodi liiguvad ka alam-gruppide keskmised lähemale üldisele grupi keskmisele. Selle positiivne mõju on valealarmide vähendamine ja oht on, et me kaotame ka tõelisi efekte. Bayesi eelis on, et see oht realiseerub ainult niipalju, kuipalju meie mudel ei kajasta reaalset katse struktuuri. Klassikalises statistikas rakendatavad multiple testingu korrektsioonid (Bonfferroni, ANOVA jt) on kõik teoreetiliselt kehvemad.</p>
@@ -683,6 +739,7 @@ Joonis 12.11: score1 vs. score2
 <span class="co">#&gt; schoolm6 11862   3.3 482.0      0 54.6 41.6</span></code></pre></div>
 <p>0-mudel, mis on kõige kehvem, on kõige suurema betaga ja kõige väiksema ebakindlusega selle ümber. See on tavaline — hierarhiline mudel modelleerib ebakindlust paremini (realistlikumalt) ja vähendab üle-fittimise ohtu (beta tuleb selle võrra väiksem).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">precis</span>(schoolm7, <span class="dt">depth =</span> <span class="dv">2</span>)</code></pre></div>
+
 
 </div>
 </div>
