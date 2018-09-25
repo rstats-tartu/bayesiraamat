@@ -26,5 +26,6 @@ Imports:
     gridExtra,
     inline,
     skimr,
-    psych
+    psych,
+    ggeffects
 Remotes: rstudio/bookdown
