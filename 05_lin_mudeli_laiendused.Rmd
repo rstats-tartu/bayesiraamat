@@ -6,6 +6,7 @@ library(tidyverse)
 library(scatterplot3d)
 library(viridis)
 library(ggeffects)
+library(broom)
 ```
 
 
