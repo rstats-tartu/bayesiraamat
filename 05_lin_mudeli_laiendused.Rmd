@@ -5,6 +5,7 @@
 library(tidyverse)
 library(scatterplot3d)
 library(viridis)
+library(ggeffects)
 ```
 
 
@@ -162,3 +163,163 @@ with(dfr, scatterplot3d(Sepal_length, Petal_length, Sepal_width_predicted, pch =
 ```
 
 Vau! See on alles ennustus!
+
+## Vähimruutude meetodiga fititud mudelite töövoog -- lm()
+
+Kuna lm() funktsiooniga ja bayesi meetodil fititud mudeliobjektidega töötamine on mõnevõrra erinev, õpetame seda eraldi. Siinkohal anname põhilise töövoo lm() mudelobjektide inspekteerimiseks.
+
+Töötame m3 mudeliobjektiga, mis on interaktsiooniga mudel: Sepal.Width ~ Sepal.Length * Species
+
+```{r}
+library(ggeffects)
+m3 <- lm(Sepal.Width ~ Sepal.Length * Species, data = iris)
+```
+
+
+### vaatame mudeli koefitsiente
+
+```{r}
+tidy(m3)
+```
+
+Interaktsioonimudeli koefitsientide jõllitamine on sageli tühi töö ja vaimu närimine. Õnneks on meil muid meeotodeid, kuidas lm() mudelitega töötada.
+
+
+Adjusteeritud r2 tasub eraldi üle vaadata.
+```{r}
+summary(m3)$adj.r.squared
+```
+
+0.61 tähendab, et mudel suudab seletada mitte rohkem kui 61% y-muutuja (Sepal.Width) varieeruvusest. 
+
+### Arvutame residuaalid jms, et testida mudeli eeldusi
+
+Nii saab fititud väärtused (.fitted), residuaalid (.resid), fittitud väätruste standardvead (.se.fit). Residuaal = Y data value - fitted value. Seega positiivne residuaal näitab, et mudeli ennustus keskmisele y väärtusele mingil x-muutujate väärtusel on madalam kui juhutb olema tegelik y-i andmepunkti väärtus. See võib olla tingitud y-muutuja normaalsest bioloogilisest varieeruvusest, aga ka sellest, et mudel ei kirjelda täiuslikult x-ide ja y tegelikku seost.
+
+```{r}
+(a_m3 <- augment(m3))
+```
+
+.hat >1 sugereerib high leverage andmepunkte 
+
+.std.resid on studentiseeritud residuaal, mis on sd ühikutes (.resid/sd(.resid))
+
+.cooksd on Cook-i kaugus, mis näitab võimalikke outliereid. rusikareeglina tähendab cooksd > 3 cooksd keskväärtust, et tegu võiks olla outlieriga. Teine võimalus on pidada igat punkti, mis on kõrgem kui 4/n, outlieriks. Kolmanadad arvavad jälle, et outlierina võiks vaadelda iga teistest väga erinevat väärtust, või et .cooksd > 1 v .cooksd > 0.5 on indikatsiooniks nn mõjukast väärtusest (influencial value).
+
+```{r}
+ggplot(data = NULL, aes(x=1:150, y= a_m3$`.cooksd`)) + geom_col() + 
+  geom_hline(yintercept = 4/150)+ 
+  geom_hline(yintercept = 3*mean(a_m3$`.cooksd`), lty =2)
+```
+
+####Mõjukuse plot
+
+outlierid - studentideeritud residuaalid > 2 või < -2
+hat > 1 - sugereerib high leverage andmepunkte 
+```{r}
+library(car)
+influencePlot(m3, id.method="identify", main="Influence Plot",
+              sub="Circle size is proportional to Cook's distance")
+```
+
+Mõjukad punktid (Influential observations) omavad suurt mõju mudeli ennustustele. High Leverage andmepunktid on x-muutujate ekstreemsed punktid, mille lähedal ei ole n-mõõtmelises ruumis (kui teil on n x-muutujat) teisi punkte. Seetõttu läheb fititud mudel nende punktide lähedalt mõõda. Mõjukad punktid on tüüpiliselt ka high leverage punktid, kuid vastupidine ei kehti!
+
+Kas residuaalid on normaaljaotusega?
+```{r}
+car::qqPlot(a_m3$`.std.resid`, distribution = "norm")
+```
+
+Residuals vs fitted plot testib lineaarsuse eeldust - kui .resid punktid jaotuvad ühtlaselt nulli ümber, siis mudel püüab kinni kogu süstemaatilise varieeruvuse teie andmetest ja see mis üle jääb on juhuslik varieeruvus.
+```{r}
+ggplot(a_m3, aes(`.fitted`, `.resid`)) + 
+  geom_point(aes(color=Species), alpha=0.5) + 
+  geom_smooth()
+```
+
+Scale-location plot - homoskedastilisuse eeldust ehk seda, et varieeruvus ei sõltuks prediktormuutuja väärtusest. Y-teljel on ruutjuur studentiseeritud residuaalide absoluutväärtusest
+```{r message=FALSE}
+ggplot(a_m3, aes(`.fitted`, `.resid` %>% abs %>% sqrt)) + 
+  geom_point(aes(color=Species), alpha=0.5) + 
+  geom_smooth()
+```
+
+
+## Residuaalide plotid y ja x muutujate vastu
+
+Kõigepealt residuaalid y-muutja vastu
+```{r}
+ggplot(a_m3, aes(Sepal.Width, `.std.resid`)) + geom_point(aes(color=Species)) + geom_hline(yintercept = 0, lty =2, color ="darkgrey") + 
+  geom_smooth(method = lm, se=F, color="black", size=0.5)
+```
+
+Mudel paistab süstemaatiliselt alahindama Sepal Width-i seal kus Sepal Length on kõrge, ja vastupidi. Horisontaalne punktiirjoon näitab, kus mudel vastab täpselt andmetele.
+
+Studentiseeritud residuaalid sd ühikutes
+
+Ja nüüd residuaalid x-muutuja vastu. 
+```{r}
+ggplot(a_m3, aes(Sepal.Length, `.std.resid`, color=Species)) + 
+  geom_point() +
+  geom_hline(yintercept = 0, lty =2, color ="darkgrey")+
+  geom_smooth(method = lm, se=F, color="black", size=0.5)
+```
+Ideaalsed residuaalid! 
+
+## Marginaalsed plotid
+
+Me ennustame Y-i väärtuseid etteantud X-i väärtustel.
+
+ggpredict() ennustab y-muutuja väärtusi ühe x-muutuja väärtuste järgi, hoides kõiki teisi x-muutujaid konstantsena.
+
+Kõigepealt võrdleme lihtsa 1 prediktoriga mudeli ennustust kahe prediktoriga mudeli ennustusega 
+```{r}
+lm1 <- lm(Sepal.Width ~ Sepal.Length, data = iris)
+lm2 <- lm(Sepal.Width ~ Sepal.Length + Petal.Length, data = iris)
+
+mydf <- ggpredict(lm1, terms = "Sepal.Length")
+mydf2 <- ggpredict(lm2, terms = "Sepal.Length")
+
+ggplot(mydf, aes(x, predicted)) + 
+  geom_line() +
+  geom_line(data = mydf2, aes(x, predicted), lty=2)+
+  geom_point(data=iris, aes(Sepal.Length, Sepal.Width, color=Species)) + 
+  xlab("Sepal Length") + 
+  ylab("predicted sepal width")
+```
+
+>terms argument võtab kuni 3 muutujat, neist 2 peavad olema faktormuutujad ja 3 muutuja korral tekib tabelisse veerg nimega facet, mille abil saab tulemused facet_wrap()-ga välja plottida.
+
+
+```{r}
+mydf <- ggpredict(m3, terms = c("Sepal.Length", "Species"))
+ggplot(mydf, aes(x, predicted)) + 
+  geom_line(aes(color=group)) + 
+  geom_point(data=iris, aes(Sepal.Length, Sepal.Width, color=Species)) + 
+  xlab("Sepal Length") +
+  ylab("predicted sepal width")
+```
+
+```{r}
+tidy(m3)
+```
+
+Nii saab sisestada üksikuid parameetriväärtusi ja neile ennustusi teha:
+```{r message=FALSE}
+(mydf1 <- ggpredict(m3, terms = c("Sepal.Length [5, 22]", "Species [setosa, versicolor]")))
+```
+
+##Mudelite võrdlus
+
+
+ Mudelite võrdlus ANOVA-ga (ainult nested mudelid)
+```{r}
+tidy(anova(lm1, lm2, m3))
+```
+
+Mudelite võrdlus AIC-ga
+```{r}
+AIC(lm1, lm2, m3)
+```
+
+
+

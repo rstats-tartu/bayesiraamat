@@ -74,7 +74,7 @@ Meie poolt simuleeritud andmed tulevad normaaljaotusega populatsioonist, mille m
 
 
 
-## protsessi mudel ja veamudel lineaarses regressioonis
+## protsessimudel ja veamudel lineaarses regressioonis
 
 Kui mudel $kaal = b_0 + b_1 ~pikkus$ ennustab, et 160 cm inimene kaalub keskmiselt 80 kg, siis protsessi mudel ei ütle, kui suurt pikkusest sõltumatut kaalude varieeruvust võime oodata 160 cm-ste inimeste hulgas. 
 Selle hinnangu andmiseks tuleb mudelile lisada varieeruvusekomponent, sageli normaaljaotuse kujul, mis modelleerib üksikute inimeste kaalude varieeruvust (mitte keskmise kaalu varieeruvust) igal mõeldaval ja mittemõeldaval pikkusel. 

@@ -326,6 +326,7 @@ conditions <- data.frame(Sepal.Width = mean(iris$Sepal.Width),
 plot(marginal_effects(m2, effects = "Petal.Length", conditions = conditions, re_formula = NULL), points= TRUE)
 ```
 
+
 ####Alternatiivne tee:
 
 Teeme tabeli nende väärtustega, millele tahame mudeli ennustusi. Tabelis newx on spetsifitseeritud mudeli kõikide X muutujate väärtused! Me ennustame Y väärtusi paljudel meie poolt võrdse vahemaaga ette antud petal length väärtustel, kusjuures me hoiame sepal width väärtuse alati konstantsena tema valimi keskmisel väärtusel ja vaatame ennustusi eraldi kahele liigile kolmest. Liigid on mudeli madala taseme osad, seega kasutame ennustuste tegemisel mudeli kõikide tasemete koefitsiente.
@@ -345,7 +346,7 @@ reformula NULL mudeldab eraldi liigid eraldi mudeli madalama taseme (liikide see
 ```{r}
 predict_interval_brms2 <- predict(m2, newdata = newx, re_formula = NULL) %>%
   cbind(newx,.)
-head(predict_interval_brms)
+head(predict_interval_brms2)
 ```
 
 predict() ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele
@@ -713,7 +714,7 @@ fit2 <- brm(bf_tarsus + bf_back, data = BTdata, chains = 2, cores = 2)
 
 We change our model in various directions at the same time. Remember the slight left skewness of tarsus, which we will now model by using the skew_normal family instead of the gaussian family. Since we do not have a multivariate normal (or student-t) model, estimating residual correlations is no longer possible. We make this explicit using the set_rescor function. We investigate if the relationship of back and hatchdate is really linear as previously assumed by fitting a non-linear spline of hatchdate. On top of it, we model separate residual variances of tarsus for males and femals chicks.
 
-```{r}
+```{r eval=FALSE}
 bf_tarsus <- bf(tarsus ~ sex + (1|p|fosternest) + (1|q|dam)) +
   lf(sigma ~ 0 + sex) + skew_normal()
 bf_back <- bf(back ~ s(hatchdate) + (1|p|fosternest) + (1|q|dam)) +
