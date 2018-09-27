@@ -320,9 +320,9 @@ Nii saab sisestada üksikuid parameetriväärtusi ja neile ennustusi teha:
 
 ### 4. Võrdleme mudeleid
 
+1. Eeldus - kõik võrreldavad mudelid on fititud täpselt samade andmete peal.
 
-1. Eeldus - kõik võrreldavad mudelid on fititud täpselt samade andmete peal
-2. Eeldus (vajalik ainult ANOVA meetodi puhul) - tegemist on nn nested mudelitega.
+2. Eeldus (ei ole vajalik AIC meetodi puhul) - tegemist on nn nested mudelitega. Nested mudel tähendab, et kõik väiksema mudeli liikmed on olemas ka suuremas mudelis.
 
  Mudelite võrdlus ANOVA-ga (ainult nested mudelid)
 ```{r}
