@@ -208,9 +208,9 @@ Nii saab fititud väärtused (.fitted), residuaalid (.resid), fittitud väätrus
 .cooksd on Cook-i kaugus, mis näitab võimalikke outliereid. rusikareeglina tähendab cooksd > 3 cooksd keskväärtust, et tegu võiks olla outlieriga. Teine võimalus on pidada igat punkti, mis on kõrgem kui 4/n, outlieriks. Kolmanadad arvavad jälle, et outlierina võiks vaadelda iga teistest väga erinevat väärtust, või et .cooksd > 1 v .cooksd > 0.5 on indikatsiooniks nn mõjukast väärtusest (influencial value).
 
 ```{r}
-ggplot(data = NULL, aes(x=1:150, y= a_m3$`.cooksd`)) + geom_col() + 
+ggplot(data = NULL, aes(x = 1:150, y = a_m3$`.cooksd`)) + geom_col() + 
   geom_hline(yintercept = 4/150)+ 
-  geom_hline(yintercept = 3*mean(a_m3$`.cooksd`), lty =2)
+  geom_hline(yintercept = 3*mean(a_m3$`.cooksd`), lty = 2)
 ```
 
 ####Mõjukuse plot
@@ -266,9 +266,9 @@ ggplot(a_m3, aes(Sepal.Length, `.std.resid`, color=Species)) +
 ```
 Ideaalsed residuaalid! 
 
-## Marginaalsed plotid
+## Ennustuslikud plotid (marginal plots)
 
-Me ennustame Y-i väärtuseid etteantud X-i väärtustel.
+Me ennustame Y-i keskmisi väärtuseid etteantud X-i väärtustel.
 
 ggpredict() ennustab y-muutuja väärtusi ühe x-muutuja väärtuste järgi, hoides kõiki teisi x-muutujaid konstantsena.
 
@@ -283,9 +283,12 @@ mydf2 <- ggpredict(lm2, terms = "Sepal.Length")
 ggplot(mydf, aes(x, predicted)) + 
   geom_line() +
   geom_line(data = mydf2, aes(x, predicted), lty=2)+
+  geom_ribbon(data = mydf2, aes(ymin = conf.low, ymax = conf.high), 
+              alpha = 0.5, fill="lightgrey") +
   geom_point(data=iris, aes(Sepal.Length, Sepal.Width, color=Species)) + 
   xlab("Sepal Length") + 
-  ylab("predicted sepal width")
+  ylab("predicted sepal width")+
+  theme_classic()
 ```
 
 >terms argument võtab kuni 3 muutujat, neist 2 peavad olema faktormuutujad ja 3 muutuja korral tekib tabelisse veerg nimega facet, mille abil saab tulemused facet_wrap()-ga välja plottida.
@@ -300,9 +303,6 @@ ggplot(mydf, aes(x, predicted)) +
   ylab("predicted sepal width")
 ```
 
-```{r}
-tidy(m3)
-```
 
 Nii saab sisestada üksikuid parameetriväärtusi ja neile ennustusi teha:
 ```{r message=FALSE}
