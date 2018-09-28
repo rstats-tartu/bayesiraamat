@@ -189,16 +189,6 @@ Interaktsioonimudeli koefitsientide jõllitamine on sageli tühi töö ja vaimu 
 Võrdluseks - nii fitime eraldi mudeli igale irise liigile. Tulemus on tegelikult identne interaktsioonimudeliga kategoorilisele muutujale (Species), aga koefitsiendid on otse tõlgendatavad. Samas, interaktsioonimudelit saab fittida ka pidevale muutujale!
 
 ```{r}
-mudelid <- iris %>% group_by(Species) %>% 
-  do(model = lm(Sepal.Width ~ Sepal.Length, data = .))
-m4 <- mudelid$model[[1]] #setosa
-m5 <- mudelid$model[[2]] #versicolor
-m6 <- mudelid$model[[3]] #virginica
-tidy(m4)
-```
-
-ja sama map-ga
-```{r}
 iris %>% split(.$Species) %>% 
   map(~ lm(Sepal.Width ~ Sepal.Length, data = .)) %>% 
   map(summary) %>% 
