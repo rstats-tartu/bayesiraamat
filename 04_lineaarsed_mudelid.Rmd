@@ -333,7 +333,7 @@ Tähtsuse järjekorras:
 
 4. vigade sõltumatus
 
-5. vigade võrdne varieeruvus (equal variance) ja vigade normaalsus on vähemtähtsad. Neid eeldusi ei tasu tavaliselt kontrollida (kuigi meetodid selleks on olemas).
+5. vigade võrdne varieeruvus (homoskedastilisus) ja vigade normaalsus on vähemtähtsad. Neid eeldusi ei tasu tavaliselt kontrollida (kuigi meetodid selleks on olemas).
 
 ## Andmete transformeerimine
 
