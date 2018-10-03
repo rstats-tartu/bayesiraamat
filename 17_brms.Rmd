@@ -651,7 +651,7 @@ fit_smooth1 <- brm(
 näit prediktor muutuja: suitsetab palju - vähe - väga vähe.
 me ei eelda, et 3 taset oleks üksteisest sama kaugel - ei modelleeri seda pideva muutujana.
 
-```{r}
+```{r, eval=FALSE}
 fit1 <- brm(y ~ mo(x), data = d)
 ```
 
@@ -673,7 +673,7 @@ marginal_effects(fit5, "x:age")
 
 
 mitmetasemelised monotoonilised mudelid
-```{r}
+```{r, eval=FALSE}
 fit6 <- brm(y ~ mo(x)*age + (mo(x) | city), data = d)
 ```
 
