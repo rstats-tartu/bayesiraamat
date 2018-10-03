@@ -284,7 +284,7 @@ ggplot(a_m3, aes(Sepal.Length, `.std.resid`, color=Species)) +
 ```
 Ideaalsed residuaalid! 
 
-## 3. Teeme mudeli põhjal ennustusi (marginal plots)
+## Teeme mudeli põhjal ennustusi (marginal plots)
 
 Me ennustame Y-i keskmisi väärtuseid etteantud X-i väärtustel.
 

@@ -117,6 +117,9 @@ adapt_delta - mida suurem number (max = 1), seda stabiilsemat, ja aeglasemalt, a
 m1 <- read_rds("m1.fit")
 ```
 
+
+
+
 Teine mudel, mis sisaldab veel üht ennustavat muutujat
 
 ```{r eval=FALSE}
@@ -153,9 +156,10 @@ write_rds(m3, path = "m3.fit")
 ```
 
 ```{r}
-
 m3 <- read_rds("m3.fit")
 ```
+
+
 
 
 ### 4. Võrdleme mudeleid.
@@ -220,18 +224,36 @@ See on kvaliteedikontrolli etapp, kus me vaatleme ahelate konvergentsi.
 plot(m1)
 ```
 
+
+
 Siit on näha, et ahelad on ilusti konvergeerunud. Ühtlasi posterioorsed jaotused m1 fititud koefitsientidele.
 
+regular expression võimaldab näiteks plottida mudeli madalama taseme posteerioreid, mida plot tavaliselt ei näita.
 ```{r}
 #regex works!
 plot(m1, pars = "r_", theme = theme_dark())
 ```
 
+Siin on posteeriorite põhjal arvutatud 50% ja 95% CI ja see plotitud.
 ```{r}
-plot(m1, pars = "sig") 
+stanplot(m1, pars = "r_", type = "intervals")
+```
+
+type= argument sisestamine kujul type = "intervals" võimaldab plottida erinevaid diagnostilisi näitajaid type = "intervals" type argumendi lubatud sisendid on hist, dens, hist_by_chain, dens_overlay, violin, intervals, areas, acf, acf_bar,trace, trace_highlight, scatter, rhat, rhat_hist, neff, neff_hist nuts_acceptance, nuts_divergence, nuts_stepsize, nuts_treedepth ja nuts_energy.
+
+posteeriorid ahela kaupa:
+```{r}
+stanplot(m1, type = "dens_overlay")
 ```
 
 ### 7. korjame ahelad andmeraami ja plotime fititud koefitsiendid CI-dega
+
+
+```{r}
+stanplot(m1, pars = "r_|b_|sd|sigma")
+```
+
+Aga bayesplot::mcmc_intervals() näitab ka neid. Selleks, et oma mudel sellesse funktsiooni suunata, peame kõigepealt oma mudeli fiti (koefitsientide posterioorsed valimid) andmeraamiks konverteerima.
 
 ```{r}
 model <- m1$fit %>% as.data.frame() 
@@ -252,6 +274,7 @@ pars <- names(model2)
 mcmc_intervals(model2, pars=pars[-length(pars)])
 mcmc_areas(model2,  pars=c("b_Petal.Length", "b_Sepal.Width"))
 ```
+
 
 bayesi versioon r-ruudust - kui suurt osa koguvarieeruvusest suudavad mudeli prediktorid seletada
 ```{r}
@@ -327,6 +350,43 @@ plot(marginal_effects(m2, effects = "Petal.Length", conditions = conditions, re_
 ```
 
 
+tavaline interaktsioonimudel, aga pidevatele muutujatele.
+
+```{r eval=FALSE}
+m4 <- brm(Sepal.Length~Petal.Length + Sepal.Width + Petal.Length*Sepal.Width, 
+          data= iris, 
+          prior = prior, 
+          family = gaussian,
+          warmup = 1000, 
+          iter = 2000, 
+          chains = 3,
+          cores = 4,
+          control = list(adapt_delta = 0.95))
+write_rds(m4, path = "m4.fit")
+```
+
+
+```{r}
+m4 <- read_rds("m4.fit")
+```
+
+Kõigepealt plotime mudeli ennustused, kuidas Sepal Length sõltub Petal Length-ist kolmel erineval Sepal width väärtusel. Ja siis sümmeetriliselt vastupidi.
+```{r}
+plot(marginal_effects(m4, 
+                      effects = "Petal.Length:Sepal.Width"),
+     points = T)
+plot(marginal_effects(m4, 
+                      effects = "Sepal.Width:Petal.Length"),
+     points = T)
+```
+
+Siin lisame enda soovitud Sepal Width väärtused (5 ja 1.2), mis on väljaspool seda, mida loodus pakub. Pane tähele ennustuse laiu CI-sid.
+```{r}
+conditions <- data.frame(Sepal.Width = c(5, 1.2))
+plot(marginal_effects(m4, effects = "Petal.Length", conditions = conditions, re_formula = NULL), points= TRUE)
+```
+
+
 ####Alternatiivne tee:
 
 Teeme tabeli nende väärtustega, millele tahame mudeli ennustusi. Tabelis newx on spetsifitseeritud mudeli kõikide X muutujate väärtused! Me ennustame Y väärtusi paljudel meie poolt võrdse vahemaaga ette antud petal length väärtustel, kusjuures me hoiame sepal width väärtuse alati konstantsena tema valimi keskmisel väärtusel ja vaatame ennustusi eraldi kahele liigile kolmest. Liigid on mudeli madala taseme osad, seega kasutame ennustuste tegemisel mudeli kõikide tasemete koefitsiente.
@@ -362,8 +422,33 @@ ggplot(data = predict_interval_brms2, aes(x = Petal.Length, y = Estimate)) +
   ggthemes::theme_tufte()
 ```
 
+Ennustav plot - kuidas lähevad kokku mudeli ennustused reaalsete y-i andmepunktidega
+```{r}
+pr <- predict(m2) %>% cbind(iris)
 
-Sama, aga nüüd plotime usaldusintervalli mudeli fitile (**keskmisele** Y väärtusele igal määratud X-i väärtusel), mitte Y- ennustusele andmepunkti kaupa. Selleks on hea fitted() funktsioon. Me ennustame m2 mudelist vastavalt newdata parameetriväärtustele. Kui me newdata argumendi tühjaks jätame, siis võtab fitted() selleks automaatselt algse iris tabeli (ehk valimi väärtused). 
+ggplot(pr, aes(Sepal.Length, Estimate, color=Species))+
+  geom_pointrange(aes(ymin = Q2.5, ymax = Q97.5), alpha=0.5, size=0.2) +
+  geom_abline(intercept = 0, slope = 1, lty = 2) +
+  coord_cartesian( xlim=c( 4, 8 ), ylim=c( 4, 8 ))+
+  ggthemes::theme_tufte()
+```
+
+Igae andmepunktile - kui palju erineb selle residuaal 0-st - st kui hästi ennustab mudel just seda andmepunkti. Ruumi kokkuhoiuks plotime välja ainult irise esimele 50-le andmepunktile.
+```{r fig.width=3}
+re <- residuals(m2) %>% cbind(iris)
+re$indeks <- 1:nrow(re)
+
+ggplot(re[1:50,], aes(x = Estimate, y = reorder(indeks, Estimate))) +
+  geom_vline(xintercept = 0, lty = 2) +
+  geom_point(size=1) +
+  geom_errorbarh(aes(xmin = Q2.5, xmax = Q97.5), color = "red", size =0.2) +
+  theme(text = element_text(size = 7), axis.title.y = element_blank())+
+  xlab("residuals (95 CI)")
+```
+
+Ok, isendid nr 15 ja 37 paistavad olema palju väiksema Sepal Lengthiga kui mudel ennustab. Võib küsida, miks?
+
+Nüüd plotime usaldusintervalli mudeli fitile (**keskmisele** Y väärtusele igal määratud X-i väärtusel), mitte Y- ennustusele andmepunkti kaupa. Selleks on hea fitted() funktsioon. Me ennustame m2 mudelist vastavalt newdata parameetriväärtustele. Kui me newdata argumendi tühjaks jätame, siis võtab fitted() selleks automaatselt algse iris tabeli (ehk valimi väärtused). 
 
 ```{r}
 predict_interval_brms2f <- fitted(m2, newdata = newx, re_formula = NULL) %>%
