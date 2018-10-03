@@ -27,5 +27,6 @@ Imports:
     inline,
     skimr,
     psych,
-    ggeffects
+    ggeffects,
+    mice
 Remotes: rstudio/bookdown

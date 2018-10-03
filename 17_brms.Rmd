@@ -687,13 +687,12 @@ selle mudeli spetsifitseerimiseks pole vaja teha muud, kui õelda brm() argument
 
 zinb data: mitu kala turist püüab.
 
-nofish livebait camper persons child         xb         zg count
-1      1        0      0       1     0 -0.8963146  3.0504048     0
-2      0        1      1       1     0 -0.5583450  1.7461489     0
+```{r}
+zinb <- read_csv("http://stats.idre.ucla.edu/stat/data/fish.csv")
+zinb
+```
 
 ```{r eval=FALSE}
-zinb <- read.csv("http://stats.idre.ucla.edu/stat/data/fish.csv")
-
 brm(count ~ persons + child + camper, 
                  data = zinb, family = zero_inflated_poisson())
 ```
@@ -727,7 +726,7 @@ x0 kuni x3 on prediktorid, fac on faktor veerg, mis indikeerib nested andmestruk
 ```{r}
 fit_smooth1 <- brm(
   bf(y ~ s(x1) + s(x2) + (1|fac), sigma ~ s(x0) + (1|fac)),
-  data = dat_smooth, family = gaussian())
+  data = dat_smooth, family = gaussian()
 )
 ```
 
@@ -737,7 +736,7 @@ fit_smooth1 <- brm(
 näit prediktor muutuja: suitsetab palju - vähe - väga vähe.
 me ei eelda, et 3 taset oleks üksteisest sama kaugel - ei modelleeri seda pideva muutujana.
 
-```{r}
+```{r, eval=FALSE}
 fit1 <- brm(y ~ mo(x), data = d)
 ```
 
@@ -759,7 +758,7 @@ marginal_effects(fit5, "x:age")
 
 
 mitmetasemelised monotoonilised mudelid
-```{r}
+```{r, eval=FALSE}
 fit6 <- brm(y ~ mo(x)*age + (mo(x) | city), data = d)
 ```
 
