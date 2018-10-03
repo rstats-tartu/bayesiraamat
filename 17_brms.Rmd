@@ -641,7 +641,7 @@ x0 kuni x3 on prediktorid, fac on faktor veerg, mis indikeerib nested andmestruk
 ```{r}
 fit_smooth1 <- brm(
   bf(y ~ s(x1) + s(x2) + (1|fac), sigma ~ s(x0) + (1|fac)),
-  data = dat_smooth, family = gaussian())
+  data = dat_smooth, family = gaussian()
 )
 ```
 
