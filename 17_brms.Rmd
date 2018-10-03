@@ -603,12 +603,9 @@ selle mudeli spetsifitseerimiseks pole vaja teha muud, kui õelda brm() argument
 zinb data: mitu kala turist püüab.
 
 ```{r}
-zinb <- read.csv("http://stats.idre.ucla.edu/stat/data/fish.csv")
+zinb <- read_csv("http://stats.idre.ucla.edu/stat/data/fish.csv")
+zinb
 ```
-
-nofish livebait camper persons child         xb         zg count
-1      1        0      0       1     0 -0.8963146  3.0504048     0
-2      0        1      1       1     0 -0.5583450  1.7461489     0
 
 ```{r eval=FALSE}
 brm(count ~ persons + child + camper, 
