@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="keerulisemate-mudelitega-tootamine.html">
-<link rel="next" href="bayesi-ja-sagedusliku-statistika-vordlus.html">
+<link rel="next" href="brms.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -123,39 +123,57 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="kuidas-naevad-valja-teie-andmed.html"><a href="kuidas-naevad-valja-teie-andmed.html#muutujate-koosvarieeruvus"><i class="fa fa-check"></i>Muutujate koosvarieeruvus</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html"><i class="fa fa-check"></i><b>4</b> Lineaarsed mudelid</a><ul>
+<li class="chapter" data-level="4.1" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#sirge-vorrand"><i class="fa fa-check"></i><b>4.1</b> Sirge võrrand</a></li>
 <li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#ennustus-lineaarsest-mudelist"><i class="fa fa-check"></i>Ennustus lineaarsest mudelist</a></li>
 <li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#neli-moistet"><i class="fa fa-check"></i>Neli mõistet</a></li>
 <li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#mudeli-fittimine"><i class="fa fa-check"></i>Mudeli fittimine</a></li>
 <li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#ule--ja-alafittimine"><i class="fa fa-check"></i>Üle- ja alafittimine</a></li>
-<li class="chapter" data-level="4.1" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#regressioonimudelite-eeldused"><i class="fa fa-check"></i><b>4.1</b> Regressioonimudelite eeldused</a></li>
-<li class="chapter" data-level="4.2" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#andmete-transformeerimine"><i class="fa fa-check"></i><b>4.2</b> Andmete transformeerimine</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#logaritmimine"><i class="fa fa-check"></i><b>4.2.1</b> Logaritmimine</a></li>
-<li class="chapter" data-level="4.2.2" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#standardiseerimine"><i class="fa fa-check"></i><b>4.2.2</b> Standardiseerimine</a></li>
-<li class="chapter" data-level="4.2.3" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#tsentreerimine"><i class="fa fa-check"></i><b>4.2.3</b> tsentreerimine</a></li>
-<li class="chapter" data-level="4.2.4" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#mudeli-koefitsientide-transformeerimine"><i class="fa fa-check"></i><b>4.2.4</b> mudeli koefitsientide transformeerimine</a></li>
-<li class="chapter" data-level="4.2.5" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#korrelatsioonikoefitsiendi-arvutamine-regressioonikoefitsientidest"><i class="fa fa-check"></i><b>4.2.5</b> korrelatsioonikoefitsiendi arvutamine regressioonikoefitsientidest</a></li>
-<li class="chapter" data-level="4.2.6" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#pidev-voi-diskreetne-muutuja"><i class="fa fa-check"></i><b>4.2.6</b> pidev või diskreetne muutuja?</a></li>
+<li class="chapter" data-level="4.2" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#regressioonimudelite-eeldused"><i class="fa fa-check"></i><b>4.2</b> Regressioonimudelite eeldused</a></li>
+<li class="chapter" data-level="4.3" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#andmete-transformeerimine"><i class="fa fa-check"></i><b>4.3</b> Andmete transformeerimine</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#logaritmimine"><i class="fa fa-check"></i><b>4.3.1</b> Logaritmimine</a></li>
+<li class="chapter" data-level="4.3.2" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#standardiseerimine"><i class="fa fa-check"></i><b>4.3.2</b> Standardiseerimine</a></li>
+<li class="chapter" data-level="4.3.3" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#tsentreerimine"><i class="fa fa-check"></i><b>4.3.3</b> tsentreerimine</a></li>
+<li class="chapter" data-level="4.3.4" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#mudeli-koefitsientide-transformeerimine"><i class="fa fa-check"></i><b>4.3.4</b> mudeli koefitsientide transformeerimine</a></li>
+<li class="chapter" data-level="4.3.5" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#korrelatsioonikoefitsiendi-arvutamine-regressioonikoefitsientidest"><i class="fa fa-check"></i><b>4.3.5</b> korrelatsioonikoefitsiendi arvutamine regressioonikoefitsientidest</a></li>
+<li class="chapter" data-level="4.3.6" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#pidev-voi-diskreetne-muutuja"><i class="fa fa-check"></i><b>4.3.6</b> pidev või diskreetne muutuja?</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#uldised-printsiibid"><i class="fa fa-check"></i><b>4.3</b> Üldised printsiibid</a></li>
+<li class="chapter" data-level="4.4" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#uldised-printsiibid"><i class="fa fa-check"></i><b>4.4</b> Üldised printsiibid</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="kaks-lineaarse-mudeli-laiendust.html"><a href="kaks-lineaarse-mudeli-laiendust.html"><i class="fa fa-check"></i><b>5</b> Kaks lineaarse mudeli laiendust</a><ul>
 <li class="chapter" data-level="" data-path="kaks-lineaarse-mudeli-laiendust.html"><a href="kaks-lineaarse-mudeli-laiendust.html#mitme-soltumatu-prediktoriga-mudel"><i class="fa fa-check"></i>Mitme sõltumatu prediktoriga mudel</a></li>
 <li class="chapter" data-level="" data-path="kaks-lineaarse-mudeli-laiendust.html"><a href="kaks-lineaarse-mudeli-laiendust.html#interaktsioonimudel"><i class="fa fa-check"></i>Interaktsioonimudel</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="veamudel.html"><a href="veamudel.html"><i class="fa fa-check"></i><b>6</b> Veamudel</a><ul>
-<li class="chapter" data-level="" data-path="veamudel.html"><a href="veamudel.html#enimkasutatud-veamudel-on-normaaljaotus"><i class="fa fa-check"></i>Enimkasutatud veamudel on normaaljaotus</a></li>
+<li class="chapter" data-level="6" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><i class="fa fa-check"></i><b>6</b> Vähimruutude meetodiga fititud mudelite töövoog – lm()</a><ul>
+<li class="chapter" data-level="6.1" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#vaatame-mudeli-koefitsiente"><i class="fa fa-check"></i><b>6.1</b> 1. vaatame mudeli koefitsiente</a></li>
+<li class="chapter" data-level="6.2" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#testime-mudeli-eeldusi"><i class="fa fa-check"></i><b>6.2</b> 2. Testime mudeli eeldusi</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#lineaarsus---residuaalidfitted-plot"><i class="fa fa-check"></i><b>6.2.1</b> Lineaarsus - residuaalid~fitted plot</a></li>
+<li class="chapter" data-level="6.2.2" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#cooki-kaugus---outlierid"><i class="fa fa-check"></i><b>6.2.2</b> Cooki kaugus - outlierid</a></li>
+<li class="chapter" data-level="6.2.3" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#mojukuse-plot"><i class="fa fa-check"></i><b>6.2.3</b> Mõjukuse plot</a></li>
+<li class="chapter" data-level="6.2.4" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#residuaalide-normaalsus---qq-plot"><i class="fa fa-check"></i><b>6.2.4</b> Residuaalide normaalsus - qq plot</a></li>
+<li class="chapter" data-level="6.2.5" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#homoskedastilisus---scale-location-plot"><i class="fa fa-check"></i><b>6.2.5</b> Homoskedastilisus - Scale-location plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#residuaalid-y-ja-x-muutujate-vastu"><i class="fa fa-check"></i><b>6.3</b> Residuaalid y ja x muutujate vastu</a></li>
+<li class="chapter" data-level="6.4" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#teeme-mudeli-pohjal-ennustusi-marginal-plots"><i class="fa fa-check"></i><b>6.4</b> 3. Teeme mudeli põhjal ennustusi (marginal plots)</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#vordleme-mudeleid"><i class="fa fa-check"></i><b>6.4.1</b> 4. Võrdleme mudeleid</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="veamudel.html"><a href="veamudel.html"><i class="fa fa-check"></i><b>7</b> Veamudel</a><ul>
+<li class="chapter" data-level="7.1" data-path="veamudel.html"><a href="veamudel.html#lihtne-varieeruvuse-mudel"><i class="fa fa-check"></i><b>7.1</b> Lihtne varieeruvuse mudel</a></li>
+<li class="chapter" data-level="7.2" data-path="veamudel.html"><a href="veamudel.html#protsessimudel-ja-veamudel-lineaarses-regressioonis"><i class="fa fa-check"></i><b>7.2</b> protsessimudel ja veamudel lineaarses regressioonis</a></li>
+<li class="chapter" data-level="" data-path="veamudel.html"><a href="veamudel.html#enimkasutatud-veamudel-on-normaaljaotus"><i class="fa fa-check"></i>Enimkasutatud veamudel on normaaljaotus</a><ul>
 <li class="chapter" data-level="" data-path="veamudel.html"><a href="veamudel.html#normaaljaotuse-mudel-vaikestel-valimitel"><i class="fa fa-check"></i>Normaaljaotuse mudel väikestel valimitel</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="veamudel.html"><a href="veamudel.html#normaaljaotuse-ja-lognormaaljaotuse-erilisus"><i class="fa fa-check"></i>Normaaljaotuse ja lognormaaljaotuse erilisus</a></li>
-<li class="chapter" data-level="6.1" data-path="veamudel.html"><a href="veamudel.html#teised-veamudelid"><i class="fa fa-check"></i><b>6.1</b> Teised veamudelid</a><ul>
-<li class="chapter" data-level="6.1.1" data-path="veamudel.html"><a href="veamudel.html#lognormaaljaotus"><i class="fa fa-check"></i><b>6.1.1</b> Lognormaaljaotus</a></li>
-<li class="chapter" data-level="6.1.2" data-path="veamudel.html"><a href="veamudel.html#binoomjaotus"><i class="fa fa-check"></i><b>6.1.2</b> Binoomjaotus</a></li>
-<li class="chapter" data-level="6.1.3" data-path="veamudel.html"><a href="veamudel.html#poissoni-jaotus"><i class="fa fa-check"></i><b>6.1.3</b> Poissoni jaotus</a></li>
+<li class="chapter" data-level="7.3" data-path="veamudel.html"><a href="veamudel.html#teised-veamudelid"><i class="fa fa-check"></i><b>7.3</b> Teised veamudelid</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="veamudel.html"><a href="veamudel.html#lognormaaljaotus"><i class="fa fa-check"></i><b>7.3.1</b> Lognormaaljaotus</a></li>
+<li class="chapter" data-level="7.3.2" data-path="veamudel.html"><a href="veamudel.html#binoomjaotus"><i class="fa fa-check"></i><b>7.3.2</b> Binoomjaotus</a></li>
+<li class="chapter" data-level="7.3.3" data-path="veamudel.html"><a href="veamudel.html#poissoni-jaotus"><i class="fa fa-check"></i><b>7.3.3</b> Poissoni jaotus</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="eda-eksploratoorne-andmeanaluus.html"><a href="eda-eksploratoorne-andmeanaluus.html"><i class="fa fa-check"></i><b>7</b> EDA — eksploratoorne andmeanalüüs</a><ul>
-<li class="chapter" data-level="7.1" data-path="eda-eksploratoorne-andmeanaluus.html"><a href="eda-eksploratoorne-andmeanaluus.html#eda-kokkuvote"><i class="fa fa-check"></i><b>7.1</b> EDA kokkuvõte</a></li>
+<li class="chapter" data-level="8" data-path="eda-eksploratoorne-andmeanaluus.html"><a href="eda-eksploratoorne-andmeanaluus.html"><i class="fa fa-check"></i><b>8</b> EDA — eksploratoorne andmeanalüüs</a><ul>
+<li class="chapter" data-level="8.1" data-path="eda-eksploratoorne-andmeanaluus.html"><a href="eda-eksploratoorne-andmeanaluus.html#eda-kokkuvote"><i class="fa fa-check"></i><b>8.1</b> EDA kokkuvõte</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html"><i class="fa fa-check"></i><b>8</b> Järeldav statistika</a><ul>
+<li class="chapter" data-level="9" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html"><i class="fa fa-check"></i><b>9</b> Järeldav statistika</a><ul>
 <li class="chapter" data-level="" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#jareldav-statistika-on-toenaosusteooria-kaepikendus"><i class="fa fa-check"></i>Järeldav statistika on tõenäosusteooria käepikendus</a><ul>
 <li class="chapter" data-level="" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#formaalsed-tuletised-toenaosusteooria-aksioomidest"><i class="fa fa-check"></i>Formaalsed tuletised tõenäosusteooria aksioomidest</a></li>
 <li class="chapter" data-level="" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#naited-toenaosusteooria-tuletiste-rakendamisest"><i class="fa fa-check"></i>Näited tõenäosusteooria tuletiste rakendamisest</a></li>
@@ -165,22 +183,22 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#andmed-ei-ole-sama-mis-tegelikkus"><i class="fa fa-check"></i>Andmed ei ole sama, mis tegelikkus</a></li>
 </ul></li>
 <li class="part"><span><b>II OSA</b></span></li>
-<li class="chapter" data-level="9" data-path="bootstrap.html"><a href="bootstrap.html"><i class="fa fa-check"></i><b>9</b> Bootstrap</a><ul>
-<li class="chapter" data-level="9.1" data-path="bootstrap.html"><a href="bootstrap.html#moned-tava-bootstrapi-paketid"><i class="fa fa-check"></i><b>9.1</b> Mõned tava-bootstrapi paketid</a></li>
+<li class="chapter" data-level="10" data-path="bootstrap.html"><a href="bootstrap.html"><i class="fa fa-check"></i><b>10</b> Bootstrap</a><ul>
+<li class="chapter" data-level="10.1" data-path="bootstrap.html"><a href="bootstrap.html#moned-tava-bootstrapi-paketid"><i class="fa fa-check"></i><b>10.1</b> Mõned tava-bootstrapi paketid</a></li>
 <li class="chapter" data-level="" data-path="bootstrap.html"><a href="bootstrap.html#bayesi-bootstrap"><i class="fa fa-check"></i>Bayesi bootstrap</a></li>
 <li class="chapter" data-level="" data-path="bootstrap.html"><a href="bootstrap.html#parameetriline-bootstrap"><i class="fa fa-check"></i>Parameetriline bootstrap</a></li>
 <li class="chapter" data-level="" data-path="bootstrap.html"><a href="bootstrap.html#bootstrappimine-ei-ole-kogu-tode"><i class="fa fa-check"></i>Bootstrappimine ei ole kogu tõde</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="bayesi-pohimote.html"><a href="bayesi-pohimote.html"><i class="fa fa-check"></i><b>10</b> Bayesi põhimõte</a><ul>
+<li class="chapter" data-level="11" data-path="bayesi-pohimote.html"><a href="bayesi-pohimote.html"><i class="fa fa-check"></i><b>11</b> Bayesi põhimõte</a><ul>
 <li class="chapter" data-level="" data-path="bayesi-pohimote.html"><a href="bayesi-pohimote.html#esimene-naide"><i class="fa fa-check"></i>Esimene näide</a></li>
 <li class="chapter" data-level="" data-path="bayesi-pohimote.html"><a href="bayesi-pohimote.html#teine-naide-sonastame-oma-probleemi-umber"><i class="fa fa-check"></i>Teine näide: sõnastame oma probleemi ümber</a></li>
 <li class="chapter" data-level="" data-path="bayesi-pohimote.html"><a href="bayesi-pohimote.html#kui-n-1"><i class="fa fa-check"></i>Kui n = 1</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="mudelite-keel.html"><a href="mudelite-keel.html"><i class="fa fa-check"></i><b>11</b> Mudelite keel</a><ul>
+<li class="chapter" data-level="12" data-path="mudelite-keel.html"><a href="mudelite-keel.html"><i class="fa fa-check"></i><b>12</b> Mudelite keel</a><ul>
 <li class="chapter" data-level="" data-path="mudelite-keel.html"><a href="mudelite-keel.html#beta-prior"><i class="fa fa-check"></i>Beta prior</a></li>
 <li class="chapter" data-level="" data-path="mudelite-keel.html"><a href="mudelite-keel.html#prioritest-uldiselt"><i class="fa fa-check"></i>Prioritest üldiselt</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="lihtne-normaaljaotuse-mudel.html"><a href="lihtne-normaaljaotuse-mudel.html"><i class="fa fa-check"></i><b>12</b> Lihtne normaaljaotuse mudel</a><ul>
+<li class="chapter" data-level="13" data-path="lihtne-normaaljaotuse-mudel.html"><a href="lihtne-normaaljaotuse-mudel.html"><i class="fa fa-check"></i><b>13</b> Lihtne normaaljaotuse mudel</a><ul>
 <li class="chapter" data-level="" data-path="lihtne-normaaljaotuse-mudel.html"><a href="lihtne-normaaljaotuse-mudel.html#kui-lai-on-meie-toeparafunktsioon"><i class="fa fa-check"></i>Kui lai on meie tõepärafunktsioon?</a></li>
 <li class="chapter" data-level="" data-path="lihtne-normaaljaotuse-mudel.html"><a href="lihtne-normaaljaotuse-mudel.html#lihtne-voi-robustne-normaalne-mudel"><i class="fa fa-check"></i>Lihtne või robustne normaalne mudel?</a></li>
 <li class="chapter" data-level="" data-path="lihtne-normaaljaotuse-mudel.html"><a href="lihtne-normaaljaotuse-mudel.html#mcmc-ahelate-kvaliteet"><i class="fa fa-check"></i>MCMC ahelate kvaliteet</a><ul>
@@ -189,33 +207,62 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="lihtne-normaaljaotuse-mudel.html"><a href="lihtne-normaaljaotuse-mudel.html#lineaarne-regressioon"><i class="fa fa-check"></i>Lineaarne regressioon</a></li>
 <li><a href="lihtne-normaaljaotuse-mudel.html#lm---vahimruutude-meetodiga-fititud-lineaarsed-mudelid"><code>lm()</code> - vähimruutude meetodiga fititud lineaarsed mudelid</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="bayesi-meetodil-lineaarse-mudeli-fittimine.html"><a href="bayesi-meetodil-lineaarse-mudeli-fittimine.html"><i class="fa fa-check"></i><b>13</b> Bayesi meetodil lineaarse mudeli fittimine</a><ul>
+<li class="chapter" data-level="14" data-path="bayesi-meetodil-lineaarse-mudeli-fittimine.html"><a href="bayesi-meetodil-lineaarse-mudeli-fittimine.html"><i class="fa fa-check"></i><b>14</b> Bayesi meetodil lineaarse mudeli fittimine</a><ul>
 <li class="chapter" data-level="" data-path="bayesi-meetodil-lineaarse-mudeli-fittimine.html"><a href="bayesi-meetodil-lineaarse-mudeli-fittimine.html#ennustused-mudelist"><i class="fa fa-check"></i>Ennustused mudelist</a></li>
 <li class="chapter" data-level="" data-path="bayesi-meetodil-lineaarse-mudeli-fittimine.html"><a href="bayesi-meetodil-lineaarse-mudeli-fittimine.html#lognormaalne-toeparamudel"><i class="fa fa-check"></i>Lognormaalne tõepäramudel</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="mitme-prediktoriga-lineaarne-regressioon.html"><a href="mitme-prediktoriga-lineaarne-regressioon.html"><i class="fa fa-check"></i><b>14</b> Mitme prediktoriga lineaarne regressioon</a><ul>
+<li class="chapter" data-level="15" data-path="mitme-prediktoriga-lineaarne-regressioon.html"><a href="mitme-prediktoriga-lineaarne-regressioon.html"><i class="fa fa-check"></i><b>15</b> Mitme prediktoriga lineaarne regressioon</a><ul>
 <li class="chapter" data-level="" data-path="mitme-prediktoriga-lineaarne-regressioon.html"><a href="mitme-prediktoriga-lineaarne-regressioon.html#miks-multivariaatsed-mudelid-head-on"><i class="fa fa-check"></i>Miks multivariaatsed mudelid head on?</a></li>
 <li class="chapter" data-level="" data-path="mitme-prediktoriga-lineaarne-regressioon.html"><a href="mitme-prediktoriga-lineaarne-regressioon.html#mudeldamine-standardiseeritud-andmetega"><i class="fa fa-check"></i>Mudeldamine standardiseeritud andmetega</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html"><i class="fa fa-check"></i><b>15</b> Keerulisemate mudelitega töötamine</a><ul>
+<li class="chapter" data-level="16" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html"><i class="fa fa-check"></i><b>16</b> Keerulisemate mudelitega töötamine</a><ul>
 <li class="chapter" data-level="" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html#predictor-residual-plots"><i class="fa fa-check"></i>Predictor residual plots</a></li>
 <li class="chapter" data-level="" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html#ennustavad-plotid"><i class="fa fa-check"></i>Ennustavad plotid</a></li>
 <li class="chapter" data-level="" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html#posterior-prediction-plots"><i class="fa fa-check"></i>Posterior prediction plots</a></li>
 <li class="chapter" data-level="" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html#interaktsioonid-prediktorite-vahel"><i class="fa fa-check"></i>Interaktsioonid prediktorite vahel</a></li>
 <li class="chapter" data-level="" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html#interaktsioonid-pidevatele-tunnustele"><i class="fa fa-check"></i>Interaktsioonid pidevatele tunnustele</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html"><i class="fa fa-check"></i><b>16</b> Mitmetasemelised mudelid</a><ul>
-<li class="chapter" data-level="16.1" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#kahetasemeline-mudel-agebra-keeles"><i class="fa fa-check"></i><b>16.1</b> kahetasemeline mudel agebra keeles</a><ul>
-<li class="chapter" data-level="16.1.1" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#aegread"><i class="fa fa-check"></i><b>16.1.1</b> Aegread</a></li>
+<li class="chapter" data-level="17" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html"><i class="fa fa-check"></i><b>17</b> Mitmetasemelised mudelid</a><ul>
+<li class="chapter" data-level="17.1" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#kahetasemeline-mudel-agebra-keeles"><i class="fa fa-check"></i><b>17.1</b> kahetasemeline mudel agebra keeles</a><ul>
+<li class="chapter" data-level="17.1.1" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#aegread"><i class="fa fa-check"></i><b>17.1.1</b> Aegread</a></li>
+<li class="chapter" data-level="17.1.2" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#temporaalne-autokorrelatsioon"><i class="fa fa-check"></i><b>17.1.2</b> Temporaalne autokorrelatsioon</a></li>
 </ul></li>
-<li class="chapter" data-level="16.2" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeline-mudel-r-i-mudelikeeles"><i class="fa fa-check"></i><b>16.2</b> mitmetasemeline mudel R-i mudelikeeles</a></li>
-<li class="chapter" data-level="16.3" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeliste-mudelite-lisaeeldused"><i class="fa fa-check"></i><b>16.3</b> Mitmetasemeliste mudelite lisaeeldused</a></li>
-<li class="chapter" data-level="16.4" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeline-mudel-tootab-korraga-mitmel-tasmel"><i class="fa fa-check"></i><b>16.4</b> Mitmetasemeline mudel töötab korraga mitmel tasmel</a></li>
+<li class="chapter" data-level="17.2" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeline-mudel-r-i-mudelikeeles"><i class="fa fa-check"></i><b>17.2</b> mitmetasemeline mudel R-i mudelikeeles</a></li>
+<li class="chapter" data-level="17.3" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeliste-mudelite-lisaeeldused"><i class="fa fa-check"></i><b>17.3</b> Mitmetasemeliste mudelite lisaeeldused</a></li>
+<li class="chapter" data-level="17.4" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeline-mudel-tootab-korraga-mitmel-tasmel"><i class="fa fa-check"></i><b>17.4</b> Mitmetasemeline mudel töötab korraga mitmel tasmel</a></li>
 <li class="chapter" data-level="" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#shrinkage"><i class="fa fa-check"></i>Shrinkage</a></li>
 <li class="chapter" data-level="" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#anova-laadne-mudel"><i class="fa fa-check"></i>ANOVA-laadne mudel</a></li>
 <li class="chapter" data-level="" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#vabad-interceptid-klassikalises-regressioonimudelis"><i class="fa fa-check"></i>Vabad interceptid klassikalises regressioonimudelis</a></li>
 <li class="chapter" data-level="" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#vabad-tousud-ja-interceptid"><i class="fa fa-check"></i>Vabad tõusud ja interceptid</a></li>
 <li class="chapter" data-level="" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#hierarhiline-mudel-pidevate-prediktoritega"><i class="fa fa-check"></i>Hierarhiline mudel pidevate prediktoritega</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="brms.html"><a href="brms.html"><i class="fa fa-check"></i><b>18</b> brms</a><ul>
+<li class="chapter" data-level="18.1" data-path="brms.html"><a href="brms.html#brms-i-toovoog"><i class="fa fa-check"></i><b>18.1</b> brms-i töövoog</a><ul>
+<li class="chapter" data-level="18.1.1" data-path="brms.html"><a href="brms.html#enne-tosist-mudeldamist-vaatame-sisse-irise-andmetabelisse"><i class="fa fa-check"></i><b>18.1.1</b> Enne tõsist mudeldamist vaatame sisse irise andmetabelisse</a></li>
+<li class="chapter" data-level="18.1.2" data-path="brms.html"><a href="brms.html#spetsifitseerime-mudeli-struktuuri-ja-vaatame-milliseid-prioreid-brms-tahab-defaultina-kasutada."><i class="fa fa-check"></i><b>18.1.2</b> 1. Spetsifitseerime mudeli struktuuri ja vaatame, milliseid prioreid brms tahab defaultina kasutada.</a></li>
+<li class="chapter" data-level="18.1.3" data-path="brms.html"><a href="brms.html#spetsifitseerime-priorid-mida-me-tegelikult-kasutada-tahame"><i class="fa fa-check"></i><b>18.1.3</b> 2. spetsifitseerime priorid, mida me tegelikult kasutada tahame</a></li>
+<li class="chapter" data-level="18.1.4" data-path="brms.html"><a href="brms.html#jooksutame-mudelit-oma-prioritega-ja-salvestame-mudeli-objekti-kovakettale."><i class="fa fa-check"></i><b>18.1.4</b> 3. Jooksutame mudelit oma prioritega ja salvestame mudeli objekti kõvakettale.</a></li>
+<li class="chapter" data-level="18.1.5" data-path="brms.html"><a href="brms.html#vordleme-mudeleid."><i class="fa fa-check"></i><b>18.1.5</b> 4. Võrdleme mudeleid.</a></li>
+<li class="chapter" data-level="18.1.6" data-path="brms.html"><a href="brms.html#vaatame-mudelite-kokkuvotet"><i class="fa fa-check"></i><b>18.1.6</b> 5. vaatame mudelite kokkuvõtet</a></li>
+<li class="chapter" data-level="18.1.7" data-path="brms.html"><a href="brms.html#plotime-posteeriorid-ja-ahelad"><i class="fa fa-check"></i><b>18.1.7</b> 6. plotime posteeriorid ja ahelad</a></li>
+<li class="chapter" data-level="18.1.8" data-path="brms.html"><a href="brms.html#korjame-ahelad-andmeraami-ja-plotime-fititud-koefitsiendid-ci-dega"><i class="fa fa-check"></i><b>18.1.8</b> 7. korjame ahelad andmeraami ja plotime fititud koefitsiendid CI-dega</a></li>
+<li class="chapter" data-level="18.1.9" data-path="brms.html"><a href="brms.html#plotime-mudeli-poolt-ennustatud-valimeid---posterior-predictive-check"><i class="fa fa-check"></i><b>18.1.9</b> 8. plotime mudeli poolt ennustatud valimeid - posterior predictive check</a></li>
+<li class="chapter" data-level="18.1.10" data-path="brms.html"><a href="brms.html#plotime-mudeli-ennustusi---marginal-effects-plots"><i class="fa fa-check"></i><b>18.1.10</b> 9. plotime mudeli ennustusi - marginal effects plots</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="brms.html"><a href="brms.html#plotime-residuaalid"><i class="fa fa-check"></i><b>18.2</b> 9. plotime residuaalid</a><ul>
+<li class="chapter" data-level="18.2.1" data-path="brms.html"><a href="brms.html#puuduvate-andmete-imputatsioon"><i class="fa fa-check"></i><b>18.2.1</b> puuduvate andmete imputatsioon</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="brms.html"><a href="brms.html#brms-mudelite-suntaks"><i class="fa fa-check"></i><b>18.3</b> brms mudelite süntaks</a></li>
+<li class="chapter" data-level="18.4" data-path="brms.html"><a href="brms.html#naited-brms-mudeliklassidest"><i class="fa fa-check"></i><b>18.4</b> Näited brms mudeliklassidest</a></li>
+<li class="chapter" data-level="18.5" data-path="brms.html"><a href="brms.html#distributsioonilised-mudelid"><i class="fa fa-check"></i><b>18.5</b> distributsioonilised mudelid</a><ul>
+<li class="chapter" data-level="18.5.1" data-path="brms.html"><a href="brms.html#erinevad-varieeruvused"><i class="fa fa-check"></i><b>18.5.1</b> erinevad varieeruvused</a></li>
+<li class="chapter" data-level="18.5.2" data-path="brms.html"><a href="brms.html#zero-inflated-mudelid"><i class="fa fa-check"></i><b>18.5.2</b> zero inflated mudelid</a></li>
+<li class="chapter" data-level="18.5.3" data-path="brms.html"><a href="brms.html#additiivsed-distributsioonilised-mudelid"><i class="fa fa-check"></i><b>18.5.3</b> additiivsed distributsioonilised mudelid</a></li>
+</ul></li>
+<li class="chapter" data-level="18.6" data-path="brms.html"><a href="brms.html#monotoonilised-efektid"><i class="fa fa-check"></i><b>18.6</b> Monotoonilised efektid</a><ul>
+<li class="chapter" data-level="18.6.1" data-path="brms.html"><a href="brms.html#multivariaatsed-mudelid"><i class="fa fa-check"></i><b>18.6.1</b> multivariaatsed mudelid</a></li>
+<li class="chapter" data-level="18.6.2" data-path="brms.html"><a href="brms.html#mittelineaarsed-mudelid"><i class="fa fa-check"></i><b>18.6.2</b> mittelineaarsed mudelid</a></li>
+</ul></li>
 </ul></li>
 <li class="appendix"><span><b>Lisa</b></span></li>
 <li class="chapter" data-level="A" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html"><i class="fa fa-check"></i><b>A</b> Bayesi ja sagedusliku statistika võrdlus</a><ul>
@@ -252,7 +299,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="mitmetasemelised-mudelid" class="section level1">
-<h1><span class="header-section-number">16</span> Mitmetasemelised mudelid</h1>
+<h1><span class="header-section-number">17</span> Mitmetasemelised mudelid</h1>
 <blockquote>
 <p>Mitmetasemeline mudel on regressioonimudel, kus andmed on struktureeritud gruppidesse ja mudeli koefitsiendid võivad erineda grupist gruppi.</p>
 </blockquote>
@@ -261,59 +308,76 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>Mitmetasemelised mudelid on eriti kasulikud, kui teil on osades klastrites vähem andmepunkte kui teistes, sest nad vaatavad andmeid korraga nii klastrite vahel kui klastrite sees ning kannavad informatsiooni üle klastritest, kus on rohkem andmepunkte, nendesse klastritesse, kus on vähe andmeid. See parandab hinnangute täpsust.</p>
 <p>Tavapärane regressioonimudel on sageli vaadeldav mitmetasandilise mudeli erijuhuna. Näiteks kujutage ette mudelit, kus laste õppedukust on mõõdetud mitmes koolis. Kui gruppide (koolide) vaheline varieeruvus on väga madal, siis annab mitmetasemeline mudel sarnase tulemuse lihtsa mudeliga, kus kõik koolid on ühte patta kokku pandud. Ja vastupidi, kui koolide vaheline varieeruvus on väga suur, võrreldes koolide sisese varieeruvusega, siis võime sama hästi modelleerida iga kooli eraldi ja teistest sõltumatult. Samuti, kui meil on andmeid väga väheste koolide kohta, siis võib mitmetasandilsest mudelist saadav kasu olla tagasihoidlik, sest meil pole piisavalt andmeid, et modelleerida koolide vahelist varieeruvust. Samuti, kui meil on iga kooli kohta piisavalt palju andmeid, siis saame iga kooli eraldi modelleerides praktiliselt sama tulemuse kui mitmetasemelisest mudelist. Muudel juhtudel on tõenäoliselt mõistlikum modelleerida õppedukust kahetasemelises mudelis, korraga õpilase tasemel ja kooli tasemel.</p>
 <div id="kahetasemeline-mudel-agebra-keeles" class="section level2">
-<h2><span class="header-section-number">16.1</span> kahetasemeline mudel agebra keeles</h2>
+<h2><span class="header-section-number">17.1</span> kahetasemeline mudel agebra keeles</h2>
 <ol style="list-style-type: decimal">
 <li>tase on õpilse tase, 2. tase on klassi tase. meil on J klassi, milles on erinev arv nj õpilasi. Iga õpilase kohta teame populaarsusindeksit (y - muutuja) ja sugu (x - muutuja). Klassi tasemel teame õpetaja staazi aastates (z - muutuja). Alustuseks on meil eraldi regressioonivõrrand igale klassile.</li>
 </ol>
-<p><span class="math display">\[y_ij = b_0j + b_1j x X_ij + e_ij\]</span></p>
+<p><span class="math display">\[y_{ij} = b_{0j} + b_{1j}X_{ij} + e_{ij}\]</span></p>
 <p>kus subskript j tähistab klassi ja i tähistab õpilast. Näit bi1 tähendab, et me fitime iga klassi kohta ühe b1 koefitsiendi. Seega eeldame, et igal klassil on erinev b0 ja b1 koefitsient. Residuaalvigadele eeldame, et mean = 0 ja e varieeruvus tuleb meil hinnata. Enamasti eeldame, et kõikide klasside varieeruvus on sama. b0 ja b1 omavad jaotust üle kõikide klasside, milledel on keskväärtus ja sd. Me modelleerime b0 ja b1 jaotusi tuues sisse klassi tasemel muutuja z:</p>
-<p>b0j = gamma00 + gamma01 x Zj + u0j</p>
-<p>b1j = gamma10 + gamma11 x Zj + u1j</p>
+<p><span class="math display">\[b_{0j} = \gamma_{00} + \gamma_{01} Z_j + u_{0j}\]</span></p>
+<p><span class="math display">\[b_{1j} = \gamma_{10} + \gamma_{11} Z_j + u_{1j}\]</span></p>
 <ol start="2" style="list-style-type: decimal">
 <li>võrrand ennustab klassi keskmist populaarsusindeksit vastavalt õpetaja staazile.</li>
 <li>võrrand ütleb, et populaarsuse ja soo seose tugevus sõltub õpetaja staazist. kui y11 &gt; 0, siis on seos seda tugevam, mida staazikam on õpetaja. u0j ja u1j on residuaalide vead klassi tasemel, mille kohta me eeldame, et mean = 0 ja sõltuamtust residuaalide vigadest õpilase tasemel (eij). u0j residuaalide vigade variance on sigma_sq_u0 jne. u0j ja u1j covariance on sigma_sq_u01 ja me ei eelda, et see = 0. Gamma koefitsiendid ei varieeru klasside vahel.</li>
 </ol>
 <p>Asendades 1. võrrandis b0j ja b1j, saame oma võrrandisüsteemi muuta üheks pikaks võrrandiks.</p>
-<p>Yij = gamma00 + gamma10 x Xij + gamma01 x Zj + gamma11 x Xij x Zj + u1j x Xij + u0j + eij</p>
-<p>Siis näeme uues võrrandis liiget gamma1 x Zj x Xij, mis on interaktsiooniliige. Ilma interaktsioonita mudel näeb välja niimodi</p>
-<p>Yij = gamma00 + gamma10 x Xij + gamma01 x Zj + u1j x Xij + u0j + eij</p>
-<p>juhusliku vealiige uij korrutub Xij-ga, mistõttu sellest tulenev totaalne viga on erinev erinevatel Xij väärtistel. Seega on meie mudel heteroskedastiline ja erineb selle poolest tavalistest lineaarsetest mudelitest, mis eeldavad homoskedastilisust e residuaalvea sõltumatust X-i väärtusest.</p>
+<p><span class="math display">\[Y_{ij} = \gamma_{00} + \gamma_{10} X_{ij} + \gamma_{01} Z_j + \gamma_{11}X_{ij} Z_j + u_{1j} X_{ij} + u_{0j} + e_{ij}\]</span></p>
+<p>Siis näeme uues võrrandis liiget <span class="math inline">\(\gamma_1 Z_j X_{ij}\)</span>, mis on interaktsiooniliige. Ilma interaktsioonita mudel näeb välja niimodi</p>
+<p><span class="math display">\[Y_{ij} = \gamma_{00} + \gamma_{10} X_{ij} + \gamma_{01} Z_j + u_{1j} X_{ij} + u_{0j} + e_{ij}\]</span></p>
+<p>juhusliku vealiige <span class="math inline">\(u_{ij}\)</span> korrutub <span class="math inline">\(X_{ij}\)</span>-ga, mistõttu sellest tulenev totaalne viga on erinev erinevatel <span class="math inline">\(X_{ij}\)</span> väärtustel. Seega on meie mudel heteroskedastiline ja erineb selle poolest tavalistest lineaarsetest mudelitest, mis eeldavad homoskedastilisust e residuaalvea sõltumatust X-i väärtusest.</p>
 <p>Teine oluline erinevus tavalisest lin mudelist on, et gupeeritud andmete puhul ei ole täidetud andmete iseseisvuse eeldus (gruppide sees modelleeritakse andmed korreleerituna - klassisisene korrelatsioon), mis muudab veapiirid liiga kitsaks. Klassisisese korrelatsiooni saame intercept-only mudelist</p>
-<p>Yij = gamma00 + uoj + eij</p>
-<p>(selle mudeli saad, kui viskad pikast mudelist välja kõik X ja Z sisaldavad liikmed.) See mudel ajab varieeruvuse lahku kahe iseseisva komponendi vahel: sigma_sq_e (1. taseme vigade variance eij) ja sigma_sq_u0 (2. taseme vigade variance u0j).</p>
+<p><span class="math display">\[Y_{ij} = \gamma_{00} + u_{0j} + e_{ij}\]</span></p>
+<p>(selle mudeli saad, kui viskad pikast mudelist välja kõik X ja Z sisaldavad liikmed.) See mudel ajab varieeruvuse lahku kahe iseseisva komponendi vahel: <span class="math inline">\(\sigma^2_e\)</span> (1. taseme vigade variance <span class="math inline">\(e_{ij}\)</span>) ja <span class="math inline">\(\sigma^2_{u0}\)</span> (2. taseme vigade variance <span class="math inline">\(u_{0j}\)</span>).</p>
 <p>Klassisisene korrelatsioon:</p>
-<p>rho = sigma_sq_u0/(sigma_sq_u0 + sigma_sq_e)</p>
+<p><span class="math display">\[\rho = \frac{\sigma^2_{u0}}{\sigma^2_{u0} + \sigma^2_e}\]</span></p>
 <p>rho annab grupistruktuuri poolt seletatud variace proportsiooni, mida võib tõlgendada kui kahe sama grupi juhusliku liikme vahelist oodatavat korrelatsiooni.</p>
-<p>Üldiselt on kasulik töötada standardiseeritud regressioonikoefitsientidega, mida saab tõlgendada sd ühikutes. Erandiks on olukord, kus anaöüüsi eesmärk on võrrelda erinevaid sampleid omavahel. Enamasti on kasulik standardiseerida andmed, mis mudelisse sisse lähevad, aga on võimalik ka standardiseerida koefitsiente kui selliseid.</p>
+<p>Üldiselt on kasulik töötada standardiseeritud regressioonikoefitsientidega, mida saab tõlgendada sd ühikutes. Erandiks on olukord, kus analüüsi eesmärk on võrrelda erinevaid valimeid omavahel. Enamasti on kasulik standardiseerida andmed, mis mudelisse sisse lähevad, aga on võimalik ka standardiseerida koefitsiente kui selliseid.</p>
 <p>st_coef = (unstand_coef x sd(X))/sd(Y)</p>
-<p>Standardiseeritud andmete kasutamine muudab totaalselt varieeruvuskompnmentide fitte, aga jätab b koefitsientide fitid olemuselt samaks (see kehtib X-muutujate suvaliste lineaarsete transformatsioonide korral). Kui me jagame X-muutuja 2-ga, siis uus b1 = vana b1 x 2. Mudeli poolt seletamata varieeruvuse proportsioon ei muutu. Eelnev kehtib aga ainult niikaua, kui mudeli tõusud (b1) ei ole vabaks lastud - st need ei varieeru klassist klassi.</p>
-<p>Tsentreerimine (xi - mean(x)) mõjutab b0, aga mitte b1 koefitsiente, mis võib rääkida selle meetodi kasuks üle standardiseerimise ((xi - mean(x))/sd(x)), mis tekitab X muutujate jaotused, mille mean = 0 ja sd = 1.</p>
+<p>Standardiseeritud andmete kasutamine muudab totaalselt varieeruvuskompnmentide fitte, aga jätab b koefitsientide fitid olemuselt samaks (see kehtib X-muutujate suvaliste lineaarsete transformatsioonide korral). Kui me jagame X-muutuja 2-ga, siis uus b1 = vana b1 x 2. Mudeli poolt seletamata varieeruvuse proportsioon ei muutu. Eelnev kehtib kuni mudeli tõusud (b1) ei ole vabaks lastud - st need ei varieeru klassist klassi.</p>
+<p>Tsentreerimine (<span class="math inline">\(x_i - mean(x)\)</span>) mõjutab b0 aga mitte b1 koefitsiente, mis võib rääkida selle meetodi kasuks üle standardiseerimise ((<span class="math inline">\(\frac {x_i - mean(x)}{sd(x)}\)</span>), mis tekitab X muutujate jaotused, mille mean = 0 ja sd = 1.</p>
 <p>NB! grupi tasemel tsentreerimine, ehki vahest kasulik, töötab hoopis teistmoodi kui üle kõikide gruppide tsentreerimine ja viib täiesti erineva mudelini - sellest tuleks hoiduda, senikaua kui te ei tea täpselt, mida te teete.</p>
 <div id="aegread" class="section level3">
-<h3><span class="header-section-number">16.1.1</span> Aegread</h3>
+<h3><span class="header-section-number">17.1.1</span> Aegread</h3>
 <p>Aegridasid saab analüüsida mitmetasemilisena, kus korduvad mõõtmised (1. tase) on grupeeritud indiviidide sisse (2. tase). Nii saab analüüsida ka ebaühtlase ajavahemiku järel tehtud mõõtmisi.</p>
-<p><span class="math inline">\(Y_ti\)</span> - indiviidi i õpitulemus ajapunktis t.</p>
-<p><span class="math inline">\(T_ti\)</span> - ajapunkt</p>
-<p><span class="math inline">\(X_ti\)</span> - ajas muutuv covariaat - kas õpilane töötab</p>
+<p><span class="math inline">\(Y_{ti}\)</span> - indiviidi i õpitulemus ajapunktis t.</p>
+<p><span class="math inline">\(T_{ti}\)</span> - ajapunkt</p>
+<p><span class="math inline">\(X_{ti}\)</span> - ajas muutuv covariaat - kas õpilane töötab</p>
 <p><span class="math inline">\(Z_t\)</span> - ajast mittesõltuv kovariaat - sugu</p>
 <ol style="list-style-type: decimal">
 <li>tase (indiviidi tase):</li>
 </ol>
-<p>$Y_ti = _0i + _1i x T_ti + _2i x X_ti + e_ti $</p>
+<p><span class="math display">\[Y_{ti} = \pi_{0i} + \pi_{1i} x T_{ti} + \pi_{2i} X_{ti} + e_{ti} \]</span></p>
 <ol start="2" style="list-style-type: decimal">
 <li>tase (üle indiviidie):</li>
 </ol>
-<p><span class="math inline">\(\pi_0i = \beta_00 + \beta_01 x Z_t + u_01\)</span></p>
-<p><span class="math inline">\(\pi_1i =\beta_10 + \beta_11 x Z_t + u_1i\)</span></p>
-<p><span class="math inline">\(\pi_2i = \beta_20 + \beta_21 x Z_t + u_21\)</span></p>
-<p>Oluline punkt: aegridade modelleerimisel pakub meile sageli huvi ka kaoorelatsioon mudeli slope ja intercepti vahel. Kahjuks sõltub see näitaja sellest, millises skaalas me ajamuutuja sisse anname. Oluline on tagada, et ajaskaala nullpunkt on selgelt mõtekas.</p>
-<p>To model growth - polynomial, logistic curve (first slow change, then quick, then slow again S curve).logistic parameters have meaning! cubic polynomial approximates logistic and exponential curves - but here interpretation is on the level of some predicted growth curves.</p>
+<p><span class="math display">\[\pi_{0i} = \beta_{00} + \beta_{01} Z_t + u_{01}\]</span></p>
+<p><span class="math display">\[\pi_{1i} =\beta_{10} + \beta_{11} Z_t + u_{1i}\]</span></p>
+<p><span class="math display">\[\pi_{2i} = \beta_{20} + \beta_{21} Z_t + u_{21}\]</span></p>
+<p>Oluline punkt: aegridade modelleerimisel pakub meile sageli huvi ka ka korrelatsioon mudeli tõusu ja intercepti vahel. Kahjuks sõltub see näitaja sellest, millises skaalas me ajamuutuja mudelisse sisse anname. Oluline on tagada, et ajaskaala nullpunkt on mõtekas.</p>
+<p>To model growth - polynomial, logistic curve (first slow change, then quick, then slow again). Logistic parameters have meaning! Cubic polynomial approximates logistic and exponential curves - but here interpretation is on the level of some predicted growth curves.</p>
 <p><a href="https://facebook.github.io/prophet" class="uri">https://facebook.github.io/prophet</a> sessoonsete andmete fittimine ennustavasse mudelisse</p>
 <p><a href="https://github.com/nwfsc-timeseries" class="uri">https://github.com/nwfsc-timeseries</a> kogu aegridade analüüsi pakette</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(coda)
+<span class="co">#library(R2jags)</span>
+<span class="kw">library</span>(gridExtra)
+<span class="kw">library</span>(broom)</code></pre></div>
+</div>
+<div id="temporaalne-autokorrelatsioon" class="section level3">
+<h3><span class="header-section-number">17.1.2</span> Temporaalne autokorrelatsioon</h3>
+<p>eeldus: Mida lähemal on 2 ajapunkti üksteisele, seda suurem on nende vaheline korrelatsioon (ja residuaalide vaheline korrelatsioon). Tavaline lm eeldab, et see korrelatsioon = 0. Seda korrelatsiooni saab kas hinnata, või selle vastu võidelda. Meie teeme siin viimast.</p>
+<p>Brms mudel näeb välja niimoodi</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data.temporalCor.brms &lt;-<span class="st">  </span><span class="kw">brm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> d, 
+                              <span class="dt">autocor =</span> <span class="kw">cor_ar</span>(<span class="dt">formula =</span> <span class="op">~</span>year))</code></pre></div>
+<p>cor_ar() on brms funktsioon autokorrelatsiooni modelleerimiseks. selle formula on ühepoolne valem ~t või ~ t | g, mis annab ajakovariaadi t ja grupeeriva faktori g. Kui g on antud, siis modelleeritakse iga grupp iseseisvalt ja teistest gruppidest sõltumata (gruppide vahel on korrelatsioon 0).</p>
+<p>A covariate for this correlation structure must be integer valued. When a grouping factor is present in formula, the correlation structure is assumed to apply only to observations within the same grouping level; observations with different grouping levels are assumed to be uncorrelated. Defaults to ~ 1, which corresponds to using the order of the observations in the data as a covariate, and no groups.</p>
+<p>Teine võimalus inkorporeerib mudelisse AR1 residuaalide autokorrelatsioonistruktuuri, kus korrelatsiooni eksponent väheneb ajas lineaarselt. Me eeldame, et see vähenemine toimub samamoodi sõltumata sellest, millises ajavahemikus me parasjagu oleme (statsionaarsuse eeldus).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data.temporalCor.brms =<span class="st"> </span><span class="kw">brm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> d, 
+                            <span class="dt">autocor =</span> <span class="kw">cor_ar</span>( <span class="op">~</span>year, <span class="dt">cov =</span> <span class="ot">TRUE</span>))</code></pre></div>
+<p>Lihtsuse mõttes eeldame, et iga ajapunkti oodatud väärtus = tavaline lin prediktor + autokorrelatsiooni parameeter (<span class="math inline">\(ρ\)</span>) korrutatuna eelmise vaatluse residuaaliga + tavapärane sõltumatu müra (<span class="math inline">\(σ^2\)</span>).</p>
 </div>
 </div>
 <div id="mitmetasemeline-mudel-r-i-mudelikeeles" class="section level2">
-<h2><span class="header-section-number">16.2</span> mitmetasemeline mudel R-i mudelikeeles</h2>
+<h2><span class="header-section-number">17.2</span> mitmetasemeline mudel R-i mudelikeeles</h2>
 <p>Kui meie muutujad andmetabelis “data” on y = õpilase testiskoor, x = katsetingimus (binaarne faktor katse-kontroll, kalamaksaöli - platseebo), ja kool, siis “ühepajamudel” väljendub R-i mudelikeeles:</p>
 <p><code>mudel &lt;- lm(y ~ x, data=data)</code></p>
 <p>ja mudel, kus iga kool on eraldi modelleeritud:</p>
@@ -337,11 +401,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </blockquote>
 </div>
 <div id="mitmetasemeliste-mudelite-lisaeeldused" class="section level2">
-<h2><span class="header-section-number">16.3</span> Mitmetasemeliste mudelite lisaeeldused</h2>
+<h2><span class="header-section-number">17.3</span> Mitmetasemeliste mudelite lisaeeldused</h2>
 <p>Mitmetasandilised mudelid toovad sisse lisaeelduse, et lineaarsuse/normaalsuse jm eeldused kehtivad igal mudeli tasemel. Samuti, et kõik grupid tulevad samast statistilisest populatsioonist, ja vastavalt sellele on nad mudelis koondatud ühise priori alla. Mitmetasemelises mudelis töötab grupi tasemel mudel priorina indiviidi tasemel mudelile.</p>
 </div>
 <div id="mitmetasemeline-mudel-tootab-korraga-mitmel-tasmel" class="section level2">
-<h2><span class="header-section-number">16.4</span> Mitmetasemeline mudel töötab korraga mitmel tasmel</h2>
+<h2><span class="header-section-number">17.4</span> Mitmetasemeline mudel töötab korraga mitmel tasmel</h2>
 <p>Mudeli muudab mitmetasemeliseks see, et me määrame veamudelit kasutades mitte ainult indiviidi tasemel koefitsiente (1. tase), vaid anname neile koefitsientidele omakorda veamudeli (2. tase), mis modelleerib koefitsientide varieeruvust gruppide vahel. Selliseid tasemeid võib lisada põhimõtteliselt ükskõik kui palju. Kõrgema taseme mudel, lisaks sellele, et modelleerida gruppide vahelist varieeruvust, töötab ka priorina madalama taseme suhtes. Seega saab mudeli fittimisel 2. tase informatsiooni 1. tasemelt (andmete näol) ja samal ajal annab informatsiooni esimesele tasemele (priori kujul).</p>
 <ol style="list-style-type: decimal">
 <li><p>Mitmetasemelised mudelid modelleerivad eksplitsiitselt varieeruvust klasrtite sees ja klastrite vahel.</p></li>
@@ -425,10 +489,10 @@ schools &lt;-<span class="st"> </span>schools <span class="op">%&gt;%</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">compare</span>(schoolm2, schoolm3)</code></pre></div>
 <p>Siit nähtub, et m3 on parim mudel, aga ka m2 omab mingit kaalu.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coeftab_plot</span>(<span class="kw">coeftab</span>(schoolm2, schoolm3), <span class="dt">cex =</span> <span class="fl">0.5</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
-<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-11-1.png" alt="Mudelite koefitsiendid." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-14"></span>
+<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-14-1.png" alt="Mudelite koefitsiendid." width="70%" />
 <p class="caption">
-Joonis 4.5: Mudelite koefitsiendid.
+Joonis 4.6: Mudelite koefitsiendid.
 </p>
 </div>
 <p>Siin on hästi näha shrinkage m3 puhul võrreldes m2-ga, mis ei tee multiple testingu korrektsiooni. Nende koolide puhul, kus usaldusintervall on laiem, on ka suurem shrinkage (mudel võtab nende kohta suhteliselt rohkem infot teistest koolidest sest need koolid ise on mingil põhjusel suhteliselt infovaesed).</p>
@@ -477,10 +541,10 @@ Joonis 4.5: Mudelite koefitsiendid.
 <span class="co">#glimmer converts factors to Stan-eatable form.</span></code></pre></div>
 <p>Siin on v_Intercept kooli-spetsiifiline korrektsioonifaktor, mis tuleb liita üldisele Interceptile. mean(v_Intercept) == 0. Me eeldame, et korrektsioonid on normaaljaotusega. Alternatiivne viis seda mudelit kirjutada oleks <code>mu &lt;- Intercept[school] + b_sex1*sex1</code> ja see töötab smamoodi (nüüd on iga kooli intercept kohe eraldi).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">precis</span>(schools_m1, <span class="dt">depth =</span> <span class="dv">2</span>), <span class="dt">cex =</span> <span class="fl">0.5</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-17"></span>
-<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-17-1.png" alt="Mudeli koefitsiendid" width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-20"></span>
+<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-20-1.png" alt="Mudeli koefitsiendid" width="70%" />
 <p class="caption">
-Joonis 12.7: Mudeli koefitsiendid
+Joonis 14.2: Mudeli koefitsiendid
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">precis</span>(schools_m1)
@@ -503,10 +567,10 @@ school_2_girls &lt;-<span class="st"> </span>schools_m1_samples<span class="op">
 <span class="st">  </span>schools_m1_samples<span class="op">$</span><span class="st">`</span><span class="dt">v_Intercept[2]</span><span class="st">`</span>
 ## Plot density histogram of intercepts
 <span class="kw">dens</span>(school_2_girls)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-19"></span>
-<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-19-1.png" alt="Tüdrukute skoori posteerior" width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-22"></span>
+<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-22-1.png" alt="Tüdrukute skoori posteerior" width="70%" />
 <p class="caption">
-Joonis 12.9: Tüdrukute skoori posteerior
+Joonis 17.1: Tüdrukute skoori posteerior
 </p>
 </div>
 <p>Ja Poiste oma</p>
@@ -514,10 +578,10 @@ Joonis 12.9: Tüdrukute skoori posteerior
 <span class="st">  </span>schools_m1_samples<span class="op">$</span><span class="st">`</span><span class="dt">v_Intercept[2]</span><span class="st">`</span>
 ## Plot density histogram of intercepts
 <span class="kw">dens</span>(school_2_boys)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-20"></span>
-<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-20-1.png" alt="Poiste skoori posteerior." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-23"></span>
+<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-23-1.png" alt="Poiste skoori posteerior." width="70%" />
 <p class="caption">
-Joonis 13.2: Poiste skoori posteerior.
+Joonis 16.3: Poiste skoori posteerior.
 </p>
 </div>
 <p>Siin on eeldus, et kõikides koolides on sama poiste ja tüdrukute vaheline erinevus (b_sex1), kuid erinevad matemaatikateadmiste baastasemed (mudeli intercept on koolide vahel vabaks lastud, kuid tõus mitte).</p>
@@ -543,10 +607,10 @@ Joonis 13.2: Poiste skoori posteerior.
 <p>Prior korrelatsioonile Interceptide ja tõusude vahel on <code>rethinking::lkjcorr()</code>. Selle ainus parameeter on K. Mida suurem K, seda rohkem on prior konsentreeritud 0 korrelatsiooni ümber. K = 1 annab tasase priori. Meie kasutame K = 2, mis töötab laia vahemiku mudelitega.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">R &lt;-<span class="st"> </span><span class="kw">rlkjcorr</span>(<span class="fl">1e4</span>, <span class="dt">K =</span> <span class="dv">2</span>, <span class="dt">eta =</span> <span class="dv">2</span>)
 <span class="kw">dens</span>(R[, <span class="dv">1</span>, <span class="dv">2</span>] , <span class="dt">xlab =</span> <span class="st">&quot;correlation&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-22"></span>
-<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-22-1.png" alt="Korrelatsiooni prior on nõrgalt informatiivne -- suunab posteeriori eemale ekstreemsetest korrelatsioonidest." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-25"></span>
+<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-25-1.png" alt="Korrelatsiooni prior on nõrgalt informatiivne -- suunab posteeriori eemale ekstreemsetest korrelatsioonidest." width="70%" />
 <p class="caption">
-Joonis 16.1: Korrelatsiooni prior on nõrgalt informatiivne – suunab posteeriori eemale ekstreemsetest korrelatsioonidest.
+Joonis 14.4: Korrelatsiooni prior on nõrgalt informatiivne – suunab posteeriori eemale ekstreemsetest korrelatsioonidest.
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">schools_m2 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(<span class="kw">alist</span>(
@@ -563,10 +627,10 @@ Joonis 16.1: Korrelatsiooni prior on nõrgalt informatiivne – suunab posteerio
     sigma <span class="op">~</span><span class="st"> </span><span class="kw">dcauchy</span>(<span class="dv">0</span>,<span class="dv">2</span>)
 ), schools_f2<span class="op">$</span>d)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">precis</span>(schools_m2, <span class="dt">depth =</span> <span class="dv">2</span>), <span class="dt">cex =</span> <span class="fl">0.5</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-25"></span>
-<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-25-1.png" alt="Mudeli m2 koefitsiendid." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-28"></span>
+<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-28-1.png" alt="Mudeli m2 koefitsiendid." width="70%" />
 <p class="caption">
-Joonis 13.4: Mudeli m2 koefitsiendid.
+Joonis 17.2: Mudeli m2 koefitsiendid.
 </p>
 </div>
 <p>Posteerior korrelatsioonile intercepti ja tõusu vahel:</p>
@@ -574,10 +638,10 @@ Joonis 13.4: Mudeli m2 koefitsiendid.
 df1 &lt;-<span class="st"> </span>schools_m2_samples<span class="op">$</span>Rho_school <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()
 <span class="co">#df1 #corr matrix- we need only the V2 col</span>
 <span class="kw">dens</span>(df1<span class="op">$</span>V2)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-26"></span>
-<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-26-1.png" alt="Posteerior korrelatsioonile intercepti ja tõusu vahel." width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-29"></span>
+<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-29-1.png" alt="Posteerior korrelatsioonile intercepti ja tõusu vahel." width="70%" />
 <p class="caption">
-Joonis 13.5: Posteerior korrelatsioonile intercepti ja tõusu vahel.
+Joonis 16.4: Posteerior korrelatsioonile intercepti ja tõusu vahel.
 </p>
 </div>
 <p>Meil on negatiivne korrelatsioon intercepti ja tõusu vahel. Seega, mida väiksem on poiste keskmine skoor koolis (=intercept), seda suurem om erinevus poiste ja tüdrukute skooride vahel (= tõus).</p>
@@ -637,10 +701,10 @@ pred.p.PI
 <span class="co">#&gt; schools_m1 11734  55.8   0.0    0.7 57.2   NA</span>
 <span class="co">#&gt; schools_m2 11736  60.8   1.7    0.3 57.2 1.38</span></code></pre></div>
 <p>Tundub, et tõusude vabakslaskmine oli hea mõte. Ma saan hästi pihta, et erinevad koolid õpetavad matemaatikat erineva kvaliteediga. Aga miks peaks erinevates Inglismaa koolides olema erinev vahe poiste ja tüdrukute matemaatikateadmistel? Kas olukorras kus meil on hea kool, läheb see vahe väiksemaks või suuremaks? Tehke kindlaks!!! võrrelge graafiku slope vs. intercept.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-30"></span>
-<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-30-1.png" alt="mida suurem on koolis poiste skoor, seda väiksem on poiste ja tüdrukute erinevus" width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-33"></span>
+<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-33-1.png" alt="mida suurem on koolis poiste skoor, seda väiksem on poiste ja tüdrukute erinevus" width="70%" />
 <p class="caption">
-Joonis 12.10: mida suurem on koolis poiste skoor, seda väiksem on poiste ja tüdrukute erinevus
+Joonis 13.12: mida suurem on koolis poiste skoor, seda väiksem on poiste ja tüdrukute erinevus
 </p>
 </div>
 <p>Tõepoolest: mida suurem on koolis poiste skoor (parem kool), seda väiksem on poiste ja tüdrukute erinevus. Aga seos on kaunis nõrk!</p>
@@ -652,10 +716,10 @@ Joonis 12.10: mida suurem on koolis poiste skoor, seda väiksem on poiste ja tü
 <p>Siin püüame ennustada score1 mõju score2 väärtusele.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(schools<span class="op">$</span>score2, schools<span class="op">$</span>score1)
 <span class="kw">abline</span>(<span class="kw">lm</span>(score1 <span class="op">~</span><span class="st"> </span>score2, <span class="dt">data =</span> schools))</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-31"></span>
-<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-31-1.png" alt="score1 vs. score2" width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-34"></span>
+<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-34-1.png" alt="score1 vs. score2" width="70%" />
 <p class="caption">
-Joonis 12.11: score1 vs. score2
+Joonis 17.3: score1 vs. score2
 </p>
 </div>
 <p>Kõigepealt lihtne regressioon <code>lm()</code> funktsiooniga (see ei ole hierarhiline mudel).</p>
@@ -740,19 +804,15 @@ Joonis 12.11: score1 vs. score2
 <p>0-mudel, mis on kõige kehvem, on kõige suurema betaga ja kõige väiksema ebakindlusega selle ümber. See on tavaline — hierarhiline mudel modelleerib ebakindlust paremini (realistlikumalt) ja vähendab üle-fittimise ohtu (beta tuleb selle võrra väiksem).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">precis</span>(schoolm7, <span class="dt">depth =</span> <span class="dv">2</span>)</code></pre></div>
 
-
 </div>
 </div>
-
-
-
             </section>
 
           </div>
         </div>
       </div>
 <a href="keerulisemate-mudelitega-tootamine.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="bayesi-ja-sagedusliku-statistika-vordlus.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="brms.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -799,7 +859,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;

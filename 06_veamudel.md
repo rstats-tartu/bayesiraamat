@@ -6,47 +6,127 @@
 ```r
 library(tidyverse)
 library(brms)
+library(broom)
+```
+
+## Lihtne varieeruvuse mudel  
+
+Oletame, et me oleme mõõtnud nelja patsienti ja saanud tulemuseks 1.2, 2.12, 1.4 ja 8.34. Kuidas me oma valimit iseloomustame ja kas me peaksime 4. tulemuse kahtlasena välja viskama? 
+
+Arvatavasti tahaksime saada hinnangut kõige tõenäolisemale mõõtetulemusele patsientide populatsioonis ehk siis keskmise või tüüpilise patsiendi väärtusele, mis on kõik sisuliselt sama. Ja lisaks ka hinnangut  patsientide vahelise varieeruvuse määrale (meid võib huvitada võrrelda varieeruvust patsientide ja tervete inimeste vahel). Esmapilgul tundub see lihtsa ülesandena, mis ei vaja mudeldamist --  lihtsalt arvutame aritmeetilise keskmise ja standardhälbe ja meil on mõlemad hinnangud olemas. Aga tegelikult oleme probleemi ees, millele pole ühte õiget lahendust. 
+
+Kui me viskame 4. tulemuse välja, siis tuleb meie keskmine kuhugi 1.5 kanti, muidu aga läheb see piirkonda, mille lähedal meil ei ole ühtegi andmepunkti. Samuti annaks sd arvutus üsna erinevad tulemused. Kumb võimalus siis valida? Selleks peame ikkagi otsustama, kuidas modelleerida oma andmed. Arvestades looduslikku protsessi, mis need andmed genereeris (ja mille ma jätsin lahtiseks), võiks andmete mudel olla näiteks normaaljaotus, lognormaaljaotus, cauchy jaotus vms. Kui valime normaaljaotuse, millise õlad laskuvad väga kiiresti, siis on vaid väike tõenäosus kohata tervelt veerandit oma andmepunktidest nõnda kaugel teistest, mis omakorda annab põhjust selle punkti eemaldamiseks. Aga näiteks lognormaaljaotuse korral, mille õlg laskub palju aeglasemalt, on tõenäosus 4. mõõtmisest isegi kaugemal olevaid andmeid kohata palju suurem ja seega peaksime selle andmepunkti sisse jätma. 
+Erinevat tüüpi mudelitel on erinevad parameetrid, millele andmete põhjal peaksime väärtusi otsima. See, et normaaljaotuse parameetrit $\mu$ saab meie näites arvutada aritmeetilise keskmise kaudu, ei tähenda, et ka teiste mudelite korral peaksime sama lokatsiooniparameetrit fittima (või et neil mudelitel üldse oleks lokatsiooniparameeter, mida fittida). Sarnased lood on muidugi ka varieeruvust iseloomustava parameetriga.
+
+Statistilist mudelit saab kasutada mitmel moel.
+
+1. Mudel toob sisse lisainformatsiooni andmete jaotuse kohta, mida valimiandmetes endis ei pruugi sisalduda, ja mis tõstab meie järelduste kvaliteeti (või langetab seda, kui valisime kehva mudeli).
+
+2. Võrreldes erinevat tüüpi mudelite sobivust andmetega ning omades aimu protsesside kohta, mida üks või teine mudel võiks adekvaatselt kirjeldada, on vahest võimalik teha järeldusi loodusliku mehhanismi kohta, mis genereeris andmed, mille põhjal mudelid fititi.
+
+3. Me võime fititud mudeli põhjal teha ennustusi, ehk genereerida uusi andmeid in silico.
+
+Niisiis lihtne mudel andmetele: $\mu$ ehk aritmeetiline keskmine kui hinnang kõige tõenäosemale väärtusele. See on deterministlik nn *protsessimudel*, kus samad valimiväärtused annavad alati sama ja ühese tulemuse. Statistiline mudel sisaldab endas nii protsessimudelit kui tõenäosuslikku nn *varieeruvuse mudelit* (ajaloolistel põhjustel kutsutakse seda sageli veamudeliks), mis tuleb sisse tõenäosusjaotuse kujul
+
+$$dnorm(\mu, \sigma)$$
+
+Selle mudeli on võimalik ümber sõnastada (seda seeläbi üldistades) lihtsa regressioonivõrrandina $ y = b_0$, kusjuures $\mu = b_0$ ehk andmete keskväärtus võrdub regressioonisirge interceptiga. Asendades saame
+
+$$y \sim dnorm(b_0, \sigma)$$
+
+Tilde $\sim$ tähistab seose tõenäosuslikkust, ehk seda, et y muutuja ennustuslikd väärtused tõmmatakse juhuvalimina normaaljaotusest, mis omakorda on fititud empiiriliste väärtuste (ehk valimi) põhjal. 
+
+Seega on meil normaaljaotuse keskväärtus võimalik leida aritmeetilise keskmisena või samaväärselt vähimruutude meetodiga, mis paneb keskväärtuse kohta, kus keskväärtuse ja iga andmepunkti vahelise kauguste ruutude summa tuleb minimaalne. Vähimruutude meetod on üldisem, sest töötab ka järgmises peatükis, kus me asendame $\mu$ terve regressioonivõrrandiga kujul $y = b_0 + b_1x_1 + b_2x_2 + ... + b_ix_i$ (protsessimudel). Ja kui meie regressioonivõrrandid lähevad mittelineaarseks ja vähimruutude meetod nende fittimisel enam ei tööta, siis veel üldisem meetod, Bayesi teoreem, töötab ikka.
+
+Kuigi aritmeetiline keskmine ja vähimruutude meetod annavad sama hinnangu lokatsiooniparameetrile, ei ütle need midagi sigma kohta. Samas Bayesi meetod annab hinnangu (koos usaldusintervalliga) mõlemale parameetrile.
+
+    Normaaljaotus mudeldab lokalisatsiooniparameetrit mu populatsiooni 
+    tüüpilise või keskmise liikme hinnanguna ja varieeruvusparameetrit 
+    sigma populatsiooni liikmete vaheliste erinevuste määra hinnanguna. 
+    
+
+Arvutame lihtsa mudeli läbi vähimruutude meetodiga ja Bayesi meetodiga
+
+
+```r
+set.seed(1234321)
+andmed <- tibble(a= rnorm(4))
+plot(andmed)
+```
+
+<img src="06_veamudel_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" />
+
+```r
+mean(andmed$a); sd(andmed$a)
+#> [1] 1.24
+#> [1] 0.662
+```
+
+Vähimruutude meetodit rakendab lm() funktsioon
+
+```r
+lm(a~1, data = andmed) %>% broom::tidy()
+#> # A tibble: 1 x 5
+#>   term        estimate std.error statistic p.value
+#>   <chr>          <dbl>     <dbl>     <dbl>   <dbl>
+#> 1 (Intercept)     1.24     0.331      3.74  0.0333
+```
+
+Ja Bayesi brms::brm()
+
+```r
+(Bayes_mudel <- brm(a~1, data = andmed) %>% broom::tidy())
 ```
 
 
-Eelpool kirjeldatud mudelid on deterministlikud --- nad ei sisalda hinnangut andmete varieeruvusele ennustuse ümber. 
-Neid kutsutakse ka **protsessi mudeliteks** sest nad modelleerivad protsessi täpselt. 
-Ehk, kui mudel ennustab, et 160 cm inimene kaalub keskmiselt 80 kg, siis protsessi mudel ei ütle, kui suurt pikkusest sõltumatut kaalude varieeruvust võime oodata 160 cm-ste inimeste hulgas. 
-Selle hinnangu andmiseks tuleb mudelile lisada veel üks komponent, **veamudel** ehk veakomponent, mis sageli tuuakse sisse normaaljaotuse kujul. 
-Veakomponent modelleerib üksikute inimeste kaalude varieeruvust (mitte keskmise kaalu varieeruvust) igal mõeldaval ja mittemõeldaval pikkusel. 
-Tänu sellele ei ole mudeli ennustused enam deterministlikud, vaid tõenäosuslikud. 
+```
+#> # A tibble: 2 x 5
+#>   term        estimate std.error lower upper
+#>   <chr>          <dbl>     <dbl> <dbl> <dbl>
+#> 1 b_Intercept     1.24     0.684 0.196  2.25
+#> 2 sigma           1.27     1.24  0.461  3.02
+```
 
-  > Bioloogid, erinevalt füüsikutest, usuvad, et valimisisene andmete varieeruvus on
-   tingitud pigem bioloogilisest varieeruvusest, kui mõõtmisveast. Aga loomulikult sisaldub selles ka mõõtmisviga. Lihtsuse huvides räägime
-    edaspidi siiski veamudelist, selle asemel, et öelda "bioloogilise varieeruvuse ja veamudel".
+Nagu näete, lm() fitib ainult mu parameetri, samas kui me Bayesi meetodit kasutades saame hinnangu (koos usalduspiiridega) kahele parameetrile: mu ehk intercept ja sigma ehk sd. 
+
+Meie poolt simuleeritud andmed tulevad normaaljaotusega populatsioonist, mille mu = 0 ja sd = 1. Kumbki meetod ei luba meile null-intercepti sest andmeid on vähe ja need on juhusliku valimivea tõttu kallutatud. See-eest sigma hinnang, mille Bayes meile annab on küll laiavõitu (ikka sellepärast, et meil on vähe andmeid), aga vähemalt hõlmab endas õiget väärtust.
+
+
+
+## protsessimudel ja veamudel lineaarses regressioonis
+
+Kui mudel $kaal = b_0 + b_1 ~pikkus$ ennustab, et 160 cm inimene kaalub keskmiselt 80 kg, siis protsessi mudel ei ütle, kui suurt pikkusest sõltumatut kaalude varieeruvust võime oodata 160 cm-ste inimeste hulgas. 
+Selle hinnangu andmiseks tuleb mudelile lisada varieeruvusekomponent, sageli normaaljaotuse kujul, mis modelleerib üksikute inimeste kaalude varieeruvust (mitte keskmise kaalu varieeruvust) igal mõeldaval ja mittemõeldaval pikkusel. 
+
+
+  > Bioloogid, erinevalt füüsikutest, usuvad, et valimisisene andmete 
+  varieeruvus on tingitud pigem bioloogilisest varieeruvusest kui mõõtmisveast. 
+  Aga loomulikult sisaldub selles ka mõõtmisviga. Lihtsuse huvides räägime 
+  edaspidi siiski veamudelist, selle asemel, et öelda "varieeruvuse ja veamudel".
 
 Kuidas veakomponent lineaarsesse mudelisse sisse tuua? 
 Ilma veakomponendita mudel:
 
-$$y = a + bx$$
+$$y = b_0 + bx$$
 
 ennustab y-i keskväärtust erinevatel x-i väärtustel.
 
-Veakomponent tähendab, et andmepunkti tasemel varieerub y-i väärtus ümber mudeli poolt ennustatud keskväärtuse. 
-Lineaarsetes mudelites modelleeritakse seda varieeruvust normaaljaotusega (vahest ka studenti t jaotusega): 
-
-
+Veakomponent: 
 
 $$y\sim dnorm(\mu,~\sigma)$$
 
 kus $\mu$ (*mu*) on mudeli poolt ennustatud keskväärtus ja $\sigma$ (sigma) on mudeli poolt ennustatud standardhälve ehk varieeruvus andmepunktide tasemel. 
-Tilde $\sim$ tähistab seose tõenäosuslikkust. 
 Veamudelis on keskväärtuse ehk *mu* ennustus endiselt deterministlik ja sigma töötab originaalsel andmetasemel, mitte keskväärtuste tasemel. 
-See võimaldab protsessi mudeli veamudelisse sisse kirjutada lihtsalt *mu* ümber defineerides:
+See võimaldab protsessimudeli veamudelisse sisse kirjutada lihtsalt *mu* ümber defineerides:
 
-$$\mu = a + bx$$ 
+$$\mu = b_0 + bx$$ 
 
 mis tähendab, et
 
-$$y \sim dnorm(a + bx, ~\sigma)$$
+$$y \sim dnorm(b_0 + b_1x, ~\sigma)$$
 
 
-See ongi sirge mudel koos veakomponendiga. Seega on sellel lineaarsel regressioonimudelil kolm parameetrit: intercept a, tõus b ja "veaparameeter" $\sigma$. 
+See ongi sirge mudel koos veakomponendiga. Seega on sellel lineaarsel regressioonimudelil kolm parameetrit: intercept $b_0$, tõus $b_1$ ja "veaparameeter" $\sigma$. 
 Sellist mudelit on mõistlik fittida Bayesi teoreemi abil. 
 Bayesi meetodiga fititud mudel, mida kutsutakse posteerioriks, näitab, millised kombinatsioonid nendest kolmest parameetrist usutavalt koos esinevad, ja millised mitte. 
 Seega on fititud 3 parameetriga bayesi mudel 3-dimensionaalne tõenäosusjaotus (3D posteerior). 
@@ -56,11 +136,10 @@ Muidugi saame ka ükshaaval välja plottida kolm 1D posteeriori, millest igaüks
 
 > Kõik statistilised mudelid on tõenäosusmudelid ning sisaldavad veakomponenti.  
 
-
-Muide, kõik veamudelid, millega me edaspidi töötame, modelleerivad igale x-i väärtusele (kaalule) sama suure y-i suunalise varieeruvuse (pikkuste sd). 
+Kuna erinevalt lokatsiooniparameetrist, ei aja me mudelis sigmat lahku vastavalt x-i väärtustele, siis veamudel (ja enamus veamudeleid, millega me edaspidi töötame) modelleerivad igale x-i väärtusele (kaalule) samasuure y-i suunalise varieeruvuse (pikkuste sd). 
 Suurem osa statistikast kasutab eeldusi, mida keegi päriselt tõe pähe ei võta, aga millega on arvutuslikus mõttes lihtsam elada.
 
-### Enimkasutatud veamudel on normaaljaotus {-}
+## Enimkasutatud veamudel on normaaljaotus {-}
 
 Alustuseks simuleerime lihtsate vahenditega looduslikku protsessi, mille tulemusel tekib normaaljaotus.  
 Oletame, et bakteri kasvukiirust mõjutavad 12 geeni, mille mõjud võivad olla väga erineva tugevusega, kuid mille mõjude suurused ei sõltu üksteisest. 
@@ -226,7 +305,7 @@ mean(sim_t > 1)
 Samad ennustused t jaotusest on isegi paremad! Aga kumb on ikkagi parem mudel populatsioonile?
 
 
-### Normaaljaotuse ja lognormaaljaotuse erilisus {-}
+## Normaaljaotuse ja lognormaaljaotuse erilisus {-}
 
 Normaaljaotus ja lognormaaljaotus on erilised sest 
 
@@ -258,7 +337,7 @@ y <- dlnorm(x)
 plot(x, y, typ = "l")
 ```
 
-<img src="06_veamudel_files/figure-html/unnamed-chunk-5-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="06_veamudel_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 Seda jaotust, mis ei ulatu kunagi teisele poole nulli, iseloomustab, et x-i logaritmimine annab tulemuseks normaaljaotuse. 
@@ -268,7 +347,7 @@ Seda jaotust, mis ei ulatu kunagi teisele poole nulli, iseloomustab, et x-i loga
 plot(log(x), y, type = "l")
 ```
 
-<img src="06_veamudel_files/figure-html/unnamed-chunk-6-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="06_veamudel_files/figure-html/unnamed-chunk-11-1.png" width="70%" style="display: block; margin: auto;" />
 
 Lognormaaljaotuse keskväärtus, standardhälve, mood ja mediaan:
 
@@ -298,7 +377,7 @@ y <- dbinom(x, n, p)
 plot(x, y)
 ```
 
-<img src="06_veamudel_files/figure-html/unnamed-chunk-7-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="06_veamudel_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" />
 
 $$keskv\ddot{a}\ddot{a}rtus = N \times p$$
 

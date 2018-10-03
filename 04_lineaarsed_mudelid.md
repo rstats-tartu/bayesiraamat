@@ -11,6 +11,7 @@ library(modelr)
 library(viridis)
 ```
 
+## Sirge võrrand
 
 Oletame, et me mõõtsime N inimese pikkuse cm-s ja kaalu kg-s ning meid huvitab, kuidas inimeste pikkus sõltub nende kaalust. 
 Lihtsaim mudel pikkuse sõltuvusest kaalust on pikkus = kaal (formaliseeritult: y = x) ja see mudel ennustab, et kui Juhani kaal = 80 kg, siis Juhan on 80 cm pikkune. 
@@ -341,7 +342,7 @@ Tähtsuse järjekorras:
 
 4. vigade sõltumatus
 
-5. vigade võrdne varieeruvus (equal variance) ja vigade normaalsus on vähetähtsad. Neid eeldusi ei tasu tavaliselt kontrollida (kuigi meetodid selleks on olemas).
+5. vigade võrdne varieeruvus (homoskedastilisus) ja vigade normaalsus on vähemtähtsad. Neid eeldusi ei tasu tavaliselt kontrollida (kuigi meetodid selleks on olemas).
 
 ## Andmete transformeerimine
 
@@ -405,13 +406,13 @@ Tavaliselt on mõistlik fittida mudel pidevale y muutujale ka siis, kui tahame l
 
 ## Üldised printsiibid
 
-1. võta sisse kõik teaduslikku huvi pakkuvad muutujad
+1. võta sisse kõik teaduslikku huvi pakkuvad muutujad ja viska välja muutujad, mille kohta sul pole põhust arvata, et nad võiksid y väärtusi mõjutada.
 
 2. kontrolli, ega muutujate vahel ei esine väga tugevaid korrelatsioone (kollineaarsus). Kui jah, siis kombineeri kollineaarsed muutujad üheks või transformeeri neid või viska mõni muutuja välja.
 
 3. muutujad, mis ei varieeru, ei oma ka regressioonis mõju.
 
-4. tugeva mõjuga muutujate puhul võib olla vajalik sisse tuua interkatsiooniga mudelid (vt ptk ...).
+4. tugeva mõjuga muutujate puhul võib olla vajalik sisse tuua nende muutujate interkatsioond (vt ptk ...).
 
 5. muutujad, mida sa reaalselt mõõtsid ei pruugi olla need muutujad, mis mudelisse lähevad -- näiteks arvuta kehamassiindeks mõõdetud muutujate põhjal.
 
