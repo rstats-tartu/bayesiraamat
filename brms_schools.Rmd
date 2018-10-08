@@ -1,0 +1,203 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(brms)
+library(bayesplot)
+library(broom)
+library(rethinking)
+```
+
+
+```{r}
+schools <- read_csv( "data/schools.csv")
+schools <- schools %>%
+  filter(complete.cases(.)) %>%
+  mutate_at(vars(sex, school), as.factor)
+```
+```{r}
+head(schools)
+```
+
+(0 - poiss, 1 - tüdruk)
+
+
+Excersize: how do these models differ?
+
+1. score1~ sex
+
+2. score1~ score2
+
+3. score1~score2 + sex
+
+4. score1~score2*sex
+
+5. score1~score2:sex
+
+6. score1~sex*school
+
+7. score1~sex + (1 | school)
+
+8. score1~sex + (sex | school)
+
+9. score1~0 + (sex | school)
+
+
+score1~score2*sex on sama, mis score1~score2 + sex + score2:sex
+```{r}
+lm_m1 <- lm(score1~score2 + sex, data = schools)
+lm_m2 <- lm(score1~score2*sex, data = schools)
+lm_m3 <- lm(score1~score2:sex, data = schools)
+```
+
+```{r}
+rethinking::AIC(lm_m1, lm_m2, lm_m3)
+```
+
+```{r}
+tidy(lm_m1)
+```
+
+```{r}
+tidy(lm_m2)
+```
+
+score1~score2 + sex + score2:sex
+```{r}
+score2 <- 50
+sex <- 1
+a <- 22.22521711
+b1 <- 0.37664046
+b2 <- -11.90657014
+b3 <- 0.08180509
+a + b1*score2 + b2*sex +  b3*score2*sex
+
+```
+
+```{r}
+score2 <- 50
+sex <- 0
+a <- 22.22521711
+b1 <- 0.37664046
+b2 <- -11.90657014
+a + b1*score2 + b2*sex +  b3*score2*sex
+```
+
+```{r}
+tidy(lm_m3)
+```
+
+score1~ a + b1* score2_fem + b2* score2_male
+```{r}
+
+```
+
+
+**Homework: please get from the fitted lm_m1 the predictions for the score 1 for boys and girls, if score 2 is 50.**
+
+
+ennustame keskmist skoori nii üle kõikide koolide kui ka kooli tasemel eraldi poistele ja tüdrukutele.
+```{r}
+get_prior(score1~sex + (sex | school), 
+          data= schools)
+```
+
+
+```{r}
+prior <- c(prior(normal(50, 30), class="b"),
+           prior(normal(0, 20), class ="b", coef = "sex1"),
+           prior(lkj(3), class = "cor"))
+```
+
+```{r eval=FALSE}
+sch_m1 <- brm(score1~sex + (sex | school), 
+          data= schools, prior = prior, chains = 3, cores = 3)
+write_rds(sch_m1, path = "sch_m1.fit")
+```
+
+```{r}
+sch_m1 <- read_rds("sch_m1.fit")
+```
+
+b_Intercept annab ennustuse sex = 0 keskmisele testitulemusele üle kõikide koolide ja b_sex1
+annab sex = 1 tulemuse. Kooli tasemele minnes tuleb teha tehted: 
+
+b_Intercept + r_school[xxx,Intercept] ja 
+
+b_sex1 + r_school[xxx,sex1], 
+
+et saada sellele koolile ennustatud poiste ja tüdrukute skoor.
+```{r}
+broom::tidyMCMC(sch_m1$fit, conf.int = TRUE, conf.method = "HPDinterval",
+    rhat = TRUE)
+```
+
+Kui suure tõenäosusega on sex1 koef suurem kui -2.3?
+
+```{r}
+sch_df <- as.data.frame(sch_m1$fit)
+mean(sch_df$b_sex1 > -2.3)
+```
+Vastus - 38% tõenäosusega.
+
+Posteerior kahe kooli keskmise tulemuse erinevusele "22520", "30474"
+```{r}
+a <- ((sch_df$`r_school[22520,Intercept]` - sch_df$`r_school[22520,sex1]`)/2) - ((sch_df$`r_school[30474,Intercept]` - sch_df$`r_school[30474,sex1]`)/2)
+
+ggplot(data=NULL, aes(a)) + geom_density()
+
+```
+
+90% CI 
+```{r}
+rethinking::HPDI(a, prob = 0.9)
+```
+Juhhei! keskmine tulemus erineb kuskil 7 - 15 punkti võrra ja posteerior ei kata üldse nulli.
+
+```{r}
+mean(sch_df$b_sex1 > 0)
+```
+
+
+
+
+```{r}
+plot(sch_m1, pars = "b_")
+```
+
+
+```{r}
+stanplot(sch_m1, pars = "cept]$")
+```
+
+```{r}
+bayes_R2(sch_m1)
+```
+
+```{r}
+pp_check(sch_m1)
+```
+
+poiste ja tüdrukute ennustatud keskmine tulemus 90% CI-ga (0 - poiss, 1 - tüdruk)
+```{r}
+marginal_effects(sch_m1, method = "fitted", probs=c(0.1, 0.9))
+```
+
+siin ennustab mudel kooli kaupa, kuhu piirkonda võiksid tulla just selle kooli tulemused kordustestis. Näidatud on ka algse valimi andmepunktid. NB! kui minna mudeli alumisele tasemele, siis tuleb sisse panna argument re_formula = NULL (muidu ei arvesta ennustus mudeli alumise taseme koefitsiente)
+```{r}
+conditions <- data.frame(school =c("20920", "22520", "30474"))
+plot(marginal_effects(sch_m1, method = "predict", re_formula = NULL, conditions = conditions, probs=c(0.1, 0.9)), points = TRUE,  theme = theme_bw())
+```
+
+ja kooli tasemel ennustused keskmisele skoorile. Kool 2, kus on rohkem andmeid kui kool 1-l, saab ka kitsamad usalduspiirid.
+```{r}
+plot(marginal_effects(sch_m1, method = "fitted", conditions = conditions, re_formula = NULL, probs=c(0.1, 0.9)),  theme = theme_bw())
+```
+
+```{r}
+
+```
+

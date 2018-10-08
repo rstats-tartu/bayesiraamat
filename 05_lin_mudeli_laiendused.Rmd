@@ -170,7 +170,13 @@ Vau! See on alles ennustus!
 
 Kuna lm() funktsiooniga ja bayesi meetodil fititud mudeliobjektidega töötamine on mõnevõrra erinev, õpetame seda eraldi. Siinkohal anname põhilise töövoo lm() mudelobjektide inspekteerimiseks.
 
-Töötame m3 mudeliobjektiga, mis on interaktsioonimudel: Sepal.Width ~ Sepal.Length * Species
+Töötame m3 mudeliobjektiga, mis on interaktsioonimudel: 
+
+Sepal.Width ~ Sepal.Length * Species
+
+ehk
+
+$$Speal.Width = a + b_1*Sepal.Length + b_2*Species + b_3*Sepal.Length*Species$$
 
 ```{r}
 library(ggeffects)
