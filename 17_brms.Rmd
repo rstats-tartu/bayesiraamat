@@ -72,7 +72,7 @@ plot(m_kiire)
 
 Fiti kokkuvõte - koefitsiendid ja nende fittimise edukust hindavad statistikud (Eff.Sample, Rhat)
 ```{r}
-m_kiire
+m_kiire %>% tidy
 ```
 
 Eff.Sample näitab efektiivset valimi suurust, mida ahelad on kasutanud. See on suht keeruline mõiste, aga piisab, kui aru saada, et see näitaja ei tohiks olla madalam kui paarkümmend.
@@ -367,6 +367,11 @@ Kõigepealt ennustame ühe keskmise mudeliga, mis ei arvesta mitmetasemelise mud
 
 ```{r }
 plot(marginal_effects(m2, effects= "Petal.Length", method = "predict", probs=c(0.1, 0.9)), points = TRUE,  theme = theme_bw())
+```
+
+```{r}
+marginal_effects(m2, effects= "Petal.Length", method = "predict", probs=c(0.1, 0.9))
+
 ```
 
 Ennustus on selles mõttes ok, et vaid väike osa punkte jääb sellest välja, aga laiavõitu teine!

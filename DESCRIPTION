@@ -28,5 +28,6 @@ Imports:
     skimr,
     psych,
     ggeffects,
-    mice
+    mice,
+    pROC
 Remotes: rstudio/bookdown
