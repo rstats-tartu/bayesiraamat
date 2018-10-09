@@ -15,8 +15,8 @@ library(rethinking)
 ```{r}
 schools <- read_csv( "data/schools.csv")
 schools <- schools %>%
-  filter(complete.cases(.)) %>%
-  mutate_at(vars(sex, school), as.factor)
+  drop_na() %>%
+  mutate_at(vars(sex, school), as.factor) 
 ```
 ```{r}
 head(schools)
@@ -24,6 +24,9 @@ head(schools)
 
 (0 - poiss, 1 - tüdruk)
 
+```{r}
+skimr::skim(schools)
+```
 
 Excersize: how do these models differ?
 

@@ -27,7 +27,7 @@ Niisiis lihtne mudel andmetele: $\mu$ ehk aritmeetiline keskmine kui hinnang kõ
 
 $$dnorm(\mu, \sigma)$$
 
-Selle mudeli on võimalik ümber sõnastada (seda seeläbi üldistades) lihtsa regressioonivõrrandina $ y = b_0$, kusjuures $\mu = b_0$ ehk andmete keskväärtus võrdub regressioonisirge interceptiga. Asendades saame
+Selle mudeli on võimalik ümber sõnastada (seda seeläbi üldistades) lihtsa regressioonivõrrandina $y = b_0$, kusjuures $\mu = b_0$ ehk andmete keskväärtus võrdub regressioonisirge interceptiga. Asendades saame
 
 $$y \sim dnorm(b_0, \sigma)$$
 

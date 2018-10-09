@@ -11,6 +11,7 @@ library(brms)
 library(broom)
 library(bayesplot)
 library(mice)
+library(pROC)
 ```
 
 ## brms-i töövoog
