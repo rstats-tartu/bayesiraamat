@@ -289,13 +289,20 @@ kus $\sigma^*$ on multiplikatiivne standardhälve
 $\mu^*$ korda/jagatud $\sigma^*$ katab 68% lognormaaljaotusest, ja 2 $\sigma^*$ katab 96% jaotusest.
 
 
-$$e^\mu e^{\frac{\sigma^2}2} = keskväärtus$$
+$$e^\mu e^{\frac{\sigma^2}2} = \mu$$
 
-tavaline additiivne standardhälve
+kus $\mu$ on tavaline additiivne keskväärtus (aritmeetiline keskmine)
+
+
 
 $$e^{\sigma^2}(e^{\sigma^2} - 1)e^{2\sigma} =\sigma$$
 
-Kõigepealt avaldame tõusu. Kuna meil on tegemist mitte-lineaarse mudeliga, sõltub tõusu väärtus ka mudeli interceptist: $slope = exp(\alpha + \beta)-exp(\alpha)$. See ei ole lineaarne seos: b omab seda suuremat mõju efektile (tõusule), mida suurem on a. [Kui meil on tegu binaarse X-ga (prediktoriga), siis kodeerime selle 2 taset kui -1 ja 1. Sellises mudelis on slope sama, mis efekti suurus ES, ja $ES = exp(\alpha + \beta)-exp(\alpha-\beta)$]
+ ja $\sigma$ on tavaline additiivne standardhälve
+
+
+Kuna meil on tegemist mitte-lineaarse mudeliga, sõltub tõusu ($\beta$) väärtus ka mudeli interceptist: $\beta = exp(\alpha + \beta)-exp(\alpha)$. See ei ole lineaarne seos: $\beta$ omab seda suuremat mõju efektile (tõusule), mida suurem on $\alpha$. 
+
+Kui meil on tegu binaarse prediktoriga, siis kodeerime selle 2 taset kui -1 ja 1. Sellises mudelis on tõus sama, mis efekti suurus ES, ja $ES = exp(\alpha + \beta)-exp(\alpha-\beta)$
 
 ```{r fig.cap="Mudeli tõus sõltub interceptist."}
 a <- seq( 0, 10, length.out = 1000 )

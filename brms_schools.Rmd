@@ -31,6 +31,9 @@ skimr::skim(schools)
 Excersize: how do these models differ?
 
 1. score1~ sex
+```{r}
+lm(score1~sex, data = schools) %>% tidy()
+```
 
 2. score1~ score2
 
@@ -40,13 +43,23 @@ Excersize: how do these models differ?
 
 5. score1~score2:sex
 
+```{r}
+lm(score1~score2:sex, data = schools) %>% tidy()
+```
+
+
 6. score1~sex*school
+
+```{r}
+lm(score1~school:sex, data = schools) %>% tidy()
+```
+
 
 7. score1~sex + (1 | school)
 
 8. score1~sex + (sex | school)
 
-9. score1~0 + (sex | school)
+9. 
 
 
 score1~score2*sex on sama, mis score1~score2 + sex + score2:sex
@@ -86,7 +99,12 @@ sex <- 0
 a <- 22.22521711
 b1 <- 0.37664046
 b2 <- -11.90657014
+b3 <- 0.08180509
 a + b1*score2 + b2*sex +  b3*score2*sex
+```
+
+```{r}
+a + b1*score2
 ```
 
 ```{r}
