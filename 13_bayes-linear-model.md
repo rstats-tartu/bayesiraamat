@@ -278,7 +278,7 @@ Kuidas saada ennustusi kindlale l_GDP väärtusele? Näiteks tulp V10 vastab l_G
 dens(sim.length$V10)
 HPDI(sim.length$V10, prob = 0.95)
 #> |0.95 0.95| 
-#>  39.0  66.6
+#>  39.1  67.7
 ```
 
 <div class="figure" style="text-align: center">
@@ -331,7 +331,27 @@ precis(m_ln1)
 #> sigma 0.81   0.05       0.74       0.88   294    1
 ```
 
-Logormaalses mudelis muutuvad parameetrite tähendused ja need tuleb lineaarse mudeli intercepti ja tõusu interpretatsioonidega kooskõlla viimiseks ümber arvutada. Kõigepealt avaldame tõusu. Kuna meil on tegemist mitte-lineaarse mudeliga, sõltub tõusu väärtus ka mudeli interceptist: $slope = exp(\alpha + \beta)-exp(\alpha)$. See ei ole lineaarne seos: b omab seda suuremat mõju efektile (tõusule), mida suurem on a. [Kui meil on tegu binaarse X-ga (prediktoriga), siis kodeerime selle 2 taset kui -1 ja 1. Sellises mudelis on slope sama, mis efekti suurus ES, ja $ES = exp(\alpha + \beta)-exp(\alpha-\beta)$]
+Lognormaalse mudeli koefitsiendid mu ja sigma annavad keskmise ja standardhälbe log(x)-le, mitte x-le! Seega tuleb need koefitsiendid lineaarse mudeli andmeskaalas tõlgendamiseks ümber arvutada. 
+
+$$e^\mu = \mu^*$$ 
+ 
+ kus $\mu^*$ on geomeetriline keskmine ehk mediaan
+
+
+$$e^\sigma = \sigma^*$$ 
+
+kus $\sigma^*$ on multiplikatiivne standardhälve
+
+$\mu^*$ korda/jagatud $\sigma^*$ katab 68% lognormaaljaotusest, ja 2 $\sigma^*$ katab 96% jaotusest.
+
+
+$$e^\mu e^{\frac{\sigma^2}2} = keskväärtus$$
+
+tavaline additiivne standardhälve
+
+$$e^{\sigma^2}(e^{\sigma^2} - 1)e^{2\sigma} =\sigma$$
+
+Kõigepealt avaldame tõusu. Kuna meil on tegemist mitte-lineaarse mudeliga, sõltub tõusu väärtus ka mudeli interceptist: $slope = exp(\alpha + \beta)-exp(\alpha)$. See ei ole lineaarne seos: b omab seda suuremat mõju efektile (tõusule), mida suurem on a. [Kui meil on tegu binaarse X-ga (prediktoriga), siis kodeerime selle 2 taset kui -1 ja 1. Sellises mudelis on slope sama, mis efekti suurus ES, ja $ES = exp(\alpha + \beta)-exp(\alpha-\beta)$]
 
 
 ```r

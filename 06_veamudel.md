@@ -12,7 +12,6 @@ library(broom)
 ## Lihtne varieeruvuse mudel  
 
 Oletame, et me oleme mõõtnud nelja patsienti ja saanud tulemuseks 1.2, 2.12, 1.4 ja 8.34. Kuidas me oma valimit iseloomustame ja kas me peaksime 4. tulemuse kahtlasena välja viskama? 
-
 Arvatavasti tahaksime saada hinnangut kõige tõenäolisemale mõõtetulemusele patsientide populatsioonis ehk siis keskmise või tüüpilise patsiendi väärtusele, mis on kõik sisuliselt sama. Ja lisaks ka hinnangut  patsientide vahelise varieeruvuse määrale (meid võib huvitada võrrelda varieeruvust patsientide ja tervete inimeste vahel). Esmapilgul tundub see lihtsa ülesandena, mis ei vaja mudeldamist --  lihtsalt arvutame aritmeetilise keskmise ja standardhälbe ja meil on mõlemad hinnangud olemas. Aga tegelikult oleme probleemi ees, millele pole ühte õiget lahendust. 
 
 Kui me viskame 4. tulemuse välja, siis tuleb meie keskmine kuhugi 1.5 kanti, muidu aga läheb see piirkonda, mille lähedal meil ei ole ühtegi andmepunkti. Samuti annaks sd arvutus üsna erinevad tulemused. Kumb võimalus siis valida? Selleks peame ikkagi otsustama, kuidas modelleerida oma andmed. Arvestades looduslikku protsessi, mis need andmed genereeris (ja mille ma jätsin lahtiseks), võiks andmete mudel olla näiteks normaaljaotus, lognormaaljaotus, cauchy jaotus vms. Kui valime normaaljaotuse, millise õlad laskuvad väga kiiresti, siis on vaid väike tõenäosus kohata tervelt veerandit oma andmepunktidest nõnda kaugel teistest, mis omakorda annab põhjust selle punkti eemaldamiseks. Aga näiteks lognormaaljaotuse korral, mille õlg laskub palju aeglasemalt, on tõenäosus 4. mõõtmisest isegi kaugemal olevaid andmeid kohata palju suurem ja seega peaksime selle andmepunkti sisse jätma. 
@@ -30,7 +29,7 @@ Niisiis lihtne mudel andmetele: $\mu$ ehk aritmeetiline keskmine kui hinnang kõ
 
 $$dnorm(\mu, \sigma)$$
 
-Selle mudeli on võimalik ümber sõnastada (seda seeläbi üldistades) lihtsa regressioonivõrrandina $ y = b_0$, kusjuures $\mu = b_0$ ehk andmete keskväärtus võrdub regressioonisirge interceptiga. Asendades saame
+Selle mudeli on võimalik ümber sõnastada (seda seeläbi üldistades) lihtsa regressioonivõrrandina $y = b_0$, kusjuures $\mu = b_0$ ehk andmete keskväärtus võrdub regressioonisirge interceptiga. Asendades saame
 
 $$y \sim dnorm(b_0, \sigma)$$
 

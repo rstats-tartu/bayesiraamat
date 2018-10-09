@@ -9,6 +9,7 @@ library(scatterplot3d)
 library(viridis)
 library(ggeffects)
 library(broom)
+library(car)
 ```
 
 
@@ -198,7 +199,13 @@ Vau! See on alles ennustus!
 
 Kuna lm() funktsiooniga ja bayesi meetodil fititud mudeliobjektidega töötamine on mõnevõrra erinev, õpetame seda eraldi. Siinkohal anname põhilise töövoo lm() mudelobjektide inspekteerimiseks.
 
-Töötame m3 mudeliobjektiga, mis on interaktsioonimudel: Sepal.Width ~ Sepal.Length * Species
+Töötame m3 mudeliobjektiga, mis on interaktsioonimudel: 
+
+Sepal.Width ~ Sepal.Length * Species
+
+ehk
+
+$$Speal.Width = a + b_1*Sepal.Length + b_2*Species + b_3*Sepal.Length*Species$$
 
 
 ```r
@@ -375,7 +382,7 @@ ggplot(a_m3, aes(Sepal.Length, `.std.resid`, color=Species)) +
 <img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;" />
 Ideaalsed residuaalid! 
 
-## 3. Teeme mudeli põhjal ennustusi (marginal plots)
+## Teeme mudeli põhjal ennustusi (marginal plots)
 
 Me ennustame Y-i keskmisi väärtuseid etteantud X-i väärtustel.
 

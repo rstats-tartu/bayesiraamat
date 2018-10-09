@@ -6,6 +6,8 @@
 ```r
 library(tidyverse)
 library(corrgram)
+library(psych)
+library(skimr)
 ```
 
 
@@ -42,80 +44,47 @@ corrgram(iris,
 
 
 ```r
-psych::describe(iris) %>% knitr::kable()
+psych::describe(iris) 
+#>              vars   n mean   sd median trimmed  mad min max range  skew
+#> Sepal.Length    1 150 5.84 0.83   5.80    5.81 1.04 4.3 7.9   3.6  0.31
+#> Sepal.Width     2 150 3.06 0.44   3.00    3.04 0.44 2.0 4.4   2.4  0.31
+#> Petal.Length    3 150 3.76 1.77   4.35    3.76 1.85 1.0 6.9   5.9 -0.27
+#> Petal.Width     4 150 1.20 0.76   1.30    1.18 1.04 0.1 2.5   2.4 -0.10
+#> Species*        5 150 2.00 0.82   2.00    2.00 1.48 1.0 3.0   2.0  0.00
+#>              kurtosis   se
+#> Sepal.Length    -0.61 0.07
+#> Sepal.Width      0.14 0.04
+#> Petal.Length    -1.42 0.14
+#> Petal.Width     -1.36 0.06
+#> Species*        -1.52 0.07
 ```
-
-                vars     n   mean      sd   median   trimmed     mad   min   max   range     skew   kurtosis      se
--------------  -----  ----  -----  ------  -------  --------  ------  ----  ----  ------  -------  ---------  ------
-Sepal.Length       1   150   5.84   0.828     5.80      5.81   1.038   4.3   7.9     3.6    0.309     -0.606   0.068
-Sepal.Width        2   150   3.06   0.436     3.00      3.04   0.445   2.0   4.4     2.4    0.313      0.139   0.036
-Petal.Length       3   150   3.76   1.765     4.35      3.76   1.853   1.0   6.9     5.9   -0.269     -1.417   0.144
-Petal.Width        4   150   1.20   0.762     1.30      1.18   1.038   0.1   2.5     2.4   -0.101     -1.358   0.062
-Species*           5   150   2.00   0.819     2.00      2.00   1.483   1.0   3.0     2.0    0.000     -1.520   0.067
 
 
 
 ```r
-skimr::skim(iris) %>% knitr::kable()
+skimr::skim(iris) 
+#> Skim summary statistics
+#>  n obs: 150 
+#>  n variables: 5 
+#> 
+#> ── Variable type:factor ───────────────────────────────────────────────────
+#>  variable missing complete   n n_unique                       top_counts
+#>   Species       0      150 150        3 set: 50, ver: 50, vir: 50, NA: 0
+#>  ordered
+#>    FALSE
+#> 
+#> ── Variable type:numeric ──────────────────────────────────────────────────
+#>      variable missing complete   n mean   sd  p0 p25  p50 p75 p100
+#>  Petal.Length       0      150 150 3.76 1.77 1   1.6 4.35 5.1  6.9
+#>   Petal.Width       0      150 150 1.2  0.76 0.1 0.3 1.3  1.8  2.5
+#>  Sepal.Length       0      150 150 5.84 0.83 4.3 5.1 5.8  6.4  7.9
+#>   Sepal.Width       0      150 150 3.06 0.44 2   2.8 3    3.3  4.4
+#>      hist
+#>  ▇▁▁▂▅▅▃▁
+#>  ▇▁▁▅▃▃▂▂
+#>  ▂▇▅▇▆▅▂▂
+#>  ▁▂▅▇▃▂▁▁
 ```
-
-
-
-variable       type      stat         level           value  formatted 
--------------  --------  -----------  -----------  --------  ----------
-Sepal.Length   numeric   missing      .all            0.000  0         
-Sepal.Length   numeric   complete     .all          150.000  150       
-Sepal.Length   numeric   n            .all          150.000  150       
-Sepal.Length   numeric   mean         .all            5.843  5.84      
-Sepal.Length   numeric   sd           .all            0.828  0.83      
-Sepal.Length   numeric   p0           .all            4.300  4.3       
-Sepal.Length   numeric   p25          .all            5.100  5.1       
-Sepal.Length   numeric   p50          .all            5.800  5.8       
-Sepal.Length   numeric   p75          .all            6.400  6.4       
-Sepal.Length   numeric   p100         .all            7.900  7.9       
-Sepal.Length   numeric   hist         .all               NA  ▂▇▅▇▆▅▂▂  
-Sepal.Width    numeric   missing      .all            0.000  0         
-Sepal.Width    numeric   complete     .all          150.000  150       
-Sepal.Width    numeric   n            .all          150.000  150       
-Sepal.Width    numeric   mean         .all            3.057  3.06      
-Sepal.Width    numeric   sd           .all            0.436  0.44      
-Sepal.Width    numeric   p0           .all            2.000  2         
-Sepal.Width    numeric   p25          .all            2.800  2.8       
-Sepal.Width    numeric   p50          .all            3.000  3         
-Sepal.Width    numeric   p75          .all            3.300  3.3       
-Sepal.Width    numeric   p100         .all            4.400  4.4       
-Sepal.Width    numeric   hist         .all               NA  ▁▂▅▇▃▂▁▁  
-Petal.Length   numeric   missing      .all            0.000  0         
-Petal.Length   numeric   complete     .all          150.000  150       
-Petal.Length   numeric   n            .all          150.000  150       
-Petal.Length   numeric   mean         .all            3.758  3.76      
-Petal.Length   numeric   sd           .all            1.765  1.77      
-Petal.Length   numeric   p0           .all            1.000  1         
-Petal.Length   numeric   p25          .all            1.600  1.6       
-Petal.Length   numeric   p50          .all            4.350  4.35      
-Petal.Length   numeric   p75          .all            5.100  5.1       
-Petal.Length   numeric   p100         .all            6.900  6.9       
-Petal.Length   numeric   hist         .all               NA  ▇▁▁▂▅▅▃▁  
-Petal.Width    numeric   missing      .all            0.000  0         
-Petal.Width    numeric   complete     .all          150.000  150       
-Petal.Width    numeric   n            .all          150.000  150       
-Petal.Width    numeric   mean         .all            1.199  1.2       
-Petal.Width    numeric   sd           .all            0.762  0.76      
-Petal.Width    numeric   p0           .all            0.100  0.1       
-Petal.Width    numeric   p25          .all            0.300  0.3       
-Petal.Width    numeric   p50          .all            1.300  1.3       
-Petal.Width    numeric   p75          .all            1.800  1.8       
-Petal.Width    numeric   p100         .all            2.500  2.5       
-Petal.Width    numeric   hist         .all               NA  ▇▁▁▅▃▃▂▂  
-Species        factor    missing      .all            0.000  0         
-Species        factor    complete     .all          150.000  150       
-Species        factor    n            .all          150.000  150       
-Species        factor    n_unique     .all            3.000  3         
-Species        factor    top_counts   setosa         50.000  set: 50   
-Species        factor    top_counts   versicolor     50.000  ver: 50   
-Species        factor    top_counts   virginica      50.000  vir: 50   
-Species        factor    top_counts   NA              0.000  NA: 0     
-Species        factor    ordered      .all            0.000  FALSE     
 
 Siin pööra kindlasti tähelepanu tulpadele min ja max, mis annavad kiire võimalusi outliereid ära tunda. Kontrolli, kas andmete keskmised (mediaan, mean ja trimmed mean) on üksteisele piisavalt lähedal --- kui ei ole, siis on andmete jaotus pika õlaga, ja kindlasti mitte normaalne. 
 Kontrolli, kas erinevate muutujate keskväärtused ja hälbed on teaduslikus mõttes usutavas vahemikus. 

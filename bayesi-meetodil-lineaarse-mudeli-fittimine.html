@@ -36,6 +36,7 @@
 <link rel="next" href="mitme-prediktoriga-lineaarne-regressioon.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -153,7 +154,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.2.5" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#homoskedastilisus---scale-location-plot"><i class="fa fa-check"></i><b>6.2.5</b> Homoskedastilisus - Scale-location plot</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#residuaalid-y-ja-x-muutujate-vastu"><i class="fa fa-check"></i><b>6.3</b> Residuaalid y ja x muutujate vastu</a></li>
-<li class="chapter" data-level="6.4" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#teeme-mudeli-pohjal-ennustusi-marginal-plots"><i class="fa fa-check"></i><b>6.4</b> 3. Teeme mudeli põhjal ennustusi (marginal plots)</a><ul>
+<li class="chapter" data-level="6.4" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#teeme-mudeli-pohjal-ennustusi-marginal-plots"><i class="fa fa-check"></i><b>6.4</b> Teeme mudeli põhjal ennustusi (marginal plots)</a><ul>
 <li class="chapter" data-level="6.4.1" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#vordleme-mudeleid"><i class="fa fa-check"></i><b>6.4.1</b> 4. Võrdleme mudeleid</a></li>
 </ul></li>
 </ul></li>
@@ -238,31 +239,39 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="18" data-path="brms.html"><a href="brms.html"><i class="fa fa-check"></i><b>18</b> brms</a><ul>
 <li class="chapter" data-level="18.1" data-path="brms.html"><a href="brms.html#brms-i-toovoog"><i class="fa fa-check"></i><b>18.1</b> brms-i töövoog</a><ul>
-<li class="chapter" data-level="18.1.1" data-path="brms.html"><a href="brms.html#enne-tosist-mudeldamist-vaatame-sisse-irise-andmetabelisse"><i class="fa fa-check"></i><b>18.1.1</b> Enne tõsist mudeldamist vaatame sisse irise andmetabelisse</a></li>
-<li class="chapter" data-level="18.1.2" data-path="brms.html"><a href="brms.html#spetsifitseerime-mudeli-struktuuri-ja-vaatame-milliseid-prioreid-brms-tahab-defaultina-kasutada."><i class="fa fa-check"></i><b>18.1.2</b> 1. Spetsifitseerime mudeli struktuuri ja vaatame, milliseid prioreid brms tahab defaultina kasutada.</a></li>
-<li class="chapter" data-level="18.1.3" data-path="brms.html"><a href="brms.html#spetsifitseerime-priorid-mida-me-tegelikult-kasutada-tahame"><i class="fa fa-check"></i><b>18.1.3</b> 2. spetsifitseerime priorid, mida me tegelikult kasutada tahame</a></li>
-<li class="chapter" data-level="18.1.4" data-path="brms.html"><a href="brms.html#jooksutame-mudelit-oma-prioritega-ja-salvestame-mudeli-objekti-kovakettale."><i class="fa fa-check"></i><b>18.1.4</b> 3. Jooksutame mudelit oma prioritega ja salvestame mudeli objekti kõvakettale.</a></li>
-<li class="chapter" data-level="18.1.5" data-path="brms.html"><a href="brms.html#vordleme-mudeleid."><i class="fa fa-check"></i><b>18.1.5</b> 4. Võrdleme mudeleid.</a></li>
-<li class="chapter" data-level="18.1.6" data-path="brms.html"><a href="brms.html#vaatame-mudelite-kokkuvotet"><i class="fa fa-check"></i><b>18.1.6</b> 5. vaatame mudelite kokkuvõtet</a></li>
-<li class="chapter" data-level="18.1.7" data-path="brms.html"><a href="brms.html#plotime-posteeriorid-ja-ahelad"><i class="fa fa-check"></i><b>18.1.7</b> 6. plotime posteeriorid ja ahelad</a></li>
-<li class="chapter" data-level="18.1.8" data-path="brms.html"><a href="brms.html#korjame-ahelad-andmeraami-ja-plotime-fititud-koefitsiendid-ci-dega"><i class="fa fa-check"></i><b>18.1.8</b> 7. korjame ahelad andmeraami ja plotime fititud koefitsiendid CI-dega</a></li>
-<li class="chapter" data-level="18.1.9" data-path="brms.html"><a href="brms.html#plotime-mudeli-poolt-ennustatud-valimeid---posterior-predictive-check"><i class="fa fa-check"></i><b>18.1.9</b> 8. plotime mudeli poolt ennustatud valimeid - posterior predictive check</a></li>
-<li class="chapter" data-level="18.1.10" data-path="brms.html"><a href="brms.html#plotime-mudeli-ennustusi---marginal-effects-plots"><i class="fa fa-check"></i><b>18.1.10</b> 9. plotime mudeli ennustusi - marginal effects plots</a></li>
+<li class="chapter" data-level="18.1.1" data-path="brms.html"><a href="brms.html#kiire-toovoog"><i class="fa fa-check"></i><b>18.1.1</b> kiire töövoog</a></li>
+<li class="chapter" data-level="18.1.2" data-path="brms.html"><a href="brms.html#pohjalikum-toovoog"><i class="fa fa-check"></i><b>18.1.2</b> Põhjalikum töövoog</a></li>
+<li class="chapter" data-level="18.1.3" data-path="brms.html"><a href="brms.html#spetsifitseerime-mudeli-struktuuri-vaatame-default-prioreid-ja-muudame-neid."><i class="fa fa-check"></i><b>18.1.3</b> Spetsifitseerime mudeli struktuuri, vaatame default prioreid ja muudame neid.</a></li>
+<li class="chapter" data-level="18.1.4" data-path="brms.html"><a href="brms.html#brm-funktsiooni-argumendid"><i class="fa fa-check"></i><b>18.1.4</b> brm() funktsiooni argumendid:</a></li>
+<li class="chapter" data-level="18.1.5" data-path="brms.html"><a href="brms.html#fitime-mudeleid-ja-vordleme-fitte."><i class="fa fa-check"></i><b>18.1.5</b> Fitime mudeleid ja võrdleme fitte.</a></li>
+<li class="chapter" data-level="18.1.6" data-path="brms.html"><a href="brms.html#vaatame-mudelite-kokkuvotet"><i class="fa fa-check"></i><b>18.1.6</b> vaatame mudelite kokkuvõtet</a></li>
+<li class="chapter" data-level="18.1.7" data-path="brms.html"><a href="brms.html#plotime-posteeriorid-ja-ahelad"><i class="fa fa-check"></i><b>18.1.7</b> plotime posteeriorid ja ahelad</a></li>
+<li class="chapter" data-level="18.1.8" data-path="brms.html"><a href="brms.html#korjame-ahelad-andmeraami-ja-plotime-fititud-koefitsiendid-ci-dega"><i class="fa fa-check"></i><b>18.1.8</b> korjame ahelad andmeraami ja plotime fititud koefitsiendid CI-dega</a></li>
+<li class="chapter" data-level="18.1.9" data-path="brms.html"><a href="brms.html#bayesi-versioon-r-ruudust"><i class="fa fa-check"></i><b>18.1.9</b> bayesi versioon r-ruudust</a></li>
+<li class="chapter" data-level="18.1.10" data-path="brms.html"><a href="brms.html#plotime-mudeli-poolt-ennustatud-valimeid---posterior-predictive-check"><i class="fa fa-check"></i><b>18.1.10</b> plotime mudeli poolt ennustatud valimeid - posterior predictive check</a></li>
+<li class="chapter" data-level="18.1.11" data-path="brms.html"><a href="brms.html#plotime-mudeli-ennustusi---marginal-effects-plots"><i class="fa fa-check"></i><b>18.1.11</b> plotime mudeli ennustusi - marginal effects plots</a></li>
+<li class="chapter" data-level="18.1.12" data-path="brms.html"><a href="brms.html#alternatiivne-tee"><i class="fa fa-check"></i><b>18.1.12</b> Alternatiivne tee:</a></li>
 </ul></li>
-<li class="chapter" data-level="18.2" data-path="brms.html"><a href="brms.html#plotime-residuaalid"><i class="fa fa-check"></i><b>18.2</b> 9. plotime residuaalid</a><ul>
-<li class="chapter" data-level="18.2.1" data-path="brms.html"><a href="brms.html#puuduvate-andmete-imputatsioon"><i class="fa fa-check"></i><b>18.2.1</b> puuduvate andmete imputatsioon</a></li>
+<li class="chapter" data-level="18.2" data-path="brms.html"><a href="brms.html#mudeli-eelduste-kontroll"><i class="fa fa-check"></i><b>18.2</b> mudeli eelduste kontroll</a><ul>
+<li class="chapter" data-level="18.2.1" data-path="brms.html"><a href="brms.html#plotime-residuaalid"><i class="fa fa-check"></i><b>18.2.1</b> plotime residuaalid</a></li>
 </ul></li>
-<li class="chapter" data-level="18.3" data-path="brms.html"><a href="brms.html#brms-mudelite-suntaks"><i class="fa fa-check"></i><b>18.3</b> brms mudelite süntaks</a></li>
-<li class="chapter" data-level="18.4" data-path="brms.html"><a href="brms.html#naited-brms-mudeliklassidest"><i class="fa fa-check"></i><b>18.4</b> Näited brms mudeliklassidest</a></li>
-<li class="chapter" data-level="18.5" data-path="brms.html"><a href="brms.html#distributsioonilised-mudelid"><i class="fa fa-check"></i><b>18.5</b> distributsioonilised mudelid</a><ul>
-<li class="chapter" data-level="18.5.1" data-path="brms.html"><a href="brms.html#erinevad-varieeruvused"><i class="fa fa-check"></i><b>18.5.1</b> erinevad varieeruvused</a></li>
-<li class="chapter" data-level="18.5.2" data-path="brms.html"><a href="brms.html#zero-inflated-mudelid"><i class="fa fa-check"></i><b>18.5.2</b> zero inflated mudelid</a></li>
-<li class="chapter" data-level="18.5.3" data-path="brms.html"><a href="brms.html#additiivsed-distributsioonilised-mudelid"><i class="fa fa-check"></i><b>18.5.3</b> additiivsed distributsioonilised mudelid</a></li>
 </ul></li>
-<li class="chapter" data-level="18.6" data-path="brms.html"><a href="brms.html#monotoonilised-efektid"><i class="fa fa-check"></i><b>18.6</b> Monotoonilised efektid</a><ul>
-<li class="chapter" data-level="18.6.1" data-path="brms.html"><a href="brms.html#multivariaatsed-mudelid"><i class="fa fa-check"></i><b>18.6.1</b> multivariaatsed mudelid</a></li>
-<li class="chapter" data-level="18.6.2" data-path="brms.html"><a href="brms.html#mittelineaarsed-mudelid"><i class="fa fa-check"></i><b>18.6.2</b> mittelineaarsed mudelid</a></li>
+<li class="chapter" data-level="19" data-path="brms-mudelid.html"><a href="brms-mudelid.html"><i class="fa fa-check"></i><b>19</b> Brms mudelid</a><ul>
+<li class="chapter" data-level="19.1" data-path="brms-mudelid.html"><a href="brms-mudelid.html#robustne-lineaarne-regressioon"><i class="fa fa-check"></i><b>19.1</b> Robustne lineaarne regressioon</a><ul>
+<li class="chapter" data-level="19.1.1" data-path="brms-mudelid.html"><a href="brms-mudelid.html#puuduvate-andmete-imputatsioon"><i class="fa fa-check"></i><b>19.1.1</b> puuduvate andmete imputatsioon</a></li>
 </ul></li>
+<li class="chapter" data-level="19.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#imputatsioon-otse-brms-is"><i class="fa fa-check"></i><b>19.2</b> imputatsioon otse brms-is</a><ul>
+<li class="chapter" data-level="19.2.1" data-path="brms-mudelid.html"><a href="brms-mudelid.html#binoomjaotusega-mudelid"><i class="fa fa-check"></i><b>19.2.1</b> binoomjaotusega mudelid</a></li>
+<li class="chapter" data-level="19.2.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#logistic-regression"><i class="fa fa-check"></i><b>19.2.2</b> logistic regression</a></li>
+<li class="chapter" data-level="19.2.3" data-path="brms-mudelid.html"><a href="brms-mudelid.html#y-muutujal-3-kategoorilist-vaartust"><i class="fa fa-check"></i><b>19.2.3</b> y muutujal 3+ kategoorilist väärtust</a></li>
+<li class="chapter" data-level="19.2.4" data-path="brms-mudelid.html"><a href="brms-mudelid.html#zero-inflated-mudelid"><i class="fa fa-check"></i><b>19.2.4</b> zero inflated mudelid</a></li>
+<li class="chapter" data-level="19.2.5" data-path="brms-mudelid.html"><a href="brms-mudelid.html#additiivsed-distributsioonilised-mudelid"><i class="fa fa-check"></i><b>19.2.5</b> additiivsed distributsioonilised mudelid</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="brms-mudelid.html"><a href="brms-mudelid.html#monotoonilised-efektid"><i class="fa fa-check"></i><b>19.3</b> Monotoonilised efektid</a><ul>
+<li class="chapter" data-level="19.3.1" data-path="brms-mudelid.html"><a href="brms-mudelid.html#multivariaatsed-mudelid"><i class="fa fa-check"></i><b>19.3.1</b> multivariaatsed mudelid</a></li>
+<li class="chapter" data-level="19.3.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#mittelineaarsed-mudelid"><i class="fa fa-check"></i><b>19.3.2</b> mittelineaarsed mudelid</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="brms-mudelid.html"><a href="brms-mudelid.html#brms-mudelite-suntaks"><i class="fa fa-check"></i><b>19.4</b> brms mudelite süntaks</a></li>
 </ul></li>
 <li class="appendix"><span><b>Lisa</b></span></li>
 <li class="chapter" data-level="A" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html"><i class="fa fa-check"></i><b>A</b> Bayesi ja sagedusliku statistika võrdlus</a><ul>
@@ -470,7 +479,7 @@ Joonis 14.3: Ennustused mudelist.
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dens</span>(sim.length<span class="op">$</span>V10)
 <span class="kw">HPDI</span>(sim.length<span class="op">$</span>V10, <span class="dt">prob =</span> <span class="fl">0.95</span>)
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt;  39.0  66.6</span></code></pre></div>
+<span class="co">#&gt;  39.1  67.7</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-25"></span>
 <img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-25-1.png" alt="Ennustus mudelist kindlale log GDP väärtusele." width="70%" />
 <p class="caption">
@@ -509,7 +518,16 @@ Joonis 14.5: SKP-de jaotus
 <span class="co">#&gt; a     2.48   0.38       1.87       3.08   283    1</span>
 <span class="co">#&gt; b     0.09   0.01       0.08       0.10   287    1</span>
 <span class="co">#&gt; sigma 0.81   0.05       0.74       0.88   294    1</span></code></pre></div>
-<p>Logormaalses mudelis muutuvad parameetrite tähendused ja need tuleb lineaarse mudeli intercepti ja tõusu interpretatsioonidega kooskõlla viimiseks ümber arvutada. Kõigepealt avaldame tõusu. Kuna meil on tegemist mitte-lineaarse mudeliga, sõltub tõusu väärtus ka mudeli interceptist: <span class="math inline">\(slope = exp(\alpha + \beta)-exp(\alpha)\)</span>. See ei ole lineaarne seos: b omab seda suuremat mõju efektile (tõusule), mida suurem on a. [Kui meil on tegu binaarse X-ga (prediktoriga), siis kodeerime selle 2 taset kui -1 ja 1. Sellises mudelis on slope sama, mis efekti suurus ES, ja <span class="math inline">\(ES = exp(\alpha + \beta)-exp(\alpha-\beta)\)</span>]</p>
+<p>Lognormaalse mudeli koefitsiendid mu ja sigma annavad keskmise ja standardhälbe log(x)-le, mitte x-le! Seega tuleb need koefitsiendid lineaarse mudeli andmeskaalas tõlgendamiseks ümber arvutada.</p>
+<p><span class="math display">\[e^\mu = \mu^*\]</span></p>
+<p>kus <span class="math inline">\(\mu^*\)</span> on geomeetriline keskmine ehk mediaan</p>
+<p><span class="math display">\[e^\sigma = \sigma^*\]</span></p>
+<p>kus <span class="math inline">\(\sigma^*\)</span> on multiplikatiivne standardhälve</p>
+<p><span class="math inline">\(\mu^*\)</span> korda/jagatud <span class="math inline">\(\sigma^*\)</span> katab 68% lognormaaljaotusest, ja 2 <span class="math inline">\(\sigma^*\)</span> katab 96% jaotusest.</p>
+<p><span class="math display">\[e^\mu e^{\frac{\sigma^2}2} = keskväärtus\]</span></p>
+<p>tavaline additiivne standardhälve</p>
+<p><span class="math display">\[e^{\sigma^2}(e^{\sigma^2} - 1)e^{2\sigma} =\sigma\]</span></p>
+<p>Kõigepealt avaldame tõusu. Kuna meil on tegemist mitte-lineaarse mudeliga, sõltub tõusu väärtus ka mudeli interceptist: <span class="math inline">\(slope = exp(\alpha + \beta)-exp(\alpha)\)</span>. See ei ole lineaarne seos: b omab seda suuremat mõju efektile (tõusule), mida suurem on a. [Kui meil on tegu binaarse X-ga (prediktoriga), siis kodeerime selle 2 taset kui -1 ja 1. Sellises mudelis on slope sama, mis efekti suurus ES, ja <span class="math inline">\(ES = exp(\alpha + \beta)-exp(\alpha-\beta)\)</span>]</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">seq</span>( <span class="dv">0</span>, <span class="dv">10</span>, <span class="dt">length.out =</span> <span class="dv">1000</span> )
 b &lt;-<span class="st"> </span><span class="dv">2</span>
 b1 &lt;-<span class="st"> </span><span class="dv">3</span>
