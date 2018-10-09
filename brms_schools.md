@@ -71,6 +71,15 @@ Excersize: how do these models differ?
 
 1. score1~ sex
 
+```r
+lm(score1~sex, data = schools) %>% tidy()
+#> # A tibble: 2 x 5
+#>   term        estimate std.error statistic    p.value
+#>   <chr>          <dbl>     <dbl>     <dbl>      <dbl>
+#> 1 (Intercept)    48.5      0.536     90.5  0         
+#> 2 sex1           -3.34     0.697     -4.80 0.00000178
+```
+
 2. score1~ score2
 
 3. score1~score2 + sex
@@ -79,13 +88,41 @@ Excersize: how do these models differ?
 
 5. score1~score2:sex
 
+
+```r
+lm(score1~score2:sex, data = schools) %>% tidy()
+#> # A tibble: 3 x 5
+#>   term        estimate std.error statistic   p.value
+#>   <chr>          <dbl>     <dbl>     <dbl>     <dbl>
+#> 1 (Intercept)   16.1      1.37        11.7 2.72e- 30
+#> 2 score2:sex0    0.460    0.0197      23.4 2.62e-103
+#> 3 score2:sex1    0.386    0.0180      21.4 5.80e- 89
+```
+
+
 6. score1~sex*school
+
+
+```r
+lm(score1~school:sex, data = schools) %>% tidy()
+#> # A tibble: 143 x 5
+#>   term             estimate std.error statistic  p.value
+#>   <chr>               <dbl>     <dbl>     <dbl>    <dbl>
+#> 1 (Intercept)        60.8        3.70   16.4    1.95e-55
+#> 2 school20920:sex0  -40.3        8.68   -4.64   3.85e- 6
+#> 3 school22520:sex0  -26.4        4.46   -5.93   3.92e- 9
+#> 4 school22710:sex0  -23.9        5.86   -4.09   4.57e- 5
+#> 5 school22738:sex0   -5.98       6.20   -0.965  3.35e- 1
+#> 6 school22908:sex0    0.222     11.7     0.0190 9.85e- 1
+#> # ... with 137 more rows
+```
+
 
 7. score1~sex + (1 | school)
 
 8. score1~sex + (sex | school)
 
-9. score1~0 + (sex | school)
+9. 
 
 
 score1~score2*sex on sama, mis score1~score2 + sex + score2:sex
@@ -148,7 +185,14 @@ sex <- 0
 a <- 22.22521711
 b1 <- 0.37664046
 b2 <- -11.90657014
+b3 <- 0.08180509
 a + b1*score2 + b2*sex +  b3*score2*sex
+#> [1] 41.1
+```
+
+
+```r
+a + b1*score2
 #> [1] 41.1
 ```
 
@@ -250,7 +294,7 @@ a <- ((sch_df$`r_school[22520,Intercept]` - sch_df$`r_school[22520,sex1]`)/2) - 
 ggplot(data=NULL, aes(a)) + geom_density()
 ```
 
-<img src="brms_schools_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="brms_schools_files/figure-html/unnamed-chunk-24-1.png" width="70%" style="display: block; margin: auto;" />
 
 90% CI 
 
@@ -275,7 +319,7 @@ mean(sch_df$b_sex1 > 0)
 plot(sch_m1, pars = "b_")
 ```
 
-<img src="brms_schools_files/figure-html/unnamed-chunk-23-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="brms_schools_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 
@@ -283,7 +327,7 @@ plot(sch_m1, pars = "b_")
 stanplot(sch_m1, pars = "cept]$")
 ```
 
-<img src="brms_schools_files/figure-html/unnamed-chunk-24-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="brms_schools_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 ```r
@@ -297,7 +341,7 @@ bayes_R2(sch_m1)
 pp_check(sch_m1)
 ```
 
-<img src="brms_schools_files/figure-html/unnamed-chunk-26-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="brms_schools_files/figure-html/unnamed-chunk-30-1.png" width="70%" style="display: block; margin: auto;" />
 
 poiste ja tüdrukute ennustatud keskmine tulemus 90% CI-ga (0 - poiss, 1 - tüdruk)
 
@@ -305,7 +349,7 @@ poiste ja tüdrukute ennustatud keskmine tulemus 90% CI-ga (0 - poiss, 1 - tüdr
 marginal_effects(sch_m1, method = "fitted", probs=c(0.1, 0.9))
 ```
 
-<img src="brms_schools_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="brms_schools_files/figure-html/unnamed-chunk-31-1.png" width="70%" style="display: block; margin: auto;" />
 
 siin ennustab mudel kooli kaupa, kuhu piirkonda võiksid tulla just selle kooli tulemused kordustestis. Näidatud on ka algse valimi andmepunktid. NB! kui minna mudeli alumisele tasemele, siis tuleb sisse panna argument re_formula = NULL (muidu ei arvesta ennustus mudeli alumise taseme koefitsiente)
 
@@ -314,7 +358,7 @@ conditions <- data.frame(school =c("20920", "22520", "30474"))
 plot(marginal_effects(sch_m1, method = "predict", re_formula = NULL, conditions = conditions, probs=c(0.1, 0.9)), points = TRUE,  theme = theme_bw())
 ```
 
-<img src="brms_schools_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="brms_schools_files/figure-html/unnamed-chunk-32-1.png" width="70%" style="display: block; margin: auto;" />
 
 ja kooli tasemel ennustused keskmisele skoorile. Kool 2, kus on rohkem andmeid kui kool 1-l, saab ka kitsamad usalduspiirid.
 
@@ -322,7 +366,7 @@ ja kooli tasemel ennustused keskmisele skoorile. Kool 2, kus on rohkem andmeid k
 plot(marginal_effects(sch_m1, method = "fitted", conditions = conditions, re_formula = NULL, probs=c(0.1, 0.9)),  theme = theme_bw())
 ```
 
-<img src="brms_schools_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="brms_schools_files/figure-html/unnamed-chunk-33-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 

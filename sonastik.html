@@ -394,15 +394,45 @@ schools &lt;-<span class="st"> </span>schools <span class="op">%&gt;%</span>
 <span class="co">#&gt;  ▁▁▁▂▅▇▇▆</span></code></pre></div>
 <p>Excersize: how do these models differ?</p>
 <ol style="list-style-type: decimal">
-<li><p>score1~ sex</p></li>
+<li>score1~ sex</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(score1<span class="op">~</span>sex, <span class="dt">data =</span> schools) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()
+<span class="co">#&gt; # A tibble: 2 x 5</span>
+<span class="co">#&gt;   term        estimate std.error statistic    p.value</span>
+<span class="co">#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 (Intercept)    48.5      0.536     90.5  0         </span>
+<span class="co">#&gt; 2 sex1           -3.34     0.697     -4.80 0.00000178</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
 <li><p>score1~ score2</p></li>
 <li><p>score1~score2 + sex</p></li>
 <li><p>score1~score2*sex</p></li>
 <li><p>score1~score2:sex</p></li>
-<li><p>score1~sex*school</p></li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(score1<span class="op">~</span>score2<span class="op">:</span>sex, <span class="dt">data =</span> schools) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()
+<span class="co">#&gt; # A tibble: 3 x 5</span>
+<span class="co">#&gt;   term        estimate std.error statistic   p.value</span>
+<span class="co">#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 (Intercept)   16.1      1.37        11.7 2.72e- 30</span>
+<span class="co">#&gt; 2 score2:sex0    0.460    0.0197      23.4 2.62e-103</span>
+<span class="co">#&gt; 3 score2:sex1    0.386    0.0180      21.4 5.80e- 89</span></code></pre></div>
+<ol start="6" style="list-style-type: decimal">
+<li>score1~sex*school</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(score1<span class="op">~</span>school<span class="op">:</span>sex, <span class="dt">data =</span> schools) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()
+<span class="co">#&gt; # A tibble: 143 x 5</span>
+<span class="co">#&gt;   term             estimate std.error statistic  p.value</span>
+<span class="co">#&gt;   &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 (Intercept)        60.8        3.70   16.4    1.95e-55</span>
+<span class="co">#&gt; 2 school20920:sex0  -40.3        8.68   -4.64   3.85e- 6</span>
+<span class="co">#&gt; 3 school22520:sex0  -26.4        4.46   -5.93   3.92e- 9</span>
+<span class="co">#&gt; 4 school22710:sex0  -23.9        5.86   -4.09   4.57e- 5</span>
+<span class="co">#&gt; 5 school22738:sex0   -5.98       6.20   -0.965  3.35e- 1</span>
+<span class="co">#&gt; 6 school22908:sex0    0.222     11.7     0.0190 9.85e- 1</span>
+<span class="co">#&gt; # ... with 137 more rows</span></code></pre></div>
+<ol start="7" style="list-style-type: decimal">
 <li><p>score1~sex + (1 | school)</p></li>
 <li><p>score1~sex + (sex | school)</p></li>
-<li><p>score1~0 + (sex | school)</p></li>
+<li></li>
 </ol>
 <p>score1~score2*sex on sama, mis score1~score2 + sex + score2:sex</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_m1 &lt;-<span class="st"> </span><span class="kw">lm</span>(score1<span class="op">~</span>score2 <span class="op">+</span><span class="st"> </span>sex, <span class="dt">data =</span> schools)
@@ -442,7 +472,10 @@ sex &lt;-<span class="st"> </span><span class="dv">0</span>
 a &lt;-<span class="st"> </span><span class="fl">22.22521711</span>
 b1 &lt;-<span class="st"> </span><span class="fl">0.37664046</span>
 b2 &lt;-<span class="st"> </span><span class="op">-</span><span class="fl">11.90657014</span>
+b3 &lt;-<span class="st"> </span><span class="fl">0.08180509</span>
 a <span class="op">+</span><span class="st"> </span>b1<span class="op">*</span>score2 <span class="op">+</span><span class="st"> </span>b2<span class="op">*</span>sex <span class="op">+</span><span class="st">  </span>b3<span class="op">*</span>score2<span class="op">*</span>sex
+<span class="co">#&gt; [1] 41.1</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a <span class="op">+</span><span class="st"> </span>b1<span class="op">*</span>score2
 <span class="co">#&gt; [1] 41.1</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tidy</span>(lm_m3)
 <span class="co">#&gt; # A tibble: 3 x 5</span>
@@ -499,7 +532,7 @@ a <span class="op">+</span><span class="st"> </span>b1<span class="op">*</span>s
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span>((sch_df<span class="op">$</span><span class="st">`</span><span class="dt">r_school[22520,Intercept]</span><span class="st">`</span> <span class="op">-</span><span class="st"> </span>sch_df<span class="op">$</span><span class="st">`</span><span class="dt">r_school[22520,sex1]</span><span class="st">`</span>)<span class="op">/</span><span class="dv">2</span>) <span class="op">-</span><span class="st"> </span>((sch_df<span class="op">$</span><span class="st">`</span><span class="dt">r_school[30474,Intercept]</span><span class="st">`</span> <span class="op">-</span><span class="st"> </span>sch_df<span class="op">$</span><span class="st">`</span><span class="dt">r_school[30474,sex1]</span><span class="st">`</span>)<span class="op">/</span><span class="dv">2</span>)
 
 <span class="kw">ggplot</span>(<span class="dt">data=</span><span class="ot">NULL</span>, <span class="kw">aes</span>(a)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>()</code></pre></div>
-<p><img src="brms_schools_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="brms_schools_files/figure-html/unnamed-chunk-24-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>90% CI</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rethinking<span class="op">::</span><span class="kw">HPDI</span>(a, <span class="dt">prob =</span> <span class="fl">0.9</span>)
 <span class="co">#&gt;   |0.9   0.9| </span>
@@ -508,24 +541,24 @@ a <span class="op">+</span><span class="st"> </span>b1<span class="op">*</span>s
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(sch_df<span class="op">$</span>b_sex1 <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)
 <span class="co">#&gt; [1] 0</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sch_m1, <span class="dt">pars =</span> <span class="st">&quot;b_&quot;</span>)</code></pre></div>
-<p><img src="brms_schools_files/figure-html/unnamed-chunk-23-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="brms_schools_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">stanplot</span>(sch_m1, <span class="dt">pars =</span> <span class="st">&quot;cept]$&quot;</span>)</code></pre></div>
-<p><img src="brms_schools_files/figure-html/unnamed-chunk-24-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="brms_schools_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bayes_R2</span>(sch_m1)
 <span class="co">#&gt;    Estimate Est.Error Q2.5 Q97.5</span>
 <span class="co">#&gt; R2    0.316     0.018 0.28  0.35</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pp_check</span>(sch_m1)</code></pre></div>
-<p><img src="brms_schools_files/figure-html/unnamed-chunk-26-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="brms_schools_files/figure-html/unnamed-chunk-30-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>poiste ja tüdrukute ennustatud keskmine tulemus 90% CI-ga (0 - poiss, 1 - tüdruk)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">marginal_effects</span>(sch_m1, <span class="dt">method =</span> <span class="st">&quot;fitted&quot;</span>, <span class="dt">probs=</span><span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>))</code></pre></div>
-<p><img src="brms_schools_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="brms_schools_files/figure-html/unnamed-chunk-31-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>siin ennustab mudel kooli kaupa, kuhu piirkonda võiksid tulla just selle kooli tulemused kordustestis. Näidatud on ka algse valimi andmepunktid. NB! kui minna mudeli alumisele tasemele, siis tuleb sisse panna argument re_formula = NULL (muidu ei arvesta ennustus mudeli alumise taseme koefitsiente)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">conditions &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">school =</span><span class="kw">c</span>(<span class="st">&quot;20920&quot;</span>, <span class="st">&quot;22520&quot;</span>, <span class="st">&quot;30474&quot;</span>))
 <span class="kw">plot</span>(<span class="kw">marginal_effects</span>(sch_m1, <span class="dt">method =</span> <span class="st">&quot;predict&quot;</span>, <span class="dt">re_formula =</span> <span class="ot">NULL</span>, <span class="dt">conditions =</span> conditions, <span class="dt">probs=</span><span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>)), <span class="dt">points =</span> <span class="ot">TRUE</span>,  <span class="dt">theme =</span> <span class="kw">theme_bw</span>())</code></pre></div>
-<p><img src="brms_schools_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="brms_schools_files/figure-html/unnamed-chunk-32-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>ja kooli tasemel ennustused keskmisele skoorile. Kool 2, kus on rohkem andmeid kui kool 1-l, saab ka kitsamad usalduspiirid.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(sch_m1, <span class="dt">method =</span> <span class="st">&quot;fitted&quot;</span>, <span class="dt">conditions =</span> conditions, <span class="dt">re_formula =</span> <span class="ot">NULL</span>, <span class="dt">probs=</span><span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>)),  <span class="dt">theme =</span> <span class="kw">theme_bw</span>())</code></pre></div>
-<p><img src="brms_schools_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="brms_schools_files/figure-html/unnamed-chunk-33-1.png" width="70%" style="display: block; margin: auto;" /></p>
 
 <div id="refs" class="references">
 <div>
