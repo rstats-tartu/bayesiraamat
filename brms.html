@@ -164,7 +164,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="veamudel.html"><a href="veamudel.html#enimkasutatud-veamudel-on-normaaljaotus"><i class="fa fa-check"></i>Enimkasutatud veamudel on normaaljaotus</a><ul>
 <li class="chapter" data-level="" data-path="veamudel.html"><a href="veamudel.html#normaaljaotuse-mudel-vaikestel-valimitel"><i class="fa fa-check"></i>Normaaljaotuse mudel väikestel valimitel</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="veamudel.html"><a href="veamudel.html#normaaljaotuse-ja-lognormaaljaotuse-erilisus"><i class="fa fa-check"></i>Normaaljaotuse ja lognormaaljaotuse erilisus</a></li>
+<li class="chapter" data-level="" data-path="veamudel.html"><a href="veamudel.html#normaaljaotuse-ja-lognormaaljaotuse-erilisus"><i class="fa fa-check"></i>Normaaljaotuse ja lognormaaljaotuse erilisus</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="veamudel.html"><a href="veamudel.html#normaaljaotuse-ja-lognormaaljaotuse-vordlus"><i class="fa fa-check"></i><b>7.2.1</b> Normaaljaotuse ja lognormaaljaotuse võrdlus</a></li>
+</ul></li>
 <li class="chapter" data-level="7.3" data-path="veamudel.html"><a href="veamudel.html#teised-veamudelid"><i class="fa fa-check"></i><b>7.3</b> Teised veamudelid</a><ul>
 <li class="chapter" data-level="7.3.1" data-path="veamudel.html"><a href="veamudel.html#lognormaaljaotus"><i class="fa fa-check"></i><b>7.3.1</b> Lognormaaljaotus</a></li>
 <li class="chapter" data-level="7.3.2" data-path="veamudel.html"><a href="veamudel.html#binoomjaotus"><i class="fa fa-check"></i><b>7.3.2</b> Binoomjaotus</a></li>
@@ -662,12 +664,12 @@ pars &lt;-<span class="st"> </span><span class="kw">names</span>(model2)
 <span class="st">  </span><span class="kw">cbind</span>(newx,.)
 <span class="kw">head</span>(predict_interval_brms2)
 <span class="co">#&gt;   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5</span>
-<span class="co">#&gt; 1         1.00        3.06  setosa     4.48     0.320 3.84  5.09</span>
-<span class="co">#&gt; 2         1.04        3.06  setosa     4.52     0.318 3.90  5.14</span>
-<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.318 3.95  5.19</span>
-<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.318 3.97  5.20</span>
-<span class="co">#&gt; 5         1.16        3.06  setosa     4.61     0.320 3.97  5.23</span>
-<span class="co">#&gt; 6         1.20        3.06  setosa     4.64     0.320 4.03  5.29</span></code></pre></div>
+<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.322 3.88  5.12</span>
+<span class="co">#&gt; 2         1.04        3.06  setosa     4.53     0.309 3.91  5.13</span>
+<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.318 3.94  5.19</span>
+<span class="co">#&gt; 4         1.12        3.06  setosa     4.57     0.318 3.96  5.19</span>
+<span class="co">#&gt; 5         1.16        3.06  setosa     4.61     0.315 3.98  5.20</span>
+<span class="co">#&gt; 6         1.20        3.06  setosa     4.64     0.314 4.03  5.25</span></code></pre></div>
 <p>predict() ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele</p>
 <p>Siin siis eraldi ennustused kahele liigile kolmest, kaasa arvatud petal length väärtusvahemikule, kus selle liigi isendeid valimis ei ole (ja võib-olla ei saagi olla)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris1 &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>)

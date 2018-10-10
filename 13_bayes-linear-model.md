@@ -278,7 +278,7 @@ Kuidas saada ennustusi kindlale l_GDP väärtusele? Näiteks tulp V10 vastab l_G
 dens(sim.length$V10)
 HPDI(sim.length$V10, prob = 0.95)
 #> |0.95 0.95| 
-#>  38.5  66.8
+#>  40.7  69.2
 ```
 
 <div class="figure" style="text-align: center">
@@ -294,6 +294,31 @@ See mudel on alternatiiv andmete logaritmimisele, kui Y-muutuja (see muutuja, mi
 
 
 > Lognormaalne Y-i tõepäramudel on mittelineaarne. Lognormaaljaotus defineetitakse üle mu ja sigma, mis aga vastavd hoopis log(Y) normaaljaotuse mu-le ja sigmale.
+
+Lognormaalse mudeli koefitsiendid mu ja sigma annavad keskmise ja standardhälbe log(x)-le, mitte x-le! Seega tuleb need koefitsiendid lineaarse mudeli andmeskaalas tõlgendamiseks ümber arvutada. 
+
+$$e^\mu = \mu^*$$ 
+ 
+ kus $\mu^*$ on geomeetriline keskmine ehk mediaan
+
+
+$$e^\sigma = \sigma^*$$ 
+
+kus $\sigma^*$ on multiplikatiivne standardhälve
+
+$\mu^*$ korda/jagatud $\sigma^*$ katab 68% lognormaaljaotusest, ja 2 $\sigma^*$ katab 96% jaotusest.
+
+
+$$e^\mu e^{\frac{\sigma^2}2} = \mu$$
+
+kus $\mu$ on tavaline additiivne keskväärtus (aritmeetiline keskmine)
+
+
+
+$$e^{\sigma^2}(e^{\sigma^2} - 1)e^{2\sigma} =\sigma$$
+
+ ja $\sigma$ on tavaline additiivne standardhälve
+
 
 Seekord ennustame GDP-d keskmise eluea põhjal (mis, nagu näha jooniselt, ei ole küll päris lognormaalne).
 
@@ -331,29 +356,6 @@ precis(m_ln1)
 #> sigma 0.81   0.05       0.74       0.88   294    1
 ```
 
-Lognormaalse mudeli koefitsiendid mu ja sigma annavad keskmise ja standardhälbe log(x)-le, mitte x-le! Seega tuleb need koefitsiendid lineaarse mudeli andmeskaalas tõlgendamiseks ümber arvutada. 
-
-$$e^\mu = \mu^*$$ 
- 
- kus $\mu^*$ on geomeetriline keskmine ehk mediaan
-
-
-$$e^\sigma = \sigma^*$$ 
-
-kus $\sigma^*$ on multiplikatiivne standardhälve
-
-$\mu^*$ korda/jagatud $\sigma^*$ katab 68% lognormaaljaotusest, ja 2 $\sigma^*$ katab 96% jaotusest.
-
-
-$$e^\mu e^{\frac{\sigma^2}2} = \mu$$
-
-kus $\mu$ on tavaline additiivne keskväärtus (aritmeetiline keskmine)
-
-
-
-$$e^{\sigma^2}(e^{\sigma^2} - 1)e^{2\sigma} =\sigma$$
-
- ja $\sigma$ on tavaline additiivne standardhälve
 
 
 Kuna meil on tegemist mitte-lineaarse mudeliga, sõltub tõusu ($\beta$) väärtus ka mudeli interceptist: $\beta = exp(\alpha + \beta)-exp(\alpha)$. See ei ole lineaarne seos: $\beta$ omab seda suuremat mõju efektile (tõusule), mida suurem on $\alpha$. 
