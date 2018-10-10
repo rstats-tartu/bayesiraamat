@@ -278,7 +278,7 @@ Kuidas saada ennustusi kindlale l_GDP väärtusele? Näiteks tulp V10 vastab l_G
 dens(sim.length$V10)
 HPDI(sim.length$V10, prob = 0.95)
 #> |0.95 0.95| 
-#>  40.7  69.2
+#>  38.8  65.9
 ```
 
 <div class="figure" style="text-align: center">
@@ -295,7 +295,7 @@ See mudel on alternatiiv andmete logaritmimisele, kui Y-muutuja (see muutuja, mi
 
 > Lognormaalne Y-i tõepäramudel on mittelineaarne. Lognormaaljaotus defineetitakse üle mu ja sigma, mis aga vastavd hoopis log(Y) normaaljaotuse mu-le ja sigmale.
 
-Lognormaalse mudeli koefitsiendid mu ja sigma annavad keskmise ja standardhälbe log(x)-le, mitte x-le! Seega tuleb need koefitsiendid lineaarse mudeli andmeskaalas tõlgendamiseks ümber arvutada. 
+Lognormaalse mudeli koefitsiendid mu ja sigma annavad keskmise ja standardhälbe log(y)-le, mitte y-le! Seega tuleb need koefitsiendid lineaarse mudeli andmeskaalas tõlgendamiseks ümber arvutada. 
 
 $$e^\mu = \mu^*$$ 
  

@@ -137,7 +137,7 @@ heights_bb <- bayesboot(heights$value, mean)
 plot(heights_bb, compVal = 185)
 HPDI(heights_bb$V1, prob = 0.95)
 #> |0.95 0.95| 
-#>   183   187
+#>   182   187
 ```
 
 <div class="figure" style="text-align: center">
