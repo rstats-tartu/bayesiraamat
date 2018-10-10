@@ -238,7 +238,7 @@ See mudel on alternatiiv andmete logaritmimisele, kui Y-muutuja (see muutuja, mi
 
 > Lognormaalne Y-i tõepäramudel on mittelineaarne. Lognormaaljaotus defineetitakse üle mu ja sigma, mis aga vastavd hoopis log(Y) normaaljaotuse mu-le ja sigmale.
 
-Lognormaalse mudeli koefitsiendid mu ja sigma annavad keskmise ja standardhälbe log(x)-le, mitte x-le! Seega tuleb need koefitsiendid lineaarse mudeli andmeskaalas tõlgendamiseks ümber arvutada. 
+Lognormaalse mudeli koefitsiendid mu ja sigma annavad keskmise ja standardhälbe log(y)-le, mitte y-le! Seega tuleb need koefitsiendid lineaarse mudeli andmeskaalas tõlgendamiseks ümber arvutada. 
 
 $$e^\mu = \mu^*$$ 
  
