@@ -278,7 +278,7 @@ Kuidas saada ennustusi kindlale l_GDP väärtusele? Näiteks tulp V10 vastab l_G
 dens(sim.length$V10)
 HPDI(sim.length$V10, prob = 0.95)
 #> |0.95 0.95| 
-#>  38.8  65.9
+#>  39.4  67.0
 ```
 
 <div class="figure" style="text-align: center">
@@ -308,16 +308,17 @@ kus $\sigma^*$ on multiplikatiivne standardhälve
 
 $\mu^*$ korda/jagatud $\sigma^*$ katab 68% lognormaaljaotusest, ja 2 $\sigma^*$ katab 96% jaotusest.
 
+Lognormaaljaotuse parameetrite põhjal on võimalik arvutada ka tavalised additiivsed keskväärtused ja standardhälbed, aga oluliselt keerulisemate valemitega:
 
 $$e^\mu e^{\frac{\sigma^2}2} = \mu$$
 
-kus $\mu$ on tavaline additiivne keskväärtus (aritmeetiline keskmine)
+kus saadud $\mu$ on tavaline additiivne keskväärtus (aritmeetiline keskmine)
 
 
 
 $$e^{\sigma^2}(e^{\sigma^2} - 1)e^{2\sigma} =\sigma$$
 
- ja $\sigma$ on tavaline additiivne standardhälve
+ ja saadud $\sigma$ on tavaline additiivne standardhälve
 
 
 Seekord ennustame GDP-d keskmise eluea põhjal (mis, nagu näha jooniselt, ei ole küll päris lognormaalne).

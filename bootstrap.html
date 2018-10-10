@@ -391,7 +391,7 @@ Joonis 10.1: Bootstrapitud posteerior USA presidentide keskmisele pikkusele. Jä
 <span class="kw">plot</span>(heights_bb, <span class="dt">compVal =</span> <span class="dv">185</span>)
 <span class="kw">HPDI</span>(heights_bb<span class="op">$</span>V1, <span class="dt">prob =</span> <span class="fl">0.95</span>)
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt;   182   187</span></code></pre></div>
+<span class="co">#&gt;   183   187</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:bayesboot"></span>
 <img src="09_bootstrap_files/figure-html/bayesboot-1.png" alt="Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele." width="70%" />
 <p class="caption">
@@ -405,7 +405,7 @@ Joonis 10.2: Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele.
                          <span class="dt">use.weights =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>Tõenäosus, et keskmine on suurem kui 182 cm</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(heights_bb[, <span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">182</span>)
-<span class="co">#&gt; [1] 0.992</span></code></pre></div>
+<span class="co">#&gt; [1] 0.993</span></code></pre></div>
 <p>Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):</p>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
