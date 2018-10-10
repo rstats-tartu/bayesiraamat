@@ -269,20 +269,52 @@ Normaaljaotus ja lognormaaljaotus on erilised sest
 
 (1) kesksest piirteoreemist (*central limit theorem*) tuleneb, et olgu teie valim ükskõik millise jaotusega, paljudest valimitest arvutatud **aritmeetilised keskmised** on alati enam-vähem normaaljaotusega. See kehtib enamuse andmejaotuste korral, kui n>30. 
 Selle matemaatilise tõe peegeldus füüsikalisse maailma on "elementaarsete vigade hüpotees", mille kohaselt paljude väikeste üksteisest sõltumatute juhuslike efektide (vigade) summa annab tulemuseks normaaljaotuse. 
+
 Paraku enamus bioloogilisi mõõtmisi annavad tulemuseks eranditult mitte-negatiivseid väärtusi. 
 Sageli on selliste väärtuste jaotused ebasümmeetrilised (v.a. siis, kui cv = sd/mean on väike), ja kui nii, siis on meil sageli tegu lognormaaljaotusega, mis tekkib log-normaalsete muutujate korrutamisest. 
 Siit tuleb Keskne piirteoreem 2, mille kohaselt suvalise jaotusega muutujate **geomeetrilised keskmised** on enam-vähem lognormaaljaotusega, ning elementaarsete vigade hüpotees 2: Kui juhuslik varieeruvus tekib paljude juhuslike efektide korrutamisel, on tulemuseks lognormaaljaotus. 
 Lognormaaljaotusega väärtuste logaritmimine annab normaaljaotuse. 
 
 (2) Nii normaal- kui lognormaaljaotus on maksimaalse entroopiaga jaotused. 
-Entroopiat vaadeldakse siin informatsiooni & müra kaudu --- maksimaalse entroopiaga süsteem sisaldab maksimaalselt müra ja minimaalselt informatsiooni (Shannoni informatsiooniteooria). See tähendab, et väljaspool oma parameetrite tuunitud väärtusi on normaal- ja lognormaaljaotused minimaalselt informatiivsed. 
-Näiteks normaaljaotusel on kaks parameetrit, *mu* ja *sigma* (ehk keskmine ja standardhälve). 
-Seega, andes normaaljaotusele ette keskväärtuse ja standardhälbe fikseerime üheselt jaotuse ehk mudeli kuju ja samas lisame sinna minimaalselt muud (sooviamtut) informatsiooni. 
-Teised maksimaalse entroopiaga jaotused on eksponentsiaalne jaotus, binoomjaotus ja poissoni jaotus. 
+Entroopiat vaadeldakse siin informatsiooni & müra kaudu --- maksimaalse entroopiaga süsteem sisaldab maksimaalselt müra ja minimaalselt informatsiooni (vastavalt Shannoni informatsiooniteooriale). See tähendab, et väljaspool oma parameetrite tuunitud väärtusi on normaal- ja lognormaaljaotused minimaalselt informatiivsed. 
+Normaaljaotusel ja lognormaaljaotusel on kummagil kaks parameetrit, *mu* ja *sigma* (ehk keskmine ja standardhälve), mille väärtused fikseerides fikseerime üheselt jaotuse ehk mudeli kuju, lisades sinna minimaalselt muud (sooviamtut) informatsiooni. 
+Teised maksimaalse entroopiaga jaotused on näiteks eksponentsiaalne jaotus, binoomjaotus, bernoulli jaotus, poissoni jaotus. 
 
 > Kui meil on tegu nullist suuremate andmetega, on andmete logaritmimine sageli hea mõte. Logaritmitud andmete pealt arvutatud keskmise ja sd tagasi transformeerimine annab meile geomeetrilise keskmise ja geomeetrilise sd.
 
-Maksimaalsel entroopial põhineb normaaljaotuse ja lognormaaljaotuse sage kasutamine Bayesi statistikas prioritena, sest me suudame kontrollida, millist informatsiooni me neisse surume. Esimesel kesksel piirteoreemil seevastu põhineb kogu sageduslik statistika (vt ptk 8.).
+Maksimaalsel entroopial põhineb normaaljaotuse ja lognormaaljaotuse sage kasutamine Bayesi statistikas prioritena, sest me suudame paremini kontrollida, millist informatsiooni me neisse surume. Esimesel kesksel piirteoreemil seevastu põhineb kogu sageduslik statistika (vt ptk 8.).
+
+### Normaaljaotuse ja lognormaaljaotuse võrdlus
+
+**Normaaljaotus** 
+
+* normaalsete juhuslike muutujate liitmine annab normaalse summa. Lineaarsed kombinatsioonid $Y= \alpha + \beta_1X_1 + \beta_2X_2$ jäävad normaalseks.
+
+* normaalsete muutujate aritmeetilised keskmised on normaaljaotusega
+
+* Keskne piirteoreem: mitte-normaalsete muutujate aritmeetilised keskmised on enam-vähem normaaljaotusega
+
+* elementaarsete vigade hüpotees: kui juhuslik varieeruvus on paljude juhuslike mõjude summa, on tulemuseks normaaljaotus
+
+* lm() regressionimudelid eeldavad normaaljaotusega residuaale. log-normaalsete vigadega lineaarset regresiooni tuleks teha mudeldades log(Y) (vähimruutude meetodil) või lognormaalset tõepäramudelit kasutades (bayesi regressioon, vt ptk 13). 
+
+* additiivne regressioonimudel viib additiivsete vigadeni (residuaalideni), mis omakorda viib konstantsele varieeruvusele ehk konstantsele SD-le.
+
+**lognormaaljaotus**
+
+* lognormaalsete juhuslike muutujate korrutamine annab lognormaalse korrutise.
+
+* Longnormaalsete muutujate geomeetrilised keskmised on lognormaaljaotusega.
+
+* Keskne piirteoreem: mitte-lognormaalsete muutujate geomeetrilised keskmised on enam-vähem lognormaaljaotusega
+
+* Multiplikatiivne elementaarsete vigade hüpotees: kui juhuslik varieeruvus on paljude juhuslike mõjude korrutis, on tulemuseks lognormaaljaotus
+
+* multiplikatiivne regressioonimudel viib multiplikatiivsete vigadeni (residuaalideni), mis omakorda viib konstantsele suhtelisele varieeruvusele ehk konstantsele CV-le. Vigade jaotus on nüüd ebasümmeetriline. 
+
+Seega võime lognormaaljaotust kutsuda ka multiplikatiivseks normaaljaotuseks.
+
+
 
 
 ## Teised veamudelid
