@@ -301,8 +301,6 @@ m_ln1 <- readRDS("data/m_ln1.rds")
 precis(m_ln1)
 ```
 
-
-
 Kuna meil on tegemist mitte-lineaarse mudeliga, sõltub tõusu ($\beta$) väärtus ka mudeli interceptist: $\beta = exp(\alpha + \beta)-exp(\alpha)$. See ei ole lineaarne seos: $\beta$ omab seda suuremat mõju efektile (tõusule), mida suurem on $\alpha$. 
 
 Kui meil on tegu binaarse prediktoriga, siis kodeerime selle 2 taset kui -1 ja 1. Sellises mudelis on tõus sama, mis efekti suurus ES, ja $ES = exp(\alpha + \beta)-exp(\alpha-\beta)$
