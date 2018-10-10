@@ -338,7 +338,7 @@ m1 &lt;-<span class="st"> </span><span class="kw">map</span>(
 <span class="kw">dens</span>(samples<span class="op">$</span>p)
 <span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt; 0.361 0.979</span></code></pre></div>
+<span class="co">#&gt; 0.371 0.987</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:pullpost"></span>
 <img src="11_mudelite_keel_files/figure-html/pullpost-1.png" alt="Tõmbame valimi posteeriorist." width="70%" />
 <p class="caption">
@@ -361,7 +361,7 @@ Joonis 12.1: Tõmbame valimi posteeriorist.
 <span class="co">#PI(samples$p, prob = 0.95) # Leaves out equal 2.5% at both sides</span>
 <span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt; 0.562 0.759</span></code></pre></div>
+<span class="co">#&gt; 0.570 0.766</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:perse"></span>
 <img src="11_mudelite_keel_files/figure-html/perse-1.png" alt="Veel üks valim posteeriorist (60 surma 90st)." width="70%" />
 <p class="caption">
@@ -407,7 +407,7 @@ samples &lt;-<span class="st"> </span><span class="kw">extract.samples</span>(m3
 <span class="co">#&gt; p 0.67   0.03 0.62  0.71</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt; 0.614 0.718</span>
+<span class="co">#&gt; 0.616 0.720</span>
 <span class="kw">dens</span>(samples<span class="op">$</span>p)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
 <img src="11_mudelite_keel_files/figure-html/unnamed-chunk-5-1.png" alt="Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist." width="70%" />

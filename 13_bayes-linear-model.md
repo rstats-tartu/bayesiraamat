@@ -278,7 +278,7 @@ Kuidas saada ennustusi kindlale l_GDP väärtusele? Näiteks tulp V10 vastab l_G
 dens(sim.length$V10)
 HPDI(sim.length$V10, prob = 0.95)
 #> |0.95 0.95| 
-#>  39.4  67.0
+#>  39.2  67.3
 ```
 
 <div class="figure" style="text-align: center">
@@ -356,8 +356,6 @@ precis(m_ln1)
 #> b     0.09   0.01       0.08       0.10   287    1
 #> sigma 0.81   0.05       0.74       0.88   294    1
 ```
-
-
 
 Kuna meil on tegemist mitte-lineaarse mudeliga, sõltub tõusu ($\beta$) väärtus ka mudeli interceptist: $\beta = exp(\alpha + \beta)-exp(\alpha)$. See ei ole lineaarne seos: $\beta$ omab seda suuremat mõju efektile (tõusule), mida suurem on $\alpha$. 
 
