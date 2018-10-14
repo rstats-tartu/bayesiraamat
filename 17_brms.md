@@ -122,7 +122,7 @@ plot(marginal_effects(m_kiire), points=TRUE)
 
 Põhiline erinevus eelmisega on suurem tähelepanu prioritele, mudeli fittimise diagnostikale ning tööle fititud mudeliga.
 
-### Spetsifitseerime mudeli struktuuri, vaatame default prioreid ja muudame neid. 
+### Spetsifitseerime mudeli, vaatame ja muudame vaikeprioreid 
 
 brms-i default priorid on konstrueeritud olema üsna väheinformatiivsed ja need tuleks enamasti informatiivsematega asendada. Igasse priorisse tuleks panna nii palju informatsiooni, kui teil on vastava parameetri kohta. Kui te mõne parameetri kohta ei oska öelda, milllised oleks selle mõistlikud oodatavad väärtused, siis saab piirduda brms-i antud vaikeväärtustega. Samas, kui keerulisemad mudelid ei taha hästi joosta (mida tuleb ikka ette), siis aitab sageli priorite kitsamaks muutmine.
 
@@ -154,7 +154,7 @@ prior <- c(prior(normal(6, 3), class = "Intercept"),
            prior(student_t(6, 0, 2), class = "sigma"))
 ```
 
-Me valime siin nn väheinformariivsed priorid, nii et regressiooni tulemus on suht hästi võrreldav lme4 sagedusliku mudeliga. "b" koefitsiendi priorile (aga mitte "sigma" ega "Intercept"-le) võib anda ka ülemise ja/või alumise piiri [prior(normal(0, 1), class ="b", lb= -1, ub=10) ütleb, et "b" prior on nullist erinev ainult -1 ja 10 vahel]. sigma priorid on automaatselt lb = 0 -ga sest varieeruvus ei saa olla negatiivne.
+Me valime siin nn väheinformariivsed priorid, nii et regressiooni tulemus on suht hästi võrreldav lme4 sagedusliku mudeliga. "b" koefitsiendi priorile (aga mitte "sigma" ega "Intercept"-le) võib anda ka ülemise ja/või alumise piiri [prior(normal(0, 1), class ="b", lb= -1, ub=10) ütleb, et "b" prior on nullist erinev ainult -1 ja 10 vahel]. sigma priorid on automaatselt lb = 0-ga, sest varieeruvus ei tohi olla negatiivne. 
 
 Alati tasub prioreid pildil vaadata, et veenduda nende mõistlikuses.
 
@@ -167,7 +167,7 @@ plot(y~x)
 <img src="17_brms_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" />
 Sigma prior, mida brms kasutab, on vaikimisi pool sümmeetrilisest jaotusest, mis lõigatakse nulli kohalt pooleks nii, et seal puuduvad < 0 väärtused (seega ei saa varieeruvuse posteerior minna alla nulli).
 
-Me võime ka prioreid ilma likelihoodideta (tõepärafunktsioonideta) läbi mudeli lasta, misjärel tõmbame fititud mudelist priorite samplid. Seda võimalust kasutatakse harva, aga teada tasub ikka.
+Me võime ka prioreid ilma likelihoodideta (tõepärafunktsioonideta) läbi mudeli lasta, misjärel tõmbame fititud mudelist priorite valimid (neid võiks kutsuda ka "priorite posteerioriteks") ja plotime kõik priorid koos. Seda pilti saab siis võrrelda koos andmetega fititud mudeli posteerioritega. Selle võimaluse kasutamine on tõusuteel, sest keerulisemate mudelite puhul võib priorite ükshaaval plottimine osutuda eksitavaks.
 
 Tekitame priorite valimid, et näha oma priorite mõistlikust (brm() argument on sample_prior = TRUE). Ühtlasi fitime ka oma mudeli koos andmete ja prioritega.
 
@@ -184,7 +184,7 @@ m1 <- brm(Sepal.Length~Petal.Length + (1 | Species),
 write_rds(m1, path = "m1.fit")
 ```
 
-Me fittisime mudeli m1 kaks korda: nii andmetega (selle juurde jõuame varsti), kui ka ilma andmeteta. Ilma andmeteta (likelihoodita) fitist saame tõmmata priorite mcmc valimid, mille ka järgmiseks plotime.
+Me fittisime mudeli m1 kaks korda: nii andmetega (selle juurde jõuame varsti), kui ka ilma andmeteta. Kui panna sisse `sample_prior = "only"`, siis jookseb mudel ilma andmeteta, ja selle võrra kiiremini. Vaikeväärtus on `sample_prior = "no"`, mis tähendab, et fititakse ainult üks mudel - koos andmetega. Ilma andmeteta (likelihoodita) fitist saame tõmmata priorite mcmc valimid, mille ka järgmiseks plotime. 
 
 
 
@@ -197,6 +197,9 @@ ggplot(sa)+ geom_density(aes(value)) +
 
 <img src="17_brms_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" />
 
+Kui kasutame `sample_prior = "only"` varianti, siis on esimene koodirida erinev: `samples1 = as.data.frame(m1$fit)`.
+
+> brms-i Intercepti priorite spetsifitseerimisel tasub teada, et brms oma sisemuses tsentreerib kõik prediktorid nullile (x - mean(x)), ja teie poolt ette antud prior peaks vastama neile tsentreeritud prediktoritele, kus kõikide prediktorite keskväärtus on null. Põhjus on, et tsentreeritud parametriseeringuga mudelid jooksevad sageli paremini. Alternatiiv on kasutada mudeli tavapärase süntaksi y ~ 1 + x (või ekvivalentselt y ~ x) asemel süntaksit y ~ 0 + intercept + x. Sellisel juhul saab anda priorid tsentreerimata predikroritele. Lisaks on brms selle süntaksi puhul nõus "b"-le antud prioreid vaikimisi ka intercepti fittimisel kasutama. 
 
 
 ### brm() funktsiooni argumendid: 
@@ -624,12 +627,12 @@ predict_interval_brms2 <- predict(m2, newdata = newx, re_formula = NULL) %>%
   cbind(newx,.)
 head(predict_interval_brms2)
 #>   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5
-#> 1         1.00        3.06  setosa     4.49     0.309 3.91  5.09
-#> 2         1.04        3.06  setosa     4.53     0.321 3.91  5.15
-#> 3         1.08        3.06  setosa     4.55     0.319 3.93  5.19
-#> 4         1.12        3.06  setosa     4.58     0.317 3.94  5.18
-#> 5         1.16        3.06  setosa     4.62     0.314 4.01  5.24
-#> 6         1.20        3.06  setosa     4.64     0.323 4.02  5.27
+#> 1         1.00        3.06  setosa     4.49     0.319 3.86  5.13
+#> 2         1.04        3.06  setosa     4.51     0.316 3.88  5.14
+#> 3         1.08        3.06  setosa     4.56     0.317 3.94  5.19
+#> 4         1.12        3.06  setosa     4.59     0.317 3.95  5.20
+#> 5         1.16        3.06  setosa     4.61     0.315 4.01  5.21
+#> 6         1.20        3.06  setosa     4.64     0.317 4.01  5.25
 ```
 
 predict() ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele

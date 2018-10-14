@@ -243,7 +243,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="18.1" data-path="brms.html"><a href="brms.html#brms-i-toovoog"><i class="fa fa-check"></i><b>18.1</b> brms-i töövoog</a><ul>
 <li class="chapter" data-level="18.1.1" data-path="brms.html"><a href="brms.html#kiire-toovoog"><i class="fa fa-check"></i><b>18.1.1</b> kiire töövoog</a></li>
 <li class="chapter" data-level="18.1.2" data-path="brms.html"><a href="brms.html#pohjalikum-toovoog"><i class="fa fa-check"></i><b>18.1.2</b> Põhjalikum töövoog</a></li>
-<li class="chapter" data-level="18.1.3" data-path="brms.html"><a href="brms.html#spetsifitseerime-mudeli-struktuuri-vaatame-default-prioreid-ja-muudame-neid."><i class="fa fa-check"></i><b>18.1.3</b> Spetsifitseerime mudeli struktuuri, vaatame default prioreid ja muudame neid.</a></li>
+<li class="chapter" data-level="18.1.3" data-path="brms.html"><a href="brms.html#spetsifitseerime-mudeli-vaatame-ja-muudame-vaikeprioreid"><i class="fa fa-check"></i><b>18.1.3</b> Spetsifitseerime mudeli, vaatame ja muudame vaikeprioreid</a></li>
 <li class="chapter" data-level="18.1.4" data-path="brms.html"><a href="brms.html#brm-funktsiooni-argumendid"><i class="fa fa-check"></i><b>18.1.4</b> brm() funktsiooni argumendid:</a></li>
 <li class="chapter" data-level="18.1.5" data-path="brms.html"><a href="brms.html#fitime-mudeleid-ja-vordleme-fitte."><i class="fa fa-check"></i><b>18.1.5</b> Fitime mudeleid ja võrdleme fitte.</a></li>
 <li class="chapter" data-level="18.1.6" data-path="brms.html"><a href="brms.html#vaatame-mudelite-kokkuvotet"><i class="fa fa-check"></i><b>18.1.6</b> vaatame mudelite kokkuvõtet</a></li>
@@ -383,8 +383,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">18.1.2</span> Põhjalikum töövoog</h3>
 <p>Põhiline erinevus eelmisega on suurem tähelepanu prioritele, mudeli fittimise diagnostikale ning tööle fititud mudeliga.</p>
 </div>
-<div id="spetsifitseerime-mudeli-struktuuri-vaatame-default-prioreid-ja-muudame-neid." class="section level3">
-<h3><span class="header-section-number">18.1.3</span> Spetsifitseerime mudeli struktuuri, vaatame default prioreid ja muudame neid.</h3>
+<div id="spetsifitseerime-mudeli-vaatame-ja-muudame-vaikeprioreid" class="section level3">
+<h3><span class="header-section-number">18.1.3</span> Spetsifitseerime mudeli, vaatame ja muudame vaikeprioreid</h3>
 <p>brms-i default priorid on konstrueeritud olema üsna väheinformatiivsed ja need tuleks enamasti informatiivsematega asendada. Igasse priorisse tuleks panna nii palju informatsiooni, kui teil on vastava parameetri kohta. Kui te mõne parameetri kohta ei oska öelda, milllised oleks selle mõistlikud oodatavad väärtused, siis saab piirduda brms-i antud vaikeväärtustega. Samas, kui keerulisemad mudelid ei taha hästi joosta (mida tuleb ikka ette), siis aitab sageli priorite kitsamaks muutmine.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_prior</span>(Sepal.Length<span class="op">~</span>Petal.Length <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), 
           <span class="dt">data=</span> iris)
@@ -404,13 +404,13 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prior &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">6</span>, <span class="dv">3</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>),
            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span><span class="st">&quot;b&quot;</span>),
            <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">6</span>, <span class="dv">0</span>, <span class="dv">2</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>))</code></pre></div>
-<p>Me valime siin nn väheinformariivsed priorid, nii et regressiooni tulemus on suht hästi võrreldav lme4 sagedusliku mudeliga. “b” koefitsiendi priorile (aga mitte “sigma” ega “Intercept”-le) võib anda ka ülemise ja/või alumise piiri [prior(normal(0, 1), class =“b”, lb= -1, ub=10) ütleb, et “b” prior on nullist erinev ainult -1 ja 10 vahel]. sigma priorid on automaatselt lb = 0 -ga sest varieeruvus ei saa olla negatiivne.</p>
+<p>Me valime siin nn väheinformariivsed priorid, nii et regressiooni tulemus on suht hästi võrreldav lme4 sagedusliku mudeliga. “b” koefitsiendi priorile (aga mitte “sigma” ega “Intercept”-le) võib anda ka ülemise ja/või alumise piiri [prior(normal(0, 1), class =“b”, lb= -1, ub=10) ütleb, et “b” prior on nullist erinev ainult -1 ja 10 vahel]. sigma priorid on automaatselt lb = 0-ga, sest varieeruvus ei tohi olla negatiivne.</p>
 <p>Alati tasub prioreid pildil vaadata, et veenduda nende mõistlikuses.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dt">length.out =</span> <span class="dv">100</span>)
 y &lt;-<span class="st"> </span>brms<span class="op">::</span><span class="kw">dstudent_t</span>(x, <span class="dt">df =</span> <span class="dv">6</span>, <span class="dt">mu =</span> <span class="dv">0</span>, <span class="dt">sigma =</span> <span class="dv">2</span>, <span class="dt">log =</span> <span class="ot">FALSE</span>)
 <span class="kw">plot</span>(y<span class="op">~</span>x)</code></pre></div>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" /> Sigma prior, mida brms kasutab, on vaikimisi pool sümmeetrilisest jaotusest, mis lõigatakse nulli kohalt pooleks nii, et seal puuduvad &lt; 0 väärtused (seega ei saa varieeruvuse posteerior minna alla nulli).</p>
-<p>Me võime ka prioreid ilma likelihoodideta (tõepärafunktsioonideta) läbi mudeli lasta, misjärel tõmbame fititud mudelist priorite samplid. Seda võimalust kasutatakse harva, aga teada tasub ikka.</p>
+<p>Me võime ka prioreid ilma likelihoodideta (tõepärafunktsioonideta) läbi mudeli lasta, misjärel tõmbame fititud mudelist priorite valimid (neid võiks kutsuda ka “priorite posteerioriteks”) ja plotime kõik priorid koos. Seda pilti saab siis võrrelda koos andmetega fititud mudeli posteerioritega. Selle võimaluse kasutamine on tõusuteel, sest keerulisemate mudelite puhul võib priorite ükshaaval plottimine osutuda eksitavaks.</p>
 <p>Tekitame priorite valimid, et näha oma priorite mõistlikust (brm() argument on sample_prior = TRUE). Ühtlasi fitime ka oma mudeli koos andmete ja prioritega.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m1 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length<span class="op">~</span>Petal.Length <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), 
           <span class="dt">data=</span> iris, 
@@ -422,12 +422,16 @@ y &lt;-<span class="st"> </span>brms<span class="op">::</span><span class="kw">d
           <span class="dt">cores =</span> <span class="dv">3</span>,
           <span class="dt">sample_prior=</span><span class="ot">TRUE</span>)
 <span class="kw">write_rds</span>(m1, <span class="dt">path =</span> <span class="st">&quot;m1.fit&quot;</span>)</code></pre></div>
-<p>Me fittisime mudeli m1 kaks korda: nii andmetega (selle juurde jõuame varsti), kui ka ilma andmeteta. Ilma andmeteta (likelihoodita) fitist saame tõmmata priorite mcmc valimid, mille ka järgmiseks plotime.</p>
+<p>Me fittisime mudeli m1 kaks korda: nii andmetega (selle juurde jõuame varsti), kui ka ilma andmeteta. Kui panna sisse <code>sample_prior = &quot;only&quot;</code>, siis jookseb mudel ilma andmeteta, ja selle võrra kiiremini. Vaikeväärtus on <code>sample_prior = &quot;no&quot;</code>, mis tähendab, et fititakse ainult üks mudel - koos andmetega. Ilma andmeteta (likelihoodita) fitist saame tõmmata priorite mcmc valimid, mille ka järgmiseks plotime.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">samples1 &lt;-<span class="st"> </span><span class="kw">prior_samples</span>(m1)
 sa &lt;-<span class="st"> </span>samples1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>()
 <span class="kw">ggplot</span>(sa)<span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(value)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>key, <span class="dt">scales=</span><span class="st">&quot;free_x&quot;</span>)</code></pre></div>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>Kui kasutame <code>sample_prior = &quot;only&quot;</code> varianti, siis on esimene koodirida erinev: <code>samples1 = as.data.frame(m1$fit)</code>.</p>
+<blockquote>
+<p>brms-i Intercepti priorite spetsifitseerimisel tasub teada, et brms oma sisemuses tsentreerib kõik prediktorid nullile (x - mean(x)), ja teie poolt ette antud prior peaks vastama neile tsentreeritud prediktoritele, kus kõikide prediktorite keskväärtus on null. Põhjus on, et tsentreeritud parametriseeringuga mudelid jooksevad sageli paremini. Alternatiiv on kasutada mudeli tavapärase süntaksi y ~ 1 + x (või ekvivalentselt y ~ x) asemel süntaksit y ~ 0 + intercept + x. Sellisel juhul saab anda priorid tsentreerimata predikroritele. Lisaks on brms selle süntaksi puhul nõus “b”-le antud prioreid vaikimisi ka intercepti fittimisel kasutama.</p>
+</blockquote>
 </div>
 <div id="brm-funktsiooni-argumendid" class="section level3">
 <h3><span class="header-section-number">18.1.4</span> brm() funktsiooni argumendid:</h3>
@@ -664,12 +668,12 @@ pars &lt;-<span class="st"> </span><span class="kw">names</span>(model2)
 <span class="st">  </span><span class="kw">cbind</span>(newx,.)
 <span class="kw">head</span>(predict_interval_brms2)
 <span class="co">#&gt;   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5</span>
-<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.309 3.91  5.09</span>
-<span class="co">#&gt; 2         1.04        3.06  setosa     4.53     0.321 3.91  5.15</span>
-<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.319 3.93  5.19</span>
-<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.317 3.94  5.18</span>
-<span class="co">#&gt; 5         1.16        3.06  setosa     4.62     0.314 4.01  5.24</span>
-<span class="co">#&gt; 6         1.20        3.06  setosa     4.64     0.323 4.02  5.27</span></code></pre></div>
+<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.319 3.86  5.13</span>
+<span class="co">#&gt; 2         1.04        3.06  setosa     4.51     0.316 3.88  5.14</span>
+<span class="co">#&gt; 3         1.08        3.06  setosa     4.56     0.317 3.94  5.19</span>
+<span class="co">#&gt; 4         1.12        3.06  setosa     4.59     0.317 3.95  5.20</span>
+<span class="co">#&gt; 5         1.16        3.06  setosa     4.61     0.315 4.01  5.21</span>
+<span class="co">#&gt; 6         1.20        3.06  setosa     4.64     0.317 4.01  5.25</span></code></pre></div>
 <p>predict() ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele</p>
 <p>Siin siis eraldi ennustused kahele liigile kolmest, kaasa arvatud petal length väärtusvahemikule, kus selle liigi isendeid valimis ei ole (ja võib-olla ei saagi olla)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris1 &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>)
