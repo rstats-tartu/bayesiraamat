@@ -8,9 +8,6 @@ addons:
   apt:
     packages:
     - libssl-dev
-before_install:
-- chmod +x ./_configure.sh
-- "./_configure.sh"
 r_github_packages:
 - rmcelreath/rethinking
 pandoc_version: 1.19.2.1
