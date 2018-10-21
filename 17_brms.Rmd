@@ -846,7 +846,8 @@ lm(iris$Petal.Length~iris$Sepal.Length) %>% tidy()
 lm(iris_na$Petal.Length~iris_na$Sepal.Length) %>% tidy()
 ```
 
-imputeerime enne mudeli fittimist kasutades multiple imputation meetodit mice paketist. Siin imputeerime iga puuduva väärtuse kasutades kõigi teiste parameetrite väärtusi, ja me teeme seda 5 korda.
+imputeerime enne mudeli fittimist kasutades multiple imputation meetodit mice paketist https://stefvanbuuren.name/mice/.
+Siin imputeerime iga puuduva väärtuse kasutades kõigi teiste parameetrite väärtusi, ja me teeme seda 5 korda.
 
 ```{r}
 library(mice)
@@ -908,17 +909,86 @@ tidy(iris_imp2)
 tidy(iris_imp3)
 ```
 
-### binoomjaotusega mudelid
+## Binoomjaotusega mudelid
 
 y ∼ Binomial(n,p)
+
+Me teeme n katset ja kodeerime iga eduka katse 1-ga ja mitteeduka katse 0-ga. Kui n=1, siis y on ühtedest ja nullidest koosnev vektor (muutuja) ja p on tõenäosus, et suvaline katse annab tulemuseks 1-e. Eeldades logistilist transformatsiooni on siin tegu logistilise regressiooniga.
+Kui n > 1 (ja ikka eeldades logistilist transformatsiooni), siis on tegu aggregeeritud binoomse logistilise regressiooniga. Me lahendame allpool need mõlemad.
  
-where y is some count variable, n is the number of trials, and  p is the probability a given trial was a 1, which is sometimes termed a success. 
+### Logistiline regressioon
 
-When  n = 1, then y is a vector of 0s and 1s. Presuming the logit link, models of this type are commonly termed logistic regression. 
+Tavalises lineaarses regressioonis on tavapärane, et kuigi me ennustame pidevat y-muutujat, kas osad või kõik X-muutujad (prediktorid) on mittepidevad. Lineaarsed mudelid jooksevad võrdselt hästi pidevate ja mittepidevate (binaarsete) prediktoritega. (Binaarsed muutujad võivad omada kaht diskreetset väärtust, mida kodeerime 1 ja 0-na). Aga kuidas käituda, kui meie poolt ennustatav Y-muutuja on binaarne? Kui me püüame ennustada binaarse y-muutuja oodatavaid väärtusi tõenäosustena, ehk 1-de arvu suhet katsete koguarvu, kas siis tavaline lineaarne regressioon enam ei tööta? Töötab küll, aga paraku ei ole garanteeritud, et mudeli ennustused jäävad 0 ja 1 vahele, ehk tõenäosuste skaalasse. Seda tagab logistiline regressioon. Logistilises regressioonis ei modelleeri me mitte otse y väärtusi (1 ja 0) erinevatel x-i väärtustel, vaid tõenäosust P(Y = 1 | X) [tõenäosus, et Y = 1, fikseeritud x-i väärtusel]. 
 
-When n > 1, and still presuming the logit link, we might call our model an aggregated logistic regression model, or more generally an aggregated binomial regression model.
+Logistiline regressioon töötab tänu logistilisele transformatsioonile. Näiteks logistiline transformatsioon funktsioonile $y = a + bx$ näeb välja niimoodi 
+$$y=\frac{exp(a + bx)}{1 + exp(a + bx)}$$
 
-### logistic regression
+    exp(a) tähendab "e astmes a", kus e on Euleri arv, ehk arv, mille 
+    naturaal-logaritm = 1 (seega on e naturaal-logaritmi alus). 
+    e on umbes 2.71828 ja selle saab valemist (1 + 1/n)^n, 
+    kui n läheneb lõpmatusele.
+
+#### Logistiline ja logit transformatsioon - definitsioonid
+
+See peatükk aitab loogilisest regressioonist aru saada - aru saamine pole aga tingimata vajalik selle edukaks tegemiseks. 
+
+ Logistiline transformatsioon viib lineaarse regressiooni tavapärasest y-muutuja skaalast [−∞,+∞] tõenäosuste skaalasse [0,1], andes meile sirge asemele S-kujulise kurvi, mis läheneb asümptootiliselt ühelt poolt 0-le ja teiselt poolt 1-le. Logistilise funktsiooni põõrdväärtus on logit funktsioon, mis annab "*odds*-i" ehk shansi ehk kihlveosuhted tõenäosusele p: $odds = \frac {p}{1 − p}$. Tõenäosuse p logit ehk logit(p) on sama, mis log(odds):
+
+$$logit(p)=\log \left({\frac {p}{1-p}}\right)=\log(p)-\log(1-p)$$
+
+Meie y = a + bx mudeli korral tavalises meetrilises skaalas on *odds* exponent meie fititud lineaarsest mudelist: 
+
+$$odds= \frac {P(Y = 1 ~|~ X)}{1-P(Y = 1 ~|~ X)} = exp(a+bx)$$ 
+
+Näiteks tõenäosus 0.2 (20%) tähendab, et $odds = 0.2/(1 - 0.2) = 1/4$ ehk üks neljale ja tõenäosus 0.9 tähendab, et $odds = 0.9/(1 - 0.9) = 9$ ehk üheksa ühele. Sellel meetodil töötavad näiteks hipodroomid, sest nii on mänguril lihtne näha, et kui kihlveokontori poolt mingile hobusele omistatud odds on näiteks üks nelja vastu ja te maksate kihlveo maaklerile 1 euro, siis saab võidu korral 4 eurot kasumit (ehk 5 eurose kupüüri). Logaritm *odds*-idest ongi logit transformatsioon, mille pöördväärtus on omakorda logistiline transformatsioon!
+
+Suvalise arvu α logistiline funktsioon on logiti põõrdväärtus:
+
+$$logit^{-1}\alpha=logistic (\alpha)={\frac {exp (\alpha) }{1+ exp (\alpha)}}$$
+
+```{r}
+x <- -10:10
+y <- exp(x)/(1+exp(x))
+plot(y~x)
+```
+
+Kui me mudeli y = a + bx korral muudame x-i ühe ühiku võrra muutuvad log-odds-id b võrra. Teisisõnu võime korrutada lineaarses skaalas *odds*-id exp(b)-ga. Kuna P(Y = 1 | X) ja X-i seos ei ole sirge, siis b ei vasta P(Y = 1 | X) muutusele X-i muutumisel ühe ühiku võrra. See, kui kiiresti P(Y = 1 | X) muutub, sõltub X-i väärtusest, aga hoolimata sellest, senikaua kui b > 0, on X-i kasv alati seotud tõenäosuse kasvuga (ja vastupidi). 
+ 
+
+Kahe tõenäosuse logitite vahe on sama, mis logaritm *odds-ratio*-st (log(OR) ehk shanside suhe)
+
+$${log} (OR)= {logit} (p_{1})- {logit} (p_{2})$$
+
+**Odds-ratio**
+
+Kui meil on 2 katsetingimust (ravim/platseebo) ning 2 väljundit (näit elus/surnud), siis 
+
+* a - ravim/elus juhutude arv, 
+
+* b - ravim/surnud juhutude arv, 
+
+* c - platseebo/elus juhutude arv, 
+
+* d - platseebo/surnud juhutude arv.
+
+$$OR = \frac {a/b}{c/d} = \frac {ad}{bc}$$ 
+
+* OR = 1 Katsetingimus ei mõjuta väljundi *odds*-e 
+
+* OR > 1 Katsetingimus tõstab väljundi *odds*-e 
+
+* OR < 1 Katsetingimus langetab väljundi *odds*-e
+
+Logistiline regressioon üldistab OR-i kaugemale 2st binaarsest muutujast.
+Kui meil on binaarne y-muutuja ja binaarne x-muutuja (x1), pluss rida teisi x-muutujaid (x2...xn), siis mitmese logistilise regressiooni x1-e tõusukoefitsient b1 on seotud tingimusliku OR-ga. $\exp(\beta_1)$ annab Y ja X vahelise OR-i, tingimusel, et teiste x-muutujate väärtused on fikseeritud (see on tavaline sõltumatute muutujatega lineaarse regressiooni beta-koefitsientide tõlgendamise tingimus). 
+
+    OR-i kui suhtelise efekti suuruse tõlgendamine sõltub sündmuse y = 1 
+    baastõenäosusest. Näiteks kui surm põhjusel x on tavapäraselt väga 
+    haruldane ja mingi keskkonnamõju annab OR = 10, siis tegelik tõus 
+    suremuses (surma tõenäosus keskkonnamõju tingimustes) võib olla tühine. 
+
+#### Logistiline regressioon brms-s
+
 ```{r}
 library(rethinking)
 data(chimpanzees)
@@ -928,8 +998,7 @@ head(d)
 
 1. intercept only model
 ```{r eval=FALSE}
-m_logreg_1 <-
-  brm(data = d, family = binomial,
+m_logreg_1 <- brm(data = d, family = binomial,
       pulled_left ~ 1,
       prior(normal(0, 10), class = Intercept))
 write_rds(m_logreg_1, path= "m_logreg_1.fit")
@@ -947,6 +1016,8 @@ Tõenäosus, et ahv "pulled left":
 ```{r}
 inv_logit_scaled(fixef(m_logreg_1))
 ```
+
+See tõenäosus peaks seega jääma kuhugi 54% ja 62% vahele.
 
 Nüüd ehtne ennustav logistiline regressioonimudel
 ```{r eval=FALSE}
