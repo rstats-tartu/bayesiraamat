@@ -9,6 +9,7 @@
 library(tidyverse)
 library(skimr)
 library(brms)
+library(loo)
 library(broom)
 library(bayesplot)
 library(gridExtra)
@@ -456,22 +457,21 @@ ggplot(pr, aes(Sepal.Length, Estimate, color = Species)) +
   coord_cartesian(xlim = c(4, 8), ylim = c(4, 8))
 ```
 
-Igale andmepunktile - kui palju erineb selle residuaal 0-st - st kui hästi ennustab mudel just seda andmepunkti. Ruumi kokkuhoiuks plotime välja ainult irise esimele 50-le andmepunktile.
-```{r fig.width=3}
-re <- residuals(m2) %>% cbind(iris)
-re$indeks <- 1:nrow(re)
-
-ggplot(re[1:50,], aes(x = Estimate, y = reorder(indeks, Estimate))) +
-  geom_vline(xintercept = 0, lty = 2) +
-  geom_point(size=1) +
-  geom_errorbarh(aes(xmin = Q2.5, xmax = Q97.5), color = "red", size =0.2) +
-  theme(text = element_text(size = 7), axis.title.y = element_blank())+
-  xlab("residuals (95 CI)")
+Igale andmepunktile -- kui palju erineb selle residuaal 0-st kui hästi ennustab mudel just seda andmepunkti. Ruumi kokkuhoiuks plotime välja ainult irise valiku 50-st andmepunktist.
+```{r}
+set.seed(69)
+as_data_frame(residuals(m2)) %>% 
+  sample_n(50) %>% 
+  ggplot(aes(x = reorder(seq_along(Estimate), Estimate), y = Estimate)) +
+  geom_pointrange(aes(ymin = Q2.5, ymax = Q97.5), fatten = 0.1) +
+  coord_flip() +
+  theme(text = element_text(size = 8), axis.title.y = element_blank()) +
+  xlab("Residuals (95 CI)")
 ```
 
-Ok, isendid nr 15 ja 37 paistavad olema palju väiksema Sepal Lengthiga kui mudel ennustab. Võib küsida, miks?
+Ok, isendid nr 15 ja 44 paistavad olema vastavalt palju suurema ja väiksema Sepal Lengthiga kui mudel ennustab. Võib küsida, miks?
 
-Nüüd plotime usaldusintervalli mudeli fitile (**keskmisele** Y väärtusele igal määratud X-i väärtusel), mitte Y- ennustusele andmepunkti kaupa. Selleks on hea fitted() funktsioon. Me ennustame m2 mudelist vastavalt newdata parameetriväärtustele. Kui me newdata argumendi tühjaks jätame, siis võtab fitted() selleks automaatselt algse iris tabeli (ehk valimi väärtused). 
+Nüüd plotime usaldusintervalli mudeli fitile ('keskmisele' Y väärtusele igal määratud X-i väärtusel), mitte Y-ennustusele andmepunkti kaupa. Selleks on hea fitted() funktsioon. Me ennustame m2 mudelist vastavalt newdata parameetriväärtustele. Kui me newdata argumendi tühjaks jätame, siis võtab fitted() selleks automaatselt algse iris tabeli (ehk valimi väärtused). 
 
 
 ```{r}
@@ -479,49 +479,43 @@ predict_interval_brms2f <- fitted(m2, newdata = newx, re_formula = NULL) %>%
   cbind(newx,.)
 head(predict_interval_brms2f)
 ```
+
 ```{r}
 ggplot(data = predict_interval_brms2f, aes(x = Petal.Length, y = Estimate, color = Species)) +
-  geom_point(data= iris1, aes(Petal.Length, Sepal.Length, color=Species)) +
+  geom_point(data = no_versicolor, aes(Petal.Length, Sepal.Length, color = Species)) +
   geom_line() +
-  geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = Species), alpha = .1, colour = NA) +
-  scale_x_continuous(breaks = 0:10) +
-  theme(panel.grid.minor = element_blank()) +
-  scale_color_brewer(palette = 'Set1')+
-  ggthemes::theme_tufte()
+  geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = Species), alpha = 1/3, colour = NA) +
+  scale_x_continuous(breaks = 0:10)
 ```
 
- **mudeli genereeritud andmed ja valimiandmed mõõtmisobjekti (subjekti e taimeisendi) kaupa**. See on sisuliselt posterior predictive plot (vt eespool). 
+Mudeli genereeritud andmed ja valimiandmed mõõtmisobjekti (subjekti e taimeisendi) kaupa. See on sisuliselt posterior predictive plot (vt eespool). 
 
 ```{r}
-predict_subjects_brms <- predict(m2) %>% cbind(iris, .)
-#ennustame andmeid igale taimele vastavate parameetriväärtustega 
-#ja paneme ennustused kokku algse irise tabeliga
+predicted_subjects_brms <- predict(m2) %>% cbind(iris, .)
 ```
 
-predict() arvutab mudeli põhjal uusi Y muutuja andmepunkte. Võib kasutada ka väljamõeldud andmete pealt Y väärtuste ennustamiseks (selleks tuleb anda ette andmeraam kõigi X-muutujate väärtustega, mille pealt tahetakse ennustusi).
+`predict()` arvutab mudeli põhjal uusi Y muutuja andmepunkte. Võib kasutada ka väljamõeldud andmete pealt Y väärtuste ennustamiseks (selleks tuleb anda ette andmeraam kõigi X-muutujate väärtustega, mille pealt tahetakse ennustusi).
 
-tugevalt värvitud punktid on ennustused ja läbipastvad punktid on valimiandmed
+Punktid on ennustused ja ristikesed on valimiandmed
 ```{r}
-ggplot(data = predict_subjects_brms, aes(Petal.Length, Estimate, color = Species)) +
-  geom_point(aes(Petal.Length, Estimate), alpha = .8)+
-  geom_point(data = iris, aes(Petal.Length, Sepal.Length), alpha = .3)+
-  ggthemes::theme_tufte()
+ggplot(data = predicted_subjects_brms, aes(x = Petal.Length, color = Species)) +
+  geom_point(aes(y = Estimate)) +
+  geom_point(aes(y = Sepal.Length), shape = 3)
 ```
 
-**Alternatiiv - ansambliennustus**
+### Alternatiiv -- ansambliennustus
 
-Kuna meil on 2 mudelit, m2 ja m3, mis on pea võrdselt eelistatud, siis genreerime ennustused mõlemast (mudelite ansamblist) proportsionaalselt nende waic skooridega. See ennustus kajastab meie mudeldamistööd tervikuna, mitte ühte "parimat" mudelit ja seega võib loota, et annab paremini edasi meie mudeldamises peituvat ebakindlust.
+Kuna meil on 2 mudelit (m2 ja m3) mis on pea võrdselt eelistatud, siis genreerime ennustused mõlemast (mudelite ansamblist) proportsionaalselt nende waic skooridega. See ennustus kajastab meie mudeldamistööd tervikuna, mitte ühte "parimat" mudelit ja seega võib loota, et annab paremini edasi meie mudeldamises peituvat ebakindlust.
 ```{r eval=FALSE}
 pp_a <- pp_average(m2, m3, weights = "waic", method = "predict") %>%
   as_tibble() %>% 
-  bind_cols(iris) 
-ggplot(data = pp_a, aes(Petal.Length, Estimate, color = Species)) +
-  geom_point(aes(Petal.Length, Estimate), alpha = .8)+
-  geom_point(data = iris, aes(Petal.Length, Sepal.Length), alpha = .3)+
-  ggthemes::theme_tufte()
+  bind_cols(iris)
+ggplot(data = pp_a, aes(x = Petal.Length, color = Species)) +
+  geom_point(aes(y = Estimate)) +
+  geom_point(aes(y = Sepal.Length), shape = 3)
 ```
 
-## mudeli eelduste kontroll
+## Mudeli eelduste kontroll
 
 Pareto k otsib nn mõjukaid (influential) andmepunkte. 
 ```{r}
@@ -531,63 +525,65 @@ plot(loo_m2)
 
 Kui paljud andmepunktid on kahtlaselt mõjukad?
 ```{r}
-loo::pareto_k_table(loo_m2) 
+pareto_k_table(loo_m2) 
 ```
 
 
-### plotime residuaalid
+### Plotime residuaalid
 
-resid() annab residuaalid vektorina. 
-**Kõigepealt plotime residuaalid fititud (keskmiste) Y väärtuste vastu.**
+`resid()` annab residuaalid vektorina. 
+Kõigepealt plotime residuaalid fititud (keskmiste) Y väärtuste vastu:
 ```{r}
-resid <-  resid(m2, type = "pearson")[, "Estimate"]
-fit <-  fitted(m2)[, "Estimate"]
-ggplot() + geom_point(data = NULL, aes(y = resid, x = fit)) + geom_hline(yintercept=0, lty=2)
+resid <- residuals(m2, type = "pearson")
+fit <- fitted(m2)
+ggplot() + 
+  geom_point(aes(x = fit[,"Estimate"], y = resid[,"Estimate"])) + 
+  geom_hline(yintercept = 0, lty = "dashed") +
+  labs(x = "fitted", y = "residuals")
 ```
 
 Residuals vs fitted plot testib lineaarsuse eeldust - kui .resid punktid jaotuvad ühtlaselt nulli ümber, siis mudel püüab kinni kogu süstemaatilise varieeruvuse teie andmetest ja see mis üle jääb on juhuslik varieeruvus.
 
-**vaatame diagnostilist plotti autokorrelatsioonist residuaalide vahel.**
+Vaatame diagnostilist plotti autokorrelatsioonist residuaalide vahel.
 ```{r}
 plot(acf(resid))
 ```
 
 Residuaalide autokorrelatsioonid on madalad - seega kõik paistab OK ja andmepunktide sõltumatus on tagatud.
 
-**siin on residuaalide histogramm**
+Siin on residuaalide histogramm:
 ```{r}
-ggplot(data = NULL, aes(resid)) + geom_density(fill="lightgrey") + geom_vline(xintercept = median(resid), linetype ="dashed")+ theme_classic()
+ggplot(data = NULL) + 
+  geom_density(aes(x = resid[,"Estimate"]), fill = "lightgrey") + 
+  geom_vline(xintercept = median(resid), linetype = "dashed")
 ```
 
 Residuaalid on sümmeetrilise jaotusega ja meedian residuaal on peaaegu null. See on kõik hea.
 
-**Ja lõpuks plotime residuaalid kõigi x-muutujate vastu:**
-
-Kõigepealt ühendame resid vektori irise tabeliga, et oleks mugavam plottida, seejärel tekitame uue veeru st_resid e studentiseeritud residuaalid, mis on sd ühikutes.
+Ja lõpuks plotime residuaalid kõigi x-muutujate vastu. Kõigepealt ühendame resid vektori irise tabeliga, et oleks mugavam plottida, seejärel tekitame uue veeru st_resid e studentiseeritud residuaalid, mis on sd ühikutes.
 
 residuaalid standardhälbe ühikutes (nn Studentiseeritud residuaalid) saab ja ka tuleks plottida kõigi x-muutujate suhtes.
 ```{r}
-iris2 <- iris %>% cbind(resid) %>% mutate(st_resid= resid/sd(resid))
-ggplot(iris2, aes(Petal.Length, st_resid, color=Species))+ 
+iris2 <- iris %>% 
+  cbind(resid) %>% 
+  mutate(st_resid = Estimate / sd(resid))
+ggplot(iris2, aes(Petal.Length, st_resid, color = Species)) + 
   geom_point() +
-  geom_hline(yintercept = 0, linetype = "dashed") + 
-  ggthemes::theme_tufte()
+  geom_hline(yintercept = 0, linetype = "dashed")
 ```
 
-Pole paha, mudel ennustab hästi, aga mõne punkti jaoks on ennustus 2 sd kaugusel.
-
+Tsiteerides klassikuid: "Pole paha!". Mudel ennustab hästi, aga mõne punkti jaoks on ennustus 2 sd kaugusel.
 ```{r}
-ggplot(iris2, aes(Sepal.Width, st_resid, color=Species))+ 
+ggplot(iris2, aes(Sepal.Width, st_resid, color = Species)) + 
   geom_point() +
-  geom_hline(yintercept = 0, linetype = "dashed") + 
-  ggthemes::theme_tufte()
+  geom_hline(yintercept = 0, linetype = "dashed")
 ```
 
 ```{r}
-ggplot(iris2, aes(Species, st_resid)) + geom_boxplot() +
+ggplot(iris2, aes(Species, st_resid)) + 
+  geom_boxplot() +
   geom_hline(yintercept = 0, linetype = "dashed") +
-  geom_jitter(width = 0.1, size=0.4)+
-  ggthemes::theme_tufte()
+  geom_jitter(width = 0.1)
 ```
 
 # Brms mudelid
