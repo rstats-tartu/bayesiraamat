@@ -921,7 +921,7 @@ Kui n > 1 (ja ikka eeldades logistilist transformatsiooni), siis on tegu aggrege
 Tavalises lineaarses regressioonis on tavapärane, et kuigi me ennustame pidevat y-muutujat, kas osad või kõik X-muutujad (prediktorid) on mittepidevad. Lineaarsed mudelid jooksevad võrdselt hästi pidevate ja mittepidevate (binaarsete) prediktoritega. (Binaarsed muutujad võivad omada kaht diskreetset väärtust, mida kodeerime 1 ja 0-na). Aga kuidas käituda, kui meie poolt ennustatav Y-muutuja on binaarne? Kui me püüame ennustada binaarse y-muutuja oodatavaid väärtusi tõenäosustena, ehk 1-de arvu suhet katsete koguarvu, kas siis tavaline lineaarne regressioon enam ei tööta? Töötab küll, aga paraku ei ole garanteeritud, et mudeli ennustused jäävad 0 ja 1 vahele, ehk tõenäosuste skaalasse. Seda tagab logistiline regressioon. Logistilises regressioonis ei modelleeri me mitte otse y väärtusi (1 ja 0) erinevatel x-i väärtustel, vaid tõenäosust P(Y = 1 | X) [tõenäosus, et Y = 1, fikseeritud x-i väärtusel]. 
 
 Logistiline regressioon töötab tänu logistilisele transformatsioonile. Näiteks logistiline transformatsioon funktsioonile $y = a + bx$ näeb välja niimoodi 
-$$y=\frac{exp(a + bx)}{1 + exp(a + bx)}$$
+$$y=\frac{exp(a + bx)}{1 + exp(a + bx)}$$ 
 
     exp(a) tähendab "e astmes a", kus e on Euleri arv, ehk arv, mille 
     naturaal-logaritm = 1 (seega on e naturaal-logaritmi alus). 
