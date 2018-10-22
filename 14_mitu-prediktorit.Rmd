@@ -5,6 +5,9 @@
 library(tidyverse)
 library(gapminder)
 library(rethinking)
+library(BayesVarSel)
+library(mice)
+library(leaps)
 ```
 
 Vaatame jälle gapminderi andmeid aastast 2007. 
@@ -135,5 +138,61 @@ m6 <- readRDS("data/gapmod_m6.rds")
 
 ```{r}
 precis(m6)
+```
+
+##  Prediktorite valik e milline on parim mudel
+
+Kui me võtame oma mudelisse prediktoreid, mis ei aita märkimisväärselt ennustada y-muutuja väärtusi, siis lisame sellega mudelisse müra ja meie tulemus saab sellest ainult kannatada. Seega tasub enne formaalset mudelit välja visata mõttetud muutujad. Seda püüame nüüd teha kahel meetodil.
+
+Kasutame diabeedi andmeid, kus 403 USA Lõunaosariikide neegril mõõdeti 15 muutujat, mis seostuvad ülekaalu, diabeedi ja teiste kardiovaskulaarsete riskifaktoritega. 
+
+Willems JP, Saunders JT, DE Hunt, JB Schorling: Prevalence of coronary heart disease risk factors among rural blacks: A community-based study. Southern Medical Journal 90:814-820; 1997
+
+Schorling JB, Roach J, Siegel M, Baturka N, Hunt DE, Guterbock TM, Stewart HL: A trial of church-based smoking cessation interventions for rural African Americans. Preventive Medicine 26:92-101; 1997.
+
+Kõigepealt bayesi meetodil. Eeldame tavalist mitme prediktoriga iseseisvat (aditiivset) lineaarset regressiooni (ilma interaktsioonideta v mitmetasemeliste mudeliteta).
+```{r}
+library(BayesVarSel)
+library(mice)
+diabetes <- read.csv2("data/diabetes.csv")
+imp_d <- mice(diabetes, m = 1, print = FALSE)
+diab <- complete(imp_d) 
+diab_Bvs <- Bvs(formula = hdl ~ chol + stab.glu + ratio + glyhb + age + gender + height + weight + frame + bp.1s + bp.1d+ waist + hip, data = diab)
+```
+
+```{r}
+library(car)
+vif(lm(hdl ~ chol + stab.glu + ratio + glyhb + age + height + weight +  bp.1s + bp.1d + waist, data = diab))
+```
+
+
+```{r}
+summary(diab_Bvs)
+```
+
+Hüpoteesi testimine. See annab Bayesi faktorid nullhüpoteesi suhtes. H0 on ilma prediktoriteta mudel, mis annab tulemuseks keskmise hdl-i.
+```{r}
+fullmodel <- hdl ~ chol + stab.glu + ratio + glyhb + age + gender + height + weight + frame + bp.1s + bp.1d+ waist + hip
+reducedmodel <- hdl ~ chol + ratio 
+nullmodel <- hdl ~ 1
+Btest(models = c(H0 = nullmodel, H1 = fullmodel, H2 = reducedmodel), data = diab)
+```
+
+Ja sageduslik alternatiiv sellele:
+```{r}
+library(leaps)
+regfit.full<- regsubsets(hdl ~ chol + stab.glu + ratio + glyhb + age + gender + height + weight + frame + bp.1s + bp.1d+ waist + hip, data = diab, nvmax=19, method="backward") 
+reg.summary<-summary(regfit.full) 
+par(mfrow=c(1,2)) 
+plot(reg.summary$rss , xlab="Number of Variables ", ylab="RSS", type="l") 
+plot(reg.summary$adjr2, xlab="Number of Variables ", ylab="Adjusted RSq", type="l")
+```
+
+```{r}
+reg.summary$adjr2
+```
+
+```{r}
+summary(regfit.full)
 ```
 
