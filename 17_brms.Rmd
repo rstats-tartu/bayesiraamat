@@ -1,34 +1,37 @@
 
 # brms
 
-brms on populaarne pakett, mis võimaldab kirjutada lihtsas ja lühidas keeles ka üsna keerulisi mudeleid ja need Stan-is fittida. Brms on ühe inimese (Paul Bürkner) projekt (https://github.com/paul-buerkner/brms), mis on jõudnud ette Stani meeskonna arendatavast analoogsest paketist rstanarm (https://github.com/stan-dev/rstanarm/blob/master/README.md). Paul Brükner oli mõned aastad tagasi psühholoogia doktorant, kes kirjutas brms-i naljaviluks oma doktoriprojekti kõrvalt, mille tulemusel on ta praegu teatud ringkonnis tuntum kui Lady Gaga.  
+**brms** on pakett, mis võimaldab kirjutada lihtsat süntaksit kasutades ka üsna keerulisi mudeleid ja need Stan-is fittida. Brms on loodud Paul Bürkneri poolt (https://github.com/paul-buerkner/brms), mis on oma kasutuslihtsuse tõttu jõudnud isegi ette Stani meeskonna arendatavast analoogsest paketist **rstanarm** (https://github.com/stan-dev/rstanarm/blob/master/README.md). Paul Bürkner oli mõned aastad tagasi psühholoogia doktorant, kes kirjutas brms-i algselt naljaviluks oma doktoriprojekti kõrvalt, mille tulemusel on ta praegu teatud ringkonnis tuntum kui Lady Gaga.  
 
-rstanarm, mide me siin ei käsitle, püüab pakkuda tavalisete sageduslikele meetoditele (ANOVA, lineaarne regressioon jne) bayesi analooge, mille mudeli spetsifikatsioon ja väljund erineks võimalikult vähe tavalisest baas-R-i töövoost. Brms on keskendunud mitmetasemelistele mudelitele ja püüab kasutada mudelite keelt, mis on harjumuspärane sageduslike hierarhiliste mudelite fittimise paketi lme4 (https://github.com/lme4/lme4/) kasutajatele. Loomulikult saab brms-is fittida ka lineaarseid ja mitte-lineaareid ühetasemelisi mudeleid, nagu ka imputeerida andmeid ja teha palju muud.
+**rstanarm**, mide me siin ei käsitle, püüab pakkuda tavalisete sageduslikele meetoditele (ANOVA, lineaarne regressioon jne) bayesi analooge, mille mudeli spetsifikatsioon ja väljund erineks võimalikult vähe tavalisest baas-R-i töövoost. **brms** on keskendunud mitmetasemelistele mudelitele ja kasutab põhimõtteliselt **lme4** (https://github.com/lme4/lme4/) mudelite keelt. Loomulikult saab **brms**-is fittida ka lineaarseid ja mitte-lineaareid ühetasemelisi mudeleid, nagu ka imputeerida andmeid ja teha palju muud (nagu näiteks pitsat valmistada).
 
-```{r}
+```{r, message=FALSE}
 library(tidyverse)
+library(skimr)
 library(brms)
+library(loo)
 library(broom)
 library(bayesplot)
+library(gridExtra)
 library(mice)
 library(pROC)
 ```
 
 ## brms-i töövoog
 
-brms-iga modelleerimisel on mõned asjad, mida tuleks teha sõltumata sellest, millist mudelit te parajasti fitite. Kõigepealt peaksite kontrollima, et mcmc ahelad on korralikult jooksnud (divergent transitions, rhat ja ahelate visuaalne inspekteerimine). Lisaks peaksite tegema posterioorse prediktiivse ploti ja vaatama, kui palju mudeli poolt genereeritud uued valimid meenutavad teie valimit. Samuti peaksite joonisel plottima residuaalid. Kui te inspekteerite fititud parameetrite väärtusi, siis tehke seda posteeriorite tasemel, k.a. koos veapiiridega. Kindlasti tuleks ka plottida mudeli ennustused koos usalduspiiridega.
+**brms**-iga modelleerimisel on mõned asjad, mida tuleks teha sõltumata sellest, millist mudelit te parajasti fitite. Kõigepealt peaksite kontrollima, et mcmc ahelad on korralikult jooksnud (divergent transitions, rhat ja ahelate visuaalne inspekteerimine). Lisaks peaksite tegema posterioorse prediktiivse ploti ja vaatama, kui palju mudeli poolt genereeritud uued valimid meenutavad teie valimit. Samuti peaksite joonisel plottima residuaalid. Kui te inspekteerite fititud parameetrite väärtusi, siis tehke seda posteeriorite tasemel, k.a. koos veapiiridega. Kindlasti tuleks ka plottida mudeli ennustused koos usalduspiiridega.
 
 Enne tõsist mudeldamist kiikame irise andmetabelisse
 
 ```{r}
-summary(iris)
+skim(iris)
 ```
 
 ```{r}
 ggplot(iris, aes(Petal.Length, Sepal.Length)) + 
   geom_point(aes(color = Species)) +
-  geom_smooth(method = lm) +
-  geom_smooth( color = "black", size = 0.5)
+  geom_smooth(method = "loess", color = "black") +
+  geom_smooth(method = "lm")
 ```
 
 Loess fit viitab, et 3 liiki ühe sirgega mudeldada pole võib-olla optimaalne lahendus.
@@ -36,34 +39,28 @@ Loess fit viitab, et 3 liiki ühe sirgega mudeldada pole võib-olla optimaalne l
 ```{r}
 ggplot(iris, aes(Petal.Length, Sepal.Length, color = Species)) + 
   geom_point() +
-  geom_smooth(method = lm) +
-  geom_smooth(data=iris %>% filter(Species =="virginica"), 
-              se = FALSE, color = "black", size = 0.5)+
-  geom_smooth(data=iris %>% filter(Species =="versicolor"), 
-              se = FALSE, color = "black", size = 0.5)+
-  geom_smooth(data=iris %>% filter(Species =="setosa"), 
-              se = FALSE, color = "black", size = 0.5)+
-  theme_classic()
+  geom_smooth(method = "loess", aes(group = Species), color = "black") +
+  geom_smooth(method = "lm")
 ```
 
 Nüüd on loess ja lm heas kooskõlas - seos y~x vahel oleks nagu enam-vähem lineaarne. Siit tuleb ka välja, et kolme mudeli tõusud on sarnased, interceptid erinevad.
 
-### kiire töövoog
+### Kiire töövoog
 
 Minimaalses töövoos anname ette võimalikult vähe parameetreid ja töötame mudeliga nii vähe kui võimalik. See on mõeldud ülevaatena Bayesi mudeli fittimise põhilistest etappidest 
 
-mudeli fittimine
+Mudeli fittimine:
 ```{r eval=FALSE}
-m_kiire <- brm(Sepal.Length~Petal.Length, data= iris)
-write_rds(m_kiire, path = "m_kiire.fit")
+m_kiire <- brm(Sepal.Length ~ Petal.Length, data = iris)
+write_rds(m_kiire, path = "data/m_kiire.fit")
 ```
 
 Priorid on brms-i poolt ette antud ja loomulikult ei sisalda mingit teaduslikku informatsiooni. Nad on siiski "nõrgalt informatiivsed" selles mõttes, et kasutavad parametriseeringuid, mis enamasti võimaldavad mcmc ahelatel normaalselt joosta. Järgmises ptk-s õpime ise prioreid määrama.
 
-posteeriorid ja mcmc ahelate konvergents
+Posteeriorid ja mcmc ahelate konvergents
 
 ```{r echo=FALSE}
-m_kiire <- read_rds("m_kiire.fit")
+m_kiire <- read_rds("data/m_kiire.fit")
 ```
 
 ```{r}
@@ -72,16 +69,16 @@ plot(m_kiire)
 
 Fiti kokkuvõte - koefitsiendid ja nende fittimise edukust hindavad statistikud (Eff.Sample, Rhat)
 ```{r}
-m_kiire %>% tidy
+tidy(m_kiire)
 ```
 
 Eff.Sample näitab efektiivset valimi suurust, mida ahelad on kasutanud. See on suht keeruline mõiste, aga piisab, kui aru saada, et see näitaja ei tohiks olla madalam kui paarkümmend.
 
 Rhat on statistik, mis vaatab ahelate konvergentsi. Kui Rhat > 1.1, siis on kuri karjas. Rhat 1.0 ei tähenda paraku, et võiks rahulikult hingata -- tegu on statistikuga, mida saab hästi tõlgendada häda kuulutajana, aga liiga sageli mitte vastupidi.
 
-Ennustav plot ehk *marginal plot* - mudeli fit 95% CI-ga.
+Ennustav plot ehk *marginal plot* -- mudeli fit 95% CI-ga.
 ```{r}
-plot(marginal_effects(m_kiire), points=TRUE)
+plot(marginal_effects(m_kiire), points = TRUE)
 ```
 
 ### Põhjalikum töövoog
@@ -93,153 +90,142 @@ Põhiline erinevus eelmisega on suurem tähelepanu prioritele, mudeli fittimise 
 brms-i default priorid on konstrueeritud olema üsna väheinformatiivsed ja need tuleks enamasti informatiivsematega asendada. Igasse priorisse tuleks panna nii palju informatsiooni, kui teil on vastava parameetri kohta. Kui te mõne parameetri kohta ei oska öelda, milllised oleks selle mõistlikud oodatavad väärtused, siis saab piirduda brms-i antud vaikeväärtustega. Samas, kui keerulisemad mudelid ei taha hästi joosta (mida tuleb ikka ette), siis aitab sageli priorite kitsamaks muutmine.
 
 ```{r}
-get_prior(Sepal.Length~Petal.Length + (1 | Species), 
-          data= iris)
+get_prior(Sepal.Length ~ Petal.Length + (1 | Species), 
+          data = iris)
 ```
 
-Me fitime pedagoogilistel kaalutlustel shrinkage mudeli, mis tõmbab 3 liigi intercepte natuke keskmise intercepti suunas. On vaieldav, kas see on irise andmestiku juures mõistlik strateegia, aga me teeme seda siin ikkagi.
+Me fitime pedagoogilistel kaalutlustel shrinkage mudeli, mis tõmbab 3 liigi lõikepunkte natuke keskmise lõikepunkti suunas. On vaieldav, kas see on irise andmestiku juures mõistlik strateegia, aga me teeme seda siin ikkagi.
 
->Mitmetasemeline shrinkage mudel on abinõu ülefittimise vastu. Mudelite võrdlemisel otsitakse kompromissi - ehk mudeli, mille ennustused oleks andmepunktidele võimalikult lähedal ilma,et see mudel oleks liiga keeruliseks aetud (keerulisus on proportsionaalne mudeli parameetrite arvuga).
+> Mitmetasemeline shrinkage mudel on abinõu ülefittimise vastu. Mudelite võrdlemisel otsitakse kompromissi - ehk mudeli, mille ennustused oleks andmepunktidele võimalikult lähedal ilma,et see mudel oleks liiga keeruliseks aetud (keerulisus on proportsionaalne mudeli parameetrite arvuga).
 
 
-Prioreid muudame nii
-
+Prioreid muudame nii:
 ```{r}
 prior <- c(prior(normal(6, 3), class = "Intercept"),
-           prior(normal(0, 1), class ="b"),
+           prior(normal(0, 1), class = "b"),
            prior(student_t(6, 0, 2), class = "sigma"))
 ```
 
-Me valime siin nn väheinformariivsed priorid, nii et regressiooni tulemus on suht hästi võrreldav lme4 sagedusliku mudeliga. "b" koefitsiendi priorile (aga mitte "sigma" ega "Intercept"-le) võib anda ka ülemise ja/või alumise piiri [prior(normal(0, 1), class ="b", lb= -1, ub=10) ütleb, et "b" prior on nullist erinev ainult -1 ja 10 vahel]. sigma priorid on automaatselt lb = 0-ga, sest varieeruvus ei tohi olla negatiivne. 
+Me valime siin nn väheinformariivsed priorid, nii et regressiooni tulemus on suht hästi võrreldav lme4 sagedusliku mudeliga. "b" koefitsiendi priorile (aga mitte "sigma" ega "Intercept"-le) võib anda ka ülemise ja/või alumise piiri `prior(normal(0, 1), class = "b", lb = -1, ub = 10)` ütleb, et "b" prior on nullist erinev ainult -1 ja 10 vahel. "sigma" priorid on automaatselt lb = 0-ga, sest varieeruvus ei tohi olla negatiivne. 
 
 Alati tasub prioreid pildil vaadata, et veenduda nende mõistlikuses.
 ```{r}
 x <- seq(0, 10, length.out = 100)
-y <- brms::dstudent_t(x, df = 6, mu = 0, sigma = 2, log = FALSE)
-plot(y~x)
+y <- dstudent_t(x, df = 6, mu = 0, sigma = 2, log = FALSE)
+plot(y ~ x)
 ```
-Sigma prior, mida brms kasutab, on vaikimisi pool sümmeetrilisest jaotusest, mis lõigatakse nulli kohalt pooleks nii, et seal puuduvad < 0 väärtused (seega ei saa varieeruvuse posteerior minna alla nulli).
+Sigma prior, mida **brms** kasutab, on vaikimisi pool sümmeetrilisest jaotusest, mis lõigatakse nulli kohalt pooleks nii, et seal puuduvad < 0 väärtused (seega ei saa varieeruvuse posteerior minna alla nulli).
 
 Me võime ka prioreid ilma likelihoodideta (tõepärafunktsioonideta) läbi mudeli lasta, misjärel tõmbame fititud mudelist priorite valimid (neid võiks kutsuda ka "priorite posteerioriteks") ja plotime kõik priorid koos. Seda pilti saab siis võrrelda koos andmetega fititud mudeli posteerioritega. Selle võimaluse kasutamine on tõusuteel, sest keerulisemate mudelite puhul võib priorite ükshaaval plottimine osutuda eksitavaks.
 
 Tekitame priorite valimid, et näha oma priorite mõistlikust (brm() argument on sample_prior = TRUE). Ühtlasi fitime ka oma mudeli koos andmete ja prioritega.
 ```{r eval=FALSE}
-m1 <- brm(Sepal.Length~Petal.Length + (1 | Species), 
-          data= iris, 
+m1 <- brm(Sepal.Length ~ Petal.Length + (1 | Species), 
+          data = iris, 
           prior = prior, 
           family = gaussian,
           warmup = 1000,
           iter = 2000,
           chains = 3,
           cores = 3,
-          sample_prior=TRUE)
-write_rds(m1, path = "m1.fit")
+          sample_prior = TRUE)
+write_rds(m1, path = "data/m1.fit")
 ```
 
 Me fittisime mudeli m1 kaks korda: nii andmetega (selle juurde jõuame varsti), kui ka ilma andmeteta. Kui panna sisse `sample_prior = "only"`, siis jookseb mudel ilma andmeteta, ja selle võrra kiiremini. Vaikeväärtus on `sample_prior = "no"`, mis tähendab, et fititakse ainult üks mudel - koos andmetega. Ilma andmeteta (likelihoodita) fitist saame tõmmata priorite mcmc valimid, mille ka järgmiseks plotime. 
 ```{r echo=FALSE}
-m1 <- read_rds("m1.fit")
+m1 <- read_rds("data/m1.fit")
 ```
 
 ```{r}
-samples1 <- prior_samples(m1)
-sa <- samples1 %>% gather()
-ggplot(sa)+ geom_density(aes(value)) + 
-  facet_wrap(~key, scales="free_x")
+prior_samples(m1) %>% 
+  gather() %>% 
+  ggplot() + 
+  geom_density(aes(value)) + 
+  facet_wrap(~ key, scales = "free_x")
 ```
 
 Kui kasutame `sample_prior = "only"` varianti, siis on esimene koodirida erinev: `samples1 = as.data.frame(m1$fit)`.
 
-> brms-i Intercepti priorite spetsifitseerimisel tasub teada, et brms oma sisemuses tsentreerib kõik prediktorid nullile (x - mean(x)), ja teie poolt ette antud prior peaks vastama neile tsentreeritud prediktoritele, kus kõikide prediktorite keskväärtus on null. Põhjus on, et tsentreeritud parametriseeringuga mudelid jooksevad sageli paremini. Alternatiiv on kasutada mudeli tavapärase süntaksi y ~ 1 + x (või ekvivalentselt y ~ x) asemel süntaksit y ~ 0 + intercept + x. Sellisel juhul saab anda priorid tsentreerimata predikroritele. Lisaks on brms selle süntaksi puhul nõus "b"-le antud prioreid vaikimisi ka intercepti fittimisel kasutama. 
+> **brms**-i Intercepti priorite spetsifitseerimisel tasub teada, et **brms** oma sisemuses tsentreerib kõik prediktorid nullile (x - mean(x)), ja teie poolt ette antud prior peaks vastama neile tsentreeritud prediktoritele, kus kõikide prediktorite keskväärtus on null. Põhjus on, et tsentreeritud parametriseeringuga mudelid jooksevad sageli paremini. Alternatiiv on kasutada mudeli tavapärase süntaksi y ~ 1 + x (või ekvivalentselt y ~ x) asemel süntaksit y ~ 0 + intercept + x. Sellisel juhul saab anda priorid tsentreerimata predikroritele. Lisaks on **brms** selle süntaksi puhul nõus "b"-le antud prioreid vaikimisi ka intercepti fittimisel kasutama. 
 
 
-### brm() funktsiooni argumendid: 
+### `brm()` funktsiooni argumendid: 
 
-family - tõepärafunktsiooni tüüp (modelleerib y muutuja jaotust e likelihoodi)
+- family - tõepärafunktsiooni tüüp (modelleerib y muutuja jaotust e likelihoodi)
 
-warmup - mitu sammu mcmc ahel astub, enne kui ahelat salvestama hakatakse. tavaliselt on 500-1000 sammu piisav, et tagada ahelate konvergents. Kui ei ole, tõstke 2000 sammuni.
+- warmup - mitu sammu mcmc ahel astub, enne kui ahelat salvestama hakatakse. tavaliselt on 500-1000 sammu piisav, et tagada ahelate konvergents. Kui ei ole, tõstke 2000 sammuni.
 
-iter - ahelate sammude arv, mida salvestatakse peale warmup perioodi. Enamasti on 2000 piisav. Kui olete nõus piirduma posteeriori keskväärtuse arvutamisega ja ei soovi täpseid usaldusintervalle, siis võib piisata ka 200 sammust. 
+- iter - ahelate sammude arv, mida salvestatakse peale warmup perioodi. Enamasti on 2000 piisav. Kui olete nõus piirduma posteeriori keskväärtuse arvutamisega ja ei soovi täpseid usaldusintervalle, siis võib piisata ka 200 sammust. 
 
-chains - mitu sõltumatut mcmc ahelat jooksutada. 3 on hea selleks, et näha kas ahelad konvergeeruvad. Kui mitte, tuleks lisada informatiivsemaid prioreid ja/või warmupi pikkust.
+- chains - mitu sõltumatut mcmc ahelat jooksutada. 3 on hea selleks, et näha kas ahelad konvergeeruvad. Kui mitte, tuleks lisada informatiivsemaid prioreid ja/või warmupi pikkust.
 
-cores - mitu teie arvuti tuuma ahelaid jooksutama panna.
+- cores - mitu teie arvuti tuuma ahelaid jooksutama panna.
 
-adapt_delta - mida suurem number (max = 1), seda stabiilsemalt, ja aeglasemalt, ahelad jooksevad.
+- adapt_delta - mida suurem number (max = 1), seda stabiilsemalt, ja aeglasemalt, ahelad jooksevad.
 
-thin - kui ahel on autokorreleeritud, st ahela eelmine samm suudab ennustada järgevaid (see on paha), siis saab salvestada näit ahela iga 5. sammu (thin = 5). Aga siis tuleks ka sammude arvu 5 korda tõsta. Vaikeväärtus on thin = 1. Autokorrelatsiooni graafilist määramist näitame allpool
+- thin - kui ahel on autokorreleeritud, st ahela eelmine samm suudab ennustada järgevaid (see on paha), siis saab salvestada näit ahela iga 5. sammu (thin = 5). Aga siis tuleks ka sammude arvu 5 korda tõsta. Vaikeväärtus on thin = 1. Autokorrelatsiooni graafilist määramist näitame allpool
 
-
-*Järgmine funktsioon trükib välja Stani koodi, mis spetsifitseerib mudeli, mida tegelikult Stanis fittima hakatakse. See on väga kasulik, aga ainult siis kui tahate õppida otse Stanis mudeleid kirjutama.*
+Järgmine funktsioon trükib välja Stani koodi, mis spetsifitseerib mudeli, mida tegelikult Stanis fittima hakatakse. See on väga kasulik, aga ainult siis kui tahate õppida otse Stanis mudeleid kirjutama:
 
 ```{r eval=FALSE}
-make_stancode(Sepal.Length~Petal.Length, data= iris,
-              prior = prior)
+make_stancode(Sepal.Length ~ Petal.Length, data = iris, prior = prior)
 ```
 
 ### Fitime mudeleid ja võrdleme fitte.
 
-Mudelis m1 ennustame muutuja Sepal.Length väärtusi Petal.Length väärtuste põhjal shrinkage mudelis, kus iga irise liik on oma grupis.
+Eelmises mudelis (m1) ennustame muutuja Sepal.Length väärtusi Petal.Length väärtuste põhjal shrinkage mudelis, kus iga irise liik on oma grupis.
 
-Teine mudel, m2, sisaldab veel üht ennustavat muutujat (Sepal.Width).
-
+Teine mudel, mis sisaldab veel üht ennustavat muutujat (Sepal.Width):
 ```{r eval=FALSE}
-m2 <- brm(Sepal.Length~Petal.Length + Sepal.Width + (1 | Species), 
-          data= iris, 
-          prior = prior, 
-          chains = 3,
-          cores = 4,
-          control = list(adapt_delta = 0.95))
-write_rds(m2, path = "m2.fit")
+m2 <- brm(Sepal.Length ~ Petal.Length + Sepal.Width + (1 | Species), 
+          data = iris, 
+          prior = prior)
+write_rds(m2, path = "data/m2.fit")
 ```
 
-Kolmandaks ühetasemeline mudel, m3, mis vaatab kolme irise liiki eraldi
-
+Kolmandaks ühetasemeline mudel, mis vaatab kolme irise liiki eraldi:
 ```{r eval=FALSE}
-m3 <- brm(Sepal.Length~ Sepal.Width + Petal.Length*Species, 
-          data= iris, 
-          prior = prior, 
-          chains = 3,
-          cores = 3)
-write_rds(m3, path = "m3.fit")
+m3 <- brm(Sepal.Length ~ Sepal.Width + Petal.Length * Species, 
+          data = iris, 
+          prior = prior)
+write_rds(m3, path = "data/m3.fit")
 ```
 
-Ja lõpuks lihtne mudel, m4, mis paneb kõik liigid ühte patta.
+Ja lõpuks mudel, mis paneb kõik liigid ühte patta:
 ```{r eval=FALSE}
-m4 <- brm(Sepal.Length~Petal.Length + Sepal.Width, 
-          data= iris, 
-          prior = prior, 
-          chains = 3,
-          cores = 4)
-write_rds(m4, path = "m4.fit")
+m4 <- brm(Sepal.Length ~ Petal.Length + Sepal.Width, 
+          data = iris, 
+          prior = prior)
+write_rds(m4, path = "data/m4.fit")
 ```
 
-```{r}
-m2 <- read_rds("m2.fit")
-m3 <- read_rds("m3.fit")
-m4 <- read_rds("m4.fit")
+```{r, echo=FALSE}
+m2 <- read_rds("data/m2.fit")
+m3 <- read_rds("data/m3.fit")
+m4 <- read_rds("data/m4.fit")
 ```
 
 
 Siin me võrdleme neid nelja mudelit. Väikseim looic (leave-one-out information criterion) võidab. See on suhteline võrdlus -- looic abs väärtus ei mängi mingit rolli. 
 
-```{r eval=FALSE}
+```{r}
 loo(m1, m2, m3, m4)
 ```
 
 Siin on m1 ja m2/m3 mudeli erinevus 25 ühikut ja selle erinevuse standardviga on 10 ühikut. 2 SE-d annab umbkaudu 95% usaldusintervalli, ja see ei kata antud juhul nulli. Seega järeldame, et m2 ja m3, mis kasutavad ennustamiseks lisamuutujat, on selgelt eelistatud. Samas ei saa me õelda, et hierarhiline mudel m2 oleks parem või halvem kui interaktsioonimudel m3. Ka puudub oluline erinevus m1 ja m4 fiti vahel. Tundub, et selle ennustusjõu, mille me võidame lisaparameetrit mudeldades, kaotame omakorda liike ühte patta pannes (neid mitte osaliselt iseseisvana modelleerides).
 
-Alternatiivina kasutame brms::waic kriteeriumit mudelite võrdlemiseks. See töötab kiiremini kui LOO ja tõlgendus on sarnane - väikseim waic võidab ja absolutväärtusi ei saa ükshaaval tõlgendada. 
+Alternatiivina kasutame `brms::waic` kriteeriumit mudelite võrdlemiseks. See töötab kiiremini kui LOO ja tõlgendus on sarnane - väikseim waic võidab ja absolutväärtusi ei saa ükshaaval tõlgendada. 
 
 ```{r}
-brms::waic(m1, m2, m3, m4)
+waic(m1, m2, m3, m4)
 ```
 
 Nagu näha, annavad LOO ja waic sageli väga sarnaseid tulemusi.
 
 Me ei süvene LOOIC ega waic-i statistilisse mõttesse, sest bayesi mudelite võrdlemine on kiiresti arenev ala, kus ühte parimat lahendust pole veel leitud. 
 
-### vaatame mudelite kokkuvõtet
+### Vaatame mudelite kokkuvõtet
 
 Lihtne tabel mudeli m2 fititud koefitsientidest koos 95% usalduspiiridega
 
@@ -247,9 +233,9 @@ Lihtne tabel mudeli m2 fititud koefitsientidest koos 95% usalduspiiridega
 tidy(m2)
 ```
 
-r_ prefiks tähendab, et antud koefitsient kuulub mudeli esimesele (madalamale) tasemele (Liigi tase) r- random - tähendab, et iga grupi (liigi) sees arvutatakse oma fit. b_ tähendab mudeli 2. taset (keskmistatud üle kõikide gruppide). 2. tasmel on meil intercept, b1 ja b2 tõusud ning standardhälve y muutuja ennustatud andempunktide tasemel. 1. tasemel on meil 3 liigi interceptide erinevus üldisest b_Intercepti väärtusest. Seega, selleks, et saada setosa liigi intercepti, peame tegema tehte 1.616 + 0.765.
+r_ prefiks tähendab, et antud koefitsient kuulub mudeli esimesele (madalamale) tasemele (Liigi tase) r - random - tähendab, et iga grupi (liigi) sees arvutatakse oma fit. b_ tähendab mudeli 2. taset (keskmistatud üle kõikide gruppide). 2. tasmel on meil intercept, b1 ja b2 tõusud ning standardhälve y muutuja ennustatud andempunktide tasemel. 1. tasemel on meil 3 liigi interceptide erinevus üldisest b_Intercepti väärtusest. Seega, selleks, et saada setosa liigi intercepti, peame tegema tehte 1.616 + 0.765.
 
-tidy funktsiooni tööd saab kontrollida järgmiste parameetrite abil:
+**tidy** funktsiooni tööd saab kontrollida järgmiste parameetrite abil:
 ```{r eval=FALSE}
 tidy(x, parameters = NA, par_type = c("all",
   "non-varying", "varying", "hierarchical"), robust = FALSE,
@@ -270,7 +256,7 @@ Siin on eraldi toodud grupi tasemel ja populatsiooni tasemel koefitsiendid ja gr
 Divergentsed transitsioonid on halvad asjad - ahelad on läinud 17 korda metsa. Viisakas oleks adapt deltat tõsta või kitsamad priorid panna, aga 17 halba andmepunkti paarist tuhandest, mille mcmc ahelad meile tekitasid, pole ka mingi maailmalõpp. Nii et las praegu jääb nagu on. Need divergentsed transitsioonid on kerged tekkima just mitmetasemelistes mudelites. 
 
 
-### plotime posteeriorid ja ahelad
+### Plotime posteeriorid ja ahelad
 
 ```{r}
 plot(m2)
@@ -278,21 +264,20 @@ plot(m2)
 
 Siit on näha, et ahelad on ilusti konvergeerunud. Ühtlasi on pildil posterioorsed jaotused fititud koefitsientidele.
 
-regular expressioni abil saab plottida mudeli madalama taseme ahelaid & posteerioreid, mida plot() vaikimisi ei näita.
+*Regular expressioni* abil saab plottida mudeli madalama taseme ahelaid & posteerioreid, mida plot() vaikimisi ei näita.
 ```{r}
-#regex works!
-plot(m2, pars = "r_", theme = theme_dark())
+plot(m2, pars = "r_")
 ```
 
 Vaatame korrelatsioone erinevate parameetrite posterioorsete valimite vahel. (Markovi ahelad jooksevad n-mõõtmelises ruumis, kus n on mudeli parameetrite arv, mille väärtusi hinnatakse.)
-pairs(m3) teeb pildi ära, aga ilusama pildi saab GGally::ggpairs() abil.
+Pairs(m3) teeb pildi ära, aga ilusama pildi saab `GGally::ggpairs()` abil.
 
 ```{r}
-pairs(m2, pars="b_")
+pairs(m2, pars = "b_")
 ```
 
 
-```{r eval=FALSE, message=FALSE}
+```{r}
 library(GGally)
 posterior_samples(m2) %>%
   select(contains("b_")) %>%
@@ -304,210 +289,189 @@ Siin on posteeriorite põhjal arvutatud 50% ja 95% CI ja see plotitud.
 stanplot(m2, pars = "r_", type = "intervals")
 ```
 
-type= argument sisestamine võimaldab plottida erinevaid diagnostilisi näitajaid. Lubatud sisendid on "hist", "dens", "hist_by_chain", "dens_overlay", "violin", "intervals", "areas", "acf", "acf_bar", "trace", "trace_highlight", "scatter", "rhat", "rhat_hist", "neff", "neff_hist" "nuts_acceptance", "nuts_divergence", "nuts_stepsize", "nuts_treedepth" ja "nuts_energy".
+type = argument sisestamine võimaldab plottida erinevaid diagnostilisi näitajaid. Lubatud sisendid on "hist", "dens", "hist_by_chain", "dens_overlay", "violin", "intervals", "areas", "acf", "acf_bar", "trace", "trace_highlight", "scatter", "rhat", "rhat_hist", "neff", "neff_hist" "nuts_acceptance", "nuts_divergence", "nuts_stepsize", "nuts_treedepth" ja "nuts_energy".
 
 ```{r}
-stanplot(m2, type="neff")
+stanplot(m2, type = "neff")
 ```
 
 Neff on efektiivne valimi suurus ja senikaua kuni Neff/N suhe ei ole < 0.1, pole põhjust selle pärast muretseda.
 
-### korjame ahelad andmeraami ja plotime fititud koefitsiendid CI-dega
+### Korjame ahelad andmeraami ja plotime fititud koefitsiendid CI-dega
 
 ```{r}
-model <- posterior_samples(m1) 
-#model <- m1$fit %>% as.data.frame() 
-##töötab samamoodi
+model <- posterior_samples(m1)
 ```
 
 mcmc_intervals() on bayesplot paketi funktsioon. me plotime 50% ja 95% CI-d.
 ```{r}
-pars <- names(model)
-mcmc_intervals(model, pars=pars[-length(pars)]) 
-#with pars left out the last parameter lp_
+pars <- colnames(model)
+mcmc_intervals(model, regex_pars = "[^(lp__)]")
 ```
 
 Näeme, et sigma hinnang on väga usaldusväärne, samas kui gruppide vahelise sd hinnang ei ole seda mitte (pane tähele posterioorse jaotuse ebasümmeetrilisust).
 
 ```{r}
-model2 <- m2$fit %>% as.data.frame() 
-pars <- names(model2)
-mcmc_intervals(model2, pars=pars[-length(pars)])
-mcmc_areas(model2,  pars=c("b_Petal.Length", "b_Sepal.Width"))
+model2 <- posterior_samples(m2)
+pars <- colnames(model2)
+mcmc_intervals(model2, regex_pars = "[^(lp__)]")
+mcmc_areas(model2,  pars = c("b_Petal.Length", "b_Sepal.Width"))
 ```
 
 
-### bayesi versioon r-ruudust 
+### Bayesi versioon R-ruudust 
 
-kui suurt osa koguvarieeruvusest suudavad mudeli prediktorid seletada?
+Kui suurt osa koguvarieeruvusest suudavad mudeli prediktorid seletada?
 ```{r}
 bayes_R2(m2)
 ```
+
+
 ```{r}
 bayes_R2(m1)
 ```
 
 https://github.com/jgabry/bayes_R2/blob/master/bayes_R2.pdf
-Annab põhjenduse sellele statistikule (mille arvutamine erineb tavalisest vähimruutudega arvutatud mudeli r2-st).
+Annab põhjenduse sellele statistikule (mille arvutamine erineb tavalisest vähimruutudega arvutatud mudeli $R^2$-st).
 
-### plotime mudeli poolt ennustatud valimeid - posterior predictive check
+### Plotime mudeli poolt ennustatud valimeid -- posterior predictive check
 
 Kui mudel suudab genereerida simuleeritud valimeid, mis ei erine väga palju empiirilisest valimist, mille põhjal see mudel fititi, siis võib-olla ei ole see täiesti ebaõnnestunud mudeldamine. See on loogika posterioorse ennustava ploti taga.
 
-```{r message=FALSE}
-gridExtra::grid.arrange(pp_check(m1), pp_check(m2), pp_check(m3), nrow = 3)
+Vaatame siin simultaanselt kõigi kolme eelnevalt fititud mudeli simuleeritud valimeid (y_rep) võrdluses algsete andmetega (y):
+```{r}
+map(list(m1, m2, m3), pp_check, nsamples = 10) %>% 
+  grid.arrange(grobs = ., nrow = 3)
 ```
 
-y - tihedusplot empiirilistest andmetest
-y_rep - plotid mudeli poolt ennustatud iseseisvatest valimitest (igaüks sama suur kui empiiriline valim y) 
+- y - tihedusplot empiirilistest andmetest
+- y_rep -- plotid mudeli poolt ennustatud iseseisvatest valimitest (igaüks sama suur kui empiiriline valim y) 
 Jooniselt on näha, et m3 ennustused on võrreldes m1 ja m2-ga kõige kaugemal tegelikust valimist.
 
-### plotime mudeli ennustusi - marginal effects plots
+### Plotime mudeli ennustusi - marginal effects plots
 
-teeme ennustused
-
-Kõigepealt ennustame ühe keskmise mudeliga, mis ei arvesta mitmetasemelise mudeli madalamte tasemete koefitsientidega.
+Teeme ennustused. Kõigepealt ennustame ühe keskmise mudeliga, mis ei arvesta mitmetasemelise mudeli madalamte tasemete koefitsientidega.
 
 ```{r }
-plot(marginal_effects(m2, effects= "Petal.Length", method = "predict", probs=c(0.1, 0.9)), points = TRUE,  theme = theme_bw())
-```
-
-```{r}
-marginal_effects(m2, effects= "Petal.Length", method = "predict", probs=c(0.1, 0.9))
-
+plot(marginal_effects(m2, effects = "Petal.Length", method = "predict", probs = c(0.1, 0.9)), points = TRUE)
 ```
 
 Ennustus on selles mõttes ok, et vaid väike osa punkte jääb sellest välja, aga laiavõitu teine!
 
-Nüüd ennustame sama mudeli põhjal igale liigile eraldi. Seega kasutame mudeli madalama taseme koefitsiente. peame andma lisaparameetri re_formula = NULL, mis tagab, et ennustuse tegemisel kasutatakse ka mudeli madalama taseme koefitsiente.
-```{r }
-conditions <- data.frame(Species =c("setosa", "virginica", "versicolor"))
-plot(marginal_effects(m2, effects= "Petal.Length", method = "predict", conditions = conditions, probs=c(0.1, 0.9), re_formula = NULL), points = TRUE, theme = theme_bw())
+Nüüd ennustame sama mudeli põhjal igale liigile eraldi. Seega kasutame mudeli madalama taseme koefitsiente. Peame andma lisaparameetri `re_formula = NULL`, mis tagab, et ennustuse tegemisel kasutatakse ka mudeli madalama taseme koefitsiente.
+```{r}
+plot(marginal_effects(m2, effects = "Petal.Length", method = "predict", conditions = make_conditions(iris, vars = "Species"), probs = c(0.1, 0.9), re_formula = NULL), points = TRUE)
 ```
 
 
-method = "predict" ennustab, millisesse vahemikku peaks mudeli järgi jääma 90% andmepunkte (k.a. uued andmepunktid, mida pole veel valimisse korjatud).
+`method = "predict"` ennustab, millisesse vahemikku peaks mudeli järgi jääma 90% andmepunkte (k.a. uued andmepunktid, mida pole veel valimisse korjatud).
 
-Tõesti, valdav enamus valimi punkte on intervallis sees, mis viitab et mudel töötab hästi. Seal, kus on rohkem punkte, on intervall kitsam (mudel on usaldusväärsem).
+Tõesti, valdav enamus valimi punkte on intervallis sees, mis viitab et mudel töötab hästi. Seal, kus on rohkem punkte, on intervall kitsam ja mudel usaldusväärsem.
 
-Järgneval pildil on method = "fitted". Nüüd on enamus punkte väljaspool usaldusintervalle, mis sellel pildil mõõdavad meie usaldust regressioonijoone vastu.
+Järgneval pildil on `method = "fitted"`. Nüüd on enamus punkte väljaspool usaldusintervalle, mis sellel pildil mõõdavad meie usaldust regressioonijoone vastu.
 
 ```{r }
-conditions <- data.frame(Species =c("setosa", "virginica", "versicolor"))
-plot(marginal_effects(m2, effects= "Petal.Length", method = "fitted", conditions = conditions, probs=c(0.1, 0.9), re_formula = NULL), points = TRUE, theme = theme_bw())
+plot(marginal_effects(m2, effects = "Petal.Length", method = "fitted", conditions = make_conditions(iris, vars = "Species"), probs = c(0.1, 0.9), re_formula = NULL), points = TRUE)
 ```
-method = "fitted" annab CI regressioonijoonele.
+`method = "fitted"` annab CI regressioonijoonele.
 
-argumendid: 
+Argumendid: 
 
-method - predict annab veapiirid (95% CI) mudeli ennustustustele andmepunkti tasemel. fitted annab veapiirid mudeli fitile endale (joonele, mis tähistab keskmist või kõige tõenäolisemat y muutuja väärtust igal x-i väärtusel)
+- method -- predict annab veapiirid (95% CI) mudeli ennustustustele andmepunkti tasemel. fitted annab veapiirid mudeli fitile endale (joonele, mis tähistab keskmist või kõige tõenäolisemat y muutuja väärtust igal x-i väärtusel)
 
-conditions - andmeraam, kus on kirjas mudeli nendele ennustavatele (x) muutujatele omistatud väärtused, mida ei joonistata x teljele. Kuna meil on selleks mudeli madalama taseme muutuja Species, siis on lisaks vaja määrata argument *re_formula = NULL*, mis tagab, et ennustuste tegemisel kasutatakse mudeli kõikide tasemete fititud koefitsiente. re_formula = NA annab seevastu keskmise fiti üle kõigi gruppide (irise liikide)
+- conditions - andmeraam, kus on kirjas mudeli nendele ennustavatele (x) muutujatele omistatud väärtused, mida ei joonistata x teljele. Kuna meil on selleks mudeli madalama taseme muutuja Species, siis on lisaks vaja määrata argument *re_formula = NULL*, mis tagab, et ennustuste tegemisel kasutatakse mudeli kõikide tasemete fititud koefitsiente. re_formula = NA annab seevastu keskmise fiti üle kõigi gruppide (irise liikide)
 
-probs annab usaldusintervalli piirid.
+- probs annab usaldusintervalli piirid.
 
-Pane tähele, et argumendid points ja theme kuuluvad plot(), mitte marginal_effects() funktsioonile.
+Pane tähele, et argument `points` (ja muud lisaargumendid, nagu näiteks `theme`) kuuluvad `plot()`, mitte `marginal_effects()` funktsioonile.
 
 
-tavaline interaktsioonimudel, aga pidevatele muutujatele.
-
+Tavaline interaktsioonimudel, aga pidevatele muutujatele.
 ```{r eval=FALSE}
-m5 <- brm(Sepal.Length~Petal.Length + Sepal.Width + Petal.Length*Sepal.Width, 
-          data= iris, 
+m5 <- brm(Sepal.Length ~ Petal.Length + Sepal.Width + Petal.Length * Sepal.Width, 
+          data = iris, 
           prior = prior, 
-          family = gaussian,
-          warmup = 1000, 
-          iter = 2000, 
-          chains = 3,
-          cores = 4,
-          control = list(adapt_delta = 0.95))
-write_rds(m5, path = "m5.fit")
+          family = gaussian)
+write_rds(m5, path = "data/m5.fit")
 ```
 
 
+```{r, echo=FALSE}
+m5 <- read_rds("data/m5.fit")
+```
+
+Kõigepealt plotime mudeli ennustused, kuidas Sepal Length sõltub Petal Length-ist kolmel erineval Sepal width väärtusel.
 ```{r}
-m5 <- read_rds("m5.fit")
+plot(marginal_effects(m5, effects = "Petal.Length:Sepal.Width"), points = TRUE)
 ```
 
-Kõigepealt plotime mudeli ennustused, kuidas Sepal Length sõltub Petal Length-ist kolmel erineval Sepal width väärtusel. Ja siis sümmeetriliselt vastupidi.
+Ja siis sümmeetriliselt vastupidi.
 ```{r}
-plot(marginal_effects(m5, 
-                      effects = "Petal.Length:Sepal.Width"),
-     points = T)
-plot(marginal_effects(m5, 
-                      effects = "Sepal.Width:Petal.Length"),
-     points = T)
+plot(marginal_effects(m5, effects = "Sepal.Width:Petal.Length"), points = TRUE)
 ```
 
-Siin lisame enda soovitud Sepal Width väärtused (5 ja 1.2), mis on väljaspool seda, mida loodus pakub. Pane tähele ennustuse laiu CI-sid.
+
+Siin lisame enda soovitud Sepal Width väärtused (5 ja 1.2), mis on väljaspool seda, mida loodus pakub. Pane tähele ennustuse laiemaid CI-e.
 ```{r}
 conditions <- data.frame(Sepal.Width = c(5, 1.2))
-plot(marginal_effects(m5, effects = "Petal.Length", conditions = conditions, re_formula = NULL), points= TRUE)
+plot(marginal_effects(m5, effects = "Petal.Length", conditions = conditions, re_formula = NULL), points = TRUE)
 ```
 
 
-### Alternatiivne tee:
-
+### Alternatiivne tee
+Alternatiivne millele?
 Teeme tabeli nende väärtustega, millele tahame mudeli ennustusi. Tabelis newx on spetsifitseeritud mudeli kõikide X muutujate väärtused! Me ennustame Y väärtusi paljudel meie poolt võrdse vahemaaga ette antud petal length väärtustel, kusjuures me hoiame sepal width väärtuse alati konstantsena tema valimi keskmisel väärtusel ja vaatame ennustusi eraldi kahele liigile kolmest. Liigid on mudeli madala taseme osad, seega kasutame ennustuste tegemisel mudeli kõikide tasemete koefitsiente.
 
 ```{r}
-newx <- expand.grid(Petal.Length = seq(min(iris$Petal.Length), 
-                                       max(iris$Petal.Length), 
-                                       length.out = 150),
+newx <- expand.grid(Petal.Length = modelr::seq_range(iris$Petal.Length, n = 150),
                     Sepal.Width = mean(iris$Sepal.Width),
-                    Species = c("setosa", "virginica")
-                    )
+                    Species = c("setosa", "virginica"))
 ```
-expand.grid() lõõb tabeli pikaks nii, et kõik võimalikud kombinatsioonid 3st muutujast on täidetud väärtustega.
+`expand.grid()` lõõb tabeli pikaks nii, et kõik võimalikud kombinatsioonid 3st muutujast on täidetud väärtustega.
 
 
-reformula NULL mudeldab eraldi liigid eraldi mudeli madalama taseme (liikide sees) koefitsiente kasutades
+`re_formula` NULL mudeldab eraldi liigid eraldi mudeli madalama taseme (liikide sees) koefitsiente kasutades
 ```{r}
 predict_interval_brms2 <- predict(m2, newdata = newx, re_formula = NULL) %>%
-  cbind(newx,.)
+  cbind(newx, .)
 head(predict_interval_brms2)
 ```
 
-predict() ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele
+`predict()` ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele
 
 Siin siis eraldi ennustused kahele liigile kolmest, kaasa arvatud petal length väärtusvahemikule, kus selle liigi isendeid valimis ei ole (ja võib-olla ei saagi olla) 
 ```{r}
-iris1 <- iris %>% filter(Species != "versicolor")
+no_versicolor <- filter(iris, Species != "versicolor")
 ggplot(data = predict_interval_brms2, aes(x = Petal.Length, y = Estimate)) +
-  geom_point(data= iris1, aes(Petal.Length, Sepal.Length, color=Species)) +
+  geom_point(data = no_versicolor, aes(Petal.Length, Sepal.Length, color = Species)) +
   geom_line(aes(color = Species)) +
-  geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = Species), alpha = .1, colour = NA) +
-  scale_color_brewer(palette = 'Set1') +
-  ggthemes::theme_tufte()
+  geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = Species), alpha = 1/3)
 ```
 
 Ennustav plot - kuidas lähevad kokku mudeli ennustused reaalsete y-i andmepunktidega
 ```{r}
 pr <- predict(m2) %>% cbind(iris)
-
-ggplot(pr, aes(Sepal.Length, Estimate, color=Species))+
-  geom_pointrange(aes(ymin = Q2.5, ymax = Q97.5), alpha=0.5, size=0.2) +
-  geom_abline(intercept = 0, slope = 1, lty = 2) +
-  coord_cartesian( xlim=c( 4, 8 ), ylim=c( 4, 8 ))+
-  ggthemes::theme_tufte()
+ggplot(pr, aes(Sepal.Length, Estimate, color = Species)) +
+  geom_pointrange(aes(ymin = Q2.5, ymax = Q97.5)) +
+  geom_abline(lty = 2) +
+  coord_cartesian(xlim = c(4, 8), ylim = c(4, 8))
 ```
 
-Igae andmepunktile - kui palju erineb selle residuaal 0-st - st kui hästi ennustab mudel just seda andmepunkti. Ruumi kokkuhoiuks plotime välja ainult irise esimele 50-le andmepunktile.
-```{r fig.width=3}
-re <- residuals(m2) %>% cbind(iris)
-re$indeks <- 1:nrow(re)
-
-ggplot(re[1:50,], aes(x = Estimate, y = reorder(indeks, Estimate))) +
-  geom_vline(xintercept = 0, lty = 2) +
-  geom_point(size=1) +
-  geom_errorbarh(aes(xmin = Q2.5, xmax = Q97.5), color = "red", size =0.2) +
-  theme(text = element_text(size = 7), axis.title.y = element_blank())+
-  xlab("residuals (95 CI)")
+Igale andmepunktile -- kui palju erineb selle residuaal 0-st kui hästi ennustab mudel just seda andmepunkti. Ruumi kokkuhoiuks plotime välja ainult irise valiku 50-st andmepunktist.
+```{r}
+set.seed(69)
+as_data_frame(residuals(m2)) %>% 
+  sample_n(50) %>% 
+  ggplot(aes(x = reorder(seq_along(Estimate), Estimate), y = Estimate)) +
+  geom_pointrange(aes(ymin = Q2.5, ymax = Q97.5), fatten = 0.1) +
+  coord_flip() +
+  theme(text = element_text(size = 8), axis.title.y = element_blank()) +
+  xlab("Residuals (95 CI)")
 ```
 
-Ok, isendid nr 15 ja 37 paistavad olema palju väiksema Sepal Lengthiga kui mudel ennustab. Võib küsida, miks?
+Ok, isendid nr 15 ja 44 paistavad olema vastavalt palju suurema ja väiksema Sepal Lengthiga kui mudel ennustab. Võib küsida, miks?
 
-Nüüd plotime usaldusintervalli mudeli fitile (**keskmisele** Y väärtusele igal määratud X-i väärtusel), mitte Y- ennustusele andmepunkti kaupa. Selleks on hea fitted() funktsioon. Me ennustame m2 mudelist vastavalt newdata parameetriväärtustele. Kui me newdata argumendi tühjaks jätame, siis võtab fitted() selleks automaatselt algse iris tabeli (ehk valimi väärtused). 
+Nüüd plotime usaldusintervalli mudeli fitile ('keskmisele' Y väärtusele igal määratud X-i väärtusel), mitte Y-ennustusele andmepunkti kaupa. Selleks on hea fitted() funktsioon. Me ennustame m2 mudelist vastavalt newdata parameetriväärtustele. Kui me newdata argumendi tühjaks jätame, siis võtab fitted() selleks automaatselt algse iris tabeli (ehk valimi väärtused). 
 
 
 ```{r}
@@ -515,49 +479,43 @@ predict_interval_brms2f <- fitted(m2, newdata = newx, re_formula = NULL) %>%
   cbind(newx,.)
 head(predict_interval_brms2f)
 ```
+
 ```{r}
 ggplot(data = predict_interval_brms2f, aes(x = Petal.Length, y = Estimate, color = Species)) +
-  geom_point(data= iris1, aes(Petal.Length, Sepal.Length, color=Species)) +
+  geom_point(data = no_versicolor, aes(Petal.Length, Sepal.Length, color = Species)) +
   geom_line() +
-  geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = Species), alpha = .1, colour = NA) +
-  scale_x_continuous(breaks = 0:10) +
-  theme(panel.grid.minor = element_blank()) +
-  scale_color_brewer(palette = 'Set1')+
-  ggthemes::theme_tufte()
+  geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = Species), alpha = 1/3, colour = NA) +
+  scale_x_continuous(breaks = 0:10)
 ```
 
- **mudeli genereeritud andmed ja valimiandmed mõõtmisobjekti (subjekti e taimeisendi) kaupa**. See on sisuliselt posterior predictive plot (vt eespool). 
+Mudeli genereeritud andmed ja valimiandmed mõõtmisobjekti (subjekti e taimeisendi) kaupa. See on sisuliselt posterior predictive plot (vt eespool). 
 
 ```{r}
-predict_subjects_brms <- predict(m2) %>% cbind(iris, .)
-#ennustame andmeid igale taimele vastavate parameetriväärtustega 
-#ja paneme ennustused kokku algse irise tabeliga
+predicted_subjects_brms <- predict(m2) %>% cbind(iris, .)
 ```
 
-predict() arvutab mudeli põhjal uusi Y muutuja andmepunkte. Võib kasutada ka väljamõeldud andmete pealt Y väärtuste ennustamiseks (selleks tuleb anda ette andmeraam kõigi X-muutujate väärtustega, mille pealt tahetakse ennustusi).
+`predict()` arvutab mudeli põhjal uusi Y muutuja andmepunkte. Võib kasutada ka väljamõeldud andmete pealt Y väärtuste ennustamiseks (selleks tuleb anda ette andmeraam kõigi X-muutujate väärtustega, mille pealt tahetakse ennustusi).
 
-tugevalt värvitud punktid on ennustused ja läbipastvad punktid on valimiandmed
+Punktid on ennustused ja ristikesed on valimiandmed
 ```{r}
-ggplot(data = predict_subjects_brms, aes(Petal.Length, Estimate, color = Species)) +
-  geom_point(aes(Petal.Length, Estimate), alpha = .8)+
-  geom_point(data = iris, aes(Petal.Length, Sepal.Length), alpha = .3)+
-  ggthemes::theme_tufte()
+ggplot(data = predicted_subjects_brms, aes(x = Petal.Length, color = Species)) +
+  geom_point(aes(y = Estimate)) +
+  geom_point(aes(y = Sepal.Length), shape = 3)
 ```
 
-**Alternatiiv - ansambliennustus**
+### Alternatiiv -- ansambliennustus
 
-Kuna meil on 2 mudelit, m2 ja m3, mis on pea võrdselt eelistatud, siis genreerime ennustused mõlemast (mudelite ansamblist) proportsionaalselt nende waic skooridega. See ennustus kajastab meie mudeldamistööd tervikuna, mitte ühte "parimat" mudelit ja seega võib loota, et annab paremini edasi meie mudeldamises peituvat ebakindlust.
+Kuna meil on 2 mudelit (m2 ja m3) mis on pea võrdselt eelistatud, siis genreerime ennustused mõlemast (mudelite ansamblist) proportsionaalselt nende waic skooridega. See ennustus kajastab meie mudeldamistööd tervikuna, mitte ühte "parimat" mudelit ja seega võib loota, et annab paremini edasi meie mudeldamises peituvat ebakindlust.
 ```{r eval=FALSE}
 pp_a <- pp_average(m2, m3, weights = "waic", method = "predict") %>%
   as_tibble() %>% 
-  bind_cols(iris) 
-ggplot(data = pp_a, aes(Petal.Length, Estimate, color = Species)) +
-  geom_point(aes(Petal.Length, Estimate), alpha = .8)+
-  geom_point(data = iris, aes(Petal.Length, Sepal.Length), alpha = .3)+
-  ggthemes::theme_tufte()
+  bind_cols(iris)
+ggplot(data = pp_a, aes(x = Petal.Length, color = Species)) +
+  geom_point(aes(y = Estimate)) +
+  geom_point(aes(y = Sepal.Length), shape = 3)
 ```
 
-## mudeli eelduste kontroll
+## Mudeli eelduste kontroll
 
 Pareto k otsib nn mõjukaid (influential) andmepunkte. 
 ```{r}
@@ -567,63 +525,65 @@ plot(loo_m2)
 
 Kui paljud andmepunktid on kahtlaselt mõjukad?
 ```{r}
-loo::pareto_k_table(loo_m2) 
+pareto_k_table(loo_m2) 
 ```
 
 
-### plotime residuaalid
+### Plotime residuaalid
 
-resid() annab residuaalid vektorina. 
-**Kõigepealt plotime residuaalid fititud (keskmiste) Y väärtuste vastu.**
+`resid()` annab residuaalid vektorina. 
+Kõigepealt plotime residuaalid fititud (keskmiste) Y väärtuste vastu:
 ```{r}
-resid <-  resid(m2, type = "pearson")[, "Estimate"]
-fit <-  fitted(m2)[, "Estimate"]
-ggplot() + geom_point(data = NULL, aes(y = resid, x = fit)) + geom_hline(yintercept=0, lty=2)
+resid <- residuals(m2, type = "pearson")
+fit <- fitted(m2)
+ggplot() + 
+  geom_point(aes(x = fit[,"Estimate"], y = resid[,"Estimate"])) + 
+  geom_hline(yintercept = 0, lty = "dashed") +
+  labs(x = "fitted", y = "residuals")
 ```
 
 Residuals vs fitted plot testib lineaarsuse eeldust - kui .resid punktid jaotuvad ühtlaselt nulli ümber, siis mudel püüab kinni kogu süstemaatilise varieeruvuse teie andmetest ja see mis üle jääb on juhuslik varieeruvus.
 
-**vaatame diagnostilist plotti autokorrelatsioonist residuaalide vahel.**
+Vaatame diagnostilist plotti autokorrelatsioonist residuaalide vahel.
 ```{r}
 plot(acf(resid))
 ```
 
 Residuaalide autokorrelatsioonid on madalad - seega kõik paistab OK ja andmepunktide sõltumatus on tagatud.
 
-**siin on residuaalide histogramm**
+Siin on residuaalide histogramm:
 ```{r}
-ggplot(data = NULL, aes(resid)) + geom_density(fill="lightgrey") + geom_vline(xintercept = median(resid), linetype ="dashed")+ theme_classic()
+ggplot(data = NULL) + 
+  geom_density(aes(x = resid[,"Estimate"]), fill = "lightgrey") + 
+  geom_vline(xintercept = median(resid), linetype = "dashed")
 ```
 
 Residuaalid on sümmeetrilise jaotusega ja meedian residuaal on peaaegu null. See on kõik hea.
 
-**Ja lõpuks plotime residuaalid kõigi x-muutujate vastu:**
-
-Kõigepealt ühendame resid vektori irise tabeliga, et oleks mugavam plottida, seejärel tekitame uue veeru st_resid e studentiseeritud residuaalid, mis on sd ühikutes.
+Ja lõpuks plotime residuaalid kõigi x-muutujate vastu. Kõigepealt ühendame resid vektori irise tabeliga, et oleks mugavam plottida, seejärel tekitame uue veeru st_resid e studentiseeritud residuaalid, mis on sd ühikutes.
 
 residuaalid standardhälbe ühikutes (nn Studentiseeritud residuaalid) saab ja ka tuleks plottida kõigi x-muutujate suhtes.
 ```{r}
-iris2 <- iris %>% cbind(resid) %>% mutate(st_resid= resid/sd(resid))
-ggplot(iris2, aes(Petal.Length, st_resid, color=Species))+ 
+iris2 <- iris %>% 
+  cbind(resid) %>% 
+  mutate(st_resid = Estimate / sd(resid))
+ggplot(iris2, aes(Petal.Length, st_resid, color = Species)) + 
   geom_point() +
-  geom_hline(yintercept = 0, linetype = "dashed") + 
-  ggthemes::theme_tufte()
+  geom_hline(yintercept = 0, linetype = "dashed")
 ```
 
-Pole paha, mudel ennustab hästi, aga mõne punkti jaoks on ennustus 2 sd kaugusel.
-
+Tsiteerides klassikuid: "Pole paha!". Mudel ennustab hästi, aga mõne punkti jaoks on ennustus 2 sd kaugusel.
 ```{r}
-ggplot(iris2, aes(Sepal.Width, st_resid, color=Species))+ 
+ggplot(iris2, aes(Sepal.Width, st_resid, color = Species)) + 
   geom_point() +
-  geom_hline(yintercept = 0, linetype = "dashed") + 
-  ggthemes::theme_tufte()
+  geom_hline(yintercept = 0, linetype = "dashed")
 ```
 
 ```{r}
-ggplot(iris2, aes(Species, st_resid)) + geom_boxplot() +
+ggplot(iris2, aes(Species, st_resid)) + 
+  geom_boxplot() +
   geom_hline(yintercept = 0, linetype = "dashed") +
-  geom_jitter(width = 0.1, size=0.4)+
-  ggthemes::theme_tufte()
+  geom_jitter(width = 0.1)
 ```
 
 # Brms mudelid
@@ -634,98 +594,88 @@ Kasutame dnorm likelihoodi asemel studenti t jaotust. Selle jaotuse õlad on reg
 
 ```{r}
 x = seq(from = 0, to = 20, by = .1)
-y = dgamma(x, shape= 4, scale = 1)
-plot(y~x)
+y = dgamma(x, shape = 4, scale = 1)
+plot(y ~ x)
 ```
 
 ```{r}
-get_prior(Sepal.Length~Petal.Length, 
-          data= iris, 
-          family = "student")
+get_prior(Sepal.Length ~ Petal.Length, data = iris, family = "student")
 ```
 
 ```{r}
-prior <- c(prior(gamma(4,1), class="nu"))
+prior <- prior(gamma(4, 1), class = "nu")
 ```
 
 robust_m1 on studenti likelihoodiga, mille õlad määratakse adaptiivselt andmete poolt.
 robust_m2-s anname õlgade laiuse ette ja robust_m3 on mitte-robustne kontroll tavalise normaalse likelihoodiga.
 ```{r eval=FALSE}
-robust_m1 <- brm(Sepal.Length~Petal.Length, 
-          data= iris, 
+robust_m1 <- brm(Sepal.Length ~ Petal.Length, 
+          data = iris, 
           family = "student",
-          prior = prior, 
-          chains = 3,
-          cores = 3)
-robust_m2 <- brm(
-          data= iris, 
+          prior = prior)
+robust_m2 <- brm(bf(Sepal.Length~Petal.Length, nu = 4),
+          data = iris, 
           family = student,
-          bf(Sepal.Length~Petal.Length, nu = 4),
           prior = c(prior(normal(0, 100), class = Intercept),
                 prior(normal(0, 10),  class = b),
-                prior(student_t(5, 0, 5),   class = sigma)),
-          chains = 3,
-          cores = 3)
-
+                prior(student_t(5, 0, 5),   class = sigma)))
 robust_m3 <- brm(Sepal.Length~Petal.Length, 
-          data= iris, 
-          family = "gaussian",
-          chains = 3,
-          cores = 3)
-write_rds(robust_m1, path = "robust_m1.fit")
-write_rds(robust_m2, path = "robust_m2.fit")
-write_rds(robust_m3, path = "robust_m3.fit")
+          data = iris, 
+          family = "gaussian")
+write_rds(robust_m1, path = "data/robust_m1.fit")
+write_rds(robust_m2, path = "data/robust_m2.fit")
+write_rds(robust_m3, path = "data/robust_m3.fit")
 ```
 
 ```{r echo=FALSE}
-robust_m1 <- read_rds("robust_m1.fit") 
-robust_m2 <- read_rds("robust_m2.fit") 
-robust_m3 <- read_rds("robust_m3.fit")
+robust_m1 <- read_rds("data/robust_m1.fit") 
+robust_m2 <- read_rds("data/robust_m2.fit") 
+robust_m3 <- read_rds("data/robust_m3.fit")
 ```
 
 ```{r}
 b_estimates <- bind_rows(tidy(robust_m1), 
                          tidy(robust_m2), 
-                         tidy(robust_m3), .id= "model_nr") 
-b1 <- b_estimates %>% filter(str_detect(term, "b_P") ) %>%   
-ggplot(aes(model_nr, estimate))+
-  geom_pointrange(aes(ymin=lower, ymax=upper))+ 
-  coord_flip()+ labs(x="Model nr", title ="slopes")
-b2 <- b_estimates %>% filter(str_detect(term, "b_I") ) %>%    
-ggplot(aes(model_nr, estimate))+
-  geom_pointrange(aes(ymin=lower, ymax=upper))+ 
-  coord_flip()+ labs(x=NULL, title ="intercepts")
+                         tidy(robust_m3), 
+                         .id = "model_nr") 
+b1 <- filter(b_estimates, str_detect(term, "b_P")) %>%
+  ggplot(aes(model_nr, estimate)) +
+  geom_pointrange(aes(ymin = lower, ymax = upper)) + 
+  coord_flip() + 
+  labs(x = "Model nr", title = "slopes")
+b2 <- filter(b_estimates, str_detect(term, "b_I")) %>%
+  ggplot(aes(model_nr, estimate)) +
+  geom_pointrange(aes(ymin = lower, ymax = upper)) + 
+  coord_flip() + 
+  labs(x = NULL, title = "intercepts")
 gridExtra::grid.arrange(b1, b2, nrow = 1)
 ```
 
-Kolme mudeli interceptid ja sloped on sisuliselt võrdsed ja sama täpsusega hinnatud. Seega ei tee robustne mudel vähemal halba, kui meil on enam-vähem normaalsed andmed.
+Kolme mudeli lõikepunktid ja tõusunurgad on sisuliselt võrdsed ja sama täpsusega hinnatud. Seega ei tee robustne mudel vähemal halba, kui meil on enam-vähem normaalsed andmed.
 
 Proovime ka robuststet versiooni 2 grupi võrdlusest (vastab t testile, kus kahe grupi sd-d hinnatakse eraldi)
 ```{r}
-ir1 <- iris %>% filter(Species != "versicolor")
-ir1$Species <- as.factor(ir1$Species) %>% fct_drop() 
-```
-
-
-```{r}
-get_prior(bf(Sepal.Length~Species, sigma ~ Species), 
-            data = ir1, family = "student")
+get_prior(bf(Sepal.Length ~ Species, sigma ~ Species), 
+          data = no_versicolor, 
+          family = "student")
 ```
 
 ```{r}
-prior <- c(prior(gamma(4,1), class= "nu"),
-           prior(normal(0, 4), class= "b"))
+prior <- c(prior(gamma(4, 1), class = "nu"),
+           prior(normal(0, 4), class = "b"))
 ```
 
 ```{r eval=FALSE}
-robust_t_test1 <- brm(bf(Sepal.Length~Species, sigma ~ Species), 
-            data = ir1, prior = prior, family = "student")
-write_rds(robust_t_test1, path = "robust_t_test1.fit")
+robust_t_test1 <- brm(bf(Sepal.Length ~ Species, sigma ~ Species), 
+            data = no_versicolor, 
+            prior = prior, 
+            family = "student")
+write_rds(robust_t_test1, path = "data/robust_t_test1.fit")
 ```
 
 
 ```{r echo=FALSE}
-robust_t_test1 <- read_rds("robust_t_test1.fit")
+robust_t_test1 <- read_rds("data/robust_t_test1.fit")
 ```
 
 ```{r}
@@ -742,7 +692,7 @@ b_sigma_Intercept on naturaallogaritm 1. grupi sd-st.
 
 b_sigma_Speciesvirginica on logaritm 2. grupi (I. virginica) sd erinevusest esimesest grupist (ehk efekti suurus).
 
-**Seega saab algses skaalas sd-d nii:** 
+Seega saab algses skaalas sd-d nii: 
 
 exp(b_sigma_Intercept) = 1. grupi sd
 
@@ -772,13 +722,14 @@ Asendades eelnevas koodis 6.4 nulliga saame bayesi versiooni ühepoolsest p vä�
 Avaldame posteeriori 2. grupi sd-e
 ```{r}
 sd_2.gr <- exp(r_1_df$b_sigma_Intercept) + exp(r_1_df$b_sigma_Speciesvirginica)
-ggplot(data = NULL) + geom_density(aes(sd_2.gr))
+ggplot(data = NULL) + 
+  geom_density(aes(sd_2.gr))
 ```
 
 On tavaline, et sd-de posteeriorid ei ole normaaljaotusega (selle kohta vaata lähemalt Statistical Rethinking raamatust).
 
 ```{r}
-t.test(Sepal.Length~Species, data=ir1)
+t.test(Sepal.Length ~ Species, data = no_versicolor)
 ```
 
 Klassikalise t testi efekti suuruse CI on 1.38 ... 1.79
@@ -787,18 +738,21 @@ robustse t testi oma on 1.39 ... 1.73
 Simuleerime siis ühe tõsiste outlieritega andmestiku, et vaadata kas meil õnnestub päästa efekt statistilise mitteolulisuse õnnetust saatusest. Meil on a grupis 30 andmepunkti normaaljaotusest mu = 0, sd = 1 ja b grupis 25 andmepunkti normaaljaotusest mu = 1, sd = 1.5, pluss 5 andmepunkti, mis mängivad outliereid.
 ```{r}
 set.seed(123)
-df1 <- tibble(a=rnorm(30), b= c(rnorm(25, 1, 1.5), 4.3, 5.3, 7, -8.1, -17)) %>% gather()
-ggplot(df1, aes(value, fill=key)) + geom_histogram(alpha = 0.7, position = "identity")
+df1 <- tibble(a = rnorm(30), b = c(rnorm(25, 1, 1.5), 4.3, 5.3, 7, -8.1, -17)) %>% gather()
+ggplot(df1, aes(value, fill = key)) + 
+  geom_histogram(alpha = 0.7, position = "identity", bins = 30)
 ```
 
 ```{r eval=FALSE}
 robust_t_test2 <- brm(bf(value~key, sigma ~ key), 
-            data = df1, family = "student", prior= prior(gamma(4,1), class= "nu"))
-write_rds(robust_t_test2, path = "robust_t_test2.fit")
+            data = df1, 
+            family = "student", 
+            prior = prior(gamma(4, 1), class= "nu"))
+write_rds(robust_t_test2, path = "data/robust_t_test2.fit")
 ```
 
 ```{r echo=FALSE}
-robust_t_test2 <- read_rds("robust_t_test2.fit")
+robust_t_test2 <- read_rds("data/robust_t_test2.fit")
 ```
 
 ```{r}
@@ -807,7 +761,7 @@ tidy(robust_t_test2)
 
 
 ```{r}
-t.test(value~key, data=df1)
+t.test(value ~ key, data = df1)
 ```
 
 Nüüd kus meil on outlieritega andmed, annab klassikaline t test efekti suurusele CI -2.41 ... 0.78 (p = 0.3), aga robustne t test leiab efekti üles - CI 0.78 ... 2.10 [tegelik ES oleks 1, outliereid arvestamata]. 
@@ -818,36 +772,38 @@ Igaks juhuks tuletame meelde, et tavaline t test (küll versioonis, kus võrreld
 
 
 ```{r}
-lm1 <- lm(value~key, data=df1)
+lm1 <- lm(value ~ key, data = df1)
 tidy(lm1)
 ```
-p = 0.2999252 ongi vastava t testi põhiväljund.
+p = `r format.pval(tidy(lm1)$p.value[2])` ongi vastava t testi põhiväljund.
 
 
-### puuduvate andmete imputatsioon
+### Puuduvate andmete imputatsioon
 
-Regressioonimudelite fittimisel kasutatakse ainult vaatlusi, kus esinevad väärtused kõigis mudelisse pandud muutujates. Seega, kui meil on palju muutujaid, milles igaühes puuduvad juhuslikult mõned väärtused, siis kaotame kokkuvõttes enamuse oma valimist. Aitab puuduvate andmete imputatsioon, mis tegelikult tähendab, et me fitime iga puuduvaid andmeid sisaldava muutuja eraldi regressioonimudelis kõigi teiste muutujate vastu. 
+Regressioonimudelite fittimisel kasutatakse ainult vaatlusi, kus esinevad väärtused kõigis mudelisse pandud muutujates. Seega, kui meil on palju muutujaid, milles igaühes puuduvad juhuslikult mõned väärtused, siis kaotame kokkuvõttes enamuse oma valimist. Aitab puuduvate andmete imputatsioon, mis tegelikult tähendab, et me fitime iga puuduvaid andmeid sisaldava muutuja eraldi regressioonimudelis kõigi teiste muutujate vastu.
 
-Eriti vajalik, kui andmed ei puudu juhuslikult!
+Eriti vajalik, kui andmed ei puudu juhuslikult! 
 
 Viskame irise andmestiku kahest tulbast välja 1/4 andmepunkte, aga mitte juhuslikult vaid kõik madalamad väärtused. Selline suunatud tegevus kallutab (ehk suunab kindlas suunas) oluliselt mudeldamise tulemusi
 ```{r}
+quantile(iris$Petal.Length)
 iris_na <- iris
-quantile(iris_na$Petal.Length)
 iris_na$Sepal.Length[iris_na$Sepal.Length < 5] <- NA
 iris_na$Petal.Length[iris_na$Petal.Length < 1.6] <- NA
 ```
 
 ```{r}
-lm(iris$Petal.Length~iris$Sepal.Length) %>% tidy()
+lm(Petal.Length ~ Sepal.Length, data = iris) %>% tidy()
 ```
 
 ```{r}
-lm(iris_na$Petal.Length~iris_na$Sepal.Length) %>% tidy()
+lm(Petal.Length ~ Sepal.Length, data = iris_na) %>% tidy()
 ```
+
 
 imputeerime enne mudeli fittimist kasutades multiple imputation meetodit mice paketist https://stefvanbuuren.name/mice/.
 Siin imputeerime iga puuduva väärtuse kasutades kõigi teiste parameetrite väärtusi, ja me teeme seda 5 korda.
+
 
 ```{r}
 library(mice)
@@ -856,27 +812,27 @@ imp <- mice(iris_na, m = 5, print = FALSE)
 
 Meil on nüüd 5 imputeeritud andmesetti. Me saadame need kõik brms-i.
 
->Siin kasutame mice() tema vaikeväärtustel, kuid mice pakett on tegelikult vägagi rikkalik imputatsioonimasin, mille helpi ja tutoorialeid tuleks kindlasti enne lugeda, kui oma andmeid imputeerima asuda. Lisaks, see raamat on tervenisti pühendatud imputatsioonile: https://stefvanbuuren.name/fimd/
+> Siin kasutame mice() tema vaikeväärtustel, kuid mice pakett on tegelikult vägagi rikkalik imputatsioonimasin, mille helpi ja tutoorialeid tuleks kindlasti enne lugeda, kui oma andmeid imputeerima asuda. Lisaks, see raamat on tervenisti pühendatud imputatsioonile: https://stefvanbuuren.name/fimd/
 
 
 
 ```{r eval=FALSE}
-iris_imp1 <- brm_multiple(Petal.Length~Sepal.Length, data = imp)
-write_rds(iris_imp1, path = "iris_imp1.fit")
+iris_imp1 <- brm_multiple(Petal.Length ~ Sepal.Length, data = imp)
+write_rds(iris_imp1, path = "data/iris_imp1.fit")
 ```
 
 ```{r echo=FALSE}
-iris_imp1 <- read_rds("iris_imp1.fit")
+iris_imp1 <- read_rds("data/iris_imp1.fit")
 ```
 
 Saame tavalise fitiobjekti, kus on 5 alammudeli posterioorid. Kõik juba koos.
 ```{r}
-tidy(iris_imp1)[1:2,]
+tidy(iris_imp1)[,1:3]
 ```
 
 Tõepoolest, süstemaatiliselt rikutud andmetest on imutatsiooni abil võimalik täitsa head ennustust tagasi saada!!!
 
-## imputatsioon otse brms-is
+## Imputatsioon otse brms-is
 
 See töötab küll irise peal halvemini kui mice!
 
@@ -884,20 +840,20 @@ See töötab küll irise peal halvemini kui mice!
 bform <- bf(Petal.Length | mi() ~ mi(Sepal.Length)) + 
   bf(Sepal.Length | mi() ~ Sepal.Width + Petal.Width + Species + mi(Petal.Length)) + set_rescor(FALSE)
 iris_imp2 <- brm(bform, data = iris_na)
-write_rds(iris_imp2, path = "iris_imp2.fit")
+write_rds(iris_imp2, path = "data/iris_imp2.fit")
 ```
 
 ```{r eval=FALSE}
 bform <- bf(Petal.Length | mi() ~ mi(Sepal.Length)) + 
   bf(Sepal.Length | mi() ~ Species) + set_rescor(FALSE)
 iris_imp3 <- brm(bform, data = iris_na)
-write_rds(iris_imp3, path = "iris_imp3.fit")
+write_rds(iris_imp3, path = "data/iris_imp3.fit")
 ```
 
 
 ```{r echo=FALSE}
-iris_imp2 <- read_rds("iris_imp2.fit")
-iris_imp3 <- read_rds("iris_imp3.fit")
+iris_imp2 <- read_rds("data/iris_imp2.fit")
+iris_imp3 <- read_rds("data/iris_imp3.fit")
 ```
 
 ```{r}
@@ -908,6 +864,7 @@ tidy(iris_imp2)
 ```{r}
 tidy(iris_imp3)
 ```
+
 
 ## Binoomjaotusega mudelid
 
@@ -989,30 +946,35 @@ Kui meil on binaarne y-muutuja ja binaarne x-muutuja (x1), pluss rida teisi x-mu
 
 #### Logistiline regressioon brms-s
 
-```{r}
+```{r, message=FALSE}
 library(rethinking)
-data(chimpanzees)
-d <- chimpanzees
-head(d)
-```
-
-1. intercept only model
-```{r eval=FALSE}
-m_logreg_1 <- brm(data = d, family = binomial,
-      pulled_left ~ 1,
-      prior(normal(0, 10), class = Intercept))
-write_rds(m_logreg_1, path= "m_logreg_1.fit")
 ```
 
 ```{r}
-m_logreg_1 <- read_rds("m_logreg_1.fit")
+data(chimpanzees)
+skim(chimpanzees)
+```
+
+
+#### Intercept only model
+
+```{r eval=FALSE}
+m_logreg_1 <- brm(data = chimpanzees, 
+                  family = binomial,
+                  pulled_left ~ 1,
+                  prior(normal(0, 10), class = Intercept))
+write_rds(m_logreg_1, path= "data/m_logreg_1.fit")
+```
+
+```{r}
+m_logreg_1 <- read_rds("data/m_logreg_1.fit")
 ```
 
 ```{r}
 tidy(m_logreg_1)
 ```
 
-Tõenäosus, et ahv "pulled left":
+Tõenäosus, et shimpans "pulled left":
 ```{r}
 inv_logit_scaled(fixef(m_logreg_1))
 ```
@@ -1026,28 +988,27 @@ m_logreg_2 <-
       pulled_left ~ 1 + prosoc_left,
       prior = c(prior(normal(0, 10), class = Intercept),
                 prior(normal(0, 10), class = b)))
-write_rds(m_logreg_2, path= "m_logreg_2.fit")
+write_rds(m_logreg_2, path= "data/m_logreg_2.fit")
 ```
 
 
 ```{r}
-m_logreg_2 <-read_rds("m_logreg_2.fit")
+m_logreg_2 <- read_rds("data/m_logreg_2.fit")
 ```
 
 ```{r}
 tidy(m_logreg_2)
 ```
 
-The proportional odds = `exp(0.5528)`, which is the ratio of the probability an event happens to the probability it does not happen (the outcome or y variable). 
+The proportional odds = `r signif(exp(tidy(m_logreg_2)$estimate[2]), 3)`, which is the ratio of the probability an event happens to the probability it does not happen (the outcome or y variable). 
 
-If changing the predictor prosoc_left from 0 to 1 increases the log-odds of pulling the left-hand lever by 0.55, then there is a proportional increase of exp(0.55) = 1.73 in the odds of pulling the left-hand lever. This means that the odds increase by 73%.
+If changing the predictor prosoc_left from 0 to 1 increases the log-odds of pulling the left-hand lever by `r round(tidy(m_logreg_2)$estimate[2], 2)`, then there is a proportional increase of exp(`r round(tidy(m_logreg_2)$estimate[2], 2)`) = `r round(exp(tidy(m_logreg_2)$estimate[2]), 2)` in the odds of pulling the left-hand lever. This means that the odds increase by 73%.
 
 ```{r}
-exp(0.55)
+exp(0.57)
 ```
 
-
-the actual change in probability will also depend upon the intercept, α, as well as any other predictor variables. Logistic regression induce interactions among all variables. You can think of these interactions as resulting from both ceiling and  floor effects: If the intercept is large enough to guarantee a pull, then increasing the odds by 73% isn’t going to make it any more guaranteed. Suppose α = 4.  Then the probability of a pull, ignoring everything else, would be `inv_logit_scaled(4)` = 0.98. Adding in an increase of 0.55 (the estimate for beta) changes this to: `inv_logit_scaled(4 + 0.55)` = 0.99. That’s a difference, on the absolute scale, of 1%, despite being an 73% increase in proportional odds. Likewise, if the intercept is very negative, then the probability of a pull is almost zero. An increase in odds of 73% may not be enough to get the probability up from the floor. 
+The actual change in probability will also depend upon the intercept, alpha, as well as any other predictor variables. Logistic regression induce interactions among all variables. You can think of these interactions as resulting from both ceiling and  floor effects: If the intercept is large enough to guarantee a pull, then increasing the odds by 73% isn’t going to make it any more guaranteed. Suppose α = 4.  Then the probability of a pull, ignoring everything else, would be `inv_logit_scaled(4)` = `r round(inv_logit_scaled(4), 2)`. Adding in an increase of `r round(tidy(m_logreg_2)$estimate[2], 2)` (the estimate for beta) changes this to: ``r str_c("inv_logit_scaled(4 + ", round(tidy(m_logreg_2)$estimate[2], 2), ")")`` = `r round(inv_logit_scaled(4 + tidy(m_logreg_2)$estimate[2]), 2)`. That's a difference, on the absolute scale, of 1%, despite being an 73% increase in proportional odds. Likewise, if the intercept is very negative, then the probability of a pull is almost zero. An increase in odds of 73% may not be enough to get the probability up from the floor. 
 
 
 ```{r}
@@ -1060,52 +1021,60 @@ Pr of pulling left, if prosoc_left is 1, is 64%.
 inv_logit_scaled(0.04562136)
 ```
 
-if prosoc_left is 0, it is 51%.
+If prosoc_left is 0, it is 51%.
 
 This meagre difference is reflected in the roc curve.
 ```{r}
-glm.probs <- predict(m_logreg_2, type= "response") %>% as.data.frame()
+glm.probs <- predict(m_logreg_2, type = "response") %>% as.data.frame()
 glm.probs <- glm.probs[,1]
-glm.pred <- rep("pulled_right",504)
-glm.pred[glm.probs >.5] <- "pulled_left" 
-table(glm.pred, d$pulled_left) #confusion matrix
+glm.pred <- rep("pulled_right", 504)
+glm.pred[glm.probs > 0.5] <- "pulled_left" 
+table(glm.pred, chimpanzees$pulled_left)
+```
+
+```{r}
 library(pROC)
-roccurve <- roc(d$pulled_left ~ glm.probs)
-plot(roccurve, legacy.axes = TRUE, cex.axis=0.7, cex.lab= 0.8)
+roccurve <- roc(chimpanzees$pulled_left ~ glm.probs)
+plot(roccurve, legacy.axes = TRUE, cex.axis = 0.7, cex.lab = 0.8)
 ```
 
 
 Sarnase mudeli saab fittida ka siis, kui n>1 ja meil on igale ahvile countide suhted nr of pull-left/total pulls. Nüüd on meil vaja lisada trials(), kuhu läheb n kas ühe numbrina või muutujana, mis indekseerib sündmuste arvu ehk n-i. Antud juhul on kõikidel ahvidel katsete arv n 18.
 ```{r eval=FALSE}
-d_aggr <- d %>% select(-recipient, -block, -trial, -chose_prosoc) %>%
+chimp_aggr <- select(chimpanzees, actor, condition, prosoc_left, pulled_left) %>%
   group_by(actor, condition, prosoc_left) %>%
-  summarise(x = sum(pulled_left))
-m_logreg_3 <-
-  brm(data = d_aggr, family = binomial, x | trials(18) ~ 1 + prosoc_left)
+  summarise_at("pulled_left", sum)
+m_logreg_3 <- brm(pulled_left | trials(18) ~ 1 + prosoc_left, 
+                  data = chimp_aggr, 
+                  family = binomial)
 ```
 Koefitsendid  tulevad samad, mis eelmisel mudelil.
 
-2. näide aggregeeritud binoomsetele andmetele
+Näide agregeeritud binoomsetele andmetele.
 ```{r}
-library(rethinking)
 data(UCBadmit)
-d <- UCBadmit
-#teeme dummy variable "male", kodeeritud kui 1 ja 0
-d <- d %>% mutate(male = ifelse(applicant.gender == "male", 1, 0))
-head(d)
+skim(UCBadmit)
 ```
+
+```{r}
+ucbadmit <- mutate(UCBadmit, male = case_when(
+  applicant.gender == "male" ~ 1,
+  TRUE ~ 0
+))
+```
+
 
 ```{r eval=FALSE}
-m_ucadmit1 <- brm(data = d, family = binomial,
-      admit | trials(applications) ~ 1 + male ,
-      prior = c(prior(normal(0, 10), class = Intercept),
-                prior(normal(0, 10), class = b)),
-      iter = 2500, warmup = 500, cores = 2, chains = 2)
-write_rds(m_ucadmit1, path = "m_ucadmit1.fit")
+m_ucadmit1 <- brm(admit | trials(applications) ~ 1 + male,
+                  data = ubcadmit, 
+                  family = binomial,
+                  prior = c(prior(normal(0, 10), class = Intercept), 
+                            prior(normal(0, 10), class = b)))
+write_rds(m_ucadmit1, path = "data/m_ucadmit1.fit")
 ```
 
 ```{r}
-m_ucadmit1 <- read_rds("m_ucadmit1.fit")
+m_ucadmit1 <- read_rds("data/m_ucadmit1.fit")
 ```
 
 ```{r}
@@ -1113,19 +1082,19 @@ tidy(m_ucadmit1)
 ```
 
 ```{r}
-exp(0.6102733)
+exp(0.61)
 ```
 
-mehed saavad suhtelise 84% eelise ülikooli sissesaamisel.
+Mehed saavad suhtelise 84% eelise ülikooli sissesaamisel.
 
 ```{r}
-inv_logit_scaled(-0.8311908 + 0.6102733)
+inv_logit_scaled(-0.83 + 0.61)
 ```
 
 Meeskandidaadi tõenäosus sisse saada on 44%.
 
 ```{r}
-inv_logit_scaled(-0.8311908)
+inv_logit_scaled(-0.83)
 ```
 
 Naiskandidaadi tõenäosus sisse saada on 30%.
@@ -1133,27 +1102,26 @@ Naiskandidaadi tõenäosus sisse saada on 30%.
 Kui palju erinevad vastuvõtmise tõenäosused (usaldusintervallidega)?
 ```{r}
 post <- posterior_samples(m_ucadmit1)
-post %>% mutate(p_admit_male   = inv_logit_scaled(b_Intercept + b_male),
-         p_admit_female = inv_logit_scaled(b_Intercept),
-         diff_admit     = p_admit_male - p_admit_female) %>%
+post %>% mutate(p_admit_male = inv_logit_scaled(b_Intercept + b_male),
+                p_admit_female = inv_logit_scaled(b_Intercept),
+                diff_admit = p_admit_male - p_admit_female) %>%
   summarise(`2.5%`  = quantile(diff_admit, probs = .025),
             `50%`   = median(diff_admit),
             `97.5%` = quantile(diff_admit, probs = .975))
 ```
 
 Mudeldame otse küsimust, mis on naiste ja meeste erinevus sissesaamisel.
-intercepti surume nulli, et saada eraldi hinnang igale departmendile
-
+intercepti surume nulli, et saada eraldi hinnang igale departmendile:
 ```{r eval=FALSE}
-m_ucadmit2 <- brm(data = d, family = binomial,
-      admit | trials(applications) ~ 0 + dept + male,
-      prior(normal(0, 10), class = b),
-      iter = 2500, warmup = 500, cores = 2, chains = 2)
-write_rds(m_ucadmit2, path = "m_ucadmit2.fit")
+m_ucadmit2 <- brm(admit | trials(applications) ~ 0 + dept + male,
+                  data = ucbadmit, 
+                  family = binomial,
+                  prior(normal(0, 10), class = b))
+write_rds(m_ucadmit2, path = "data/m_ucadmit2.fit")
 ```
 
 ```{r}
-m_ucadmit2 <- read_rds("m_ucadmit2.fit")
+m_ucadmit2 <- read_rds("data/m_ucadmit2.fit")
 ```
 
 ```{r}
@@ -1161,23 +1129,16 @@ tidy(m_ucadmit2)
 ```
 
 ```{r}
-d <- d %>% mutate(case = factor(1:12))
-d_text <- d %>% group_by(dept) %>%
-  summarise(case  = mean(as.numeric(case)),
-            admit = mean(admit / applications) + .05)
-
+pd <- position_dodge(1)
 predict(m_ucadmit2) %>%
   as_tibble() %>% 
-  bind_cols(d) %>% 
-  ggplot(aes(x = case, y = admit / applications)) +
+  bind_cols(ucbadmit) %>% 
+  ggplot(aes(x = dept, y = admit / applications)) +
   geom_pointrange(aes(y = Estimate / applications,
                       ymin = Q2.5  / applications,
-                      ymax = Q97.5 / applications),
-                  shape = 1, alpha = 1/3) +
-  geom_point() +
-  geom_line(aes(group = dept)) +
-  geom_text(data = d_text,
-            aes(y = admit, label = dept)) +
+                      ymax = Q97.5 / applications,
+                      color = applicant.gender), position = pd) +
+  geom_point(aes(color = applicant.gender), position = pd) +
   labs(y = "Proportion admitted",
        title = "Posterior validation check") 
 ```
@@ -1185,8 +1146,7 @@ predict(m_ucadmit2) %>%
 Ohhoo, kui vaadata deparmente eraldi, pole mingit kinnitust, et meestel oleks paremad võimalused ülikooli sisse saada.
 
 ```{r}
-conditions <- data.frame(male = c(0, 1))
-marginal_effects(m_ucadmit2, effects="dept", conditions = conditions)
+marginal_effects(m_ucadmit2, effects ="dept", conditions = data.frame(male = c(0, 1)))
 ```
 
 ### y muutujal 3+ kategoorilist väärtust
@@ -1199,7 +1159,6 @@ When more than two types of unordered events are possible, and the probability o
 Estimate the association between person’s family income and which career (there are 3 choiches) he chooses. 
 
 ```{r}
-library(rethinking)
 N <- 100
 set.seed(2078)
 # simulate family incomes for each individual
@@ -1221,11 +1180,11 @@ mult_logistic_m1 <-
       family = categorical(link = "logit"),
       career ~ 1 + family_income)
 
-write_rds(mult_logistic_m1, path = "mult_logistic_m1.fit")
+write_rds(mult_logistic_m1, path = "data/mult_logistic_m1.fit")
 ```
  
 ```{r echo=FALSE}
-mult_logistic_m1 <- read_rds("mult_logistic_m1.fit")
+mult_logistic_m1 <- read_rds("data/mult_logistic_m1.fit")
 ```
 
 Parameetreid ei saa otse tõlgendada. Selle asemel on mõistlik töötada mudeli ennustuste tasemel konverteerides parameetrid 3ks tõenäosusteks, et inimene kindlal perekonna sissetuleku tasemel valib karjääri 1, 2 või 3.
@@ -1238,7 +1197,7 @@ pred1_l <- pred1_l %>%
   mutate(variable = case_when(variable == "P(Y = 1)" ~ "career 1",
                               variable == "P(Y = 2)" ~ "career 2",
                               variable == "P(Y = 3)" ~ "career 3"))
-ggplot(pred1_l, aes(income, value)) + geom_point()+ facet_wrap(~variable)+
+ggplot(pred1_l, aes(income, value)) + geom_point() + facet_wrap(~variable)+
   ylab("Pr of career choice at a given income") 
 ```
  
@@ -1327,7 +1286,7 @@ mitmetasemelised monotoonilised mudelid
 fit6 <- brm(y ~ mo(x)*age + (mo(x) | city), data = d)
 ```
 
-### multivariaatsed mudelid
+### Multivariaatsed mudelid
 
 mitu y muutujat, millel igaühel on oma prediktorid.
 
@@ -1371,7 +1330,7 @@ bf_back <- bf(back ~ s(hatchdate) + (1|p|fosternest) + (1|q|dam)) +
 fit3 <- brm(bf_tarsus + bf_back + set_rescor(FALSE), data = BTdata)
 ```
 
-### mittelineaarsed mudelid
+### Mittelineaarsed mudelid
 
 ```{r eval=FALSE}
 b <- c(2, 0.75)
@@ -1445,5 +1404,3 @@ Gaussian process terms gp.
 
 additional information on the response variable may be specified via
 `response | aterms ~ <predictor terms>`. The aterms part may contain multiple terms of the form fun(<variable>) separated by + each providing special information on the response variable. This allows among others to weight observations, provide known standard errors for meta-analysis, or model censored or truncated data. 
-
-
