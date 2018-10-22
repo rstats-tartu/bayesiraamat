@@ -170,24 +170,38 @@ vif(lm(hdl ~ chol + stab.glu + ratio + glyhb + age + height + weight +  bp.1s + 
 summary(diab_Bvs)
 ```
 
-Hüpoteesi testimine. See annab Bayesi faktorid nullhüpoteesi suhtes. H0 on ilma prediktoriteta mudel, mis annab tulemuseks keskmise hdl-i.
+
+Aga mis juhtub, kui me eemaldame muutuja chol?
+```{r}
+diab_Bvs2 <- Bvs(formula = hdl ~ stab.glu + ratio + glyhb + age + gender + height + weight + frame + bp.1s + bp.1d+ waist + hip, data = diab)
+summary(diab_Bvs2)
+```
+
+Nüüd ilmusid välja lisamuutujad, mis äkki on olulised ja selgu, et vanus on peaaegu sama oluline kui ratio!
+
+Järgneb **Hüpoteeside testimine**, mis annab Bayesi faktorid (B) nullhüpoteesi suhtes. B=1 tähendab, et kaks hüpoteesi on andmete poolt võrdselt toetatud. B = 100 tähendab, et see hüpotees, mis ei ole H0, on andmete poolt 100 korda rohkem toetatud, kui H0. B = 0.1 tähendab, et hüpotees on 10 korda vähem toetatud kui H0. Bayesi faktor mõõdab tõendusmaterjali (evidence), mis on suhteline mõõt, millega andmed toetavad ühte hüpoteesi rohkem või vähem kui teist hüpoteesi.
+
+H0 on ilma prediktoriteta mudel, mis annab tulemuseks keskmise hdl-i.
 ```{r}
 fullmodel <- hdl ~ chol + stab.glu + ratio + glyhb + age + gender + height + weight + frame + bp.1s + bp.1d+ waist + hip
 reducedmodel <- hdl ~ chol + ratio 
+reducedmodel2 <- hdl ~ age + ratio + frame
 nullmodel <- hdl ~ 1
-Btest(models = c(H0 = nullmodel, H1 = fullmodel, H2 = reducedmodel), data = diab)
+Btest(models = c(H0 = nullmodel, H1 = fullmodel, H2 = reducedmodel, H3 = reducedmodel2), data = diab)
 ```
 
-Ja sageduslik alternatiiv sellele:
+Väga huvitav, chol muutuja eemaldamine (millest ma kahtlustan, et see on osaliselt(?) redundantne ratio muutujaga) langetas Bayesi faktorit meeletult.
+
+sageduslik alternatiiv muutujate valimisele:
 ```{r}
 library(leaps)
 regfit.full<- regsubsets(hdl ~ chol + stab.glu + ratio + glyhb + age + gender + height + weight + frame + bp.1s + bp.1d+ waist + hip, data = diab, nvmax=19, method="backward") 
 reg.summary<-summary(regfit.full) 
-par(mfrow=c(1,2)) 
-plot(reg.summary$rss , xlab="Number of Variables ", ylab="RSS", type="l") 
-plot(reg.summary$adjr2, xlab="Number of Variables ", ylab="Adjusted RSq", type="l")
+regs <- data.frame(adj_RSq = reg.summary$adjr2)
+ggplot(regs) + geom_line(aes(x=1:nrow(regs), y = adj_RSq)) + xlab("Number of Variables")
 ```
 
+Peale 2. muutuja lisamist jääb adjusteeritud r-ruut stabiilseks. Seega piisab kahest muutujast.
 ```{r}
 reg.summary$adjr2
 ```
@@ -195,4 +209,5 @@ reg.summary$adjr2
 ```{r}
 summary(regfit.full)
 ```
+
 
