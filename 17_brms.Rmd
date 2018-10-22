@@ -857,12 +857,12 @@ iris_imp3 <- read_rds("data/iris_imp3.fit")
 ```
 
 ```{r}
-tidy(iris_imp2)
+tidy(iris_imp2) %>% head()
 ```
 
 
 ```{r}
-tidy(iris_imp3)
+tidy(iris_imp3) %>% head()
 ```
 
 
