@@ -30,6 +30,8 @@ Imports:
     ggeffects,
     mice,
     pROC,
+    MASS,
+    parallel,
     BayesVarSel,
     leaps
 Remotes: 
