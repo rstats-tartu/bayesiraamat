@@ -32,4 +32,6 @@ Imports:
     pROC,
     BayesVarSel,
     leaps
-Remotes: rstudio/bookdown
+Remotes: 
+     rstudio/bookdown,
+     rmcelreath/rethinking
