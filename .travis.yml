@@ -10,8 +10,6 @@ before_install:
 - sudo apt-get update -q
 - sudo apt-get install -y libssl-dev
 - sudo apt-get install -y r-cran-rstan
-r_github_packages:
-- rmcelreath/rethinking
 pandoc_version: 1.19.2.1
 before_script:
 - chmod +x ./_build.sh
