@@ -843,6 +843,8 @@ iris_imp2 <- brm(bform, data = iris_na)
 write_rds(iris_imp2, path = "data/iris_imp2.fit")
 ```
 
+Kasutades mi() funktsiooni peame siin ekslpitsiitselt ütlema, milliseid muutujaid soovime imputeerida. Me imputeerime Petal.Length-i, kasutades NA-de väärtuste prediktorina Sepal.Length-i, mis on omakorda imputeeritud. Sepal.Length-i imputeerime omakorda Sepal.Width, Petal.width jne järgi. 
+
 ```{r eval=FALSE}
 bform <- bf(Petal.Length | mi() ~ mi(Sepal.Length)) + 
   bf(Sepal.Length | mi() ~ Species) + set_rescor(FALSE)
@@ -928,7 +930,7 @@ Kui meil on 2 katsetingimust (ravim/platseebo) ning 2 väljundit (näit elus/sur
 
 * d - platseebo/surnud juhutude arv.
 
-$$OR = \frac {a/b}{c/d} = \frac {ad}{bc}$$ 
+$$OR = \frac {a/b}{c/d}$$ 
 
 * OR = 1 Katsetingimus ei mõjuta väljundi *odds*-e 
 
@@ -1349,6 +1351,22 @@ Siin on iga mittelineaarne parameeter (b1 ja b2) eraldi modelleeritud ~1 abil.  
 Priors on population-level parameters (i.e., ‘fixed effects’) are often mandatory to identify a non-linear model. Thus, brms requires the user to explicitely specify these priors. In the present example, we used a normal(1, 2) prior on (the population-level intercept of) b1, while we used a normal(0, 2) prior on (the population-level intercept of) b2. Setting priors is a non-trivial task in all kinds of models, especially in non-linear models, so you should always invest some time to think of appropriate priors. Quite often, you may be forced to change your priors after fitting a non-linear model for the first time, when you observe different MCMC chains converging to different posterior regions. This is a clear sign of an idenfication problem and one solution is to set stronger (i.e., more narrow) priors.
 
 ## brms mudelite süntaks
+
+```{r, echo=FALSE}
+fo <- read.csv(textConnection('"Symbol",	"Example",	"Meaning"
+"+",	"+ x",	"include this variable"
+"-",	"-", "x	delete this variable"
+":", "x : z",	"include the interaction between these variables"
+"*",	"x * z",	"include these variables and the interactions between them"
+"/",	"x / z",	"nesting: include z nested within x"
+"|",	"x | z",	"conditioning: include x given z"
+"^",	"(u + v + w + z)^3",	"include these variables and all interactions up to three way"
+"poly",	"poly(x,3)",	"polynomial regression: orthogonal polynomials"
+"Error",	"Error(a/b)",	"specify an error term"
+"I",	"I(x*z)",	"as is: include a new variable consisting of these variables multiplied. (x^2) means include this variable squared, etc. In other words I( ) isolates the mathematic operations inside it."
+"1",	"- 1",	"intercept: delete the intercept (regress through the origin)"'))
+knitr::kable(fo)
+```
 
 üldine vorm:
 

@@ -29,7 +29,11 @@ Imports:
     psych,
     ggeffects,
     mice,
-    pROC
+    pROC,
+    MASS,
+    parallel,
+    BayesVarSel,
+    leaps
 Remotes: 
     rstudio/bookdown,
     rmcelreath/rethinking
