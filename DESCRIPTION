@@ -30,4 +30,6 @@ Imports:
     ggeffects,
     mice,
     pROC
-Remotes: rstudio/bookdown
+Remotes: 
+    rstudio/bookdown,
+    rmcelreath/rethinking
