@@ -8,6 +8,7 @@ addons:
    apt:
      packages:
      - libssl-dev
+     - libgsl0-dev
 before_install:
   - mkdir -p ~/.R
   - echo "CXX14FLAGS=-O3 -mtune=native -march=native -Wno-unused-variable -Wno-unused-function  -Wno-macro-redefined" >> ~/.R/Makevars
