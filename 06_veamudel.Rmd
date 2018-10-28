@@ -9,19 +9,19 @@ library(broom)
 
 ## Lihtne varieeruvuse mudel  
 
-Oletame, et me oleme mõõtnud nelja patsienti ja saanud tulemuseks 1.2, 2.12, 1.4 ja 8.34. Kuidas me oma valimit iseloomustame ja kas me peaksime 4. tulemuse kahtlasena välja viskama? 
-Arvatavasti tahaksime saada hinnangut kõige tõenäolisemale mõõtetulemusele patsientide populatsioonis ehk siis keskmise või tüüpilise patsiendi väärtusele, mis on kõik sisuliselt sama. Ja lisaks ka hinnangut  patsientide vahelise varieeruvuse määrale (meid võib huvitada võrrelda varieeruvust patsientide ja tervete inimeste vahel). Esmapilgul tundub see lihtsa ülesandena, mis ei vaja mudeldamist --  lihtsalt arvutame aritmeetilise keskmise ja standardhälbe ja meil on mõlemad hinnangud olemas. Aga tegelikult oleme probleemi ees, millele pole ühte õiget lahendust. 
+Oletame, et me oleme mõõtnud nelja patsienti ja saanud tulemuseks 1.2, 2.12, 1.4 ja 8.34. Kuidas me oma valimit iseloomustame ja kas me peaksime 4. tulemuse, kui kahtlase, välja viskama? 
+Arvatavasti tahaksime saada hinnangut kõige tõenäolisemale mõõtetulemusele patsientide populatsioonis ehk siis keskmise või tüüpilise patsiendi väärtusele. Ja lisaks ka hinnangut  patsientide vahelise varieeruvuse määrale. Meid võib ka huvitada võrrelda  patsientide ja tervete inimeste varieeruvust. Esmapilgul tundub see lihtsa ülesandena, mis ei vaja mudeldamist --  lihtsalt arvutame aritmeetilise keskmise ja standardhälbe ja meil on mõlemad hinnangud olemas. Aga tegelikult oleme probleemi ees, millele pole ühte õiget lahendust. 
 
-Kui me viskame 4. tulemuse välja, siis tuleb meie keskmine kuhugi 1.5 kanti, muidu aga läheb see piirkonda, mille lähedal meil ei ole ühtegi andmepunkti. Samuti annaks sd arvutus üsna erinevad tulemused. Kumb võimalus siis valida? Selleks peame ikkagi otsustama, kuidas modelleerida oma andmed. Arvestades looduslikku protsessi, mis need andmed genereeris (ja mille ma jätsin lahtiseks), võiks andmete mudel olla näiteks normaaljaotus, lognormaaljaotus, cauchy jaotus vms. Kui valime normaaljaotuse, millise õlad laskuvad väga kiiresti, siis on vaid väike tõenäosus kohata tervelt veerandit oma andmepunktidest nõnda kaugel teistest, mis omakorda annab põhjust selle punkti eemaldamiseks. Aga näiteks lognormaaljaotuse korral, mille õlg laskub palju aeglasemalt, on tõenäosus 4. mõõtmisest isegi kaugemal olevaid andmeid kohata palju suurem ja seega peaksime selle andmepunkti sisse jätma. 
-Erinevat tüüpi mudelitel on erinevad parameetrid, millele andmete põhjal peaksime väärtusi otsima. See, et normaaljaotuse parameetrit $\mu$ saab meie näites arvutada aritmeetilise keskmise kaudu, ei tähenda, et ka teiste mudelite korral peaksime sama lokatsiooniparameetrit fittima (või et neil mudelitel üldse oleks lokatsiooniparameeter, mida fittida). Sarnased lood on muidugi ka varieeruvust iseloomustava parameetriga.
+Kui me viskame 4. tulemuse välja, siis tuleb meie keskmine kuhugi 1.5 kanti, muidu aga piirkonda, mille lähedal meil ei ole ühtegi andmepunkti. Samuti annaks sd arvutus üsna erinevad tulemused. Kumb võimalus siis valida? Selleks peame ikkagi otsustama, kuidas modelleerida oma andmed. Sõltuvalt looduslikust protsessist, mis need andmed genereeris, võiks andmete mudel olla näiteks normaaljaotus, lognormaaljaotus vms. Kui valime normaaljaotuse, millise õlad langevad väga kiiresti, siis on vaid väike tõenäosus kohata tervelt veerandit oma andmepunktidest nõnda kaugel teistest, mis annab argumendi selle punkti eemaldamiseks. Aga lognormaaljaotuse korral, mille õlg laskub palju aeglasemalt, on tõenäosus 4. mõõtmisest isegi kaugemal olevaid andmeid kohata palju suurem ja seega peaksime selle andmepunkti sisse jätma. 
+Erinevat tüüpi mudelitel on erinevad parameetrid, millele saab andmete põhjal väärtusi otsida. See, et normaaljaotuse parameetrit $\mu$ saab meie näites arvutada aritmeetilise keskmise kaudu, ei tähenda, et ka teiste mudelite korral peaksime sama lokatsiooniparameetrit fittima (või et neil mudelitel üldse oleks lokatsiooniparameeter). Sarnased lood on muidugi ka varieeruvust iseloomustava parameetriga.
 
 Statistilist mudelit saab kasutada mitmel moel.
 
-1. Mudel toob sisse lisainformatsiooni andmete jaotuse kohta, mida valimiandmetes endis ei pruugi sisalduda, ja mis tõstab meie järelduste kvaliteeti (või langetab seda, kui valisime kehva mudeli).
+1. Mudel toob sisse lisainformatsiooni andmete jaotuse kuju kohta, mida valimiandmetes endis ei pruugi sisalduda, ja mis tõstab meie järelduste kvaliteeti (või langetab seda, kui valisime kehva mudeli).
 
-2. Võrreldes erinevat tüüpi mudelite sobivust andmetega ning omades aimu protsesside kohta, mida üks või teine mudel võiks adekvaatselt kirjeldada, on vahest võimalik teha järeldusi loodusliku mehhanismi kohta, mis genereeris andmed, mille põhjal mudelid fititi.
+2. Võrreldes erinevat tüüpi mudelite sobivust andmetega ning omades aimu protsesside kohta, mida üks või teine mudel võiks adekvaatselt kirjeldada, on võimalik teha järeldusi loodusliku mehhanismi kohta, mis genereeris andmed, mille põhjal mudelid fititi.
 
-3. Me võime fititud mudeli põhjal teha ennustusi, ehk genereerida uusi andmeid in silico.
+3. Me võime fititud mudeli põhjal teha ennustusi, ehk genereerida uusi andmeid *in silico*.
 
 Niisiis lihtne mudel andmetele: $\mu$ ehk aritmeetiline keskmine kui hinnang kõige tõenäosemale väärtusele. See on deterministlik nn *protsessimudel*, kus samad valimiväärtused annavad alati sama ja ühese tulemuse. Statistiline mudel sisaldab endas nii protsessimudelit kui tõenäosuslikku nn *varieeruvuse mudelit* (ajaloolistel põhjustel kutsutakse seda sageli veamudeliks), mis tuleb sisse tõenäosusjaotuse kujul
 
@@ -73,31 +73,29 @@ Meie poolt simuleeritud andmed tulevad normaaljaotusega populatsioonist, mille m
 
 
 
-## protsessimudel ja veamudel lineaarses regressioonis
+## protsessimudel ja varieeruvuse mudel lineaarses regressioonis
 
 Kui mudel $kaal = b_0 + b_1 ~pikkus$ ennustab, et 160 cm inimene kaalub keskmiselt 80 kg, siis protsessi mudel ei ütle, kui suurt pikkusest sõltumatut kaalude varieeruvust võime oodata 160 cm-ste inimeste hulgas. 
 Selle hinnangu andmiseks tuleb mudelile lisada varieeruvusekomponent, sageli normaaljaotuse kujul, mis modelleerib üksikute inimeste kaalude varieeruvust (mitte keskmise kaalu varieeruvust) igal mõeldaval ja mittemõeldaval pikkusel. 
 
-
   > Bioloogid, erinevalt füüsikutest, usuvad, et valimisisene andmete 
-  varieeruvus on tingitud pigem bioloogilisest varieeruvusest kui mõõtmisveast. 
-  Aga loomulikult sisaldub selles ka mõõtmisviga. Lihtsuse huvides räägime 
-  edaspidi siiski veamudelist, selle asemel, et öelda "varieeruvuse ja veamudel".
+  varieeruvus on tingitud pigem bioloogilisest varieeruvusest kui mõõtmisveast, 
+  aga loomulikult sisaldub selles ka mõõtmisviga. 
 
-Kuidas veakomponent lineaarsesse mudelisse sisse tuua? 
-Ilma veakomponendita mudel:
+Kuidas varieeruvuskomponent lineaarsesse mudelisse sisse tuua? 
+Ilma varieeruvuskomponendita mudel:
 
 $$y = b_0 + bx$$
 
 ennustab y-i keskväärtust erinevatel x-i väärtustel.
 
-Veakomponent: 
+Varieeruvuskomponent: 
 
 $$y\sim dnorm(\mu,~\sigma)$$
 
 kus $\mu$ (*mu*) on mudeli poolt ennustatud keskväärtus ja $\sigma$ (sigma) on mudeli poolt ennustatud standardhälve ehk varieeruvus andmepunktide tasemel. 
-Veamudelis on keskväärtuse ehk *mu* ennustus endiselt deterministlik ja sigma töötab originaalsel andmetasemel, mitte keskväärtuste tasemel. 
-See võimaldab protsessimudeli veamudelisse sisse kirjutada lihtsalt *mu* ümber defineerides:
+Varieeruvusmudelis on keskväärtuse ehk *mu* ennustus endiselt deterministlik ja sigma töötab originaalsel andmetasemel, mitte keskväärtuste tasemel. 
+See võimaldab protsessimudeli varieeruvusmudelisse sisse kirjutada lihtsalt *mu* ümber defineerides:
 
 $$\mu = b_0 + bx$$ 
 
@@ -106,7 +104,7 @@ mis tähendab, et
 $$y \sim dnorm(b_0 + b_1x, ~\sigma)$$
 
 
-See ongi sirge mudel koos veakomponendiga. Seega on sellel lineaarsel regressioonimudelil kolm parameetrit: intercept $b_0$, tõus $b_1$ ja "veaparameeter" $\sigma$. 
+See ongi sirge mudel koos varieeruvuskomponendiga. Seega on sellel lineaarsel regressioonimudelil kolm parameetrit: intercept $b_0$, tõus $b_1$ ja "veaparameeter" $\sigma$. 
 Sellist mudelit on mõistlik fittida Bayesi teoreemi abil. 
 Bayesi meetodiga fititud mudel, mida kutsutakse posteerioriks, näitab, millised kombinatsioonid nendest kolmest parameetrist usutavalt koos esinevad, ja millised mitte. 
 Seega on fititud 3 parameetriga bayesi mudel 3-dimensionaalne tõenäosusjaotus (3D posteerior). 
@@ -114,10 +112,10 @@ Muidugi saame ka ükshaaval välja plottida kolm 1D posteeriori, millest igaüks
 [Edaspidi](pidev) õpime selliste mudelitega töötama. 
 
 
-> Kõik statistilised mudelid on tõenäosusmudelid ning sisaldavad veakomponenti.  
+> Kõik statistilised mudelid on tõenäosusmudelid ning sisaldavad varieeruvuskomponenti.  
 
-Kuna erinevalt lokatsiooniparameetrist, ei aja me mudelis sigmat lahku vastavalt x-i väärtustele, siis veamudel (ja enamus veamudeleid, millega me edaspidi töötame) modelleerivad igale x-i väärtusele (kaalule) samasuure y-i suunalise varieeruvuse (pikkuste sd). 
-Suurem osa statistikast kasutab eeldusi, mida keegi päriselt tõe pähe ei võta, aga millega on arvutuslikus mõttes lihtsam elada.
+Kuna erinevalt lokatsiooniparameetrist, ei aja me mudelis sigmat lahku vastavalt x-i väärtustele, siis meie varieeruvusmudel (ja enamus veamudeleid, millega me edaspidi töötame) modelleerib igale x-i väärtusele (kaalule) sama suure y-i suunalise varieeruvuse (pikkuste sd). 
+Suurem osa statistikast kasutab eeldusi, mida keegi päriselt tõe pähe ei võta, aga millega on arvutuslikus mõttes lihtsam elada. Siiski, 19. peatükis õpime, kuidas loobuda sellest eeldusest.
 
 ## Enimkasutatud veamudel on normaaljaotus {-}
 
@@ -184,13 +182,9 @@ p %+% tibble(kasv) + labs(x = "kasv, log10")
 
 ### Normaaljaotuse mudel väikestel valimitel {-}
 
-Oletame, et meil on kolm andmepunkti ning me usume, et need andmed on juhuslikult tõmmatud normaaljaotusest või sellele lähedasest jaotusest. Normaaljaotuse mudelit kasutades me sisuliselt deklareerime, et me usume, et kui me oleksime olnud vähem laisad ja 3 mõõtmise asemel sooritanuks 3000, siis need mõõtmised sobituksid piisavalt hästi meie 3 väärtuse peal fititud normaaljaotusega. Seega, me usume, et omades 3 andmepunkti me teame juba umbkaudu, millised tulemused me oleksime saanud korjates näiteks 3 miljonit andmepunkti. Oma mudelist võime simuleerida ükskõik kui palju andmepunkte. 
+Oletame, et meil on kolm andmepunkti ning me usume, et need andmed on juhuslikult tõmmatud normaaljaotusest või sellele lähedasest jaotusest. Normaaljaotuse mudelit kasutades deklareerime, et me usume, et kui oleksime olnud vähem laisad ja 3 mõõtmise asemel sooritanuks 3000, siis need mõõtmised sobituksid piisavalt hästi meie 3 väärtuse peal fititud normaaljaotusega. Seega, me usume, et omades 3 andmepunkti me teame juba umbkaudu, millised tulemused me oleksime saanud korjates näiteks 3 miljonit andmepunkti. Oma mudelist võime simuleerida ükskõik kui palju andmepunkte. 
 
 Aga pidage meeles, et selle mudeli fittimiseks kasutame me ainult neid andmeid, mis meil päriselt on --- ja kui meil on ainult 3 andmepunkti, on tõenäoline, et fititud mudel ei kajasta hästi tegelikkust. 
-
-> Halvad andmed ei anna kunagi head tulemust. 
-
-Eelnev ei kehti Bayesi mudelite kohta, mis toovad priorite kaudu sisse lisainfot, mis ei kajastu valimiandmetes ja võib analüüsi päästa.
 
 Kuidas panna skeptik uskuma, et statistilised meetodid töötavad halvasti väikestel valimitel? Järgnevalt illustreerime seda ühe võimaliku valimiga paljudest, mis on tõmmatud imaginaarsest populatsioonist, mille parameetreid me teame. Me tõmbame 3-se valimi ning üritame selle valimi põhjal ennustada selleasama populatsiooni struktuuri. Kuna tegemist on simulatsiooniga, teame täpselt, et populatsioon, kust me tõmbame oma kolmese valimi, on normaaljaotusega, et tema keskväärtus = 0 ja et tema sd = 1. Seega saame võrrelda oma ennustust populatsiooni tõeliste parameetriväärtustega.
 Me fitime oma valimiandmetega 2 erinevat mudelit: normaaljaotuse ja Studenti t jaotuse. 
@@ -280,7 +274,7 @@ Entroopiat vaadeldakse siin informatsiooni & müra kaudu --- maksimaalse entroop
 Normaaljaotusel ja lognormaaljaotusel on kummagil kaks parameetrit, *mu* ja *sigma* (ehk keskmine ja standardhälve), mille väärtused fikseerides fikseerime üheselt jaotuse ehk mudeli kuju, lisades sinna minimaalselt muud (sooviamtut) informatsiooni. 
 Teised maksimaalse entroopiaga jaotused on näiteks eksponentsiaalne jaotus, binoomjaotus, bernoulli jaotus, poissoni jaotus. 
 
-> Kui meil on tegu nullist suuremate andmetega, on andmete logaritmimine sageli hea mõte. Logaritmitud andmete pealt arvutatud keskmise ja sd tagasi transformeerimine annab meile geomeetrilise keskmise ja geomeetrilise sd.
+> Kui meil on tegu nullist suuremate andmetega, on andmete logaritmimine sageli hea mõte. Logaritmitud andmete pealt arvutatud keskmise ja sd tagasi transformeerimine annab meile geomeetrilise keskmise ja multiplikatiivse sd.
 
 Maksimaalsel entroopial põhineb normaaljaotuse ja lognormaaljaotuse sage kasutamine Bayesi statistikas prioritena, sest me suudame paremini kontrollida, millist informatsiooni me neisse surume. Esimesel kesksel piirteoreemil seevastu põhineb kogu sageduslik statistika (vt ptk 8.).
 
@@ -288,17 +282,17 @@ Maksimaalsel entroopial põhineb normaaljaotuse ja lognormaaljaotuse sage kasuta
 
 **Normaaljaotus** 
 
-* normaalsete juhuslike muutujate liitmine annab normaalse summa. Lineaarsed kombinatsioonid $Y= \alpha + \beta_1X_1 + \beta_2X_2$ jäävad normaalseks.
+* Normaaljaotusega ehk normaalsete juhuslike muutujate liitmine annab normaalse summa. Lineaarsed kombinatsioonid $Y= \alpha + \beta_1X_1 + \beta_2X_2$ jäävad normaalseks.
 
-* normaalsete muutujate aritmeetilised keskmised on normaaljaotusega
+* Normaalsete muutujate aritmeetilised keskmised on normaaljaotusega.
 
-* Keskne piirteoreem: mitte-normaalsete muutujate aritmeetilised keskmised on enam-vähem normaaljaotusega
+* Keskne piirteoreem: mitte-normaalsete muutujate aritmeetilised keskmised on enam-vähem normaaljaotusega.
 
-* elementaarsete vigade hüpotees: kui juhuslik varieeruvus on paljude juhuslike mõjude summa, on tulemuseks normaaljaotus
+* Elementaarsete vigade hüpotees: kui juhuslik varieeruvus on paljude juhuslike mõjude summa, on tulemuseks normaaljaotus.
 
-* lm() regressionimudelid eeldavad normaaljaotusega residuaale. log-normaalsete vigadega lineaarset regresiooni tuleks teha mudeldades log(Y) (vähimruutude meetodil) või lognormaalset tõepäramudelit kasutades (bayesi regressioon, vt ptk 13). 
+* lm() regressionimudelid eeldavad normaaljaotusega residuaale. log-normaalsete vigadega lineaarsel regresioonil tuleks mudeldada log(Y) (vähimruutude meetodil) või lognormaalset tõepäramudelit kasutades (bayesi regressioon, vt ptk 13). 
 
-* additiivne regressioonimudel viib additiivsete vigadeni (residuaalideni), mis omakorda viib konstantsele varieeruvusele ehk konstantsele SD-le.
+* Additiivne regressioonimudel viib additiivsete vigadeni (residuaalideni), mis omakorda viib konstantsele varieeruvusele ehk konstantsele SD-le.
 
 **lognormaaljaotus**
 
@@ -373,7 +367,7 @@ Kui n = 0 või N - n = 0, siis on selline SE arvutus eksitav.
 ### Poissoni jaotus
 
 See jaotus modelleerib üksikuid haruldasi ja sõltumatuid diskreetseid sündmusi, mille arvu me saame üles lugeda.
-Näiteks surmi ajaühiku kohta või pommitabamusi pindalaühiku kohta. See on sisuliselt binoomjaotuse erijuht.
+Näiteks surmi ajaühiku kohta või pommitabamusi pindalaühiku kohta. Poissoni jaotus on binoomjaotuse erijuht.
 Lisaeeldused on, et sündmuste toimumise sagedus ei muutu, et kaks sündmust ei saa toimuda täpselt samal ajal/kohas, et sündmuse toimumise tõenäosus on proportsionaalne intervalli pikkusega/suurusega (ajas või ruumis) ja et N >> n.
 
 Kui keskmine sündmuste arv intevallis on $\lambda$ (lambda), siis

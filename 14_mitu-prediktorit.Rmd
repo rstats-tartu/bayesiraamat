@@ -1,4 +1,6 @@
 
+
+
 # Mitme prediktoriga lineaarne regressioon
 
 ```{r}
@@ -195,7 +197,7 @@ Väga huvitav, chol muutuja eemaldamine (millest ma kahtlustan, et see on osalis
 sageduslik alternatiiv muutujate valimisele:
 ```{r}
 library(leaps)
-regfit.full<- regsubsets(hdl ~ chol + stab.glu + ratio + glyhb + age + gender + height + weight + frame + bp.1s + bp.1d+ waist + hip, data = diab, nvmax=19, method="backward") 
+regfit.full<- regsubsets(hdl ~ stab.glu + ratio + glyhb + age + gender + height + weight + frame + bp.1s + bp.1d+ waist + hip, data = diab, nvmax=19, method="backward") 
 reg.summary<-summary(regfit.full) 
 regs <- data.frame(adj_RSq = reg.summary$adjr2)
 ggplot(regs) + geom_line(aes(x=1:nrow(regs), y = adj_RSq)) + xlab("Number of Variables")
