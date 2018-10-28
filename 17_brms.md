@@ -2,51 +2,61 @@
 
 # brms
 
-brms on populaarne pakett, mis võimaldab kirjutada lihtsas ja lühidas keeles ka üsna keerulisi mudeleid ja need Stan-is fittida. Brms on ühe inimese (Paul Bürkner) projekt (https://github.com/paul-buerkner/brms), mis on jõudnud ette Stani meeskonna arendatavast analoogsest paketist rstanarm (https://github.com/stan-dev/rstanarm/blob/master/README.md). Paul Brükner oli mõned aastad tagasi psühholoogia doktorant, kes kirjutas brms-i naljaviluks oma doktoriprojekti kõrvalt, mille tulemusel on ta praegu teatud ringkonnis tuntum kui Lady Gaga.  
+**brms** on pakett, mis võimaldab kirjutada lihtsat süntaksit kasutades ka üsna keerulisi mudeleid ja need Stan-is fittida. Brms on loodud Paul Bürkneri poolt (https://github.com/paul-buerkner/brms), mis on oma kasutuslihtsuse tõttu jõudnud isegi ette Stani meeskonna arendatavast analoogsest paketist **rstanarm** (https://github.com/stan-dev/rstanarm/blob/master/README.md). Paul Bürkner oli mõned aastad tagasi psühholoogia doktorant, kes kirjutas brms-i algselt naljaviluks oma doktoriprojekti kõrvalt, mille tulemusel on ta praegu teatud ringkonnis tuntum kui Lady Gaga.  
 
-rstanarm, mide me siin ei käsitle, püüab pakkuda tavalisete sageduslikele meetoditele (ANOVA, lineaarne regressioon jne) bayesi analooge, mille mudeli spetsifikatsioon ja väljund erineks võimalikult vähe tavalisest baas-R-i töövoost. Brms on keskendunud mitmetasemelistele mudelitele ja püüab kasutada mudelite keelt, mis on harjumuspärane sageduslike hierarhiliste mudelite fittimise paketi lme4 (https://github.com/lme4/lme4/) kasutajatele. Loomulikult saab brms-is fittida ka lineaarseid ja mitte-lineaareid ühetasemelisi mudeleid, nagu ka imputeerida andmeid ja teha palju muud.
+**rstanarm**, mide me siin ei käsitle, püüab pakkuda tavalisete sageduslikele meetoditele (ANOVA, lineaarne regressioon jne) bayesi analooge, mille mudeli spetsifikatsioon ja väljund erineks võimalikult vähe tavalisest baas-R-i töövoost. **brms** on keskendunud mitmetasemelistele mudelitele ja kasutab põhimõtteliselt **lme4** (https://github.com/lme4/lme4/) mudelite keelt. Loomulikult saab **brms**-is fittida ka lineaarseid ja mitte-lineaareid ühetasemelisi mudeleid, nagu ka imputeerida andmeid ja teha palju muud (nagu näiteks pitsat valmistada).
 
 
 ```r
 library(tidyverse)
+library(skimr)
 library(brms)
+library(loo)
 library(broom)
 library(bayesplot)
+library(gridExtra)
 library(mice)
 library(pROC)
 ```
 
 ## brms-i töövoog
 
-brms-iga modelleerimisel on mõned asjad, mida tuleks teha sõltumata sellest, millist mudelit te parajasti fitite. Kõigepealt peaksite kontrollima, et mcmc ahelad on korralikult jooksnud (divergent transitions, rhat ja ahelate visuaalne inspekteerimine). Lisaks peaksite tegema posterioorse prediktiivse ploti ja vaatama, kui palju mudeli poolt genereeritud uued valimid meenutavad teie valimit. Samuti peaksite joonisel plottima residuaalid. Kui te inspekteerite fititud parameetrite väärtusi, siis tehke seda posteeriorite tasemel, k.a. koos veapiiridega. Kindlasti tuleks ka plottida mudeli ennustused koos usalduspiiridega.
+**brms**-iga modelleerimisel on mõned asjad, mida tuleks teha sõltumata sellest, millist mudelit te parajasti fitite. Kõigepealt peaksite kontrollima, et mcmc ahelad on korralikult jooksnud (divergent transitions, rhat ja ahelate visuaalne inspekteerimine). Lisaks peaksite tegema posterioorse prediktiivse ploti ja vaatama, kui palju mudeli poolt genereeritud uued valimid meenutavad teie valimit. Samuti peaksite joonisel plottima residuaalid. Kui te inspekteerite fititud parameetrite väärtusi, siis tehke seda posteeriorite tasemel, k.a. koos veapiiridega. Kindlasti tuleks ka plottida mudeli ennustused koos usalduspiiridega.
 
 Enne tõsist mudeldamist kiikame irise andmetabelisse
 
 
 ```r
-summary(iris)
-#>   Sepal.Length   Sepal.Width    Petal.Length   Petal.Width 
-#>  Min.   :4.30   Min.   :2.00   Min.   :1.00   Min.   :0.1  
-#>  1st Qu.:5.10   1st Qu.:2.80   1st Qu.:1.60   1st Qu.:0.3  
-#>  Median :5.80   Median :3.00   Median :4.35   Median :1.3  
-#>  Mean   :5.84   Mean   :3.06   Mean   :3.76   Mean   :1.2  
-#>  3rd Qu.:6.40   3rd Qu.:3.30   3rd Qu.:5.10   3rd Qu.:1.8  
-#>  Max.   :7.90   Max.   :4.40   Max.   :6.90   Max.   :2.5  
-#>        Species  
-#>  setosa    :50  
-#>  versicolor:50  
-#>  virginica :50  
-#>                 
-#>                 
+skim(iris)
+#> Skim summary statistics
+#>  n obs: 150 
+#>  n variables: 5 
 #> 
+#> ── Variable type:factor ───────────────────────────────────────────────────
+#>  variable missing complete   n n_unique                       top_counts
+#>   Species       0      150 150        3 set: 50, ver: 50, vir: 50, NA: 0
+#>  ordered
+#>    FALSE
+#> 
+#> ── Variable type:numeric ──────────────────────────────────────────────────
+#>      variable missing complete   n mean   sd  p0 p25  p50 p75 p100
+#>  Petal.Length       0      150 150 3.76 1.77 1   1.6 4.35 5.1  6.9
+#>   Petal.Width       0      150 150 1.2  0.76 0.1 0.3 1.3  1.8  2.5
+#>  Sepal.Length       0      150 150 5.84 0.83 4.3 5.1 5.8  6.4  7.9
+#>   Sepal.Width       0      150 150 3.06 0.44 2   2.8 3    3.3  4.4
+#>      hist
+#>  ▇▁▁▂▅▅▃▁
+#>  ▇▁▁▅▃▃▂▂
+#>  ▂▇▅▇▆▅▂▂
+#>  ▁▂▅▇▃▂▁▁
 ```
 
 
 ```r
 ggplot(iris, aes(Petal.Length, Sepal.Length)) + 
   geom_point(aes(color = Species)) +
-  geom_smooth(method = lm) +
-  geom_smooth( color = "black", size = 0.5)
+  geom_smooth(method = "loess", color = "black") +
+  geom_smooth(method = "lm")
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-4-1.png" width="70%" style="display: block; margin: auto;" />
@@ -57,34 +67,28 @@ Loess fit viitab, et 3 liiki ühe sirgega mudeldada pole võib-olla optimaalne l
 ```r
 ggplot(iris, aes(Petal.Length, Sepal.Length, color = Species)) + 
   geom_point() +
-  geom_smooth(method = lm) +
-  geom_smooth(data=iris %>% filter(Species =="virginica"), 
-              se = FALSE, color = "black", size = 0.5)+
-  geom_smooth(data=iris %>% filter(Species =="versicolor"), 
-              se = FALSE, color = "black", size = 0.5)+
-  geom_smooth(data=iris %>% filter(Species =="setosa"), 
-              se = FALSE, color = "black", size = 0.5)+
-  theme_classic()
+  geom_smooth(method = "loess", aes(group = Species), color = "black") +
+  geom_smooth(method = "lm")
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-5-1.png" width="70%" style="display: block; margin: auto;" />
 
 Nüüd on loess ja lm heas kooskõlas - seos y~x vahel oleks nagu enam-vähem lineaarne. Siit tuleb ka välja, et kolme mudeli tõusud on sarnased, interceptid erinevad.
 
-### kiire töövoog
+### Kiire töövoog
 
 Minimaalses töövoos anname ette võimalikult vähe parameetreid ja töötame mudeliga nii vähe kui võimalik. See on mõeldud ülevaatena Bayesi mudeli fittimise põhilistest etappidest 
 
-mudeli fittimine
+Mudeli fittimine:
 
 ```r
-m_kiire <- brm(Sepal.Length~Petal.Length, data= iris)
-write_rds(m_kiire, path = "m_kiire.fit")
+m_kiire <- brm(Sepal.Length ~ Petal.Length, data = iris)
+write_rds(m_kiire, path = "data/m_kiire.fit")
 ```
 
 Priorid on brms-i poolt ette antud ja loomulikult ei sisalda mingit teaduslikku informatsiooni. Nad on siiski "nõrgalt informatiivsed" selles mõttes, et kasutavad parametriseeringuid, mis enamasti võimaldavad mcmc ahelatel normaalselt joosta. Järgmises ptk-s õpime ise prioreid määrama.
 
-posteeriorid ja mcmc ahelate konvergents
+Posteeriorid ja mcmc ahelate konvergents
 
 
 
@@ -98,7 +102,7 @@ plot(m_kiire)
 Fiti kokkuvõte - koefitsiendid ja nende fittimise edukust hindavad statistikud (Eff.Sample, Rhat)
 
 ```r
-m_kiire %>% tidy
+tidy(m_kiire)
 #>             term estimate std.error   lower   upper
 #> 1    b_Intercept    4.307    0.0780   4.179   4.434
 #> 2 b_Petal.Length    0.409    0.0187   0.379   0.439
@@ -110,10 +114,10 @@ Eff.Sample näitab efektiivset valimi suurust, mida ahelad on kasutanud. See on 
 
 Rhat on statistik, mis vaatab ahelate konvergentsi. Kui Rhat > 1.1, siis on kuri karjas. Rhat 1.0 ei tähenda paraku, et võiks rahulikult hingata -- tegu on statistikuga, mida saab hästi tõlgendada häda kuulutajana, aga liiga sageli mitte vastupidi.
 
-Ennustav plot ehk *marginal plot* - mudeli fit 95% CI-ga.
+Ennustav plot ehk *marginal plot* -- mudeli fit 95% CI-ga.
 
 ```r
-plot(marginal_effects(m_kiire), points=TRUE)
+plot(marginal_effects(m_kiire), points = TRUE)
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" />
@@ -128,8 +132,8 @@ brms-i default priorid on konstrueeritud olema üsna väheinformatiivsed ja need
 
 
 ```r
-get_prior(Sepal.Length~Petal.Length + (1 | Species), 
-          data= iris)
+get_prior(Sepal.Length ~ Petal.Length + (1 | Species), 
+          data = iris)
 #>                 prior     class         coef   group resp dpar nlpar bound
 #> 1                             b                                           
 #> 2                             b Petal.Length                              
@@ -140,48 +144,47 @@ get_prior(Sepal.Length~Petal.Length + (1 | Species),
 #> 7 student_t(3, 0, 10)     sigma
 ```
 
-Me fitime pedagoogilistel kaalutlustel shrinkage mudeli, mis tõmbab 3 liigi intercepte natuke keskmise intercepti suunas. On vaieldav, kas see on irise andmestiku juures mõistlik strateegia, aga me teeme seda siin ikkagi.
+Me fitime pedagoogilistel kaalutlustel shrinkage mudeli, mis tõmbab 3 liigi lõikepunkte natuke keskmise lõikepunkti suunas. On vaieldav, kas see on irise andmestiku juures mõistlik strateegia, aga me teeme seda siin ikkagi.
 
->Mitmetasemeline shrinkage mudel on abinõu ülefittimise vastu. Mudelite võrdlemisel otsitakse kompromissi - ehk mudeli, mille ennustused oleks andmepunktidele võimalikult lähedal ilma,et see mudel oleks liiga keeruliseks aetud (keerulisus on proportsionaalne mudeli parameetrite arvuga).
+> Mitmetasemeline shrinkage mudel on abinõu ülefittimise vastu. Mudelite võrdlemisel otsitakse kompromissi - ehk mudeli, mille ennustused oleks andmepunktidele võimalikult lähedal ilma,et see mudel oleks liiga keeruliseks aetud (keerulisus on proportsionaalne mudeli parameetrite arvuga).
 
 
-Prioreid muudame nii
-
+Prioreid muudame nii:
 
 ```r
 prior <- c(prior(normal(6, 3), class = "Intercept"),
-           prior(normal(0, 1), class ="b"),
+           prior(normal(0, 1), class = "b"),
            prior(student_t(6, 0, 2), class = "sigma"))
 ```
 
-Me valime siin nn väheinformariivsed priorid, nii et regressiooni tulemus on suht hästi võrreldav lme4 sagedusliku mudeliga. "b" koefitsiendi priorile (aga mitte "sigma" ega "Intercept"-le) võib anda ka ülemise ja/või alumise piiri [prior(normal(0, 1), class ="b", lb= -1, ub=10) ütleb, et "b" prior on nullist erinev ainult -1 ja 10 vahel]. sigma priorid on automaatselt lb = 0-ga, sest varieeruvus ei tohi olla negatiivne. 
+Me valime siin nn väheinformariivsed priorid, nii et regressiooni tulemus on suht hästi võrreldav lme4 sagedusliku mudeliga. "b" koefitsiendi priorile (aga mitte "sigma" ega "Intercept"-le) võib anda ka ülemise ja/või alumise piiri `prior(normal(0, 1), class = "b", lb = -1, ub = 10)` ütleb, et "b" prior on nullist erinev ainult -1 ja 10 vahel. "sigma" priorid on automaatselt lb = 0-ga, sest varieeruvus ei tohi olla negatiivne. 
 
 Alati tasub prioreid pildil vaadata, et veenduda nende mõistlikuses.
 
 ```r
 x <- seq(0, 10, length.out = 100)
-y <- brms::dstudent_t(x, df = 6, mu = 0, sigma = 2, log = FALSE)
-plot(y~x)
+y <- dstudent_t(x, df = 6, mu = 0, sigma = 2, log = FALSE)
+plot(y ~ x)
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" />
-Sigma prior, mida brms kasutab, on vaikimisi pool sümmeetrilisest jaotusest, mis lõigatakse nulli kohalt pooleks nii, et seal puuduvad < 0 väärtused (seega ei saa varieeruvuse posteerior minna alla nulli).
+Sigma prior, mida **brms** kasutab, on vaikimisi pool sümmeetrilisest jaotusest, mis lõigatakse nulli kohalt pooleks nii, et seal puuduvad < 0 väärtused (seega ei saa varieeruvuse posteerior minna alla nulli).
 
 Me võime ka prioreid ilma likelihoodideta (tõepärafunktsioonideta) läbi mudeli lasta, misjärel tõmbame fititud mudelist priorite valimid (neid võiks kutsuda ka "priorite posteerioriteks") ja plotime kõik priorid koos. Seda pilti saab siis võrrelda koos andmetega fititud mudeli posteerioritega. Selle võimaluse kasutamine on tõusuteel, sest keerulisemate mudelite puhul võib priorite ükshaaval plottimine osutuda eksitavaks.
 
 Tekitame priorite valimid, et näha oma priorite mõistlikust (brm() argument on sample_prior = TRUE). Ühtlasi fitime ka oma mudeli koos andmete ja prioritega.
 
 ```r
-m1 <- brm(Sepal.Length~Petal.Length + (1 | Species), 
-          data= iris, 
+m1 <- brm(Sepal.Length ~ Petal.Length + (1 | Species), 
+          data = iris, 
           prior = prior, 
           family = gaussian,
           warmup = 1000,
           iter = 2000,
           chains = 3,
           cores = 3,
-          sample_prior=TRUE)
-write_rds(m1, path = "m1.fit")
+          sample_prior = TRUE)
+write_rds(m1, path = "data/m1.fit")
 ```
 
 Me fittisime mudeli m1 kaks korda: nii andmetega (selle juurde jõuame varsti), kui ka ilma andmeteta. Kui panna sisse `sample_prior = "only"`, siis jookseb mudel ilma andmeteta, ja selle võrra kiiremini. Vaikeväärtus on `sample_prior = "no"`, mis tähendab, et fititakse ainult üks mudel - koos andmetega. Ilma andmeteta (likelihoodita) fitist saame tõmmata priorite mcmc valimid, mille ka järgmiseks plotime. 
@@ -189,90 +192,75 @@ Me fittisime mudeli m1 kaks korda: nii andmetega (selle juurde jõuame varsti), 
 
 
 ```r
-samples1 <- prior_samples(m1)
-sa <- samples1 %>% gather()
-ggplot(sa)+ geom_density(aes(value)) + 
-  facet_wrap(~key, scales="free_x")
+prior_samples(m1) %>% 
+  gather() %>% 
+  ggplot() + 
+  geom_density(aes(value)) + 
+  facet_wrap(~ key, scales = "free_x")
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" />
 
 Kui kasutame `sample_prior = "only"` varianti, siis on esimene koodirida erinev: `samples1 = as.data.frame(m1$fit)`.
 
-> brms-i Intercepti priorite spetsifitseerimisel tasub teada, et brms oma sisemuses tsentreerib kõik prediktorid nullile (x - mean(x)), ja teie poolt ette antud prior peaks vastama neile tsentreeritud prediktoritele, kus kõikide prediktorite keskväärtus on null. Põhjus on, et tsentreeritud parametriseeringuga mudelid jooksevad sageli paremini. Alternatiiv on kasutada mudeli tavapärase süntaksi y ~ 1 + x (või ekvivalentselt y ~ x) asemel süntaksit y ~ 0 + intercept + x. Sellisel juhul saab anda priorid tsentreerimata predikroritele. Lisaks on brms selle süntaksi puhul nõus "b"-le antud prioreid vaikimisi ka intercepti fittimisel kasutama. 
+> **brms**-i Intercepti priorite spetsifitseerimisel tasub teada, et **brms** oma sisemuses tsentreerib kõik prediktorid nullile (x - mean(x)), ja teie poolt ette antud prior peaks vastama neile tsentreeritud prediktoritele, kus kõikide prediktorite keskväärtus on null. Põhjus on, et tsentreeritud parametriseeringuga mudelid jooksevad sageli paremini. Alternatiiv on kasutada mudeli tavapärase süntaksi y ~ 1 + x (või ekvivalentselt y ~ x) asemel süntaksit y ~ 0 + intercept + x. Sellisel juhul saab anda priorid tsentreerimata predikroritele. Lisaks on **brms** selle süntaksi puhul nõus "b"-le antud prioreid vaikimisi ka intercepti fittimisel kasutama. 
 
 
-### brm() funktsiooni argumendid: 
+### `brm()` funktsiooni argumendid: 
 
-family - tõepärafunktsiooni tüüp (modelleerib y muutuja jaotust e likelihoodi)
+- family - tõepärafunktsiooni tüüp (modelleerib y muutuja jaotust e likelihoodi)
 
-warmup - mitu sammu mcmc ahel astub, enne kui ahelat salvestama hakatakse. tavaliselt on 500-1000 sammu piisav, et tagada ahelate konvergents. Kui ei ole, tõstke 2000 sammuni.
+- warmup - mitu sammu mcmc ahel astub, enne kui ahelat salvestama hakatakse. tavaliselt on 500-1000 sammu piisav, et tagada ahelate konvergents. Kui ei ole, tõstke 2000 sammuni.
 
-iter - ahelate sammude arv, mida salvestatakse peale warmup perioodi. Enamasti on 2000 piisav. Kui olete nõus piirduma posteeriori keskväärtuse arvutamisega ja ei soovi täpseid usaldusintervalle, siis võib piisata ka 200 sammust. 
+- iter - ahelate sammude arv, mida salvestatakse peale warmup perioodi. Enamasti on 2000 piisav. Kui olete nõus piirduma posteeriori keskväärtuse arvutamisega ja ei soovi täpseid usaldusintervalle, siis võib piisata ka 200 sammust. 
 
-chains - mitu sõltumatut mcmc ahelat jooksutada. 3 on hea selleks, et näha kas ahelad konvergeeruvad. Kui mitte, tuleks lisada informatiivsemaid prioreid ja/või warmupi pikkust.
+- chains - mitu sõltumatut mcmc ahelat jooksutada. 3 on hea selleks, et näha kas ahelad konvergeeruvad. Kui mitte, tuleks lisada informatiivsemaid prioreid ja/või warmupi pikkust.
 
-cores - mitu teie arvuti tuuma ahelaid jooksutama panna.
+- cores - mitu teie arvuti tuuma ahelaid jooksutama panna.
 
-adapt_delta - mida suurem number (max = 1), seda stabiilsemalt, ja aeglasemalt, ahelad jooksevad.
+- adapt_delta - mida suurem number (max = 1), seda stabiilsemalt, ja aeglasemalt, ahelad jooksevad.
 
-thin - kui ahel on autokorreleeritud, st ahela eelmine samm suudab ennustada järgevaid (see on paha), siis saab salvestada näit ahela iga 5. sammu (thin = 5). Aga siis tuleks ka sammude arvu 5 korda tõsta. Vaikeväärtus on thin = 1. Autokorrelatsiooni graafilist määramist näitame allpool
+- thin - kui ahel on autokorreleeritud, st ahela eelmine samm suudab ennustada järgevaid (see on paha), siis saab salvestada näit ahela iga 5. sammu (thin = 5). Aga siis tuleks ka sammude arvu 5 korda tõsta. Vaikeväärtus on thin = 1. Autokorrelatsiooni graafilist määramist näitame allpool
 
-
-*Järgmine funktsioon trükib välja Stani koodi, mis spetsifitseerib mudeli, mida tegelikult Stanis fittima hakatakse. See on väga kasulik, aga ainult siis kui tahate õppida otse Stanis mudeleid kirjutama.*
+Järgmine funktsioon trükib välja Stani koodi, mis spetsifitseerib mudeli, mida tegelikult Stanis fittima hakatakse. See on väga kasulik, aga ainult siis kui tahate õppida otse Stanis mudeleid kirjutama:
 
 
 ```r
-make_stancode(Sepal.Length~Petal.Length, data= iris,
-              prior = prior)
+make_stancode(Sepal.Length ~ Petal.Length, data = iris, prior = prior)
 ```
 
 ### Fitime mudeleid ja võrdleme fitte.
 
-Mudelis m1 ennustame muutuja Sepal.Length väärtusi Petal.Length väärtuste põhjal shrinkage mudelis, kus iga irise liik on oma grupis.
+Eelmises mudelis (m1) ennustame muutuja Sepal.Length väärtusi Petal.Length väärtuste põhjal shrinkage mudelis, kus iga irise liik on oma grupis.
 
-Teine mudel, m2, sisaldab veel üht ennustavat muutujat (Sepal.Width).
-
+Teine mudel, mis sisaldab veel üht ennustavat muutujat (Sepal.Width):
 
 ```r
-m2 <- brm(Sepal.Length~Petal.Length + Sepal.Width + (1 | Species), 
-          data= iris, 
-          prior = prior, 
-          chains = 3,
-          cores = 4,
-          control = list(adapt_delta = 0.95))
-write_rds(m2, path = "m2.fit")
+m2 <- brm(Sepal.Length ~ Petal.Length + Sepal.Width + (1 | Species), 
+          data = iris, 
+          prior = prior)
+write_rds(m2, path = "data/m2.fit")
 ```
 
-Kolmandaks ühetasemeline mudel, m3, mis vaatab kolme irise liiki eraldi
-
+Kolmandaks ühetasemeline mudel, mis vaatab kolme irise liiki eraldi:
 
 ```r
-m3 <- brm(Sepal.Length~ Sepal.Width + Petal.Length*Species, 
-          data= iris, 
-          prior = prior, 
-          chains = 3,
-          cores = 3)
-write_rds(m3, path = "m3.fit")
+m3 <- brm(Sepal.Length ~ Sepal.Width + Petal.Length * Species, 
+          data = iris, 
+          prior = prior)
+write_rds(m3, path = "data/m3.fit")
 ```
 
-Ja lõpuks lihtne mudel, m4, mis paneb kõik liigid ühte patta.
+Ja lõpuks mudel, mis paneb kõik liigid ühte patta:
 
 ```r
-m4 <- brm(Sepal.Length~Petal.Length + Sepal.Width, 
-          data= iris, 
-          prior = prior, 
-          chains = 3,
-          cores = 4)
-write_rds(m4, path = "m4.fit")
+m4 <- brm(Sepal.Length ~ Petal.Length + Sepal.Width, 
+          data = iris, 
+          prior = prior)
+write_rds(m4, path = "data/m4.fit")
 ```
 
 
-```r
-m2 <- read_rds("m2.fit")
-m3 <- read_rds("m3.fit")
-m4 <- read_rds("m4.fit")
-```
 
 
 Siin me võrdleme neid nelja mudelit. Väikseim looic (leave-one-out information criterion) võidab. See on suhteline võrdlus -- looic abs väärtus ei mängi mingit rolli. 
@@ -280,15 +268,26 @@ Siin me võrdleme neid nelja mudelit. Väikseim looic (leave-one-out information
 
 ```r
 loo(m1, m2, m3, m4)
+#>          LOOIC    SE
+#> m1      106.43 16.65
+#> m2       81.61 16.11
+#> m3       80.06 15.77
+#> m4      100.55 16.41
+#> m1 - m2  24.82  9.63
+#> m1 - m3  26.37 10.66
+#> m1 - m4   5.88 15.28
+#> m2 - m3   1.55  3.34
+#> m2 - m4 -18.94  9.90
+#> m3 - m4 -20.49  9.95
 ```
 
 Siin on m1 ja m2/m3 mudeli erinevus 25 ühikut ja selle erinevuse standardviga on 10 ühikut. 2 SE-d annab umbkaudu 95% usaldusintervalli, ja see ei kata antud juhul nulli. Seega järeldame, et m2 ja m3, mis kasutavad ennustamiseks lisamuutujat, on selgelt eelistatud. Samas ei saa me õelda, et hierarhiline mudel m2 oleks parem või halvem kui interaktsioonimudel m3. Ka puudub oluline erinevus m1 ja m4 fiti vahel. Tundub, et selle ennustusjõu, mille me võidame lisaparameetrit mudeldades, kaotame omakorda liike ühte patta pannes (neid mitte osaliselt iseseisvana modelleerides).
 
-Alternatiivina kasutame brms::waic kriteeriumit mudelite võrdlemiseks. See töötab kiiremini kui LOO ja tõlgendus on sarnane - väikseim waic võidab ja absolutväärtusi ei saa ükshaaval tõlgendada. 
+Alternatiivina kasutame `brms::waic` kriteeriumit mudelite võrdlemiseks. See töötab kiiremini kui LOO ja tõlgendus on sarnane - väikseim waic võidab ja absolutväärtusi ei saa ükshaaval tõlgendada. 
 
 
 ```r
-brms::waic(m1, m2, m3, m4)
+waic(m1, m2, m3, m4)
 #>           WAIC    SE
 #> m1      106.40 16.64
 #> m2       81.55 16.10
@@ -306,7 +305,7 @@ Nagu näha, annavad LOO ja waic sageli väga sarnaseid tulemusi.
 
 Me ei süvene LOOIC ega waic-i statistilisse mõttesse, sest bayesi mudelite võrdlemine on kiiresti arenev ala, kus ühte parimat lahendust pole veel leitud. 
 
-### vaatame mudelite kokkuvõtet
+### Vaatame mudelite kokkuvõtet
 
 Lihtne tabel mudeli m2 fititud koefitsientidest koos 95% usalduspiiridega
 
@@ -325,9 +324,9 @@ tidy(m2)
 #> 9                            lp__  -50.433    2.3680 -54.788 -47.169
 ```
 
-r_ prefiks tähendab, et antud koefitsient kuulub mudeli esimesele (madalamale) tasemele (Liigi tase) r- random - tähendab, et iga grupi (liigi) sees arvutatakse oma fit. b_ tähendab mudeli 2. taset (keskmistatud üle kõikide gruppide). 2. tasmel on meil intercept, b1 ja b2 tõusud ning standardhälve y muutuja ennustatud andempunktide tasemel. 1. tasemel on meil 3 liigi interceptide erinevus üldisest b_Intercepti väärtusest. Seega, selleks, et saada setosa liigi intercepti, peame tegema tehte 1.616 + 0.765.
+r_ prefiks tähendab, et antud koefitsient kuulub mudeli esimesele (madalamale) tasemele (Liigi tase) r - random - tähendab, et iga grupi (liigi) sees arvutatakse oma fit. b_ tähendab mudeli 2. taset (keskmistatud üle kõikide gruppide). 2. tasmel on meil intercept, b1 ja b2 tõusud ning standardhälve y muutuja ennustatud andempunktide tasemel. 1. tasemel on meil 3 liigi interceptide erinevus üldisest b_Intercepti väärtusest. Seega, selleks, et saada setosa liigi intercepti, peame tegema tehte 1.616 + 0.765.
 
-tidy funktsiooni tööd saab kontrollida järgmiste parameetrite abil:
+**tidy** funktsiooni tööd saab kontrollida järgmiste parameetrite abil:
 
 ```r
 tidy(x, parameters = NA, par_type = c("all",
@@ -355,13 +354,13 @@ m2
 #> Group-Level Effects: 
 #> ~Species (Number of levels: 3) 
 #>               Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-#> sd(Intercept)     1.72      1.53     0.36     5.98        503 1.00
+#> sd(Intercept)     1.72      1.53     0.36     5.98        515 1.00
 #> 
 #> Population-Level Effects: 
 #>              Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-#> Intercept        1.71      1.03    -0.36     4.08        550 1.01
-#> Petal.Length     0.76      0.06     0.63     0.88       1380 1.00
-#> Sepal.Width      0.44      0.08     0.27     0.60       1857 1.00
+#> Intercept        1.71      1.03    -0.36     4.08        594 1.01
+#> Petal.Length     0.76      0.06     0.63     0.88       1478 1.00
+#> Sepal.Width      0.44      0.08     0.27     0.60       1893 1.00
 #> 
 #> Family Specific Parameters: 
 #>       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
@@ -377,7 +376,7 @@ Siin on eraldi toodud grupi tasemel ja populatsiooni tasemel koefitsiendid ja gr
 Divergentsed transitsioonid on halvad asjad - ahelad on läinud 17 korda metsa. Viisakas oleks adapt deltat tõsta või kitsamad priorid panna, aga 17 halba andmepunkti paarist tuhandest, mille mcmc ahelad meile tekitasid, pole ka mingi maailmalõpp. Nii et las praegu jääb nagu on. Need divergentsed transitsioonid on kerged tekkima just mitmetasemelistes mudelites. 
 
 
-### plotime posteeriorid ja ahelad
+### Plotime posteeriorid ja ahelad
 
 
 ```r
@@ -388,21 +387,20 @@ plot(m2)
 
 Siit on näha, et ahelad on ilusti konvergeerunud. Ühtlasi on pildil posterioorsed jaotused fititud koefitsientidele.
 
-regular expressioni abil saab plottida mudeli madalama taseme ahelaid & posteerioreid, mida plot() vaikimisi ei näita.
+*Regular expressioni* abil saab plottida mudeli madalama taseme ahelaid & posteerioreid, mida plot() vaikimisi ei näita.
 
 ```r
-#regex works!
-plot(m2, pars = "r_", theme = theme_dark())
+plot(m2, pars = "r_")
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" />
 
 Vaatame korrelatsioone erinevate parameetrite posterioorsete valimite vahel. (Markovi ahelad jooksevad n-mõõtmelises ruumis, kus n on mudeli parameetrite arv, mille väärtusi hinnatakse.)
-pairs(m3) teeb pildi ära, aga ilusama pildi saab GGally::ggpairs() abil.
+Pairs(m3) teeb pildi ära, aga ilusama pildi saab `GGally::ggpairs()` abil.
 
 
 ```r
-pairs(m2, pars="b_")
+pairs(m2, pars = "b_")
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;" />
@@ -416,6 +414,8 @@ posterior_samples(m2) %>%
   ggpairs()
 ```
 
+<img src="17_brms_files/figure-html/unnamed-chunk-30-1.png" width="70%" style="display: block; margin: auto;" />
+
 Siin on posteeriorite põhjal arvutatud 50% ja 95% CI ja see plotitud.
 
 ```r
@@ -424,32 +424,29 @@ stanplot(m2, pars = "r_", type = "intervals")
 
 <img src="17_brms_files/figure-html/unnamed-chunk-31-1.png" width="70%" style="display: block; margin: auto;" />
 
-type= argument sisestamine võimaldab plottida erinevaid diagnostilisi näitajaid. Lubatud sisendid on "hist", "dens", "hist_by_chain", "dens_overlay", "violin", "intervals", "areas", "acf", "acf_bar", "trace", "trace_highlight", "scatter", "rhat", "rhat_hist", "neff", "neff_hist" "nuts_acceptance", "nuts_divergence", "nuts_stepsize", "nuts_treedepth" ja "nuts_energy".
+type = argument sisestamine võimaldab plottida erinevaid diagnostilisi näitajaid. Lubatud sisendid on "hist", "dens", "hist_by_chain", "dens_overlay", "violin", "intervals", "areas", "acf", "acf_bar", "trace", "trace_highlight", "scatter", "rhat", "rhat_hist", "neff", "neff_hist" "nuts_acceptance", "nuts_divergence", "nuts_stepsize", "nuts_treedepth" ja "nuts_energy".
 
 
 ```r
-stanplot(m2, type="neff")
+stanplot(m2, type = "neff")
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-32-1.png" width="70%" style="display: block; margin: auto;" />
 
 Neff on efektiivne valimi suurus ja senikaua kuni Neff/N suhe ei ole < 0.1, pole põhjust selle pärast muretseda.
 
-### korjame ahelad andmeraami ja plotime fititud koefitsiendid CI-dega
+### Korjame ahelad andmeraami ja plotime fititud koefitsiendid CI-dega
 
 
 ```r
-model <- posterior_samples(m1) 
-#model <- m1$fit %>% as.data.frame() 
-##töötab samamoodi
+model <- posterior_samples(m1)
 ```
 
 mcmc_intervals() on bayesplot paketi funktsioon. me plotime 50% ja 95% CI-d.
 
 ```r
-pars <- names(model)
-mcmc_intervals(model, pars=pars[-length(pars)]) 
-#with pars left out the last parameter lp_
+pars <- colnames(model)
+mcmc_intervals(model, regex_pars = "[^(lp__)]")
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-34-1.png" width="70%" style="display: block; margin: auto;" />
@@ -458,24 +455,26 @@ Näeme, et sigma hinnang on väga usaldusväärne, samas kui gruppide vahelise s
 
 
 ```r
-model2 <- m2$fit %>% as.data.frame() 
-pars <- names(model2)
-mcmc_intervals(model2, pars=pars[-length(pars)])
-mcmc_areas(model2,  pars=c("b_Petal.Length", "b_Sepal.Width"))
+model2 <- posterior_samples(m2)
+pars <- colnames(model2)
+mcmc_intervals(model2, regex_pars = "[^(lp__)]")
+mcmc_areas(model2,  pars = c("b_Petal.Length", "b_Sepal.Width"))
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-35-1.png" width="70%" style="display: block; margin: auto;" /><img src="17_brms_files/figure-html/unnamed-chunk-35-2.png" width="70%" style="display: block; margin: auto;" />
 
 
-### bayesi versioon r-ruudust 
+### Bayesi versioon R-ruudust 
 
-kui suurt osa koguvarieeruvusest suudavad mudeli prediktorid seletada?
+Kui suurt osa koguvarieeruvusest suudavad mudeli prediktorid seletada?
 
 ```r
 bayes_R2(m2)
 #>    Estimate Est.Error Q2.5 Q97.5
 #> R2     0.86   0.00831 0.84 0.873
 ```
+
+
 
 ```r
 bayes_R2(m1)
@@ -484,169 +483,150 @@ bayes_R2(m1)
 ```
 
 https://github.com/jgabry/bayes_R2/blob/master/bayes_R2.pdf
-Annab põhjenduse sellele statistikule (mille arvutamine erineb tavalisest vähimruutudega arvutatud mudeli r2-st).
+Annab põhjenduse sellele statistikule (mille arvutamine erineb tavalisest vähimruutudega arvutatud mudeli $R^2$-st).
 
-### plotime mudeli poolt ennustatud valimeid - posterior predictive check
+### Plotime mudeli poolt ennustatud valimeid -- posterior predictive check
 
 Kui mudel suudab genereerida simuleeritud valimeid, mis ei erine väga palju empiirilisest valimist, mille põhjal see mudel fititi, siis võib-olla ei ole see täiesti ebaõnnestunud mudeldamine. See on loogika posterioorse ennustava ploti taga.
 
+Vaatame siin simultaanselt kõigi kolme eelnevalt fititud mudeli simuleeritud valimeid (y_rep) võrdluses algsete andmetega (y):
 
 ```r
-gridExtra::grid.arrange(pp_check(m1), pp_check(m2), pp_check(m3), nrow = 3)
+map(list(m1, m2, m3), pp_check, nsamples = 10) %>% 
+  grid.arrange(grobs = ., nrow = 3)
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-38-1.png" width="70%" style="display: block; margin: auto;" />
 
-y - tihedusplot empiirilistest andmetest
-y_rep - plotid mudeli poolt ennustatud iseseisvatest valimitest (igaüks sama suur kui empiiriline valim y) 
+- y - tihedusplot empiirilistest andmetest
+- y_rep -- plotid mudeli poolt ennustatud iseseisvatest valimitest (igaüks sama suur kui empiiriline valim y) 
 Jooniselt on näha, et m3 ennustused on võrreldes m1 ja m2-ga kõige kaugemal tegelikust valimist.
 
-### plotime mudeli ennustusi - marginal effects plots
+### Plotime mudeli ennustusi - marginal effects plots
 
-teeme ennustused
-
-Kõigepealt ennustame ühe keskmise mudeliga, mis ei arvesta mitmetasemelise mudeli madalamte tasemete koefitsientidega.
+Teeme ennustused. Kõigepealt ennustame ühe keskmise mudeliga, mis ei arvesta mitmetasemelise mudeli madalamte tasemete koefitsientidega.
 
 
 ```r
-plot(marginal_effects(m2, effects= "Petal.Length", method = "predict", probs=c(0.1, 0.9)), points = TRUE,  theme = theme_bw())
+plot(marginal_effects(m2, effects = "Petal.Length", method = "predict", probs = c(0.1, 0.9)), points = TRUE)
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-39-1.png" width="70%" style="display: block; margin: auto;" />
 
+Ennustus on selles mõttes ok, et vaid väike osa punkte jääb sellest välja, aga laiavõitu teine!
+
+Nüüd ennustame sama mudeli põhjal igale liigile eraldi. Seega kasutame mudeli madalama taseme koefitsiente. Peame andma lisaparameetri `re_formula = NULL`, mis tagab, et ennustuse tegemisel kasutatakse ka mudeli madalama taseme koefitsiente.
 
 ```r
-marginal_effects(m2, effects= "Petal.Length", method = "predict", probs=c(0.1, 0.9))
+plot(marginal_effects(m2, effects = "Petal.Length", method = "predict", conditions = make_conditions(iris, vars = "Species"), probs = c(0.1, 0.9), re_formula = NULL), points = TRUE)
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-40-1.png" width="70%" style="display: block; margin: auto;" />
 
-Ennustus on selles mõttes ok, et vaid väike osa punkte jääb sellest välja, aga laiavõitu teine!
 
-Nüüd ennustame sama mudeli põhjal igale liigile eraldi. Seega kasutame mudeli madalama taseme koefitsiente. peame andma lisaparameetri re_formula = NULL, mis tagab, et ennustuse tegemisel kasutatakse ka mudeli madalama taseme koefitsiente.
+`method = "predict"` ennustab, millisesse vahemikku peaks mudeli järgi jääma 90% andmepunkte (k.a. uued andmepunktid, mida pole veel valimisse korjatud).
+
+Tõesti, valdav enamus valimi punkte on intervallis sees, mis viitab et mudel töötab hästi. Seal, kus on rohkem punkte, on intervall kitsam ja mudel usaldusväärsem.
+
+Järgneval pildil on `method = "fitted"`. Nüüd on enamus punkte väljaspool usaldusintervalle, mis sellel pildil mõõdavad meie usaldust regressioonijoone vastu.
+
 
 ```r
-conditions <- data.frame(Species =c("setosa", "virginica", "versicolor"))
-plot(marginal_effects(m2, effects= "Petal.Length", method = "predict", conditions = conditions, probs=c(0.1, 0.9), re_formula = NULL), points = TRUE, theme = theme_bw())
+plot(marginal_effects(m2, effects = "Petal.Length", method = "fitted", conditions = make_conditions(iris, vars = "Species"), probs = c(0.1, 0.9), re_formula = NULL), points = TRUE)
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-41-1.png" width="70%" style="display: block; margin: auto;" />
+`method = "fitted"` annab CI regressioonijoonele.
+
+Argumendid: 
+
+- method -- predict annab veapiirid (95% CI) mudeli ennustustustele andmepunkti tasemel. fitted annab veapiirid mudeli fitile endale (joonele, mis tähistab keskmist või kõige tõenäolisemat y muutuja väärtust igal x-i väärtusel)
+
+- conditions - andmeraam, kus on kirjas mudeli nendele ennustavatele (x) muutujatele omistatud väärtused, mida ei joonistata x teljele. Kuna meil on selleks mudeli madalama taseme muutuja Species, siis on lisaks vaja määrata argument *re_formula = NULL*, mis tagab, et ennustuste tegemisel kasutatakse mudeli kõikide tasemete fititud koefitsiente. re_formula = NA annab seevastu keskmise fiti üle kõigi gruppide (irise liikide)
+
+- probs annab usaldusintervalli piirid.
+
+Pane tähele, et argument `points` (ja muud lisaargumendid, nagu näiteks `theme`) kuuluvad `plot()`, mitte `marginal_effects()` funktsioonile.
 
 
-method = "predict" ennustab, millisesse vahemikku peaks mudeli järgi jääma 90% andmepunkte (k.a. uued andmepunktid, mida pole veel valimisse korjatud).
-
-Tõesti, valdav enamus valimi punkte on intervallis sees, mis viitab et mudel töötab hästi. Seal, kus on rohkem punkte, on intervall kitsam (mudel on usaldusväärsem).
-
-Järgneval pildil on method = "fitted". Nüüd on enamus punkte väljaspool usaldusintervalle, mis sellel pildil mõõdavad meie usaldust regressioonijoone vastu.
-
-
-```r
-conditions <- data.frame(Species =c("setosa", "virginica", "versicolor"))
-plot(marginal_effects(m2, effects= "Petal.Length", method = "fitted", conditions = conditions, probs=c(0.1, 0.9), re_formula = NULL), points = TRUE, theme = theme_bw())
-```
-
-<img src="17_brms_files/figure-html/unnamed-chunk-42-1.png" width="70%" style="display: block; margin: auto;" />
-method = "fitted" annab CI regressioonijoonele.
-
-argumendid: 
-
-method - predict annab veapiirid (95% CI) mudeli ennustustustele andmepunkti tasemel. fitted annab veapiirid mudeli fitile endale (joonele, mis tähistab keskmist või kõige tõenäolisemat y muutuja väärtust igal x-i väärtusel)
-
-conditions - andmeraam, kus on kirjas mudeli nendele ennustavatele (x) muutujatele omistatud väärtused, mida ei joonistata x teljele. Kuna meil on selleks mudeli madalama taseme muutuja Species, siis on lisaks vaja määrata argument *re_formula = NULL*, mis tagab, et ennustuste tegemisel kasutatakse mudeli kõikide tasemete fititud koefitsiente. re_formula = NA annab seevastu keskmise fiti üle kõigi gruppide (irise liikide)
-
-probs annab usaldusintervalli piirid.
-
-Pane tähele, et argumendid points ja theme kuuluvad plot(), mitte marginal_effects() funktsioonile.
-
-
-tavaline interaktsioonimudel, aga pidevatele muutujatele.
-
+Tavaline interaktsioonimudel, aga pidevatele muutujatele.
 
 ```r
-m5 <- brm(Sepal.Length~Petal.Length + Sepal.Width + Petal.Length*Sepal.Width, 
-          data= iris, 
+m5 <- brm(Sepal.Length ~ Petal.Length + Sepal.Width + Petal.Length * Sepal.Width, 
+          data = iris, 
           prior = prior, 
-          family = gaussian,
-          warmup = 1000, 
-          iter = 2000, 
-          chains = 3,
-          cores = 4,
-          control = list(adapt_delta = 0.95))
-write_rds(m5, path = "m5.fit")
+          family = gaussian)
+write_rds(m5, path = "data/m5.fit")
 ```
 
 
+
+
+Kõigepealt plotime mudeli ennustused, kuidas Sepal Length sõltub Petal Length-ist kolmel erineval Sepal width väärtusel.
 
 ```r
-m5 <- read_rds("m5.fit")
+plot(marginal_effects(m5, effects = "Petal.Length:Sepal.Width"), points = TRUE)
 ```
 
-Kõigepealt plotime mudeli ennustused, kuidas Sepal Length sõltub Petal Length-ist kolmel erineval Sepal width väärtusel. Ja siis sümmeetriliselt vastupidi.
+<img src="17_brms_files/figure-html/unnamed-chunk-44-1.png" width="70%" style="display: block; margin: auto;" />
+
+Ja siis sümmeetriliselt vastupidi.
 
 ```r
-plot(marginal_effects(m5, 
-                      effects = "Petal.Length:Sepal.Width"),
-     points = T)
-plot(marginal_effects(m5, 
-                      effects = "Sepal.Width:Petal.Length"),
-     points = T)
+plot(marginal_effects(m5, effects = "Sepal.Width:Petal.Length"), points = TRUE)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-45-1.png" width="70%" style="display: block; margin: auto;" /><img src="17_brms_files/figure-html/unnamed-chunk-45-2.png" width="70%" style="display: block; margin: auto;" />
+<img src="17_brms_files/figure-html/unnamed-chunk-45-1.png" width="70%" style="display: block; margin: auto;" />
 
-Siin lisame enda soovitud Sepal Width väärtused (5 ja 1.2), mis on väljaspool seda, mida loodus pakub. Pane tähele ennustuse laiu CI-sid.
+
+Siin lisame enda soovitud Sepal Width väärtused (5 ja 1.2), mis on väljaspool seda, mida loodus pakub. Pane tähele ennustuse laiemaid CI-e.
 
 ```r
 conditions <- data.frame(Sepal.Width = c(5, 1.2))
-plot(marginal_effects(m5, effects = "Petal.Length", conditions = conditions, re_formula = NULL), points= TRUE)
+plot(marginal_effects(m5, effects = "Petal.Length", conditions = conditions, re_formula = NULL), points = TRUE)
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-46-1.png" width="70%" style="display: block; margin: auto;" />
 
 
-### Alternatiivne tee:
-
+### Alternatiivne tee
+Alternatiivne millele?
 Teeme tabeli nende väärtustega, millele tahame mudeli ennustusi. Tabelis newx on spetsifitseeritud mudeli kõikide X muutujate väärtused! Me ennustame Y väärtusi paljudel meie poolt võrdse vahemaaga ette antud petal length väärtustel, kusjuures me hoiame sepal width väärtuse alati konstantsena tema valimi keskmisel väärtusel ja vaatame ennustusi eraldi kahele liigile kolmest. Liigid on mudeli madala taseme osad, seega kasutame ennustuste tegemisel mudeli kõikide tasemete koefitsiente.
 
 
 ```r
-newx <- expand.grid(Petal.Length = seq(min(iris$Petal.Length), 
-                                       max(iris$Petal.Length), 
-                                       length.out = 150),
+newx <- expand.grid(Petal.Length = modelr::seq_range(iris$Petal.Length, n = 150),
                     Sepal.Width = mean(iris$Sepal.Width),
-                    Species = c("setosa", "virginica")
-                    )
+                    Species = c("setosa", "virginica"))
 ```
-expand.grid() lõõb tabeli pikaks nii, et kõik võimalikud kombinatsioonid 3st muutujast on täidetud väärtustega.
+`expand.grid()` lõõb tabeli pikaks nii, et kõik võimalikud kombinatsioonid 3st muutujast on täidetud väärtustega.
 
 
-reformula NULL mudeldab eraldi liigid eraldi mudeli madalama taseme (liikide sees) koefitsiente kasutades
+`re_formula` NULL mudeldab eraldi liigid eraldi mudeli madalama taseme (liikide sees) koefitsiente kasutades
 
 ```r
 predict_interval_brms2 <- predict(m2, newdata = newx, re_formula = NULL) %>%
-  cbind(newx,.)
+  cbind(newx, .)
 head(predict_interval_brms2)
 #>   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5
-#> 1         1.00        3.06  setosa     4.49     0.319 3.86  5.13
-#> 2         1.04        3.06  setosa     4.51     0.316 3.88  5.14
-#> 3         1.08        3.06  setosa     4.56     0.317 3.94  5.19
-#> 4         1.12        3.06  setosa     4.59     0.317 3.95  5.20
-#> 5         1.16        3.06  setosa     4.61     0.315 4.01  5.21
-#> 6         1.20        3.06  setosa     4.64     0.317 4.01  5.25
+#> 1         1.00        3.06  setosa     4.49     0.324 3.86  5.12
+#> 2         1.04        3.06  setosa     4.52     0.312 3.91  5.12
+#> 3         1.08        3.06  setosa     4.54     0.320 3.91  5.16
+#> 4         1.12        3.06  setosa     4.58     0.321 3.97  5.20
+#> 5         1.16        3.06  setosa     4.61     0.313 3.99  5.22
+#> 6         1.20        3.06  setosa     4.64     0.320 4.03  5.29
 ```
 
-predict() ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele
+`predict()` ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele
 
 Siin siis eraldi ennustused kahele liigile kolmest, kaasa arvatud petal length väärtusvahemikule, kus selle liigi isendeid valimis ei ole (ja võib-olla ei saagi olla) 
 
 ```r
-iris1 <- iris %>% filter(Species != "versicolor")
+no_versicolor <- filter(iris, Species != "versicolor")
 ggplot(data = predict_interval_brms2, aes(x = Petal.Length, y = Estimate)) +
-  geom_point(data= iris1, aes(Petal.Length, Sepal.Length, color=Species)) +
+  geom_point(data = no_versicolor, aes(Petal.Length, Sepal.Length, color = Species)) +
   geom_line(aes(color = Species)) +
-  geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = Species), alpha = .1, colour = NA) +
-  scale_color_brewer(palette = 'Set1') +
-  ggthemes::theme_tufte()
+  geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = Species), alpha = 1/3)
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-49-1.png" width="70%" style="display: block; margin: auto;" />
@@ -655,35 +635,32 @@ Ennustav plot - kuidas lähevad kokku mudeli ennustused reaalsete y-i andmepunkt
 
 ```r
 pr <- predict(m2) %>% cbind(iris)
-
-ggplot(pr, aes(Sepal.Length, Estimate, color=Species))+
-  geom_pointrange(aes(ymin = Q2.5, ymax = Q97.5), alpha=0.5, size=0.2) +
-  geom_abline(intercept = 0, slope = 1, lty = 2) +
-  coord_cartesian( xlim=c( 4, 8 ), ylim=c( 4, 8 ))+
-  ggthemes::theme_tufte()
+ggplot(pr, aes(Sepal.Length, Estimate, color = Species)) +
+  geom_pointrange(aes(ymin = Q2.5, ymax = Q97.5)) +
+  geom_abline(lty = 2) +
+  coord_cartesian(xlim = c(4, 8), ylim = c(4, 8))
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-50-1.png" width="70%" style="display: block; margin: auto;" />
 
-Igae andmepunktile - kui palju erineb selle residuaal 0-st - st kui hästi ennustab mudel just seda andmepunkti. Ruumi kokkuhoiuks plotime välja ainult irise esimele 50-le andmepunktile.
+Igale andmepunktile -- kui palju erineb selle residuaal 0-st kui hästi ennustab mudel just seda andmepunkti. Ruumi kokkuhoiuks plotime välja ainult irise valiku 50-st andmepunktist.
 
 ```r
-re <- residuals(m2) %>% cbind(iris)
-re$indeks <- 1:nrow(re)
-
-ggplot(re[1:50,], aes(x = Estimate, y = reorder(indeks, Estimate))) +
-  geom_vline(xintercept = 0, lty = 2) +
-  geom_point(size=1) +
-  geom_errorbarh(aes(xmin = Q2.5, xmax = Q97.5), color = "red", size =0.2) +
-  theme(text = element_text(size = 7), axis.title.y = element_blank())+
-  xlab("residuals (95 CI)")
+set.seed(69)
+as_data_frame(residuals(m2)) %>% 
+  sample_n(50) %>% 
+  ggplot(aes(x = reorder(seq_along(Estimate), Estimate), y = Estimate)) +
+  geom_pointrange(aes(ymin = Q2.5, ymax = Q97.5), fatten = 0.1) +
+  coord_flip() +
+  theme(text = element_text(size = 8), axis.title.y = element_blank()) +
+  xlab("Residuals (95 CI)")
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-51-1.png" width="70%" style="display: block; margin: auto;" />
 
-Ok, isendid nr 15 ja 37 paistavad olema palju väiksema Sepal Lengthiga kui mudel ennustab. Võib küsida, miks?
+Ok, isendid nr 15 ja 44 paistavad olema vastavalt palju suurema ja väiksema Sepal Lengthiga kui mudel ennustab. Võib küsida, miks?
 
-Nüüd plotime usaldusintervalli mudeli fitile (**keskmisele** Y väärtusele igal määratud X-i väärtusel), mitte Y- ennustusele andmepunkti kaupa. Selleks on hea fitted() funktsioon. Me ennustame m2 mudelist vastavalt newdata parameetriväärtustele. Kui me newdata argumendi tühjaks jätame, siis võtab fitted() selleks automaatselt algse iris tabeli (ehk valimi väärtused). 
+Nüüd plotime usaldusintervalli mudeli fitile ('keskmisele' Y väärtusele igal määratud X-i väärtusel), mitte Y-ennustusele andmepunkti kaupa. Selleks on hea fitted() funktsioon. Me ennustame m2 mudelist vastavalt newdata parameetriväärtustele. Kui me newdata argumendi tühjaks jätame, siis võtab fitted() selleks automaatselt algse iris tabeli (ehk valimi väärtused). 
 
 
 
@@ -700,56 +677,50 @@ head(predict_interval_brms2f)
 #> 6         1.20        3.06  setosa     4.64    0.0518 4.54  4.74
 ```
 
+
 ```r
 ggplot(data = predict_interval_brms2f, aes(x = Petal.Length, y = Estimate, color = Species)) +
-  geom_point(data= iris1, aes(Petal.Length, Sepal.Length, color=Species)) +
+  geom_point(data = no_versicolor, aes(Petal.Length, Sepal.Length, color = Species)) +
   geom_line() +
-  geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = Species), alpha = .1, colour = NA) +
-  scale_x_continuous(breaks = 0:10) +
-  theme(panel.grid.minor = element_blank()) +
-  scale_color_brewer(palette = 'Set1')+
-  ggthemes::theme_tufte()
+  geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = Species), alpha = 1/3, colour = NA) +
+  scale_x_continuous(breaks = 0:10)
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-53-1.png" width="70%" style="display: block; margin: auto;" />
 
- **mudeli genereeritud andmed ja valimiandmed mõõtmisobjekti (subjekti e taimeisendi) kaupa**. See on sisuliselt posterior predictive plot (vt eespool). 
+Mudeli genereeritud andmed ja valimiandmed mõõtmisobjekti (subjekti e taimeisendi) kaupa. See on sisuliselt posterior predictive plot (vt eespool). 
 
 
 ```r
-predict_subjects_brms <- predict(m2) %>% cbind(iris, .)
-#ennustame andmeid igale taimele vastavate parameetriväärtustega 
-#ja paneme ennustused kokku algse irise tabeliga
+predicted_subjects_brms <- predict(m2) %>% cbind(iris, .)
 ```
 
-predict() arvutab mudeli põhjal uusi Y muutuja andmepunkte. Võib kasutada ka väljamõeldud andmete pealt Y väärtuste ennustamiseks (selleks tuleb anda ette andmeraam kõigi X-muutujate väärtustega, mille pealt tahetakse ennustusi).
+`predict()` arvutab mudeli põhjal uusi Y muutuja andmepunkte. Võib kasutada ka väljamõeldud andmete pealt Y väärtuste ennustamiseks (selleks tuleb anda ette andmeraam kõigi X-muutujate väärtustega, mille pealt tahetakse ennustusi).
 
-tugevalt värvitud punktid on ennustused ja läbipastvad punktid on valimiandmed
+Punktid on ennustused ja ristikesed on valimiandmed
 
 ```r
-ggplot(data = predict_subjects_brms, aes(Petal.Length, Estimate, color = Species)) +
-  geom_point(aes(Petal.Length, Estimate), alpha = .8)+
-  geom_point(data = iris, aes(Petal.Length, Sepal.Length), alpha = .3)+
-  ggthemes::theme_tufte()
+ggplot(data = predicted_subjects_brms, aes(x = Petal.Length, color = Species)) +
+  geom_point(aes(y = Estimate)) +
+  geom_point(aes(y = Sepal.Length), shape = 3)
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-55-1.png" width="70%" style="display: block; margin: auto;" />
 
-**Alternatiiv - ansambliennustus**
+### Alternatiiv -- ansambliennustus
 
-Kuna meil on 2 mudelit, m2 ja m3, mis on pea võrdselt eelistatud, siis genreerime ennustused mõlemast (mudelite ansamblist) proportsionaalselt nende waic skooridega. See ennustus kajastab meie mudeldamistööd tervikuna, mitte ühte "parimat" mudelit ja seega võib loota, et annab paremini edasi meie mudeldamises peituvat ebakindlust.
+Kuna meil on 2 mudelit (m2 ja m3) mis on pea võrdselt eelistatud, siis genreerime ennustused mõlemast (mudelite ansamblist) proportsionaalselt nende waic skooridega. See ennustus kajastab meie mudeldamistööd tervikuna, mitte ühte "parimat" mudelit ja seega võib loota, et annab paremini edasi meie mudeldamises peituvat ebakindlust.
 
 ```r
 pp_a <- pp_average(m2, m3, weights = "waic", method = "predict") %>%
   as_tibble() %>% 
-  bind_cols(iris) 
-ggplot(data = pp_a, aes(Petal.Length, Estimate, color = Species)) +
-  geom_point(aes(Petal.Length, Estimate), alpha = .8)+
-  geom_point(data = iris, aes(Petal.Length, Sepal.Length), alpha = .3)+
-  ggthemes::theme_tufte()
+  bind_cols(iris)
+ggplot(data = pp_a, aes(x = Petal.Length, color = Species)) +
+  geom_point(aes(y = Estimate)) +
+  geom_point(aes(y = Sepal.Length), shape = 3)
 ```
 
-## mudeli eelduste kontroll
+## Mudeli eelduste kontroll
 
 Pareto k otsib nn mõjukaid (influential) andmepunkte. 
 
@@ -763,81 +734,83 @@ plot(loo_m2)
 Kui paljud andmepunktid on kahtlaselt mõjukad?
 
 ```r
-loo::pareto_k_table(loo_m2) 
+pareto_k_table(loo_m2) 
 #> 
 #> All Pareto k estimates are good (k < 0.5).
 ```
 
 
-### plotime residuaalid
+### Plotime residuaalid
 
-resid() annab residuaalid vektorina. 
-**Kõigepealt plotime residuaalid fititud (keskmiste) Y väärtuste vastu.**
+`resid()` annab residuaalid vektorina. 
+Kõigepealt plotime residuaalid fititud (keskmiste) Y väärtuste vastu:
 
 ```r
-resid <-  resid(m2, type = "pearson")[, "Estimate"]
-fit <-  fitted(m2)[, "Estimate"]
-ggplot() + geom_point(data = NULL, aes(y = resid, x = fit)) + geom_hline(yintercept=0, lty=2)
+resid <- residuals(m2, type = "pearson")
+fit <- fitted(m2)
+ggplot() + 
+  geom_point(aes(x = fit[,"Estimate"], y = resid[,"Estimate"])) + 
+  geom_hline(yintercept = 0, lty = "dashed") +
+  labs(x = "fitted", y = "residuals")
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-59-1.png" width="70%" style="display: block; margin: auto;" />
 
 Residuals vs fitted plot testib lineaarsuse eeldust - kui .resid punktid jaotuvad ühtlaselt nulli ümber, siis mudel püüab kinni kogu süstemaatilise varieeruvuse teie andmetest ja see mis üle jääb on juhuslik varieeruvus.
 
-**vaatame diagnostilist plotti autokorrelatsioonist residuaalide vahel.**
+Vaatame diagnostilist plotti autokorrelatsioonist residuaalide vahel.
 
 ```r
 plot(acf(resid))
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-60-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="17_brms_files/figure-html/unnamed-chunk-60-1.png" width="70%" style="display: block; margin: auto;" /><img src="17_brms_files/figure-html/unnamed-chunk-60-2.png" width="70%" style="display: block; margin: auto;" />
 
 Residuaalide autokorrelatsioonid on madalad - seega kõik paistab OK ja andmepunktide sõltumatus on tagatud.
 
-**siin on residuaalide histogramm**
+Siin on residuaalide histogramm:
 
 ```r
-ggplot(data = NULL, aes(resid)) + geom_density(fill="lightgrey") + geom_vline(xintercept = median(resid), linetype ="dashed")+ theme_classic()
+ggplot(data = NULL) + 
+  geom_density(aes(x = resid[,"Estimate"]), fill = "lightgrey") + 
+  geom_vline(xintercept = median(resid), linetype = "dashed")
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-61-1.png" width="70%" style="display: block; margin: auto;" />
 
 Residuaalid on sümmeetrilise jaotusega ja meedian residuaal on peaaegu null. See on kõik hea.
 
-**Ja lõpuks plotime residuaalid kõigi x-muutujate vastu:**
-
-Kõigepealt ühendame resid vektori irise tabeliga, et oleks mugavam plottida, seejärel tekitame uue veeru st_resid e studentiseeritud residuaalid, mis on sd ühikutes.
+Ja lõpuks plotime residuaalid kõigi x-muutujate vastu. Kõigepealt ühendame resid vektori irise tabeliga, et oleks mugavam plottida, seejärel tekitame uue veeru st_resid e studentiseeritud residuaalid, mis on sd ühikutes.
 
 residuaalid standardhälbe ühikutes (nn Studentiseeritud residuaalid) saab ja ka tuleks plottida kõigi x-muutujate suhtes.
 
 ```r
-iris2 <- iris %>% cbind(resid) %>% mutate(st_resid= resid/sd(resid))
-ggplot(iris2, aes(Petal.Length, st_resid, color=Species))+ 
+iris2 <- iris %>% 
+  cbind(resid) %>% 
+  mutate(st_resid = Estimate / sd(resid))
+ggplot(iris2, aes(Petal.Length, st_resid, color = Species)) + 
   geom_point() +
-  geom_hline(yintercept = 0, linetype = "dashed") + 
-  ggthemes::theme_tufte()
+  geom_hline(yintercept = 0, linetype = "dashed")
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-62-1.png" width="70%" style="display: block; margin: auto;" />
 
-Pole paha, mudel ennustab hästi, aga mõne punkti jaoks on ennustus 2 sd kaugusel.
-
+Tsiteerides klassikuid: "Pole paha!". Mudel ennustab hästi, aga mõne punkti jaoks on ennustus 2 sd kaugusel.
 
 ```r
-ggplot(iris2, aes(Sepal.Width, st_resid, color=Species))+ 
+ggplot(iris2, aes(Sepal.Width, st_resid, color = Species)) + 
   geom_point() +
-  geom_hline(yintercept = 0, linetype = "dashed") + 
-  ggthemes::theme_tufte()
+  geom_hline(yintercept = 0, linetype = "dashed")
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-63-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 ```r
-ggplot(iris2, aes(Species, st_resid)) + geom_boxplot() +
+ggplot(iris2, aes(Species, st_resid)) + 
+  geom_boxplot() +
   geom_hline(yintercept = 0, linetype = "dashed") +
-  geom_jitter(width = 0.1, size=0.4)+
-  ggthemes::theme_tufte()
+  geom_jitter(width = 0.1)
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-64-1.png" width="70%" style="display: block; margin: auto;" />
@@ -851,17 +824,15 @@ Kasutame dnorm likelihoodi asemel studenti t jaotust. Selle jaotuse õlad on reg
 
 ```r
 x = seq(from = 0, to = 20, by = .1)
-y = dgamma(x, shape= 4, scale = 1)
-plot(y~x)
+y = dgamma(x, shape = 4, scale = 1)
+plot(y ~ x)
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-65-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 ```r
-get_prior(Sepal.Length~Petal.Length, 
-          data= iris, 
-          family = "student")
+get_prior(Sepal.Length ~ Petal.Length, data = iris, family = "student")
 #>                 prior     class         coef group resp dpar nlpar bound
 #> 1                             b                                         
 #> 2                             b Petal.Length                            
@@ -872,37 +843,29 @@ get_prior(Sepal.Length~Petal.Length,
 
 
 ```r
-prior <- c(prior(gamma(4,1), class="nu"))
+prior <- prior(gamma(4, 1), class = "nu")
 ```
 
 robust_m1 on studenti likelihoodiga, mille õlad määratakse adaptiivselt andmete poolt.
 robust_m2-s anname õlgade laiuse ette ja robust_m3 on mitte-robustne kontroll tavalise normaalse likelihoodiga.
 
 ```r
-robust_m1 <- brm(Sepal.Length~Petal.Length, 
-          data= iris, 
+robust_m1 <- brm(Sepal.Length ~ Petal.Length, 
+          data = iris, 
           family = "student",
-          prior = prior, 
-          chains = 3,
-          cores = 3)
-robust_m2 <- brm(
-          data= iris, 
+          prior = prior)
+robust_m2 <- brm(bf(Sepal.Length~Petal.Length, nu = 4),
+          data = iris, 
           family = student,
-          bf(Sepal.Length~Petal.Length, nu = 4),
           prior = c(prior(normal(0, 100), class = Intercept),
                 prior(normal(0, 10),  class = b),
-                prior(student_t(5, 0, 5),   class = sigma)),
-          chains = 3,
-          cores = 3)
-
+                prior(student_t(5, 0, 5),   class = sigma)))
 robust_m3 <- brm(Sepal.Length~Petal.Length, 
-          data= iris, 
-          family = "gaussian",
-          chains = 3,
-          cores = 3)
-write_rds(robust_m1, path = "robust_m1.fit")
-write_rds(robust_m2, path = "robust_m2.fit")
-write_rds(robust_m3, path = "robust_m3.fit")
+          data = iris, 
+          family = "gaussian")
+write_rds(robust_m1, path = "data/robust_m1.fit")
+write_rds(robust_m2, path = "data/robust_m2.fit")
+write_rds(robust_m3, path = "data/robust_m3.fit")
 ```
 
 
@@ -911,34 +874,31 @@ write_rds(robust_m3, path = "robust_m3.fit")
 ```r
 b_estimates <- bind_rows(tidy(robust_m1), 
                          tidy(robust_m2), 
-                         tidy(robust_m3), .id= "model_nr") 
-b1 <- b_estimates %>% filter(str_detect(term, "b_P") ) %>%   
-ggplot(aes(model_nr, estimate))+
-  geom_pointrange(aes(ymin=lower, ymax=upper))+ 
-  coord_flip()+ labs(x="Model nr", title ="slopes")
-b2 <- b_estimates %>% filter(str_detect(term, "b_I") ) %>%    
-ggplot(aes(model_nr, estimate))+
-  geom_pointrange(aes(ymin=lower, ymax=upper))+ 
-  coord_flip()+ labs(x=NULL, title ="intercepts")
+                         tidy(robust_m3), 
+                         .id = "model_nr") 
+b1 <- filter(b_estimates, str_detect(term, "b_P")) %>%
+  ggplot(aes(model_nr, estimate)) +
+  geom_pointrange(aes(ymin = lower, ymax = upper)) + 
+  coord_flip() + 
+  labs(x = "Model nr", title = "slopes")
+b2 <- filter(b_estimates, str_detect(term, "b_I")) %>%
+  ggplot(aes(model_nr, estimate)) +
+  geom_pointrange(aes(ymin = lower, ymax = upper)) + 
+  coord_flip() + 
+  labs(x = NULL, title = "intercepts")
 gridExtra::grid.arrange(b1, b2, nrow = 1)
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-70-1.png" width="70%" style="display: block; margin: auto;" />
 
-Kolme mudeli interceptid ja sloped on sisuliselt võrdsed ja sama täpsusega hinnatud. Seega ei tee robustne mudel vähemal halba, kui meil on enam-vähem normaalsed andmed.
+Kolme mudeli lõikepunktid ja tõusunurgad on sisuliselt võrdsed ja sama täpsusega hinnatud. Seega ei tee robustne mudel vähemal halba, kui meil on enam-vähem normaalsed andmed.
 
 Proovime ka robuststet versiooni 2 grupi võrdlusest (vastab t testile, kus kahe grupi sd-d hinnatakse eraldi)
 
 ```r
-ir1 <- iris %>% filter(Species != "versicolor")
-ir1$Species <- as.factor(ir1$Species) %>% fct_drop() 
-```
-
-
-
-```r
-get_prior(bf(Sepal.Length~Species, sigma ~ Species), 
-            data = ir1, family = "student")
+get_prior(bf(Sepal.Length ~ Species, sigma ~ Species), 
+          data = no_versicolor, 
+          family = "student")
 #>                 prior     class             coef group resp  dpar nlpar
 #> 1                             b                                        
 #> 2                             b Speciesvirginica                       
@@ -959,15 +919,17 @@ get_prior(bf(Sepal.Length~Species, sigma ~ Species),
 
 
 ```r
-prior <- c(prior(gamma(4,1), class= "nu"),
-           prior(normal(0, 4), class= "b"))
+prior <- c(prior(gamma(4, 1), class = "nu"),
+           prior(normal(0, 4), class = "b"))
 ```
 
 
 ```r
-robust_t_test1 <- brm(bf(Sepal.Length~Species, sigma ~ Species), 
-            data = ir1, prior = prior, family = "student")
-write_rds(robust_t_test1, path = "robust_t_test1.fit")
+robust_t_test1 <- brm(bf(Sepal.Length ~ Species, sigma ~ Species), 
+            data = no_versicolor, 
+            prior = prior, 
+            family = "student")
+write_rds(robust_t_test1, path = "data/robust_t_test1.fit")
 ```
 
 
@@ -995,7 +957,7 @@ b_sigma_Intercept on naturaallogaritm 1. grupi sd-st.
 
 b_sigma_Speciesvirginica on logaritm 2. grupi (I. virginica) sd erinevusest esimesest grupist (ehk efekti suurus).
 
-**Seega saab algses skaalas sd-d nii:** 
+Seega saab algses skaalas sd-d nii: 
 
 exp(b_sigma_Intercept) = 1. grupi sd
 
@@ -1011,7 +973,7 @@ mean_2.gr <- r_1_df$b_Intercept + r_1_df$b_Speciesvirginica
 ggplot(data = NULL) + geom_density(aes(mean_2.gr))
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-77-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="17_brms_files/figure-html/unnamed-chunk-76-1.png" width="70%" style="display: block; margin: auto;" />
 
 Nii saab tekitada usaldusinetvalle, mis katavad 90% jaotuse alusest kõrgeimast tihedusest (mis ei ole päris sama, mis kvantiilide meetod) 
 
@@ -1034,16 +996,17 @@ Avaldame posteeriori 2. grupi sd-e
 
 ```r
 sd_2.gr <- exp(r_1_df$b_sigma_Intercept) + exp(r_1_df$b_sigma_Speciesvirginica)
-ggplot(data = NULL) + geom_density(aes(sd_2.gr))
+ggplot(data = NULL) + 
+  geom_density(aes(sd_2.gr))
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-80-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="17_brms_files/figure-html/unnamed-chunk-79-1.png" width="70%" style="display: block; margin: auto;" />
 
 On tavaline, et sd-de posteeriorid ei ole normaaljaotusega (selle kohta vaata lähemalt Statistical Rethinking raamatust).
 
 
 ```r
-t.test(Sepal.Length~Species, data=ir1)
+t.test(Sepal.Length ~ Species, data = no_versicolor)
 #> 
 #> 	Welch Two Sample t-test
 #> 
@@ -1064,17 +1027,20 @@ Simuleerime siis ühe tõsiste outlieritega andmestiku, et vaadata kas meil õnn
 
 ```r
 set.seed(123)
-df1 <- tibble(a=rnorm(30), b= c(rnorm(25, 1, 1.5), 4.3, 5.3, 7, -8.1, -17)) %>% gather()
-ggplot(df1, aes(value, fill=key)) + geom_histogram(alpha = 0.7, position = "identity")
+df1 <- tibble(a = rnorm(30), b = c(rnorm(25, 1, 1.5), 4.3, 5.3, 7, -8.1, -17)) %>% gather()
+ggplot(df1, aes(value, fill = key)) + 
+  geom_histogram(alpha = 0.7, position = "identity", bins = 30)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-82-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="17_brms_files/figure-html/unnamed-chunk-81-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 ```r
 robust_t_test2 <- brm(bf(value~key, sigma ~ key), 
-            data = df1, family = "student", prior= prior(gamma(4,1), class= "nu"))
-write_rds(robust_t_test2, path = "robust_t_test2.fit")
+            data = df1, 
+            family = "student", 
+            prior = prior(gamma(4, 1), class= "nu"))
+write_rds(robust_t_test2, path = "data/robust_t_test2.fit")
 ```
 
 
@@ -1094,7 +1060,7 @@ tidy(robust_t_test2)
 
 
 ```r
-t.test(value~key, data=df1)
+t.test(value ~ key, data = df1)
 #> 
 #> 	Welch Two Sample t-test
 #> 
@@ -1117,7 +1083,7 @@ Igaks juhuks tuletame meelde, et tavaline t test (küll versioonis, kus võrreld
 
 
 ```r
-lm1 <- lm(value~key, data=df1)
+lm1 <- lm(value ~ key, data = df1)
 tidy(lm1)
 #> # A tibble: 2 x 5
 #>   term        estimate std.error statistic p.value
@@ -1125,47 +1091,50 @@ tidy(lm1)
 #> 1 (Intercept)  -0.0471     0.554   -0.0850   0.933
 #> 2 keyb          0.820      0.784    1.05     0.300
 ```
-p = 0.2999252 ongi vastava t testi põhiväljund.
+p = 0.3 ongi vastava t testi põhiväljund.
 
 
-### puuduvate andmete imputatsioon
+### Puuduvate andmete imputatsioon
 
-Regressioonimudelite fittimisel kasutatakse ainult vaatlusi, kus esinevad väärtused kõigis mudelisse pandud muutujates. Seega, kui meil on palju muutujaid, milles igaühes puuduvad juhuslikult mõned väärtused, siis kaotame kokkuvõttes enamuse oma valimist. Aitab puuduvate andmete imputatsioon, mis tegelikult tähendab, et me fitime iga puuduvaid andmeid sisaldava muutuja eraldi regressioonimudelis kõigi teiste muutujate vastu. 
+Regressioonimudelite fittimisel kasutatakse ainult vaatlusi, kus esinevad väärtused kõigis mudelisse pandud muutujates. Seega, kui meil on palju muutujaid, milles igaühes puuduvad juhuslikult mõned väärtused, siis kaotame kokkuvõttes enamuse oma valimist. Aitab puuduvate andmete imputatsioon, mis tegelikult tähendab, et me fitime iga puuduvaid andmeid sisaldava muutuja eraldi regressioonimudelis kõigi teiste muutujate vastu.
 
-Eriti vajalik, kui andmed ei puudu juhuslikult!
+Eriti vajalik, kui andmed ei puudu juhuslikult! 
 
 Viskame irise andmestiku kahest tulbast välja 1/4 andmepunkte, aga mitte juhuslikult vaid kõik madalamad väärtused. Selline suunatud tegevus kallutab (ehk suunab kindlas suunas) oluliselt mudeldamise tulemusi
 
 ```r
-iris_na <- iris
-quantile(iris_na$Petal.Length)
+quantile(iris$Petal.Length)
 #>   0%  25%  50%  75% 100% 
 #> 1.00 1.60 4.35 5.10 6.90
+iris_na <- iris
 iris_na$Sepal.Length[iris_na$Sepal.Length < 5] <- NA
 iris_na$Petal.Length[iris_na$Petal.Length < 1.6] <- NA
 ```
 
 
 ```r
-lm(iris$Petal.Length~iris$Sepal.Length) %>% tidy()
+lm(Petal.Length ~ Sepal.Length, data = iris) %>% tidy()
 #> # A tibble: 2 x 5
-#>   term              estimate std.error statistic  p.value
-#>   <chr>                <dbl>     <dbl>     <dbl>    <dbl>
-#> 1 (Intercept)          -7.10    0.507      -14.0 6.13e-29
-#> 2 iris$Sepal.Length     1.86    0.0859      21.6 1.04e-47
+#>   term         estimate std.error statistic  p.value
+#>   <chr>           <dbl>     <dbl>     <dbl>    <dbl>
+#> 1 (Intercept)     -7.10    0.507      -14.0 6.13e-29
+#> 2 Sepal.Length     1.86    0.0859      21.6 1.04e-47
 ```
 
 
 ```r
-lm(iris_na$Petal.Length~iris_na$Sepal.Length) %>% tidy()
+lm(Petal.Length ~ Sepal.Length, data = iris_na) %>% tidy()
 #> # A tibble: 2 x 5
-#>   term                 estimate std.error statistic  p.value
-#>   <chr>                   <dbl>     <dbl>     <dbl>    <dbl>
-#> 1 (Intercept)             -4.19    0.609      -6.89 4.33e-10
-#> 2 iris_na$Sepal.Length     1.43    0.0976     14.6  4.53e-27
+#>   term         estimate std.error statistic  p.value
+#>   <chr>           <dbl>     <dbl>     <dbl>    <dbl>
+#> 1 (Intercept)     -4.19    0.609      -6.89 4.33e-10
+#> 2 Sepal.Length     1.43    0.0976     14.6  4.53e-27
 ```
 
-imputeerime enne mudeli fittimist kasutades multiple imputation meetodit mice paketist. Siin imputeerime iga puuduva väärtuse kasutades kõigi teiste parameetrite väärtusi, ja me teeme seda 5 korda.
+
+imputeerime enne mudeli fittimist kasutades multiple imputation meetodit mice paketist https://stefvanbuuren.name/mice/.
+Siin imputeerime iga puuduva väärtuse kasutades kõigi teiste parameetrite väärtusi, ja me teeme seda 5 korda.
+
 
 
 ```r
@@ -1175,14 +1144,14 @@ imp <- mice(iris_na, m = 5, print = FALSE)
 
 Meil on nüüd 5 imputeeritud andmesetti. Me saadame need kõik brms-i.
 
->Siin kasutame mice() tema vaikeväärtustel, kuid mice pakett on tegelikult vägagi rikkalik imputatsioonimasin, mille helpi ja tutoorialeid tuleks kindlasti enne lugeda, kui oma andmeid imputeerima asuda. Lisaks, see raamat on tervenisti pühendatud imputatsioonile: https://stefvanbuuren.name/fimd/
+> Siin kasutame mice() tema vaikeväärtustel, kuid mice pakett on tegelikult vägagi rikkalik imputatsioonimasin, mille helpi ja tutoorialeid tuleks kindlasti enne lugeda, kui oma andmeid imputeerima asuda. Lisaks, see raamat on tervenisti pühendatud imputatsioonile: https://stefvanbuuren.name/fimd/
 
 
 
 
 ```r
-iris_imp1 <- brm_multiple(Petal.Length~Sepal.Length, data = imp)
-write_rds(iris_imp1, path = "iris_imp1.fit")
+iris_imp1 <- brm_multiple(Petal.Length ~ Sepal.Length, data = imp)
+write_rds(iris_imp1, path = "data/iris_imp1.fit")
 ```
 
 
@@ -1190,15 +1159,17 @@ write_rds(iris_imp1, path = "iris_imp1.fit")
 Saame tavalise fitiobjekti, kus on 5 alammudeli posterioorid. Kõik juba koos.
 
 ```r
-tidy(iris_imp1)[1:2,]
-#>             term estimate std.error lower upper
-#> 1    b_Intercept    -7.69    0.5543  -8.6 -6.79
-#> 2 b_Sepal.Length     1.95    0.0929   1.8  2.10
+tidy(iris_imp1)[,1:3]
+#>             term estimate std.error
+#> 1    b_Intercept   -7.692    0.5543
+#> 2 b_Sepal.Length    1.948    0.0929
+#> 3          sigma    0.843    0.0523
+#> 4           lp__ -192.574    3.2501
 ```
 
 Tõepoolest, süstemaatiliselt rikutud andmetest on imutatsiooni abil võimalik täitsa head ennustust tagasi saada!!!
 
-## imputatsioon otse brms-is
+## Imputatsioon otse brms-is
 
 See töötab küll irise peal halvemini kui mice!
 
@@ -1207,15 +1178,17 @@ See töötab küll irise peal halvemini kui mice!
 bform <- bf(Petal.Length | mi() ~ mi(Sepal.Length)) + 
   bf(Sepal.Length | mi() ~ Sepal.Width + Petal.Width + Species + mi(Petal.Length)) + set_rescor(FALSE)
 iris_imp2 <- brm(bform, data = iris_na)
-write_rds(iris_imp2, path = "iris_imp2.fit")
+write_rds(iris_imp2, path = "data/iris_imp2.fit")
 ```
+
+Kasutades mi() funktsiooni peame siin ekslpitsiitselt ütlema, milliseid muutujaid soovime imputeerida. Me imputeerime Petal.Length-i, kasutades NA-de väärtuste prediktorina Sepal.Length-i, mis on omakorda imputeeritud. Sepal.Length-i imputeerime omakorda Sepal.Width, Petal.width jne järgi. 
 
 
 ```r
 bform <- bf(Petal.Length | mi() ~ mi(Sepal.Length)) + 
   bf(Sepal.Length | mi() ~ Species) + set_rescor(FALSE)
 iris_imp3 <- brm(bform, data = iris_na)
-write_rds(iris_imp3, path = "iris_imp3.fit")
+write_rds(iris_imp3, path = "data/iris_imp3.fit")
 ```
 
 
@@ -1223,200 +1196,162 @@ write_rds(iris_imp3, path = "iris_imp3.fit")
 
 
 ```r
-tidy(iris_imp2)
-#>                               term  estimate std.error     lower     upper
-#> 1          b_PetalLength_Intercept   -5.5690  4.92e-01    -6.204 -4.81e+00
-#> 2          b_SepalLength_Intercept    2.6008  3.26e-01     2.115  3.12e+00
-#> 3        b_SepalLength_Sepal.Width    0.3074  8.55e-02     0.164  4.30e-01
-#> 4        b_SepalLength_Petal.Width    0.0679  1.52e-01    -0.130  3.33e-01
-#> 5  b_SepalLength_Speciesversicolor   -0.2201  1.59e-01    -0.482  1.72e-02
-#> 6   b_SepalLength_Speciesvirginica   -0.4502  2.32e-01    -0.856 -9.37e-02
-#> 7   bsp_PetalLength_miSepal.Length    1.6355  8.26e-02     1.509  1.74e+00
-#> 8   bsp_SepalLength_miPetal.Length    0.6130  3.13e-02     0.576  6.63e-01
-#> 9                sigma_PetalLength    0.6527  4.04e-02     0.599  7.22e-01
-#> 10               sigma_SepalLength    0.3325  1.35e-02     0.309  3.53e-01
-#> 11              Ymi_PetalLength[1]    2.5171  3.47e-01     2.006  3.08e+00
-#> 12              Ymi_PetalLength[2] -432.9218  1.39e+03 -3058.912  8.54e+02
-#> 13              Ymi_PetalLength[3] -996.6434  1.42e+03 -4056.104  1.16e+02
-#> 14              Ymi_PetalLength[4] 1510.4882  1.42e+03  -295.164  3.59e+03
-#> 15              Ymi_PetalLength[5]    2.2171  3.65e-01     1.658  2.78e+00
-#> 16              Ymi_PetalLength[7] 4136.6840  5.31e+03 -1684.596  1.41e+04
-#> 17              Ymi_PetalLength[8]    2.1674  3.67e-01     1.673  2.77e+00
-#> 18              Ymi_PetalLength[9]  172.4278  8.99e+02  -963.060  2.21e+03
-#> 19             Ymi_PetalLength[10] 1157.3398  9.74e+02  -503.254  2.82e+03
-#> 20             Ymi_PetalLength[11]    3.2050  3.12e-01     2.689  3.67e+00
-#> 21             Ymi_PetalLength[13]  571.3848  1.11e+03  -644.225  2.81e+03
-#> 22             Ymi_PetalLength[14]  265.7601  6.34e+02  -440.222  1.47e+03
-#> 23             Ymi_PetalLength[15]    3.3153  3.90e-01     2.681  3.93e+00
-#> 24             Ymi_PetalLength[16]    3.0418  4.40e-01     2.216  3.69e+00
-#> 25             Ymi_PetalLength[17]    3.0307  3.64e-01     2.566  3.74e+00
-#> 26             Ymi_PetalLength[18]    2.5185  3.97e-01     1.782  3.12e+00
-#> 27             Ymi_PetalLength[20]    2.2725  4.03e-01     1.530  2.86e+00
-#> 28             Ymi_PetalLength[22]    2.4953  3.96e-01     1.890  3.13e+00
-#> 29             Ymi_PetalLength[23] -153.9356  2.05e+03 -3859.651  2.09e+03
-#> 30             Ymi_PetalLength[28]    2.7134  4.40e-01     2.014  3.39e+00
-#> 31             Ymi_PetalLength[29]    2.7003  4.45e-01     1.989  3.48e+00
-#> 32             Ymi_PetalLength[32]    2.9400  3.63e-01     2.379  3.58e+00
-#> 33             Ymi_PetalLength[33]    2.5132  4.26e-01     1.847  3.28e+00
-#> 34             Ymi_PetalLength[34]    2.8653  3.28e-01     2.375  3.41e+00
-#> 35             Ymi_PetalLength[35]  315.7272  1.31e+03 -1101.428  2.84e+03
-#> 36             Ymi_PetalLength[36]    2.5777  3.37e-01     1.976  3.08e+00
-#> 37             Ymi_PetalLength[37]    3.2112  3.88e-01     2.574  3.80e+00
-#> 38             Ymi_PetalLength[38] -113.1557  5.45e+02 -1429.359  5.01e+02
-#> 39             Ymi_PetalLength[39] -122.0110  1.87e+03 -4121.989  2.67e+03
-#> 40             Ymi_PetalLength[40]    2.5490  3.25e-01     2.031  3.05e+00
-#> 41             Ymi_PetalLength[41]    2.3217  4.26e-01     1.650  3.08e+00
-#> 42             Ymi_PetalLength[42]  -10.1840  2.22e+02  -311.454  4.23e+02
-#> 43             Ymi_PetalLength[43] -847.8219  1.13e+03 -2960.030  6.47e+02
-#> 44             Ymi_PetalLength[46] -163.4421  7.83e+02 -1370.487  9.39e+02
-#> 45             Ymi_PetalLength[48] 2292.4104  5.66e+03 -4695.643  1.20e+04
-#> 46             Ymi_PetalLength[49]    2.5764  4.47e-01     1.862  3.29e+00
-#> 47             Ymi_PetalLength[50]    2.4020  3.81e-01     1.687  2.97e+00
-#> 48              Ymi_SepalLength[2] -266.8168  8.70e+02 -1892.662  5.63e+02
-#> 49              Ymi_SepalLength[3] -639.3507  9.37e+02 -2636.029  7.14e+01
-#> 50              Ymi_SepalLength[4]  964.9306  9.08e+02  -167.148  2.28e+03
-#> 51              Ymi_SepalLength[7] 2470.0979  3.13e+03 -1050.894  8.24e+03
-#> 52              Ymi_SepalLength[9]   97.2306  5.32e+02  -621.286  1.29e+03
-#> 53             Ymi_SepalLength[10]  701.1611  5.83e+02  -313.687  1.65e+03
-#> 54             Ymi_SepalLength[12]    4.5950  2.95e-01     4.224  5.17e+00
-#> 55             Ymi_SepalLength[13]  366.2949  7.13e+02  -394.819  1.83e+03
-#> 56             Ymi_SepalLength[14]  156.5420  3.77e+02  -271.828  8.59e+02
-#> 57             Ymi_SepalLength[23]  -54.1831  1.24e+03 -2232.912  1.37e+03
-#> 58             Ymi_SepalLength[25]    4.7323  1.66e-01     4.474  5.05e+00
-#> 59             Ymi_SepalLength[30]    4.5205  2.99e-01     4.040  4.95e+00
-#> 60             Ymi_SepalLength[31]    4.5043  2.08e-01     4.157  4.85e+00
-#> 61             Ymi_SepalLength[35]  193.4708  7.73e+02  -637.046  1.68e+03
-#> 62             Ymi_SepalLength[38]  -71.5785  3.47e+02  -922.843  3.01e+02
-#> 63             Ymi_SepalLength[39]  -55.9220  1.18e+03 -2591.647  1.74e+03
-#> 64             Ymi_SepalLength[42]   -1.2193  1.37e+02  -182.045  2.66e+02
-#> 65             Ymi_SepalLength[43] -523.7231  6.99e+02 -1866.247  3.84e+02
-#> 66             Ymi_SepalLength[46] -104.9238  4.79e+02  -856.116  5.47e+02
-#> 67             Ymi_SepalLength[48] 1271.7510  3.35e+03 -2938.394  6.94e+03
-#> 68             Ymi_SepalLength[58]    5.1607  2.74e-01     4.644  5.60e+00
-#> 69            Ymi_SepalLength[107]    6.0507  2.04e-01     5.776  6.40e+00
-#> 70                            lp__ -213.4054  5.31e+00  -222.784 -2.05e+02
+tidy(iris_imp2) %>% head()
+#>                              term estimate std.error  lower   upper
+#> 1         b_PetalLength_Intercept  -5.5690    0.4917 -6.204 -4.8129
+#> 2         b_SepalLength_Intercept   2.6008    0.3255  2.115  3.1246
+#> 3       b_SepalLength_Sepal.Width   0.3074    0.0855  0.164  0.4297
+#> 4       b_SepalLength_Petal.Width   0.0679    0.1515 -0.130  0.3330
+#> 5 b_SepalLength_Speciesversicolor  -0.2201    0.1595 -0.482  0.0172
+#> 6  b_SepalLength_Speciesvirginica  -0.4502    0.2319 -0.856 -0.0937
 ```
 
 
 
 ```r
-tidy(iris_imp3)
-#>                               term estimate std.error    lower    upper
-#> 1          b_PetalLength_Intercept   -4.601    0.5864   -5.560   -3.650
-#> 2          b_SepalLength_Intercept    5.168    0.0915    5.014    5.316
-#> 3  b_SepalLength_Speciesversicolor    0.781    0.1157    0.590    0.971
-#> 4   b_SepalLength_Speciesvirginica    1.449    0.1155    1.259    1.645
-#> 5   bsp_PetalLength_miSepal.Length    1.488    0.0945    1.333    1.642
-#> 6                sigma_PetalLength    0.705    0.0494    0.630    0.791
-#> 7                sigma_SepalLength    0.503    0.0325    0.453    0.559
-#> 8               Ymi_PetalLength[1]    2.998    0.7075    1.887    4.187
-#> 9               Ymi_PetalLength[2]    3.074    1.0414    1.344    4.806
-#> 10              Ymi_PetalLength[3]    3.110    1.0349    1.401    4.837
-#> 11              Ymi_PetalLength[4]    3.108    1.0649    1.343    4.882
-#> 12              Ymi_PetalLength[5]    2.833    0.6971    1.690    3.987
-#> 13              Ymi_PetalLength[7]    3.101    1.0299    1.433    4.832
-#> 14              Ymi_PetalLength[8]    2.830    0.7094    1.668    3.986
-#> 15              Ymi_PetalLength[9]    3.106    1.0544    1.335    4.809
-#> 16             Ymi_PetalLength[10]    3.120    1.0461    1.402    4.882
-#> 17             Ymi_PetalLength[11]    3.452    0.6926    2.341    4.582
-#> 18             Ymi_PetalLength[13]    3.098    1.0516    1.346    4.774
-#> 19             Ymi_PetalLength[14]    3.079    1.0440    1.420    4.796
-#> 20             Ymi_PetalLength[15]    4.028    0.7033    2.873    5.193
-#> 21             Ymi_PetalLength[16]    3.876    0.7141    2.693    5.081
-#> 22             Ymi_PetalLength[17]    3.439    0.7004    2.269    4.585
-#> 23             Ymi_PetalLength[18]    2.977    0.7185    1.778    4.152
-#> 24             Ymi_PetalLength[20]    2.972    0.7062    1.804    4.141
-#> 25             Ymi_PetalLength[22]    2.980    0.7071    1.853    4.116
-#> 26             Ymi_PetalLength[23]    3.083    1.0405    1.385    4.814
-#> 27             Ymi_PetalLength[28]    3.150    0.7182    1.970    4.319
-#> 28             Ymi_PetalLength[29]    3.137    0.7118    1.955    4.322
-#> 29             Ymi_PetalLength[32]    3.438    0.7153    2.250    4.594
-#> 30             Ymi_PetalLength[33]    3.135    0.7317    1.949    4.335
-#> 31             Ymi_PetalLength[34]    3.585    0.7020    2.410    4.743
-#> 32             Ymi_PetalLength[35]    3.095    1.0425    1.354    4.801
-#> 33             Ymi_PetalLength[36]    2.843    0.7317    1.667    4.049
-#> 34             Ymi_PetalLength[37]    3.582    0.7249    2.382    4.772
-#> 35             Ymi_PetalLength[38]    3.078    1.0506    1.311    4.763
-#> 36             Ymi_PetalLength[39]    3.088    1.0618    1.333    4.794
-#> 37             Ymi_PetalLength[40]    2.989    0.7160    1.784    4.172
-#> 38             Ymi_PetalLength[41]    2.852    0.7160    1.662    4.031
-#> 39             Ymi_PetalLength[42]    3.092    1.0302    1.385    4.780
-#> 40             Ymi_PetalLength[43]    3.102    1.0397    1.401    4.792
-#> 41             Ymi_PetalLength[46]    3.126    1.0382    1.416    4.844
-#> 42             Ymi_PetalLength[48]    3.128    1.0212    1.465    4.821
-#> 43             Ymi_PetalLength[49]    3.278    0.7262    2.072    4.452
-#> 44             Ymi_PetalLength[50]    2.825    0.7284    1.598    4.012
-#> 45              Ymi_SepalLength[2]    5.169    0.5124    4.342    6.016
-#> 46              Ymi_SepalLength[3]    5.175    0.5100    4.306    5.985
-#> 47              Ymi_SepalLength[4]    5.181    0.5113    4.354    6.024
-#> 48              Ymi_SepalLength[7]    5.172    0.4976    4.360    5.989
-#> 49              Ymi_SepalLength[9]    5.175    0.5084    4.340    6.002
-#> 50             Ymi_SepalLength[10]    5.182    0.5094    4.337    5.988
-#> 51             Ymi_SepalLength[12]    4.643    0.3494    4.053    5.208
-#> 52             Ymi_SepalLength[13]    5.164    0.5111    4.325    5.984
-#> 53             Ymi_SepalLength[14]    5.163    0.5175    4.324    6.014
-#> 54             Ymi_SepalLength[23]    5.158    0.5114    4.329    5.989
-#> 55             Ymi_SepalLength[25]    4.741    0.3495    4.161    5.311
-#> 56             Ymi_SepalLength[30]    4.643    0.3498    4.080    5.223
-#> 57             Ymi_SepalLength[31]    4.642    0.3564    4.056    5.223
-#> 58             Ymi_SepalLength[35]    5.170    0.5100    4.336    6.009
-#> 59             Ymi_SepalLength[38]    5.177    0.5112    4.328    6.007
-#> 60             Ymi_SepalLength[39]    5.167    0.5121    4.335    6.009
-#> 61             Ymi_SepalLength[42]    5.171    0.5068    4.328    5.982
-#> 62             Ymi_SepalLength[43]    5.179    0.5137    4.311    6.018
-#> 63             Ymi_SepalLength[46]    5.174    0.5101    4.339    6.007
-#> 64             Ymi_SepalLength[48]    5.178    0.4987    4.349    5.982
-#> 65             Ymi_SepalLength[58]    5.615    0.3417    5.058    6.168
-#> 66            Ymi_SepalLength[107]    6.357    0.3541    5.779    6.930
-#> 67                            lp__ -281.863    6.6033 -293.525 -271.709
+tidy(iris_imp3) %>% head()
+#>                              term estimate std.error lower  upper
+#> 1         b_PetalLength_Intercept   -4.601    0.5864 -5.56 -3.650
+#> 2         b_SepalLength_Intercept    5.168    0.0915  5.01  5.316
+#> 3 b_SepalLength_Speciesversicolor    0.781    0.1157  0.59  0.971
+#> 4  b_SepalLength_Speciesvirginica    1.449    0.1155  1.26  1.645
+#> 5  bsp_PetalLength_miSepal.Length    1.488    0.0945  1.33  1.642
+#> 6               sigma_PetalLength    0.705    0.0494  0.63  0.791
 ```
 
-### binoomjaotusega mudelid
+
+## Binoomjaotusega mudelid
 
 y ∼ Binomial(n,p)
+
+Me teeme n katset ja kodeerime iga eduka katse 1-ga ja mitteeduka katse 0-ga. Kui n=1, siis y on ühtedest ja nullidest koosnev vektor (muutuja) ja p on tõenäosus, et suvaline katse annab tulemuseks 1-e. Eeldades logistilist transformatsiooni on siin tegu logistilise regressiooniga.
+Kui n > 1 (ja ikka eeldades logistilist transformatsiooni), siis on tegu aggregeeritud binoomse logistilise regressiooniga. Me lahendame allpool need mõlemad.
  
-where y is some count variable, n is the number of trials, and  p is the probability a given trial was a 1, which is sometimes termed a success. 
+### Logistiline regressioon
 
-When  n = 1, then y is a vector of 0s and 1s. Presuming the logit link, models of this type are commonly termed logistic regression. 
+Tavalises lineaarses regressioonis on tavapärane, et kuigi me ennustame pidevat y-muutujat, kas osad või kõik X-muutujad (prediktorid) on mittepidevad. Lineaarsed mudelid jooksevad võrdselt hästi pidevate ja mittepidevate (binaarsete) prediktoritega. (Binaarsed muutujad võivad omada kaht diskreetset väärtust, mida kodeerime 1 ja 0-na). Aga kuidas käituda, kui meie poolt ennustatav Y-muutuja on binaarne? Kui me püüame ennustada binaarse y-muutuja oodatavaid väärtusi tõenäosustena, ehk 1-de arvu suhet katsete koguarvu, kas siis tavaline lineaarne regressioon enam ei tööta? Töötab küll, aga paraku ei ole garanteeritud, et mudeli ennustused jäävad 0 ja 1 vahele, ehk tõenäosuste skaalasse. Seda tagab logistiline regressioon. Logistilises regressioonis ei modelleeri me mitte otse y väärtusi (1 ja 0) erinevatel x-i väärtustel, vaid tõenäosust P(Y = 1 | X) [tõenäosus, et Y = 1, fikseeritud x-i väärtusel]. 
 
-When n > 1, and still presuming the logit link, we might call our model an aggregated logistic regression model, or more generally an aggregated binomial regression model.
+Logistiline regressioon töötab tänu logistilisele transformatsioonile. Näiteks logistiline transformatsioon funktsioonile $y = a + bx$ näeb välja niimoodi 
+$$y=\frac{exp(a + bx)}{1 + exp(a + bx)}$$ 
 
-### logistic regression
+    exp(a) tähendab "e astmes a", kus e on Euleri arv, ehk arv, mille 
+    naturaal-logaritm = 1 (seega on e naturaal-logaritmi alus). 
+    e on umbes 2.71828 ja selle saab valemist (1 + 1/n)^n, 
+    kui n läheneb lõpmatusele.
+
+#### Logistiline ja logit transformatsioon - definitsioonid
+
+See peatükk aitab loogilisest regressioonist aru saada - aru saamine pole aga tingimata vajalik selle edukaks tegemiseks. 
+
+ Logistiline transformatsioon viib lineaarse regressiooni tavapärasest y-muutuja skaalast [−∞,+∞] tõenäosuste skaalasse [0,1], andes meile sirge asemele S-kujulise kurvi, mis läheneb asümptootiliselt ühelt poolt 0-le ja teiselt poolt 1-le. Logistilise funktsiooni põõrdväärtus on logit funktsioon, mis annab "*odds*-i" ehk shansi ehk kihlveosuhted tõenäosusele p: $odds = \frac {p}{1 − p}$. Tõenäosuse p logit ehk logit(p) on sama, mis log(odds):
+
+$$logit(p)=\log \left({\frac {p}{1-p}}\right)=\log(p)-\log(1-p)$$
+
+Meie y = a + bx mudeli korral tavalises meetrilises skaalas on *odds* exponent meie fititud lineaarsest mudelist: 
+
+$$odds= \frac {P(Y = 1 ~|~ X)}{1-P(Y = 1 ~|~ X)} = exp(a+bx)$$ 
+
+Näiteks tõenäosus 0.2 (20%) tähendab, et $odds = 0.2/(1 - 0.2) = 1/4$ ehk üks neljale ja tõenäosus 0.9 tähendab, et $odds = 0.9/(1 - 0.9) = 9$ ehk üheksa ühele. Sellel meetodil töötavad näiteks hipodroomid, sest nii on mänguril lihtne näha, et kui kihlveokontori poolt mingile hobusele omistatud odds on näiteks üks nelja vastu ja te maksate kihlveo maaklerile 1 euro, siis saab võidu korral 4 eurot kasumit (ehk 5 eurose kupüüri). Logaritm *odds*-idest ongi logit transformatsioon, mille pöördväärtus on omakorda logistiline transformatsioon!
+
+Suvalise arvu α logistiline funktsioon on logiti põõrdväärtus:
+
+$$logit^{-1}\alpha=logistic (\alpha)={\frac {exp (\alpha) }{1+ exp (\alpha)}}$$
+
+
+```r
+x <- -10:10
+y <- exp(x)/(1+exp(x))
+plot(y~x)
+```
+
+<img src="17_brms_files/figure-html/unnamed-chunk-99-1.png" width="70%" style="display: block; margin: auto;" />
+
+Kui me mudeli y = a + bx korral muudame x-i ühe ühiku võrra muutuvad log-odds-id b võrra. Teisisõnu võime korrutada lineaarses skaalas *odds*-id exp(b)-ga. Kuna P(Y = 1 | X) ja X-i seos ei ole sirge, siis b ei vasta P(Y = 1 | X) muutusele X-i muutumisel ühe ühiku võrra. See, kui kiiresti P(Y = 1 | X) muutub, sõltub X-i väärtusest, aga hoolimata sellest, senikaua kui b > 0, on X-i kasv alati seotud tõenäosuse kasvuga (ja vastupidi). 
+ 
+
+Kahe tõenäosuse logitite vahe on sama, mis logaritm *odds-ratio*-st (log(OR) ehk shanside suhe)
+
+$${log} (OR)= {logit} (p_{1})- {logit} (p_{2})$$
+
+**Odds-ratio**
+
+Kui meil on 2 katsetingimust (ravim/platseebo) ning 2 väljundit (näit elus/surnud), siis 
+
+* a - ravim/elus juhutude arv, 
+
+* b - ravim/surnud juhutude arv, 
+
+* c - platseebo/elus juhutude arv, 
+
+* d - platseebo/surnud juhutude arv.
+
+$$OR = \frac {a/b}{c/d}$$ 
+
+* OR = 1 Katsetingimus ei mõjuta väljundi *odds*-e 
+
+* OR > 1 Katsetingimus tõstab väljundi *odds*-e 
+
+* OR < 1 Katsetingimus langetab väljundi *odds*-e
+
+Logistiline regressioon üldistab OR-i kaugemale 2st binaarsest muutujast.
+Kui meil on binaarne y-muutuja ja binaarne x-muutuja (x1), pluss rida teisi x-muutujaid (x2...xn), siis mitmese logistilise regressiooni x1-e tõusukoefitsient b1 on seotud tingimusliku OR-ga. $\exp(\beta_1)$ annab Y ja X vahelise OR-i, tingimusel, et teiste x-muutujate väärtused on fikseeritud (see on tavaline sõltumatute muutujatega lineaarse regressiooni beta-koefitsientide tõlgendamise tingimus). 
+
+    OR-i kui suhtelise efekti suuruse tõlgendamine sõltub sündmuse y = 1 
+    baastõenäosusest. Näiteks kui surm põhjusel x on tavapäraselt väga 
+    haruldane ja mingi keskkonnamõju annab OR = 10, siis tegelik tõus 
+    suremuses (surma tõenäosus keskkonnamõju tingimustes) võib olla tühine. 
+
+#### Logistiline regressioon brms-s
+
 
 ```r
 library(rethinking)
+```
+
+
+```r
 data(chimpanzees)
-d <- chimpanzees
-head(d)
-#>   actor recipient condition block trial prosoc_left chose_prosoc
-#> 1     1        NA         0     1     2           0            1
-#> 2     1        NA         0     1     4           0            0
-#> 3     1        NA         0     1     6           1            0
-#> 4     1        NA         0     1     8           0            1
-#> 5     1        NA         0     1    10           1            1
-#> 6     1        NA         0     1    12           1            1
-#>   pulled_left
-#> 1           0
-#> 2           1
-#> 3           0
-#> 4           0
-#> 5           1
-#> 6           1
+skim(chimpanzees)
+#> Skim summary statistics
+#>  n obs: 504 
+#>  n variables: 8 
+#> 
+#> ── Variable type:integer ──────────────────────────────────────────────────
+#>      variable missing complete   n  mean    sd p0 p25  p50 p75 p100
+#>         actor       0      504 504  4     2     1   2  4     6    7
+#>         block       0      504 504  3.5   1.71  1   2  3.5   5    6
+#>  chose_prosoc       0      504 504  0.57  0.5   0   0  1     1    1
+#>     condition       0      504 504  0.5   0.5   0   0  0.5   1    1
+#>   prosoc_left       0      504 504  0.5   0.5   0   0  0.5   1    1
+#>   pulled_left       0      504 504  0.58  0.49  0   0  1     1    1
+#>     recipient     252      252 504  5     2     2   3  5     7    8
+#>         trial       0      504 504 36.38 20.79  1  18 36    54   72
+#>      hist
+#>  ▇▇▇▇▁▇▇▇
+#>  ▇▇▁▇▇▁▇▇
+#>  ▆▁▁▁▁▁▁▇
+#>  ▇▁▁▁▁▁▁▇
+#>  ▇▁▁▁▁▁▁▇
+#>  ▆▁▁▁▁▁▁▇
+#>  ▇▇▇▇▁▇▇▇
+#>  ▇▇▇▇▇▇▇▇
 ```
 
-1. intercept only model
+
+#### Intercept only model
+
 
 ```r
-m_logreg_1 <-
-  brm(data = d, family = binomial,
-      pulled_left ~ 1,
-      prior(normal(0, 10), class = Intercept))
-write_rds(m_logreg_1, path= "m_logreg_1.fit")
+m_logreg_1 <- brm(data = chimpanzees, 
+                  family = binomial,
+                  pulled_left ~ 1,
+                  prior(normal(0, 10), class = Intercept))
+write_rds(m_logreg_1, path= "data/m_logreg_1.fit")
 ```
 
 
 ```r
-m_logreg_1 <- read_rds("m_logreg_1.fit")
+m_logreg_1 <- read_rds("data/m_logreg_1.fit")
 ```
 
 
@@ -1427,13 +1362,15 @@ tidy(m_logreg_1)
 #> 2        lp__ -346.669    0.6652 -347.959 -346.194
 ```
 
-Tõenäosus, et ahv "pulled left":
+Tõenäosus, et shimpans "pulled left":
 
 ```r
 inv_logit_scaled(fixef(m_logreg_1))
 #>           Estimate Est.Error  Q2.5 Q97.5
 #> Intercept     0.58     0.522 0.539 0.621
 ```
+
+See tõenäosus peaks seega jääma kuhugi 54% ja 62% vahele.
 
 Nüüd ehtne ennustav logistiline regressioonimudel
 
@@ -1443,13 +1380,13 @@ m_logreg_2 <-
       pulled_left ~ 1 + prosoc_left,
       prior = c(prior(normal(0, 10), class = Intercept),
                 prior(normal(0, 10), class = b)))
-write_rds(m_logreg_2, path= "m_logreg_2.fit")
+write_rds(m_logreg_2, path= "data/m_logreg_2.fit")
 ```
 
 
 
 ```r
-m_logreg_2 <-read_rds("m_logreg_2.fit")
+m_logreg_2 <- read_rds("data/m_logreg_2.fit")
 ```
 
 
@@ -1461,18 +1398,17 @@ tidy(m_logreg_2)
 #> 3          lp__ -345.7102     1.014 -347.639 -344.741
 ```
 
-The proportional odds = `exp(0.5528)`, which is the ratio of the probability an event happens to the probability it does not happen (the outcome or y variable). 
+The proportional odds = 1.76, which is the ratio of the probability an event happens to the probability it does not happen (the outcome or y variable). 
 
-If changing the predictor prosoc_left from 0 to 1 increases the log-odds of pulling the left-hand lever by 0.55, then there is a proportional increase of exp(0.55) = 1.73 in the odds of pulling the left-hand lever. This means that the odds increase by 73%.
+If changing the predictor prosoc_left from 0 to 1 increases the log-odds of pulling the left-hand lever by 0.57, then there is a proportional increase of exp(0.57) = 1.76 in the odds of pulling the left-hand lever. This means that the odds increase by 73%.
 
 
 ```r
-exp(0.55)
-#> [1] 1.73
+exp(0.57)
+#> [1] 1.77
 ```
 
-
-the actual change in probability will also depend upon the intercept, α, as well as any other predictor variables. Logistic regression induce interactions among all variables. You can think of these interactions as resulting from both ceiling and  floor effects: If the intercept is large enough to guarantee a pull, then increasing the odds by 73% isn’t going to make it any more guaranteed. Suppose α = 4.  Then the probability of a pull, ignoring everything else, would be `inv_logit_scaled(4)` = 0.98. Adding in an increase of 0.55 (the estimate for beta) changes this to: `inv_logit_scaled(4 + 0.55)` = 0.99. That’s a difference, on the absolute scale, of 1%, despite being an 73% increase in proportional odds. Likewise, if the intercept is very negative, then the probability of a pull is almost zero. An increase in odds of 73% may not be enough to get the probability up from the floor. 
+The actual change in probability will also depend upon the intercept, alpha, as well as any other predictor variables. Logistic regression induce interactions among all variables. You can think of these interactions as resulting from both ceiling and  floor effects: If the intercept is large enough to guarantee a pull, then increasing the odds by 73% isn’t going to make it any more guaranteed. Suppose α = 4.  Then the probability of a pull, ignoring everything else, would be `inv_logit_scaled(4)` = 0.98. Adding in an increase of 0.57 (the estimate for beta) changes this to: `inv_logit_scaled(4 + 0.57)` = 0.99. That's a difference, on the absolute scale, of 1%, despite being an 73% increase in proportional odds. Likewise, if the intercept is very negative, then the probability of a pull is almost zero. An increase in odds of 73% may not be enough to get the probability up from the floor. 
 
 
 
@@ -1489,72 +1425,96 @@ inv_logit_scaled(0.04562136)
 #> [1] 0.511
 ```
 
-if prosoc_left is 0, it is 51%.
+If prosoc_left is 0, it is 51%.
 
 This meagre difference is reflected in the roc curve.
 
 ```r
-glm.probs <- predict(m_logreg_2, type= "response") %>% as.data.frame()
+glm.probs <- predict(m_logreg_2, type = "response") %>% as.data.frame()
 #> Warning: Using 'binomial' families without specifying 'trials' on the left-
 #> hand side of the model formula is deprecated.
 glm.probs <- glm.probs[,1]
-glm.pred <- rep("pulled_right",504)
-glm.pred[glm.probs >.5] <- "pulled_left" 
-table(glm.pred, d$pulled_left) #confusion matrix
+glm.pred <- rep("pulled_right", 504)
+glm.pred[glm.probs > 0.5] <- "pulled_left" 
+table(glm.pred, chimpanzees$pulled_left)
 #>               
 #> glm.pred         0   1
 #>   pulled_left  201 282
 #>   pulled_right  11  10
-library(pROC)
-roccurve <- roc(d$pulled_left ~ glm.probs)
-plot(roccurve, legacy.axes = TRUE, cex.axis=0.7, cex.lab= 0.8)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-111-1.png" width="70%" style="display: block; margin: auto;" />
+
+```r
+library(pROC)
+roccurve <- roc(chimpanzees$pulled_left ~ glm.probs)
+plot(roccurve, legacy.axes = TRUE, cex.axis = 0.7, cex.lab = 0.8)
+```
+
+<img src="17_brms_files/figure-html/unnamed-chunk-113-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 Sarnase mudeli saab fittida ka siis, kui n>1 ja meil on igale ahvile countide suhted nr of pull-left/total pulls. Nüüd on meil vaja lisada trials(), kuhu läheb n kas ühe numbrina või muutujana, mis indekseerib sündmuste arvu ehk n-i. Antud juhul on kõikidel ahvidel katsete arv n 18.
 
 ```r
-d_aggr <- d %>% select(-recipient, -block, -trial, -chose_prosoc) %>%
+chimp_aggr <- select(chimpanzees, actor, condition, prosoc_left, pulled_left) %>%
   group_by(actor, condition, prosoc_left) %>%
-  summarise(x = sum(pulled_left))
-m_logreg_3 <-
-  brm(data = d_aggr, family = binomial, x | trials(18) ~ 1 + prosoc_left)
+  summarise_at("pulled_left", sum)
+m_logreg_3 <- brm(pulled_left | trials(18) ~ 1 + prosoc_left, 
+                  data = chimp_aggr, 
+                  family = binomial)
 ```
 Koefitsendid  tulevad samad, mis eelmisel mudelil.
 
-2. näide aggregeeritud binoomsetele andmetele
+Näide agregeeritud binoomsetele andmetele.
 
 ```r
-library(rethinking)
 data(UCBadmit)
-d <- UCBadmit
-#teeme dummy variable "male", kodeeritud kui 1 ja 0
-d <- d %>% mutate(male = ifelse(applicant.gender == "male", 1, 0))
-head(d)
-#>   dept applicant.gender admit reject applications male
-#> 1    A             male   512    313          825    1
-#> 2    A           female    89     19          108    0
-#> 3    B             male   353    207          560    1
-#> 4    B           female    17      8           25    0
-#> 5    C             male   120    205          325    1
-#> 6    C           female   202    391          593    0
+skim(UCBadmit)
+#> Skim summary statistics
+#>  n obs: 12 
+#>  n variables: 5 
+#> 
+#> ── Variable type:factor ───────────────────────────────────────────────────
+#>          variable missing complete  n n_unique             top_counts
+#>  applicant.gender       0       12 12        2  fem: 6, mal: 6, NA: 0
+#>              dept       0       12 12        6 A: 2, B: 2, C: 2, D: 2
+#>  ordered
+#>    FALSE
+#>    FALSE
+#> 
+#> ── Variable type:integer ──────────────────────────────────────────────────
+#>      variable missing complete  n   mean     sd p0    p25   p50    p75
+#>         admit       0       12 12 146.25 148.45 17  45.75 107   154   
+#>  applications       0       12 12 377.17 216.92 25 291.5  374   452.75
+#>        reject       0       12 12 230.92 122.77  8 188.25 261.5 314   
+#>  p100     hist
+#>   512 ▆▇▂▁▁▂▁▂
+#>   825 ▃▂▂▇▁▃▁▂
+#>   391 ▅▁▂▁▇▂▇▅
 ```
 
 
 ```r
-m_ucadmit1 <- brm(data = d, family = binomial,
-      admit | trials(applications) ~ 1 + male ,
-      prior = c(prior(normal(0, 10), class = Intercept),
-                prior(normal(0, 10), class = b)),
-      iter = 2500, warmup = 500, cores = 2, chains = 2)
-write_rds(m_ucadmit1, path = "m_ucadmit1.fit")
+ucbadmit <- mutate(UCBadmit, male = case_when(
+  applicant.gender == "male" ~ 1,
+  TRUE ~ 0
+))
+```
+
+
+
+```r
+m_ucadmit1 <- brm(admit | trials(applications) ~ 1 + male,
+                  data = ubcadmit, 
+                  family = binomial,
+                  prior = c(prior(normal(0, 10), class = Intercept), 
+                            prior(normal(0, 10), class = b)))
+write_rds(m_ucadmit1, path = "data/m_ucadmit1.fit")
 ```
 
 
 ```r
-m_ucadmit1 <- read_rds("m_ucadmit1.fit")
+m_ucadmit1 <- read_rds("data/m_ucadmit1.fit")
 ```
 
 
@@ -1568,15 +1528,15 @@ tidy(m_ucadmit1)
 
 
 ```r
-exp(0.6102733)
+exp(0.61)
 #> [1] 1.84
 ```
 
-mehed saavad suhtelise 84% eelise ülikooli sissesaamisel.
+Mehed saavad suhtelise 84% eelise ülikooli sissesaamisel.
 
 
 ```r
-inv_logit_scaled(-0.8311908 + 0.6102733)
+inv_logit_scaled(-0.83 + 0.61)
 #> [1] 0.445
 ```
 
@@ -1584,8 +1544,8 @@ Meeskandidaadi tõenäosus sisse saada on 44%.
 
 
 ```r
-inv_logit_scaled(-0.8311908)
-#> [1] 0.303
+inv_logit_scaled(-0.83)
+#> [1] 0.304
 ```
 
 Naiskandidaadi tõenäosus sisse saada on 30%.
@@ -1594,9 +1554,9 @@ Kui palju erinevad vastuvõtmise tõenäosused (usaldusintervallidega)?
 
 ```r
 post <- posterior_samples(m_ucadmit1)
-post %>% mutate(p_admit_male   = inv_logit_scaled(b_Intercept + b_male),
-         p_admit_female = inv_logit_scaled(b_Intercept),
-         diff_admit     = p_admit_male - p_admit_female) %>%
+post %>% mutate(p_admit_male = inv_logit_scaled(b_Intercept + b_male),
+                p_admit_female = inv_logit_scaled(b_Intercept),
+                diff_admit = p_admit_male - p_admit_female) %>%
   summarise(`2.5%`  = quantile(diff_admit, probs = .025),
             `50%`   = median(diff_admit),
             `97.5%` = quantile(diff_admit, probs = .975))
@@ -1605,20 +1565,19 @@ post %>% mutate(p_admit_male   = inv_logit_scaled(b_Intercept + b_male),
 ```
 
 Mudeldame otse küsimust, mis on naiste ja meeste erinevus sissesaamisel.
-intercepti surume nulli, et saada eraldi hinnang igale departmendile
-
+intercepti surume nulli, et saada eraldi hinnang igale departmendile:
 
 ```r
-m_ucadmit2 <- brm(data = d, family = binomial,
-      admit | trials(applications) ~ 0 + dept + male,
-      prior(normal(0, 10), class = b),
-      iter = 2500, warmup = 500, cores = 2, chains = 2)
-write_rds(m_ucadmit2, path = "m_ucadmit2.fit")
+m_ucadmit2 <- brm(admit | trials(applications) ~ 0 + dept + male,
+                  data = ucbadmit, 
+                  family = binomial,
+                  prior(normal(0, 10), class = b))
+write_rds(m_ucadmit2, path = "data/m_ucadmit2.fit")
 ```
 
 
 ```r
-m_ucadmit2 <- read_rds("m_ucadmit2.fit")
+m_ucadmit2 <- read_rds("data/m_ucadmit2.fit")
 ```
 
 
@@ -1637,38 +1596,30 @@ tidy(m_ucadmit2)
 
 
 ```r
-d <- d %>% mutate(case = factor(1:12))
-d_text <- d %>% group_by(dept) %>%
-  summarise(case  = mean(as.numeric(case)),
-            admit = mean(admit / applications) + .05)
-
+pd <- position_dodge(1)
 predict(m_ucadmit2) %>%
   as_tibble() %>% 
-  bind_cols(d) %>% 
-  ggplot(aes(x = case, y = admit / applications)) +
+  bind_cols(ucbadmit) %>% 
+  ggplot(aes(x = dept, y = admit / applications)) +
   geom_pointrange(aes(y = Estimate / applications,
                       ymin = Q2.5  / applications,
-                      ymax = Q97.5 / applications),
-                  shape = 1, alpha = 1/3) +
-  geom_point() +
-  geom_line(aes(group = dept)) +
-  geom_text(data = d_text,
-            aes(y = admit, label = dept)) +
+                      ymax = Q97.5 / applications,
+                      color = applicant.gender), position = pd) +
+  geom_point(aes(color = applicant.gender), position = pd) +
   labs(y = "Proportion admitted",
        title = "Posterior validation check") 
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-124-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="17_brms_files/figure-html/unnamed-chunk-127-1.png" width="70%" style="display: block; margin: auto;" />
 
 Ohhoo, kui vaadata deparmente eraldi, pole mingit kinnitust, et meestel oleks paremad võimalused ülikooli sisse saada.
 
 
 ```r
-conditions <- data.frame(male = c(0, 1))
-marginal_effects(m_ucadmit2, effects="dept", conditions = conditions)
+marginal_effects(m_ucadmit2, effects ="dept", conditions = data.frame(male = c(0, 1)))
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-125-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="17_brms_files/figure-html/unnamed-chunk-128-1.png" width="70%" style="display: block; margin: auto;" />
 
 ### y muutujal 3+ kategoorilist väärtust
 
@@ -1681,7 +1632,6 @@ Estimate the association between person’s family income and which career (ther
 
 
 ```r
-library(rethinking)
 N <- 100
 set.seed(2078)
 # simulate family incomes for each individual
@@ -1704,7 +1654,7 @@ mult_logistic_m1 <-
       family = categorical(link = "logit"),
       career ~ 1 + family_income)
 
-write_rds(mult_logistic_m1, path = "mult_logistic_m1.fit")
+write_rds(mult_logistic_m1, path = "data/mult_logistic_m1.fit")
 ```
  
 
@@ -1720,11 +1670,11 @@ pred1_l <- pred1_l %>%
   mutate(variable = case_when(variable == "P(Y = 1)" ~ "career 1",
                               variable == "P(Y = 2)" ~ "career 2",
                               variable == "P(Y = 3)" ~ "career 3"))
-ggplot(pred1_l, aes(income, value)) + geom_point()+ facet_wrap(~variable)+
+ggplot(pred1_l, aes(income, value)) + geom_point() + facet_wrap(~variable)+
   ylab("Pr of career choice at a given income") 
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-129-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="17_brms_files/figure-html/unnamed-chunk-132-1.png" width="70%" style="display: block; margin: auto;" />
  
 
 ### zero inflated mudelid
@@ -1829,7 +1779,7 @@ mitmetasemelised monotoonilised mudelid
 fit6 <- brm(y ~ mo(x)*age + (mo(x) | city), data = d)
 ```
 
-### multivariaatsed mudelid
+### Multivariaatsed mudelid
 
 mitu y muutujat, millel igaühel on oma prediktorid.
 
@@ -1877,7 +1827,7 @@ bf_back <- bf(back ~ s(hatchdate) + (1|p|fosternest) + (1|q|dam)) +
 fit3 <- brm(bf_tarsus + bf_back + set_rescor(FALSE), data = BTdata)
 ```
 
-### mittelineaarsed mudelid
+### Mittelineaarsed mudelid
 
 
 ```r
@@ -1897,6 +1847,21 @@ Siin on iga mittelineaarne parameeter (b1 ja b2) eraldi modelleeritud ~1 abil.  
 Priors on population-level parameters (i.e., ‘fixed effects’) are often mandatory to identify a non-linear model. Thus, brms requires the user to explicitely specify these priors. In the present example, we used a normal(1, 2) prior on (the population-level intercept of) b1, while we used a normal(0, 2) prior on (the population-level intercept of) b2. Setting priors is a non-trivial task in all kinds of models, especially in non-linear models, so you should always invest some time to think of appropriate priors. Quite often, you may be forced to change your priors after fitting a non-linear model for the first time, when you observe different MCMC chains converging to different posterior regions. This is a clear sign of an idenfication problem and one solution is to set stronger (i.e., more narrow) priors.
 
 ## brms mudelite süntaks
+
+
+Symbol   Example             Meaning                                                                                                                                                                                   
+-------  ------------------  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
++        + x                 include this variable                                                                                                                                                                     
+-        -                   x	delete this variable                                                                                                                                                                    
+:        x : z               include the interaction between these variables                                                                                                                                           
+*        x * z               include these variables and the interactions between them                                                                                                                                 
+/        x / z               nesting: include z nested within x                                                                                                                                                        
+|        x | z               conditioning: include x given z                                                                                                                                                           
+^        (u + v + w + z)^3   include these variables and all interactions up to three way                                                                                                                              
+poly     poly(x,3)           polynomial regression: orthogonal polynomials                                                                                                                                             
+Error    Error(a/b)          specify an error term                                                                                                                                                                     
+I        I(x*z)              as is: include a new variable consisting of these variables multiplied. (x^2) means include this variable squared, etc. In other words I( ) isolates the mathematic operations inside it. 
+1        - 1                 intercept: delete the intercept (regress through the origin)                                                                                                                              
 
 üldine vorm:
 
@@ -1952,5 +1917,3 @@ Gaussian process terms gp.
 
 additional information on the response variable may be specified via
 `response | aterms ~ <predictor terms>`. The aterms part may contain multiple terms of the form fun(<variable>) separated by + each providing special information on the response variable. This allows among others to weight observations, provide known standard errors for meta-analysis, or model censored or truncated data. 
-
-
