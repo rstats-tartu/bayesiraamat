@@ -492,7 +492,7 @@ Kui mudel suudab genereerida simuleeritud valimeid, mis ei erine väga palju emp
 Vaatame siin simultaanselt kõigi kolme eelnevalt fititud mudeli simuleeritud valimeid (y_rep) võrdluses algsete andmetega (y):
 
 ```r
-map(list(m1, m2, m3), pp_check, nsamples = 10) %>% 
+purrr::map(list(m1, m2, m3), pp_check, nsamples = 10) %>% 
   grid.arrange(grobs = ., nrow = 3)
 ```
 
@@ -609,12 +609,12 @@ predict_interval_brms2 <- predict(m2, newdata = newx, re_formula = NULL) %>%
   cbind(newx, .)
 head(predict_interval_brms2)
 #>   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5
-#> 1         1.00        3.06  setosa     4.49     0.324 3.86  5.12
-#> 2         1.04        3.06  setosa     4.52     0.312 3.91  5.12
-#> 3         1.08        3.06  setosa     4.54     0.320 3.91  5.16
-#> 4         1.12        3.06  setosa     4.58     0.321 3.97  5.20
-#> 5         1.16        3.06  setosa     4.61     0.313 3.99  5.22
-#> 6         1.20        3.06  setosa     4.64     0.320 4.03  5.29
+#> 1         1.00        3.06  setosa     4.48     0.320 3.84  5.11
+#> 2         1.04        3.06  setosa     4.51     0.318 3.90  5.14
+#> 3         1.08        3.06  setosa     4.56     0.321 3.95  5.18
+#> 4         1.12        3.06  setosa     4.58     0.322 3.97  5.22
+#> 5         1.16        3.06  setosa     4.62     0.320 3.99  5.26
+#> 6         1.20        3.06  setosa     4.64     0.314 4.05  5.27
 ```
 
 `predict()` ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele
@@ -896,6 +896,7 @@ Kolme mudeli lõikepunktid ja tõusunurgad on sisuliselt võrdsed ja sama täpsu
 Proovime ka robuststet versiooni 2 grupi võrdlusest (vastab t testile, kus kahe grupi sd-d hinnatakse eraldi)
 
 ```r
+no_versicolor <- filter(iris, Species != "versicolor")
 get_prior(bf(Sepal.Length ~ Species, sigma ~ Species), 
           data = no_versicolor, 
           family = "student")
@@ -955,7 +956,18 @@ b_Intercept + b_Speciesvirginica annab 2. grupi keskväärtuse.
 
 b_sigma_Intercept on naturaallogaritm 1. grupi sd-st.
 
+```r
+exp(-1.175)
+#> [1] 0.309
+```
+Tegelik sigma on 0.3
+
 b_sigma_Speciesvirginica on logaritm 2. grupi (I. virginica) sd erinevusest esimesest grupist (ehk efekti suurus).
+
+```r
+exp(-1.175 + 0.577)
+#> [1] 0.55
+```
 
 Seega saab algses skaalas sd-d nii: 
 
@@ -973,7 +985,7 @@ mean_2.gr <- r_1_df$b_Intercept + r_1_df$b_Speciesvirginica
 ggplot(data = NULL) + geom_density(aes(mean_2.gr))
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-76-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="17_brms_files/figure-html/unnamed-chunk-78-1.png" width="70%" style="display: block; margin: auto;" />
 
 Nii saab tekitada usaldusinetvalle, mis katavad 90% jaotuse alusest kõrgeimast tihedusest (mis ei ole päris sama, mis kvantiilide meetod) 
 
@@ -982,6 +994,14 @@ rethinking::HPDI(mean_2.gr, prob = 0.9)
 #> |0.9 0.9| 
 #>  6.4  6.7
 ```
+
+
+```r
+quantile(mean_2.gr, probs = c(0.05, 0.95))
+#>   5%  95% 
+#> 6.41 6.71
+```
+
 
 Nii saame teada, milline osa (fraktsioon) posteeriorist on väiksem kui 6.4
 
@@ -1000,7 +1020,7 @@ ggplot(data = NULL) +
   geom_density(aes(sd_2.gr))
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-79-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="17_brms_files/figure-html/unnamed-chunk-82-1.png" width="70%" style="display: block; margin: auto;" />
 
 On tavaline, et sd-de posteeriorid ei ole normaaljaotusega (selle kohta vaata lähemalt Statistical Rethinking raamatust).
 
@@ -1032,7 +1052,7 @@ ggplot(df1, aes(value, fill = key)) +
   geom_histogram(alpha = 0.7, position = "identity", bins = 30)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-81-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="17_brms_files/figure-html/unnamed-chunk-84-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 ```r
@@ -1074,7 +1094,19 @@ t.test(value ~ key, data = df1)
 #>         -0.0471          0.7729
 ```
 
-Nüüd kus meil on outlieritega andmed, annab klassikaline t test efekti suurusele CI -2.41 ... 0.78 (p = 0.3), aga robustne t test leiab efekti üles - CI 0.78 ... 2.10 [tegelik ES oleks 1, outliereid arvestamata]. 
+Nüüd kus meil on outlieritega andmed, annab klassikaline t test efekti suurusele 
+CI -2.41 ... 0.78 (p = 0.3), aga robustne t test leiab efekti üles - 
+CI 0.78 ... 2.10 [tegelik ES oleks 1, outliereid arvestamata].
+
+Ilma outlieriteta versioon annab p = 0.00006
+
+```r
+set.seed(123)
+a = rnorm(30) 
+b = c(rnorm(25, 1, 1.5))
+t.test(a, b)$p.value
+#> [1] 6.37e-05
+```
 
 Kui tavaline t test annab välja kahe grupi keskmised, usaldusintervalli nende erinevusele (ehk ES-le) ja p väärtuse, siis bayesi variant annab välja 2 grupi keskväärtused, 2 grupi varieeruvused andmepunktide tasemel ning kõik efekti suurused ja hüpoteesitestid, millest te suudate unistada. Selle külluse põhjus on, et hinnang iga parameeteri väärtusele tuleb meile posteeriori ehk tõenäosusjaotuse kujul. Kuna iga posteerior on meil arvutis olemas kui arvuline vektor, ja teatavasti saab vektoritega teha aritmeetilisi tehteid, siis saab ka posteerioreid omavahel liita, lahutada, astendada jms. Teoreetiliselt sisaldab posteerior kogu infot, mis meil vastava parameetri väärtuse kohta on. Me ei vaja midagi enamat, et teha kõiki järeldusi, mida me selle parameetri väärtuse kohta üldse teha saame. Seetõttu on bayesi versioon mitte ainult palju paindlikum kui tavaline t test, vaid selle output on ka hästi palju informatiivsem.
 
@@ -1092,6 +1124,115 @@ tidy(lm1)
 #> 2 keyb          0.820      0.784    1.05     0.300
 ```
 p = 0.3 ongi vastava t testi põhiväljund.
+
+
+### lognormaalne tõepärafunktsioon
+
+Sama näide on pikemalt 14. peatükis, seal küll lahendatud rethinkingu abil.
+
+
+```r
+library(gapminder)
+library(rethinking)
+g2007 <- gapminder %>% 
+  filter(year == 2007) %>% 
+  mutate(l_GDP = log10(gdpPercap))
+```
+
+<div class="figure" style="text-align: center">
+<img src="17_brms_files/figure-html/unnamed-chunk-92-1.png" alt="SKP-de jaotus" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-92)SKP-de jaotus</p>
+</div>
+
+
+```r
+get_prior(gdpPercap~lifeExp, family = "lognormal", data=g2007)
+#>                 prior     class    coef group resp dpar nlpar bound
+#> 1                             b                                    
+#> 2                             b lifeExp                            
+#> 3 student_t(3, 9, 10) Intercept                                    
+#> 4 student_t(3, 0, 10)     sigma
+```
+
+
+```r
+prior <- c(prior(normal(0, 10), class="Intercept"),
+           prior(normal(0,10), class ="b"),
+           prior(student(6,0,5)), class ="sigma")
+```
+
+
+
+```r
+ln_m1 <- brm(gdpPercap~lifeExp, family = "lognormal", prior=prior, data=g2007, cores=4)
+write_rds(ln_m1, "ln_m1.rds")
+```
+
+
+
+
+```r
+tidy(ln_m1)
+#>          term  estimate std.error     lower     upper
+#> 1 b_Intercept  2.53e+00    0.3891  1.88e+00     3.162
+#> 2   b_lifeExp  9.09e-02    0.0057  8.15e-02     0.100
+#> 3       sigma  8.08e-01    0.0504  7.30e-01     0.895
+#> 4        lp__ -1.40e+03    1.2649 -1.40e+03 -1398.543
+```
+
+
+```r
+plot(marginal_effects(ln_m1), points=TRUE)
+```
+
+<img src="17_brms_files/figure-html/unnamed-chunk-98-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+```r
+plot(marginal_effects(ln_m1, method="predict"), points=TRUE)
+```
+
+<img src="17_brms_files/figure-html/unnamed-chunk-99-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+```r
+ln_m2 <- brm(l_GDP~lifeExp, data=g2007, cores=4)
+write_rds(ln_m2, "ln_m2.rds")
+```
+
+
+```r
+ln_m2 <- read_rds("ln_m2.rds")
+```
+
+
+```r
+plot(marginal_effects(ln_m2, method="predict"), points=TRUE)
+```
+
+<img src="17_brms_files/figure-html/unnamed-chunk-102-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+```r
+bayes_R2(ln_m1)
+#>    Estimate Est.Error  Q2.5 Q97.5
+#> R2    0.587    0.0767 0.429 0.727
+```
+
+```r
+bayes_R2(ln_m2)
+#>    Estimate Est.Error Q2.5 Q97.5
+#> R2    0.652    0.0277 0.59 0.698
+```
+
+
+
+```r
+plot(marginal_effects(ln_m2), points=TRUE)
+```
+
+<img src="17_brms_files/figure-html/unnamed-chunk-105-1.png" width="70%" style="display: block; margin: auto;" />
+
 
 
 ### Puuduvate andmete imputatsioon
@@ -1264,7 +1405,7 @@ y <- exp(x)/(1+exp(x))
 plot(y~x)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-99-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="17_brms_files/figure-html/unnamed-chunk-118-1.png" width="70%" style="display: block; margin: auto;" />
 
 Kui me mudeli y = a + bx korral muudame x-i ühe ühiku võrra muutuvad log-odds-id b võrra. Teisisõnu võime korrutada lineaarses skaalas *odds*-id exp(b)-ga. Kuna P(Y = 1 | X) ja X-i seos ei ole sirge, siis b ei vasta P(Y = 1 | X) muutusele X-i muutumisel ühe ühiku võrra. See, kui kiiresti P(Y = 1 | X) muutub, sõltub X-i väärtusest, aga hoolimata sellest, senikaua kui b > 0, on X-i kasv alati seotud tõenäosuse kasvuga (ja vastupidi). 
  
@@ -1439,8 +1580,8 @@ glm.pred[glm.probs > 0.5] <- "pulled_left"
 table(glm.pred, chimpanzees$pulled_left)
 #>               
 #> glm.pred         0   1
-#>   pulled_left  201 282
-#>   pulled_right  11  10
+#>   pulled_left  202 279
+#>   pulled_right  10  13
 ```
 
 
@@ -1450,7 +1591,7 @@ roccurve <- roc(chimpanzees$pulled_left ~ glm.probs)
 plot(roccurve, legacy.axes = TRUE, cex.axis = 0.7, cex.lab = 0.8)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-113-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="17_brms_files/figure-html/unnamed-chunk-132-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 Sarnase mudeli saab fittida ka siis, kui n>1 ja meil on igale ahvile countide suhted nr of pull-left/total pulls. Nüüd on meil vaja lisada trials(), kuhu läheb n kas ühe numbrina või muutujana, mis indekseerib sündmuste arvu ehk n-i. Antud juhul on kõikidel ahvidel katsete arv n 18.
@@ -1469,28 +1610,14 @@ Näide agregeeritud binoomsetele andmetele.
 
 ```r
 data(UCBadmit)
-skim(UCBadmit)
-#> Skim summary statistics
-#>  n obs: 12 
-#>  n variables: 5 
-#> 
-#> ── Variable type:factor ───────────────────────────────────────────────────
-#>          variable missing complete  n n_unique             top_counts
-#>  applicant.gender       0       12 12        2  fem: 6, mal: 6, NA: 0
-#>              dept       0       12 12        6 A: 2, B: 2, C: 2, D: 2
-#>  ordered
-#>    FALSE
-#>    FALSE
-#> 
-#> ── Variable type:integer ──────────────────────────────────────────────────
-#>      variable missing complete  n   mean     sd p0    p25   p50    p75
-#>         admit       0       12 12 146.25 148.45 17  45.75 107   154   
-#>  applications       0       12 12 377.17 216.92 25 291.5  374   452.75
-#>        reject       0       12 12 230.92 122.77  8 188.25 261.5 314   
-#>  p100     hist
-#>   512 ▆▇▂▁▁▂▁▂
-#>   825 ▃▂▂▇▁▃▁▂
-#>   391 ▅▁▂▁▇▂▇▅
+head(UCBadmit)
+#>   dept applicant.gender admit reject applications
+#> 1    A             male   512    313          825
+#> 2    A           female    89     19          108
+#> 3    B             male   353    207          560
+#> 4    B           female    17      8           25
+#> 5    C             male   120    205          325
+#> 6    C           female   202    391          593
 ```
 
 
@@ -1610,7 +1737,7 @@ predict(m_ucadmit2) %>%
        title = "Posterior validation check") 
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-127-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="17_brms_files/figure-html/unnamed-chunk-146-1.png" width="70%" style="display: block; margin: auto;" />
 
 Ohhoo, kui vaadata deparmente eraldi, pole mingit kinnitust, et meestel oleks paremad võimalused ülikooli sisse saada.
 
@@ -1619,7 +1746,7 @@ Ohhoo, kui vaadata deparmente eraldi, pole mingit kinnitust, et meestel oleks pa
 marginal_effects(m_ucadmit2, effects ="dept", conditions = data.frame(male = c(0, 1)))
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-128-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="17_brms_files/figure-html/unnamed-chunk-147-1.png" width="70%" style="display: block; margin: auto;" />
 
 ### y muutujal 3+ kategoorilist väärtust
 
@@ -1674,7 +1801,7 @@ ggplot(pred1_l, aes(income, value)) + geom_point() + facet_wrap(~variable)+
   ylab("Pr of career choice at a given income") 
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-132-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="17_brms_files/figure-html/unnamed-chunk-151-1.png" width="70%" style="display: block; margin: auto;" />
  
 
 ### zero inflated mudelid
@@ -1846,7 +1973,7 @@ Siin on iga mittelineaarne parameeter (b1 ja b2) eraldi modelleeritud ~1 abil.  
 
 Priors on population-level parameters (i.e., ‘fixed effects’) are often mandatory to identify a non-linear model. Thus, brms requires the user to explicitely specify these priors. In the present example, we used a normal(1, 2) prior on (the population-level intercept of) b1, while we used a normal(0, 2) prior on (the population-level intercept of) b2. Setting priors is a non-trivial task in all kinds of models, especially in non-linear models, so you should always invest some time to think of appropriate priors. Quite often, you may be forced to change your priors after fitting a non-linear model for the first time, when you observe different MCMC chains converging to different posterior regions. This is a clear sign of an idenfication problem and one solution is to set stronger (i.e., more narrow) priors.
 
-## brms mudelite süntaks
+# brms süntaks
 
 
 Symbol   Example             Meaning                                                                                                                                                                                   
@@ -1916,4 +2043,259 @@ noise-free effects me, or
 Gaussian process terms gp. 
 
 additional information on the response variable may be specified via
-`response | aterms ~ <predictor terms>`. The aterms part may contain multiple terms of the form fun(<variable>) separated by + each providing special information on the response variable. This allows among others to weight observations, provide known standard errors for meta-analysis, or model censored or truncated data. 
+`response | aterms ~ <predictor terms>`. The aterms part may contain multiple terms of the form fun(<variable>) separated by + each providing special information on the response variable. This allows among others to weight observations, provide known standard errors for meta-analysis, or model censored or truncated data.
+
+
+## General formula structure
+
+response | aterms ~ pterms + (gterms | group)
+
+The pterms - effects that are assumed to be the same across observations ('population-level' effects). 
+
+gterms - effects that are assumed to vary across grouping variables specified in group ('group-level' effects).
+
+###Group-level terms: x||g, 1|ID|g, gr(x, by = ), mm(g1, g2)
+
+Multiple grouping factors each with multiple group-level effects are possible. 
+
+Use || in grouping terms to prevent correlations from being modeled. 
+
+It is possible to model different group-level terms of the same grouping factor as correlated (even across different formulas, e.g., in non-linear models) by using |<ID>| instead of |. All group-level terms sharing the same ID will be modeled as correlated. for instance, the terms (1+x|2|g) and (1+z|2|g) mean that correlations between x and z will be estimated.
+correlated group-level effects across parameters:
+`bf(y ~ a1 - a2^x, a1 ~ 1 + (1|2|g), a2 ~ x + (x|2|g), nl = TRUE)`
+
+If levels of the grouping factor belong to different sub-populations, it may be reasonable to assume a different covariance matrix for each of the sub-populations. For instance, the variation within the treatment group and within the control group in a randomized control trial might differ. Suppose that y is the outcome, and x is the factor indicating the treatment and control group. Then, we could estimate different hyper-parameters of the varying effects (in this case a varying intercept) for treatment and control group via y ~ x + (1 | gr(subject, by = x)).
+
+A multi-membership term with two members: (1 | mm(g1, g2)), where g1 and g2 specify the first and second member, respectively. If x varies across the levels of g1 and g2, we can save the respective x values in the variables x1 and x2 and then model the varying effect as (1 + mmc(x1, x2) | mm(g1, g2)).
+
+multilevel w smoothing terms `brmsformula(y ~ x1*x2 + s(z) + (1+x1|1) + (1|g2))` 
+
+additionally predict 'sigma' `brmsformula(y ~ x1*x2 + s(z) + (1+x1|1) + (1|g2), sigma ~ x1 + (1|g2))`
+
+
+
+### Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())
+
+Smoothing terms are modeled using s() and t2() in the pterms part of the formula. 
+
+Gaussian process terms can be fitted using gp() in the pterms. Similar to smooth terms, Gaussian processes can be used to model complex non-linear relationships, for instance temporal or spatial autocorrelation. However, they are computationally demanding and are thus not recommended for very large datasets.
+
+The pterms and gterms parts may contain non-standard effect types: monotonic mo(predictor), measurement error me(predictor, sd_predictor), missing value mi(predictor), and category specific effects cs(<predictors>). 
+
+Category specific effects can only be estimated in ordinal models and are explained in more detail in the package's main vignette (type vignette("brms_overview")). 
+
+A monotonic predictor must either be integer valued or an ordered factor. Predictor categories (or integers) are not assumed to be equidistant with respect to their effect on the response variable. The distance between adjacent categories is estimated from the data and may vary across categories. One parameter takes care of the direction and size of the effect similar to an ordinary regression parameter, while an additional parameter vector estimates the normalized distances between consecutive predictor categories.
+
+Often predictors contain measurement error. Effects of noise-free predictors can be modeled using the me (for 'measurement error') function. If x is a measured predictor with known measurement error sdx, we can include it via y ~ me(x, sdx). If x2 is another measured predictor with corresponding error sdx2 and z is a predictor without error (e.g., an experimental setting), we can model all main effects and interactions: $y = me(x, sdx) * me(x2, sdx2) * z$. 
+
+Using a variable with missing values as predictors requires two things, First, we need to specify that the predictor contains missings that should to be imputed. If x is a predictor with missings and z is a predictor without missings, we go for y ~ mi(x) + z. Second, we need to model x as an additional response with corresponding predictors and the addition term mi(). In our example, we could write x | mi() ~ z. 
+
+bf(bmi ~ age * mi(chl)) + bf(chl | mi() ~ age) + set_rescor(FALSE).
+
+### Additional response information
+
+aterms part may contain multiple terms of the form fun(<variable>) separated by + each providing special information on the response variable. fun can be replaced with either se, weights, cens, trunc, trials, cat, or dec. 
+
+For families gaussian, student and skew_normal, it is possible to specify standard errors of the observations, thus allowing to perform meta-analysis. Suppose that the variable y_i contains the effect sizes from the studies and se_i the corresponding standard errors. Then, fixed and random effects meta-analyses can be conducted using the formulas `y_i | se(se_i) ~ 1` and `y_i | se(se_i) ~ 1 + (1|study)`, respectively, where study is a variable uniquely identifying every study. 
+
+Meta-regression can be performed via `y_i | se(se_i) ~ 1 + mod1 + mod2 + (1|study)` or 
+`y_i | se(se_i) ~ 1 + mod1 + mod2 + (1 + mod1 + mod2|study)`, where mod1 and mod2 represent moderator variables. By default, the standard errors replace the parameter sigma. To model sigma in addition to the known standard errors, set argument sigma in function se to TRUE, for instance, `y_i | se(se_i, sigma = TRUE) ~ 1`.
+
+For all families, weighted regression may be performed using weights in the aterms part. Internally, this is implemented by multiplying the log-posterior values of each observation by their corresponding weights. Suppose that variable we_i contains the weights and that yi is the response variable. Then, formula `y_i | weights(we_i) ~ predictors` implements a weighted regression.
+
+With the exception of categorical, ordinal, and mixture families, left, right, and interval censoring can be modeled through `y | cens(censored) ~ predictors`. The censoring variable (named censored in this example) should contain the values 'left', 'none', 'right', and 'interval' (or equivalently -1, 0, 1, and 2) to indicate that the corresponding observation is left censored, not censored, right censored, or interval censored. For interval censored data, a second variable (let's call it y2) has to be passed to cens. In this case, the formula has the structure `y | cens(censored, y2) ~ predictors`. While the lower bounds are given in y, the upper bounds are given in y2 for interval censored data. Intervals are assumed to be open on the left and closed on the right: (y, y2].
+
+With the exception of categorical, ordinal, and mixture families, the response distribution can be truncated using the trunc function in the addition part. If the response variable is truncated between, say, 0 and 100, we can specify this via `yi | trunc(lb = 0, ub = 100) ~ predictors`. Instead of numbers, variables in the data set can also be passed allowing for varying truncation points across observations. Defining only one of the two arguments in trunc leads to one-sided truncation.
+
+For all continuous families, missing values in the responses can be imputed within Stan by using the addition term mi. This is mostly useful in combination with mi predictor terms as explained above under 'Special predictor terms'.
+
+For families binomial and zero_inflated_binomial, addition should contain a variable indicating the number of trials underlying each observation: `success | trials(n)`. If the number of trials is constant across all observations, say 10, we may also write `success | trials(10)`. 
+
+For all ordinal families, aterms may contain a term cat(number) to specify the number of categories (e.g, cat(7)). If not given, the number of categories is calculated from the data.
+
+Multiple addition terms may be specified at the same time using the + operator, for instance `formula = y_i | se(se_i) + cens(censored) ~ 1` for a censored meta-analytic model.
+
+
+### Formula syntax for non-linear models
+
+The non-linear model can be specified within the formula argument. Suppose, that we want a non-linear model being defined via formula = y ~ alpha - beta * lambda^x. To tell brms that this is a non-linear model, argument nl = TRUE. Now we have to specify a model for each of the non-linear parameters. Let's say we just want to estimate those three parameters with no further covariates or random effects. Then we can pass alpha + beta + lambda ~ 1 or equivalently (and more flexible) alpha ~ 1, beta ~ 1, lambda ~ 1 to the ... argument. If we have another predictor z and observations nested within the grouping factor g, we may write for instance alpha ~ 1, beta ~ 1 + z + (1|g), lambda ~ 1. We are using z and g only for the prediction of beta, but we might also use them for the other non-linear parameters.
+
+Non-linear models may not be uniquely identified and / or show bad convergence. For this reason it is mandatory to specify priors on the non-linear parameters.
+
+`bf(y ~ a1 - a2^x, a1 + a2 ~ 1, nl = TRUE)` simple nl model
+
+### Formula syntax for predicting distributional parameters
+
+It is also possible to predict parameters of the response distribution such as the residual standard deviation sigma in gaussian models or the hurdle probability hu in hurdle models. The syntax closely resembles that of a non-linear parameter, for instance sigma ~ x + s(z) + (1+x|g). 
+
+Alternatively, one may fix distributional parameters to certain values. This is useful when models become too complicated and otherwise have convergence issues. The quantile parameter of the asym_laplace distribution is a good example where it is useful. By fixing quantile, one can perform quantile regression for the specified quantile. For instance, quantile = 0.25 allows predicting the 25%-quantile. Furthermore, the bias parameter in drift-diffusion models, is assumed to be 0.5 (i.e. no bias) in many applications. To achieve this, simply write bias = 0.5. Other possible applications are the Cauchy distribution as a special case of the Student-t distribution with nu = 1, or the geometric distribution as a special case of the negative binomial distribution with shape = 1. Furthermore, the parameter disc ('discrimination') in ordinal models is fixed to 1 by default and not estimated, but may be modeled as any other distributional parameter if desired ('disc' can only be positive, which is achieved by applying the log-link).
+
+In categorical models, distributional parameters do not have fixed names. Instead, they are named after the response categories (excluding the first one, which serves as the reference category), with the prefix 'mu'. If, for instance, categories are named cat1, cat2, and cat3, the distributional parameters will be named mucat2 and mucat3.
+
+Some distributional parameters currently supported by brmsformula have to be positive (a negative standard deviation or precision parameter does not make any sense) or are bounded between 0 and 1 (for zero-inflated / hurdle probabilities, quantiles, or the initial bias parameter of drift-diffusion models). However, linear predictors can be positive or negative, and thus the log link (for positive parameters) or logit link (for probability parameters) are used by default to ensure that distributional parameters are within their valid intervals. This implies that, by default, effects for such distributional parameters are estimated on the log / logit scale and one has to apply the inverse link function to get to the effects on the original scale. Alternatively, it is possible to use the identity link to predict parameters on their original scale, directly. However, this is much more likely to lead to problems in the model fitting, if the parameter actually has a restricted range.
+
+### Formula syntax for mixture models
+
+If not specified otherwise, all mean parameters of the mixture components are predicted using the right-hand side of formula.
+
+distributional parameters of mixture distributions have the same name as those of the corresponding ordinary distributions, but with a number at the end to indicate the mixture component. For instance, if you use family mixture(gaussian, gaussian), the distributional parameters are sigma1 and sigma2. distributional parameters of the same class can be fixed to the same value. For the above example, we could write sigma2 = "sigma1" to make sure that both components have the same residual standard deviation, which is in turn estimated from the data.
+
+specify different predictors for different mixture components
+mix <- mixture(gaussian, gaussian)
+bf(y ~ 1, mu1 ~ x, mu2 ~ z, family = mix)
+
+fix both residual standard deviations to the same value
+bf(y ~ x, sigma2 = "sigma1", family = mix)
+
+
+In addition, there are two types of special distributional parameters. The first are named mu<ID>, that allow for modeling different predictors for the mean parameters of different mixture components. For instance, if you want to predict the mean of the first component using predictor x and the mean of the second component using predictor z, you can write mu1 ~ x as well as mu2 ~ z. The second are named theta<ID>, which constitute the mixing proportions. If the mixing proportions are fixed to certain values, they are internally normalized to form a probability vector. If one seeks to predict the mixing proportions, all but one of the them has to be predicted, while the remaining one is used as the reference category to identify the model. The softmax function is applied on the linear predictor terms to form a probability vector.
+
+### Formula syntax for multivariate models
+
+Multivariate models may be specified using cbind notation or with help of the mvbf function. Suppose that y1 and y2 are response variables and x is a predictor. Then cbind(y1, y2) ~ x specifies a multivariate model, The effects of all terms specified at the RHS of the formula are assumed to vary across response variables. For instance, two parameters will be estimated for x, one for the effect on y1 and another for the effect on y2. This is also true for group-level effects. When writing, for instance, cbind(y1, y2) ~ x + (1+x|g), group-level effects will be estimated separately for each response. To model these effects as correlated across responses, use the ID syntax (see above). For the present example, this would look as follows: cbind(y1, y2) ~ x + (1+x|2|g). Of course, you could also use any value other than 2 as ID.
+
+It is also possible to specify different formulas for different responses. If, for instance, y1 should be predicted by x and y2 should be predicted by z, we could write mvbf(y1 ~ x, y2 ~ z). Alternatively, multiple brmsformula objects can be added to specify a joint multivariate model (see 'Examples').
+
+## brms likelihoods
+
+A character string naming the distribution of the response variable. 
+
+student(link = "identity", link_sigma = "log", link_nu = "logm1")
+
+bernoulli(link = "logit")
+
+negbinomial(link = "log", link_shape = "log")
+
+geometric(link = "log")
+
+lognormal(link = "identity", link_sigma = "log")
+
+shifted_lognormal(link = "identity", link_sigma = "log",
+  link_ndt = "log")
+
+skew_normal(link = "identity", link_sigma = "log",
+  link_alpha = "identity")
+
+exponential(link = "log")
+
+weibull(link = "log", link_shape = "log")
+
+exgaussian(link = "identity", link_sigma = "log", link_beta = "log")
+
+Beta(link = "logit", link_phi = "log")
+
+hurdle_poisson(link = "log")
+
+hurdle_negbinomial(link = "log", link_shape = "log",
+  link_hu = "logit")
+
+hurdle_gamma(link = "log", link_shape = "log", link_hu = "logit")
+
+hurdle_lognormal(link = "identity", link_sigma = "log",
+  link_hu = "logit")
+
+zero_inflated_beta(link = "logit", link_phi = "log",
+  link_zi = "logit")
+
+zero_one_inflated_beta(link = "logit", link_phi = "log",
+  link_zoi = "logit", link_coi = "logit")
+
+zero_inflated_poisson(link = "log", link_zi = "logit")
+
+zero_inflated_negbinomial(link = "log", link_shape = "log",
+  link_zi = "logit")
+
+zero_inflated_binomial(link = "logit", link_zi = "logit")
+
+categorical(link = "logit")
+
+cumulative(link = "logit", link_disc = "log",
+  threshold = c("flexible", "equidistant"))
+  
+* Family gaussian with identity link leads to linear regression. 
+
+* Family student with identity link leads to robust linear regression that is less influenced by outliers. 
+
+* Family skew_normal can handle skewed responses in linear regression. 
+
+* Families poisson, negbinomial, and geometric with log link lead to regression models for count data. 
+
+* Families binomial and bernoulli with logit link leads to logistic regression and family categorical to multi-logistic regression when there are more than two possible outcomes. 
+
+* Families cumulative, cratio ('continuation ratio'), sratio ('stopping ratio'), and acat ('adjacent category') leads to ordinal regression. 
+
+* Families Gamma, weibull, exponential, lognormal, frechet, and inverse.gaussian can be used (among others) for survival regression. 
+
+* Families weibull, frechet, and gen_extreme_value ('generalized extreme value') allow for modeling extremes. 
+
+* Family asym_laplace allows for quantile regression when fixing the auxiliary quantile parameter to the quantile of interest. 
+
+* Family exgaussian ('exponentially modified Gaussian') and shifted_lognormal are especially suited to model reaction times. 
+
+* The wiener family provides an implementation of the Wiener diffusion model. For this family, the main formula predicts the drift parameter 'delta' and all other parameters are modeled as auxiliary parameters (see brmsformula for details). 
+
+* Families hurdle_poisson, hurdle_negbinomial, hurdle_gamma, hurdle_lognormal, zero_inflated_poisson, zero_inflated_negbinomial, zero_inflated_binomial, zero_inflated_beta, and zero_one_inflated_beta allow to estimate zero-inflated and hurdle models. These models can be very helpful when there are many zeros in the data (or ones in case of one-inflated models) that cannot be explained by the primary distribution of the response. Families hurdle_lognormal and hurdle_gamma are especially useful, as traditional lognormal or Gamma models cannot be reasonably fitted for data containing zeros in the response.
+
+A list of all possible links for each family: 
+
+* The families gaussian, student, skew_normal, exgaussian, asym_laplace, and gen_extreme_value accept the links (as names) identity, log, and inverse; 
+
+* families poisson, negbinomial, geometric, zero_inflated_poisson, zero_inflated_negbinomial, hurdle_poisson, and hurdle_negbinomial the links log, identity, and sqrt; 
+
+* families binomial, bernoulli, Beta, zero_inflated_binomial, zero_inflated_beta, and zero_one_inflated_beta the links logit, probit, probit_approx, cloglog, cauchit, and identity; 
+
+* families cumulative, cratio, sratio, and acat the links logit, probit, probit_approx, cloglog, and cauchit; family categorical the link logit; 
+
+* families Gamma, weibull, exponential, frechet, and hurdle_gamma the links log, identity, and inverse; families lognormal and hurdle_lognormal the links identity and inverse; 
+
+* family inverse.gaussian the links 1/mu^2, inverse, identity and log; family von_mises the link tan_half; family wiener the link identity. 
+
+The first link mentioned for each family is the default.
+
+
+## priors
+
+### Population-level ('fixed') effects
+
+If y is predicted by x1 and x2 then x1 and x2 have regression parameters b_x1 and b_x2. The default prior for population-level effects (including monotonic and category specific effects) is an improper flat prior. Other common options are normal priors or student-t priors. If we want to have a normal prior with mean 0 and standard deviation 5 for x1, and a unit student-t prior with 10 degrees of freedom for x2, we can specify this via set_prior("normal(0,5)", class = "b", coef = "x1") and  set_prior("student_t(10,0,1)", class = "b", coef = "x2"). To put the same prior on all population-level effects at once, set_prior("<prior>", class = "b"). This also leads to faster sampling, because priors can be vectorized in this case. Both ways of defining priors can be combined using for instance set_prior("normal(0,2)", class = "b") and 
+set_prior("normal(0,10)", class = "b", coef = "x1") at the same time. This will set a normal(0,10) prior on the effect of x1 and a normal(0,2) prior on all other population-level effects. However, this will break vectorization.
+
+The intercept has its own parameter class named "Intercept" and priors can thus be specified via set_prior("<prior>", class = "Intercept"). Setting a prior on the intercept will not break vectorization of the other population-level effects. Note that technically, this prior is set on an intercept that results when internally centering all population-level predictors around zero to improve sampling efficiency. On this centered intercept, specifying a prior is actually much easier and intuitive than on the original intercept, since the former represents the expected response value when all predictors are at their means. To treat the intercept as an ordinary population-level effect and avoid the centering parameterization, use 0 + intercept on the right-hand side of the model formula.
+
+A special shrinkage prior to be applied on population-level effects is the horseshoe prior. See horseshoe for details. Another shrinkage prior is the so-called lasso prior. See lasso for details.
+
+In non-linear models, population-level effects are defined separately for each non-linear parameter. Accordingly, it is necessary to specify the non-linear parameter in set_prior so that priors can be assigned correctly. If, for instance, alpha is the parameter and x the predictor for which we want to define the prior, we can write set_prior("<prior>", coef = "x", nlpar = "alpha"). As a shortcut we can use set_prior("<prior>", nlpar = "alpha") to set the same prior on all population-level effects of alpha at once.
+
+If desired, population-level effects can be restricted to fall only within a certain interval using the lb and ub arguments of set_prior. This is often required when defining priors that are not defined everywhere on the real line, such as uniform or gamma priors. When defining a uniform(2,4) prior, you should write set_prior("uniform(2,4)", lb = 2, ub = 4). When using a prior that is defined on the positive reals only (such as a gamma prior) set lb = 0. In most situations, it is not useful to restrict population-level parameters through bounded priors (non-linear models are an important exception), but if you really want to this is the way to go.
+
+### Standard deviations of group-level ('random') effects
+
+Each group-level effect of each grouping factor has a standard deviation named sd_<group>_<coef>. Consider, for instance, the formula y ~ x1 + x2 + (1 + x1 | g). We see that the intercept as well as x1 are group-level effects nested in the grouping factor g. The corresponding standard deviation parameters are named as sd_g_Intercept and sd_g_x1 respectively. These parameters are restricted to be non-negative and, by default, have a half student-t prior with 3 degrees of freedom and a scale parameter that depends on the standard deviation of the response after applying the link function. Minimally, the scale parameter is 10. This prior is used (a) to be only very weakly informative in order to influence results as few as possible, while (b) providing at least some regularization to considerably improve convergence and sampling efficiency. To define a prior distribution only for standard deviations of a specific grouping factor, use set_prior("<prior>", class = "sd", group = "<group>"). To define a prior distribution only for a specific standard deviation of a specific grouping factor, you may write set_prior("<prior>", class = "sd", group = "<group>", coef = "<coef>"). 
+When defining priors on group-level parameters in non-linear models, please make sure to specify the corresponding non-linear parameter through the nlpar argument in the same way as for population-level effects.
+
+### Correlations of group-level ('random') effects
+
+If there is more than one group-level effect per grouping factor, the correlations between those effects have to be estimated. The prior "lkj_corr_cholesky(eta)" or in short "lkj(eta)" with eta > 0 is essentially the only prior for (Cholesky factors) of correlation matrices. If eta = 1 (the default) all correlations matrices are equally likely a priori. If eta > 1, extreme correlations become less likely, whereas 0 < eta < 1 results in higher probabilities for extreme correlations. Correlation matrix parameters in brms models are named as cor_<group>, (e.g., cor_g if g is the grouping factor). To set the same prior on every correlation matrix, use for instance set_prior("lkj(2)", class = "cor"). 
+
+### Splines
+
+Each spline has its corresponding standard deviations modeling the variability within this term. This parameter class is called sds and priors can be specified via set_prior("<prior>", class = "sds", coef = "<term label>"). The default prior is the same as for standard deviations of group-level effects.
+
+### Gaussian processes
+
+Gaussian processes have two parameters, the standard deviation parameter sdgp, and characteristic length-scale parameter lscale (see gp for more details). The default prior of sdgp is the same as for sd-s of group-level effects. The default prior of lscale is an informative inverse-gamma prior specifically tuned to the covariates of the Gaussian process (for more details see https://betanalpha.github.io/assets/case_studies/gp_part3/part3.html). This tuned prior may be overly informative in some cases, so please consider other priors as well to make sure inference is robust to the prior specification. If tuning fails, a half-normal prior is used instead.
+
+### Autocorrelation parameters
+
+The autocorrelation parameters are named ar (autoregression), ma (moving average), arr (autoregression of the response), car (spatial conditional autoregression), as well as lagsar and errorsar (Spatial simultaneous autoregression). Priors can be defined by set_prior("<prior>", class = "ar") for ar and similar for other autocorrelation parameters. By default, ar and ma are bounded between -1 and 1, car, lagsar, and errorsar are bounded between 0, and 1, and arr is unbounded (you may change this by using the arguments lb and ub). The default prior is flat over the definition area.
+
+### Parameters for specific families
+
+Families gaussian, student, skew_normal, lognormal, and gen_extreme_value need the parameter sigma to account for the residual standard deviation. By default, sigma has a half student-t prior that scales in the same way as the group-level standard deviations. 
+Family student needs the parameter nu representing the degrees of freedom of students-t distribution. By default, nu has prior "gamma(2, 0.1)" and a fixed lower bound of 1. 
+
+Families gamma, weibull, inverse.gaussian, and negbinomial need a shape parameter that has a "gamma(0.01, 0.01)" prior by default. 
+
+Every family specific parameter has its own prior class, so that set_prior("<prior>", class = "<parameter>") is the right way to go. All of these priors are chosen to be weakly informative, having only minimal influence on the estimations, while improving convergence and sampling efficiency. Often, it may not be immediately clear, which parameters are present in the model. To get a full list of parameters and parameter classes for which priors can be specified use function get_prior.
+
+

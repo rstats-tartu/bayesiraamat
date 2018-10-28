@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="brms.html">
-<link rel="next" href="bayesi-ja-sagedusliku-statistika-vordlus.html">
+<link rel="next" href="brms-suntaks.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -160,7 +160,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="7" data-path="veamudel.html"><a href="veamudel.html"><i class="fa fa-check"></i><b>7</b> Veamudel</a><ul>
 <li class="chapter" data-level="7.1" data-path="veamudel.html"><a href="veamudel.html#lihtne-varieeruvuse-mudel"><i class="fa fa-check"></i><b>7.1</b> Lihtne varieeruvuse mudel</a></li>
-<li class="chapter" data-level="7.2" data-path="veamudel.html"><a href="veamudel.html#protsessimudel-ja-veamudel-lineaarses-regressioonis"><i class="fa fa-check"></i><b>7.2</b> protsessimudel ja veamudel lineaarses regressioonis</a></li>
+<li class="chapter" data-level="7.2" data-path="veamudel.html"><a href="veamudel.html#protsessimudel-ja-varieeruvuse-mudel-lineaarses-regressioonis"><i class="fa fa-check"></i><b>7.2</b> protsessimudel ja varieeruvuse mudel lineaarses regressioonis</a></li>
 <li class="chapter" data-level="" data-path="veamudel.html"><a href="veamudel.html#enimkasutatud-veamudel-on-normaaljaotus"><i class="fa fa-check"></i>Enimkasutatud veamudel on normaaljaotus</a><ul>
 <li class="chapter" data-level="" data-path="veamudel.html"><a href="veamudel.html#normaaljaotuse-mudel-vaikestel-valimitel"><i class="fa fa-check"></i>Normaaljaotuse mudel väikestel valimitel</a></li>
 </ul></li>
@@ -262,7 +262,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="19" data-path="brms-mudelid.html"><a href="brms-mudelid.html"><i class="fa fa-check"></i><b>19</b> Brms mudelid</a><ul>
 <li class="chapter" data-level="19.1" data-path="brms-mudelid.html"><a href="brms-mudelid.html#robustne-lineaarne-regressioon"><i class="fa fa-check"></i><b>19.1</b> Robustne lineaarne regressioon</a><ul>
-<li class="chapter" data-level="19.1.1" data-path="brms-mudelid.html"><a href="brms-mudelid.html#puuduvate-andmete-imputatsioon"><i class="fa fa-check"></i><b>19.1.1</b> Puuduvate andmete imputatsioon</a></li>
+<li class="chapter" data-level="19.1.1" data-path="brms-mudelid.html"><a href="brms-mudelid.html#lognormaalne-toeparafunktsioon"><i class="fa fa-check"></i><b>19.1.1</b> lognormaalne tõepärafunktsioon</a></li>
+<li class="chapter" data-level="19.1.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#puuduvate-andmete-imputatsioon"><i class="fa fa-check"></i><b>19.1.2</b> Puuduvate andmete imputatsioon</a></li>
 </ul></li>
 <li class="chapter" data-level="19.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#imputatsioon-otse-brms-is"><i class="fa fa-check"></i><b>19.2</b> Imputatsioon otse brms-is</a></li>
 <li class="chapter" data-level="19.3" data-path="brms-mudelid.html"><a href="brms-mudelid.html#binoomjaotusega-mudelid"><i class="fa fa-check"></i><b>19.3</b> Binoomjaotusega mudelid</a><ul>
@@ -275,7 +276,27 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="19.4.1" data-path="brms-mudelid.html"><a href="brms-mudelid.html#multivariaatsed-mudelid"><i class="fa fa-check"></i><b>19.4.1</b> Multivariaatsed mudelid</a></li>
 <li class="chapter" data-level="19.4.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#mittelineaarsed-mudelid"><i class="fa fa-check"></i><b>19.4.2</b> Mittelineaarsed mudelid</a></li>
 </ul></li>
-<li class="chapter" data-level="19.5" data-path="brms-mudelid.html"><a href="brms-mudelid.html#brms-mudelite-suntaks"><i class="fa fa-check"></i><b>19.5</b> brms mudelite süntaks</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="brms-suntaks.html"><a href="brms-suntaks.html"><i class="fa fa-check"></i><b>20</b> brms süntaks</a><ul>
+<li class="chapter" data-level="20.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#general-formula-structure"><i class="fa fa-check"></i><b>20.1</b> General formula structure</a><ul>
+<li class="chapter" data-level="20.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#group-level-terms-xg-1idg-grx-by-mmg1-g2"><i class="fa fa-check"></i><b>20.1.1</b> Group-level terms: x||g, 1|ID|g, gr(x, by = ), mm(g1, g2)</a></li>
+<li class="chapter" data-level="20.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>20.1.2</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
+<li class="chapter" data-level="20.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>20.1.3</b> Additional response information</a></li>
+<li class="chapter" data-level="20.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>20.1.4</b> Formula syntax for non-linear models</a></li>
+<li class="chapter" data-level="20.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>20.1.5</b> Formula syntax for predicting distributional parameters</a></li>
+<li class="chapter" data-level="20.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>20.1.6</b> Formula syntax for mixture models</a></li>
+<li class="chapter" data-level="20.1.7" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>20.1.7</b> Formula syntax for multivariate models</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#brms-likelihoods"><i class="fa fa-check"></i><b>20.2</b> brms likelihoods</a></li>
+<li class="chapter" data-level="20.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#priors"><i class="fa fa-check"></i><b>20.3</b> priors</a><ul>
+<li class="chapter" data-level="20.3.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#population-level-fixed-effects"><i class="fa fa-check"></i><b>20.3.1</b> Population-level (‘fixed’) effects</a></li>
+<li class="chapter" data-level="20.3.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#standard-deviations-of-group-level-random-effects"><i class="fa fa-check"></i><b>20.3.2</b> Standard deviations of group-level (‘random’) effects</a></li>
+<li class="chapter" data-level="20.3.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#correlations-of-group-level-random-effects"><i class="fa fa-check"></i><b>20.3.3</b> Correlations of group-level (‘random’) effects</a></li>
+<li class="chapter" data-level="20.3.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#splines"><i class="fa fa-check"></i><b>20.3.4</b> Splines</a></li>
+<li class="chapter" data-level="20.3.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#gaussian-processes"><i class="fa fa-check"></i><b>20.3.5</b> Gaussian processes</a></li>
+<li class="chapter" data-level="20.3.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#autocorrelation-parameters"><i class="fa fa-check"></i><b>20.3.6</b> Autocorrelation parameters</a></li>
+<li class="chapter" data-level="20.3.7" data-path="brms-suntaks.html"><a href="brms-suntaks.html#parameters-for-specific-families"><i class="fa fa-check"></i><b>20.3.7</b> Parameters for specific families</a></li>
+</ul></li>
 </ul></li>
 <li class="appendix"><span><b>Lisa</b></span></li>
 <li class="chapter" data-level="A" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html"><i class="fa fa-check"></i><b>A</b> Bayesi ja sagedusliku statistika võrdlus</a><ul>
@@ -363,7 +384,8 @@ gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(b1, b2, 
 <p><img src="17_brms_files/figure-html/unnamed-chunk-70-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Kolme mudeli lõikepunktid ja tõusunurgad on sisuliselt võrdsed ja sama täpsusega hinnatud. Seega ei tee robustne mudel vähemal halba, kui meil on enam-vähem normaalsed andmed.</p>
 <p>Proovime ka robuststet versiooni 2 grupi võrdlusest (vastab t testile, kus kahe grupi sd-d hinnatakse eraldi)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_prior</span>(<span class="kw">bf</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, sigma <span class="op">~</span><span class="st"> </span>Species), 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">no_versicolor &lt;-<span class="st"> </span><span class="kw">filter</span>(iris, Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>)
+<span class="kw">get_prior</span>(<span class="kw">bf</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, sigma <span class="op">~</span><span class="st"> </span>Species), 
           <span class="dt">data =</span> no_versicolor, 
           <span class="dt">family =</span> <span class="st">&quot;student&quot;</span>)
 <span class="co">#&gt;                 prior     class             coef group resp  dpar nlpar</span>
@@ -401,7 +423,12 @@ gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(b1, b2, 
 <p>b_Speciesvirginica on hinnag efekti suurusele, ehk 2. grupi erinevusest esimesest grupist (algses skaalas)</p>
 <p>b_Intercept + b_Speciesvirginica annab 2. grupi keskväärtuse.</p>
 <p>b_sigma_Intercept on naturaallogaritm 1. grupi sd-st.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">exp</span>(<span class="op">-</span><span class="fl">1.175</span>)
+<span class="co">#&gt; [1] 0.309</span></code></pre></div>
+<p>Tegelik sigma on 0.3</p>
 <p>b_sigma_Speciesvirginica on logaritm 2. grupi (I. virginica) sd erinevusest esimesest grupist (ehk efekti suurus).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">exp</span>(<span class="op">-</span><span class="fl">1.175</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.577</span>)
+<span class="co">#&gt; [1] 0.55</span></code></pre></div>
 <p>Seega saab algses skaalas sd-d nii:</p>
 <p>exp(b_sigma_Intercept) = 1. grupi sd</p>
 <p>exp(b_sigma_Intercept) + exp(b_sigma_Speciesvirginica) = 2. grupi sd</p>
@@ -410,11 +437,14 @@ gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(b1, b2, 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">r_1_df &lt;-<span class="st"> </span><span class="kw">posterior_samples</span>(robust_t_test1)
 mean_<span class="fl">2.</span>gr &lt;-<span class="st"> </span>r_1_df<span class="op">$</span>b_Intercept <span class="op">+</span><span class="st"> </span>r_1_df<span class="op">$</span>b_Speciesvirginica
 <span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="ot">NULL</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(mean_<span class="fl">2.</span>gr))</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-76-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-78-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Nii saab tekitada usaldusinetvalle, mis katavad 90% jaotuse alusest kõrgeimast tihedusest (mis ei ole päris sama, mis kvantiilide meetod)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rethinking<span class="op">::</span><span class="kw">HPDI</span>(mean_<span class="fl">2.</span>gr, <span class="dt">prob =</span> <span class="fl">0.9</span>)
 <span class="co">#&gt; |0.9 0.9| </span>
 <span class="co">#&gt;  6.4  6.7</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">quantile</span>(mean_<span class="fl">2.</span>gr, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>))
+<span class="co">#&gt;   5%  95% </span>
+<span class="co">#&gt; 6.41 6.71</span></code></pre></div>
 <p>Nii saame teada, milline osa (fraktsioon) posteeriorist on väiksem kui 6.4</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(mean_<span class="fl">2.</span>gr <span class="op">&lt;</span><span class="st"> </span><span class="fl">6.4</span>)
 <span class="co">#&gt; [1] 0.0372</span></code></pre></div>
@@ -423,7 +453,7 @@ mean_<span class="fl">2.</span>gr &lt;-<span class="st"> </span>r_1_df<span clas
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sd_<span class="fl">2.</span>gr &lt;-<span class="st"> </span><span class="kw">exp</span>(r_1_df<span class="op">$</span>b_sigma_Intercept) <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(r_1_df<span class="op">$</span>b_sigma_Speciesvirginica)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="ot">NULL</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(sd_<span class="fl">2.</span>gr))</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-79-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-82-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>On tavaline, et sd-de posteeriorid ei ole normaaljaotusega (selle kohta vaata lähemalt Statistical Rethinking raamatust).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> no_versicolor)
 <span class="co">#&gt; </span>
@@ -443,7 +473,7 @@ mean_<span class="fl">2.</span>gr &lt;-<span class="st"> </span>r_1_df<span clas
 df1 &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">a =</span> <span class="kw">rnorm</span>(<span class="dv">30</span>), <span class="dt">b =</span> <span class="kw">c</span>(<span class="kw">rnorm</span>(<span class="dv">25</span>, <span class="dv">1</span>, <span class="fl">1.5</span>), <span class="fl">4.3</span>, <span class="fl">5.3</span>, <span class="dv">7</span>, <span class="op">-</span><span class="fl">8.1</span>, <span class="op">-</span><span class="dv">17</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>()
 <span class="kw">ggplot</span>(df1, <span class="kw">aes</span>(value, <span class="dt">fill =</span> key)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">alpha =</span> <span class="fl">0.7</span>, <span class="dt">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">bins =</span> <span class="dv">30</span>)</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-81-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-84-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">robust_t_test2 &lt;-<span class="st"> </span><span class="kw">brm</span>(<span class="kw">bf</span>(value<span class="op">~</span>key, sigma <span class="op">~</span><span class="st"> </span>key), 
             <span class="dt">data =</span> df1, 
             <span class="dt">family =</span> <span class="st">&quot;student&quot;</span>, 
@@ -470,6 +500,12 @@ df1 &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt
 <span class="co">#&gt; mean in group a mean in group b </span>
 <span class="co">#&gt;         -0.0471          0.7729</span></code></pre></div>
 <p>Nüüd kus meil on outlieritega andmed, annab klassikaline t test efekti suurusele CI -2.41 … 0.78 (p = 0.3), aga robustne t test leiab efekti üles - CI 0.78 … 2.10 [tegelik ES oleks 1, outliereid arvestamata].</p>
+<p>Ilma outlieriteta versioon annab p = 0.00006</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">123</span>)
+a =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">30</span>) 
+b =<span class="st"> </span><span class="kw">c</span>(<span class="kw">rnorm</span>(<span class="dv">25</span>, <span class="dv">1</span>, <span class="fl">1.5</span>))
+<span class="kw">t.test</span>(a, b)<span class="op">$</span>p.value
+<span class="co">#&gt; [1] 6.37e-05</span></code></pre></div>
 <p>Kui tavaline t test annab välja kahe grupi keskmised, usaldusintervalli nende erinevusele (ehk ES-le) ja p väärtuse, siis bayesi variant annab välja 2 grupi keskväärtused, 2 grupi varieeruvused andmepunktide tasemel ning kõik efekti suurused ja hüpoteesitestid, millest te suudate unistada. Selle külluse põhjus on, et hinnang iga parameeteri väärtusele tuleb meile posteeriori ehk tõenäosusjaotuse kujul. Kuna iga posteerior on meil arvutis olemas kui arvuline vektor, ja teatavasti saab vektoritega teha aritmeetilisi tehteid, siis saab ka posteerioreid omavahel liita, lahutada, astendada jms. Teoreetiliselt sisaldab posteerior kogu infot, mis meil vastava parameetri väärtuse kohta on. Me ei vaja midagi enamat, et teha kõiki järeldusi, mida me selle parameetri väärtuse kohta üldse teha saame. Seetõttu on bayesi versioon mitte ainult palju paindlikum kui tavaline t test, vaid selle output on ka hästi palju informatiivsem.</p>
 <p>Igaks juhuks tuletame meelde, et tavaline t test (küll versioonis, kus võrreldavate gruppide varieeruvused on eeldatud olema identsed) on ekvivalentne lineaarse regressiooniga, mille siin fitime vähimruutude meetodiga. (Väheinformatiivsete prioritega bayesi versioon normaaljaotuse likelihoodiga annaks sellega väga sarnase fiti.)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm1 &lt;-<span class="st"> </span><span class="kw">lm</span>(value <span class="op">~</span><span class="st"> </span>key, <span class="dt">data =</span> df1)
@@ -480,8 +516,57 @@ df1 &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt
 <span class="co">#&gt; 1 (Intercept)  -0.0471     0.554   -0.0850   0.933</span>
 <span class="co">#&gt; 2 keyb          0.820      0.784    1.05     0.300</span></code></pre></div>
 <p>p = 0.3 ongi vastava t testi põhiväljund.</p>
+<div id="lognormaalne-toeparafunktsioon" class="section level3">
+<h3><span class="header-section-number">19.1.1</span> lognormaalne tõepärafunktsioon</h3>
+<p>Sama näide on pikemalt 14. peatükis, seal küll lahendatud rethinkingu abil.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gapminder)
+<span class="kw">library</span>(rethinking)
+g2007 &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">l_GDP =</span> <span class="kw">log10</span>(gdpPercap))</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-92"></span>
+<img src="17_brms_files/figure-html/unnamed-chunk-92-1.png" alt="SKP-de jaotus" width="70%" />
+<p class="caption">
+Joonis 19.1: SKP-de jaotus
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_prior</span>(gdpPercap<span class="op">~</span>lifeExp, <span class="dt">family =</span> <span class="st">&quot;lognormal&quot;</span>, <span class="dt">data=</span>g2007)
+<span class="co">#&gt;                 prior     class    coef group resp dpar nlpar bound</span>
+<span class="co">#&gt; 1                             b                                    </span>
+<span class="co">#&gt; 2                             b lifeExp                            </span>
+<span class="co">#&gt; 3 student_t(3, 9, 10) Intercept                                    </span>
+<span class="co">#&gt; 4 student_t(3, 0, 10)     sigma</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prior &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="dt">class=</span><span class="st">&quot;Intercept&quot;</span>),
+           <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>,<span class="dv">10</span>), <span class="dt">class =</span><span class="st">&quot;b&quot;</span>),
+           <span class="kw">prior</span>(<span class="kw">student</span>(<span class="dv">6</span>,<span class="dv">0</span>,<span class="dv">5</span>)), <span class="dt">class =</span><span class="st">&quot;sigma&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ln_m1 &lt;-<span class="st"> </span><span class="kw">brm</span>(gdpPercap<span class="op">~</span>lifeExp, <span class="dt">family =</span> <span class="st">&quot;lognormal&quot;</span>, <span class="dt">prior=</span>prior, <span class="dt">data=</span>g2007, <span class="dt">cores=</span><span class="dv">4</span>)
+<span class="kw">write_rds</span>(ln_m1, <span class="st">&quot;ln_m1.rds&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tidy</span>(ln_m1)
+<span class="co">#&gt;          term  estimate std.error     lower     upper</span>
+<span class="co">#&gt; 1 b_Intercept  2.53e+00    0.3891  1.88e+00     3.162</span>
+<span class="co">#&gt; 2   b_lifeExp  9.09e-02    0.0057  8.15e-02     0.100</span>
+<span class="co">#&gt; 3       sigma  8.08e-01    0.0504  7.30e-01     0.895</span>
+<span class="co">#&gt; 4        lp__ -1.40e+03    1.2649 -1.40e+03 -1398.543</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(ln_m1), <span class="dt">points=</span><span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-98-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(ln_m1, <span class="dt">method=</span><span class="st">&quot;predict&quot;</span>), <span class="dt">points=</span><span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-99-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ln_m2 &lt;-<span class="st"> </span><span class="kw">brm</span>(l_GDP<span class="op">~</span>lifeExp, <span class="dt">data=</span>g2007, <span class="dt">cores=</span><span class="dv">4</span>)
+<span class="kw">write_rds</span>(ln_m2, <span class="st">&quot;ln_m2.rds&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ln_m2 &lt;-<span class="st"> </span><span class="kw">read_rds</span>(<span class="st">&quot;ln_m2.rds&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(ln_m2, <span class="dt">method=</span><span class="st">&quot;predict&quot;</span>), <span class="dt">points=</span><span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-102-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bayes_R2</span>(ln_m1)
+<span class="co">#&gt;    Estimate Est.Error  Q2.5 Q97.5</span>
+<span class="co">#&gt; R2    0.587    0.0767 0.429 0.727</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bayes_R2</span>(ln_m2)
+<span class="co">#&gt;    Estimate Est.Error Q2.5 Q97.5</span>
+<span class="co">#&gt; R2    0.652    0.0277 0.59 0.698</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(ln_m2), <span class="dt">points=</span><span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-105-1.png" width="70%" style="display: block; margin: auto;" /></p>
+</div>
 <div id="puuduvate-andmete-imputatsioon" class="section level3">
-<h3><span class="header-section-number">19.1.1</span> Puuduvate andmete imputatsioon</h3>
+<h3><span class="header-section-number">19.1.2</span> Puuduvate andmete imputatsioon</h3>
 <p>Regressioonimudelite fittimisel kasutatakse ainult vaatlusi, kus esinevad väärtused kõigis mudelisse pandud muutujates. Seega, kui meil on palju muutujaid, milles igaühes puuduvad juhuslikult mõned väärtused, siis kaotame kokkuvõttes enamuse oma valimist. Aitab puuduvate andmete imputatsioon, mis tegelikult tähendab, et me fitime iga puuduvaid andmeid sisaldava muutuja eraldi regressioonimudelis kõigi teiste muutujate vastu.</p>
 <p>Eriti vajalik, kui andmed ei puudu juhuslikult!</p>
 <p>Viskame irise andmestiku kahest tulbast välja 1/4 andmepunkte, aga mitte juhuslikult vaid kõik madalamad väärtused. Selline suunatud tegevus kallutab (ehk suunab kindlas suunas) oluliselt mudeldamise tulemusi</p>
@@ -576,7 +661,7 @@ kui n läheneb lõpmatusele.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="op">-</span><span class="dv">10</span><span class="op">:</span><span class="dv">10</span>
 y &lt;-<span class="st"> </span><span class="kw">exp</span>(x)<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(x))
 <span class="kw">plot</span>(y<span class="op">~</span>x)</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-99-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-118-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Kui me mudeli y = a + bx korral muudame x-i ühe ühiku võrra muutuvad log-odds-id b võrra. Teisisõnu võime korrutada lineaarses skaalas <em>odds</em>-id exp(b)-ga. Kuna P(Y = 1 | X) ja X-i seos ei ole sirge, siis b ei vasta P(Y = 1 | X) muutusele X-i muutumisel ühe ühiku võrra. See, kui kiiresti P(Y = 1 | X) muutub, sõltub X-i väärtusest, aga hoolimata sellest, senikaua kui b &gt; 0, on X-i kasv alati seotud tõenäosuse kasvuga (ja vastupidi).</p>
 <p>Kahe tõenäosuse logitite vahe on sama, mis logaritm <em>odds-ratio</em>-st (log(OR) ehk shanside suhe)</p>
 <p><span class="math display">\[{log} (OR)= {logit} (p_{1})- {logit} (p_{2})\]</span></p>
@@ -680,12 +765,12 @@ glm.pred[glm.probs <span class="op">&gt;</span><span class="st"> </span><span cl
 <span class="kw">table</span>(glm.pred, chimpanzees<span class="op">$</span>pulled_left)
 <span class="co">#&gt;               </span>
 <span class="co">#&gt; glm.pred         0   1</span>
-<span class="co">#&gt;   pulled_left  201 282</span>
-<span class="co">#&gt;   pulled_right  11  10</span></code></pre></div>
+<span class="co">#&gt;   pulled_left  202 279</span>
+<span class="co">#&gt;   pulled_right  10  13</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pROC)
 roccurve &lt;-<span class="st"> </span><span class="kw">roc</span>(chimpanzees<span class="op">$</span>pulled_left <span class="op">~</span><span class="st"> </span>glm.probs)
 <span class="kw">plot</span>(roccurve, <span class="dt">legacy.axes =</span> <span class="ot">TRUE</span>, <span class="dt">cex.axis =</span> <span class="fl">0.7</span>, <span class="dt">cex.lab =</span> <span class="fl">0.8</span>)</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-113-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-132-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Sarnase mudeli saab fittida ka siis, kui n&gt;1 ja meil on igale ahvile countide suhted nr of pull-left/total pulls. Nüüd on meil vaja lisada trials(), kuhu läheb n kas ühe numbrina või muutujana, mis indekseerib sündmuste arvu ehk n-i. Antud juhul on kõikidel ahvidel katsete arv n 18.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chimp_aggr &lt;-<span class="st"> </span><span class="kw">select</span>(chimpanzees, actor, condition, prosoc_left, pulled_left) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(actor, condition, prosoc_left) <span class="op">%&gt;%</span>
@@ -696,28 +781,14 @@ m_logreg_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw
 <p>Koefitsendid tulevad samad, mis eelmisel mudelil.</p>
 <p>Näide agregeeritud binoomsetele andmetele.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(UCBadmit)
-<span class="kw">skim</span>(UCBadmit)
-<span class="co">#&gt; Skim summary statistics</span>
-<span class="co">#&gt;  n obs: 12 </span>
-<span class="co">#&gt;  n variables: 5 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ── Variable type:factor ───────────────────────────────────────────────────</span>
-<span class="co">#&gt;          variable missing complete  n n_unique             top_counts</span>
-<span class="co">#&gt;  applicant.gender       0       12 12        2  fem: 6, mal: 6, NA: 0</span>
-<span class="co">#&gt;              dept       0       12 12        6 A: 2, B: 2, C: 2, D: 2</span>
-<span class="co">#&gt;  ordered</span>
-<span class="co">#&gt;    FALSE</span>
-<span class="co">#&gt;    FALSE</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ── Variable type:integer ──────────────────────────────────────────────────</span>
-<span class="co">#&gt;      variable missing complete  n   mean     sd p0    p25   p50    p75</span>
-<span class="co">#&gt;         admit       0       12 12 146.25 148.45 17  45.75 107   154   </span>
-<span class="co">#&gt;  applications       0       12 12 377.17 216.92 25 291.5  374   452.75</span>
-<span class="co">#&gt;        reject       0       12 12 230.92 122.77  8 188.25 261.5 314   </span>
-<span class="co">#&gt;  p100     hist</span>
-<span class="co">#&gt;   512 ▆▇▂▁▁▂▁▂</span>
-<span class="co">#&gt;   825 ▃▂▂▇▁▃▁▂</span>
-<span class="co">#&gt;   391 ▅▁▂▁▇▂▇▅</span></code></pre></div>
+<span class="kw">head</span>(UCBadmit)
+<span class="co">#&gt;   dept applicant.gender admit reject applications</span>
+<span class="co">#&gt; 1    A             male   512    313          825</span>
+<span class="co">#&gt; 2    A           female    89     19          108</span>
+<span class="co">#&gt; 3    B             male   353    207          560</span>
+<span class="co">#&gt; 4    B           female    17      8           25</span>
+<span class="co">#&gt; 5    C             male   120    205          325</span>
+<span class="co">#&gt; 6    C           female   202    391          593</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ucbadmit &lt;-<span class="st"> </span><span class="kw">mutate</span>(UCBadmit, <span class="dt">male =</span> <span class="kw">case_when</span>(
   applicant.gender <span class="op">==</span><span class="st"> &quot;male&quot;</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,
   <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">0</span>
@@ -782,10 +853,10 @@ post <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mut
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> applicant.gender), <span class="dt">position =</span> pd) <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;Proportion admitted&quot;</span>,
        <span class="dt">title =</span> <span class="st">&quot;Posterior validation check&quot;</span>) </code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-127-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-146-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Ohhoo, kui vaadata deparmente eraldi, pole mingit kinnitust, et meestel oleks paremad võimalused ülikooli sisse saada.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">marginal_effects</span>(m_ucadmit2, <span class="dt">effects =</span><span class="st">&quot;dept&quot;</span>, <span class="dt">conditions =</span> <span class="kw">data.frame</span>(<span class="dt">male =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)))</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-128-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-147-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="y-muutujal-3-kategoorilist-vaartust" class="section level3">
@@ -823,7 +894,7 @@ pred1_l &lt;-<span class="st"> </span>pred1_l <span class="op">%&gt;%</span><spa
                               variable <span class="op">==</span><span class="st"> &quot;P(Y = 3)&quot;</span> <span class="op">~</span><span class="st"> &quot;career 3&quot;</span>))
 <span class="kw">ggplot</span>(pred1_l, <span class="kw">aes</span>(income, value)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>variable)<span class="op">+</span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Pr of career choice at a given income&quot;</span>) </code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-132-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-151-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="zero-inflated-mudelid" class="section level3">
 <h3><span class="header-section-number">19.3.3</span> zero inflated mudelid</h3>
@@ -917,114 +988,14 @@ fit1 &lt;-<span class="st"> </span><span class="kw">brm</span>(<span class="kw">
 <p>Priors on population-level parameters (i.e., ‘fixed effects’) are often mandatory to identify a non-linear model. Thus, brms requires the user to explicitely specify these priors. In the present example, we used a normal(1, 2) prior on (the population-level intercept of) b1, while we used a normal(0, 2) prior on (the population-level intercept of) b2. Setting priors is a non-trivial task in all kinds of models, especially in non-linear models, so you should always invest some time to think of appropriate priors. Quite often, you may be forced to change your priors after fitting a non-linear model for the first time, when you observe different MCMC chains converging to different posterior regions. This is a clear sign of an idenfication problem and one solution is to set stronger (i.e., more narrow) priors.</p>
 </div>
 </div>
-<div id="brms-mudelite-suntaks" class="section level2">
-<h2><span class="header-section-number">19.5</span> brms mudelite süntaks</h2>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Symbol</th>
-<th align="left">Example</th>
-<th align="left">Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">+</td>
-<td align="left">+ x</td>
-<td align="left">include this variable</td>
-</tr>
-<tr class="even">
-<td align="left">-</td>
-<td align="left">-</td>
-<td align="left">x delete this variable</td>
-</tr>
-<tr class="odd">
-<td align="left">:</td>
-<td align="left">x : z</td>
-<td align="left">include the interaction between these variables</td>
-</tr>
-<tr class="even">
-<td align="left">*</td>
-<td align="left">x * z</td>
-<td align="left">include these variables and the interactions between them</td>
-</tr>
-<tr class="odd">
-<td align="left">/</td>
-<td align="left">x / z</td>
-<td align="left">nesting: include z nested within x</td>
-</tr>
-<tr class="even">
-<td align="left">|</td>
-<td align="left">x | z</td>
-<td align="left">conditioning: include x given z</td>
-</tr>
-<tr class="odd">
-<td align="left">^</td>
-<td align="left">(u + v + w + z)^3</td>
-<td align="left">include these variables and all interactions up to three way</td>
-</tr>
-<tr class="even">
-<td align="left">poly</td>
-<td align="left">poly(x,3)</td>
-<td align="left">polynomial regression: orthogonal polynomials</td>
-</tr>
-<tr class="odd">
-<td align="left">Error</td>
-<td align="left">Error(a/b)</td>
-<td align="left">specify an error term</td>
-</tr>
-<tr class="even">
-<td align="left">I</td>
-<td align="left">I(x*z)</td>
-<td align="left">as is: include a new variable consisting of these variables multiplied. (x^2) means include this variable squared, etc. In other words I( ) isolates the mathematic operations inside it.</td>
-</tr>
-<tr class="odd">
-<td align="left">1</td>
-<td align="left">- 1</td>
-<td align="left">intercept: delete the intercept (regress through the origin)</td>
-</tr>
-</tbody>
-</table>
-<p>üldine vorm:</p>
-<p><code>response ~ pterms + (gterms | group)</code></p>
-<dl>
-<dt>kasuta g1:g2 või g1/g2, kui nii g1 kui g2 on sobilikud grupeerivad faktorid.</dt>
-<dd>operaator loob uue grupeeriva faktori, mis kombineerib g1 ja g2 tasemed.
-</dd>
-</dl>
-<p>/ operaator viitab nested struktuurile (kool - koolitüüp)</p>
-<p>(1 | g1/g2), tähendab tegelikult (1 | g1) + (1 | g1:g2).</p>
-<p>(1 | g1 + g2) on sama, mis (1 | g1) + (1 | g2).</p>
-<p>|| kasutades (x || g1) ei modelleeri me grupi-taseme korrelatsioone. See on hea, kui mudeli fittimine muidu ei tööta.</p>
-<p>kuidas mudeldada sama grupeeriva faktori korrelatsioone üle mitme regressioonivõrrandi? Selleks laiendame | operaatori |<ID>|, kus <ID> on suvaline väärtus. Näiteks kui termid (x1|ID|g1) and (x2|ID|g1) esinevad kuskil samas või erinevates võrrandites, modelleeritakse need kui korreleeritud.</p>
-<p>alternatiivseid grupeeivaid struktuure saab väljendada nii:</p>
-<p><code>(gterms | fun(group))</code>.</p>
-<p>Hetkel on meil 2 sellist fun-i: gr() annab default käitumise ja mm() annab multi-membership termid. Näiteks <code>brm(y ~ 1 + (1 | mm(s1, s2))</code> modelleerib seda, kuidas lapsed võivad õppida kahes koolis (s1 ja s2) eri aegadel</p>
-<p>gr() lisatakse muidu automaatselt, aga seda spetsifitseerides saab kirjutada</p>
-<p><code>y ~ x + (1|gr(g1, by = g2))</code>, mis tähendab, et grupeeriva muutja g1 sees lahutatakse veel gruppidesse g2 muutuja tasemete järgi - ja iga g2 grupp modelleeritakse iseseisvalt (ilma shrinkageta)</p>
-<p>Mittelineaarne mudel:</p>
-<p>y = b1(1 − exp(−(x/b2)**b3 )</p>
-<p>y ja x seos parameetritega b1..b3 Oletame, et tahame kõik parameetrid fittida grupeeriva muutuja g tasemete järgi ja et grupi tasmel efektid oleks omavahel korreleeritud. Lisaks ennustame me b1-e kovariaat z järgi. See kõik läheb järgmisesse võrrandisüsteemi kus, lisaks mitte-lineaarsele võrrandile, igale parameetrile b1…b3 vastab oma lineaarne võrrand:</p>
-<p><code>y ~ b1 * (1 - exp(-(x / b2) ^ b3)</code> <code>b1 ~ z + (1|ID|g)</code> <code>b2 ~ (1|ID|g)</code> <code>b3 ~ (1|ID|g)</code></p>
-<p>lisaks on mudeli keeles silumistermid s() ehk spline ja t2() ehk bivariate tensor spline, mis tulevad mgcv paketist. Näiteks <code>rentsqm ~ t2(area, yearc) + (1|district)</code></p>
-<p>category specific effects cs,</p>
-<p>monotonic effects mo,</p>
-<p>noise-free effects me, or</p>
-<p>Gaussian process terms gp.</p>
-<p>additional information on the response variable may be specified via <code>response | aterms ~ &lt;predictor terms&gt;</code>. The aterms part may contain multiple terms of the form fun(<variable>) separated by + each providing special information on the response variable. This allows among others to weight observations, provide known standard errors for meta-analysis, or model censored or truncated data.</p>
-
 </div>
-</div>
-
-
-
             </section>
 
           </div>
         </div>
       </div>
 <a href="brms.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="bayesi-ja-sagedusliku-statistika-vordlus.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="brms-suntaks.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

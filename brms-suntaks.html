@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="eda-eksploratoorne-andmeanaluus.html">
-<link rel="next" href="bootstrap.html">
+<link rel="prev" href="brms-mudelid.html">
+<link rel="next" href="bayesi-ja-sagedusliku-statistika-vordlus.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -332,189 +332,254 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="jareldav-statistika" class="section level1">
-<h1><span class="header-section-number">9</span> Järeldav statistika</h1>
-<p>Kui EDA määrab graafiliste meetoditega andmete kvaliteeti ja püstitab uusi hüpoteese, siis järeldav statistika püüab formaalsete arvutuste abil vastata kahele lihtsale küsimusele: 1. mis võiks olla kõige usutavam parameetriväärtus? ja 2. kui suur ebakindlus seda hinnangut ümbritseb? Kuna andmed tulevad meile lõpliku suurusega valimina koos mõõtmisveaga ja bioloogilise varieeruvusega, on ebakindlus hinnagusse sisse ehitatud. Hea protseduur kvantifitseerib selle ebakindluse ausalt ja täpselt – siin ei ole eesmärk mitte niivõrd ebakindlust vähendada (seda teeme eelkõige katse planeerimise tasemel), vaid seda kirjeldada. Järeldav statistika püüab, kasutades algoritme ja mudeleid, teha andmete põhjal järeldusi looduse kohta.</p>
-<blockquote>
-<p>Ebakindluse allikad on mõõtmisviga (võib olla tsentreeritud õigele väärtusele, või mitte), valimiviga (juhuslik viga, mis sõltub valimi suurusest), bioloogiline varieeruvus, mudeli viga (kas maailm on lineaarne ja normaaljaotusega?), algoritmi viga kus algoritm ei tee seda, mida kasutaja tahab (eriti ohtlik mcmc algoritmide puhul) ja süstemaatiline viga (juhtub, kui te saate valesti aru oma katsesüsteemist, harrastate teaduslikku pettust või teete kõike muud, mis suunaliselt kallutab teie valimit tegelikkusest).</p>
-</blockquote>
-<p>Sellisel tegevusel on mõtet ainult siis, kui ühest küljest andmed peegeldavad tegelikkust ja teisest küljest tegelikkus hõlmab enamat, kui lihtsalt meie andmeid. Kui andmed = tegelikkus, siis pole mõtet keerulisi mudeleid kasutada – piisab lihtsast andmete kirjeldusest. Ja kui andmetel pole midagi ühist tegelikkusega, siis on need lihtsalt ebarelevatsed. Seega on järeldava statistika abil tehtud järeldused alati rohkem või vähem ebamäärased ning meil on vaja meetodit selle ebamäärasuse mõõtmiseks. Selle meetodi annab tõenäosusteooria.</p>
-<div id="jareldav-statistika-on-toenaosusteooria-kaepikendus" class="section level2 unnumbered">
-<h2>Järeldav statistika on tõenäosusteooria käepikendus</h2>
-<p>See õpik õpetab Bayesi statistikat, mis põhineb tõenäosusteoorial. Tänu sellele moodustab Bayesi statistika sidusa terviku, mille abil saab teha kõike seda, mida saab teha tõenäosusteooria abil. Bayesi statistika põhineb Bayesi teoreemil, mis on triviaalne tuletus tõenäosusteooria aksioomidest. Tänu Cox-i teoreemile (1961) teame, et klassikaline lausearvutuslik loogika on tõenäosusteooria erijuht ning, et Bayesi teoreem on teoreetiliselt parim viis tõenäosustega töötamiseks. Seega, kui te olete kindel oma väidete tõesuses või vääruses, siis on klassikaline loogika parim viis nendega opereerida; aga kui te ei saa oma järeldustes päris kindel olla, siis on teoreetiliselt parim lahendus tõenäosusteooria ja Bayesi teoreem.</p>
-<p>Tõenäosusteooria on aksiomaatline süsteem, mille abil saame omistada numbriline väärtuse meie usu määrale mingisse hüpoteesi. Näiteks, kui me planeerime katset, kus me viskame kulli ja kirja ja teeme seda kaks korda, siis saame arvutada, millise tõenäosusega võime oodata katse tulemuseks kaht kirja. Aga seda tingimusel, et me võtame omaks mõned eeldused – näiteks et münt on aus ja et need kaks viset on üksteisest sõltumatud.</p>
-<p>Sellel katsel on 4 võimalikku tulemust: H-H, H-T, T-H, T-T (H -kull, T - kiri). Tõenäosus saada 2-l mündiviskel 2 kirja, P(2 kirja) = 1/4, P(0 kirja) = 1/4 ja P(1 kiri) = 2/4 = 1/2. Sellega oleme andnud oma katseplaanile täieliku tõenäosusliku kirjelduse (pane tähele, et 1/4 + 1/4 + 1/2 = 1). Ükskõik kui keeruline on teie katseplaan, põhimõtteliselt käib selle analüüs samamoodi. Tõenäosusteooria loomus seisneb kõikide võimalike sündmuste üleslugemises ning senikaua, kui me seda nüri järjekindlusega teeme, on vastus, mille me saame, tõsikindel.</p>
-<p>Ehkki Bayesi statistika põhineb tõenäosusteoorial ja on sellega kooskõlas, ei ole see sama asi, mis tõenäosusteooria. Statistikas pööratakse tõenäosusteoreetiline ülesanne pea peale ja küsitakse nii: kui me saime 2-l mündiviskel 2 kirja, siis millise tõenäosusega on münt aus (tasakaalus)? Erinevus tõenäosusteoreetilise ja statistilise lähenemise vahel seisneb selles, et kui tõenäosusteoorias me eeldame, et teame, kuidas süsteem on üles ehitatud, ja ennustame sellest lähtuvalt andmete tõenäosusi, siis statistikas me kontrollime neid eeldusi andmete põhjal. Seega annab tõenäosusteooria matemaatiliselt tõsikindlaid vastuseid ideaalmaailmade kohta, samas kui statistika püüab andmete põhjal teha järeldusi päris maailma kohta. Selleks kasutame Bayesi teoreemi (vt allpool).</p>
-<blockquote>
-<p>Tõenäosusteooria määrab kõikide võimalike sündmuste esinemise tõenäosused, eeldades, et hüpotees H kehtib (H on siin lihtsalt teine nimi “eeldusele”).</p>
-</blockquote>
-<blockquote>
-<p>Statistika arvutab H-i kehtimise tõenäosuse lähtuvalt kogutud andmetest, matemaatilistest mudelitest ning teaduslikest taustateadmistest.</p>
-</blockquote>
-<p><strong>Tõenäosusteooria aksioomid</strong> ütlevad tõlkes inimkeelde, et tõenäosused (P) jäävad 0 ja 1 vahele, et <em>P(A) = 1</em> tähendab, et A on tõene, et <em>P(A) = 0</em> tähendab, et A on väär, ning kui A ja B on hüpoteesiruumi ammendavad üksteist välistavad hüpoteesid, siis <em>P(A) + P(B) = 1</em>. Need aksioomid peaksid olema iseenesestmõistetavad ja ainult neist on tuletatud kogu tõenäosusteooria.</p>
-<p>Need aksioomid, mis oma matemaatilises vormis postuleeriti Andrei Kolmogorovi poolt ca 1930, on tuletatavad järgmistest eeldustest:</p>
+<div id="brms-suntaks" class="section level1">
+<h1><span class="header-section-number">20</span> brms süntaks</h1>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Symbol</th>
+<th align="left">Example</th>
+<th align="left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">+</td>
+<td align="left">+ x</td>
+<td align="left">include this variable</td>
+</tr>
+<tr class="even">
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">x delete this variable</td>
+</tr>
+<tr class="odd">
+<td align="left">:</td>
+<td align="left">x : z</td>
+<td align="left">include the interaction between these variables</td>
+</tr>
+<tr class="even">
+<td align="left">*</td>
+<td align="left">x * z</td>
+<td align="left">include these variables and the interactions between them</td>
+</tr>
+<tr class="odd">
+<td align="left">/</td>
+<td align="left">x / z</td>
+<td align="left">nesting: include z nested within x</td>
+</tr>
+<tr class="even">
+<td align="left">|</td>
+<td align="left">x | z</td>
+<td align="left">conditioning: include x given z</td>
+</tr>
+<tr class="odd">
+<td align="left">^</td>
+<td align="left">(u + v + w + z)^3</td>
+<td align="left">include these variables and all interactions up to three way</td>
+</tr>
+<tr class="even">
+<td align="left">poly</td>
+<td align="left">poly(x,3)</td>
+<td align="left">polynomial regression: orthogonal polynomials</td>
+</tr>
+<tr class="odd">
+<td align="left">Error</td>
+<td align="left">Error(a/b)</td>
+<td align="left">specify an error term</td>
+</tr>
+<tr class="even">
+<td align="left">I</td>
+<td align="left">I(x*z)</td>
+<td align="left">as is: include a new variable consisting of these variables multiplied. (x^2) means include this variable squared, etc. In other words I( ) isolates the mathematic operations inside it.</td>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">- 1</td>
+<td align="left">intercept: delete the intercept (regress through the origin)</td>
+</tr>
+</tbody>
+</table>
+<p>üldine vorm:</p>
+<p><code>response ~ pterms + (gterms | group)</code></p>
+<dl>
+<dt>kasuta g1:g2 või g1/g2, kui nii g1 kui g2 on sobilikud grupeerivad faktorid.</dt>
+<dd>operaator loob uue grupeeriva faktori, mis kombineerib g1 ja g2 tasemed.
+</dd>
+</dl>
+<p>/ operaator viitab nested struktuurile (kool - koolitüüp)</p>
+<p>(1 | g1/g2), tähendab tegelikult (1 | g1) + (1 | g1:g2).</p>
+<p>(1 | g1 + g2) on sama, mis (1 | g1) + (1 | g2).</p>
+<p>|| kasutades (x || g1) ei modelleeri me grupi-taseme korrelatsioone. See on hea, kui mudeli fittimine muidu ei tööta.</p>
+<p>kuidas mudeldada sama grupeeriva faktori korrelatsioone üle mitme regressioonivõrrandi? Selleks laiendame | operaatori |<ID>|, kus <ID> on suvaline väärtus. Näiteks kui termid (x1|ID|g1) and (x2|ID|g1) esinevad kuskil samas või erinevates võrrandites, modelleeritakse need kui korreleeritud.</p>
+<p>alternatiivseid grupeeivaid struktuure saab väljendada nii:</p>
+<p><code>(gterms | fun(group))</code>.</p>
+<p>Hetkel on meil 2 sellist fun-i: gr() annab default käitumise ja mm() annab multi-membership termid. Näiteks <code>brm(y ~ 1 + (1 | mm(s1, s2))</code> modelleerib seda, kuidas lapsed võivad õppida kahes koolis (s1 ja s2) eri aegadel</p>
+<p>gr() lisatakse muidu automaatselt, aga seda spetsifitseerides saab kirjutada</p>
+<p><code>y ~ x + (1|gr(g1, by = g2))</code>, mis tähendab, et grupeeriva muutja g1 sees lahutatakse veel gruppidesse g2 muutuja tasemete järgi - ja iga g2 grupp modelleeritakse iseseisvalt (ilma shrinkageta)</p>
+<p>Mittelineaarne mudel:</p>
+<p>y = b1(1 − exp(−(x/b2)**b3 )</p>
+<p>y ja x seos parameetritega b1..b3 Oletame, et tahame kõik parameetrid fittida grupeeriva muutuja g tasemete järgi ja et grupi tasmel efektid oleks omavahel korreleeritud. Lisaks ennustame me b1-e kovariaat z järgi. See kõik läheb järgmisesse võrrandisüsteemi kus, lisaks mitte-lineaarsele võrrandile, igale parameetrile b1…b3 vastab oma lineaarne võrrand:</p>
+<p><code>y ~ b1 * (1 - exp(-(x / b2) ^ b3)</code> <code>b1 ~ z + (1|ID|g)</code> <code>b2 ~ (1|ID|g)</code> <code>b3 ~ (1|ID|g)</code></p>
+<p>lisaks on mudeli keeles silumistermid s() ehk spline ja t2() ehk bivariate tensor spline, mis tulevad mgcv paketist. Näiteks <code>rentsqm ~ t2(area, yearc) + (1|district)</code></p>
+<p>category specific effects cs,</p>
+<p>monotonic effects mo,</p>
+<p>noise-free effects me, or</p>
+<p>Gaussian process terms gp.</p>
+<p>additional information on the response variable may be specified via <code>response | aterms ~ &lt;predictor terms&gt;</code>. The aterms part may contain multiple terms of the form fun(<variable>) separated by + each providing special information on the response variable. This allows among others to weight observations, provide known standard errors for meta-analysis, or model censored or truncated data.</p>
+<div id="general-formula-structure" class="section level2">
+<h2><span class="header-section-number">20.1</span> General formula structure</h2>
+<p>response | aterms ~ pterms + (gterms | group)</p>
+<p>The pterms - effects that are assumed to be the same across observations (‘population-level’ effects).</p>
+<p>gterms - effects that are assumed to vary across grouping variables specified in group (‘group-level’ effects).</p>
+<div id="group-level-terms-xg-1idg-grx-by-mmg1-g2" class="section level3">
+<h3><span class="header-section-number">20.1.1</span> Group-level terms: x||g, 1|ID|g, gr(x, by = ), mm(g1, g2)</h3>
+<p>Multiple grouping factors each with multiple group-level effects are possible.</p>
+<p>Use || in grouping terms to prevent correlations from being modeled.</p>
+<p>It is possible to model different group-level terms of the same grouping factor as correlated (even across different formulas, e.g., in non-linear models) by using |<ID>| instead of |. All group-level terms sharing the same ID will be modeled as correlated. for instance, the terms (1+x|2|g) and (1+z|2|g) mean that correlations between x and z will be estimated. correlated group-level effects across parameters: <code>bf(y ~ a1 - a2^x, a1 ~ 1 + (1|2|g), a2 ~ x + (x|2|g), nl = TRUE)</code></p>
+<p>If levels of the grouping factor belong to different sub-populations, it may be reasonable to assume a different covariance matrix for each of the sub-populations. For instance, the variation within the treatment group and within the control group in a randomized control trial might differ. Suppose that y is the outcome, and x is the factor indicating the treatment and control group. Then, we could estimate different hyper-parameters of the varying effects (in this case a varying intercept) for treatment and control group via y ~ x + (1 | gr(subject, by = x)).</p>
+<p>A multi-membership term with two members: (1 | mm(g1, g2)), where g1 and g2 specify the first and second member, respectively. If x varies across the levels of g1 and g2, we can save the respective x values in the variables x1 and x2 and then model the varying effect as (1 + mmc(x1, x2) | mm(g1, g2)).</p>
+<p>multilevel w smoothing terms <code>brmsformula(y ~ x1*x2 + s(z) + (1+x1|1) + (1|g2))</code></p>
+<p>additionally predict ‘sigma’ <code>brmsformula(y ~ x1*x2 + s(z) + (1+x1|1) + (1|g2), sigma ~ x1 + (1|g2))</code></p>
+</div>
+<div id="special-predictor-terms-s-t2-gp-mo-me-mi-cs" class="section level3">
+<h3><span class="header-section-number">20.1.2</span> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</h3>
+<p>Smoothing terms are modeled using s() and t2() in the pterms part of the formula.</p>
+<p>Gaussian process terms can be fitted using gp() in the pterms. Similar to smooth terms, Gaussian processes can be used to model complex non-linear relationships, for instance temporal or spatial autocorrelation. However, they are computationally demanding and are thus not recommended for very large datasets.</p>
+<p>The pterms and gterms parts may contain non-standard effect types: monotonic mo(predictor), measurement error me(predictor, sd_predictor), missing value mi(predictor), and category specific effects cs(<predictors>).</p>
+<p>Category specific effects can only be estimated in ordinal models and are explained in more detail in the package’s main vignette (type vignette(“brms_overview”)).</p>
+<p>A monotonic predictor must either be integer valued or an ordered factor. Predictor categories (or integers) are not assumed to be equidistant with respect to their effect on the response variable. The distance between adjacent categories is estimated from the data and may vary across categories. One parameter takes care of the direction and size of the effect similar to an ordinary regression parameter, while an additional parameter vector estimates the normalized distances between consecutive predictor categories.</p>
+<p>Often predictors contain measurement error. Effects of noise-free predictors can be modeled using the me (for ‘measurement error’) function. If x is a measured predictor with known measurement error sdx, we can include it via y ~ me(x, sdx). If x2 is another measured predictor with corresponding error sdx2 and z is a predictor without error (e.g., an experimental setting), we can model all main effects and interactions: <span class="math inline">\(y = me(x, sdx) * me(x2, sdx2) * z\)</span>.</p>
+<p>Using a variable with missing values as predictors requires two things, First, we need to specify that the predictor contains missings that should to be imputed. If x is a predictor with missings and z is a predictor without missings, we go for y ~ mi(x) + z. Second, we need to model x as an additional response with corresponding predictors and the addition term mi(). In our example, we could write x | mi() ~ z.</p>
+<p>bf(bmi ~ age * mi(chl)) + bf(chl | mi() ~ age) + set_rescor(FALSE).</p>
+</div>
+<div id="additional-response-information" class="section level3">
+<h3><span class="header-section-number">20.1.3</span> Additional response information</h3>
+<p>aterms part may contain multiple terms of the form fun(<variable>) separated by + each providing special information on the response variable. fun can be replaced with either se, weights, cens, trunc, trials, cat, or dec.</p>
+<p>For families gaussian, student and skew_normal, it is possible to specify standard errors of the observations, thus allowing to perform meta-analysis. Suppose that the variable y_i contains the effect sizes from the studies and se_i the corresponding standard errors. Then, fixed and random effects meta-analyses can be conducted using the formulas <code>y_i | se(se_i) ~ 1</code> and <code>y_i | se(se_i) ~ 1 + (1|study)</code>, respectively, where study is a variable uniquely identifying every study.</p>
+<p>Meta-regression can be performed via <code>y_i | se(se_i) ~ 1 + mod1 + mod2 + (1|study)</code> or <code>y_i | se(se_i) ~ 1 + mod1 + mod2 + (1 + mod1 + mod2|study)</code>, where mod1 and mod2 represent moderator variables. By default, the standard errors replace the parameter sigma. To model sigma in addition to the known standard errors, set argument sigma in function se to TRUE, for instance, <code>y_i | se(se_i, sigma = TRUE) ~ 1</code>.</p>
+<p>For all families, weighted regression may be performed using weights in the aterms part. Internally, this is implemented by multiplying the log-posterior values of each observation by their corresponding weights. Suppose that variable we_i contains the weights and that yi is the response variable. Then, formula <code>y_i | weights(we_i) ~ predictors</code> implements a weighted regression.</p>
+<p>With the exception of categorical, ordinal, and mixture families, left, right, and interval censoring can be modeled through <code>y | cens(censored) ~ predictors</code>. The censoring variable (named censored in this example) should contain the values ‘left’, ‘none’, ‘right’, and ‘interval’ (or equivalently -1, 0, 1, and 2) to indicate that the corresponding observation is left censored, not censored, right censored, or interval censored. For interval censored data, a second variable (let’s call it y2) has to be passed to cens. In this case, the formula has the structure <code>y | cens(censored, y2) ~ predictors</code>. While the lower bounds are given in y, the upper bounds are given in y2 for interval censored data. Intervals are assumed to be open on the left and closed on the right: (y, y2].</p>
+<p>With the exception of categorical, ordinal, and mixture families, the response distribution can be truncated using the trunc function in the addition part. If the response variable is truncated between, say, 0 and 100, we can specify this via <code>yi | trunc(lb = 0, ub = 100) ~ predictors</code>. Instead of numbers, variables in the data set can also be passed allowing for varying truncation points across observations. Defining only one of the two arguments in trunc leads to one-sided truncation.</p>
+<p>For all continuous families, missing values in the responses can be imputed within Stan by using the addition term mi. This is mostly useful in combination with mi predictor terms as explained above under ‘Special predictor terms’.</p>
+<p>For families binomial and zero_inflated_binomial, addition should contain a variable indicating the number of trials underlying each observation: <code>success | trials(n)</code>. If the number of trials is constant across all observations, say 10, we may also write <code>success | trials(10)</code>.</p>
+<p>For all ordinal families, aterms may contain a term cat(number) to specify the number of categories (e.g, cat(7)). If not given, the number of categories is calculated from the data.</p>
+<p>Multiple addition terms may be specified at the same time using the + operator, for instance <code>formula = y_i | se(se_i) + cens(censored) ~ 1</code> for a censored meta-analytic model.</p>
+</div>
+<div id="formula-syntax-for-non-linear-models" class="section level3">
+<h3><span class="header-section-number">20.1.4</span> Formula syntax for non-linear models</h3>
+<p>The non-linear model can be specified within the formula argument. Suppose, that we want a non-linear model being defined via formula = y ~ alpha - beta * lambda^x. To tell brms that this is a non-linear model, argument nl = TRUE. Now we have to specify a model for each of the non-linear parameters. Let’s say we just want to estimate those three parameters with no further covariates or random effects. Then we can pass alpha + beta + lambda ~ 1 or equivalently (and more flexible) alpha ~ 1, beta ~ 1, lambda ~ 1 to the … argument. If we have another predictor z and observations nested within the grouping factor g, we may write for instance alpha ~ 1, beta ~ 1 + z + (1|g), lambda ~ 1. We are using z and g only for the prediction of beta, but we might also use them for the other non-linear parameters.</p>
+<p>Non-linear models may not be uniquely identified and / or show bad convergence. For this reason it is mandatory to specify priors on the non-linear parameters.</p>
+<p><code>bf(y ~ a1 - a2^x, a1 + a2 ~ 1, nl = TRUE)</code> simple nl model</p>
+</div>
+<div id="formula-syntax-for-predicting-distributional-parameters" class="section level3">
+<h3><span class="header-section-number">20.1.5</span> Formula syntax for predicting distributional parameters</h3>
+<p>It is also possible to predict parameters of the response distribution such as the residual standard deviation sigma in gaussian models or the hurdle probability hu in hurdle models. The syntax closely resembles that of a non-linear parameter, for instance sigma ~ x + s(z) + (1+x|g).</p>
+<p>Alternatively, one may fix distributional parameters to certain values. This is useful when models become too complicated and otherwise have convergence issues. The quantile parameter of the asym_laplace distribution is a good example where it is useful. By fixing quantile, one can perform quantile regression for the specified quantile. For instance, quantile = 0.25 allows predicting the 25%-quantile. Furthermore, the bias parameter in drift-diffusion models, is assumed to be 0.5 (i.e. no bias) in many applications. To achieve this, simply write bias = 0.5. Other possible applications are the Cauchy distribution as a special case of the Student-t distribution with nu = 1, or the geometric distribution as a special case of the negative binomial distribution with shape = 1. Furthermore, the parameter disc (‘discrimination’) in ordinal models is fixed to 1 by default and not estimated, but may be modeled as any other distributional parameter if desired (‘disc’ can only be positive, which is achieved by applying the log-link).</p>
+<p>In categorical models, distributional parameters do not have fixed names. Instead, they are named after the response categories (excluding the first one, which serves as the reference category), with the prefix ‘mu’. If, for instance, categories are named cat1, cat2, and cat3, the distributional parameters will be named mucat2 and mucat3.</p>
+<p>Some distributional parameters currently supported by brmsformula have to be positive (a negative standard deviation or precision parameter does not make any sense) or are bounded between 0 and 1 (for zero-inflated / hurdle probabilities, quantiles, or the initial bias parameter of drift-diffusion models). However, linear predictors can be positive or negative, and thus the log link (for positive parameters) or logit link (for probability parameters) are used by default to ensure that distributional parameters are within their valid intervals. This implies that, by default, effects for such distributional parameters are estimated on the log / logit scale and one has to apply the inverse link function to get to the effects on the original scale. Alternatively, it is possible to use the identity link to predict parameters on their original scale, directly. However, this is much more likely to lead to problems in the model fitting, if the parameter actually has a restricted range.</p>
+</div>
+<div id="formula-syntax-for-mixture-models" class="section level3">
+<h3><span class="header-section-number">20.1.6</span> Formula syntax for mixture models</h3>
+<p>If not specified otherwise, all mean parameters of the mixture components are predicted using the right-hand side of formula.</p>
+<p>distributional parameters of mixture distributions have the same name as those of the corresponding ordinary distributions, but with a number at the end to indicate the mixture component. For instance, if you use family mixture(gaussian, gaussian), the distributional parameters are sigma1 and sigma2. distributional parameters of the same class can be fixed to the same value. For the above example, we could write sigma2 = “sigma1” to make sure that both components have the same residual standard deviation, which is in turn estimated from the data.</p>
+<p>specify different predictors for different mixture components mix &lt;- mixture(gaussian, gaussian) bf(y ~ 1, mu1 ~ x, mu2 ~ z, family = mix)</p>
+<p>fix both residual standard deviations to the same value bf(y ~ x, sigma2 = “sigma1”, family = mix)</p>
+<p>In addition, there are two types of special distributional parameters. The first are named mu<ID>, that allow for modeling different predictors for the mean parameters of different mixture components. For instance, if you want to predict the mean of the first component using predictor x and the mean of the second component using predictor z, you can write mu1 ~ x as well as mu2 ~ z. The second are named theta<ID>, which constitute the mixing proportions. If the mixing proportions are fixed to certain values, they are internally normalized to form a probability vector. If one seeks to predict the mixing proportions, all but one of the them has to be predicted, while the remaining one is used as the reference category to identify the model. The softmax function is applied on the linear predictor terms to form a probability vector.</p>
+</div>
+<div id="formula-syntax-for-multivariate-models" class="section level3">
+<h3><span class="header-section-number">20.1.7</span> Formula syntax for multivariate models</h3>
+<p>Multivariate models may be specified using cbind notation or with help of the mvbf function. Suppose that y1 and y2 are response variables and x is a predictor. Then cbind(y1, y2) ~ x specifies a multivariate model, The effects of all terms specified at the RHS of the formula are assumed to vary across response variables. For instance, two parameters will be estimated for x, one for the effect on y1 and another for the effect on y2. This is also true for group-level effects. When writing, for instance, cbind(y1, y2) ~ x + (1+x|g), group-level effects will be estimated separately for each response. To model these effects as correlated across responses, use the ID syntax (see above). For the present example, this would look as follows: cbind(y1, y2) ~ x + (1+x|2|g). Of course, you could also use any value other than 2 as ID.</p>
+<p>It is also possible to specify different formulas for different responses. If, for instance, y1 should be predicted by x and y2 should be predicted by z, we could write mvbf(y1 ~ x, y2 ~ z). Alternatively, multiple brmsformula objects can be added to specify a joint multivariate model (see ‘Examples’).</p>
+</div>
+</div>
+<div id="brms-likelihoods" class="section level2">
+<h2><span class="header-section-number">20.2</span> brms likelihoods</h2>
+<p>A character string naming the distribution of the response variable.</p>
+<p>student(link = “identity”, link_sigma = “log”, link_nu = “logm1”)</p>
+<p>bernoulli(link = “logit”)</p>
+<p>negbinomial(link = “log”, link_shape = “log”)</p>
+<p>geometric(link = “log”)</p>
+<p>lognormal(link = “identity”, link_sigma = “log”)</p>
+<p>shifted_lognormal(link = “identity”, link_sigma = “log”, link_ndt = “log”)</p>
+<p>skew_normal(link = “identity”, link_sigma = “log”, link_alpha = “identity”)</p>
+<p>exponential(link = “log”)</p>
+<p>weibull(link = “log”, link_shape = “log”)</p>
+<p>exgaussian(link = “identity”, link_sigma = “log”, link_beta = “log”)</p>
+<p>Beta(link = “logit”, link_phi = “log”)</p>
+<p>hurdle_poisson(link = “log”)</p>
+<p>hurdle_negbinomial(link = “log”, link_shape = “log”, link_hu = “logit”)</p>
+<p>hurdle_gamma(link = “log”, link_shape = “log”, link_hu = “logit”)</p>
+<p>hurdle_lognormal(link = “identity”, link_sigma = “log”, link_hu = “logit”)</p>
+<p>zero_inflated_beta(link = “logit”, link_phi = “log”, link_zi = “logit”)</p>
+<p>zero_one_inflated_beta(link = “logit”, link_phi = “log”, link_zoi = “logit”, link_coi = “logit”)</p>
+<p>zero_inflated_poisson(link = “log”, link_zi = “logit”)</p>
+<p>zero_inflated_negbinomial(link = “log”, link_shape = “log”, link_zi = “logit”)</p>
+<p>zero_inflated_binomial(link = “logit”, link_zi = “logit”)</p>
+<p>categorical(link = “logit”)</p>
+<p>cumulative(link = “logit”, link_disc = “log”, threshold = c(“flexible”, “equidistant”))</p>
 <ul>
-<li><p>ratsionaalne mõtlemine vastab kvalitatiivselt tervele mõistusele: lisatõendusmaterjal hüpoteesi kasuks tõstab selle hüpoteesi usutavust.</p></li>
-<li><p>mõtlemine peab olema konsistentne: kui me võime järeldusi teha rohkem kui ühel viisil, peame lõpuks ikkagi alati samale lõppjäreldusele jõudma</p></li>
-<li><p>kogu kättesaadav relevantne informatsioon tuleb järelduste tegemisel arvesse võtta (totaalse informatsiooni printsiip)</p></li>
-<li><p>ekvivalentsed teadmised on representeeritud ekvivalentsete numbritega.</p></li>
+<li><p>Family gaussian with identity link leads to linear regression.</p></li>
+<li><p>Family student with identity link leads to robust linear regression that is less influenced by outliers.</p></li>
+<li><p>Family skew_normal can handle skewed responses in linear regression.</p></li>
+<li><p>Families poisson, negbinomial, and geometric with log link lead to regression models for count data.</p></li>
+<li><p>Families binomial and bernoulli with logit link leads to logistic regression and family categorical to multi-logistic regression when there are more than two possible outcomes.</p></li>
+<li><p>Families cumulative, cratio (‘continuation ratio’), sratio (‘stopping ratio’), and acat (‘adjacent category’) leads to ordinal regression.</p></li>
+<li><p>Families Gamma, weibull, exponential, lognormal, frechet, and inverse.gaussian can be used (among others) for survival regression.</p></li>
+<li><p>Families weibull, frechet, and gen_extreme_value (‘generalized extreme value’) allow for modeling extremes.</p></li>
+<li><p>Family asym_laplace allows for quantile regression when fixing the auxiliary quantile parameter to the quantile of interest.</p></li>
+<li><p>Family exgaussian (‘exponentially modified Gaussian’) and shifted_lognormal are especially suited to model reaction times.</p></li>
+<li><p>The wiener family provides an implementation of the Wiener diffusion model. For this family, the main formula predicts the drift parameter ‘delta’ and all other parameters are modeled as auxiliary parameters (see brmsformula for details).</p></li>
+<li><p>Families hurdle_poisson, hurdle_negbinomial, hurdle_gamma, hurdle_lognormal, zero_inflated_poisson, zero_inflated_negbinomial, zero_inflated_binomial, zero_inflated_beta, and zero_one_inflated_beta allow to estimate zero-inflated and hurdle models. These models can be very helpful when there are many zeros in the data (or ones in case of one-inflated models) that cannot be explained by the primary distribution of the response. Families hurdle_lognormal and hurdle_gamma are especially useful, as traditional lognormal or Gamma models cannot be reasonably fitted for data containing zeros in the response.</p></li>
 </ul>
-<p>Kui tõenäosused on 0 või 1, siis taandub tõenäosusteooria matemaatliselt oma erijuhule, milleks on lausearvutuslik loogika. Lausearvutuse oluline erinevus tõenäosusteooriast on, et kui selle abil on saavutatud valiidne tulemus, on see tõsikindel ja uute andmete lisandumisel ei saa me seda tulemust muuta. Seevastu tõenäosusteoorias ja statstikas muudavad uued andmed alati tõenäosusi. Selles mõttes ei saa tõenäosuslik teadus kunagi valmis.</p>
-<div id="formaalsed-tuletised-toenaosusteooria-aksioomidest" class="section level3 unnumbered">
-<h3>Formaalsed tuletised tõenäosusteooria aksioomidest</h3>
-<p>Me anname siin 9 tuletust ilma tõestuskäikudeta, mis on aga lihtsad. Siin võib A ja B vaadelda erinevate sündmustena või hüpoteesidena. Me eeldame, et kummagi hüpoteesi tõenäosus &gt; 0.</p>
-<p>Sümbolite tähendused:</p>
+<p>A list of all possible links for each family:</p>
 <ul>
-<li><p><span class="math inline">\(P(A~ \vert ~B)\)</span> on tinglik tõenäosus, mida tuleks lugeda: “A tõenäosus tingimusel, et kehtib B”. Pane tähele, et <span class="math inline">\(P(vihm~\vert~pilves~ilm)\)</span> ei ole sama, mis <span class="math inline">\(P(pilves~ilm~\vert~vihm)\)</span>.</p></li>
-<li><p><span class="math inline">\(A \land B\)</span> tähendab “A ja B”,</p></li>
-<li><p><span class="math inline">\(A \lor B\)</span> tähendab “A või B”,</p></li>
-<li><p><span class="math inline">\(\lnot A\)</span> tähendab mitte-A, ehk A == FALSE.</p></li>
+<li><p>The families gaussian, student, skew_normal, exgaussian, asym_laplace, and gen_extreme_value accept the links (as names) identity, log, and inverse;</p></li>
+<li><p>families poisson, negbinomial, geometric, zero_inflated_poisson, zero_inflated_negbinomial, hurdle_poisson, and hurdle_negbinomial the links log, identity, and sqrt;</p></li>
+<li><p>families binomial, bernoulli, Beta, zero_inflated_binomial, zero_inflated_beta, and zero_one_inflated_beta the links logit, probit, probit_approx, cloglog, cauchit, and identity;</p></li>
+<li><p>families cumulative, cratio, sratio, and acat the links logit, probit, probit_approx, cloglog, and cauchit; family categorical the link logit;</p></li>
+<li><p>families Gamma, weibull, exponential, frechet, and hurdle_gamma the links log, identity, and inverse; families lognormal and hurdle_lognormal the links identity and inverse;</p></li>
+<li><p>family inverse.gaussian the links 1/mu^2, inverse, identity and log; family von_mises the link tan_half; family wiener the link identity.</p></li>
 </ul>
-<p>Tõenäosusteooria põhituletised:</p>
-<ol style="list-style-type: decimal">
-<li><p>Kui B sisaldab endas A-d, siis <span class="math inline">\(P(B) \leq P(A)\)</span></p></li>
-<li><p>Def: A ja B on üksteisest sõltumatud siis ja ainult siis kui <span class="math inline">\(P(A~ \vert B) = P(A)\)</span></p></li>
-<li><p>Kui A ja B on üksteisest sõltumatud, siis <span class="math inline">\(P(A \land B) = P(A)P(B) = P(A~\vert~B)P(B)\)</span></p></li>
-<li><p>Kui A ja B on üksteist välistavad, siis <span class="math inline">\(P(A \lor B) = P(A) + P(B)\)</span>.</p></li>
-<li><p>Kui A ja B ei ole üksteist välistavad, siis <span class="math inline">\(P(A \lor B) = P(A) + P(B) - P(A \land B)\)</span></p></li>
-<li><p>Def: <span class="math inline">\(P(A~\vert~B) = P(A \land B)/P(B)\)</span> – Tinglik tõenäosus</p></li>
-<li><p>Totaalne tõenäosus: <span class="math inline">\(P(A) = P(A~\vert~B)P(B) + P(A~\vert~\lnot B)P(\lnot B)\)</span> – , tuletatud 6. punktist.</p></li>
-<li><p>Bayesi teoreem: <span class="math inline">\(P(A~\vert~B) = P(A)P(B~\vert~A)/P(B)\)</span> – tuletatud 6. punktist –, kus <span class="math inline">\(P(B) = P(A)P(B~\vert~A) + P(\lnot A)P(B~\vert~\lnot A)\)</span> – 7. punktist.</p></li>
-</ol>
-<p>Bayesi teoreemi kasutatakse määramaks hüpoteesi tõenäosuse pärast uute faktide (andmete) lisandumist olemasolevatele teadmistele. Selleks peab hüpoteesiruum olema jagatud vähemalt kaheks ammendavaks ja üksteist välistavaks hüpoteesiks. Kui A on H<sub>1</sub> ning mitte-A on ammendav ja välistav H<sub>2</sub> ja B tähistab andmeid (data), saame Bayesi teoreemi ümber kirjutada</p>
-<p><span class="math inline">\(P(H_1~\vert~data) = P(H_1)P(data~\vert~H_1) /( P(H_1)P(data~\vert~H_1) + P(H_2)P(data~ \vert ~H_2) )\)</span></p>
-<p><span class="math inline">\(P(H_1~\vert~data)\)</span> on <span class="math inline">\(H_1\)</span> kehtimise tõenäosus meie andmete korral – ehk posteerior,</p>
-<p><span class="math inline">\(P(H_1)\)</span> on <span class="math inline">\(H_1\)</span> kehtimise eelnev, ehk meie andmetest sõltumatu, tõenäosus – ehk prior,</p>
-<p><span class="math inline">\(P(data~\vert~H_1)\)</span> on andmete esinemise tõenäosus tingimusel, et H<sub>1</sub> kehtib – ehk tõepära.</p>
-<p>Jagamistehe tehakse ainult selle pärast, et normaliseerida 1-le kõikide hüpoteeside tõenäosuste summa meie andmete korral ja seega viia posteerior vastavusse tõenäosusteooria aksioomidega — kui meil on i ammendavat üksteist välistavat hüpoteesi, siis murrujoone alla läheb <span class="math inline">\(\sum~P(data~\vert~H_i)P(H_i) = 1\)</span>. Bayesi teoreem on triviaalne tuletus tõenäosusteooria aksioomidest, milles pole midagi maagilist. See ei ole automaatne meetod, mis tagaks inimkonna teadmiste kasvu, vaid lihtsalt parim võimalik viis andmemudeli ja taustateadmiste mudeli ühendamiseks ja normaliseerimiseks tinglikuks tõenäosuseks (hüpoteesi tõenäosus meie andmete ja taustateadmiste korral). Edasi sõltub kõik mudelite, andmete ja taustateadmiste kvaliteedist.</p>
+<p>The first link mentioned for each family is the default.</p>
 </div>
-<div id="naited-toenaosusteooria-tuletiste-rakendamisest" class="section level3 unnumbered">
-<h3>Näited tõenäosusteooria tuletiste rakendamisest</h3>
-<p>Järgnevatel näidetel on ühist kaks asja: need on matemaatiliselt triviaalselt lihtsad, aga intuitiivselt lootusetult keerulised. Kõigi nende puhul on inimestel tugev intuitsioon, mis on vale – ja tõenäosusteooria tundmine ei anna meile paremat intuitsiooni. Seega, ainus, mis üle jääb, on iga probleemi taandamine tõenäosusteooria valemitele ja selle tuimalt läbi arvutamine.</p>
-<p><strong>Punkt 3.</strong> Kui me viskame täringut 3 korda, kui suure tõenäosusega saame vähemalt ühe kuue? Naiivselt võiks arvata, et see tõenäosus on 50%. Kuid rakendades tõenäosusteooriat saame teistsuguse vastuse. Lihtsuse huvides defineerime küsimuse ümber: kui suure tõenäosusega ei saa me 3-l viskel ühtegi kuute? Vastus: kui igal viskel on 0 kuue tõenäosus 1/6, siis <span class="math inline">\((5/6)*(5/6)*(5/6) = 0.58\)</span> ja <span class="math inline">\(1 - 0.58 = 0.42\)</span>, mis tähendab, et vähemalt 1 kuue (või ükskõik mis numbri ühest kuueni) saame 42% tõenäosusega. Teine näide (NYT 03-12-2017): te ostate maja Texases Hustonis, millele müüja annab garantii, et üleujutuse tõenäosus on 1% aastas. Seadus nimetab seda näidikut “100 aasta suurvee-tasemeks”. 1% näidu puhul ei pea te seaduse järgi ostma üleujutusekindlustust. Kui suure tõenäosusega tabab teie maja üleujutus pangalaenu perioodi vältel (30 aastat)? Vastus: <span class="math inline">\(1 - (99/100)^{30} = 0.26\)</span>.</p>
-<p><strong>Punkt 6.</strong> Meil on kolm pannkooki, millest esimesel on mõlemad küljed moosised, teisel on üks külg moosine ja kolmandal pole üldse moosi. Juhtus nii, et meile pandi taldrikule pannkook, mille pealmine külg on moosine. Millise tõenäosusega on moosine ka selle pannkoogi alumine külg? NB! Vastus ei ole 50%. Lahendus: Kui A - moos all, B - moos üleval, siis vastavalt tingliku tõenäosuse definitsioonile <span class="math inline">\(P(moos~ all~ \lvert ~moos~üleval ) = P(moos~all \land ~moos~üleval)/P(moos~all)\)</span> Tõenäosus, et moos on all ja üleval on 1/3 (me teame, et 1 pannkook 3st on mõlemalt küljelt moosine) ja tõenäosus, et moos on all, on keskmine kolmest tõenäosusest, millega me kolmel pannkoogil moosise külje saame: mean(c(1, 0.5, 0)) = 1/2. Seega, vastus on <span class="math inline">\((1/3)/(1/2) = 2/3\)</span>. Kui me saame moosise ülemise külje, siis on tõenäosus 2/3, et ka all on moos!</p>
-<p><strong>Punkt 7.</strong> Kui A tähistab sündmust “ma sooritan eksami edukalt” ja B tähistab sündmust “ma õpin eksamiks”, ning meil on dihhotoomne valik: õpin / ei õpi, siis <span class="math inline">\(P(hea~hinne) = P(õpin)P(hea~hinne~ \lvert ~õpin) + P(ei~ õpi)P(hea~hinne~ \lvert ~ei~õpi)\)</span>. Ehk sõnadega kirjutatult: Hea hinde tõenäosus võrdub korrutisega kahest tõenäosusest – tõenäosus, et ma eksamiks õpin, ja tõenäosus, et ma saan hea hinde siis kui ma õpin –, millele tuleb liita teine korrutis kahest tõenäosustest – tõenäosus, et ma ei õpi, ja tõenäosus, et ma saan hea hinde ka ilma õppimata.<br />
-Siit saad ise enda jaoks välja arvutada ennustuse, millise tõenäosusega just sina selle kursuse edukalt läbid.</p>
-<p><strong>Punkt8.</strong> Bayesi teoreemi rakendamine diskreetsetele hüpoteesidele: Oletame, et 45 aastane naine saab rinnavähi sõeluuringus mammograafias positiivse tulemuse. Millise tõenäosusega on tal rinnavähk? Kõigepealt jagame hüpoteesiruumi kahe diskreetse hüpoteesi vahel: H<sub>1</sub> - vähk ja H<sub>2</sub> - mitte vähk. Edasi omistame numbrilised väärtused järgmistele parameetritele:</p>
-<ol style="list-style-type: decimal">
-<li><p>H<sub>1</sub> tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil on rinnavähk (testi sensitiivsus): <span class="math inline">\(P( +~\vert~H_1) = 0.9\)</span></p></li>
-<li><p>H<sub>2</sub> tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil ei ole rinnavähki (1 - testi spetsiifilisus): <span class="math inline">\(P( +~\vert~H_2) = 0.08\)</span>. Pane tähele, et 0.9 + 0.08 ei võrdu ühega, mis tähendab, et tõepära pole tõenäosusteooria mõttes päris tõenäosus.</p></li>
-<li><p>Eelnev tõenäosus, et patsiendil on rinnavähk <span class="math inline">\(P(H_1) = 0.01\)</span> (see on rinnavähi sagedus 45 a naiste populatsioonis; kui me teame patsiendi genoomi järjestust või rinnavähijuhte tema lähisugulastel, võib P(H~1) tulla väga erinev).</p></li>
-<li><p><span class="math inline">\(P(H_2) = 1 - P(H_1) = 0.99\)</span></p></li>
-</ol>
-<p>Nüüd arvutame posterioorse tõenäosuse <span class="math inline">\(P(H_1~\vert~+)\)</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">likelihood_H1 &lt;-<span class="st"> </span><span class="fl">0.9</span>
-likelihood_H2 &lt;-<span class="st"> </span><span class="fl">0.08</span>
-prior_H1 &lt;-<span class="st"> </span><span class="fl">0.01</span>
-prior_H2 &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>prior_H1
-posterior1 &lt;-<span class="st"> </span>likelihood_H1<span class="op">*</span>prior_H1<span class="op">/</span>(likelihood_H1<span class="op">*</span>prior_H1 <span class="op">+</span><span class="st"> </span>likelihood_H2<span class="op">*</span>prior_H2)
-posterior1
-<span class="co">#&gt; [1] 0.102</span></code></pre></div>
-<p>Nagu näha, postiivne tulemus rinnavähi sõeluuringus annab 10% tõenäosuse, et teil on vähk (ja 90% tõenäosuse, et olete terve). Selle mudeli parameetriväärtused vastavad enam-vähem tegelikele mammograafia veasagedustele ja tegelikule populatsiooni vähisagedusele.</p>
-<p>Mis juhtub, kui me teeme positiivsele patsiendile kordustesti? Nüüd on esimese testi posteerior meile prioriks, sest see kajastab definitsiooni järgi kogu teadmist, mis meil selle patsiendi vähiseisundist on (muidugi eeldusel, et me esimese mudeli kohusetundlikult koostasime).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">likelihood_H1 &lt;-<span class="st"> </span><span class="fl">0.9</span>
-likelihood_H2 &lt;-<span class="st"> </span><span class="fl">0.08</span>
-prior_H1 &lt;-<span class="st"> </span>posterior1
-prior_H2 &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>prior_H1
-posterior2 &lt;-<span class="st"> </span>likelihood_H1<span class="op">*</span>prior_H1<span class="op">/</span>(likelihood_H1<span class="op">*</span>prior_H1 <span class="op">+</span><span class="st"> </span>likelihood_H2<span class="op">*</span>prior_H2)
-posterior2
-<span class="co">#&gt; [1] 0.561</span></code></pre></div>
-<p>Patsiendile võib pärast kordustesti positiivset tulemust öelda, et ta on 44% tõenäosusega vähivaba. Eelduseks on, et me ei tea midagi selle patsiendi geneetikast ega keskkonnast põhjustatud vastuvõtlikusest vähile ning, et testi ja kordustesti vead on üksteisest sõltumatud (mitte korreleeritud).</p>
-<p>Bayesi teoreemi kasutamine pideva suuruse (näiteks keskväärtuse või standardhälbe) hindamiseks on põhimõtteliselt samasugune, ainult et nüüd on meil lõpmata suur arv hüpoteese (iga teoreetiliselt võimalik parameetri väärtus on siin “hüpotees”), mis tähendab, et vastavalt Bayesi teoreemile on meil vaja ka lõpmata hulka tõepärasid ja lõpmata hulka prioreid. Lõpmata hulk tõepärasid ja prioreid tähendab lihtsalt, et me avaldame need kahe pideva funktsioonina, misjärel saame neist kahest funktsioonist arvutada kolmanda pideva funktsiooni, posteeriori. Posteeriorist saab omakorda arvutada iga mõeldava parameetriväärtuste vahemiku tõenäosuse või usalduspiirid, milles mingi meie poolt etteantud tõenäosusega paikneb parameetri tegelik väärtus (vt ptk 10). Ja posterioorse funktsiooni tipp (mood) vastab kõige tõenäolisemale parameetriväärtusele.</p>
-<p>Mida kitsam on posteerior, seda kitsamad tulevad sellest arvutatud usalduspiirid. Siit tuleneb, et kui võimalik peaksime oma mudelitesse panema parameetreid (statistikuid), mille posteeriorid tulevad maksimaalselt kitsad (vt allpool ptk “ajalooline vahepala” selle kohta, kuidas aritmeetiline keskmine on selline statistik).</p>
+<div id="priors" class="section level2">
+<h2><span class="header-section-number">20.3</span> priors</h2>
+<div id="population-level-fixed-effects" class="section level3">
+<h3><span class="header-section-number">20.3.1</span> Population-level (‘fixed’) effects</h3>
+<p>If y is predicted by x1 and x2 then x1 and x2 have regression parameters b_x1 and b_x2. The default prior for population-level effects (including monotonic and category specific effects) is an improper flat prior. Other common options are normal priors or student-t priors. If we want to have a normal prior with mean 0 and standard deviation 5 for x1, and a unit student-t prior with 10 degrees of freedom for x2, we can specify this via set_prior(“normal(0,5)”, class = “b”, coef = “x1”) and set_prior(“student_t(10,0,1)”, class = “b”, coef = “x2”). To put the same prior on all population-level effects at once, set_prior(“<prior>”, class = “b”). This also leads to faster sampling, because priors can be vectorized in this case. Both ways of defining priors can be combined using for instance set_prior(“normal(0,2)”, class = “b”) and set_prior(“normal(0,10)”, class = “b”, coef = “x1”) at the same time. This will set a normal(0,10) prior on the effect of x1 and a normal(0,2) prior on all other population-level effects. However, this will break vectorization.</p>
+<p>The intercept has its own parameter class named “Intercept” and priors can thus be specified via set_prior(“<prior>”, class = “Intercept”). Setting a prior on the intercept will not break vectorization of the other population-level effects. Note that technically, this prior is set on an intercept that results when internally centering all population-level predictors around zero to improve sampling efficiency. On this centered intercept, specifying a prior is actually much easier and intuitive than on the original intercept, since the former represents the expected response value when all predictors are at their means. To treat the intercept as an ordinary population-level effect and avoid the centering parameterization, use 0 + intercept on the right-hand side of the model formula.</p>
+<p>A special shrinkage prior to be applied on population-level effects is the horseshoe prior. See horseshoe for details. Another shrinkage prior is the so-called lasso prior. See lasso for details.</p>
+<p>In non-linear models, population-level effects are defined separately for each non-linear parameter. Accordingly, it is necessary to specify the non-linear parameter in set_prior so that priors can be assigned correctly. If, for instance, alpha is the parameter and x the predictor for which we want to define the prior, we can write set_prior(“<prior>”, coef = “x”, nlpar = “alpha”). As a shortcut we can use set_prior(“<prior>”, nlpar = “alpha”) to set the same prior on all population-level effects of alpha at once.</p>
+<p>If desired, population-level effects can be restricted to fall only within a certain interval using the lb and ub arguments of set_prior. This is often required when defining priors that are not defined everywhere on the real line, such as uniform or gamma priors. When defining a uniform(2,4) prior, you should write set_prior(“uniform(2,4)”, lb = 2, ub = 4). When using a prior that is defined on the positive reals only (such as a gamma prior) set lb = 0. In most situations, it is not useful to restrict population-level parameters through bounded priors (non-linear models are an important exception), but if you really want to this is the way to go.</p>
 </div>
-<div id="toenaosuse-tolgendus" class="section level3 unnumbered">
-<h3>Tõenäosuse tõlgendus</h3>
-<p>Kolmogorovi aksioomid õpetavad meid tõenäosustega matemaatiliselt ümber käima, aga nad ei anna meile seost matemaatiliste tõenäosuste ja päris maailma vahel, ega ei ütle, mida tõenäosus teaduses tähendab. Need on pigem küsimused teadlastele ja filosoofidele, kui matemaatikutele. Kaasajal eksisteerib kaks põhilist tõenäosuse tülgendust, bayesiaanlik ja sageduslik, millest me siin käsitleme esimest. Sagedisliku tõlgenduse kohta vt lisa 1.</p>
-<p>Bayesiaanlik statistika opereerib episteemilise tõenäosusega. See tähendab, et tõenäosus annab numbrilise mõõdu meie ebakindluse määrale mõne hüpoteesi ehk parameetriväärtuse kehtimise kohta. Seega mõõdab tõenäosus meie teadmiste kindlust (või ebakindlust). Näiteks, kui Bayesi arvutus väidab, et vihma tõenäosus homme on 60%, siis me oleme 60% kindlad, et homme tuleb vihma. Aga hoolimata sellest, mida me vihma kohta usume, homme kas sajab vihma või mitte, ja seega on objektiivne vihma tõenäosus meie akna taga 0% või 100% – mitte kunagi 60%.</p>
-<blockquote>
-<p>Tõenäosuse formaalne tõlgendus tuleb otse kihlveokontorist. Kui sa arvutasid, et vihma tõenäosus homme on 60%, siis see tähendab, et sa oled ratsionaalse olendina nõus maksma mitte rohkem kui 60 senti kihlveo eest, mis võidu korral toob sulle sisse 1 EUR – ehk 40 senti kasumit.</p>
-</blockquote>
-<p>Selles mõttes on Bayesi tõenäosus subjektiivne. Kui me teaksime täpselt, mis homme juhtub, siis ei oleks meil selliseid tõenäosusi vaja. Seega, kui te usute, et teadus suudab tõestada väiteid maailma kohta, nagu seda teeb matemaatika formaalsete struktuuride kohta, siis pääsete sellega statistika õppimisest ja kasutamisest. Aga kui te siiski arvutate Bayesi tõenäosusi, siis ei ütle need midagi selle kohta, kas maailm on tõenäosuslik või deterministlik. Inimesed, kes vajavad tõenäosusi maailma seisundite kirjeldamiseks, ei kasuta enamasti Bayesi tõenäosustõlgendust, vaid sagedusliku tõlgendust.</p>
-<p>Kui me mõõdame pidevat suurust, näiteks inimeste pikkusi, siis saame arvutuse tagajärjel tõenäosused kõigi võimalike parameetriväärtuste kohta, ehk igale mõeldavale pikkuse väärtusele. Kuna pideval suurusel on lõpmata hulk võimalikke väärtusi, avaldame me sellised tõenäosused pideva tõenäosusfunktsioonina, ehk posteeriorina. See näeb sageli välja nagu normaaljaotus ja me võime igast posteeriorist arvutada, kui suur osa summaarsest tõenäosusest, mis on 100%, jääb meid huvitavasse pikkustevahemikku. Kui näiteks 67% posteeriori pindalast jääb pikkuste vahemikku 178 kuni 180 cm, siis me usume 67%-se kindlusega, et tõde asub kuskil selles vahemikus.</p>
+<div id="standard-deviations-of-group-level-random-effects" class="section level3">
+<h3><span class="header-section-number">20.3.2</span> Standard deviations of group-level (‘random’) effects</h3>
+<p>Each group-level effect of each grouping factor has a standard deviation named sd_<group>_<coef>. Consider, for instance, the formula y ~ x1 + x2 + (1 + x1 | g). We see that the intercept as well as x1 are group-level effects nested in the grouping factor g. The corresponding standard deviation parameters are named as sd_g_Intercept and sd_g_x1 respectively. These parameters are restricted to be non-negative and, by default, have a half student-t prior with 3 degrees of freedom and a scale parameter that depends on the standard deviation of the response after applying the link function. Minimally, the scale parameter is 10. This prior is used (a) to be only very weakly informative in order to influence results as few as possible, while (b) providing at least some regularization to considerably improve convergence and sampling efficiency. To define a prior distribution only for standard deviations of a specific grouping factor, use set_prior(“<prior>”, class = “sd”, group = “<group>”). To define a prior distribution only for a specific standard deviation of a specific grouping factor, you may write set_prior(“<prior>”, class = “sd”, group = “<group>”, coef = “<coef>”). When defining priors on group-level parameters in non-linear models, please make sure to specify the corresponding non-linear parameter through the nlpar argument in the same way as for population-level effects.</p>
 </div>
-<div id="toenaosusteooriast-tulenevad-statistika-pohiprintsiibid" class="section level3 unnumbered">
-<h3>Tõenäosusteooriast tulenevad statistika põhiprintsiibid</h3>
-<ol style="list-style-type: decimal">
-<li><p>statistilise analüüsi kvaliteet sõltub mudeli eeldustest &amp; struktuurist. Kuna maailm ei koosne matemaatikast, teevad matemaatilised mudelid alati eeldusi maailma kohta, mis ei ole päris tõesed ja mida ei saa tingimata empiiriliselt kontrollida. Mündiviske näites eeldasime, et mündivisked olid üksteisest sõltumatud. Kui me sellest eeldusest loobume, läheb meie mudel keerulisemaks, sest me peame mudelisse lisama teavet visetevahelise korrelatsiooni kohta. Aga see keerulisem mudel toob sisse uued eeldused (vähemalt pool tosinat lisaeeldust). Üldiselt peaks mudeli struktuur kajastama katse struktuuri, mis kaasaegses statistikas tähendab sageli hierarhilisi mudeleid.</p></li>
-<li><p>statistilise analüüsi täpsus sõltub andmete hulgast. Kui kahe mündiviske asemel teeksime kakskümmend, siis saaksime samade eelduste põhjal teha oluliselt väiksema ebakindluse määraga järeldusi mündi aususe kohta.</p></li>
-<li><p>statistilise analüüsi kvaliteet sõltub andmete kvaliteedist. Kui münt on aus, aga me viskame seda ebaausalt, siis, mida rohkem arv kordi me seda teeme, seda tugevamalt usub teadusüldsus selle tagajärjel millessegi, mis pole tõsi.</p></li>
-<li><p>statistilise analüüsi kvaliteet sõltub taustateadmiste kvaliteedist. Napid taustateadmised ei võimalda parandada andmete põhjal tehtud järeldusi juhul, kui andmed mingil põhjusel ei vasta tegelikkusele. Adekvaatsete taustateadmiste lisamine mudelisse aitab vältida mudelite üle-fittimist.</p></li>
-<li><p>Järeldused ühe hüpoteesi kohta mõjutavad järeldusi ka kõigi alternatiivsete hüpoteeside kohta. Relevantsete hüpoteeside eiramine viib ekslikele järeldustele kõigi teiste hüpoteeside kohta. Me ei saa põhimõtteliselt rääkida tõendusmaterjali tugevusest ühe hüpoteesi kontekstis – tõendusmaterjal on suhteline ja selle tugevust mõõdab tõepärade suhe <span class="math inline">\(P(andmed ~\vert~ H_1)/P(andmed ~\vert~ H_2)\)</span>.</p></li>
-</ol>
+<div id="correlations-of-group-level-random-effects" class="section level3">
+<h3><span class="header-section-number">20.3.3</span> Correlations of group-level (‘random’) effects</h3>
+<p>If there is more than one group-level effect per grouping factor, the correlations between those effects have to be estimated. The prior “lkj_corr_cholesky(eta)” or in short “lkj(eta)” with eta &gt; 0 is essentially the only prior for (Cholesky factors) of correlation matrices. If eta = 1 (the default) all correlations matrices are equally likely a priori. If eta &gt; 1, extreme correlations become less likely, whereas 0 &lt; eta &lt; 1 results in higher probabilities for extreme correlations. Correlation matrix parameters in brms models are named as cor_<group>, (e.g., cor_g if g is the grouping factor). To set the same prior on every correlation matrix, use for instance set_prior(“lkj(2)”, class = “cor”).</p>
 </div>
+<div id="splines" class="section level3">
+<h3><span class="header-section-number">20.3.4</span> Splines</h3>
+<p>Each spline has its corresponding standard deviations modeling the variability within this term. This parameter class is called sds and priors can be specified via set_prior(“<prior>”, class = “sds”, coef = “<term label>”). The default prior is the same as for standard deviations of group-level effects.</p>
 </div>
-<div id="andmed-ei-ole-sama-mis-tegelikkus" class="section level2 unnumbered">
-<h2>Andmed ei ole sama, mis tegelikkus</h2>
-<p>Nüüd, kus me saame aru tõenäosusteooriast, on aeg asuda statistika kallale. Me ei kasuta statistikat kunagi vabatahtlikult, vaid teeme seda ainult siis, kui usume kahte asja: ühest küljest, et meie andmed on piisavalt tõetruud, et nende põhjal saaks teha adekvaatseid oletusi päris maailma kohta. Ja teisest küljest, et meie andmed ei ole piisavalt sarnased tõetruud, et neid järeldusi saaks teha lihtsalt ja intuitiivselt. Seega tasub alustada näitega sellest, kuidas andmed ja tegelikkus erinevad. Meie tööriistaks on siin simulatsioon. Simuleerimine on lahe sest simulatsioonid elavad mudeli väikeses maailmas, kus me teame täpselt, mida me teeme ja mida on selle tagajärjel oodata. Simulatsioonidega saame me hõlpsalt kontrollida, kas ja kuidas meie mudelid töötavad ning genereerida olukordi (parameetrite väärtuste kombinatsioone), mida suures maailmas kunagi ette ei tule. Selles mõttes on mudelid korraga nii väiksemad kui suuremad kui päris maailm.</p>
-<p>Alustuseks simuleerime juhuvalimi n = 3 lõpmata suurest normaaljaotusega populatsioonist, mille keskmine on 100 ja sd on 20. See on põhimõtteliselt sama simulatsioon, millise me tegime eelnevalt peatükis “Normaaljaotuse mudel väikestel valimitel”. Jällegi, tähtis ei ole konkreetne juhuvalim, vaid valimi kui sellise erinevus populatsioonist. Päris elus on korraliku juhuvalimi tõmbamine tehniliselt raske ettevõtmine ja, mis veelgi olulisem, me ei tea kunagi, milline on populatsiooni tõeline jaotus, keskmine ja sd. Seega, elagu simulatsioon!</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>) <span class="co"># makes random number generation reproducible</span>
-Sample &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">3</span>, <span class="dt">mean =</span> <span class="dv">100</span>, <span class="dt">sd =</span> <span class="dv">20</span>)
-Sample; <span class="kw">mean</span>(Sample); <span class="kw">sd</span>(Sample)
-<span class="co">#&gt; [1]  87.5 103.7  83.3</span>
-<span class="co">#&gt; [1] 91.5</span>
-<span class="co">#&gt; [1] 10.8</span></code></pre></div>
-<p>Nagu näha on meie konkreetse valimi keskmine 10% väiksem kui peaks ja valimi sd lausa kaks korda väiksem. Seega peegeldab meie valim halvasti populatsiooni — aga me teame seda ainult tänu sellele, et tegu on simulatsiooniga.</p>
-<p>Kui juba simuleerida, siis robinal: tõmbame ühe juhuvalimi asemel 10 000, arvutame seejärel 10 000 keskmist ja 10 000 sd-d ning vaatame nende statistikute jaotusi ja keskväärtusi. Simulatsioon on nagu tselluliit — see on nii odav, et igaüks võib seda endale lubada.</p>
-<p>Meie lootus on, et kui meil on palju valimeid, millel kõigil on juhuslik viga, mis neid populatsiooni suhtes ühele või teisele poole kallutab, siis rohkem on valimeid, mis asuvad tõelisele populatsioonile pigem lähemal kui kaugemal. Samuti, kui valimiviga on juhuslik, siis satub umbkaudu sama palju valimeid tõelisest populatsiooniväärtusest ühele poole kui teisele poole ja vigade jaotus tuleb sümmeetriline.</p>
+<div id="gaussian-processes" class="section level3">
+<h3><span class="header-section-number">20.3.5</span> Gaussian processes</h3>
+<p>Gaussian processes have two parameters, the standard deviation parameter sdgp, and characteristic length-scale parameter lscale (see gp for more details). The default prior of sdgp is the same as for sd-s of group-level effects. The default prior of lscale is an informative inverse-gamma prior specifically tuned to the covariates of the Gaussian process (for more details see <a href="https://betanalpha.github.io/assets/case_studies/gp_part3/part3.html" class="uri">https://betanalpha.github.io/assets/case_studies/gp_part3/part3.html</a>). This tuned prior may be overly informative in some cases, so please consider other priors as well to make sure inference is robust to the prior specification. If tuning fails, a half-normal prior is used instead.</p>
+</div>
+<div id="autocorrelation-parameters" class="section level3">
+<h3><span class="header-section-number">20.3.6</span> Autocorrelation parameters</h3>
+<p>The autocorrelation parameters are named ar (autoregression), ma (moving average), arr (autoregression of the response), car (spatial conditional autoregression), as well as lagsar and errorsar (Spatial simultaneous autoregression). Priors can be defined by set_prior(“<prior>”, class = “ar”) for ar and similar for other autocorrelation parameters. By default, ar and ma are bounded between -1 and 1, car, lagsar, and errorsar are bounded between 0, and 1, and arr is unbounded (you may change this by using the arguments lb and ub). The default prior is flat over the definition area.</p>
+</div>
+<div id="parameters-for-specific-families" class="section level3">
+<h3><span class="header-section-number">20.3.7</span> Parameters for specific families</h3>
+<p>Families gaussian, student, skew_normal, lognormal, and gen_extreme_value need the parameter sigma to account for the residual standard deviation. By default, sigma has a half student-t prior that scales in the same way as the group-level standard deviations. Family student needs the parameter nu representing the degrees of freedom of students-t distribution. By default, nu has prior “gamma(2, 0.1)” and a fixed lower bound of 1.</p>
+<p>Families gamma, weibull, inverse.gaussian, and negbinomial need a shape parameter that has a “gamma(0.01, 0.01)” prior by default.</p>
+<p>Every family specific parameter has its own prior class, so that set_prior(“<prior>”, class = “<parameter>”) is the right way to go. All of these priors are chosen to be weakly informative, having only minimal influence on the estimations, while improving convergence and sampling efficiency. Often, it may not be immediately clear, which parameters are present in the model. To get a full list of parameters and parameter classes for which priors can be specified use function get_prior.</p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">N &lt;-<span class="st"> </span><span class="dv">3</span>
-N_simulations &lt;-<span class="st"> </span><span class="dv">10000</span>
-df &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">a =</span> <span class="kw">rnorm</span>(N <span class="op">*</span><span class="st"> </span>N_simulations, <span class="dv">100</span>, <span class="dv">20</span>), 
-             <span class="dt">b =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span>N_simulations, <span class="dt">each =</span> N))
-Summary &lt;-<span class="st">  </span>df <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(b) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Mean =</span> <span class="kw">mean</span>(a), <span class="dt">SD =</span> <span class="kw">sd</span>(a)) 
-Summary <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(Mean)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">40</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:jaotus"></span>
-<img src="08_inferential_files/figure-html/jaotus-1.png" alt="Keskmiste jaotus 10 000 valimist." width="70%" />
-<p class="caption">
-Joonis 9.1: Keskmiste jaotus 10 000 valimist.
-</p>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(Summary<span class="op">$</span>Mean) 
-<span class="co">#&gt; [1] 100</span>
-<span class="kw">mean</span>(Summary<span class="op">$</span>SD)
-<span class="co">#&gt; [1] 17.8</span></code></pre></div>
-<p>Oh-hooo. Paljude valimite keskmiste keskmine ennustab väga täpselt populatsiooni keskmist aga sd-de keskmise keskmine alahindab populatsiooni sd-d. Valem, millega sd-d arvutatakse, töötab lihtsalt kallutatult, kui n on väike (&lt;10). Kes ei usu, kordab simulatsiooni valimiga, mille N=30.</p>
-<p>Ja nüüd 10 000 SD keskväärtused:</p>
-
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Summary <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(SD)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">40</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:sdjaotus"></span>
-<img src="08_inferential_files/figure-html/sdjaotus-1.png" alt="SD-de jaotus 10 000 valimist." width="70%" />
-<p class="caption">
-Joonis 9.2: SD-de jaotus 10 000 valimist.
-</p>
-</div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mode &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">adjust =</span> <span class="dv">1</span>){
-  x &lt;-<span class="st"> </span><span class="kw">na.omit</span>(x)
-  dx &lt;-<span class="st"> </span><span class="kw">density</span>(x, <span class="dt">adjust =</span> adjust)
-  dx<span class="op">$</span>x[<span class="kw">which.max</span>(dx<span class="op">$</span>y)]
-}
-<span class="kw">mode</span>(Summary<span class="op">$</span>SD) 
-<span class="co">#&gt; [1] 14.1</span></code></pre></div>
-<p>SD-de jaotus on ebasümmeetriline ja mood ehk kõige tõenäolisem valimi sd väärtus, mida võiksime oodata, on u 14, samal ajal kui populatsiooni sd = 20. Lisaks on sd-de jaotusel paks saba, mis tagab, et teisest küljest pole ka vähetõenäoline, et meie valimi sd populatsiooni sd-d kõvasti üle hindab.</p>
-<p>Arvutame, mitu % valimite sd-e keskmistest on &gt; 25</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(Summary<span class="op">$</span>SD <span class="op">&gt;</span><span class="st"> </span><span class="dv">25</span>)
-<span class="co">#&gt; [1] 0.211</span></code></pre></div>
-<p>Me saame &gt;20% tõenäosusega pahasti ülehinnatud SD.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(Summary<span class="op">$</span>SD <span class="op">&lt;</span><span class="st"> </span><span class="dv">15</span>)
-<span class="co">#&gt; [1] 0.434</span></code></pre></div>
-<p>Ja me saame &gt;40% tõenäosusega pahasti alahinnatud sd. Selline on väikeste valimite traagika.</p>
-<p>Aga vähemalt populatsiooni keskmise saame me palju valimeid tõmmates ilusasti kätte — ka väga väikeste valimitega.</p>
-<p>Kahjuks pole meil ei vahendeid ega kannatust loodusest 10 000 valimi kogumiseks. Enamasti on meil üksainus valim. Õnneks pole sellest väga hullu, sest meil on olemas analoogne meetod, mis töötab üsna hästi ka ühe valimiga. Me teeme lihtsalt ühest valimist mitu, mis meenutab pisut mittemillegist midagi tegemist, aga veidi üllatuslikult töötab selles kontekstis üsna hästi. Seda metoodikat kutsutakse <em>bootstrappimiseks</em> ja selle võttis esimesena kasutusele parun von Münchausen. Too jutukas parun nimelt suutis end soomülkast iseenda patsi pidi välja tõmmata (koos hobusega), mis ongi bootstrappimise põhimõte. (Inglise kultuuriruumis tõmbab bootstrappija ennast mülkast välja oma saapaserva, mitte patsi pidi – siit ka meetodi nimi.) Statistika tõmbas oma saapaid pidi mülkast välja Brad Efron 1979. aastal.</p>
-
-<div class="figure" style="text-align: center"><span id="fig:parun"></span>
-<img src="img/munchausen.jpg" alt="Nii nagu parun Münchausen tõmbas ennast patsi pidi mülkast välja, genereeritakse bootstrappimisega algse valimi põhjal teststatistiku jaotus." width="50%" />
-<p class="caption">
-Joonis 9.3: Nii nagu parun Münchausen tõmbas ennast patsi pidi mülkast välja, genereeritakse bootstrappimisega algse valimi põhjal teststatistiku jaotus.
-</p>
-</div>
-
 </div>
 </div>
 
@@ -525,8 +590,8 @@ Joonis 9.3: Nii nagu parun Münchausen tõmbas ennast patsi pidi mülkast välja
           </div>
         </div>
       </div>
-<a href="eda-eksploratoorne-andmeanaluus.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="bootstrap.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="brms-mudelid.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="bayesi-ja-sagedusliku-statistika-vordlus.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -556,7 +621,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstats-tartu/bayesiraamat/edit/master/08_inferential.Rmd",
+"link": "https://github.com/rstats-tartu/bayesiraamat/edit/master/17_brms.Rmd",
 "text": "Editeeri"
 },
 "download": ["_main.pdf"],
