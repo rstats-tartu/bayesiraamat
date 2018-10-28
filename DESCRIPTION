@@ -30,6 +30,11 @@ Imports:
     ggeffects,
     mice,
     pROC,
+    MASS,
+    parallel,
     BayesVarSel,
-    leaps
-Remotes: rstudio/bookdown
+    leaps,
+    GGally
+Remotes: 
+    rstudio/bookdown,
+    rmcelreath/rethinking

@@ -64,7 +64,7 @@ Ja Bayesi brms::brm()
 ```
 
 ```{r echo=FALSE, message=FALSE}
-(Bayes_mudel <- read_csv("Bayes_mudel.csv") %>% slice(1:2))
+(Bayes_mudel <- read_csv("data/Bayes_mudel.csv") %>% slice(1:2))
 ```
 
 Nagu näete, lm() fitib ainult mu parameetri, samas kui me Bayesi meetodit kasutades saame hinnangu (koos usalduspiiridega) kahele parameetrile: mu ehk intercept ja sigma ehk sd. 
