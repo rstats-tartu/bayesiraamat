@@ -5,33 +5,33 @@
 > Mitmetasemeline mudel on regressioonimudel, kus andmed on struktureeritud gruppidesse ja mudeli koefitsiendid võivad erineda grupist gruppi. 
 
 Statistika teooria ütleb, et me peaksime oma mudelitesse hõlmama need faktorid, mida kasutati eksperimendi disainis. Mitmetasandilised mudelid on parim viis, kuidas mudelisse panna katsedisainis esinevaid erinevatel tasemetel klastreid ja samas vältida mudeli ülefittimist.
-Mitmetasandiline mudel kajastab sellise katse või vaatluse struktuuri, kus andmed ei grupeeru mitte ainult katse- ja kontrolltingimuste vahel, vaid ka lisaklastritesse ehk gruppidesse. Näiteks, kui me mõõdame platseebo-kontrollitud uuringus kümmet patsienti ja teeme igale patsiendile viis kordusmõõtmist (kahetasemeline mudel). Või kui meil on geeniuuring, kus uuritakse korraga 1000 valgu taset ja uuring toimub 10 laboris (mitte-hierarhiline 3-tasemeline mudel). Või kui mõõdame kalamaksaõli mõju matemaatikaeksami tulemustele kümnes koolis, ja igas neist viies klassis (hierarhiline kolmetasemeline mudel). 
+Mitmetasandiline mudel kajastab sellise katse või vaatluse struktuuri, kus andmed ei grupeeru mitte ainult katse- ja kontrolltingimuste vahel, vaid ka lisaklastritesse ehk gruppidesse. Näiteks, kui me mõõdame platseebo-kontrollitud uuringus kümmet patsienti ja teeme igale patsiendile viis kordusmõõtmist (kahetasemeline mudel). Või kui meil on geeniuuring, kus uuritakse korraga 1000 valgu taset ja uuring toimub 10 laboris (3-tasemeline mudel). Või kui mõõdame kalamaksaõli mõju matemaatikaeksami tulemustele kümnes koolis, ja igas neist viies klassis (3-tasemeline mudel). 
 
 Tavapärane lähenemine oleks kõigepealt keskmistada andmed iga klassi sees ning seejärel keskmistada iga kooli sees (võtta igale koolile 5 klassi keskmine). Ning seejärel, võttes iga kooli keskmise üheks andmepunktiks, teha soovitud statistiline test (N = 10, sest meil on 10 kooli). Paraku, sellisel viisil talitades alahindame varieeruvust, mistõttu meie statistiline test alahindab ebakindluse määra arvutatud statistiku ümber. Hierarhilised mudelid, mis kajastavad adekvaatselt katse struktuuri, aitavad sellest murest üle saada. Üldine soovitus on, et kui teie katse struktuur seda võimaldab, siis peaksite alustama modelleerimist hierarhilistest mudelitest.
 
-Mitmetasemelised mudelid on eriti kasulikud, kui teil on osades klastrites vähem andmepunkte kui teistes, sest nad vaatavad andmeid korraga nii klastrite vahel kui klastrite sees ning kannavad informatsiooni üle klastritest, kus on rohkem andmepunkte, nendesse klastritesse, kus on vähe andmeid. See parandab hinnangute täpsust.
+Mitmetasemelised mudelid on eriti kasulikud, kui teil on osades klastrites vähem andmepunkte kui teistes, sest nad vaatavad andmeid korraga nii klastrite vahel kui klastrite sees ning kannavad informatsiooni üle klastritest, kus on rohkem andmepunkte, nendesse klastritesse, kus on vähe andmeid. See tõstab hinnangute täpsust.
 
 
 Tavapärane regressioonimudel on sageli vaadeldav mitmetasandilise mudeli erijuhuna. Näiteks kujutage ette mudelit, kus laste õppedukust on mõõdetud mitmes koolis. Kui gruppide (koolide) vaheline varieeruvus on väga madal, siis annab mitmetasemeline mudel sarnase tulemuse lihtsa mudeliga, kus kõik koolid on ühte patta kokku pandud. Ja vastupidi, kui koolide vaheline varieeruvus on väga suur, võrreldes koolide sisese varieeruvusega, siis võime sama hästi modelleerida iga kooli eraldi ja teistest sõltumatult. Samuti, kui meil on andmeid väga väheste koolide kohta, siis võib mitmetasandilsest mudelist saadav kasu olla tagasihoidlik, sest meil pole piisavalt andmeid, et modelleerida koolide vahelist varieeruvust. Samuti, kui meil on iga kooli kohta piisavalt palju andmeid, siis saame iga kooli eraldi modelleerides praktiliselt sama tulemuse kui mitmetasemelisest mudelist. Muudel juhtudel on tõenäoliselt mõistlikum modelleerida õppedukust kahetasemelises mudelis, korraga õpilase tasemel ja kooli tasemel. 
 
-## kahetasemeline mudel agebra keeles
+## kahetasemeline mudel algebra keeles
 
 1. tase on õpilse tase, 2. tase on klassi tase.
 meil on J klassi, milles on erinev arv nj õpilasi. Iga õpilase kohta teame populaarsusindeksit (y - muutuja) ja sugu (x - muutuja). Klassi tasemel teame õpetaja staazi aastates (z - muutuja).
 Alustuseks on meil eraldi regressioonivõrrand igale klassile. 
 
-$$y_{ij} = b_{0j} + b_{1j}X_{ij} + e_{ij}$$
+$$y_{ij} = b_{0j} + b_{1j}X_{ij} + e_{ij}$$ (1. võrrand)
 
-kus subskript j tähistab klassi ja i tähistab õpilast. Näit bi1 tähendab, et me fitime iga klassi kohta ühe b1 koefitsiendi. Seega eeldame, et igal klassil on erinev b0 ja b1 koefitsient. Residuaalvigadele eeldame, et mean = 0 ja e varieeruvus tuleb meil hinnata. Enamasti eeldame, et kõikide klasside varieeruvus on sama. b0 ja b1 omavad jaotust üle kõikide klasside, milledel on keskväärtus ja sd. Me modelleerime b0 ja b1 jaotusi tuues sisse klassi tasemel muutuja z:
+kus subskript j tähistab klassi ja i tähistab õpilast. Näit $b_{1j}$ tähendab, et me fitime iga klassi kohta ühe $b_1$ koefitsiendi (ja $b_{0j}$, et fitime iga klassi kohta ühe $b_0$-i). Me eeldame, et igal klassil on erinevad $b_0$ ja $b_1$, mis tulevad vastavatest klassiülestest normaaljaotustest. Enamasti eeldame, et kõikide klasside varieeruvus on sama. Me modelleerime $b_0$ ja $b_1$ jaotusi, tuues sisse klassi tasemel muutuja z:
 
-$$b_{0j} = \gamma_{00} + \gamma_{01} Z_j + u_{0j}$$
+$$b_{0j} = \gamma_{00} + \gamma_{01} Z_j + u_{0j}$$ (2. võrrand)
 
-$$b_{1j} = \gamma_{10} + \gamma_{11} Z_j + u_{1j}$$
+$$b_{1j} = \gamma_{10} + \gamma_{11} Z_j + u_{1j}$$ (3. võrrand)
 
 2. võrrand ennustab klassi keskmist populaarsusindeksit vastavalt õpetaja staazile.
-3. võrrand ütleb, et populaarsuse ja soo seose tugevus sõltub õpetaja staazist. kui y11 > 0, siis on seos seda tugevam, mida staazikam on õpetaja. u0j ja u1j on residuaalide vead klassi tasemel, mille kohta me eeldame, et mean = 0 ja sõltuamtust residuaalide vigadest õpilase tasemel (eij). u0j residuaalide vigade variance on sigma_sq_u0 jne. u0j ja u1j covariance on sigma_sq_u01 ja me ei eelda, et see = 0. Gamma koefitsiendid ei varieeru klasside vahel.
+3. võrrand ütleb, et populaarsuse ja soo seose tugevus sõltub õpetaja staazist. kui $\gamma_{11} > 0$, siis on seos seda tugevam, mida staazikam on õpetaja. $u_{0j}$ ja $u_{1j}$ on residuaalide vead klassi tasemel, mille kohta me eeldame, et mean = 0 ja sõltumatust residuaalide vigadest õpilase tasemel ($e_{ij}$). $u_{0j}$ residuaalide vigade dispersioon on $\sigma^2_{u0}$ jne. $u_{0j}$ ja $u_{1j}$ covariance on $\sigma^2_{u01}$ ja me ei eelda, et see = 0. Gamma koefitsiendid ei varieeru klasside vahel.
 
-Asendades 1. võrrandis b0j ja b1j, saame oma võrrandisüsteemi muuta üheks pikaks võrrandiks. 
+Asendades 1. võrrandis $b_{0j}$ ja $b_{1j}$, saame oma võrrandisüsteemi muuta üheks pikaks võrrandiks. 
 
 $$Y_{ij} = \gamma_{00} + \gamma_{10} X_{ij} + \gamma_{01} Z_j + \gamma_{11}X_{ij} Z_j + u_{1j} X_{ij} + u_{0j} + e_{ij}$$
 
@@ -43,11 +43,11 @@ $$Y_{ij} = \gamma_{00} + \gamma_{10} X_{ij} + \gamma_{01} Z_j + u_{1j} X_{ij} + 
 
 juhusliku vealiige $u_{ij}$ korrutub $X_{ij}$-ga, mistõttu sellest tulenev totaalne viga on erinev erinevatel $X_{ij}$ väärtustel. Seega on meie mudel heteroskedastiline ja erineb selle poolest tavalistest lineaarsetest mudelitest, mis eeldavad homoskedastilisust e residuaalvea sõltumatust X-i väärtusest. 
 
-Teine oluline erinevus tavalisest lin mudelist on, et gupeeritud andmete puhul ei ole täidetud andmete iseseisvuse eeldus (gruppide sees modelleeritakse andmed korreleerituna - klassisisene korrelatsioon), mis muudab veapiirid liiga kitsaks. Klassisisese korrelatsiooni saame intercept-only mudelist 
+Teine oluline erinevus tavalisest lin mudelist on, et gupeeritud andmete puhul ei ole täidetud andmete iseseisvuse eeldus (gruppide sees modelleeritakse andmed korreleerituna - klassisisene korrelatsioon). Klassisisese korrelatsiooni saame intercept-only mudelist 
 
 $$Y_{ij} = \gamma_{00} + u_{0j} + e_{ij}$$
 
-(selle mudeli saad, kui viskad pikast mudelist välja kõik X ja Z sisaldavad liikmed.) See mudel ajab varieeruvuse lahku kahe iseseisva komponendi vahel: $\sigma^2_e$ (1. taseme vigade variance $e_{ij}$) ja $\sigma^2_{u0}$ (2. taseme vigade variance $u_{0j}$). 
+(selle mudeli saad, kui viskad pikast mudelist välja kõik X ja Z sisaldavad liikmed.) See mudel ajab varieeruvuse lahku kahe iseseisva komponendi vahel: $\sigma^2_e$ (1. taseme vigade dispersioon $e_{ij}$) ja $\sigma^2_{u0}$ (2. taseme vigade dispersioon $u_{0j}$). 
 
 Klassisisene korrelatsioon: 
 
@@ -59,9 +59,9 @@ rho annab grupistruktuuri poolt seletatud variace proportsiooni, mida võib tõl
 
 st_coef = (unstand_coef x sd(X))/sd(Y)
 
-Standardiseeritud andmete kasutamine muudab totaalselt varieeruvuskompnmentide fitte, aga jätab b koefitsientide fitid olemuselt samaks (see kehtib X-muutujate suvaliste lineaarsete transformatsioonide korral). Kui me jagame X-muutuja 2-ga, siis uus b1 = vana b1 x 2. Mudeli poolt seletamata varieeruvuse proportsioon ei muutu. Eelnev kehtib kuni mudeli tõusud (b1) ei ole vabaks lastud - st need ei varieeru klassist klassi. 
+Standardiseeritud andmete kasutamine muudab varieeruvuskomponentide fitte, aga jätab b koefitsientide fitid olemuselt samaks (see kehtib X-muutujate suvaliste lineaarsete transformatsioonide korral). Kui me jagame X-muutuja 2-ga, siis $uus ~b_1 = 2 ~x~vana~ b_1$. Mudeli poolt seletamata varieeruvuse proportsioon ei muutu. Eelnev kehtib senikaua, kuni mudeli tõusud ($b_1$) ei ole vabaks lastud, st need ei varieeru klassist klassi. 
 
-Tsentreerimine ($x_i - mean(x)$) mõjutab b0 aga mitte b1 koefitsiente, mis võib rääkida selle meetodi kasuks üle standardiseerimise (($\frac {x_i - mean(x)}{sd(x)}$), mis tekitab X muutujate jaotused, mille mean = 0 ja sd = 1. 
+Tsentreerimine ($x_i - mean(x)$) mõjutab $b_0$ aga mitte $b_1$ koefitsiente, mis võib rääkida selle meetodi kasuks üle standardiseerimise (($\frac {x_i - mean(x)}{sd(x)}$), mis tekitab X muutujate jaotused, mille mean = 0 ja sd = 1. 
 
 NB! grupi tasemel tsentreerimine, ehki vahest kasulik, töötab hoopis teistmoodi kui üle kõikide gruppide tsentreerimine ja viib täiesti erineva mudelini - sellest tuleks hoiduda, senikaua kui te ei tea täpselt, mida te teete.
 
@@ -85,7 +85,7 @@ $$Y_{ti} = \pi_{0i} + \pi_{1i} x T_{ti} + \pi_{2i} X_{ti} + e_{ti} $$
 
 $$\pi_{0i} = \beta_{00} + \beta_{01} Z_t + u_{01}$$
 
-$$\pi_{1i} =\beta_{10} + \beta_{11} Z_t + u_{1i}$$
+$$\pi_{1i} =\beta_{10} + \beta_{11} Z_t + u_{11}$$
 
 $$\pi_{2i} = \beta_{20} + \beta_{21} Z_t + u_{21}$$
 
@@ -121,8 +121,6 @@ data.temporalCor.brms <-  brm(y ~ x, data = d,
 ```
 
 cor_ar() on brms funktsioon autokorrelatsiooni modelleerimiseks. selle formula on ühepoolne valem ~t või  ~ t | g,  mis annab ajakovariaadi t ja grupeeriva faktori g. Kui g on antud, siis modelleeritakse iga grupp iseseisvalt ja teistest gruppidest sõltumata (gruppide vahel on korrelatsioon 0).
-
-A covariate for this correlation structure must be integer valued. When a grouping factor is present in formula, the correlation structure is assumed to apply only to observations within the same grouping level; observations with different grouping levels are assumed to be uncorrelated. Defaults to ~ 1, which corresponds to using the order of the observations in the data as a covariate, and no groups.
 
 Teine võimalus inkorporeerib mudelisse AR1 residuaalide autokorrelatsioonistruktuuri, kus korrelatsiooni eksponent väheneb ajas lineaarselt. Me eeldame, et see vähenemine toimub samamoodi sõltumata sellest, millises ajavahemikus me parasjagu oleme (statsionaarsuse eeldus).
 

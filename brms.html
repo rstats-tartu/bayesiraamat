@@ -227,7 +227,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html#interaktsioonid-pidevatele-tunnustele"><i class="fa fa-check"></i>Interaktsioonid pidevatele tunnustele</a></li>
 </ul></li>
 <li class="chapter" data-level="17" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html"><i class="fa fa-check"></i><b>17</b> Mitmetasemelised mudelid</a><ul>
-<li class="chapter" data-level="17.1" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#kahetasemeline-mudel-agebra-keeles"><i class="fa fa-check"></i><b>17.1</b> kahetasemeline mudel agebra keeles</a><ul>
+<li class="chapter" data-level="17.1" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#kahetasemeline-mudel-algebra-keeles"><i class="fa fa-check"></i><b>17.1</b> kahetasemeline mudel algebra keeles</a><ul>
 <li class="chapter" data-level="17.1.1" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#aegread"><i class="fa fa-check"></i><b>17.1.1</b> Aegread</a></li>
 <li class="chapter" data-level="17.1.2" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#temporaalne-autokorrelatsioon"><i class="fa fa-check"></i><b>17.1.2</b> Temporaalne autokorrelatsioon</a></li>
 </ul></li>
@@ -686,12 +686,12 @@ pars &lt;-<span class="st"> </span><span class="kw">colnames</span>(model2)
 <span class="st">  </span><span class="kw">cbind</span>(newx, .)
 <span class="kw">head</span>(predict_interval_brms2)
 <span class="co">#&gt;   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5</span>
-<span class="co">#&gt; 1         1.00        3.06  setosa     4.50     0.317 3.87  5.11</span>
-<span class="co">#&gt; 2         1.04        3.06  setosa     4.51     0.322 3.88  5.14</span>
-<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.317 3.93  5.16</span>
-<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.318 3.95  5.19</span>
-<span class="co">#&gt; 5         1.16        3.06  setosa     4.61     0.322 3.98  5.26</span>
-<span class="co">#&gt; 6         1.20        3.06  setosa     4.65     0.320 4.02  5.27</span></code></pre></div>
+<span class="co">#&gt; 1         1.00        3.06  setosa     4.48     0.319 3.86  5.09</span>
+<span class="co">#&gt; 2         1.04        3.06  setosa     4.53     0.315 3.91  5.17</span>
+<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.319 3.93  5.18</span>
+<span class="co">#&gt; 4         1.12        3.06  setosa     4.59     0.315 3.96  5.21</span>
+<span class="co">#&gt; 5         1.16        3.06  setosa     4.62     0.318 4.01  5.25</span>
+<span class="co">#&gt; 6         1.20        3.06  setosa     4.63     0.328 4.01  5.26</span></code></pre></div>
 <p><code>predict()</code> ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele</p>
 <p>Siin siis eraldi ennustused kahele liigile kolmest, kaasa arvatud petal length väärtusvahemikule, kus selle liigi isendeid valimis ei ole (ja võib-olla ei saagi olla)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">no_versicolor &lt;-<span class="st"> </span><span class="kw">filter</span>(iris, Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>)
