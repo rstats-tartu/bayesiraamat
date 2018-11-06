@@ -340,7 +340,7 @@ Tähtsuse järjekorras:
 
 3. aditiivsus ja lineaarsus. Väga tähtis on, et lineaarse regressiooniga mõõdetavad seosed oleks ka tõesti lineaarsed. Y-i deterministlik komponent peab olema lineaarne funktsioon prediktoritest  $y = β_1x_1 + β_2x_2 +···$. Kui sellega on probleeme, siis võib aidata prediktorite transformeerimine (log(x) või 1/x) või uute prediktorite mudelisse lisamine. Samuti on võimalik prediktoritena lisada nii $x$ kui $x^2$. Näiteks kui me paneme mudelisse nii muutuja $vanus$ kui $vanus^2$, siis saame modelleerida seost kus y vanuse kasvades alguses kasvab ja siis kahaneb (aga ka U kujulist seost vanusega). Sellisel juhul võib olla mõistlik rekodeerida vanus kategooriliseks muutujaks (näit 4 vanuseklassi), mille tasemeid saab siis ükshaaval vaadata.
 
-4. vigade sõltumatus
+4. vigade e residuaalide sõltumatus
 
-5. vigade võrdne varieeruvus (homoskedastilisus) ja vigade normaalsus on vähemtähtsad. Neid eeldusi ei tasu tavaliselt kontrollida (kuigi meetodid selleks on olemas).
-
+5. vigade võrdne varieeruvus (homoskedastilisus) ja vigade normaalsus on vähemtähtsad. 
+Log-normaalsete vigadega lineaarsel regresioonil võiks mudeldada log(Y) (vähimruutude meetodil) või mittelineaarset lognormaalset tõepäramudelit kasutades (bayesi regressioon, vt ptk 13). 

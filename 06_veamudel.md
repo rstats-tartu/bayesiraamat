@@ -335,8 +335,6 @@ Maksimaalsel entroopial põhineb normaaljaotuse ja lognormaaljaotuse sage kasuta
 
 * Elementaarsete vigade hüpotees: kui juhuslik varieeruvus on paljude juhuslike mõjude summa, on tulemuseks normaaljaotus.
 
-* lm() regressionimudelid eeldavad normaaljaotusega residuaale. log-normaalsete vigadega lineaarsel regresioonil tuleks mudeldada log(Y) (vähimruutude meetodil) või lognormaalset tõepäramudelit kasutades (bayesi regressioon, vt ptk 13). 
-
 * Additiivne regressioonimudel viib additiivsete vigadeni (residuaalideni), mis omakorda viib konstantsele varieeruvusele ehk konstantsele SD-le.
 
 **lognormaaljaotus**
@@ -352,8 +350,6 @@ Maksimaalsel entroopial põhineb normaaljaotuse ja lognormaaljaotuse sage kasuta
 * multiplikatiivne regressioonimudel viib multiplikatiivsete vigadeni (residuaalideni), mis omakorda viib konstantsele suhtelisele varieeruvusele ehk konstantsele CV-le. Vigade jaotus on nüüd ebasümmeetriline. 
 
 Seega võime lognormaaljaotust kutsuda ka multiplikatiivseks normaaljaotuseks.
-
-
 
 
 ## Teised veamudelid

@@ -556,8 +556,8 @@ Joonis 4.7: Kasvava paindlikusega polünoomsed mudelid.
 <li><p>valiidsus – sa mõõdad asju, mis on teaduslikult olulised ja relevantsed teaduslikule küsimusele. Näiteks, kui soovite mõõta kolesterooli alandava ravimi mõju, on kaasaegne soovitus mõõta suremust, mitte pelgalt kolesterooli taset veres.</p></li>
 <li><p>esinduslikkus – andmed peaksid olema esinduslikud laiema populatsiooni suhtes. Väikesed ja kallutatud valimid ei ole sageli esinduslikud.</p></li>
 <li><p>aditiivsus ja lineaarsus. Väga tähtis on, et lineaarse regressiooniga mõõdetavad seosed oleks ka tõesti lineaarsed. Y-i deterministlik komponent peab olema lineaarne funktsioon prediktoritest <span class="math inline">\(y = β_1x_1 + β_2x_2 +···\)</span>. Kui sellega on probleeme, siis võib aidata prediktorite transformeerimine (log(x) või 1/x) või uute prediktorite mudelisse lisamine. Samuti on võimalik prediktoritena lisada nii <span class="math inline">\(x\)</span> kui <span class="math inline">\(x^2\)</span>. Näiteks kui me paneme mudelisse nii muutuja <span class="math inline">\(vanus\)</span> kui <span class="math inline">\(vanus^2\)</span>, siis saame modelleerida seost kus y vanuse kasvades alguses kasvab ja siis kahaneb (aga ka U kujulist seost vanusega). Sellisel juhul võib olla mõistlik rekodeerida vanus kategooriliseks muutujaks (näit 4 vanuseklassi), mille tasemeid saab siis ükshaaval vaadata.</p></li>
-<li><p>vigade sõltumatus</p></li>
-<li><p>vigade võrdne varieeruvus (homoskedastilisus) ja vigade normaalsus on vähemtähtsad. Neid eeldusi ei tasu tavaliselt kontrollida (kuigi meetodid selleks on olemas).</p></li>
+<li><p>vigade e residuaalide sõltumatus</p></li>
+<li><p>vigade võrdne varieeruvus (homoskedastilisus) ja vigade normaalsus on vähemtähtsad. Log-normaalsete vigadega lineaarsel regresioonil võiks mudeldada log(Y) (vähimruutude meetodil) või mittelineaarset lognormaalset tõepäramudelit kasutades (bayesi regressioon, vt ptk 13).</p></li>
 </ol>
 
 </div>
