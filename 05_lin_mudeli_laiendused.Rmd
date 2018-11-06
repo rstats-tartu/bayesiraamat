@@ -362,29 +362,28 @@ Lineaarsed transformatsioonid võivad hõlbustada mudeli koefitsientide tõlgend
 
 ## Logaritmimine
 
-Kui x-l saavad olla ainult positiivsed väärtused, siis on logaritmimine sageli hea mõte. Andmetest peab kaotama ka nullid (või asendama mingi nullilähedase positiivse väärtusega). Näiteks seost sissetuleku ja oodatava eluea vahel on lihtsam ette kujutada kui eluiga ~ log(sissetulek). Log skaalas on beeta koefitsiendid peaaegu alati < 1. 
+Kui muutujal saavad olla ainult positiivsed väärtused, siis on logaritmimine sageli hea mõte. Andmetest peab kaotama ka nullid, näiteks asendades need mingi nullilähedase positiivse arvuga. Logaritmilises skaalas on β koefitsiendid peaaegu alati < 1. 
 
-Erinevus naturaallogaritmi (log, põõrdlogaritm = exp(log(x))) ja log10 või log2 vahel on, et esimesel juhul on kergesti tõlgendatav beeta (aga mitte logaritmitud x-i väärtused) ja teisel juhul (log10 v log2) on kergesti tõlgendatavad logaritmitud x-i väärtused (aga mitte beeta). Seetõttu eelistavad loodusteadlased kasutada log2 ja log10 skaalasid, mida on mugavam otse log-skaalas tõlgendada. Kui te kasutate log2-e, siis üheühikuline muutus log skaalas on sama, mis kahekordne muutus meetrilises skaalas ja anti-logaritmi saab $2^{log2(x)}$. Log10 korral vastab ühe ühikuline muutus log skaalas 10-kordsele muutusele meetrilises skaalas ja anti-logaritmi saab $10^{log10(x)}$. NB! teie tulemuste (mudeli fiti) kvaliteedi koha pealt pole suurt vahet, millist logaritmi te kasutate -- olulised erinevused on "pelgalt" mudeli koefitsientide tõlgendustes.
+ **Kaks põhjust miks logaritmida:**
 
-Järgnevalt õpetame naturaallogaritmitud andmetega fititud mudelite β koefitsiendite tõlgendamist algeses, meetrilises skaalas.  
+1. Muutuja(te) logaritmimine muudab muutujate vahelised suhted mitte-lineaarseks, samas säilitades mudeli lineaarsuse. 
 
-* y = a + bx lineaarne mudel
+2. Muutuja logaritmimine võib selle muutuja viia lähemale normaaljaotusele (lognormaalse jaotuse logaritm on normaaljaotusega).
 
-* y = a + b * log(x) linear-log mudel
+Mudeli fiti kvaliteedi koha pealt pole suurt vahet, millist logaritmi te kasutate -- olulised erinevused on "pelgalt" mudeli koefitsientide tõlgendustes.
+Erinevus naturaallogaritmi ja  kasutamise vahel regressioonis seisneb selles. Naturaallogaritmitud log(x) andmete peal fititud mudeli korral on algses lineaarses skaalas tõlgendatav logaritmitud andmete peal fititud β, aga log-skaalas muutujate väärtused ei tähenda otse peale vaadates suurt midagi. Vastupidiselt on  kümnendlogaritmitud log10(x) või kahendlogaritmitud log2(x) andmed log skaalas tõlgendatavad, aga mitte neil fititud β lineaarses skaalas. Igal juhul eelistavad loodusteadlased kasutada log2 ja log10 skaalasid, mida on mugavam otse log-skaalas tõlgendada. log2 skaalas vastab üheühikuline muutus kahekordsele muutusele algses skaalas ja anti-logaritmm on $2^{log2(x)}$. Log10 skaalas vastab üheühikuline muutus 10-kordsele muutusele algses skaalas ja anti-logaritm on $10^{log10(x)}$. 
 
-* log(y) = a + bx log-linear mudel
+Järgnevalt õpetame naturaallogaritmitud andmetega fititud mudelite β koefitsiendite tõlgendamist algses, meetrilises skaalas ja suhtelises protsendiskaalas.  
 
-* log(y) = a + b * log(x) log-log mudel
-
-Kasutame naturaal-logaritmi, mille alus on e ≈ 2.71828.
+Naturaallogaritmi alus on e ≈ 2.71828 ja sellel on järgmised matemaatilised omadused:
 
 1. $log(e) = 1$
 
 2. $log(1) = 0$
 
-3. $log(x^r) = r * log(x)$
+3. $log(A^r) = r * log(A)$
 
-4. $e^{log(x)} = x$ ehk $exp(log(x)) = x$
+4. $e^{log(A)} = A$ ehk $exp(log(A)) = A$ ehk $2.72^{log(A)} ≈ A$
 
 5. $log(AB)=logA+logB$ 
 
@@ -396,32 +395,36 @@ Kasutame naturaal-logaritmi, mille alus on e ≈ 2.71828.
 
 9. $exp(A−B) = exp(A)/exp(B)$
 
-**Kaks põhjust miks logaritmida:**
+Lineaarsel regressioonil saab log-transformatsiooni kasutada kolmel erineval viisil:
 
-1. Muutuja(te) logaritmimine muudab muutujate vahelised suhted mitte-lineaarseks, samas säilitades mudeli lineaarsuse. 
+* y = a + bx lineaarne mudel (transformeerimata)
 
-2. Muutuja logaritmimine võib selle muutuja viia lähemale normaaljaotusele (lognormaalse jaotuse logaritm on normaaljaotusega).
+* y = a + b * log(x) lineaar-log mudel (transformeeritud on prediktor(id))
 
-**Lineaarses** mudelis Y = α + βX, annab β mitu ühikut muutub Y keskväärtus, kui X muutub ühe ühiku võrra. See tõlgendus jääb kehtima ka logaritmitud muutujate korral, ainult et log-ühikutes. Me võime siiski tahta tõlgendust mitte-logaritmitud ühikutes, vaid näiteks muutuse protsendina või lihtsalt algsetes meetrilistes ühikutes.
+* log(y) = a + bx log-lineaar mudel (transformeeritud on y-muutuja)
 
-**Linear-log** mudelis viib logX-i muutus ühe ühiku võrra Y keskväärtuse muutusele  β ühiku võrra: 
+* log(y) = a + b * log(x) log-log mudel (transformeeritud on y ja x muutujad)
 
-$$log X + 1 = log X + log e = log(eX)$$
+**Lineaarses** mudelis Y = α + βX, annab β selle, mitu ühikut muutub Y keskväärtus, kui X muutub ühe ühiku võrra. See tõlgendus jääb kehtima ka logaritmitud muutujate korral, ainult et log-ühikutes. Me võime siiski tahta tõlgendust ka näiteks muutuse protsendina või algsetes meetrilistes ühikutes.
+
+**Linear-log** mudelis viib logX-i muutus ühe ühiku võrra Y keskväärtuse muutusele  β ühiku võrra, ehk naturaallogaritmi 1. ja 5. omadust kasutades
+
+$$log (X) + 1 = log(X) + log(e) = log(eX)$$
 ehk
 
-$$1 + X = eX$$
+$$X + 1  = eX$$
 
-Selle muutuse saab avaldada protsendina: eX on sama, mis õelda, et X kasvab 172% võrra (100 × (2.72 − 1) = 172). 
+Siit tuleneb omakorda, et kui log skaalas X kasvab ühe ühiku võrra, siis algses skaalas X = eX - 1 ehk algses skaalas X kasvab 172% võrra (100 × (2.72 − 1) = 172). 
 
-* β on oodatud Y muutus kui X kasvab eX korda. 
+Seega algses skaalas:
 
-* β on oodatud Y muutus kui X kasvab 172% võrra.
+* β on oodatud Y muutus, kui X kasvab eX korda. 
 
-* Kui β on väike, siis saab seda otse tõlgendada kui suhtelist erinevust. Näiteks, kui beta = 0.06, siis võime seda tõlgendada nii: 1 ühikuline X-i muutus viib 6%-sele Y muutusele. Sedamõõda kui β kaugeneb nullist (näiteks β = 0.4), hakkab selline kiire hinnang tõsiselt alahindama tegelikku x-i mõju y väärtusele. 
+* β on oodatud Y muutus, kui X kasvab 172% võrra.
 
-* Oodatud Y muutus kui X kasvab p protsenti: β * log([100 + p]/100). Näit, kui X kasvab 10% võrra, siis log(110/100)= 0.095 ja 0.095 β on oodatud Y muutus kui x korrutada 1.1-ga (ehk kasvab 10% võrra). 
+* Kui β on väike, siis saab seda tõlgendada kui suhtelist erinevust. Näiteks, kui beta = 0.06, siis 1 ühikuline X-i muutus viib u 6%-sele Y muutusele. Sedamõõda kuidas β kaugeneb nullist (näiteks β = 0.4), hakkab selline hinnang tõsiselt alahindama tegelikku x-i mõju y väärtusele. 
 
-* Kui p on väike, siis log([100 + p]/100) ≈ p/100. Kui p = 1, siis β/100 on enam-vähem oodatud Y muutus, kui X kasvab 1 võrra. 
+* Oodatud Y muutus kui X kasvab p protsenti: β * log([100 + p]/100). Näit, kui X kasvab 10% võrra, siis log(110/100)= 0.095 ja 0.095β on oodatud Y muutus, kui X korrutada 1.1-ga (ehk kui X kasvab 10% võrra). 
 
 **Log-linear** mudeli korral, kui X kasvab 1 ühiku võrra, siis oodatud Y väärtus kasvab $e^β$ ehk $exp(β)$ korda. Kui X kasvab c ühiku võrra, siis peame oodatud Y väärtuse korrutama $exp(cβ)$-ga. 
 
@@ -440,23 +443,13 @@ $x.z = (x - mean(x))/sd(x)$
 
 Sellisel viisil standardiseeritud andmete keskväärtus on 0 ja sd = 1. Seega on kõik predikorid samas skaalas ja me mõõdame efekte sd ühikutes. See muudab lihtsaks algeslt erinevas skaalas prediktorite võrdlemise. Intecept tähendab nüüd keskmist ennustust, juhul kui kõik prediktorid on fikseeritud oma keskväärtustel. 
 
-Kui mudel sisaldab binaarseid muutujaid, siis on kasulikum standardiseerida üle 2xSD, jättes binaarsed muutujad muutmata.
+Kui mudel sisaldab lisaks pidevatele prediktoritele ka binaarseid prediktoreid, siis on kasulikum standardiseerida üle 2xSD, jättes binaarsed muutujad muutmata.
 
 $x.z2 = (x - mean(x))/(2 * sd(x))$
 
-Nüüd tähendab 1 ühikuline muutus efekti -1 SD-st kuni 1 SD-ni üle keskväärtuse. 
+Nüüd tähendab 1 ühikuline muutus efekti -1 SD-st kuni 1 SD-ni üle keskväärtuse.
 
-## Tsentreerimine
-
-x.c1 = x - mean(x), mis annab keskväärtuseks nulli aga jätab varieeruvused algsesse skaalasse. 
-
-Teine võimalus on tsentreerida mõnele teaduslikult mõistlikule väärtusele. Näiteks IQ-d saab tsentreerida 100-le (x - 100). 
-
-### Mudeli koefitsientide transformeerimine
-
-Ilma interaktsioonideta mudeli korral saab sama tulemuse, mis prediktoreid tsentreerides, kui me reskaleerime tavalises skaalas fititud mudeli koefitsiendid, korrutades iga β oma prediktori kahekordse sd-ga ($β.x = β * 2* sd(x)$). Nende β.x-de pealt näeb hästi iga muutuja suhtelist tähtsust mudelis. 
- 
-### korrelatsioonikoefitsiendi arvutamine regressioonikoefitsientidest
+### Korrelatsioon üle regressiooni ja regressioon keskmisele
 
 Kui standardiseerime nii y kui x-i
 
@@ -468,11 +461,22 @@ Seega jääb tõus alati -1 ja 1 vahele.
 
 Siit tuleb ka seletus nähtusele, mida kutsutakse regressiooniks keskmisele (*regression to the mean*). Fakti, et y on sellises mudelis alati 0-le lähemal kui x, kutsutaksegi regressiooniks keskmisele. Näiteks, kui olete 20 cm keskmisest pikem ja pikkuse päritavus on 0.5, siis on oodata, et teie järglased on keskeltläbi 10 cm võrra keskmisest pikemad (ja teist lühemad). Selle pseudo-põhjusliku nähtuse avastas Francis Galton. 
 
+## Tsentreerimine
+
+x.c1 = x - mean(x) annab keskväärtuseks nulli aga jätab varieeruvused algsesse skaalasse. Näiteks interaktsioonimudelite koefitsiendid on otse tõlgendatavad  tsentreeritud prediktorite korral.
+
+Teine võimalus on tsentreerida mõnele teaduslikult mõistlikule väärtusele. Näiteks IQ-d saab tsentreerida 100-le (x - 100). 
+
+### Mudeli koefitsientide transformeerimine
+
+Ilma interaktsioonideta mudeli korral saab sama tulemuse, mis prediktoreid tsentreerides, kui me reskaleerime tavalises skaalas fititud mudeli koefitsiendid, korrutades iga β oma prediktori kahekordse sd-ga ($β.x = β * 2* sd(x)$). Nende β.x-de pealt näeb iga muutuja suhtelist tähtsust mudelis. 
+ 
+
 ## Pidev või diskreetne muutuja?
 
-Tavaliselt on mõistlik fittida mudel pidevale y muutujale ka siis, kui tahame lõpuks tõlgenada tulemusi diskreetsel skaalal. Pidev muutuja sisaldab rohkem informatsiooni ja seetöttu on meil lootust saada parem fit. Erandiks on pidevad x muutujad, mille mõju y-le on mittelineaarne (näiteks vanuse mõju suremusele). Siin on vahest mõistlik konverteerida pidev muutuja faktormuutujaks ja saada hinnang näiteks igale vanuseklassile eraldi. 
+Tavaliselt on mõistlik fittida mudel pidevale y muutujale ka siis, kui tahame lõpuks tõlgenada tulemusi diskreetsel skaalal. Pidev muutuja sisaldab rohkem informatsiooni ja seetõttu on meil lootust saada parem fit. Erandiks on sellised pidevad x muutujad, mille mõju y-le on mittelineaarne (näiteks vanuse mõju suremusele). Siin on vahest mõistlik konverteerida pidev muutuja faktormuutujaks ja saada hinnang näiteks igale vanuseklassile eraldi. 
 
-## Üldised mitmese regressiooni printsiibid
+## mitmese regressiooni üldised printsiibid
 
 1. võta sisse kõik teaduslikku huvi pakkuvad muutujad ja viska välja muutujad, mille kohta sul pole põhust arvata, et nad võiksid y väärtusi mõjutada.
 
@@ -482,9 +486,9 @@ Tavaliselt on mõistlik fittida mudel pidevale y muutujale ka siis, kui tahame l
 
 4. tugeva mõjuga muutujate puhul võib olla vajalik sisse tuua nende muutujate interkatsioond (vt ptk ...).
 
-5. muutujad, mida sa reaalselt mõõtsid ei pruugi olla need muutujad, mis mudelisse lähevad -- näiteks arvuta kehamassiindeks mõõdetud muutujate põhjal.
+5. muutujad, mida sa reaalselt mõõtsid, ei pruugi olla need muutujad, mis mudelisse lähevad -- näiteks arvuta kehamassiindeks mõõdetud muutujate põhjal.
 
-6. kui pidevad x-id transformeerida log skaalasse, siis on lineaarsesse mudelisse pandud efektid multiplikatiivsed, mitte aditiivsed.
+6. kui pidevad prediktorid transformeerida log skaalasse, siis on lineaarsesse mudelisse pandud efektid multiplikatiivsed, mitte aditiivsed.
 
 
 
