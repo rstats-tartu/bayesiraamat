@@ -315,7 +315,11 @@ Entroopiat vaadeldakse siin informatsiooni & müra kaudu --- maksimaalse entroop
 Normaaljaotusel ja lognormaaljaotusel on kummagil kaks parameetrit, *mu* ja *sigma* (ehk keskmine ja standardhälve), mille väärtused fikseerides fikseerime üheselt jaotuse ehk mudeli kuju, lisades sinna minimaalselt muud (sooviamtut) informatsiooni. 
 Teised maksimaalse entroopiaga jaotused on näiteks eksponentsiaalne jaotus, binoomjaotus, bernoulli jaotus, poissoni jaotus. 
 
-> Kui meil on tegu nullist suuremate andmetega, on andmete logaritmimine sageli hea mõte. Logaritmitud andmete pealt arvutatud keskmise ja sd tagasi transformeerimine annab meile geomeetrilise keskmise ja multiplikatiivse sd.
+> Kui meil on tegu nullist suuremate andmetega, on andmete logaritmimine sageli hea mõte. Logaritmitud andmete pealt arvutatud keskmise ja sd eksponentimine annab meile geomeetrilise keskmise (exp(mu) = mu_geom) ja multiplikatiivse sd (exp(sd) = sd_mult). 
+
+Kui me fitime lognormaaljaotust andmetega, siis fititud koefitsiendid mu ja sd tuleb eksponentida, et saada geomeetriline keskmine ja multiplikatiivne sd. 
+
+mu_geom x sd_mult ... mu_geom/sd_mult annab vahemiku, kuhu jääb 68% lognormaalsetest andmetest ja mu_geom x 2sd_mult ... mu_geom/2sd_mult annab vahemiku, kuhu jääb 96% andmetest (just nagu additiivne sd tõõtab aritmeetilise additiivse keskmisega normaalsete andmete korral). 
 
 Maksimaalsel entroopial põhineb normaaljaotuse ja lognormaaljaotuse sage kasutamine Bayesi statistikas prioritena, sest me suudame paremini kontrollida, millist informatsiooni me neisse surume. Esimesel kesksel piirteoreemil seevastu põhineb kogu sageduslik statistika (vt ptk 8.).
 

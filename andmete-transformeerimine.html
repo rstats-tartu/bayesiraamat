@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="kaks-lineaarse-mudeli-laiendust.html">
-<link rel="next" href="andmete-transformeerimine.html">
+<link rel="prev" href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html">
+<link rel="next" href="veamudel.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -333,201 +333,94 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm" class="section level1">
-<h1><span class="header-section-number">6</span> Vähimruutude meetodiga fititud mudelite töövoog – lm()</h1>
-<p>Kuna lm() funktsiooniga ja bayesi meetodil fititud mudeliobjektidega töötamine on mõnevõrra erinev, õpetame seda eraldi. Siinkohal anname põhilise töövoo lm() mudelobjektide inspekteerimiseks.</p>
-<p>Töötame m3 mudeliobjektiga, mis on interaktsioonimudel:</p>
-<p>Sepal.Width ~ Sepal.Length * Species</p>
-<p>ehk</p>
-<p><span class="math display">\[Speal.Width = a + b_1*Sepal.Length + b_2*Species + b_3*Sepal.Length*Species\]</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggeffects)
-m3 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Width <span class="op">~</span><span class="st"> </span>Sepal.Length <span class="op">*</span><span class="st"> </span>Species, <span class="dt">data =</span> iris)</code></pre></div>
-<div id="vaatame-mudeli-koefitsiente" class="section level2">
-<h2><span class="header-section-number">6.1</span> 1. vaatame mudeli koefitsiente</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tidy</span>(m3)
-<span class="co">#&gt; # A tibble: 6 x 5</span>
-<span class="co">#&gt;   term                           estimate std.error statistic  p.value</span>
-<span class="co">#&gt;   &lt;chr&gt;                             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 (Intercept)                      -0.569     0.554     -1.03 3.06e- 1</span>
-<span class="co">#&gt; 2 Sepal.Length                      0.799     0.110      7.23 2.55e-11</span>
-<span class="co">#&gt; 3 Speciesversicolor                 1.44      0.713      2.02 4.51e- 2</span>
-<span class="co">#&gt; 4 Speciesvirginica                  2.02      0.686      2.94 3.85e- 3</span>
-<span class="co">#&gt; 5 Sepal.Length:Speciesversicolor   -0.479     0.134     -3.58 4.65e- 4</span>
-<span class="co">#&gt; 6 Sepal.Length:Speciesvirginica    -0.567     0.126     -4.49 1.45e- 5</span></code></pre></div>
-<p>Interaktsioonimudeli koefitsientide jõllitamine on sageli tühi töö ja vaimu närimine. Õnneks on meil muid meeotodeid, kuidas lm() mudelitega töötada.</p>
-<p>Võrdluseks - nii fitime eraldi mudeli igale irise liigile. Tulemus on tegelikult identne interaktsioonimudeliga kategoorilisele muutujale (Species), aga koefitsiendid on otse tõlgendatavad. Samas, interaktsioonimudelit saab fittida ka pidevale muutujale!</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">split</span>(.<span class="op">$</span>Species) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">map</span>(<span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(Sepal.Width <span class="op">~</span><span class="st"> </span>Sepal.Length, <span class="dt">data =</span> .)) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">map</span>(summary) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">map_dfr</span>(<span class="op">~</span><span class="st"> </span>broom<span class="op">::</span><span class="kw">tidy</span>(.), <span class="dt">.id =</span> <span class="st">&quot;Species&quot;</span>)
-<span class="co">#&gt; # A tibble: 6 x 6</span>
-<span class="co">#&gt;   Species    term         estimate std.error statistic  p.value</span>
-<span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 setosa     (Intercept)    -0.569    0.522      -1.09 2.81e- 1</span>
-<span class="co">#&gt; 2 setosa     Sepal.Length    0.799    0.104       7.68 6.71e-10</span>
-<span class="co">#&gt; 3 versicolor (Intercept)     0.872    0.445       1.96 5.56e- 2</span>
-<span class="co">#&gt; 4 versicolor Sepal.Length    0.320    0.0746      4.28 8.77e- 5</span>
-<span class="co">#&gt; 5 virginica  (Intercept)     1.45     0.431       3.36 1.55e- 3</span>
-<span class="co">#&gt; 6 virginica  Sepal.Length    0.232    0.0651      3.56 8.43e- 4</span></code></pre></div>
-<p>Adjusteeritud r2 tasub eraldi üle vaadata.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(m3)<span class="op">$</span>adj.r.squared
-<span class="co">#&gt; [1] 0.61</span></code></pre></div>
-<p>0.61 tähendab, et mudel suudab seletada mitte rohkem kui 61% y-muutuja (Sepal.Width) varieeruvusest.</p>
-</div>
-<div id="testime-mudeli-eeldusi" class="section level2">
-<h2><span class="header-section-number">6.2</span> 2. Testime mudeli eeldusi</h2>
-<p>Nii saab fititud väärtused (.fitted), residuaalid (.resid), fittitud väätruste standardvead (.se.fit). Residuaal = Y data value - fitted value. Seega positiivne residuaal näitab, et mudeli ennustus keskmisele y väärtusele mingil x-muutujate väärtusel on madalam kui juhutb olema tegelik y-i andmepunkti väärtus. See võib olla tingitud y-muutuja normaalsest bioloogilisest varieeruvusest, aga ka sellest, et mudel ei kirjelda täiuslikult x-ide ja y tegelikku seost.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(a_m3 &lt;-<span class="st"> </span><span class="kw">augment</span>(m3))
-<span class="co">#&gt; # A tibble: 150 x 10</span>
-<span class="co">#&gt;   Sepal.Width Sepal.Length Species .fitted .se.fit   .resid   .hat .sigma</span>
-<span class="co">#&gt; *       &lt;dbl&gt;        &lt;dbl&gt; &lt;fct&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt; 1         3.5          5.1 setosa     3.50  0.0399 -0.00306 0.0215  0.273</span>
-<span class="co">#&gt; 2         3            4.9 setosa     3.34  0.0403 -0.343   0.0218  0.272</span>
-<span class="co">#&gt; 3         3.2          4.7 setosa     3.18  0.0512  0.0163  0.0354  0.273</span>
-<span class="co">#&gt; 4         3.1          4.6 setosa     3.10  0.0591 -0.00380 0.0471  0.273</span>
-<span class="co">#&gt; 5         3.6          5   setosa     3.42  0.0385  0.177   0.0200  0.273</span>
-<span class="co">#&gt; 6         3.9          5.4 setosa     3.74  0.0581  0.157   0.0455  0.273</span>
-<span class="co">#&gt; # ... with 144 more rows, and 2 more variables: .cooksd &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   .std.resid &lt;dbl&gt;</span></code></pre></div>
-<p>.hat &gt;1 sugereerib high leverage andmepunkte</p>
-<p>.std.resid on studentiseeritud residuaal, mis on sd ühikutes (.resid/sd(.resid))</p>
-<div id="lineaarsus---residuaalidfitted-plot" class="section level3">
-<h3><span class="header-section-number">6.2.1</span> Lineaarsus - residuaalid~fitted plot</h3>
-<p>Residuals vs fitted plot testib lineaarsuse eeldust - kui .resid punktid jaotuvad ühtlaselt nulli ümber, siis mudel püüab kinni kogu süstemaatilise varieeruvuse teie andmetest ja see mis üle jääb on juhuslik varieeruvus.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(a_m3, <span class="kw">aes</span>(<span class="st">`</span><span class="dt">.fitted</span><span class="st">`</span>, <span class="st">`</span><span class="dt">.resid</span><span class="st">`</span>)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color=</span>Species), <span class="dt">alpha=</span><span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_smooth</span>()</code></pre></div>
-<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" /></p>
-</div>
-<div id="cooki-kaugus---outlierid" class="section level3">
-<h3><span class="header-section-number">6.2.2</span> Cooki kaugus - outlierid</h3>
-<p>.cooksd on Cook-i kaugus, mis näitab võimalikke outliereid. rusikareeglina tähendab cooksd &gt; 3 cooksd keskväärtust, et tegu võiks olla outlieriga. Teine võimalus on pidada igat punkti, mis on kõrgem kui 4/n, outlieriks. Kolmanadad arvavad jälle, et outlierina võiks vaadelda iga teistest väga erinevat väärtust, või et .cooksd &gt; 1 v .cooksd &gt; 0.5 on indikatsiooniks nn mõjukast väärtusest (influencial value).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="ot">NULL</span>, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">150</span>, <span class="dt">y =</span> a_m3<span class="op">$</span><span class="st">`</span><span class="dt">.cooksd</span><span class="st">`</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">4</span><span class="op">/</span><span class="dv">150</span>)<span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">3</span><span class="op">*</span><span class="kw">mean</span>(a_m3<span class="op">$</span><span class="st">`</span><span class="dt">.cooksd</span><span class="st">`</span>), <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /></p>
-</div>
-<div id="mojukuse-plot" class="section level3">
-<h3><span class="header-section-number">6.2.3</span> Mõjukuse plot</h3>
-<p>outlierid - studentideeritud residuaalid &gt; 2 või &lt; -2 hat &gt; 1 - sugereerib high leverage andmepunkte</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
-<span class="kw">influencePlot</span>(m3, <span class="dt">id.method=</span><span class="st">&quot;identify&quot;</span>, <span class="dt">main=</span><span class="st">&quot;Influence Plot&quot;</span>,
-              <span class="dt">sub=</span><span class="st">&quot;Circle size is proportional to Cook&#39;s distance&quot;</span>)
-<span class="co">#&gt;     StudRes    Hat   CookD</span>
-<span class="co">#&gt; 15   -0.243 0.1236 0.00139</span>
-<span class="co">#&gt; 42   -2.810 0.0621 0.08307</span>
-<span class="co">#&gt; 69   -2.477 0.0253 0.02567</span>
-<span class="co">#&gt; 107  -0.331 0.1638 0.00359</span>
-<span class="co">#&gt; 119  -2.464 0.0824 0.08782</span></code></pre></div>
-<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<blockquote>
-<p>Mõjukad punktid (Influential observations) omavad suurt mõju mudeli ennustustele. High Leverage andmepunktid on x-muutujate ekstreemsed punktid, mille lähedal ei ole n-mõõtmelises ruumis (kui teil on n x-muutujat) teisi punkte. Seetõttu läheb fititud mudel nende punktide lähedalt mõõda. Mõjukad punktid on tüüpiliselt ka high leverage punktid, kuid vastupidine ei kehti!</p>
-</blockquote>
-</div>
-<div id="residuaalide-normaalsus---qq-plot" class="section level3">
-<h3><span class="header-section-number">6.2.4</span> Residuaalide normaalsus - qq plot</h3>
-<p>Kas residuaalid on normaaljaotusega?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">car<span class="op">::</span><span class="kw">qqPlot</span>(a_m3<span class="op">$</span><span class="st">`</span><span class="dt">.std.resid</span><span class="st">`</span>, <span class="dt">distribution =</span> <span class="st">&quot;norm&quot;</span>)
-<span class="co">#&gt; [1] 42 69</span></code></pre></div>
-<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" /></p>
-</div>
-<div id="homoskedastilisus---scale-location-plot" class="section level3">
-<h3><span class="header-section-number">6.2.5</span> Homoskedastilisus - Scale-location plot</h3>
-<p>Scale-location plot - homoskedastilisuse eeldust ehk seda, et varieeruvus ei sõltuks prediktormuutuja väärtusest. Y-teljel on ruutjuur studentiseeritud residuaalide absoluutväärtusest</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(a_m3, <span class="kw">aes</span>(<span class="st">`</span><span class="dt">.fitted</span><span class="st">`</span>, <span class="st">`</span><span class="dt">.resid</span><span class="st">`</span> <span class="op">%&gt;%</span><span class="st"> </span>abs <span class="op">%&gt;%</span><span class="st"> </span>sqrt)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color=</span>Species), <span class="dt">alpha=</span><span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;square root of absolute residual&quot;</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" /></p>
-</div>
-</div>
-<div id="residuaalid-y-ja-x-muutujate-vastu" class="section level2">
-<h2><span class="header-section-number">6.3</span> Residuaalid y ja x muutujate vastu</h2>
-<p>Kõigepealt residuaalid y-muutja vastu</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(a_m3, <span class="kw">aes</span>(Sepal.Width, <span class="st">`</span><span class="dt">.std.resid</span><span class="st">`</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color=</span>Species)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">lty =</span><span class="dv">2</span>, <span class="dt">color =</span><span class="st">&quot;darkgrey&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_smooth</span>( <span class="dt">se=</span>F, <span class="dt">color=</span><span class="st">&quot;black&quot;</span>, <span class="dt">size=</span><span class="fl">0.5</span>)</code></pre></div>
-<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>Mudel paistab süstemaatiliselt alahindama Sepal Width-i seal kus Sepal Length on kõrge, ja vastupidi. Horisontaalne punktiirjoon näitab, kus mudel vastab täpselt andmetele.</p>
-<p>Studentiseeritud residuaalid sd ühikutes</p>
-<p>Ja nüüd residuaalid x-muutuja vastu.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(a_m3, <span class="kw">aes</span>(Sepal.Length, <span class="st">`</span><span class="dt">.std.resid</span><span class="st">`</span>, <span class="dt">color=</span>Species)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">lty =</span><span class="dv">2</span>, <span class="dt">color =</span><span class="st">&quot;darkgrey&quot;</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">se=</span>F, <span class="dt">color=</span><span class="st">&quot;black&quot;</span>, <span class="dt">size=</span><span class="fl">0.5</span>)</code></pre></div>
-<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;" /> Ideaalsed residuaalid!</p>
-</div>
-<div id="teeme-mudeli-pohjal-ennustusi-marginal-plots" class="section level2">
-<h2><span class="header-section-number">6.4</span> Teeme mudeli põhjal ennustusi (marginal plots)</h2>
-<p>Me ennustame Y-i keskmisi väärtuseid etteantud X-i väärtustel.</p>
-<p>ggpredict() ennustab y-muutuja väärtusi ühe x-muutuja väärtuste järgi, hoides kõiki teisi x-muutujaid konstantsena.</p>
-<p>Kõigepealt võrdleme lihtsa 1 prediktoriga mudeli ennustust kahe prediktoriga mudeli ennustusega</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm1 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Width <span class="op">~</span><span class="st"> </span>Sepal.Length, <span class="dt">data =</span> iris)
-lm2 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Width <span class="op">~</span><span class="st"> </span>Sepal.Length <span class="op">+</span><span class="st"> </span>Petal.Length, <span class="dt">data =</span> iris)
-
-mydf &lt;-<span class="st"> </span><span class="kw">ggpredict</span>(lm1, <span class="dt">terms =</span> <span class="st">&quot;Sepal.Length&quot;</span>)
-mydf2 &lt;-<span class="st"> </span><span class="kw">ggpredict</span>(lm2, <span class="dt">terms =</span> <span class="st">&quot;Sepal.Length&quot;</span>)
-
-<span class="kw">ggplot</span>(mydf, <span class="kw">aes</span>(x, predicted)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="dt">data =</span> mydf, <span class="kw">aes</span>(<span class="dt">ymin =</span> conf.low, <span class="dt">ymax =</span> conf.high), 
-              <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">fill=</span><span class="st">&quot;lightgrey&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data =</span> mydf2, <span class="kw">aes</span>(x, predicted), <span class="dt">lty=</span><span class="dv">2</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="dt">data =</span> mydf2, <span class="kw">aes</span>(<span class="dt">ymin =</span> conf.low, <span class="dt">ymax =</span> conf.high), 
-              <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">fill=</span><span class="st">&quot;lightgrey&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>iris, <span class="kw">aes</span>(Sepal.Length, Sepal.Width, <span class="dt">color=</span>Species)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Sepal Length&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;predicted sepal width&quot;</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
-<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<blockquote>
-<p>terms argument võtab kuni 3 muutujat, neist 2 peavad olema faktormuutujad ja 3 muutuja korral tekib tabelisse veerg nimega facet, mille abil saab tulemused facet_wrap()-ga välja plottida.</p>
-</blockquote>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mydf &lt;-<span class="st"> </span><span class="kw">ggpredict</span>(m3, <span class="dt">terms =</span> <span class="kw">c</span>(<span class="st">&quot;Sepal.Length&quot;</span>, <span class="st">&quot;Species&quot;</span>))
-<span class="kw">ggplot</span>(mydf, <span class="kw">aes</span>(x, predicted)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color=</span>group)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>iris, <span class="kw">aes</span>(Sepal.Length, Sepal.Width, <span class="dt">color=</span>Species)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Sepal Length&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;predicted sepal width&quot;</span>)</code></pre></div>
-<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>Nii saab sisestada üksikuid parameetriväärtusi ja neile ennustusi teha:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(mydf1 &lt;-<span class="st"> </span><span class="kw">ggpredict</span>(m3, <span class="dt">terms =</span> <span class="kw">c</span>(<span class="st">&quot;Sepal.Length [5, 22]&quot;</span>, <span class="st">&quot;Species [setosa, versicolor]&quot;</span>)))
-<span class="co">#&gt; </span>
-<span class="co">#&gt; # Predicted values for Sepal.Width </span>
-<span class="co">#&gt; # x = Sepal.Length </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; # setosa</span>
-<span class="co">#&gt;   x predicted conf.low conf.high</span>
-<span class="co">#&gt;   5      3.42     3.35       3.5</span>
-<span class="co">#&gt;  22     17.00    13.32      20.7</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; # versicolor</span>
-<span class="co">#&gt;   x predicted conf.low conf.high</span>
-<span class="co">#&gt;   5      2.47     2.31      2.63</span>
-<span class="co">#&gt;  22      7.91     5.53     10.28</span></code></pre></div>
-<div id="vordleme-mudeleid" class="section level3">
-<h3><span class="header-section-number">6.4.1</span> Võrdleme mudeleid</h3>
+<div id="andmete-transformeerimine" class="section level1">
+<h1><span class="header-section-number">7</span> Andmete transformeerimine</h1>
+<p>Lineaarsed transformatsioonid võivad hõlbustada mudeli koefitsientide tõlgendamist (kas x on millimeetrites, meetrites vms). Mittelineaarsed transformatsioonid muudavad mudeli fitti ja võivad olla kasulikud mudeli aditiivsuse/lineaarsuse parandamisel.</p>
+<div id="logaritmimine" class="section level2">
+<h2><span class="header-section-number">7.1</span> Logaritmimine</h2>
+<p>Kui x-l saavad olla ainult positiivsed väärtused, siis on logaritmimine sageli hea mõte. Andmetest peab kaotama ka nullid (või asendama mingi nullilähedase positiivse väärtusega). Näiteks seost sissetuleku ja oodatava eluea vahel on lihtsam ette kujutada kui eluiga ~ log(sissetulek). Log skaalas on beeta koefitsiendid peaaegu alati &lt; 1.</p>
+<p>Erinevus naturaallogaritmi (log, põõrdlogaritm = exp(log(x))) ja log10 või log2 vahel on, et esimesel juhul on kergesti tõlgendatav beeta (aga mitte logaritmitud x-i väärtused) ja teisel juhul (log10 v log2) on kergesti tõlgendatavad logaritmitud x-i väärtused (aga mitte beeta). Seetõttu eelistavad loodusteadlased kasutada log2 ja log10 skaalasid, mida on mugavam otse log-skaalas tõlgendada. Kui te kasutate log2-e, siis üheühikuline muutus log skaalas on sama, mis kahekordne muutus meetrilises skaalas ja anti-logaritmi saab <span class="math inline">\(2^{log2(x)}\)</span>. Log10 korral vastab ühe ühikuline muutus log skaalas 10-kordsele muutusele meetrilises skaalas ja anti-logaritmi saab <span class="math inline">\(10^{log10(x)}\)</span>. NB! teie tulemuste (mudeli fiti) kvaliteedi koha pealt pole suurt vahet, millist logaritmi te kasutate – olulised erinevused on “pelgalt” mudeli koefitsientide tõlgendustes.</p>
+<p>Järgnevalt õpetame naturaallogaritmitud andmetega fititud mudelite β koefitsiendite tõlgendamist algeses, meetrilises skaalas.</p>
+<ul>
+<li><p>y = a + bx lineaarne mudel</p></li>
+<li><p>y = a + b * log(x) linear-log mudel</p></li>
+<li><p>log(y) = a + bx log-linear mudel</p></li>
+<li><p>log(y) = a + b * log(x) log-log mudel</p></li>
+</ul>
+<p>Kasutame naturaal-logaritmi, mille alus on e ≈ 2.71828.</p>
 <ol style="list-style-type: decimal">
-<li><p>Eeldus - kõik võrreldavad mudelid on fititud täpselt samade andmete peal.</p></li>
-<li><p>Eeldus (ei ole vajalik AIC meetodi puhul) - tegemist on nn nested mudelitega. Nested mudel tähendab, et kõik väiksema mudeli liikmed on olemas ka suuremas mudelis.</p></li>
+<li><p><span class="math inline">\(log(e) = 1\)</span></p></li>
+<li><p><span class="math inline">\(log(1) = 0\)</span></p></li>
+<li><p><span class="math inline">\(log(x^r) = r * log(x)\)</span></p></li>
+<li><p><span class="math inline">\(e^{log(x)} = x\)</span> ehk <span class="math inline">\(exp(log(x)) = x\)</span></p></li>
+<li><p><span class="math inline">\(log(AB)=logA+logB\)</span></p></li>
+<li><p><span class="math inline">\(log(A/B)=logA−logB\)</span></p></li>
+<li><p><span class="math inline">\(exp(AB) = exp(A)^B\)</span></p></li>
+<li><p><span class="math inline">\(exp(A+B) = exp(A)exp(B)\)</span></p></li>
+<li><p><span class="math inline">\(exp(A−B) = exp(A)/exp(B)\)</span></p></li>
 </ol>
-<p>Mudelite võrdlus ANOVA-ga (ainult nested mudelid)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tidy</span>(<span class="kw">anova</span>(lm1, lm2, m3))
-<span class="co">#&gt; Warning: Unknown or uninitialised column: &#39;term&#39;.</span>
-<span class="co">#&gt; # A tibble: 3 x 6</span>
-<span class="co">#&gt;   res.df   rss    df sumsq statistic   p.value</span>
-<span class="co">#&gt; *  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt; 1    148  27.9    NA NA         NA   NA       </span>
-<span class="co">#&gt; 2    147  15.4     1 12.5      169.   4.83e-26</span>
-<span class="co">#&gt; 3    144  10.7     3  4.71      21.2  2.06e-11</span></code></pre></div>
-<p>Mudelite võrdlus AIC-ga</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">AIC</span>(lm1, lm2, m3)
-<span class="co">#&gt;     df   AIC</span>
-<span class="co">#&gt; lm1  3 179.5</span>
-<span class="co">#&gt; lm2  4  92.1</span>
-<span class="co">#&gt; m3   7  43.3</span></code></pre></div>
-<p>AIC (Akaike Informatsiooni Kriteerium) on number, mis püüab tabada mõistlikku tasakaalu mudeli fiti valimiandmetega ja parsinoomia vahel. Väiksema AIC-ga mudel on eelistatud suurema AIC-ga mudeli ees (samas, AIC-l kui ühel arvul puudub tõlgendus).</p>
-<p>Probleem AIC-i taga on selles, et parem fit valimiandmetega võib tähendada mudeli ülefittimist (ja seega halvemat mudelit). Kuna ülefittimise tõenäosus kasvab koos mudeli keerukusega (parameetrite arvuga), eelistame võimalikult lihtsat mudelit, mis samas seletaks võimalikult suure osa valimiandmete varieeruvusest.</p>
+<p><strong>Kaks põhjust miks logaritmida:</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>Muutuja(te) logaritmimine muudab muutujate vahelised suhted mitte-lineaarseks, samas säilitades mudeli lineaarsuse.</p></li>
+<li><p>Muutuja logaritmimine võib selle muutuja viia lähemale normaaljaotusele (lognormaalse jaotuse logaritm on normaaljaotusega).</p></li>
+</ol>
+<p><strong>Lineaarses</strong> mudelis Y = α + βX, annab β mitu ühikut muutub Y keskväärtus, kui X muutub ühe ühiku võrra. See tõlgendus jääb kehtima ka logaritmitud muutujate korral, ainult et log-ühikutes. Me võime siiski tahta tõlgendust mitte-logaritmitud ühikutes, vaid näiteks muutuse protsendina või lihtsalt algsetes meetrilistes ühikutes.</p>
+<p><strong>Linear-log</strong> mudelis viib logX-i muutus ühe ühiku võrra Y keskväärtuse muutusele β ühiku võrra:</p>
+<p><span class="math display">\[log X + 1 = log X + log e = log(eX)\]</span> ehk</p>
+<p><span class="math display">\[1 + X = eX\]</span></p>
+<p>Selle muutuse saab avaldada protsendina: eX on sama, mis õelda, et X kasvab 172% võrra (100 × (2.72 − 1) = 172).</p>
+<ul>
+<li><p>β on oodatud Y muutus kui X kasvab eX korda.</p></li>
+<li><p>β on oodatud Y muutus kui X kasvab 172% võrra.</p></li>
+<li><p>Kui β on väike, siis saab seda otse tõlgendada kui suhtelist erinevust. Näiteks, kui beta = 0.06, siis võime seda tõlgendada nii: 1 ühikuline X-i muutus viib 6%-sele Y muutusele. Sedamõõda kui β kaugeneb nullist (näiteks β = 0.4), hakkab selline kiire hinnang tõsiselt alahindama tegelikku x-i mõju y väärtusele.</p></li>
+<li><p>Oodatud Y muutus kui X kasvab p protsenti: β * log([100 + p]/100). Näit, kui X kasvab 10% võrra, siis log(110/100)= 0.095 ja 0.095 β on oodatud Y muutus kui x korrutada 1.1-ga (ehk kasvab 10% võrra).</p></li>
+<li><p>Kui p on väike, siis log([100 + p]/100) ≈ p/100. Kui p = 1, siis β/100 on enam-vähem oodatud Y muutus, kui X kasvab 1 võrra.</p></li>
+</ul>
+<p><strong>Log-linear</strong> mudeli korral, kui X kasvab 1 ühiku võrra, siis oodatud Y väärtus kasvab <span class="math inline">\(e^β\)</span> ehk <span class="math inline">\(exp(β)\)</span> korda. Kui X kasvab c ühiku võrra, siis peame oodatud Y väärtuse korrutama <span class="math inline">\(exp(cβ)\)</span>-ga.</p>
+<p>Kui β on väike, siis <span class="math inline">\(exp(β) ≈ 1+β\)</span>. ja 100 * β vastab Y protsentuaalsele muutusele juhul kui X muutub 1 ühiku võrra (kui β = 0.06, siis exp(0.06) ≈ 1.06 ja X-i muutus 1 ühiku võrra viib Y-i 6% tõusule).</p>
+<p><strong>Log-log</strong> mudeli korral on tõlgendus oodatud Y-i muutus protsentides kui X muutub mingi protsendi võrra. Sellist suhet kotsutakse ökonomeetrias elastiliseks ja logX-i koefitsient on “elastilisus.”</p>
+<p>Kui me korrutame X-i e-ga, siis korrutame oodatud Y-i väärtuse <span class="math inline">\(exp(β)\)</span>-ga.</p>
+<p>Et saada Y suhtelist muutust, kui X kasvab p protsenti, arvuta a = log([100 + p]/100) ja siis võta <span class="math inline">\(exp(aβ)\)</span>.</p>
 </div>
+<div id="standardiseerimine" class="section level2">
+<h2><span class="header-section-number">7.2</span> Standardiseerimine</h2>
+<p><span class="math inline">\(x.z = (x - mean(x))/sd(x)\)</span></p>
+<p>Sellisel viisil standardiseeritud andmete keskväärtus on 0 ja sd = 1. Seega on kõik predikorid samas skaalas ja me mõõdame efekte sd ühikutes. See muudab lihtsaks algeslt erinevas skaalas prediktorite võrdlemise. Intecept tähendab nüüd keskmist ennustust, juhul kui kõik prediktorid on fikseeritud oma keskväärtustel.</p>
+<p>Kui mudel sisaldab binaarseid muutujaid, siis on kasulikum standardiseerida üle 2xSD, jättes binaarsed muutujad muutmata.</p>
+<p><span class="math inline">\(x.z2 = (x - mean(x))/(2 * sd(x))\)</span></p>
+<p>Nüüd tähendab 1 ühikuline muutus efekti -1 SD-st kuni 1 SD-ni üle keskväärtuse.</p>
+</div>
+<div id="tsentreerimine" class="section level2">
+<h2><span class="header-section-number">7.3</span> Tsentreerimine</h2>
+<p>x.c1 = x - mean(x), mis annab keskväärtuseks nulli aga jätab varieeruvused algsesse skaalasse.</p>
+<p>Teine võimalus on tsentreerida mõnele teaduslikult mõistlikule väärtusele. Näiteks IQ-d saab tsentreerida 100-le (x - 100).</p>
+<div id="mudeli-koefitsientide-transformeerimine" class="section level3">
+<h3><span class="header-section-number">7.3.1</span> Mudeli koefitsientide transformeerimine</h3>
+<p>Ilma interaktsioonideta mudeli korral saab sama tulemuse, mis prediktoreid tsentreerides, kui me reskaleerime tavalises skaalas fititud mudeli koefitsiendid, korrutades iga β oma prediktori kahekordse sd-ga (<span class="math inline">\(β.x = β * 2* sd(x)\)</span>). Nende β.x-de pealt näeb hästi iga muutuja suhtelist tähtsust mudelis.</p>
+</div>
+<div id="korrelatsioonikoefitsiendi-arvutamine-regressioonikoefitsientidest" class="section level3">
+<h3><span class="header-section-number">7.3.2</span> korrelatsioonikoefitsiendi arvutamine regressioonikoefitsientidest</h3>
+<p>Kui standardiseerime nii y kui x-i</p>
+<p><code>x &lt;- (x-mean(x))/sd(x)</code> <code>y &lt;- (y-mean(y))/sd(y)</code></p>
+<p>siis y~x regressiooni intercept = 0 ja tõus on sama, mis x ja y vaheline korrelatsioonikoefitsient r. Seega jääb tõus alati -1 ja 1 vahele.</p>
+<p>Siit tuleb ka seletus nähtusele, mida kutsutakse regressiooniks keskmisele (<em>regression to the mean</em>). Fakti, et y on sellises mudelis alati 0-le lähemal kui x, kutsutaksegi regressiooniks keskmisele. Näiteks, kui olete 20 cm keskmisest pikem ja pikkuse päritavus on 0.5, siis on oodata, et teie järglased on keskeltläbi 10 cm võrra keskmisest pikemad (ja teist lühemad). Selle pseudo-põhjusliku nähtuse avastas Francis Galton.</p>
+</div>
+</div>
+<div id="pidev-voi-diskreetne-muutuja" class="section level2">
+<h2><span class="header-section-number">7.4</span> Pidev või diskreetne muutuja?</h2>
+<p>Tavaliselt on mõistlik fittida mudel pidevale y muutujale ka siis, kui tahame lõpuks tõlgenada tulemusi diskreetsel skaalal. Pidev muutuja sisaldab rohkem informatsiooni ja seetöttu on meil lootust saada parem fit. Erandiks on pidevad x muutujad, mille mõju y-le on mittelineaarne (näiteks vanuse mõju suremusele). Siin on vahest mõistlik konverteerida pidev muutuja faktormuutujaks ja saada hinnang näiteks igale vanuseklassile eraldi.</p>
+</div>
+<div id="uldised-mitmese-regressiooni-printsiibid" class="section level2">
+<h2><span class="header-section-number">7.5</span> Üldised mitmese regressiooni printsiibid</h2>
+<ol style="list-style-type: decimal">
+<li><p>võta sisse kõik teaduslikku huvi pakkuvad muutujad ja viska välja muutujad, mille kohta sul pole põhust arvata, et nad võiksid y väärtusi mõjutada.</p></li>
+<li><p>kontrolli, ega muutujate vahel ei esine väga tugevaid korrelatsioone (kollineaarsus). Kui jah, siis kombineeri kollineaarsed muutujad üheks või transformeeri neid või viska mõni muutuja välja.</p></li>
+<li><p>muutujad, mis ei varieeru, ei oma ka regressioonis mõju.</p></li>
+<li><p>tugeva mõjuga muutujate puhul võib olla vajalik sisse tuua nende muutujate interkatsioond (vt ptk …).</p></li>
+<li><p>muutujad, mida sa reaalselt mõõtsid ei pruugi olla need muutujad, mis mudelisse lähevad – näiteks arvuta kehamassiindeks mõõdetud muutujate põhjal.</p></li>
+<li><p>kui pidevad x-id transformeerida log skaalasse, siis on lineaarsesse mudelisse pandud efektid multiplikatiivsed, mitte aditiivsed.</p></li>
+</ol>
+
 </div>
 </div>
             </section>
@@ -535,8 +428,8 @@ mydf2 &lt;-<span class="st"> </span><span class="kw">ggpredict</span>(lm2, <span
           </div>
         </div>
       </div>
-<a href="kaks-lineaarse-mudeli-laiendust.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="andmete-transformeerimine.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="veamudel.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
