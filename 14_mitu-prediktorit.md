@@ -280,9 +280,9 @@ diab_Bvs <- Bvs(formula = hdl ~ chol + stab.glu + ratio + glyhb + age + gender +
 library(car)
 vif(lm(hdl ~ chol + stab.glu + ratio + glyhb + age + height + weight +  bp.1s + bp.1d + waist, data = diab))
 #>     chol stab.glu    ratio    glyhb      age   height   weight    bp.1s 
-#>     1.42     2.34     1.51     2.47     1.62     1.21     4.93     2.12 
+#>     1.42     2.33     1.50     2.46     1.63     1.21     4.95     2.13 
 #>    bp.1d    waist 
-#>     1.78     4.75
+#>     1.78     4.76
 ```
 
 
@@ -297,20 +297,20 @@ summary(diab_Bvs)
 #> Inclusion Probabilities:
 #>             Incl.prob. HPM MPM
 #> chol                 1   *   *
-#> stab.glu        0.0249        
+#> stab.glu        0.0246        
 #> ratio                1   *   *
-#> glyhb           0.0208        
-#> age             0.0405        
-#> gendermale      0.0176        
-#> height          0.0442        
-#> weight          0.0819        
-#> framelarge      0.0363        
-#> framemedium     0.0141        
-#> framesmall      0.0231        
-#> bp.1s           0.0148        
-#> bp.1d           0.0142        
-#> waist           0.0522        
-#> hip             0.5347   *   *
+#> glyhb           0.0201        
+#> age             0.0404        
+#> gendermale       0.017        
+#> height          0.0431        
+#> weight           0.076        
+#> framelarge      0.0367        
+#> framemedium     0.0137        
+#> framesmall      0.0219        
+#> bp.1s           0.0147        
+#> bp.1d           0.0134        
+#> waist           0.0514        
+#> hip             0.4642        
 #> ---
 #> Code: HPM stands for Highest posterior Probability Model and
 #>  MPM for Median Probability Model.
@@ -337,20 +337,20 @@ summary(diab_Bvs2)
 #> 
 #> Inclusion Probabilities:
 #>             Incl.prob. HPM MPM
-#> stab.glu        0.0637        
+#> stab.glu        0.0617        
 #> ratio                1   *   *
-#> glyhb           0.1226        
-#> age             0.9807   *   *
-#> gendermale      0.1266        
-#> height          0.0649        
-#> weight          0.1735        
-#> framelarge      0.6986   *   *
-#> framemedium     0.1217        
-#> framesmall      0.0841        
-#> bp.1s           0.0859        
-#> bp.1d           0.5981       *
-#> waist           0.1349        
-#> hip             0.1709        
+#> glyhb           0.1111        
+#> age              0.982   *   *
+#> gendermale      0.1219        
+#> height          0.0632        
+#> weight          0.1753        
+#> framelarge      0.7027   *   *
+#> framemedium     0.1192        
+#> framesmall      0.0846        
+#> bp.1s            0.087        
+#> bp.1d           0.5924       *
+#> waist           0.1397        
+#> hip             0.1716        
 #> ---
 #> Code: HPM stands for Highest posterior Probability Model and
 #>  MPM for Median Probability Model.
@@ -387,7 +387,7 @@ Btest(models = c(H0 = nullmodel, H1 = fullmodel, H2 = reducedmodel, H3 = reduced
 #> ---------
 #> Bayes factors (expressed in relation to H0)
 #>  H0.to.H0  H1.to.H0  H2.to.H0  H3.to.H0 
-#>  1.00e+00 1.91e+131 1.94e+142  1.14e+55 
+#>  1.00e+00 1.96e+131 2.46e+142  4.78e+55 
 #> ---------
 #> Posterior probabilities:
 #> H0 H1 H2 H3 
@@ -412,8 +412,8 @@ Peale 2. muutuja lisamist jääb adjusteeritud r-ruut stabiilseks. Seega piisab 
 
 ```r
 reg.summary$adjr2
-#>  [1] 0.469 0.488 0.501 0.508 0.510 0.512 0.513 0.513 0.512 0.511 0.510
-#> [12] 0.508 0.507 0.506
+#>  [1] 0.472 0.491 0.504 0.511 0.513 0.515 0.516 0.516 0.515 0.514 0.513
+#> [12] 0.512 0.510 0.509
 ```
 
 
@@ -453,7 +453,7 @@ summary(regfit.full)
 #> 9  ( 1 )  "*"      "*"   "*"   "*" "*"        "*"    " "    "*"       
 #> 10  ( 1 ) "*"      "*"   "*"   "*" "*"        "*"    " "    "*"       
 #> 11  ( 1 ) "*"      "*"   "*"   "*" "*"        "*"    " "    "*"       
-#> 12  ( 1 ) "*"      "*"   "*"   "*" "*"        "*"    "*"    "*"       
+#> 12  ( 1 ) "*"      "*"   "*"   "*" "*"        "*"    " "    "*"       
 #> 13  ( 1 ) "*"      "*"   "*"   "*" "*"        "*"    "*"    "*"       
 #> 14  ( 1 ) "*"      "*"   "*"   "*" "*"        "*"    "*"    "*"       
 #>           framemedium framesmall bp.1s bp.1d waist hip
@@ -468,7 +468,7 @@ summary(regfit.full)
 #> 9  ( 1 )  " "         " "        " "   "*"   " "   "*"
 #> 10  ( 1 ) " "         " "        "*"   "*"   " "   "*"
 #> 11  ( 1 ) "*"         " "        "*"   "*"   " "   "*"
-#> 12  ( 1 ) "*"         " "        "*"   "*"   " "   "*"
+#> 12  ( 1 ) "*"         "*"        "*"   "*"   " "   "*"
 #> 13  ( 1 ) "*"         "*"        "*"   "*"   " "   "*"
 #> 14  ( 1 ) "*"         "*"        "*"   "*"   "*"   "*"
 ```

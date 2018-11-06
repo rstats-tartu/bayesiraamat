@@ -151,13 +151,14 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="7" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html"><i class="fa fa-check"></i><b>7</b> Andmete transformeerimine</a><ul>
 <li class="chapter" data-level="7.1" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#logaritmimine"><i class="fa fa-check"></i><b>7.1</b> Logaritmimine</a></li>
-<li class="chapter" data-level="7.2" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#standardiseerimine"><i class="fa fa-check"></i><b>7.2</b> Standardiseerimine</a></li>
+<li class="chapter" data-level="7.2" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#standardiseerimine"><i class="fa fa-check"></i><b>7.2</b> Standardiseerimine</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#korrelatsioon-ule-regressiooni-ja-regressioon-keskmisele"><i class="fa fa-check"></i><b>7.2.1</b> Korrelatsioon üle regressiooni ja regressioon keskmisele</a></li>
+</ul></li>
 <li class="chapter" data-level="7.3" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#tsentreerimine"><i class="fa fa-check"></i><b>7.3</b> Tsentreerimine</a><ul>
 <li class="chapter" data-level="7.3.1" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#mudeli-koefitsientide-transformeerimine"><i class="fa fa-check"></i><b>7.3.1</b> Mudeli koefitsientide transformeerimine</a></li>
-<li class="chapter" data-level="7.3.2" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#korrelatsioonikoefitsiendi-arvutamine-regressioonikoefitsientidest"><i class="fa fa-check"></i><b>7.3.2</b> korrelatsioonikoefitsiendi arvutamine regressioonikoefitsientidest</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#pidev-voi-diskreetne-muutuja"><i class="fa fa-check"></i><b>7.4</b> Pidev või diskreetne muutuja?</a></li>
-<li class="chapter" data-level="7.5" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#uldised-mitmese-regressiooni-printsiibid"><i class="fa fa-check"></i><b>7.5</b> Üldised mitmese regressiooni printsiibid</a></li>
+<li class="chapter" data-level="7.5" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#mitmese-regressiooni-uldised-printsiibid"><i class="fa fa-check"></i><b>7.5</b> mitmese regressiooni üldised printsiibid</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="veamudel.html"><a href="veamudel.html"><i class="fa fa-check"></i><b>8</b> Veamudel</a><ul>
 <li class="chapter" data-level="8.1" data-path="veamudel.html"><a href="veamudel.html#lihtne-varieeruvuse-mudel"><i class="fa fa-check"></i><b>8.1</b> Lihtne varieeruvuse mudel</a></li>
@@ -687,12 +688,12 @@ pars &lt;-<span class="st"> </span><span class="kw">colnames</span>(model2)
 <span class="st">  </span><span class="kw">cbind</span>(newx, .)
 <span class="kw">head</span>(predict_interval_brms2)
 <span class="co">#&gt;   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5</span>
-<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.319 3.86  5.11</span>
-<span class="co">#&gt; 2         1.04        3.06  setosa     4.53     0.317 3.91  5.14</span>
-<span class="co">#&gt; 3         1.08        3.06  setosa     4.56     0.313 3.95  5.17</span>
-<span class="co">#&gt; 4         1.12        3.06  setosa     4.57     0.322 3.97  5.21</span>
-<span class="co">#&gt; 5         1.16        3.06  setosa     4.61     0.308 4.00  5.23</span>
-<span class="co">#&gt; 6         1.20        3.06  setosa     4.64     0.313 4.02  5.25</span></code></pre></div>
+<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.311 3.87  5.10</span>
+<span class="co">#&gt; 2         1.04        3.06  setosa     4.54     0.318 3.92  5.16</span>
+<span class="co">#&gt; 3         1.08        3.06  setosa     4.56     0.312 3.95  5.16</span>
+<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.313 3.97  5.19</span>
+<span class="co">#&gt; 5         1.16        3.06  setosa     4.59     0.316 3.95  5.21</span>
+<span class="co">#&gt; 6         1.20        3.06  setosa     4.64     0.314 4.02  5.25</span></code></pre></div>
 <p><code>predict()</code> ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele</p>
 <p>Siin siis eraldi ennustused kahele liigile kolmest, kaasa arvatud petal length väärtusvahemikule, kus selle liigi isendeid valimis ei ole (ja võib-olla ei saagi olla)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">no_versicolor &lt;-<span class="st"> </span><span class="kw">filter</span>(iris, Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>)

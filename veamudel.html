@@ -151,13 +151,14 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="7" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html"><i class="fa fa-check"></i><b>7</b> Andmete transformeerimine</a><ul>
 <li class="chapter" data-level="7.1" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#logaritmimine"><i class="fa fa-check"></i><b>7.1</b> Logaritmimine</a></li>
-<li class="chapter" data-level="7.2" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#standardiseerimine"><i class="fa fa-check"></i><b>7.2</b> Standardiseerimine</a></li>
+<li class="chapter" data-level="7.2" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#standardiseerimine"><i class="fa fa-check"></i><b>7.2</b> Standardiseerimine</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#korrelatsioon-ule-regressiooni-ja-regressioon-keskmisele"><i class="fa fa-check"></i><b>7.2.1</b> Korrelatsioon üle regressiooni ja regressioon keskmisele</a></li>
+</ul></li>
 <li class="chapter" data-level="7.3" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#tsentreerimine"><i class="fa fa-check"></i><b>7.3</b> Tsentreerimine</a><ul>
 <li class="chapter" data-level="7.3.1" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#mudeli-koefitsientide-transformeerimine"><i class="fa fa-check"></i><b>7.3.1</b> Mudeli koefitsientide transformeerimine</a></li>
-<li class="chapter" data-level="7.3.2" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#korrelatsioonikoefitsiendi-arvutamine-regressioonikoefitsientidest"><i class="fa fa-check"></i><b>7.3.2</b> korrelatsioonikoefitsiendi arvutamine regressioonikoefitsientidest</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#pidev-voi-diskreetne-muutuja"><i class="fa fa-check"></i><b>7.4</b> Pidev või diskreetne muutuja?</a></li>
-<li class="chapter" data-level="7.5" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#uldised-mitmese-regressiooni-printsiibid"><i class="fa fa-check"></i><b>7.5</b> Üldised mitmese regressiooni printsiibid</a></li>
+<li class="chapter" data-level="7.5" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#mitmese-regressiooni-uldised-printsiibid"><i class="fa fa-check"></i><b>7.5</b> mitmese regressiooni üldised printsiibid</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="veamudel.html"><a href="veamudel.html"><i class="fa fa-check"></i><b>8</b> Veamudel</a><ul>
 <li class="chapter" data-level="8.1" data-path="veamudel.html"><a href="veamudel.html#lihtne-varieeruvuse-mudel"><i class="fa fa-check"></i><b>8.1</b> Lihtne varieeruvuse mudel</a></li>
@@ -520,21 +521,21 @@ Joonis 8.6: Kasutame fititud mudeleid uute andmete simuleerimiseks.
 <div id="normaaljaotuse-ja-lognormaaljaotuse-vordlus" class="section level3">
 <h3><span class="header-section-number">8.2.1</span> Normaaljaotuse ja lognormaaljaotuse võrdlus</h3>
 <p><strong>Normaaljaotus</strong></p>
-<ul>
+<ol style="list-style-type: decimal">
 <li><p>Normaaljaotusega ehk normaalsete juhuslike muutujate liitmine annab normaalse summa. Lineaarsed kombinatsioonid <span class="math inline">\(Y= \alpha + \beta_1X_1 + \beta_2X_2\)</span> jäävad normaalseks.</p></li>
 <li><p>Normaalsete muutujate aritmeetilised keskmised on normaaljaotusega.</p></li>
 <li><p>Keskne piirteoreem: mitte-normaalsete muutujate aritmeetilised keskmised on enam-vähem normaaljaotusega.</p></li>
 <li><p>Elementaarsete vigade hüpotees: kui juhuslik varieeruvus on paljude juhuslike mõjude summa, on tulemuseks normaaljaotus.</p></li>
-<li><p>Additiivne regressioonimudel viib additiivsete vigadeni (residuaalideni), mis omakorda viib konstantsele varieeruvusele ehk konstantsele SD-le.</p></li>
-</ul>
+<li><p>Additiivne regressioonimudel (normaalne tõepära) viib additiivsetele vigadele (residuaalidele), mis omakorda viib konstantsele varieeruvusele (SD-le). Vead on normaaljaotusega.</p></li>
+</ol>
 <p><strong>lognormaaljaotus</strong></p>
-<ul>
+<ol style="list-style-type: decimal">
 <li><p>lognormaalsete juhuslike muutujate korrutamine annab lognormaalse korrutise.</p></li>
 <li><p>Longnormaalsete muutujate geomeetrilised keskmised on lognormaaljaotusega.</p></li>
 <li><p>Keskne piirteoreem: mitte-lognormaalsete muutujate geomeetrilised keskmised on enam-vähem lognormaaljaotusega</p></li>
-<li><p>Multiplikatiivne elementaarsete vigade hüpotees: kui juhuslik varieeruvus on paljude juhuslike mõjude korrutis, on tulemuseks lognormaaljaotus</p></li>
-<li><p>multiplikatiivne regressioonimudel viib multiplikatiivsete vigadeni (residuaalideni), mis omakorda viib konstantsele suhtelisele varieeruvusele ehk konstantsele CV-le. Vigade jaotus on nüüd ebasümmeetriline.</p></li>
-</ul>
+<li><p>Elementaarsete vigade hüpotees: kui juhuslik varieeruvus on paljude juhuslike mõjude korrutis, on tulemuseks lognormaaljaotus</p></li>
+<li><p>multiplikatiivne regressioonimudel (lognormaalne tõepära) viib multiplikatiivsete vigadeni ja konstantsele suhtelisele varieeruvusele (CV-le). Vigade jaotus on ebasümmeetriline.</p></li>
+</ol>
 <p>Seega võime lognormaaljaotust kutsuda ka multiplikatiivseks normaaljaotuseks.</p>
 </div>
 </div>

@@ -327,27 +327,27 @@ Maksimaalsel entroopial põhineb normaaljaotuse ja lognormaaljaotuse sage kasuta
 
 **Normaaljaotus** 
 
-* Normaaljaotusega ehk normaalsete juhuslike muutujate liitmine annab normaalse summa. Lineaarsed kombinatsioonid $Y= \alpha + \beta_1X_1 + \beta_2X_2$ jäävad normaalseks.
+1. Normaaljaotusega ehk normaalsete juhuslike muutujate liitmine annab normaalse summa. Lineaarsed kombinatsioonid $Y= \alpha + \beta_1X_1 + \beta_2X_2$ jäävad normaalseks.
 
-* Normaalsete muutujate aritmeetilised keskmised on normaaljaotusega.
+2. Normaalsete muutujate aritmeetilised keskmised on normaaljaotusega.
 
-* Keskne piirteoreem: mitte-normaalsete muutujate aritmeetilised keskmised on enam-vähem normaaljaotusega.
+3. Keskne piirteoreem: mitte-normaalsete muutujate aritmeetilised keskmised on enam-vähem normaaljaotusega.
 
-* Elementaarsete vigade hüpotees: kui juhuslik varieeruvus on paljude juhuslike mõjude summa, on tulemuseks normaaljaotus.
+4. Elementaarsete vigade hüpotees: kui juhuslik varieeruvus on paljude juhuslike mõjude summa, on tulemuseks normaaljaotus.
 
-* Additiivne regressioonimudel viib additiivsete vigadeni (residuaalideni), mis omakorda viib konstantsele varieeruvusele ehk konstantsele SD-le.
+5. Additiivne regressioonimudel (normaalne tõepära) viib additiivsetele vigadele (residuaalidele), mis omakorda viib konstantsele varieeruvusele (SD-le). Vead on normaaljaotusega.
 
 **lognormaaljaotus**
 
-* lognormaalsete juhuslike muutujate korrutamine annab lognormaalse korrutise.
+1. lognormaalsete juhuslike muutujate korrutamine annab lognormaalse korrutise.
 
-* Longnormaalsete muutujate geomeetrilised keskmised on lognormaaljaotusega.
+2. Longnormaalsete muutujate geomeetrilised keskmised on lognormaaljaotusega.
 
-* Keskne piirteoreem: mitte-lognormaalsete muutujate geomeetrilised keskmised on enam-vähem lognormaaljaotusega
+3. Keskne piirteoreem: mitte-lognormaalsete muutujate geomeetrilised keskmised on enam-vähem lognormaaljaotusega
 
-* Multiplikatiivne elementaarsete vigade hüpotees: kui juhuslik varieeruvus on paljude juhuslike mõjude korrutis, on tulemuseks lognormaaljaotus
+4. Elementaarsete vigade hüpotees: kui juhuslik varieeruvus on paljude juhuslike mõjude korrutis, on tulemuseks lognormaaljaotus
 
-* multiplikatiivne regressioonimudel viib multiplikatiivsete vigadeni (residuaalideni), mis omakorda viib konstantsele suhtelisele varieeruvusele ehk konstantsele CV-le. Vigade jaotus on nüüd ebasümmeetriline. 
+5. multiplikatiivne regressioonimudel (lognormaalne tõepära) viib multiplikatiivsete vigadeni ja konstantsele suhtelisele varieeruvusele (CV-le). Vigade jaotus on ebasümmeetriline. 
 
 Seega võime lognormaaljaotust kutsuda ka multiplikatiivseks normaaljaotuseks.
 
