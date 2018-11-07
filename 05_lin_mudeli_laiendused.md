@@ -482,20 +482,34 @@ Probleem AIC-i taga on selles, et parem fit valimiandmetega võib tähendada mud
 
 # Andmete transformeerimine
 
-Lineaarsed transformatsioonid võivad hõlbustada mudeli koefitsientide tõlgendamist (kas x on millimeetrites, meetrites vms). Mittelineaarsed transformatsioonid muudavad mudeli fitti ja võivad olla kasulikud mudeli aditiivsuse/lineaarsuse parandamisel. 
+Lineaarsed transformatsioonid võivad hõlbustada mudeli koefitsientide tõlgendamist (näit. skaala millimeetritest meetritessse, tsentreerimine, standardiseerimine). Mittelineaarsed transformatsioonid (logaritmimine, jms) muudavad mudeli fitti ja võivad olla kasulikud mudeli aditiivsuse/lineaarsuse parandamisel. 
 
 ## Logaritmimine
 
 Kui muutujal saavad olla ainult positiivsed väärtused, siis on logaritmimine sageli hea mõte. Andmetest peab kaotama ka nullid, näiteks asendades need mingi nullilähedase positiivse arvuga. Logaritmilises skaalas on β koefitsiendid peaaegu alati < 1. 
 
- **Kaks põhjust miks logaritmida:**
+### Miks ja millal muutujaid logaritmida
 
 1. Muutuja(te) logaritmimine muudab muutujate vahelised suhted mitte-lineaarseks, samas säilitades mudeli lineaarsuse. 
 
-2. Muutuja logaritmimine võib selle muutuja viia lähemale normaaljaotusele (lognormaalse jaotuse logaritm on normaaljaotusega).
+2. Logarimimine on hea, kui soovite y ja x-ide sõltuvusi vaadelda suhete muutuse ehk muutuse protsendi kaudu.
+
+3. Muutuja logaritmimine võib viia selle muutuja lähemale normaaljaotusele (lognormaalse jaotuse logaritm on normaaljaotusega). Algselt paremale kaldu jaotuse äärmuspunktid võivad regressioonile liiga suurt kaalu omada, milline probleem sageli kaob logaritmimisel.
+
+4. Kui mudeli residuaalid on ümber nulli tugevalt paremale poole kiivas jaotusega, siis andmete logaritmimine võib need normaliseerida. Samuti siis, kui residuaalide sd on proportsionaalne fititud väärtusega (st CV, mitte SD, on konstantne) ja siis, kui te ususte, et residuaalid peegeldavad multiplikatiivseid vigu.
+
+5. Kui y ja x-i sõltuvus on eksponentsiaalne 
+
+6. Logaritmimine võib aidata ka hetoroskedastilisuse vastu
+
+7. Teaduslik teooria võib indikeerida logaritmimist. Näit pH on log skaalas.
+
+8. Logaritmimine võib vahest lihtsustada mudelit, vähendades interaktsiooniliikmete arvu ja kompleksust.
 
 Mudeli fiti kvaliteedi koha pealt pole suurt vahet, millist logaritmi te kasutate -- olulised erinevused on "pelgalt" mudeli koefitsientide tõlgendustes.
-Erinevus naturaallogaritmi ja  kasutamise vahel regressioonis seisneb selles. Naturaallogaritmitud log(x) andmete peal fititud mudeli korral on algses lineaarses skaalas tõlgendatav logaritmitud andmete peal fititud β, aga log-skaalas muutujate väärtused ei tähenda otse peale vaadates suurt midagi. Vastupidiselt on  kümnendlogaritmitud log10(x) või kahendlogaritmitud log2(x) andmed log skaalas tõlgendatavad, aga mitte neil fititud β lineaarses skaalas. Igal juhul eelistavad loodusteadlased kasutada log2 ja log10 skaalasid, mida on mugavam otse log-skaalas tõlgendada. log2 skaalas vastab üheühikuline muutus kahekordsele muutusele algses skaalas ja anti-logaritmm on $2^{log2(x)}$. Log10 skaalas vastab üheühikuline muutus 10-kordsele muutusele algses skaalas ja anti-logaritm on $10^{log10(x)}$. 
+ Naturaallogaritmitud log(x) andmete peal fititud mudeli korral on algses lineaarses skaalas tõlgendatav logaritmitud andmete peal fititud β, aga log-skaalas muutujate väärtused ei tähenda otse peale vaadates suurt midagi. Vastupidiselt on  kümnendlogaritmitud log10(x) või kahendlogaritmitud log2(x) andmed log skaalas tõlgendatavad, aga mitte neil fititud β lineaarses skaalas. Igal juhul eelistavad loodusteadlased kasutada log2 ja log10 skaalasid, mida on mugavam otse log-skaalas tõlgendada. log2 skaalas vastab üheühikuline muutus kahekordsele muutusele algses skaalas ja anti-logaritm on $2^{log2(x)}$. Log10 skaalas vastab üheühikuline muutus 10-kordsele muutusele algses skaalas ja anti-logaritm on $10^{log10(x)}$. 
+
+### Naturaallogaritmitud andmetega töötamine
 
 Järgnevalt õpetame naturaallogaritmitud andmetega fititud mudelite β koefitsiendite tõlgendamist algses, meetrilises skaalas ja suhtelises protsendiskaalas.  
 
@@ -531,34 +545,29 @@ Lineaarsel regressioonil saab log-transformatsiooni kasutada kolmel erineval vii
 
 **Lineaarses** mudelis Y = α + βX, annab β selle, mitu ühikut muutub Y keskväärtus, kui X muutub ühe ühiku võrra. See tõlgendus jääb kehtima ka logaritmitud muutujate korral, ainult et log-ühikutes. Me võime siiski tahta tõlgendust ka näiteks muutuse protsendina või algsetes meetrilistes ühikutes.
 
-**Linear-log** mudelis viib logX-i muutus ühe ühiku võrra Y keskväärtuse muutusele  β ühiku võrra, ehk naturaallogaritmi 1. ja 5. omadust kasutades
+**Linear-log** mudelis viib logX-i muutus ühe ühiku võrra Y keskväärtuse muutusele  β ühiku võrra.
 
-$$log (X) + 1 = log(X) + log(e) = log(eX)$$
-ehk
-
-$$X + 1  = eX$$
-
-Siit tuleneb omakorda, et kui log skaalas X kasvab ühe ühiku võrra, siis algses skaalas X = eX - 1 ehk algses skaalas X kasvab 172% võrra (100 × (2.72 − 1) = 172). 
-
-Seega algses skaalas:
+Algses skaalas:
 
 * β on oodatud Y muutus, kui X kasvab eX korda. 
 
-* β on oodatud Y muutus, kui X kasvab 172% võrra.
-
 * Kui β on väike, siis saab seda tõlgendada kui suhtelist erinevust. Näiteks, kui beta = 0.06, siis 1 ühikuline X-i muutus viib u 6%-sele Y muutusele. Sedamõõda kuidas β kaugeneb nullist (näiteks β = 0.4), hakkab selline hinnang tõsiselt alahindama tegelikku x-i mõju y väärtusele. 
 
-* Oodatud Y muutus kui X kasvab p protsenti: β * log([100 + p]/100). Näit, kui X kasvab 10% võrra, siis log(110/100)= 0.095 ja 0.095β on oodatud Y muutus, kui X korrutada 1.1-ga (ehk kui X kasvab 10% võrra). 
+* Oodatud Y muutus kui X kasvab p protsenti on β * log([100 + p]/100). Näit, kui X kasvab 10% võrra, siis log(110/100) = 0.095 ja 0.095β on oodatud Y muutus, kui X korrutada 1.1-ga (ehk kui X kasvab 10% võrra). 
 
-**Log-linear** mudeli korral, kui X kasvab 1 ühiku võrra, siis oodatud Y väärtus kasvab $e^β$ ehk $exp(β)$ korda. Kui X kasvab c ühiku võrra, siis peame oodatud Y väärtuse korrutama $exp(cβ)$-ga. 
+**Log-linear** mudeli korral, 
 
-Kui β on väike, siis $exp(β) ≈ 1+β$. ja 100 * β vastab Y protsentuaalsele muutusele juhul kui X muutub 1 ühiku võrra (kui β = 0.06, siis exp(0.06) ≈ 1.06 ja X-i muutus 1 ühiku võrra viib Y-i 6% tõusule). 
+* kui X kasvab 1 ühiku võrra, siis oodatud Y väärtus kasvab exp(β) korda. 
 
-**Log-log** mudeli korral on tõlgendus oodatud Y-i muutus protsentides kui X muutub mingi protsendi võrra. Sellist suhet kotsutakse ökonomeetrias elastiliseks ja logX-i koefitsient on "elastilisus." 
+* Kui X kasvab c ühiku võrra, siis oodatud Y väärtus kasvab exp(cβ) korda. 
 
-Kui me korrutame X-i e-ga, siis korrutame oodatud Y-i väärtuse $exp(β)$-ga. 
+* Kui β on väike, siis 100 * β vastab Y protsentuaalsele muutusele juhul kui X muutub 1 ühiku võrra (kui β = 0.06, siis X-i muutus 1 ühiku võrra viib Y-i 6% tõusule). 
 
-Et saada Y suhtelist muutust, kui X kasvab p protsenti, arvuta a = log([100 + p]/100) ja siis võta $exp(aβ)$. 
+**Log-log** mudeli korral on tõlgendus oodatud Y-i muutus protsentides kui X muutub mingi protsendi võrra. Sellist suhet kotsutakse ökonomeetrias elastiliseks ja logX-i β koefitsient on "elastilisus." 
+
+* Kui me korrutame X-i e-ga, siis korrutame oodatud Y-i väärtuse exp(β)-ga. 
+
+* Et saada Y suhtelist muutust, kui X kasvab p protsenti, arvuta a = log([100 + p]/100) ja siis võta exp(aβ). 
 
 
 ## Standardiseerimine

@@ -150,7 +150,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html"><i class="fa fa-check"></i><b>7</b> Andmete transformeerimine</a><ul>
-<li class="chapter" data-level="7.1" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#logaritmimine"><i class="fa fa-check"></i><b>7.1</b> Logaritmimine</a></li>
+<li class="chapter" data-level="7.1" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#logaritmimine"><i class="fa fa-check"></i><b>7.1</b> Logaritmimine</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#miks-ja-millal-muutujaid-logaritmida"><i class="fa fa-check"></i><b>7.1.1</b> Miks ja millal muutujaid logaritmida</a></li>
+<li class="chapter" data-level="7.1.2" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#naturaallogaritmitud-andmetega-tootamine"><i class="fa fa-check"></i><b>7.1.2</b> Naturaallogaritmitud andmetega töötamine</a></li>
+</ul></li>
 <li class="chapter" data-level="7.2" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#standardiseerimine"><i class="fa fa-check"></i><b>7.2</b> Standardiseerimine</a><ul>
 <li class="chapter" data-level="7.2.1" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#korrelatsioon-ule-regressiooni-ja-regressioon-keskmisele"><i class="fa fa-check"></i><b>7.2.1</b> Korrelatsioon üle regressiooni ja regressioon keskmisele</a></li>
 </ul></li>
@@ -336,16 +339,26 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="andmete-transformeerimine" class="section level1">
 <h1><span class="header-section-number">7</span> Andmete transformeerimine</h1>
-<p>Lineaarsed transformatsioonid võivad hõlbustada mudeli koefitsientide tõlgendamist (kas x on millimeetrites, meetrites vms). Mittelineaarsed transformatsioonid muudavad mudeli fitti ja võivad olla kasulikud mudeli aditiivsuse/lineaarsuse parandamisel.</p>
+<p>Lineaarsed transformatsioonid võivad hõlbustada mudeli koefitsientide tõlgendamist (näit. skaala millimeetritest meetritessse, tsentreerimine, standardiseerimine). Mittelineaarsed transformatsioonid (logaritmimine, jms) muudavad mudeli fitti ja võivad olla kasulikud mudeli aditiivsuse/lineaarsuse parandamisel.</p>
 <div id="logaritmimine" class="section level2">
 <h2><span class="header-section-number">7.1</span> Logaritmimine</h2>
 <p>Kui muutujal saavad olla ainult positiivsed väärtused, siis on logaritmimine sageli hea mõte. Andmetest peab kaotama ka nullid, näiteks asendades need mingi nullilähedase positiivse arvuga. Logaritmilises skaalas on β koefitsiendid peaaegu alati &lt; 1.</p>
-<p><strong>Kaks põhjust miks logaritmida:</strong></p>
+<div id="miks-ja-millal-muutujaid-logaritmida" class="section level3">
+<h3><span class="header-section-number">7.1.1</span> Miks ja millal muutujaid logaritmida</h3>
 <ol style="list-style-type: decimal">
 <li><p>Muutuja(te) logaritmimine muudab muutujate vahelised suhted mitte-lineaarseks, samas säilitades mudeli lineaarsuse.</p></li>
-<li><p>Muutuja logaritmimine võib selle muutuja viia lähemale normaaljaotusele (lognormaalse jaotuse logaritm on normaaljaotusega).</p></li>
+<li><p>Logarimimine on hea, kui soovite y ja x-ide sõltuvusi vaadelda suhete muutuse ehk muutuse protsendi kaudu.</p></li>
+<li><p>Muutuja logaritmimine võib viia selle muutuja lähemale normaaljaotusele (lognormaalse jaotuse logaritm on normaaljaotusega). Algselt paremale kaldu jaotuse äärmuspunktid võivad regressioonile liiga suurt kaalu omada, milline probleem sageli kaob logaritmimisel.</p></li>
+<li><p>Kui mudeli residuaalid on ümber nulli tugevalt paremale poole kiivas jaotusega, siis andmete logaritmimine võib need normaliseerida. Samuti siis, kui residuaalide sd on proportsionaalne fititud väärtusega (st CV, mitte SD, on konstantne) ja siis, kui te ususte, et residuaalid peegeldavad multiplikatiivseid vigu.</p></li>
+<li><p>Kui y ja x-i sõltuvus on eksponentsiaalne</p></li>
+<li><p>Logaritmimine võib aidata ka hetoroskedastilisuse vastu</p></li>
+<li><p>Teaduslik teooria võib indikeerida logaritmimist. Näit pH on log skaalas.</p></li>
+<li><p>Logaritmimine võib vahest lihtsustada mudelit, vähendades interaktsiooniliikmete arvu ja kompleksust.</p></li>
 </ol>
-<p>Mudeli fiti kvaliteedi koha pealt pole suurt vahet, millist logaritmi te kasutate – olulised erinevused on “pelgalt” mudeli koefitsientide tõlgendustes. Erinevus naturaallogaritmi ja kasutamise vahel regressioonis seisneb selles. Naturaallogaritmitud log(x) andmete peal fititud mudeli korral on algses lineaarses skaalas tõlgendatav logaritmitud andmete peal fititud β, aga log-skaalas muutujate väärtused ei tähenda otse peale vaadates suurt midagi. Vastupidiselt on kümnendlogaritmitud log10(x) või kahendlogaritmitud log2(x) andmed log skaalas tõlgendatavad, aga mitte neil fititud β lineaarses skaalas. Igal juhul eelistavad loodusteadlased kasutada log2 ja log10 skaalasid, mida on mugavam otse log-skaalas tõlgendada. log2 skaalas vastab üheühikuline muutus kahekordsele muutusele algses skaalas ja anti-logaritmm on <span class="math inline">\(2^{log2(x)}\)</span>. Log10 skaalas vastab üheühikuline muutus 10-kordsele muutusele algses skaalas ja anti-logaritm on <span class="math inline">\(10^{log10(x)}\)</span>.</p>
+<p>Mudeli fiti kvaliteedi koha pealt pole suurt vahet, millist logaritmi te kasutate – olulised erinevused on “pelgalt” mudeli koefitsientide tõlgendustes. Naturaallogaritmitud log(x) andmete peal fititud mudeli korral on algses lineaarses skaalas tõlgendatav logaritmitud andmete peal fititud β, aga log-skaalas muutujate väärtused ei tähenda otse peale vaadates suurt midagi. Vastupidiselt on kümnendlogaritmitud log10(x) või kahendlogaritmitud log2(x) andmed log skaalas tõlgendatavad, aga mitte neil fititud β lineaarses skaalas. Igal juhul eelistavad loodusteadlased kasutada log2 ja log10 skaalasid, mida on mugavam otse log-skaalas tõlgendada. log2 skaalas vastab üheühikuline muutus kahekordsele muutusele algses skaalas ja anti-logaritm on <span class="math inline">\(2^{log2(x)}\)</span>. Log10 skaalas vastab üheühikuline muutus 10-kordsele muutusele algses skaalas ja anti-logaritm on <span class="math inline">\(10^{log10(x)}\)</span>.</p>
+</div>
+<div id="naturaallogaritmitud-andmetega-tootamine" class="section level3">
+<h3><span class="header-section-number">7.1.2</span> Naturaallogaritmitud andmetega töötamine</h3>
 <p>Järgnevalt õpetame naturaallogaritmitud andmetega fititud mudelite β koefitsiendite tõlgendamist algses, meetrilises skaalas ja suhtelises protsendiskaalas.</p>
 <p>Naturaallogaritmi alus on e ≈ 2.71828 ja sellel on järgmised matemaatilised omadused:</p>
 <ol style="list-style-type: decimal">
@@ -367,22 +380,25 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li><p>log(y) = a + b * log(x) log-log mudel (transformeeritud on y ja x muutujad)</p></li>
 </ul>
 <p><strong>Lineaarses</strong> mudelis Y = α + βX, annab β selle, mitu ühikut muutub Y keskväärtus, kui X muutub ühe ühiku võrra. See tõlgendus jääb kehtima ka logaritmitud muutujate korral, ainult et log-ühikutes. Me võime siiski tahta tõlgendust ka näiteks muutuse protsendina või algsetes meetrilistes ühikutes.</p>
-<p><strong>Linear-log</strong> mudelis viib logX-i muutus ühe ühiku võrra Y keskväärtuse muutusele β ühiku võrra, ehk naturaallogaritmi 1. ja 5. omadust kasutades</p>
-<p><span class="math display">\[log (X) + 1 = log(X) + log(e) = log(eX)\]</span> ehk</p>
-<p><span class="math display">\[X + 1  = eX\]</span></p>
-<p>Siit tuleneb omakorda, et kui log skaalas X kasvab ühe ühiku võrra, siis algses skaalas X = eX - 1 ehk algses skaalas X kasvab 172% võrra (100 × (2.72 − 1) = 172).</p>
-<p>Seega algses skaalas:</p>
+<p><strong>Linear-log</strong> mudelis viib logX-i muutus ühe ühiku võrra Y keskväärtuse muutusele β ühiku võrra.</p>
+<p>Algses skaalas:</p>
 <ul>
 <li><p>β on oodatud Y muutus, kui X kasvab eX korda.</p></li>
-<li><p>β on oodatud Y muutus, kui X kasvab 172% võrra.</p></li>
 <li><p>Kui β on väike, siis saab seda tõlgendada kui suhtelist erinevust. Näiteks, kui beta = 0.06, siis 1 ühikuline X-i muutus viib u 6%-sele Y muutusele. Sedamõõda kuidas β kaugeneb nullist (näiteks β = 0.4), hakkab selline hinnang tõsiselt alahindama tegelikku x-i mõju y väärtusele.</p></li>
-<li><p>Oodatud Y muutus kui X kasvab p protsenti: β * log([100 + p]/100). Näit, kui X kasvab 10% võrra, siis log(110/100)= 0.095 ja 0.095β on oodatud Y muutus, kui X korrutada 1.1-ga (ehk kui X kasvab 10% võrra).</p></li>
+<li><p>Oodatud Y muutus kui X kasvab p protsenti on β * log([100 + p]/100). Näit, kui X kasvab 10% võrra, siis log(110/100) = 0.095 ja 0.095β on oodatud Y muutus, kui X korrutada 1.1-ga (ehk kui X kasvab 10% võrra).</p></li>
 </ul>
-<p><strong>Log-linear</strong> mudeli korral, kui X kasvab 1 ühiku võrra, siis oodatud Y väärtus kasvab <span class="math inline">\(e^β\)</span> ehk <span class="math inline">\(exp(β)\)</span> korda. Kui X kasvab c ühiku võrra, siis peame oodatud Y väärtuse korrutama <span class="math inline">\(exp(cβ)\)</span>-ga.</p>
-<p>Kui β on väike, siis <span class="math inline">\(exp(β) ≈ 1+β\)</span>. ja 100 * β vastab Y protsentuaalsele muutusele juhul kui X muutub 1 ühiku võrra (kui β = 0.06, siis exp(0.06) ≈ 1.06 ja X-i muutus 1 ühiku võrra viib Y-i 6% tõusule).</p>
-<p><strong>Log-log</strong> mudeli korral on tõlgendus oodatud Y-i muutus protsentides kui X muutub mingi protsendi võrra. Sellist suhet kotsutakse ökonomeetrias elastiliseks ja logX-i koefitsient on “elastilisus.”</p>
-<p>Kui me korrutame X-i e-ga, siis korrutame oodatud Y-i väärtuse <span class="math inline">\(exp(β)\)</span>-ga.</p>
-<p>Et saada Y suhtelist muutust, kui X kasvab p protsenti, arvuta a = log([100 + p]/100) ja siis võta <span class="math inline">\(exp(aβ)\)</span>.</p>
+<p><strong>Log-linear</strong> mudeli korral,</p>
+<ul>
+<li><p>kui X kasvab 1 ühiku võrra, siis oodatud Y väärtus kasvab exp(β) korda.</p></li>
+<li><p>Kui X kasvab c ühiku võrra, siis oodatud Y väärtus kasvab exp(cβ) korda.</p></li>
+<li><p>Kui β on väike, siis 100 * β vastab Y protsentuaalsele muutusele juhul kui X muutub 1 ühiku võrra (kui β = 0.06, siis X-i muutus 1 ühiku võrra viib Y-i 6% tõusule).</p></li>
+</ul>
+<p><strong>Log-log</strong> mudeli korral on tõlgendus oodatud Y-i muutus protsentides kui X muutub mingi protsendi võrra. Sellist suhet kotsutakse ökonomeetrias elastiliseks ja logX-i β koefitsient on “elastilisus.”</p>
+<ul>
+<li><p>Kui me korrutame X-i e-ga, siis korrutame oodatud Y-i väärtuse exp(β)-ga.</p></li>
+<li><p>Et saada Y suhtelist muutust, kui X kasvab p protsenti, arvuta a = log([100 + p]/100) ja siis võta exp(aβ).</p></li>
+</ul>
+</div>
 </div>
 <div id="standardiseerimine" class="section level2">
 <h2><span class="header-section-number">7.2</span> Standardiseerimine</h2>

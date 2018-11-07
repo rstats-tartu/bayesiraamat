@@ -150,7 +150,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html"><i class="fa fa-check"></i><b>7</b> Andmete transformeerimine</a><ul>
-<li class="chapter" data-level="7.1" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#logaritmimine"><i class="fa fa-check"></i><b>7.1</b> Logaritmimine</a></li>
+<li class="chapter" data-level="7.1" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#logaritmimine"><i class="fa fa-check"></i><b>7.1</b> Logaritmimine</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#miks-ja-millal-muutujaid-logaritmida"><i class="fa fa-check"></i><b>7.1.1</b> Miks ja millal muutujaid logaritmida</a></li>
+<li class="chapter" data-level="7.1.2" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#naturaallogaritmitud-andmetega-tootamine"><i class="fa fa-check"></i><b>7.1.2</b> Naturaallogaritmitud andmetega töötamine</a></li>
+</ul></li>
 <li class="chapter" data-level="7.2" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#standardiseerimine"><i class="fa fa-check"></i><b>7.2</b> Standardiseerimine</a><ul>
 <li class="chapter" data-level="7.2.1" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#korrelatsioon-ule-regressiooni-ja-regressioon-keskmisele"><i class="fa fa-check"></i><b>7.2.1</b> Korrelatsioon üle regressiooni ja regressioon keskmisele</a></li>
 </ul></li>
@@ -688,12 +691,12 @@ pars &lt;-<span class="st"> </span><span class="kw">colnames</span>(model2)
 <span class="st">  </span><span class="kw">cbind</span>(newx, .)
 <span class="kw">head</span>(predict_interval_brms2)
 <span class="co">#&gt;   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5</span>
-<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.311 3.87  5.10</span>
-<span class="co">#&gt; 2         1.04        3.06  setosa     4.54     0.318 3.92  5.16</span>
-<span class="co">#&gt; 3         1.08        3.06  setosa     4.56     0.312 3.95  5.16</span>
-<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.313 3.97  5.19</span>
-<span class="co">#&gt; 5         1.16        3.06  setosa     4.59     0.316 3.95  5.21</span>
-<span class="co">#&gt; 6         1.20        3.06  setosa     4.64     0.314 4.02  5.25</span></code></pre></div>
+<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.324 3.84  5.15</span>
+<span class="co">#&gt; 2         1.04        3.06  setosa     4.52     0.320 3.89  5.15</span>
+<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.318 3.96  5.18</span>
+<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.316 3.97  5.20</span>
+<span class="co">#&gt; 5         1.16        3.06  setosa     4.61     0.317 3.99  5.24</span>
+<span class="co">#&gt; 6         1.20        3.06  setosa     4.64     0.316 4.02  5.27</span></code></pre></div>
 <p><code>predict()</code> ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele</p>
 <p>Siin siis eraldi ennustused kahele liigile kolmest, kaasa arvatud petal length väärtusvahemikule, kus selle liigi isendeid valimis ei ole (ja võib-olla ei saagi olla)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">no_versicolor &lt;-<span class="st"> </span><span class="kw">filter</span>(iris, Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>)
