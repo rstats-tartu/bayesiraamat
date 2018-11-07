@@ -129,7 +129,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#neli-moistet"><i class="fa fa-check"></i>Neli mõistet</a></li>
 <li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#mudeli-fittimine"><i class="fa fa-check"></i>Mudeli fittimine</a></li>
 <li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#ule--ja-alafittimine"><i class="fa fa-check"></i>Üle- ja alafittimine</a></li>
-<li class="chapter" data-level="4.2" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#regressioonimudelite-eeldused"><i class="fa fa-check"></i><b>4.2</b> Regressioonimudelite eeldused</a></li>
+<li class="chapter" data-level="4.2" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#regressiooni-eeldused"><i class="fa fa-check"></i><b>4.2</b> Regressiooni eeldused</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="kaks-lineaarse-mudeli-laiendust.html"><a href="kaks-lineaarse-mudeli-laiendust.html"><i class="fa fa-check"></i><b>5</b> Kaks lineaarse mudeli laiendust</a><ul>
 <li class="chapter" data-level="" data-path="kaks-lineaarse-mudeli-laiendust.html"><a href="kaks-lineaarse-mudeli-laiendust.html#mitme-soltumatu-prediktoriga-mudel"><i class="fa fa-check"></i>Mitme sõltumatu prediktoriga mudel</a></li>
@@ -145,9 +145,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.2.5" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#homoskedastilisus---scale-location-plot"><i class="fa fa-check"></i><b>6.2.5</b> Homoskedastilisus - Scale-location plot</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#residuaalid-y-ja-x-muutujate-vastu"><i class="fa fa-check"></i><b>6.3</b> Residuaalid y ja x muutujate vastu</a></li>
-<li class="chapter" data-level="6.4" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#teeme-mudeli-pohjal-ennustusi-marginal-plots"><i class="fa fa-check"></i><b>6.4</b> Teeme mudeli põhjal ennustusi (marginal plots)</a><ul>
-<li class="chapter" data-level="6.4.1" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#vordleme-mudeleid"><i class="fa fa-check"></i><b>6.4.1</b> Võrdleme mudeleid</a></li>
-</ul></li>
+<li class="chapter" data-level="6.4" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#teeme-mudeli-pohjal-ennustusi-marginal-plots"><i class="fa fa-check"></i><b>6.4</b> Teeme mudeli põhjal ennustusi (marginal plots)</a></li>
+<li class="chapter" data-level="6.5" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#vordleme-mudeleid"><i class="fa fa-check"></i><b>6.5</b> Võrdleme mudeleid</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html"><i class="fa fa-check"></i><b>7</b> Andmete transformeerimine</a><ul>
 <li class="chapter" data-level="7.1" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#logaritmimine"><i class="fa fa-check"></i><b>7.1</b> Logaritmimine</a><ul>
@@ -346,16 +345,16 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div id="miks-ja-millal-muutujaid-logaritmida" class="section level3">
 <h3><span class="header-section-number">7.1.1</span> Miks ja millal muutujaid logaritmida</h3>
 <ol style="list-style-type: decimal">
-<li><p>Muutuja(te) logaritmimine muudab muutujate vahelised suhted mitte-lineaarseks, samas säilitades mudeli lineaarsuse.</p></li>
+<li><p>Muutuja(te) logaritmimine muudab muutujate vahelised suhted mitte-lineaarseks, samas säilitades mudeli lineaarsuse. Ja vastupidi, kui tavalises meetrilises skaalas juhtuvad additiivse mudeli muutujate vahelised seosed olema mitte-lineaarsed, siis x-muutuja(te) logaritmimine võib need muuta lineaarseks, ja sellega päästa ühe olulisema lineaarse regressiooni eelduse (vt ka ptk 4.2).</p></li>
 <li><p>Logarimimine on hea, kui soovite y ja x-ide sõltuvusi vaadelda suhete muutuse ehk muutuse protsendi kaudu.</p></li>
-<li><p>Muutuja logaritmimine võib viia selle muutuja lähemale normaaljaotusele (lognormaalse jaotuse logaritm on normaaljaotusega). Algselt paremale kaldu jaotuse äärmuspunktid võivad regressioonile liiga suurt kaalu omada, milline probleem sageli kaob logaritmimisel.</p></li>
+<li><p>Muutuja logaritmimine võib viia selle muutuja lähemale normaaljaotusele (lognormaaljaotuse logaritm on normaaljaotusega). Algselt paremale kaldu jaotuse äärmuspunktid võivad regressioonile liiga suurt kaalu omada, milline probleem sageli kaob logaritmimisel.</p></li>
 <li><p>Kui mudeli residuaalid on ümber nulli tugevalt paremale poole kiivas jaotusega, siis andmete logaritmimine võib need normaliseerida. Samuti siis, kui residuaalide sd on proportsionaalne fititud väärtusega (st CV, mitte SD, on konstantne) ja siis, kui te ususte, et residuaalid peegeldavad multiplikatiivseid vigu.</p></li>
 <li><p>Kui y ja x-i vaheline sõltuvus on eksponentsiaalne.</p></li>
-<li><p>Logaritmimine võib aidata ka hetoroskedastilisuse vastu.</p></li>
+<li><p>Y-muutuja logaritmimine võib aidata hetoroskedastilisuse vastu.</p></li>
 <li><p>Teaduslik teooria võib indikeerida logaritmimist. Näit pH on log skaalas.</p></li>
-<li><p>Logaritmimine võib lihtsustada mudelit, vähendades interaktsiooniliikmete arvu ja kompleksust.</p></li>
+<li><p>Logaritmimine võib lihtsustada mudelit, vähendades interaktsiooniliikmete arvu.</p></li>
 </ol>
-<p>Mudeli fiti kvaliteedi koha pealt pole suurt vahet, millist logaritmi te kasutate – olulised erinevused on “pelgalt” mudeli koefitsientide tõlgendustes. Naturaallogaritmitud log(x) andmete peal fititud mudeli korral on algses lineaarses skaalas tõlgendatav logaritmitud andmete peal fititud β, aga log-skaalas muutujate väärtused ei tähenda otse peale vaadates suurt midagi. Vastupidiselt on kümnendlogaritmitud log10(x) või kahendlogaritmitud log2(x) andmed log skaalas tõlgendatavad, aga mitte neil fititud β lineaarses skaalas. Igal juhul eelistavad loodusteadlased kasutada log2 ja log10 skaalasid, mida on mugavam otse log-skaalas tõlgendada. log2 skaalas vastab üheühikuline muutus kahekordsele muutusele algses skaalas ja anti-logaritm on <span class="math inline">\(2^{log2(x)}\)</span>. Log10 skaalas vastab üheühikuline muutus 10-kordsele muutusele algses skaalas ja anti-logaritm on <span class="math inline">\(10^{log10(x)}\)</span>.</p>
+<p>Mudeli fiti kvaliteedi koha pealt pole suurt vahet, millist logaritmi te kasutate – olulised erinevused on “pelgalt” mudeli koefitsientide tõlgendustes. Naturaallogaritmitud log(x) andmete peal fititud mudeli korral on algses lineaarses skaalas tõlgendatav logaritmitud andmete peal fititud β, aga log-skaalas muutujate väärtused ei tähenda peale vaadates suurt midagi. Vastupidiselt on kümnendlogaritmitud log10(x) või kahendlogaritmitud log2(x) andmed log skaalas tõlgendatavad, aga mitte neil fititud β lineaarses skaalas. Igal juhul eelistavad loodusteadlased kasutada log2 ja log10 skaalasid, mida on mugavam otse log-skaalas tõlgendada. log2 skaalas vastab üheühikuline muutus kahekordsele muutusele algses skaalas ja anti-logaritm on <span class="math inline">\(2^{log2(x)}\)</span>. Log10 skaalas vastab üheühikuline muutus 10-kordsele muutusele algses skaalas ja anti-logaritm on <span class="math inline">\(10^{log10(x)}\)</span>.</p>
 </div>
 <div id="naturaallogaritmitud-andmetega-tootamine" class="section level3">
 <h3><span class="header-section-number">7.1.2</span> Naturaallogaritmitud andmetega töötamine</h3>
@@ -380,14 +379,14 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li><p>log(y) = a + b * log(x) log-log mudel (transformeeritud on y ja x muutujad)</p></li>
 </ul>
 <p><strong>Lineaarses</strong> mudelis Y = α + βX, annab β selle, mitu ühikut muutub Y keskväärtus, kui X muutub ühe ühiku võrra.</p>
-<p><strong>Linear-log</strong> mudelis jääb kehtima sama β tõlgendus, mis ülalpool, ainult et log-ühikutes. Seega viib logX-i muutus ühe log ühiku võrra Y keskväärtuse muutusele β ühiku võrra (see kehtib muidugi ka log2 ja log10 skaalades).</p>
+<p><strong>Lineaar-log</strong> mudelis jääb kehtima sama β tõlgendus, mis ülalpool, ainult et log-ühikutes. Seega viib logX-i muutus ühe log ühiku võrra Y keskväärtuse muutusele β ühiku võrra (see kehtib muidugi ka log2 ja log10 skaalades).</p>
 <p>Kui me juba kasutasime naturaallogaritmimist, siis tahame ilmselt tõlgendust pigem muutuse protsendina ja/või algsetes meetrilistes skaalas (log2 ja log10 ei võimalda selliseid mugavaid tõlgendusi):</p>
 <ul>
 <li><p>β on oodatud Y muutus, kui X kasvab eX korda.</p></li>
 <li><p>Kui β on väike, siis saab seda tõlgendada kui suhtelist erinevust. Näiteks, kui beta = 0.06, siis 1 ühikuline X-i muutus viib u 6%-sele Y muutusele. Sedamõõda kuidas β kaugeneb nullist (näiteks β = 0.4), hakkab selline hinnang tõsiselt alahindama tegelikku x-i mõju y väärtusele.</p></li>
 <li><p>Oodatud Y muutus kui X kasvab p protsenti on β * log([100 + p]/100). Näit, kui X kasvab 10% võrra, siis log(110/100) = 0.095 ja 0.095β on oodatud Y muutus, kui X korrutada 1.1-ga (ehk kui X kasvab 10% võrra).</p></li>
 </ul>
-<p><strong>Log-linear</strong> mudeli korral,</p>
+<p><strong>Log-lineaarse</strong> mudeli korral,</p>
 <ul>
 <li><p>kui X kasvab 1 ühiku võrra, siis oodatud Y väärtus kasvab exp(β) korda.</p></li>
 <li><p>Kui X kasvab c ühiku võrra, siis oodatud Y väärtus kasvab exp(cβ) korda.</p></li>

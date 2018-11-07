@@ -330,17 +330,16 @@ AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel?
 
 > Ülefittimise vältimiseks kasutavad Bayesi mudelid informatiivseid prioreid, mis välistavad ekstreemsed parameetriväärtused. Vt http://elevanth.org/blog/2017/08/22/there-is-always-prior-information/
 
-## Regressioonimudelite eeldused
+## Regressiooni eeldused
 
 Tähtsuse järjekorras:
 
-1. valiidsus -- sa mõõdad asju, mis on teaduslikult olulised ja relevantsed teaduslikule küsimusele. Näiteks, kui soovite mõõta kolesterooli alandava ravimi mõju, on kaasaegne soovitus mõõta suremust, mitte pelgalt kolesterooli taset veres.
+1. Valiidsus -- sa mõõdad asju, mis on relevantsed teadusliku küsimuse seisukohast. Näiteks, kui soovite mõõta kolesterooli alandava ravimi mõju, on mõistlik mõõta suremust, mitte pelgalt kolesterooli taset veres.
 
-2. esinduslikkus -- andmed peaksid olema esinduslikud laiema populatsiooni suhtes. Väikesed ja kallutatud valimid ei ole sageli esinduslikud.
+2. Esinduslikkus -- andmed peaksid olema esinduslikud laiema populatsiooni suhtes. Väikesed ja kallutatud valimid ei ole sageli esinduslikud.
 
-3. aditiivsus ja lineaarsus. Väga tähtis on, et lineaarse regressiooniga mõõdetavad seosed oleks ka tõesti lineaarsed. Y-i deterministlik komponent peab olema lineaarne funktsioon prediktoritest  $y = β_1x_1 + β_2x_2 +···$. Kui sellega on probleeme, siis võib aidata prediktorite transformeerimine (log(x) või 1/x) või uute prediktorite mudelisse lisamine. Samuti on võimalik prediktoritena lisada nii $x$ kui $x^2$. Näiteks kui me paneme mudelisse nii muutuja $vanus$ kui $vanus^2$, siis saame modelleerida seost kus y vanuse kasvades alguses kasvab ja siis kahaneb (aga ka U kujulist seost vanusega). Sellisel juhul võib olla mõistlik rekodeerida vanus kategooriliseks muutujaks (näit 4 vanuseklassi), mille tasemeid saab siis ükshaaval vaadata.
+3. Additiivsus ja lineaarsus. Väga tähtis on, et lineaarse regressiooniga mõõdetavad seosed oleks ka tõesti lineaarsed. Y-i deterministlik komponent on lineaarne funktsioon prediktoritest  $y = β_1x_1 + β_2x_2 +···$. Kui sellega on probleeme, siis võib aidata prediktorite transformeerimine (log(x) või 1/x) või uute prediktorite mudelisse lisamine. Samuti on võimalik prediktoritena lisada nii $x$ kui $x^2$. Näiteks kui me paneme mudelisse nii muutuja $vanus$ kui $vanus^2$, siis saame modelleerida seost kus y vanuse kasvades alguses kasvab ja siis kahaneb (aga ka U kujulist seost vanusega). Sellisel juhul võib olla mõistlik rekodeerida vanus kategooriliseks muutujaks (näit 4 vanuseklassi), mille tasemeid saab siis ükshaaval vaadata.
 
-4. vigade e residuaalide sõltumatus
+4. Vigade e residuaalide sõltumatus
 
-5. vigade võrdne varieeruvus (homoskedastilisus) ja vigade normaalsus on vähemtähtsad. 
-Log-normaalsete vigadega lineaarsel regresioonil võiks mudeldada log(Y) (vähimruutude meetodil) või mittelineaarset lognormaalset tõepäramudelit kasutades (bayesi regressioon, vt ptk 13). 
+5. Vigade võrdne varieeruvus (homoskedastilisus) ja vigade normaalsus on vähemtähtsad. Log-normaalsete vigadega võiks lineaarsel regresioonil mudeldada log(Y) skaalas (vähimruutude meetodil) või Bayesi regressioonil mittelineaarset lognormaalset tõepäramudelit kasutades (vt. ptk 13). 

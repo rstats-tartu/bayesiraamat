@@ -129,7 +129,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#neli-moistet"><i class="fa fa-check"></i>Neli mõistet</a></li>
 <li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#mudeli-fittimine"><i class="fa fa-check"></i>Mudeli fittimine</a></li>
 <li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#ule--ja-alafittimine"><i class="fa fa-check"></i>Üle- ja alafittimine</a></li>
-<li class="chapter" data-level="4.2" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#regressioonimudelite-eeldused"><i class="fa fa-check"></i><b>4.2</b> Regressioonimudelite eeldused</a></li>
+<li class="chapter" data-level="4.2" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#regressiooni-eeldused"><i class="fa fa-check"></i><b>4.2</b> Regressiooni eeldused</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="kaks-lineaarse-mudeli-laiendust.html"><a href="kaks-lineaarse-mudeli-laiendust.html"><i class="fa fa-check"></i><b>5</b> Kaks lineaarse mudeli laiendust</a><ul>
 <li class="chapter" data-level="" data-path="kaks-lineaarse-mudeli-laiendust.html"><a href="kaks-lineaarse-mudeli-laiendust.html#mitme-soltumatu-prediktoriga-mudel"><i class="fa fa-check"></i>Mitme sõltumatu prediktoriga mudel</a></li>
@@ -145,9 +145,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.2.5" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#homoskedastilisus---scale-location-plot"><i class="fa fa-check"></i><b>6.2.5</b> Homoskedastilisus - Scale-location plot</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#residuaalid-y-ja-x-muutujate-vastu"><i class="fa fa-check"></i><b>6.3</b> Residuaalid y ja x muutujate vastu</a></li>
-<li class="chapter" data-level="6.4" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#teeme-mudeli-pohjal-ennustusi-marginal-plots"><i class="fa fa-check"></i><b>6.4</b> Teeme mudeli põhjal ennustusi (marginal plots)</a><ul>
-<li class="chapter" data-level="6.4.1" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#vordleme-mudeleid"><i class="fa fa-check"></i><b>6.4.1</b> Võrdleme mudeleid</a></li>
-</ul></li>
+<li class="chapter" data-level="6.4" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#teeme-mudeli-pohjal-ennustusi-marginal-plots"><i class="fa fa-check"></i><b>6.4</b> Teeme mudeli põhjal ennustusi (marginal plots)</a></li>
+<li class="chapter" data-level="6.5" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#vordleme-mudeleid"><i class="fa fa-check"></i><b>6.5</b> Võrdleme mudeleid</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html"><i class="fa fa-check"></i><b>7</b> Andmete transformeerimine</a><ul>
 <li class="chapter" data-level="7.1" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#logaritmimine"><i class="fa fa-check"></i><b>7.1</b> Logaritmimine</a><ul>
@@ -394,27 +393,27 @@ Sageli on aga negatiivsed muutuja väärtused võimatud (näiteks nädalas suits
 <tbody>
 <tr class="odd">
 <td align="left">multiplicative_SD</td>
-<td align="right">0.907</td>
-<td align="right">0.319</td>
-<td align="right">2.58</td>
+<td align="right">1.33</td>
+<td align="right">0.553</td>
+<td align="right">3.18</td>
 </tr>
 <tr class="even">
 <td align="left">multiplicative_2_SD</td>
-<td align="right">0.907</td>
-<td align="right">0.112</td>
-<td align="right">7.36</td>
+<td align="right">1.33</td>
+<td align="right">0.231</td>
+<td align="right">7.62</td>
 </tr>
 <tr class="odd">
 <td align="left">additive_SD</td>
-<td align="right">1.520</td>
-<td align="right">-0.440</td>
-<td align="right">3.48</td>
+<td align="right">1.87</td>
+<td align="right">0.235</td>
+<td align="right">3.51</td>
 </tr>
 <tr class="even">
 <td align="left">additive_2_SD</td>
-<td align="right">1.520</td>
-<td align="right">-2.400</td>
-<td align="right">5.44</td>
+<td align="right">1.87</td>
+<td align="right">-1.402</td>
+<td align="right">5.15</td>
 </tr>
 </tbody>
 </table>
@@ -463,7 +462,7 @@ Sageli on aga negatiivsed muutuja väärtused võimatud (näiteks nädalas suits
 <p>Vahest tekkib teil vajadus empiiriliselt määrata, kas teie andmed on normaaljaotusega. Enne kui seda tegema asute, peaksite mõistma, et see, et teie valim ei ole normaalne, ei tähenda automaatselt, et populatsioon, millest see valim tõmmati, ei oleks normaaljaotusega. Igal juhul, valimiandmete normaalsuse määramiseks on kõige mõistlikum kasutada qq-plotti. QQ-plot (kvantiil-kvantiil plot) võrdleb andmete jaotust ideaalse normaaljaotusega andmepunkti haaval. Kui empiiriline jaotus kattub referentsjaotusega, siis on tulemuseks sirgel paiknevad punktid. Järgneval qq plotil on näha, mis juhtub, kui plottida lognormaalseid andmeid normaaljaotuse vastu:</p>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqPlot</span>(andmed)
-<span class="co">#&gt; [1]  4 68</span></code></pre></div>
+<span class="co">#&gt; [1] 47 31</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:qqnorm"></span>
 <img src="03_andmed_files/figure-html/qqnorm-1.png" alt="QQ-plot lognormaalsetele andmetele. Plotil võrreldakse lognormaalsete andmete jaotust referentsjaotusega, milleks on antud juhul normaaljaotus. Punased katkendjooned annavad standardveapõhise usaldusvahemiku (arvutatud simuleeritud juhuvalimist normaaljaotusega referentspopulatsioonist), millesse peaks jääma enamus andmepunkte juhul kui andmepunktid pärineksid normaaljaotusest." width="70%" />
 <p class="caption">
@@ -473,7 +472,7 @@ Joonis 3.2: QQ-plot lognormaalsetele andmetele. Plotil võrreldakse lognormaalse
 <p>Nüüd joonistame qq-ploti logaritmitud andmetele.</p>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqPlot</span>(<span class="kw">log</span>(andmed))
-<span class="co">#&gt; [1] 16 24</span></code></pre></div>
+<span class="co">#&gt; [1] 17 83</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:qqlognorm"></span>
 <img src="03_andmed_files/figure-html/qqlognorm-1.png" alt="QQ-plot normaalsetele andmetele (logaritmitud lognormaalsed andmed)." width="70%" />
 <p class="caption">
@@ -491,21 +490,21 @@ Joonis 3.3: QQ-plot normaalsetele andmetele (logaritmitud lognormaalsed andmed).
 <p>MAD –– median absolute deviation — on vähem tundlik outlierite suhtes ja ei eelda normaaljaotust. Puuduseks on, et MAD ei oma tõlgendust, mille kohaselt ta hõlmaks kindlat protsenti populatsiooni või valimi andmejaotusest. Seevastu sd puhul võime olla kindlad, et isegi kõige hullema jaotuse korral jäävad vähemalt 75% andmetest 2 SD piiridesse.</p>
 <p>Lognormaalsete andmetega:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mad</span>(andmed, <span class="dt">constant =</span> <span class="dv">1</span>); <span class="kw">sd</span>(andmed); <span class="kw">mad</span>(andmed)
-<span class="co">#&gt; [1] 0.593</span>
-<span class="co">#&gt; [1] 1.96</span>
-<span class="co">#&gt; [1] 0.88</span></code></pre></div>
+<span class="co">#&gt; [1] 0.728</span>
+<span class="co">#&gt; [1] 1.64</span>
+<span class="co">#&gt; [1] 1.08</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mad</span>(<span class="kw">log10</span>(andmed), <span class="dt">constant =</span> <span class="dv">1</span>); <span class="kw">sd</span>(<span class="kw">log10</span>(andmed)); <span class="kw">mad</span>(<span class="kw">log10</span>(andmed))
-<span class="co">#&gt; [1] 0.291</span>
-<span class="co">#&gt; [1] 0.454</span>
-<span class="co">#&gt; [1] 0.431</span></code></pre></div>
+<span class="co">#&gt; [1] 0.294</span>
+<span class="co">#&gt; [1] 0.38</span>
+<span class="co">#&gt; [1] 0.436</span></code></pre></div>
 <p>mad = median(abs(median(x) - x)), mida on väga lihtne mõista. Samas R-i funktsioon mad() korrutab default-ina mad-i läbi konstandiga 1.4826, mis muudab mad()-i tulemuse võrreldavaks sd-ga, tehes sellest sd robustse analoogi. Robustse sellepärast, et mad-i arvutuskäik, mis sõltub mediaanist, mitte aritmeetilisest keskmisest, ei ole tundlik outlierite suhtes. Seega, kui tahate arvutada mad-i, siis fikseerige mad() funktsioonis argument <em>constant</em> ühele.</p>
 <blockquote>
 <p>Ära kunagi avalda andmeid vormis: mean (MAD) või median (SD). Korrektne vorm on mean (SD) või median (MAD).</p>
 </blockquote>
 <p>Veel üks viis andmejaotuse summeerimiseks on kasutada kvantiile. Siin saame me tüüpiliselt rohkem kui ühe numbri, aga sageli on selline viis informatiivsem, kui ühenumbrilised summaarsed statistikud. Funktsioon quantile võimaldab valida, milliseid kvantiile soovite näha. Järgnevas koodist saame teada, millisest vektori “andmed” väärtusest allapoole jääb 2.5%, 25%, 50%, 75% ja 95% väärtusi.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">quantile</span>(andmed, <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.95</span>))
-<span class="co">#&gt;   2.5%    25%    50%    75%    95% </span>
-<span class="co">#&gt; 0.0979 0.4563 0.9897 1.7664 4.0492</span></code></pre></div>
+<span class="co">#&gt;  2.5%   25%   50%   75%   95% </span>
+<span class="co">#&gt; 0.202 0.757 1.343 2.762 4.729</span></code></pre></div>
 </div>
 <div id="muutujate-koosvarieeruvus" class="section level2 unnumbered">
 <h2>Muutujate koosvarieeruvus</h2>

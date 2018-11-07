@@ -65,12 +65,12 @@ Sageli on aga negatiivsed muutuja väärtused võimatud (näiteks nädalas suits
 logaritmimise kaudu avaldatud multiplikatsiivse SD arvutamiseks kasutame enda kirjutatud funktsiooni mulitplicative_sd(). Esiteks arvutame multiplikatiivse ja aditiivse sd lognormaalsetele andmetele, mida kujutasime eelmisel joonisel: 
 
 
-SD                      MEAN    lower   upper
---------------------  ------  -------  ------
-multiplicative_SD      0.907    0.319    2.58
-multiplicative_2_SD    0.907    0.112    7.36
-additive_SD            1.520   -0.440    3.48
-additive_2_SD          1.520   -2.400    5.44
+SD                     MEAN    lower   upper
+--------------------  -----  -------  ------
+multiplicative_SD      1.33    0.553    3.18
+multiplicative_2_SD    1.33    0.231    7.62
+additive_SD            1.87    0.235    3.51
+additive_2_SD          1.87   -1.402    5.15
 
 Tavalise aritmeetitilise keskmise asemel on meil nüüd geomeetriline keskmine.  Võrdluseks on antud ka tavaline (aritmeetiline) keskmine ja (aditiivne) SD. Additiivne SD on selle jaotuse kirjeldamiseks selgelt ebaadekvaatne (vt jaotuse pilti ülalpool ja võrdle mulitplikatiivse SD-ga).
 
@@ -98,7 +98,7 @@ QQ-plot (kvantiil-kvantiil plot) võrdleb andmete jaotust ideaalse normaaljaotus
 
 ```r
 qqPlot(andmed)
-#> [1]  4 68
+#> [1] 47 31
 ```
 
 <div class="figure" style="text-align: center">
@@ -113,7 +113,7 @@ Nüüd joonistame qq-ploti logaritmitud andmetele.
 
 ```r
 qqPlot(log(andmed))
-#> [1] 16 24
+#> [1] 17 83
 ```
 
 <div class="figure" style="text-align: center">
@@ -136,17 +136,17 @@ Lognormaalsete andmetega:
 
 ```r
 mad(andmed, constant = 1); sd(andmed); mad(andmed)
-#> [1] 0.593
-#> [1] 1.96
-#> [1] 0.88
+#> [1] 0.728
+#> [1] 1.64
+#> [1] 1.08
 ```
 
 
 ```r
 mad(log10(andmed), constant = 1); sd(log10(andmed)); mad(log10(andmed))
-#> [1] 0.291
-#> [1] 0.454
-#> [1] 0.431
+#> [1] 0.294
+#> [1] 0.38
+#> [1] 0.436
 ```
 
 mad = median(abs(median(x) - x)), mida on väga lihtne mõista. Samas R-i funktsioon mad() korrutab default-ina mad-i läbi konstandiga 1.4826, mis muudab mad()-i tulemuse võrreldavaks sd-ga, tehes sellest sd robustse analoogi. Robustse sellepärast, et mad-i arvutuskäik, mis sõltub mediaanist, mitte aritmeetilisest keskmisest, ei ole tundlik outlierite suhtes. Seega, kui tahate arvutada mad-i, siis fikseerige mad() funktsioonis argument *constant* ühele.
@@ -160,8 +160,8 @@ Funktsioon quantile võimaldab valida, milliseid kvantiile soovite näha. Järgn
 
 ```r
 quantile(andmed, c(0.025, 0.25, 0.5, 0.75, 0.95))
-#>   2.5%    25%    50%    75%    95% 
-#> 0.0979 0.4563 0.9897 1.7664 4.0492
+#>  2.5%   25%   50%   75%   95% 
+#> 0.202 0.757 1.343 2.762 4.729
 ```
 
 
