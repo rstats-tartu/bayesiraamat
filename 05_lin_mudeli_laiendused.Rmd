@@ -368,7 +368,7 @@ Kui muutujal saavad olla ainult positiivsed väärtused, siis on logaritmimine v
 
 1. Muutuja(te) logaritmimine muudab muutujate vahelised suhted mitte-lineaarseks, samas säilitades mudeli lineaarsuse. Ja vastupidi, kui tavalises meetrilises skaalas juhtuvad additiivse mudeli muutujate vahelised seosed olema mitte-lineaarsed, siis x-muutuja(te) logaritmimine võib need muuta lineaarseks, ja sellega päästa ühe olulisema lineaarse regressiooni eelduse (vt ka ptk 4.2).
 
-2. Logarimimine on hea, kui soovite y ja x-ide sõltuvusi vaadelda suhete muutuse ehk muutuse protsendi kaudu.
+2. Logarimimine on hea, kui soovite Y ja X muutuja omavahelist sõltuvust tõlgendada üle suhtelise muutuse ehk muutuse protsendi. Kui algses skaalas on β koefitsiendi loomulik tõlgendus additiivne: X-i kasv 1 ühiku võrra ennustab y-i kasvu β ühiku võrra, siis naturaallogaritmitud X-i korral on üks loomulikest multiplikatiivsetest tõlgendustest: X-i kasv 1 ühiku võrra ennustab Y-i muutust ... protsendi võrra. Additiivsel juhul me liidame ja lahutame, multiplikatiivsel juhul aga korrutame ja jagame.
 
 3. Muutuja logaritmimine võib viia selle muutuja lähemale normaaljaotusele (lognormaaljaotuse logaritm on normaaljaotusega). Algselt paremale kaldu jaotuse äärmuspunktid võivad regressioonile liiga suurt kaalu omada, milline probleem sageli kaob logaritmimisel.
 
@@ -411,13 +411,13 @@ Naturaallogaritmi alus on e ≈ 2.71828 ja sellel on järgmised matemaatilised o
 
 Lineaarsel regressioonil saab log-transformatsiooni kasutada kolmel erineval viisil:
 
-* y = a + bx lineaarne mudel (transformeerimata)
+* Y = α + βX lineaarne mudel (transformeerimata)
 
-* y = a + b * log(x) lineaar-log mudel (transformeeritud on prediktor(id))
+* Y = α + β * log(X) lineaar-log mudel (transformeeritud on prediktor(id))
 
-* log(y) = a + bx log-lineaar mudel (transformeeritud on y-muutuja)
+* log(Y) = α + βX log-lineaar mudel (transformeeritud on y-muutuja)
 
-* log(y) = a + b * log(x) log-log mudel (transformeeritud on y ja x muutujad)
+* log(Y) = α + β * log(X) log-log mudel (transformeeritud on y ja x muutujad)
 
 **Lineaarses** mudelis Y = α + βX, annab β selle, mitu ühikut muutub Y keskväärtus, kui X muutub ühe ühiku võrra.  
 
