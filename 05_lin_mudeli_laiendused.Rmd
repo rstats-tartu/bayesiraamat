@@ -362,7 +362,7 @@ Lineaarsed transformatsioonid võivad hõlbustada mudeli koefitsientide tõlgend
 
 ## Logaritmimine
 
-Kui muutujal saavad olla ainult positiivsed väärtused, siis on logaritmimine sageli hea mõte. Andmetest peab kaotama ka nullid, näiteks asendades need mingi nullilähedase positiivse arvuga. Logaritmilises skaalas on β koefitsiendid peaaegu alati < 1. 
+Kui muutujal saavad olla ainult positiivsed väärtused, siis on logaritmimine vahest hea mõte. Enne logaritmima asumist paeb andmetest kaotama ka nullid, näiteks asendades need mingi väikese positiivse arvuga. Logaritmilises skaalas andmetele fititud mudelite β koefitsiendid peaaegu alati < 1. 
 
 ### Miks ja millal muutujaid logaritmida
 
@@ -374,13 +374,13 @@ Kui muutujal saavad olla ainult positiivsed väärtused, siis on logaritmimine s
 
 4. Kui mudeli residuaalid on ümber nulli tugevalt paremale poole kiivas jaotusega, siis andmete logaritmimine võib need normaliseerida. Samuti siis, kui residuaalide sd on proportsionaalne fititud väärtusega (st CV, mitte SD, on konstantne) ja siis, kui te ususte, et residuaalid peegeldavad multiplikatiivseid vigu.
 
-5. Kui y ja x-i sõltuvus on eksponentsiaalne 
+5. Kui y ja x-i vaheline sõltuvus on eksponentsiaalne. 
 
-6. Logaritmimine võib aidata ka hetoroskedastilisuse vastu
+6. Logaritmimine võib aidata ka hetoroskedastilisuse vastu.
 
 7. Teaduslik teooria võib indikeerida logaritmimist. Näit pH on log skaalas.
 
-8. Logaritmimine võib vahest lihtsustada mudelit, vähendades interaktsiooniliikmete arvu ja kompleksust.
+8. Logaritmimine võib lihtsustada mudelit, vähendades interaktsiooniliikmete arvu ja kompleksust.
 
 Mudeli fiti kvaliteedi koha pealt pole suurt vahet, millist logaritmi te kasutate -- olulised erinevused on "pelgalt" mudeli koefitsientide tõlgendustes.
  Naturaallogaritmitud log(x) andmete peal fititud mudeli korral on algses lineaarses skaalas tõlgendatav logaritmitud andmete peal fititud β, aga log-skaalas muutujate väärtused ei tähenda otse peale vaadates suurt midagi. Vastupidiselt on  kümnendlogaritmitud log10(x) või kahendlogaritmitud log2(x) andmed log skaalas tõlgendatavad, aga mitte neil fititud β lineaarses skaalas. Igal juhul eelistavad loodusteadlased kasutada log2 ja log10 skaalasid, mida on mugavam otse log-skaalas tõlgendada. log2 skaalas vastab üheühikuline muutus kahekordsele muutusele algses skaalas ja anti-logaritm on $2^{log2(x)}$. Log10 skaalas vastab üheühikuline muutus 10-kordsele muutusele algses skaalas ja anti-logaritm on $10^{log10(x)}$. 
@@ -419,11 +419,11 @@ Lineaarsel regressioonil saab log-transformatsiooni kasutada kolmel erineval vii
 
 * log(y) = a + b * log(x) log-log mudel (transformeeritud on y ja x muutujad)
 
-**Lineaarses** mudelis Y = α + βX, annab β selle, mitu ühikut muutub Y keskväärtus, kui X muutub ühe ühiku võrra. See tõlgendus jääb kehtima ka logaritmitud muutujate korral, ainult et log-ühikutes. Me võime siiski tahta tõlgendust ka näiteks muutuse protsendina või algsetes meetrilistes ühikutes.
+**Lineaarses** mudelis Y = α + βX, annab β selle, mitu ühikut muutub Y keskväärtus, kui X muutub ühe ühiku võrra.  
 
-**Linear-log** mudelis viib logX-i muutus ühe ühiku võrra Y keskväärtuse muutusele  β ühiku võrra.
+**Linear-log** mudelis jääb kehtima sama β tõlgendus, mis ülalpool, ainult et log-ühikutes. Seega viib logX-i muutus ühe log ühiku võrra Y keskväärtuse muutusele β ühiku võrra (see kehtib muidugi ka log2 ja log10 skaalades). 
 
-Algses skaalas:
+Kui me juba kasutasime naturaallogaritmimist, siis tahame ilmselt tõlgendust pigem muutuse protsendina ja/või algsetes meetrilistes skaalas (log2 ja log10 ei võimalda selliseid mugavaid tõlgendusi):
 
 * β on oodatud Y muutus, kui X kasvab eX korda. 
 
