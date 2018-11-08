@@ -609,12 +609,12 @@ predict_interval_brms2 <- predict(m2, newdata = newx, re_formula = NULL) %>%
   cbind(newx, .)
 head(predict_interval_brms2)
 #>   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5
-#> 1         1.00        3.06  setosa     4.50     0.314 3.88  5.12
-#> 2         1.04        3.06  setosa     4.53     0.314 3.92  5.14
-#> 3         1.08        3.06  setosa     4.54     0.320 3.92  5.19
-#> 4         1.12        3.06  setosa     4.58     0.314 3.96  5.19
-#> 5         1.16        3.06  setosa     4.61     0.315 3.99  5.23
-#> 6         1.20        3.06  setosa     4.64     0.312 4.03  5.27
+#> 1         1.00        3.06  setosa     4.49     0.318 3.86  5.13
+#> 2         1.04        3.06  setosa     4.52     0.326 3.88  5.17
+#> 3         1.08        3.06  setosa     4.55     0.326 3.91  5.17
+#> 4         1.12        3.06  setosa     4.58     0.321 3.93  5.21
+#> 5         1.16        3.06  setosa     4.62     0.316 4.00  5.23
+#> 6         1.20        3.06  setosa     4.65     0.315 4.04  5.28
 ```
 
 `predict()` ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele
@@ -819,7 +819,7 @@ ggplot(iris2, aes(Species, st_resid)) +
 
 ## Robustne lineaarne regressioon
 
-Kasutame dnorm likelihoodi asemel studenti t jaotust. Selle jaotuse õlad on reguleeritavalt kõrgemad ja nende alla mahuvad paremini outlierid. Õlgade kõrgust reguleerib parameeter nu (1 - Inf), mille väiksemad väärtused (alla 10) annavad laiad õlad ja kaitse outlierite vastu. Me anname nu-le gamma priori. Sellel prioril on omakorda 2 parameetrit, shape ja scale Kui fikseerime shape = 4 ja scale = 1, siis saame kitsa priori, mis eelistab nu väärtusi, mis soosivad laiu õlgu ja robustset regressiooni.
+Kasutame dnorm likelihoodi asemel studenti t jaotust. Selle jaotuse õlad on reguleeritavalt kõrgemad ja nende alla mahuvad paremini outlierid. Õlgade kõrgust reguleerib parameeter nu (1 - Inf), mille väiksemad väärtused (<10) annavad laiad õlad ja kaitse outlierite vastu. Me anname nu-le gamma priori. Sellel prioril on omakorda 2 parameetrit, *shape* ja *scale*. Kui shape = 4 ja scale = 1, siis saame kitsa priori, mis eelistab nu väärtusi, mis soosivad laiu õlgu ja robustset regressiooni.
 
 
 ```r
@@ -846,7 +846,7 @@ get_prior(Sepal.Length ~ Petal.Length, data = iris, family = "student")
 prior <- prior(gamma(4, 1), class = "nu")
 ```
 
-robust_m1 on studenti likelihoodiga, mille õlad määratakse adaptiivselt andmete poolt.
+robust_m1 on studenti likelihoodiga, mille õlgade kõrgus fititakse adaptiivselt andmete põhjal.
 robust_m2-s anname õlgade laiuse ette ja robust_m3 on mitte-robustne kontroll tavalise normaalse likelihoodiga.
 
 ```r
@@ -1126,7 +1126,7 @@ tidy(lm1)
 p = 0.3 ongi vastava t testi põhiväljund.
 
 
-### lognormaalne tõepärafunktsioon
+## lognormaalne tõepärafunktsioon
 
 Sama näide on pikemalt 14. peatükis, seal küll lahendatud rethinkingu abil.
 
@@ -1235,7 +1235,7 @@ plot(marginal_effects(ln_m2), points=TRUE)
 
 
 
-### Puuduvate andmete imputatsioon
+## Puuduvate andmete imputatsioon
 
 Regressioonimudelite fittimisel kasutatakse ainult vaatlusi, kus esinevad väärtused kõigis mudelisse pandud muutujates. Seega, kui meil on palju muutujaid, milles igaühes puuduvad juhuslikult mõned väärtused, siis kaotame kokkuvõttes enamuse oma valimist. Aitab puuduvate andmete imputatsioon, mis tegelikult tähendab, et me fitime iga puuduvaid andmeid sisaldava muutuja eraldi regressioonimudelis kõigi teiste muutujate vastu.
 
@@ -1310,7 +1310,7 @@ tidy(iris_imp1)[,1:3]
 
 Tõepoolest, süstemaatiliselt rikutud andmetest on imutatsiooni abil võimalik täitsa head ennustust tagasi saada!!!
 
-## Imputatsioon otse brms-is
+### Imputatsioon otse brms-is {-}
 
 See töötab küll irise peal halvemini kui mice!
 
@@ -1370,29 +1370,28 @@ Kui n > 1 (ja ikka eeldades logistilist transformatsiooni), siis on tegu aggrege
  
 ### Logistiline regressioon
 
-Tavalises lineaarses regressioonis on tavapärane, et kuigi me ennustame pidevat y-muutujat, kas osad või kõik X-muutujad (prediktorid) on mittepidevad. Lineaarsed mudelid jooksevad võrdselt hästi pidevate ja mittepidevate (binaarsete) prediktoritega. (Binaarsed muutujad võivad omada kaht diskreetset väärtust, mida kodeerime 1 ja 0-na). Aga kuidas käituda, kui meie poolt ennustatav Y-muutuja on binaarne? Kui me püüame ennustada binaarse y-muutuja oodatavaid väärtusi tõenäosustena, ehk 1-de arvu suhet katsete koguarvu, kas siis tavaline lineaarne regressioon enam ei tööta? Töötab küll, aga paraku ei ole garanteeritud, et mudeli ennustused jäävad 0 ja 1 vahele, ehk tõenäosuste skaalasse. Seda tagab logistiline regressioon. Logistilises regressioonis ei modelleeri me mitte otse y väärtusi (1 ja 0) erinevatel x-i väärtustel, vaid tõenäosust P(Y = 1 | X) [tõenäosus, et Y = 1, fikseeritud x-i väärtusel]. 
+Tavalises lineaarses regressioonis on tavapärane, et kuigi me ennustame pidevat y-muutujat, on kas osad või kõik X-muutujad mittepidevad. Sellest pole kurja, meie mudelid jooksevad võrdselt hästi pidevate ja mittepidevate (binaarsete) prediktoritega. (Binaarsed muutujad võivad omada kaht diskreetset väärtust, mida kodeerime 1 ja 0-na). Aga kuidas käituda, kui meie poolt ennustatav Y-muutuja on binaarne? Kui me püüame ennustada binaarse y-muutuja oodatavaid väärtusi tõenäosustena, ehk 1-de arvu suhet katsete koguarvu, kas siis tavaline lineaarne regressioon enam ei tööta? Töötab küll, aga paraku ei ole garanteeritud, et mudeli ennustused jäävad 0 ja 1 vahele, ehk tõenäosuste skaalasse. Seda tagab logistiline regressioon. Logistilises regressioonis ei modelleeri me mitte otse y väärtusi (1 ja 0) erinevatel x-i väärtustel, vaid tõenäosust P(Y = 1 | X) [tõenäosus, et Y = 1, fikseeritud x-i väärtusel]. 
 
 Logistiline regressioon töötab tänu logistilisele transformatsioonile. Näiteks logistiline transformatsioon funktsioonile $y = a + bx$ näeb välja niimoodi 
 $$y=\frac{exp(a + bx)}{1 + exp(a + bx)}$$ 
 
-    exp(a) tähendab "e astmes a", kus e on Euleri arv, ehk arv, mille 
-    naturaal-logaritm = 1 (seega on e naturaal-logaritmi alus). 
-    e on umbes 2.71828 ja selle saab valemist (1 + 1/n)^n, 
-    kui n läheneb lõpmatusele.
+    exp(a) tähendab "e astmes a", kus e on Euleri arv, ehk arv, mille naturaal-logaritm = 1 
+    (seega on e naturaal-logaritmi alus). e on umbes 2.71828 ja selle 
+    saab valemist (1 + 1/n)^n, kui n läheneb lõpmatusele.
 
 #### Logistiline ja logit transformatsioon - definitsioonid
 
-See peatükk aitab loogilisest regressioonist aru saada - aru saamine pole aga tingimata vajalik selle edukaks tegemiseks. 
+See peatükk aitab loogilisest regressioonist aru saada - aru pole aga tingimata vajalik selle meetodi edukaks kasutamiseks. 
 
  Logistiline transformatsioon viib lineaarse regressiooni tavapärasest y-muutuja skaalast [−∞,+∞] tõenäosuste skaalasse [0,1], andes meile sirge asemele S-kujulise kurvi, mis läheneb asümptootiliselt ühelt poolt 0-le ja teiselt poolt 1-le. Logistilise funktsiooni põõrdväärtus on logit funktsioon, mis annab "*odds*-i" ehk shansi ehk kihlveosuhted tõenäosusele p: $odds = \frac {p}{1 − p}$. Tõenäosuse p logit ehk logit(p) on sama, mis log(odds):
 
 $$logit(p)=\log \left({\frac {p}{1-p}}\right)=\log(p)-\log(1-p)$$
 
-Meie y = a + bx mudeli korral tavalises meetrilises skaalas on *odds* exponent meie fititud lineaarsest mudelist: 
+Meie y = a + bx mudeli korral oma tavalises meetrilises skaalas on *odds* exponent meie fititud lineaarsest mudelist: 
 
 $$odds= \frac {P(Y = 1 ~|~ X)}{1-P(Y = 1 ~|~ X)} = exp(a+bx)$$ 
 
-Näiteks tõenäosus 0.2 (20%) tähendab, et $odds = 0.2/(1 - 0.2) = 1/4$ ehk üks neljale ja tõenäosus 0.9 tähendab, et $odds = 0.9/(1 - 0.9) = 9$ ehk üheksa ühele. Sellel meetodil töötavad näiteks hipodroomid, sest nii on mänguril lihtne näha, et kui kihlveokontori poolt mingile hobusele omistatud odds on näiteks üks nelja vastu ja te maksate kihlveo maaklerile 1 euro, siis saab võidu korral 4 eurot kasumit (ehk 5 eurose kupüüri). Logaritm *odds*-idest ongi logit transformatsioon, mille pöördväärtus on omakorda logistiline transformatsioon!
+Näiteks tõenäosus 0.2 (20%) tähendab, et $odds = 0.2/(1 - 0.2) = 1/4$ ehk üks neljale ja tõenäosus 0.9 tähendab, et $odds = 0.9/(1 - 0.9) = 9$ ehk üheksa ühele. Sellel viisil töötavad näiteks hipodroomid, sest nii on mänguril lihtne näha, et kui kihlveokontori poolt mingile hobusele omistatud odds on näiteks üks nelja vastu ja te maksate kihlveo sõlmimisel 1 euro, siis saab võidu korral 4 eurot kasu (ehk 5 eurose kupüüri). Logaritm *odds*-idest ongi logit transformatsioon, mille pöördväärtus on omakorda logistiline transformatsioon!
 
 Suvalise arvu α logistiline funktsioon on logiti põõrdväärtus:
 
@@ -1539,17 +1538,20 @@ tidy(m_logreg_2)
 #> 3          lp__ -345.7102     1.014 -347.639 -344.741
 ```
 
-The proportional odds = 1.76, which is the ratio of the probability an event happens to the probability it does not happen (the outcome or y variable). 
-
-If changing the predictor prosoc_left from 0 to 1 increases the log-odds of pulling the left-hand lever by 0.57, then there is a proportional increase of exp(0.57) = 1.76 in the odds of pulling the left-hand lever. This means that the odds increase by 73%.
 
 
 ```r
 exp(0.57)
 #> [1] 1.77
 ```
+Proportsionaalne odds = 1.76 kujutab endast suhet kahest tõenäosusest - et sündmus toimub (y=1) ja et sündmus ei toimu (y=0).
 
-The actual change in probability will also depend upon the intercept, alpha, as well as any other predictor variables. Logistic regression induce interactions among all variables. You can think of these interactions as resulting from both ceiling and  floor effects: If the intercept is large enough to guarantee a pull, then increasing the odds by 73% isn’t going to make it any more guaranteed. Suppose α = 4.  Then the probability of a pull, ignoring everything else, would be `inv_logit_scaled(4)` = 0.98. Adding in an increase of 0.57 (the estimate for beta) changes this to: `inv_logit_scaled(4 + 0.57)` = 0.99. That's a difference, on the absolute scale, of 1%, despite being an 73% increase in proportional odds. Likewise, if the intercept is very negative, then the probability of a pull is almost zero. An increase in odds of 73% may not be enough to get the probability up from the floor. 
+Kui prediktori prosoc_left väärtus muutumine 0-st 1-ks tõstab y=1 sündmuse *log-odds*-i 0.57 võrra, siis kasvab proportsionaalselt exp(0.57) = 1.76 ja *odds*, et toimub sündmus pull left ehk y=1 kasvab 73%.
+
+
+Tegelik tõenäosuse muutus sõltub ka interceptist (α) ja teistest prediktoritest. Logistiline regressioon erineb tavalisest lineaarsest regressioonist selle poolest, et see mudeldab igal juhul muutujate vahelisi interakstsioone. Kui α on piisavalt suur, et garanteerida sündmuse y=1 toimumine, siis ei tähenda odds-ide tõus 73% võrra suurt midagi. Oletame, et α = 4.  Siis on sündmuse tõenäosus, ignoreerides kõike muud  `inv_logit_scaled(4)` = 0.98. Lisades sinna beta hinnagu 0.57 saame: `inv_logit_scaled(4 + 0.57)` = 0.99. 
+See vastab 1% erinevusele, ehki on samas 73% kasv suhtelise odds-ühikutes. 
+ 
 
 
 
@@ -1558,17 +1560,16 @@ inv_logit_scaled(0.04562136 + 0.56590225)
 #> [1] 0.648
 ```
 
-Pr of pulling left, if prosoc_left is 1, is 64%.
+Pr(Y=1) kui prosoc_left = 1, = 64%.
 
 
 ```r
 inv_logit_scaled(0.04562136)
 #> [1] 0.511
 ```
+kui prosoc_left = 0, on see 51%.
 
-If prosoc_left is 0, it is 51%.
-
-This meagre difference is reflected in the roc curve.
+roc kurv peegeldab seda tagasihoidlikku erinevust.
 
 ```r
 glm.probs <- predict(m_logreg_2, type = "response") %>% as.data.frame()
@@ -1594,7 +1595,7 @@ plot(roccurve, legacy.axes = TRUE, cex.axis = 0.7, cex.lab = 0.8)
 <img src="17_brms_files/figure-html/unnamed-chunk-132-1.png" width="70%" style="display: block; margin: auto;" />
 
 
-Sarnase mudeli saab fittida ka siis, kui n>1 ja meil on igale ahvile countide suhted nr of pull-left/total pulls. Nüüd on meil vaja lisada trials(), kuhu läheb n kas ühe numbrina või muutujana, mis indekseerib sündmuste arvu ehk n-i. Antud juhul on kõikidel ahvidel katsete arv n 18.
+Sarnase mudeli saab fittida ka siis, kui n>1 ja meil on igale ahvile countide suhted nr of pull-left/total pulls. Nüüd on meil vaja lisada trials(), kuhu läheb n kas ühe numbrina või muutujana, mis indekseerib sündmuste arvu ehk n-i. Antud juhul on kõikidel ahvidel katsete arv (n) 18.
 
 ```r
 chimp_aggr <- select(chimpanzees, actor, condition, prosoc_left, pulled_left) %>%
