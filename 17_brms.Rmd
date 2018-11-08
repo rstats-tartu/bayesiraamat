@@ -1105,30 +1105,32 @@ m_logreg_2 <- read_rds("data/m_logreg_2.fit")
 tidy(m_logreg_2)
 ```
 
-The proportional odds = `r signif(exp(tidy(m_logreg_2)$estimate[2]), 3)`, which is the ratio of the probability an event happens to the probability it does not happen (the outcome or y variable). 
-
-If changing the predictor prosoc_left from 0 to 1 increases the log-odds of pulling the left-hand lever by `r round(tidy(m_logreg_2)$estimate[2], 2)`, then there is a proportional increase of exp(`r round(tidy(m_logreg_2)$estimate[2], 2)`) = `r round(exp(tidy(m_logreg_2)$estimate[2]), 2)` in the odds of pulling the left-hand lever. This means that the odds increase by 73%.
 
 ```{r}
 exp(0.57)
 ```
+Proportsionaalne odds = `r signif(exp(tidy(m_logreg_2)$estimate[2]), 3)` kujutab endast suhet kahest tõenäosusest - et sündmus toimub (y=1) ja et sündmus ei toimu (y=0).
 
-The actual change in probability will also depend upon the intercept, alpha, as well as any other predictor variables. Logistic regression induce interactions among all variables. You can think of these interactions as resulting from both ceiling and  floor effects: If the intercept is large enough to guarantee a pull, then increasing the odds by 73% isn’t going to make it any more guaranteed. Suppose α = 4.  Then the probability of a pull, ignoring everything else, would be `inv_logit_scaled(4)` = `r round(inv_logit_scaled(4), 2)`. Adding in an increase of `r round(tidy(m_logreg_2)$estimate[2], 2)` (the estimate for beta) changes this to: ``r str_c("inv_logit_scaled(4 + ", round(tidy(m_logreg_2)$estimate[2], 2), ")")`` = `r round(inv_logit_scaled(4 + tidy(m_logreg_2)$estimate[2]), 2)`. That's a difference, on the absolute scale, of 1%, despite being an 73% increase in proportional odds. Likewise, if the intercept is very negative, then the probability of a pull is almost zero. An increase in odds of 73% may not be enough to get the probability up from the floor. 
+Kui prediktori prosoc_left väärtus muutumine 0-st 1-ks tõstab y=1 sündmuse *log-odds*-i `r round(tidy(m_logreg_2)$estimate[2], 2)` võrra, siis kasvab proportsionaalselt exp(`r round(tidy(m_logreg_2)$estimate[2], 2)`) = `r round(exp(tidy(m_logreg_2)$estimate[2]), 2)` ja *odds*, et toimub sündmus pull left ehk y=1 kasvab 73%.
+
+
+Tegelik tõenäosuse muutus sõltub ka interceptist (α) ja teistest prediktoritest. Logistiline regressioon erineb tavalisest lineaarsest regressioonist selle poolest, et see mudeldab igal juhul muutujate vahelisi interakstsioone. Kui α on piisavalt suur, et garanteerida sündmuse y=1 toimumine, siis ei tähenda odds-ide tõus 73% võrra suurt midagi. Oletame, et α = 4.  Siis on sündmuse tõenäosus, ignoreerides kõike muud  `inv_logit_scaled(4)` = `r round(inv_logit_scaled(4), 2)`. Lisades sinna beta hinnagu `r round(tidy(m_logreg_2)$estimate[2], 2)` saame: ``r str_c("inv_logit_scaled(4 + ", round(tidy(m_logreg_2)$estimate[2], 2), ")")`` = `r round(inv_logit_scaled(4 + tidy(m_logreg_2)$estimate[2]), 2)`. 
+See vastab 1% erinevusele, ehki on samas 73% kasv suhtelise odds-ühikutes. 
+ 
 
 
 ```{r}
 inv_logit_scaled(0.04562136 + 0.56590225)
 ```
 
-Pr of pulling left, if prosoc_left is 1, is 64%.
+Pr(Y=1) kui prosoc_left = 1, = 64%.
 
 ```{r}
 inv_logit_scaled(0.04562136)
 ```
+kui prosoc_left = 0, on see 51%.
 
-If prosoc_left is 0, it is 51%.
-
-This meagre difference is reflected in the roc curve.
+roc kurv peegeldab seda tagasihoidlikku erinevust.
 ```{r}
 glm.probs <- predict(m_logreg_2, type = "response") %>% as.data.frame()
 glm.probs <- glm.probs[,1]
@@ -1144,7 +1146,7 @@ plot(roccurve, legacy.axes = TRUE, cex.axis = 0.7, cex.lab = 0.8)
 ```
 
 
-Sarnase mudeli saab fittida ka siis, kui n>1 ja meil on igale ahvile countide suhted nr of pull-left/total pulls. Nüüd on meil vaja lisada trials(), kuhu läheb n kas ühe numbrina või muutujana, mis indekseerib sündmuste arvu ehk n-i. Antud juhul on kõikidel ahvidel katsete arv n 18.
+Sarnase mudeli saab fittida ka siis, kui n>1 ja meil on igale ahvile countide suhted nr of pull-left/total pulls. Nüüd on meil vaja lisada trials(), kuhu läheb n kas ühe numbrina või muutujana, mis indekseerib sündmuste arvu ehk n-i. Antud juhul on kõikidel ahvidel katsete arv (n) 18.
 ```{r eval=FALSE}
 chimp_aggr <- select(chimpanzees, actor, condition, prosoc_left, pulled_left) %>%
   group_by(actor, condition, prosoc_left) %>%
