@@ -665,7 +665,7 @@ saab valemist (1 + 1/n)^n, kui n läheneb lõpmatusele.</code></pre>
 y &lt;-<span class="st"> </span><span class="kw">exp</span>(x)<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(x))
 <span class="kw">plot</span>(y<span class="op">~</span>x)</code></pre></div>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-118-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>Kui me mudeli y = a + bx korral muudame x-i ühe ühiku võrra muutuvad log-odds-id b võrra. Teisisõnu võime korrutada lineaarses skaalas <em>odds</em>-id exp(b)-ga. Kuna P(Y = 1 | X) ja X-i seos ei ole sirge, siis b ei vasta P(Y = 1 | X) muutusele X-i muutumisel ühe ühiku võrra. See, kui kiiresti P(Y = 1 | X) muutub, sõltub X-i väärtusest, aga hoolimata sellest, senikaua kui b &gt; 0, on X-i kasv alati seotud tõenäosuse kasvuga (ja vastupidi).</p>
+<p>Kui me mudeli y = a + bx korral muudame x-i ühe ühiku võrra, muutuvad log-odds-id b võrra. Teisisõnu võime korrutada lineaarses skaalas <em>odds</em>-id exp(b)-ga. Kuna P(Y = 1 | X) ja X-i seos ei ole sirge, siis b ei vasta P(Y = 1 | X) muutusele X-i muutumisel ühe ühiku võrra. See, kui kiiresti P(Y = 1 | X) muutub, sõltub X-i väärtusest, aga hoolimata sellest, senikaua kui b &gt; 0, on X-i kasv alati seotud tõenäosuse kasvuga (ja vastupidi).</p>
 <p>Kahe tõenäosuse logitite vahe on sama, mis logaritm <em>odds-ratio</em>-st (log(OR) ehk shanside suhe)</p>
 <p><span class="math display">\[{log} (OR)= {logit} (p_{1})- {logit} (p_{2})\]</span></p>
 <p><strong>Odds-ratio</strong></p>
@@ -682,7 +682,7 @@ y &lt;-<span class="st"> </span><span class="kw">exp</span>(x)<span class="op">/
 <li><p>OR &gt; 1 Katsetingimus tõstab väljundi <em>odds</em>-e</p></li>
 <li><p>OR &lt; 1 Katsetingimus langetab väljundi <em>odds</em>-e</p></li>
 </ul>
-<p>Logistiline regressioon üldistab OR-i kaugemale 2st binaarsest muutujast. Kui meil on binaarne y-muutuja ja binaarne x-muutuja (x1), pluss rida teisi x-muutujaid (x2…xn), siis mitmese logistilise regressiooni x1-e tõusukoefitsient b1 on seotud tingimusliku OR-ga. <span class="math inline">\(\exp(\beta_1)\)</span> annab Y ja X vahelise OR-i, tingimusel, et teiste x-muutujate väärtused on fikseeritud (see on tavaline sõltumatute muutujatega lineaarse regressiooni beta-koefitsientide tõlgendamise tingimus).</p>
+<p>Logistiline regressioon üldistab OR-i kaugemale 2st binaarsest muutujast. Kui meil on binaarne y-muutuja ja binaarne x-muutuja (<span class="math inline">\(x_1\)</span>), pluss rida teisi x-muutujaid (<span class="math inline">\(x_2...x_n\)</span>), siis mitmese logistilise regressiooni x1-e tõusukoefitsient <span class="math inline">\(\beta_1\)</span> on seotud tingimusliku OR-ga. <span class="math inline">\(\exp(\beta_1)\)</span> annab Y ja X vahelise OR-i, tingimusel, et teiste X-muutujate väärtused on fikseeritud (see on tavaline sõltumatute muutujatega lineaarse regressiooni beta-koefitsientide tõlgendamise tingimus).</p>
 <pre><code>OR-i kui suhtelise efekti suuruse tõlgendamine sõltub sündmuse y = 1 
 baastõenäosusest. Näiteks kui surm põhjusel x on tavapäraselt väga 
 haruldane ja mingi keskkonnamõju annab OR = 10, siis tegelik tõus 
@@ -717,14 +717,13 @@ suremuses (surma tõenäosus keskkonnamõju tingimustes) võib olla tühine. </c
 <span class="co">#&gt;  ▇▇▇▇▁▇▇▇</span>
 <span class="co">#&gt;  ▇▇▇▇▇▇▇▇</span></code></pre></div>
 </div>
-<div id="intercept-only-model" class="section level4">
-<h4><span class="header-section-number">20.4.1.3</span> Intercept only model</h4>
+<div id="intercept-only-mudel" class="section level4">
+<h4><span class="header-section-number">20.4.1.3</span> Intercept-only mudel</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m_logreg_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">brm</span>(<span class="dt">data =</span> chimpanzees, 
                   <span class="dt">family =</span> binomial,
                   pulled_left <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,
                   <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="dt">class =</span> Intercept))
 <span class="kw">write_rds</span>(m_logreg_<span class="dv">1</span>, <span class="dt">path=</span> <span class="st">&quot;data/m_logreg_1.fit&quot;</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m_logreg_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">read_rds</span>(<span class="st">&quot;data/m_logreg_1.fit&quot;</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tidy</span>(m_logreg_<span class="dv">1</span>)
 <span class="co">#&gt;          term estimate std.error    lower    upper</span>
 <span class="co">#&gt; 1 b_Intercept    0.323    0.0882    0.181    0.464</span>
@@ -741,7 +740,6 @@ suremuses (surma tõenäosus keskkonnamõju tingimustes) võib olla tühine. </c
       <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="dt">class =</span> Intercept),
                 <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="dt">class =</span> b)))
 <span class="kw">write_rds</span>(m_logreg_<span class="dv">2</span>, <span class="dt">path=</span> <span class="st">&quot;data/m_logreg_2.fit&quot;</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m_logreg_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">read_rds</span>(<span class="st">&quot;data/m_logreg_2.fit&quot;</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tidy</span>(m_logreg_<span class="dv">2</span>)
 <span class="co">#&gt;            term  estimate std.error    lower    upper</span>
 <span class="co">#&gt; 1   b_Intercept    0.0456     0.128   -0.165    0.259</span>
@@ -750,30 +748,41 @@ suremuses (surma tõenäosus keskkonnamõju tingimustes) võib olla tühine. </c
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">exp</span>(<span class="fl">0.57</span>)
 <span class="co">#&gt; [1] 1.77</span></code></pre></div>
 <p>Proportsionaalne odds = 1.76 kujutab endast suhet kahest tõenäosusest - et sündmus toimub (y=1) ja et sündmus ei toimu (y=0).</p>
-<p>Kui prediktori prosoc_left väärtus muutumine 0-st 1-ks tõstab y=1 sündmuse <em>log-odds</em>-i 0.57 võrra, siis kasvab proportsionaalselt exp(0.57) = 1.76 ja <em>odds</em>, et toimub sündmus pull left ehk y=1 kasvab 73%.</p>
-<p>Tegelik tõenäosuse muutus sõltub ka interceptist (α) ja teistest prediktoritest. Logistiline regressioon erineb tavalisest lineaarsest regressioonist selle poolest, et see mudeldab igal juhul muutujate vahelisi interakstsioone. Kui α on piisavalt suur, et garanteerida sündmuse y=1 toimumine, siis ei tähenda odds-ide tõus 73% võrra suurt midagi. Oletame, et α = 4. Siis on sündmuse tõenäosus, ignoreerides kõike muud <code>inv_logit_scaled(4)</code> = 0.98. Lisades sinna beta hinnagu 0.57 saame: <code>inv_logit_scaled(4 + 0.57)</code> = 0.99. See vastab 1% erinevusele, ehki on samas 73% kasv suhtelise odds-ühikutes.</p>
+<p>Kui prediktori prosoc_left väärtus muutumine 0-st 1-ks tõstab y=1 sündmuse <em>log-odds</em>-i 0.57 võrra, siis kasvab proportsionaalselt exp(0.57) = 1.76 ja <em>odds</em>, et toimub sündmus pull left ehk y=1 kasvab 77%.</p>
+<p>Tegelik tõenäosuse muutus sõltub ka interceptist (α) ja teistest prediktoritest. Logistiline regressioon erineb tavalisest lineaarsest regressioonist selle poolest, et see mudeldab igal juhul muutujate vahelisi interakstsioone. Näiteks kui α on piisavalt suur, et garanteerida sündmuse y = 1 toimumine, siis ei tähenda <em>odds</em>-ide tõus 73% võrra suurt midagi. Oletame, et α = 4. Siis on sündmuse tõenäosus, ignoreerides kõike muud <code>inv_logit_scaled(4)</code> = 0.98. Lisades sinna beta hinnagu 0.57 saame: <code>inv_logit_scaled(4 + 0.57)</code> = 0.99. See vastab 1% erinevusele, ehkki on samas 73% kasv suhtelise <em>odds</em>-i ühikutes.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">inv_logit_scaled</span>(<span class="fl">0.04562136</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.56590225</span>)
 <span class="co">#&gt; [1] 0.648</span></code></pre></div>
-<p>Pr(Y=1) kui prosoc_left = 1, = 64%.</p>
+<p>Pr(Y = 1 | X = 1) = 64%.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">inv_logit_scaled</span>(<span class="fl">0.04562136</span>)
 <span class="co">#&gt; [1] 0.511</span></code></pre></div>
-<p>kui prosoc_left = 0, on see 51%.</p>
-<p>roc kurv peegeldab seda tagasihoidlikku erinevust.</p>
+<p>kui prosoc_left = 0, on Pr(Y = 1 | X = 0) = 51%.</p>
+<p><strong>ROC kõver peegeldab seda tagasihoidlikku erinevust.</strong></p>
+<p>Kui meil on binaarne (0/1) Y-mmutuja, siis ilma igasuguse ennustusjõuta loll mudel annab õige ennustuse pooltel juhtudest. Kui palju on meie mudel parem sellisest loll-mudelist? Sellele küsimusele annab granuleeritus vastuse roc kurv ja selle põhjal arvutatud <em>area under the curve</em> ehk auc.</p>
+<p>Kõigepealt valmistame nn <em>confusion maatriksi</em>. Selleks ennustame mudeli põhjal igale vaatlusele vastava pulled-left ehk Y = 1 tõenäosuse ja nende vaatluste puhul, mille Pr(Y=1) &gt; 0.5, loeme ennustustatuks, et simpans tõmbab hooba vasakule. Siin on meie ennustuse <em>cut-off</em> 50%, aga see võiks olla ka teistsugune. Sõltuvalt sellest, kui palju me kardame eksida ühele või teisele poole (ennustada ekslikult, et Y=1 või magada maha tegelikke Y=1 sündmusi) peaksime iga kord valima oma hirme maksimaalselt maandava <em>cut-off</em>-i.</p>
+<p>Kuna me teame, kuhu poole iga ahv igas katses tegelikult hooba tõmbas, on meil võimalik arvutada nii 1. tüüpi vigade (me ennustasime Y=1, aga tegelikult Y=0), kui ka vale-negatiivsete e 2. tüüpi vigade (me ennustasime Y = 0, aga tegelikult Y=1) sagedust. Loomulikult saame vigade sagedused arvutada kõikvõimalikele <em>cut-off</em>-idele.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">glm.probs &lt;-<span class="st"> </span><span class="kw">predict</span>(m_logreg_<span class="dv">2</span>, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()
 <span class="co">#&gt; Warning: Using &#39;binomial&#39; families without specifying &#39;trials&#39; on the left-</span>
 <span class="co">#&gt; hand side of the model formula is deprecated.</span>
 glm.probs &lt;-<span class="st"> </span>glm.probs[,<span class="dv">1</span>]
-glm.pred &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">&quot;pulled_right&quot;</span>, <span class="dv">504</span>)
-glm.pred[glm.probs <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>] &lt;-<span class="st"> &quot;pulled_left&quot;</span> 
-<span class="kw">table</span>(glm.pred, chimpanzees<span class="op">$</span>pulled_left)
-<span class="co">#&gt;               </span>
-<span class="co">#&gt; glm.pred         0   1</span>
-<span class="co">#&gt;   pulled_left  202 279</span>
-<span class="co">#&gt;   pulled_right  10  13</span></code></pre></div>
+logit.pred &lt;-<span class="st"> </span><span class="kw">factor</span>(glm.probs <span class="op">&gt;</span><span class="st"> </span>.<span class="dv">5</span>, <span class="dt">levels=</span><span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>),
+                      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;right&quot;</span>, <span class="st">&quot;left&quot;</span>))
+ <span class="kw">table</span>(chimpanzees<span class="op">$</span>pulled_left, logit.pred, <span class="dt">dnn=</span><span class="kw">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>))
+<span class="co">#&gt;       Predicted</span>
+<span class="co">#&gt; Actual right left</span>
+<span class="co">#&gt;      0    10  202</span>
+<span class="co">#&gt;      1    13  279</span></code></pre></div>
+<p>Siin, 0.5-se <em>cut-off</em>-iga tõenäosuse tabelis on meil 204 ahvi tõmmanud vasakule, samas kui mudel on ennustanud tõmmet paremale. Lisaks on 279 ahvi tõmmanud vasakule kooskõlas mudeli ennustusele, 8 ahvi on tõmmanud paremale kooskõlas mudeli ennustusega ja 13 ahvi on tõmmanud paremale hoolimata mudeli vastupidisest ennustusest.</p>
+<ol style="list-style-type: decimal">
+<li>tüüpi vigade sagedus on seega 204/(204+279)=0.42 ja 2. tüüpi vigade sagedus on 13/(8+13) = 0.61. Seega on sellel <em>cut-off</em>-il sensitiivsus 1 - 0.61 = 0.39 ja spetsiifilisus 1 - 0.42 = 0.58.</li>
+</ol>
+<p>Roc kurv plotib mudeli ennususte sensitiivsuse ja spetsiifilisuse kõigil cut-offi väärtustel.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pROC)
 roccurve &lt;-<span class="st"> </span><span class="kw">roc</span>(chimpanzees<span class="op">$</span>pulled_left <span class="op">~</span><span class="st"> </span>glm.probs)
-<span class="kw">plot</span>(roccurve, <span class="dt">legacy.axes =</span> <span class="ot">TRUE</span>, <span class="dt">cex.axis =</span> <span class="fl">0.7</span>, <span class="dt">cex.lab =</span> <span class="fl">0.8</span>)</code></pre></div>
+<span class="kw">plot</span>(roccurve, <span class="dt">cex.axis =</span> <span class="fl">0.7</span>, <span class="dt">cex.lab =</span> <span class="fl">0.8</span>)</code></pre></div>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-132-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>Nagu näha, kui spetsiifilisus on kõrge, siis sensitiivsus on madal ja vastupidi. See on alati nii. Fakt, et kurv ei kaugene kuigi palju keskjoonest, mis tähistab loll-mudeli ennustuse 50%-st tabavust, näitab et meie ennustuste kvaliteet on tagasihoidlik. <em>Area under the curve</em> ehk <em>auc</em> ütleb, et ennustuse tabavus on 59%.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">auc</span>(roccurve)
+<span class="co">#&gt; Area under the curve: 0.592</span></code></pre></div>
 <p>Sarnase mudeli saab fittida ka siis, kui n&gt;1 ja meil on igale ahvile countide suhted nr of pull-left/total pulls. Nüüd on meil vaja lisada trials(), kuhu läheb n kas ühe numbrina või muutujana, mis indekseerib sündmuste arvu ehk n-i. Antud juhul on kõikidel ahvidel katsete arv (n) 18.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chimp_aggr &lt;-<span class="st"> </span><span class="kw">select</span>(chimpanzees, actor, condition, prosoc_left, pulled_left) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(actor, condition, prosoc_left) <span class="op">%&gt;%</span>
@@ -856,10 +865,10 @@ post <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mut
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> applicant.gender), <span class="dt">position =</span> pd) <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;Proportion admitted&quot;</span>,
        <span class="dt">title =</span> <span class="st">&quot;Posterior validation check&quot;</span>) </code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-146-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-147-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Ohhoo, kui vaadata deparmente eraldi, pole mingit kinnitust, et meestel oleks paremad võimalused ülikooli sisse saada.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">marginal_effects</span>(m_ucadmit2, <span class="dt">effects =</span><span class="st">&quot;dept&quot;</span>, <span class="dt">conditions =</span> <span class="kw">data.frame</span>(<span class="dt">male =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)))</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-147-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-148-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="y-muutujal-3-kategoorilist-vaartust" class="section level3">
@@ -897,7 +906,7 @@ pred1_l &lt;-<span class="st"> </span>pred1_l <span class="op">%&gt;%</span><spa
                               variable <span class="op">==</span><span class="st"> &quot;P(Y = 3)&quot;</span> <span class="op">~</span><span class="st"> &quot;career 3&quot;</span>))
 <span class="kw">ggplot</span>(pred1_l, <span class="kw">aes</span>(income, value)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>variable)<span class="op">+</span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Pr of career choice at a given income&quot;</span>) </code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-151-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-152-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="zero-inflated-mudelid" class="section level3">
 <h3><span class="header-section-number">20.4.3</span> zero inflated mudelid</h3>

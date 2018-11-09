@@ -609,12 +609,12 @@ predict_interval_brms2 <- predict(m2, newdata = newx, re_formula = NULL) %>%
   cbind(newx, .)
 head(predict_interval_brms2)
 #>   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5
-#> 1         1.00        3.06  setosa     4.49     0.318 3.86  5.13
-#> 2         1.04        3.06  setosa     4.52     0.326 3.88  5.17
-#> 3         1.08        3.06  setosa     4.55     0.326 3.91  5.17
-#> 4         1.12        3.06  setosa     4.58     0.321 3.93  5.21
-#> 5         1.16        3.06  setosa     4.62     0.316 4.00  5.23
-#> 6         1.20        3.06  setosa     4.65     0.315 4.04  5.28
+#> 1         1.00        3.06  setosa     4.50     0.316 3.88  5.12
+#> 2         1.04        3.06  setosa     4.51     0.316 3.91  5.12
+#> 3         1.08        3.06  setosa     4.55     0.319 3.94  5.19
+#> 4         1.12        3.06  setosa     4.59     0.321 3.95  5.23
+#> 5         1.16        3.06  setosa     4.61     0.318 3.97  5.24
+#> 6         1.20        3.06  setosa     4.63     0.313 4.02  5.23
 ```
 
 `predict()` ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele
@@ -1406,7 +1406,7 @@ plot(y~x)
 
 <img src="17_brms_files/figure-html/unnamed-chunk-118-1.png" width="70%" style="display: block; margin: auto;" />
 
-Kui me mudeli y = a + bx korral muudame x-i ühe ühiku võrra muutuvad log-odds-id b võrra. Teisisõnu võime korrutada lineaarses skaalas *odds*-id exp(b)-ga. Kuna P(Y = 1 | X) ja X-i seos ei ole sirge, siis b ei vasta P(Y = 1 | X) muutusele X-i muutumisel ühe ühiku võrra. See, kui kiiresti P(Y = 1 | X) muutub, sõltub X-i väärtusest, aga hoolimata sellest, senikaua kui b > 0, on X-i kasv alati seotud tõenäosuse kasvuga (ja vastupidi). 
+Kui me mudeli y = a + bx korral muudame x-i ühe ühiku võrra, muutuvad log-odds-id b võrra. Teisisõnu võime korrutada lineaarses skaalas *odds*-id exp(b)-ga. Kuna P(Y = 1 | X) ja X-i seos ei ole sirge, siis b ei vasta P(Y = 1 | X) muutusele X-i muutumisel ühe ühiku võrra. See, kui kiiresti P(Y = 1 | X) muutub, sõltub X-i väärtusest, aga hoolimata sellest, senikaua kui b > 0, on X-i kasv alati seotud tõenäosuse kasvuga (ja vastupidi). 
  
 
 Kahe tõenäosuse logitite vahe on sama, mis logaritm *odds-ratio*-st (log(OR) ehk shanside suhe)
@@ -1434,7 +1434,7 @@ $$OR = \frac {a/b}{c/d}$$
 * OR < 1 Katsetingimus langetab väljundi *odds*-e
 
 Logistiline regressioon üldistab OR-i kaugemale 2st binaarsest muutujast.
-Kui meil on binaarne y-muutuja ja binaarne x-muutuja (x1), pluss rida teisi x-muutujaid (x2...xn), siis mitmese logistilise regressiooni x1-e tõusukoefitsient b1 on seotud tingimusliku OR-ga. $\exp(\beta_1)$ annab Y ja X vahelise OR-i, tingimusel, et teiste x-muutujate väärtused on fikseeritud (see on tavaline sõltumatute muutujatega lineaarse regressiooni beta-koefitsientide tõlgendamise tingimus). 
+Kui meil on binaarne y-muutuja ja binaarne x-muutuja ($x_1$), pluss rida teisi x-muutujaid ($x_2...x_n$), siis mitmese logistilise regressiooni x1-e tõusukoefitsient $\beta_1$ on seotud tingimusliku OR-ga. $\exp(\beta_1)$ annab Y ja X vahelise OR-i, tingimusel, et teiste X-muutujate väärtused on fikseeritud (see on tavaline sõltumatute muutujatega lineaarse regressiooni beta-koefitsientide tõlgendamise tingimus). 
 
     OR-i kui suhtelise efekti suuruse tõlgendamine sõltub sündmuse y = 1 
     baastõenäosusest. Näiteks kui surm põhjusel x on tavapäraselt väga 
@@ -1478,7 +1478,7 @@ skim(chimpanzees)
 ```
 
 
-#### Intercept only model
+#### Intercept-only mudel
 
 
 ```r
@@ -1490,9 +1490,6 @@ write_rds(m_logreg_1, path= "data/m_logreg_1.fit")
 ```
 
 
-```r
-m_logreg_1 <- read_rds("data/m_logreg_1.fit")
-```
 
 
 ```r
@@ -1525,9 +1522,6 @@ write_rds(m_logreg_2, path= "data/m_logreg_2.fit")
 
 
 
-```r
-m_logreg_2 <- read_rds("data/m_logreg_2.fit")
-```
 
 
 ```r
@@ -1546,11 +1540,11 @@ exp(0.57)
 ```
 Proportsionaalne odds = 1.76 kujutab endast suhet kahest tõenäosusest - et sündmus toimub (y=1) ja et sündmus ei toimu (y=0).
 
-Kui prediktori prosoc_left väärtus muutumine 0-st 1-ks tõstab y=1 sündmuse *log-odds*-i 0.57 võrra, siis kasvab proportsionaalselt exp(0.57) = 1.76 ja *odds*, et toimub sündmus pull left ehk y=1 kasvab 73%.
+Kui prediktori prosoc_left väärtus muutumine 0-st 1-ks tõstab y=1 sündmuse *log-odds*-i 0.57 võrra, siis kasvab proportsionaalselt exp(0.57) = 1.76 ja *odds*, et toimub sündmus pull left ehk y=1 kasvab 77%.
 
 
-Tegelik tõenäosuse muutus sõltub ka interceptist (α) ja teistest prediktoritest. Logistiline regressioon erineb tavalisest lineaarsest regressioonist selle poolest, et see mudeldab igal juhul muutujate vahelisi interakstsioone. Kui α on piisavalt suur, et garanteerida sündmuse y=1 toimumine, siis ei tähenda odds-ide tõus 73% võrra suurt midagi. Oletame, et α = 4.  Siis on sündmuse tõenäosus, ignoreerides kõike muud  `inv_logit_scaled(4)` = 0.98. Lisades sinna beta hinnagu 0.57 saame: `inv_logit_scaled(4 + 0.57)` = 0.99. 
-See vastab 1% erinevusele, ehki on samas 73% kasv suhtelise odds-ühikutes. 
+Tegelik tõenäosuse muutus sõltub ka interceptist (α) ja teistest prediktoritest. Logistiline regressioon erineb tavalisest lineaarsest regressioonist selle poolest, et see mudeldab igal juhul muutujate vahelisi interakstsioone. Näiteks kui α on piisavalt suur, et garanteerida sündmuse y = 1 toimumine, siis ei tähenda *odds*-ide tõus 73% võrra suurt midagi. Oletame, et α = 4.  Siis on sündmuse tõenäosus, ignoreerides kõike muud  `inv_logit_scaled(4)` = 0.98. Lisades sinna beta hinnagu 0.57 saame: `inv_logit_scaled(4 + 0.57)` = 0.99. 
+See vastab 1% erinevusele, ehkki on samas 73% kasv suhtelise *odds*-i ühikutes. 
  
 
 
@@ -1560,40 +1554,58 @@ inv_logit_scaled(0.04562136 + 0.56590225)
 #> [1] 0.648
 ```
 
-Pr(Y=1) kui prosoc_left = 1, = 64%.
+Pr(Y = 1 | X = 1) = 64%.
 
 
 ```r
 inv_logit_scaled(0.04562136)
 #> [1] 0.511
 ```
-kui prosoc_left = 0, on see 51%.
+kui prosoc_left = 0, on Pr(Y = 1 | X = 0) = 51%.
 
-roc kurv peegeldab seda tagasihoidlikku erinevust.
+**ROC kõver peegeldab seda tagasihoidlikku erinevust.**
+
+Kui meil on binaarne (0/1) Y-mmutuja, siis ilma igasuguse ennustusjõuta loll mudel annab õige ennustuse pooltel juhtudest. Kui palju on meie mudel parem sellisest loll-mudelist? Sellele küsimusele annab granuleeritus vastuse roc kurv ja selle põhjal arvutatud *area under the curve* ehk auc.
+
+Kõigepealt valmistame nn *confusion maatriksi*. Selleks ennustame mudeli põhjal igale vaatlusele vastava pulled-left ehk Y = 1 tõenäosuse ja nende vaatluste puhul, mille Pr(Y=1) > 0.5, loeme ennustustatuks, et simpans tõmbab hooba vasakule. Siin on meie ennustuse *cut-off* 50%, aga see võiks olla ka teistsugune. Sõltuvalt sellest, kui palju me kardame eksida ühele või teisele poole (ennustada ekslikult, et Y=1 või magada maha tegelikke Y=1 sündmusi) peaksime iga kord valima oma hirme maksimaalselt maandava *cut-off*-i. 
+
+Kuna me teame, kuhu poole iga ahv igas katses tegelikult hooba tõmbas, on meil võimalik arvutada nii 1. tüüpi vigade (me ennustasime Y=1, aga tegelikult Y=0), kui ka vale-negatiivsete e 2. tüüpi vigade (me ennustasime Y = 0, aga tegelikult Y=1) sagedust. Loomulikult saame vigade sagedused arvutada kõikvõimalikele *cut-off*-idele. 
+
 
 ```r
 glm.probs <- predict(m_logreg_2, type = "response") %>% as.data.frame()
 #> Warning: Using 'binomial' families without specifying 'trials' on the left-
 #> hand side of the model formula is deprecated.
 glm.probs <- glm.probs[,1]
-glm.pred <- rep("pulled_right", 504)
-glm.pred[glm.probs > 0.5] <- "pulled_left" 
-table(glm.pred, chimpanzees$pulled_left)
-#>               
-#> glm.pred         0   1
-#>   pulled_left  202 279
-#>   pulled_right  10  13
+logit.pred <- factor(glm.probs > .5, levels=c(FALSE, TRUE),
+                      labels=c("right", "left"))
+ table(chimpanzees$pulled_left, logit.pred, dnn=c("Actual", "Predicted"))
+#>       Predicted
+#> Actual right left
+#>      0    10  202
+#>      1    13  279
 ```
 
+Siin, 0.5-se *cut-off*-iga tõenäosuse tabelis on meil 204 ahvi tõmmanud vasakule, samas kui mudel on ennustanud tõmmet paremale. Lisaks on 279 ahvi tõmmanud vasakule kooskõlas mudeli ennustusele, 8 ahvi on tõmmanud paremale kooskõlas mudeli ennustusega ja 13 ahvi on tõmmanud paremale hoolimata mudeli vastupidisest ennustusest.
+
+1. tüüpi vigade sagedus on seega 204/(204+279)=0.42 ja 2. tüüpi vigade sagedus on 13/(8+13) = 0.61. Seega on sellel *cut-off*-il sensitiivsus 1 - 0.61 = 0.39 ja spetsiifilisus 1 - 0.42 = 0.58.
+
+Roc kurv plotib mudeli ennususte sensitiivsuse ja spetsiifilisuse kõigil cut-offi väärtustel. 
 
 ```r
 library(pROC)
 roccurve <- roc(chimpanzees$pulled_left ~ glm.probs)
-plot(roccurve, legacy.axes = TRUE, cex.axis = 0.7, cex.lab = 0.8)
+plot(roccurve, cex.axis = 0.7, cex.lab = 0.8)
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-132-1.png" width="70%" style="display: block; margin: auto;" />
 
+Nagu näha, kui spetsiifilisus on kõrge, siis sensitiivsus on madal ja vastupidi. See on alati nii. Fakt, et kurv ei kaugene kuigi palju keskjoonest, mis tähistab loll-mudeli ennustuse 50%-st tabavust, näitab et meie ennustuste kvaliteet on tagasihoidlik. *Area under the curve* ehk *auc* ütleb, et ennustuse tabavus on 59%.
+
+```r
+auc(roccurve)
+#> Area under the curve: 0.592
+```
 
 Sarnase mudeli saab fittida ka siis, kui n>1 ja meil on igale ahvile countide suhted nr of pull-left/total pulls. Nüüd on meil vaja lisada trials(), kuhu läheb n kas ühe numbrina või muutujana, mis indekseerib sündmuste arvu ehk n-i. Antud juhul on kõikidel ahvidel katsete arv (n) 18.
 
@@ -1738,7 +1750,7 @@ predict(m_ucadmit2) %>%
        title = "Posterior validation check") 
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-146-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="17_brms_files/figure-html/unnamed-chunk-147-1.png" width="70%" style="display: block; margin: auto;" />
 
 Ohhoo, kui vaadata deparmente eraldi, pole mingit kinnitust, et meestel oleks paremad võimalused ülikooli sisse saada.
 
@@ -1747,7 +1759,7 @@ Ohhoo, kui vaadata deparmente eraldi, pole mingit kinnitust, et meestel oleks pa
 marginal_effects(m_ucadmit2, effects ="dept", conditions = data.frame(male = c(0, 1)))
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-147-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="17_brms_files/figure-html/unnamed-chunk-148-1.png" width="70%" style="display: block; margin: auto;" />
 
 ### y muutujal 3+ kategoorilist väärtust
 
@@ -1802,7 +1814,7 @@ ggplot(pred1_l, aes(income, value)) + geom_point() + facet_wrap(~variable)+
   ylab("Pr of career choice at a given income") 
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-151-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="17_brms_files/figure-html/unnamed-chunk-152-1.png" width="70%" style="display: block; margin: auto;" />
  
 
 ### zero inflated mudelid
