@@ -646,26 +646,27 @@ iris_imp3 &lt;-<span class="st"> </span><span class="kw">brm</span>(bform, <span
 <p>Me teeme n katset ja kodeerime iga eduka katse 1-ga ja mitteeduka katse 0-ga. Kui n=1, siis y on ühtedest ja nullidest koosnev vektor (muutuja) ja p on tõenäosus, et suvaline katse annab tulemuseks 1-e. Eeldades logistilist transformatsiooni on siin tegu logistilise regressiooniga. Kui n &gt; 1 (ja ikka eeldades logistilist transformatsiooni), siis on tegu aggregeeritud binoomse logistilise regressiooniga. Me lahendame allpool need mõlemad.</p>
 <div id="logistiline-regressioon" class="section level3">
 <h3><span class="header-section-number">20.4.1</span> Logistiline regressioon</h3>
-<p>Tavalises lineaarses regressioonis on tavapärane, et kuigi me ennustame pidevat y-muutujat, on kas osad või kõik X-muutujad mittepidevad. Sellest pole kurja, meie mudelid jooksevad võrdselt hästi pidevate ja mittepidevate (binaarsete) prediktoritega. (Binaarsed muutujad võivad omada kaht diskreetset väärtust, mida kodeerime 1 ja 0-na). Aga kuidas käituda, kui meie poolt ennustatav Y-muutuja on binaarne? Kui me püüame ennustada binaarse y-muutuja oodatavaid väärtusi tõenäosustena, ehk 1-de arvu suhet katsete koguarvu, kas siis tavaline lineaarne regressioon enam ei tööta? Töötab küll, aga paraku ei ole garanteeritud, et mudeli ennustused jäävad 0 ja 1 vahele, ehk tõenäosuste skaalasse. Seda tagab logistiline regressioon. Logistilises regressioonis ei modelleeri me mitte otse y väärtusi (1 ja 0) erinevatel x-i väärtustel, vaid tõenäosust P(Y = 1 | X) [tõenäosus, et Y = 1, fikseeritud x-i väärtusel].</p>
-<p>Logistiline regressioon töötab tänu logistilisele transformatsioonile. Näiteks logistiline transformatsioon funktsioonile <span class="math inline">\(y = a + bx\)</span> näeb välja niimoodi <span class="math display">\[y=\frac{exp(a + bx)}{1 + exp(a + bx)}\]</span></p>
+<p>Tavalises lineaarses regressioonis on tavapärane, et kuigi me ennustame pidevat y-muutujat, on kas osad või kõik X-muutujad mittepidevad. Sellest pole kurja, meie mudelid jooksevad nii pidevate kui mittepidevate (binaarsete) prediktoritega. (Binaarsed muutujad võivad omada kaht diskreetset väärtust, mida kodeerime 1 ja 0-na) Me eeldame küll, et y-muutuja on normaalne, aga ei eelda midagi sellist x-muutujate ehk prediktorite kohta. Samuti on lubatud prediktorite mitte-lineaarsed funktsioonid, nagu <span class="math inline">\(X_1 X_2\)</span> või <span class="math inline">\(X^2\)</span>, senikaua kui regressioonivõrrandi parameetrid (a, b1, … bn) on lineaarsetes additiivsetes suhetes.</p>
+<p>Aga kuidas käituda, kui meie poolt ennustataval Y-muutujal on vaid kaks võimalikku väärtust, 0 ja 1, ning ta on binoomjatusega? Kui me püüame ennustada binaarse y-muutuja oodatavaid väärtusi tõenäosustena, ehk 1-de arvu suhet katsete koguarvu, siis tavaline lineaarne regressioon ei garanteeri, et ennustused jäävad 0 ja 1 vahele, ehk tõenäosuste skaalasse.</p>
+<p>Kui me eespool õppisime transformeerima andmeid, et paremini täita regressiooni eeldusi (lineaarsust ja normaalsust), siis selleks, et suruda mudeli ennustused tõenäosusskaalasse ei transformeeri me mitte andmeid, vaid mudeli võrrandit ennast. Selliste transformeeritud mudelite ehk GLM-ide levinuim näide on logistilise regressiooni mudel. Logistilises regressioonis ei modelleeri me mitte otse y väärtusi (1 ja 0) erinevatel x-i väärtustel, vaid tõenäosust P(Y = 1 | X) [loe: tõenäosus, et Y = 1, eeldades kindlat x-i väärtust].</p>
+<p>Logistiline regressioon kasutab logistilist transformatsiooni, mis näiteks funktsioonile <span class="math inline">\(y = a + bx\)</span> on</p>
+<p><span class="math display">\[y=\frac{exp(a + bx)}{1 + exp(a + bx)}\]</span></p>
 <pre><code>exp(a) tähendab &quot;e astmes a&quot;, kus e on Euleri arv, ehk arv, mille naturaal-logaritm = 1 
 (seega on e naturaal-logaritmi alus). e on umbes 2.71828 ja selle 
 saab valemist (1 + 1/n)^n, kui n läheneb lõpmatusele.</code></pre>
-<div id="logistiline-ja-logit-transformatsioon---definitsioonid" class="section level4">
-<h4><span class="header-section-number">20.4.1.1</span> Logistiline ja logit transformatsioon - definitsioonid</h4>
-<p>See peatükk aitab loogilisest regressioonist aru saada - aru pole aga tingimata vajalik selle meetodi edukaks kasutamiseks.</p>
-<p>Logistiline transformatsioon viib lineaarse regressiooni tavapärasest y-muutuja skaalast [−∞,+∞] tõenäosuste skaalasse [0,1], andes meile sirge asemele S-kujulise kurvi, mis läheneb asümptootiliselt ühelt poolt 0-le ja teiselt poolt 1-le. Logistilise funktsiooni põõrdväärtus on logit funktsioon, mis annab “<em>odds</em>-i” ehk shansi ehk kihlveosuhted tõenäosusele p: <span class="math inline">\(odds = \frac {p}{1 − p}\)</span>. Tõenäosuse p logit ehk logit(p) on sama, mis log(odds):</p>
+<p>Logistiline transformatsioon viib lineaarse regressiooni tavapärasest y-muutuja skaalast [−∞,+∞] tõenäosuste skaalasse [0,1], andes sirge asemele S-kujulise kurvi, mis läheneb asümptootiliselt ühelt poolt 0-le ja teiselt poolt 1-le. Logistilise funktsiooni põõrdväärtus on logit funktsioon, mis annab “<em>odds</em>-i” ehk shansi ehk kihlveosuhte tõenäosusele p: <span class="math inline">\(odds = \frac {p}{1 − p}\)</span>. Tõenäosuse p logit ehk logit(p) on sama, mis log(odds):</p>
 <p><span class="math display">\[logit(p)=\log \left({\frac {p}{1-p}}\right)=\log(p)-\log(1-p)\]</span></p>
-<p>Meie y = a + bx mudeli korral oma tavalises meetrilises skaalas on <em>odds</em> exponent meie fititud lineaarsest mudelist:</p>
+<p>y = a + bx mudeli korral tavalises meetrilises skaalas on <em>odds</em> exponent fititud lineaarsest mudelist:</p>
 <p><span class="math display">\[odds= \frac {P(Y = 1 ~|~ X)}{1-P(Y = 1 ~|~ X)} = exp(a+bx)\]</span></p>
-<p>Näiteks tõenäosus 0.2 (20%) tähendab, et <span class="math inline">\(odds = 0.2/(1 - 0.2) = 1/4\)</span> ehk üks neljale ja tõenäosus 0.9 tähendab, et <span class="math inline">\(odds = 0.9/(1 - 0.9) = 9\)</span> ehk üheksa ühele. Sellel viisil töötavad näiteks hipodroomid, sest nii on mänguril lihtne näha, et kui kihlveokontori poolt mingile hobusele omistatud odds on näiteks üks nelja vastu ja te maksate kihlveo sõlmimisel 1 euro, siis saab võidu korral 4 eurot kasu (ehk 5 eurose kupüüri). Logaritm <em>odds</em>-idest ongi logit transformatsioon, mille pöördväärtus on omakorda logistiline transformatsioon!</p>
+<p>ja ekvivalentselt <span class="math inline">\(log(odds) = a + bx\)</span>. Matemaatiliselt pole vahet, kas me transformeerime prediktorid logistilise funktsiooniga või ennustatava muutuja logit funktsiooniga – need on sama asja erinevad kirjeldused.</p>
+<p>Kuidas suhtuvad <em>odds</em>-d tõenäosustesse? Näiteks tõenäosus 0.2 (20%) tähendab, et <span class="math inline">\(odds = 0.2/(1 - 0.2) = 1/4\)</span> ehk üks neljale ja tõenäosus 0.9 tähendab, et <span class="math inline">\(odds = 0.9/(1 - 0.9) = 9\)</span> ehk üheksa ühele. <em>Odds</em>-e kasutavad näiteks hipodroomid, sest nii on mänguril lihtne näha, et kui kihlveokontori poolt mingile hobusele omistatud odds on näiteks üks nelja vastu ja ta maksab kihlveo sõlmimisel 1 euro, siis ta saab võidu korral 4 eurot kasu (ehk 5 eurose kupüüri). Logaritm <em>odds</em>-idest ongi logit transformatsioon, mille pöördväärtus on omakorda logistiline transformatsioon!</p>
 <p>Suvalise arvu α logistiline funktsioon on logiti põõrdväärtus:</p>
 <p><span class="math display">\[logit^{-1}\alpha=logistic (\alpha)={\frac {exp (\alpha) }{1+ exp (\alpha)}}\]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="op">-</span><span class="dv">10</span><span class="op">:</span><span class="dv">10</span>
 y &lt;-<span class="st"> </span><span class="kw">exp</span>(x)<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(x))
 <span class="kw">plot</span>(y<span class="op">~</span>x)</code></pre></div>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-118-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>Kui me mudeli y = a + bx korral muudame x-i ühe ühiku võrra, muutuvad log-odds-id b võrra. Teisisõnu võime korrutada lineaarses skaalas <em>odds</em>-id exp(b)-ga. Kuna P(Y = 1 | X) ja X-i seos ei ole sirge, siis b ei vasta P(Y = 1 | X) muutusele X-i muutumisel ühe ühiku võrra. See, kui kiiresti P(Y = 1 | X) muutub, sõltub X-i väärtusest, aga hoolimata sellest, senikaua kui b &gt; 0, on X-i kasv alati seotud tõenäosuse kasvuga (ja vastupidi).</p>
+<p>Kui me logistilise regressiooniga fititud mudeli y = a + bx korral muudame x-i väärtust ühe ühiku võrra, siis muutuvad <em>log-odds</em>-id b võrra. Sama hästi võime korrutada lineaarses skaalas <em>odds</em>-id exp(b)-ga. Samas b ei vasta P(Y = 1 | X) muutusele X-i muutumisel ühe ühiku võrra. See, kui kiiresti P(Y = 1 | X) muutub, sõltub X-i väärtusest. Siiski, senikaua kuni b &gt; 0, kaasneb X-i kasvuga alati tõenäosuse P(Y = 1) kasv (ja vastupidi).</p>
 <p>Kahe tõenäosuse logitite vahe on sama, mis logaritm <em>odds-ratio</em>-st (log(OR) ehk shanside suhe)</p>
 <p><span class="math display">\[{log} (OR)= {logit} (p_{1})- {logit} (p_{2})\]</span></p>
 <p><strong>Odds-ratio</strong></p>
@@ -682,14 +683,13 @@ y &lt;-<span class="st"> </span><span class="kw">exp</span>(x)<span class="op">/
 <li><p>OR &gt; 1 Katsetingimus tõstab väljundi <em>odds</em>-e</p></li>
 <li><p>OR &lt; 1 Katsetingimus langetab väljundi <em>odds</em>-e</p></li>
 </ul>
-<p>Logistiline regressioon üldistab OR-i kaugemale 2st binaarsest muutujast. Kui meil on binaarne y-muutuja ja binaarne x-muutuja (<span class="math inline">\(x_1\)</span>), pluss rida teisi x-muutujaid (<span class="math inline">\(x_2...x_n\)</span>), siis mitmese logistilise regressiooni x1-e tõusukoefitsient <span class="math inline">\(\beta_1\)</span> on seotud tingimusliku OR-ga. <span class="math inline">\(\exp(\beta_1)\)</span> annab Y ja X vahelise OR-i, tingimusel, et teiste X-muutujate väärtused on fikseeritud (see on tavaline sõltumatute muutujatega lineaarse regressiooni beta-koefitsientide tõlgendamise tingimus).</p>
+<p>Logistiline regressioon üldistab OR-i kaugemale kahest binaarsest muutujast. Kui meil on binaarne y-muutuja ja binaarne x-muutuja (<span class="math inline">\(X_1\)</span>), pluss rida teisi x-muutujaid (<span class="math inline">\(X_2...X_n\)</span>), siis mitmese logistilise regressiooni <span class="math inline">\(X_1\)</span>-e tõusukoefitsient <span class="math inline">\(\beta_1\)</span> on seotud tingimusliku OR-ga. <span class="math inline">\(\exp(\beta_1)\)</span> annab Y ja X vahelise OR-i, tingimusel, et teiste X-muutujate väärtused on fikseeritud (see on tavaline sõltumatute muutujatega lineaarse regressiooni beta-koefitsientide tõlgendamise tingimus).</p>
 <pre><code>OR-i kui suhtelise efekti suuruse tõlgendamine sõltub sündmuse y = 1 
 baastõenäosusest. Näiteks kui surm põhjusel x on tavapäraselt väga 
 haruldane ja mingi keskkonnamõju annab OR = 10, siis tegelik tõus 
 suremuses (surma tõenäosus keskkonnamõju tingimustes) võib olla tühine. </code></pre>
-</div>
 <div id="logistiline-regressioon-brms-s" class="section level4">
-<h4><span class="header-section-number">20.4.1.2</span> Logistiline regressioon brms-s</h4>
+<h4><span class="header-section-number">20.4.1.1</span> Logistiline regressioon brms-s</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rethinking)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(chimpanzees)
 <span class="kw">skim</span>(chimpanzees)
@@ -717,8 +717,8 @@ suremuses (surma tõenäosus keskkonnamõju tingimustes) võib olla tühine. </c
 <span class="co">#&gt;  ▇▇▇▇▁▇▇▇</span>
 <span class="co">#&gt;  ▇▇▇▇▇▇▇▇</span></code></pre></div>
 </div>
-<div id="intercept-only-mudel" class="section level4">
-<h4><span class="header-section-number">20.4.1.3</span> Intercept-only mudel</h4>
+<div id="intercept-i-mudel" class="section level4">
+<h4><span class="header-section-number">20.4.1.2</span> Intercept-i mudel</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m_logreg_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">brm</span>(<span class="dt">data =</span> chimpanzees, 
                   <span class="dt">family =</span> binomial,
                   pulled_left <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,
@@ -748,7 +748,7 @@ suremuses (surma tõenäosus keskkonnamõju tingimustes) võib olla tühine. </c
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">exp</span>(<span class="fl">0.57</span>)
 <span class="co">#&gt; [1] 1.77</span></code></pre></div>
 <p>Proportsionaalne odds = 1.76 kujutab endast suhet kahest tõenäosusest - et sündmus toimub (y=1) ja et sündmus ei toimu (y=0).</p>
-<p>Kui prediktori prosoc_left väärtus muutumine 0-st 1-ks tõstab y=1 sündmuse <em>log-odds</em>-i 0.57 võrra, siis kasvab proportsionaalselt exp(0.57) = 1.76 ja <em>odds</em>, et toimub sündmus pull left ehk y=1 kasvab 77%.</p>
+<p>Kui prediktori prosoc_left väärtus muutumine 0-st 1-ks tõstab y=1 sündmuse <em>log-odds</em>-i 0.57 võrra, siis kasvab proportsionaalselt exp(0.57) = 1.76 ja <em>odds</em>, et toimub sündmus pull left ehk y=1 kasvab 76%.</p>
 <p>Tegelik tõenäosuse muutus sõltub ka interceptist (α) ja teistest prediktoritest. Logistiline regressioon erineb tavalisest lineaarsest regressioonist selle poolest, et see mudeldab igal juhul muutujate vahelisi interakstsioone. Näiteks kui α on piisavalt suur, et garanteerida sündmuse y = 1 toimumine, siis ei tähenda <em>odds</em>-ide tõus 73% võrra suurt midagi. Oletame, et α = 4. Siis on sündmuse tõenäosus, ignoreerides kõike muud <code>inv_logit_scaled(4)</code> = 0.98. Lisades sinna beta hinnagu 0.57 saame: <code>inv_logit_scaled(4 + 0.57)</code> = 0.99. See vastab 1% erinevusele, ehkki on samas 73% kasv suhtelise <em>odds</em>-i ühikutes.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">inv_logit_scaled</span>(<span class="fl">0.04562136</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.56590225</span>)
 <span class="co">#&gt; [1] 0.648</span></code></pre></div>
@@ -757,7 +757,7 @@ suremuses (surma tõenäosus keskkonnamõju tingimustes) võib olla tühine. </c
 <span class="co">#&gt; [1] 0.511</span></code></pre></div>
 <p>kui prosoc_left = 0, on Pr(Y = 1 | X = 0) = 51%.</p>
 <p><strong>ROC kõver peegeldab seda tagasihoidlikku erinevust.</strong></p>
-<p>Kui meil on binaarne (0/1) Y-mmutuja, siis ilma igasuguse ennustusjõuta loll mudel annab õige ennustuse pooltel juhtudest. Kui palju on meie mudel parem sellisest loll-mudelist? Sellele küsimusele annab granuleeritus vastuse roc kurv ja selle põhjal arvutatud <em>area under the curve</em> ehk auc.</p>
+<p>Kui meil on binaarne (0/1) Y-mmutuja, siis ilma igasuguse ennustusjõuta loll mudel annab õige ennustuse pooltel juhtudest. Kui palju on meie mudel parem sellisest loll-mudelist? Sellele küsimusele annab granuleeritud vastuse roc kurv ja selle põhjal arvutatud <em>area under the curve</em> ehk auc.</p>
 <p>Kõigepealt valmistame nn <em>confusion maatriksi</em>. Selleks ennustame mudeli põhjal igale vaatlusele vastava pulled-left ehk Y = 1 tõenäosuse ja nende vaatluste puhul, mille Pr(Y=1) &gt; 0.5, loeme ennustustatuks, et simpans tõmbab hooba vasakule. Siin on meie ennustuse <em>cut-off</em> 50%, aga see võiks olla ka teistsugune. Sõltuvalt sellest, kui palju me kardame eksida ühele või teisele poole (ennustada ekslikult, et Y=1 või magada maha tegelikke Y=1 sündmusi) peaksime iga kord valima oma hirme maksimaalselt maandava <em>cut-off</em>-i.</p>
 <p>Kuna me teame, kuhu poole iga ahv igas katses tegelikult hooba tõmbas, on meil võimalik arvutada nii 1. tüüpi vigade (me ennustasime Y=1, aga tegelikult Y=0), kui ka vale-negatiivsete e 2. tüüpi vigade (me ennustasime Y = 0, aga tegelikult Y=1) sagedust. Loomulikult saame vigade sagedused arvutada kõikvõimalikele <em>cut-off</em>-idele.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">glm.probs &lt;-<span class="st"> </span><span class="kw">predict</span>(m_logreg_<span class="dv">2</span>, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()
@@ -773,8 +773,11 @@ logit.pred &lt;-<span class="st"> </span><span class="kw">factor</span>(glm.prob
 <span class="co">#&gt;      1    13  279</span></code></pre></div>
 <p>Siin, 0.5-se <em>cut-off</em>-iga tõenäosuse tabelis on meil 204 ahvi tõmmanud vasakule, samas kui mudel on ennustanud tõmmet paremale. Lisaks on 279 ahvi tõmmanud vasakule kooskõlas mudeli ennustusele, 8 ahvi on tõmmanud paremale kooskõlas mudeli ennustusega ja 13 ahvi on tõmmanud paremale hoolimata mudeli vastupidisest ennustusest.</p>
 <ol style="list-style-type: decimal">
-<li>tüüpi vigade sagedus on seega 204/(204+279)=0.42 ja 2. tüüpi vigade sagedus on 13/(8+13) = 0.61. Seega on sellel <em>cut-off</em>-il sensitiivsus 1 - 0.61 = 0.39 ja spetsiifilisus 1 - 0.42 = 0.58.</li>
+<li><p>tüüpi vigade sagedus on seega 204/(204+279)=0.42 ja</p></li>
+<li><p>tüüpi vigade sagedus on 13/(8+13) = 0.61.</p></li>
 </ol>
+<p>Seega on sellel <em>cut-off</em>-il sensitiivsus 1 - 0.61 = 0.39 ja spetsiifilisus 1 - 0.42 = 0.58.</p>
+<p>Klassifitseerimise täpsus <em>cut-off</em>-il 0.5 on (8+279)/(8+204+13+279) = 0.57</p>
 <p>Roc kurv plotib mudeli ennususte sensitiivsuse ja spetsiifilisuse kõigil cut-offi väärtustel.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pROC)
 roccurve &lt;-<span class="st"> </span><span class="kw">roc</span>(chimpanzees<span class="op">$</span>pulled_left <span class="op">~</span><span class="st"> </span>glm.probs)
