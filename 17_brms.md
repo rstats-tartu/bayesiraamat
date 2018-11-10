@@ -609,12 +609,12 @@ predict_interval_brms2 <- predict(m2, newdata = newx, re_formula = NULL) %>%
   cbind(newx, .)
 head(predict_interval_brms2)
 #>   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5
-#> 1         1.00        3.06  setosa     4.50     0.320 3.88  5.12
-#> 2         1.04        3.06  setosa     4.53     0.314 3.90  5.16
-#> 3         1.08        3.06  setosa     4.56     0.322 3.94  5.21
-#> 4         1.12        3.06  setosa     4.58     0.317 3.99  5.20
-#> 5         1.16        3.06  setosa     4.60     0.324 3.98  5.24
-#> 6         1.20        3.06  setosa     4.65     0.318 4.02  5.27
+#> 1         1.00        3.06  setosa     4.49     0.321 3.82  5.12
+#> 2         1.04        3.06  setosa     4.53     0.311 3.92  5.15
+#> 3         1.08        3.06  setosa     4.55     0.311 3.95  5.17
+#> 4         1.12        3.06  setosa     4.58     0.315 3.97  5.21
+#> 5         1.16        3.06  setosa     4.61     0.319 3.97  5.23
+#> 6         1.20        3.06  setosa     4.64     0.317 4.02  5.25
 ```
 
 `predict()` ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele
@@ -1370,16 +1370,16 @@ Kui n > 1 (ja ikka eeldades logistilist transformatsiooni), siis on tegu aggrege
  
 ### Logistiline regressioon
 
-Tavalises lineaarses regressioonis on tavapärane, et kuigi me ennustame pidevat y-muutujat, on kas osad või kõik X-muutujad mittepidevad. Sellest pole kurja, meie mudelid jooksevad  nii pidevate kui mittepidevate (binaarsete) prediktoritega. (Binaarsed muutujad võivad omada kaht diskreetset väärtust, mida kodeerime 1 ja 0-na) Me eeldame küll, et y-muutuja on normaalne, aga ei eelda midagi sellist x-muutujate ehk prediktorite kohta. Samuti on lubatud prediktorite mitte-lineaarsed funktsioonid, nagu $X_1 X_2$ või $X^2$, senikaua kui regressioonivõrrandi parameetrid (a, b1, ... bn) on lineaarsetes additiivsetes suhetes. 
+Tavalises lineaarses regressioonis on tavapärane, et kuigi me ennustame pidevat y-muutujat, on kas osad või kõik X-muutujad mittepidevad. Sellest pole kurja, meie mudelid jooksevad  nii pidevate kui mittepidevate (binaarsete) prediktoritega. (Binaarsed muutujad võivad omada kaht diskreetset väärtust, mida kodeerime 1 ja 0-na) Me eeldame küll, et y-muutuja on normaalne, aga ei eelda midagi sellist x-muutujate ehk prediktorite kohta. Samuti on lubatud prediktorite mitte-lineaarsed funktsioonid, nagu $X_1 X_2$ või $X^2$, senikaua kui regressioonivõrrandi parameetrid ($a$, $b_1$, ... $b_n$) on lineaarsetes additiivsetes suhetes. 
 
-Aga kuidas käituda, kui meie poolt ennustataval Y-muutujal on vaid kaks võimalikku väärtust, 0 ja 1, ning ta on binoomjatusega? Kui me püüame ennustada binaarse y-muutuja oodatavaid väärtusi tõenäosustena, ehk 1-de arvu suhet katsete koguarvu, siis tavaline lineaarne regressioon ei garanteeri, et ennustused jäävad 0 ja 1 vahele, ehk tõenäosuste skaalasse. 
+Aga kuidas käituda, kui meie poolt ennustataval Y-muutujal on vaid kaks võimalikku väärtust, 0 ja 1, ning ta on binoomjatusega? Kui me püüame ennustada binaarse y-muutuja oodatavaid väärtusi tõenäosustena, ehk 1-de arvu suhet katsete koguarvu, siis tavaline lineaarne regressioon ei garanteeri, et ennustused jäävad 0 ja 1 vahele, ehk tõenäosuste skaalasse.  
 
-Kui me eespool õppisime transformeerima andmeid, et paremini täita regressiooni eeldusi (lineaarsust ja normaalsust), siis selleks, et suruda mudeli ennustused tõenäosusskaalasse ei transformeeri me mitte andmeid, vaid mudeli võrrandit ennast. 
-Selliste transformeeritud mudelite ehk GLM-ide levinuim näide on logistilise regressiooni mudel. Logistilises regressioonis ei modelleeri me mitte otse y väärtusi (1 ja 0) erinevatel x-i väärtustel, vaid tõenäosust P(Y = 1 | X) [loe: tõenäosus, et Y = 1, eeldades kindlat x-i väärtust]. 
+Kui eespool õppisime transformeerima andmeid, et paremini täita regressiooni eeldusi (lineaarsust ja normaalsust), siis selleks, et suruda mudeli ennustused tõenäosusskaalasse ei transformeeri me mitte andmeid, vaid mudeli võrrandit ennast. 
+Selliste transformeeritud mudelite ehk GLM-ide (*Generalized Linear Model*) levinuim näide on logistilise regressiooni mudel. Logistilises regressioonis ei modelleeri me mitte otse y väärtusi (1 ja 0) erinevatel x-i väärtustel, vaid tõenäosust P(Y = 1 | X) [loe: tõenäosus, et Y = 1, eeldades kindlat x-i väärtust]. 
 
 Logistiline regressioon kasutab logistilist transformatsiooni, mis näiteks funktsioonile $y = a + bx$ on
 
-$$y=\frac{exp(a + bx)}{1 + exp(a + bx)}$$ 
+$$P(Y = 1 | X) =\frac{exp(a + bx)}{1 + exp(a + bx)}$$ 
 
     exp(a) tähendab "e astmes a", kus e on Euleri arv, ehk arv, mille naturaal-logaritm = 1 
     (seega on e naturaal-logaritmi alus). e on umbes 2.71828 ja selle 
@@ -1394,7 +1394,10 @@ y = a + bx mudeli korral tavalises meetrilises skaalas on *odds* exponent fititu
 
 $$odds= \frac {P(Y = 1 ~|~ X)}{1-P(Y = 1 ~|~ X)} = exp(a+bx)$$ 
 
-ja ekvivalentselt $log(odds) = a + bx$. Matemaatiliselt pole vahet, kas me transformeerime prediktorid logistilise funktsiooniga või ennustatava muutuja logit funktsiooniga -- need on sama asja erinevad kirjeldused.
+ja ekvivalentselt 
+$$log(odds) = logit(p) = a + bx$$. 
+
+Matemaatiliselt pole vahet, kas me transformeerime prediktorid logistilise funktsiooniga või ennustatava muutuja logit funktsiooniga -- need on sama asja erinevad kirjeldused.
 
 Kuidas suhtuvad *odds*-d tõenäosustesse?
 Näiteks tõenäosus 0.2 (20%) tähendab, et $odds = 0.2/(1 - 0.2) = 1/4$ ehk üks neljale ja tõenäosus 0.9 tähendab, et $odds = 0.9/(1 - 0.9) = 9$ ehk üheksa ühele. *Odds*-e kasutavad näiteks hipodroomid, sest nii on mänguril lihtne näha, et kui kihlveokontori poolt mingile hobusele omistatud odds on näiteks üks nelja vastu ja ta maksab kihlveo sõlmimisel 1 euro, siis ta saab võidu korral 4 eurot kasu (ehk 5 eurose kupüüri). Logaritm *odds*-idest ongi logit transformatsioon, mille pöördväärtus on omakorda logistiline transformatsioon!
@@ -1412,7 +1415,7 @@ plot(y~x)
 
 <img src="17_brms_files/figure-html/unnamed-chunk-118-1.png" width="70%" style="display: block; margin: auto;" />
 
-Kui me logistilise regressiooniga fititud mudeli y = a + bx korral muudame x-i väärtust ühe ühiku võrra, siis muutuvad *log-odds*-id b võrra. Sama hästi võime korrutada lineaarses skaalas *odds*-id exp(b)-ga. Samas b ei vasta P(Y = 1 | X) muutusele X-i muutumisel ühe ühiku võrra. See, kui kiiresti P(Y = 1 | X) muutub, sõltub X-i väärtusest. Siiski, senikaua kuni b > 0, kaasneb X-i kasvuga alati tõenäosuse P(Y = 1) kasv (ja vastupidi). 
+Kui me logistilise regressiooniga fititud mudeli y = a + bx korral muudame x-i väärtust ühe ühiku võrra, siis muutuvad *log-odds*-id b võrra, mis on sama, mis õelda, et *odds* muutub exp(b) võrra. Samas b ei vasta P(Y = 1 | X) muutusele X-i muutumisel ühe ühiku võrra. See, kui kiiresti P(Y = 1 | X) muutub, sõltub X-i väärtusest. Siiski, senikaua kuni b > 0, kaasneb X-i kasvuga alati tõenäosuse P(Y = 1) kasv (ja vastupidi). 
  
 
 Kahe tõenäosuse logitite vahe on sama, mis logaritm *odds-ratio*-st (log(OR) ehk shanside suhe)
