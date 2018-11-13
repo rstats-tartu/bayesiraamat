@@ -562,6 +562,7 @@ write_rds(m5, path = "data/m5.fit")
 
 
 
+
 Kõigepealt plotime mudeli ennustused, kuidas Sepal Length sõltub Petal Length-ist kolmel erineval Sepal width väärtusel.
 
 ```r
@@ -609,12 +610,12 @@ predict_interval_brms2 <- predict(m2, newdata = newx, re_formula = NULL) %>%
   cbind(newx, .)
 head(predict_interval_brms2)
 #>   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5
-#> 1         1.00        3.06  setosa     4.49     0.321 3.82  5.12
-#> 2         1.04        3.06  setosa     4.53     0.311 3.92  5.15
-#> 3         1.08        3.06  setosa     4.55     0.311 3.95  5.17
-#> 4         1.12        3.06  setosa     4.58     0.315 3.97  5.21
-#> 5         1.16        3.06  setosa     4.61     0.319 3.97  5.23
-#> 6         1.20        3.06  setosa     4.64     0.317 4.02  5.25
+#> 1         1.00        3.06  setosa     4.50     0.325 3.84  5.11
+#> 2         1.04        3.06  setosa     4.52     0.316 3.90  5.14
+#> 3         1.08        3.06  setosa     4.55     0.322 3.91  5.19
+#> 4         1.12        3.06  setosa     4.58     0.326 3.95  5.25
+#> 5         1.16        3.06  setosa     4.62     0.319 4.02  5.26
+#> 6         1.20        3.06  setosa     4.64     0.325 4.02  5.30
 ```
 
 `predict()` ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele
@@ -755,16 +756,17 @@ ggplot() +
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-59-1.png" width="70%" style="display: block; margin: auto;" />
+`type = "pearson"` annab standardiseeritud residuaalid $R = (Y - Y_p) / SD(Y)$,  kus SD(Y) on hinnang Y-muutuja SD-le. alternatiiv on `type = "ordinary"`, mis annab tavalised residuaalid.
 
 Residuals vs fitted plot testib lineaarsuse eeldust - kui .resid punktid jaotuvad ühtlaselt nulli ümber, siis mudel püüab kinni kogu süstemaatilise varieeruvuse teie andmetest ja see mis üle jääb on juhuslik varieeruvus.
 
 Vaatame diagnostilist plotti autokorrelatsioonist residuaalide vahel.
 
 ```r
-plot(acf(resid))
+acf(resid[,1])
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-60-1.png" width="70%" style="display: block; margin: auto;" /><img src="17_brms_files/figure-html/unnamed-chunk-60-2.png" width="70%" style="display: block; margin: auto;" />
+<img src="17_brms_files/figure-html/unnamed-chunk-60-1.png" width="70%" style="display: block; margin: auto;" />
 
 Residuaalide autokorrelatsioonid on madalad - seega kõik paistab OK ja andmepunktide sõltumatus on tagatud.
 
@@ -780,15 +782,12 @@ ggplot(data = NULL) +
 
 Residuaalid on sümmeetrilise jaotusega ja meedian residuaal on peaaegu null. See on kõik hea.
 
-Ja lõpuks plotime residuaalid kõigi x-muutujate vastu. Kõigepealt ühendame resid vektori irise tabeliga, et oleks mugavam plottida, seejärel tekitame uue veeru st_resid e studentiseeritud residuaalid, mis on sd ühikutes.
-
-residuaalid standardhälbe ühikutes (nn Studentiseeritud residuaalid) saab ja ka tuleks plottida kõigi x-muutujate suhtes.
+Ja lõpuks plotime standardiseeritud residuaalid kõigi x-muutujate vastu. Kõigepealt ühendame resid vektori irise tabeliga, et oleks mugavam plottida. 
+residuaalid standardhälbe ühikutes saab ja ka tuleks plottida kõigi x-muutujate suhtes.
 
 ```r
-iris2 <- iris %>% 
-  cbind(resid) %>% 
-  mutate(st_resid = Estimate / sd(resid))
-ggplot(iris2, aes(Petal.Length, st_resid, color = Species)) + 
+iris2 <- iris %>% cbind(resid)  
+ggplot(iris2, aes(Petal.Length, Estimate, color = Species)) + 
   geom_point() +
   geom_hline(yintercept = 0, linetype = "dashed")
 ```
@@ -798,7 +797,7 @@ ggplot(iris2, aes(Petal.Length, st_resid, color = Species)) +
 Tsiteerides klassikuid: "Pole paha!". Mudel ennustab hästi, aga mõne punkti jaoks on ennustus 2 sd kaugusel.
 
 ```r
-ggplot(iris2, aes(Sepal.Width, st_resid, color = Species)) + 
+ggplot(iris2, aes(Sepal.Width, Estimate, color = Species)) + 
   geom_point() +
   geom_hline(yintercept = 0, linetype = "dashed")
 ```
@@ -807,7 +806,7 @@ ggplot(iris2, aes(Sepal.Width, st_resid, color = Species)) +
 
 
 ```r
-ggplot(iris2, aes(Species, st_resid)) + 
+ggplot(iris2, aes(Species, Estimate)) + 
   geom_boxplot() +
   geom_hline(yintercept = 0, linetype = "dashed") +
   geom_jitter(width = 0.1)
@@ -1202,7 +1201,7 @@ write_rds(ln_m2, "ln_m2.rds")
 
 
 ```r
-ln_m2 <- read_rds("ln_m2.rds")
+ln_m2 <- read_rds("data/ln_m2.rds")
 ```
 
 
@@ -1415,7 +1414,7 @@ plot(y~x)
 
 <img src="17_brms_files/figure-html/unnamed-chunk-118-1.png" width="70%" style="display: block; margin: auto;" />
 
-Kui me logistilise regressiooniga fititud mudeli y = a + bx korral muudame x-i väärtust ühe ühiku võrra, siis muutuvad *log-odds*-id b võrra, mis on sama, mis õelda, et *odds* muutub exp(b) võrra. Samas b ei vasta P(Y = 1 | X) muutusele X-i muutumisel ühe ühiku võrra. See, kui kiiresti P(Y = 1 | X) muutub, sõltub X-i väärtusest. Siiski, senikaua kuni b > 0, kaasneb X-i kasvuga alati tõenäosuse P(Y = 1) kasv (ja vastupidi). 
+Kui me logistilise regressiooniga fititud mudeli y = a + bx korral muudame x-i väärtust ühe ühiku võrra, siis muutub *log-odds* b võrra, mis on sama, mis õelda, et *odds* muutub exp(b) võrra. Samas b ei vasta P(Y = 1 | X) muutusele X-i muutumisel ühe ühiku võrra. See, kui kiiresti P(Y = 1 | X) muutub, sõltub X-i väärtusest. Siiski, senikaua kuni b > 0, kaasneb X-i kasvuga alati tõenäosuse P(Y = 1) kasv (ja vastupidi). 
  
 
 Kahe tõenäosuse logitite vahe on sama, mis logaritm *odds-ratio*-st (log(OR) ehk shanside suhe)
@@ -1487,7 +1486,7 @@ skim(chimpanzees)
 ```
 
 
-#### Intercept-i mudel
+#### Intercept-i mudel ilma tõusuta {-} 
 
 
 ```r
