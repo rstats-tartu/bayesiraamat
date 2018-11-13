@@ -400,6 +400,7 @@ write_rds(m5, path = "data/m5.fit")
 m5 <- read_rds("data/m5.fit")
 ```
 
+
 Kõigepealt plotime mudeli ennustused, kuidas Sepal Length sõltub Petal Length-ist kolmel erineval Sepal width väärtusel.
 ```{r}
 plot(marginal_effects(m5, effects = "Petal.Length:Sepal.Width"), points = TRUE)
@@ -541,12 +542,13 @@ ggplot() +
   geom_hline(yintercept = 0, lty = "dashed") +
   labs(x = "fitted", y = "residuals")
 ```
+`type = "pearson"` annab standardiseeritud residuaalid $R = (Y - Y_p) / SD(Y)$,  kus SD(Y) on hinnang Y-muutuja SD-le. alternatiiv on `type = "ordinary"`, mis annab tavalised residuaalid.
 
 Residuals vs fitted plot testib lineaarsuse eeldust - kui .resid punktid jaotuvad ühtlaselt nulli ümber, siis mudel püüab kinni kogu süstemaatilise varieeruvuse teie andmetest ja see mis üle jääb on juhuslik varieeruvus.
 
 Vaatame diagnostilist plotti autokorrelatsioonist residuaalide vahel.
 ```{r}
-plot(acf(resid))
+acf(resid[,1])
 ```
 
 Residuaalide autokorrelatsioonid on madalad - seega kõik paistab OK ja andmepunktide sõltumatus on tagatud.
@@ -560,27 +562,24 @@ ggplot(data = NULL) +
 
 Residuaalid on sümmeetrilise jaotusega ja meedian residuaal on peaaegu null. See on kõik hea.
 
-Ja lõpuks plotime residuaalid kõigi x-muutujate vastu. Kõigepealt ühendame resid vektori irise tabeliga, et oleks mugavam plottida, seejärel tekitame uue veeru st_resid e studentiseeritud residuaalid, mis on sd ühikutes.
-
-residuaalid standardhälbe ühikutes (nn Studentiseeritud residuaalid) saab ja ka tuleks plottida kõigi x-muutujate suhtes.
+Ja lõpuks plotime standardiseeritud residuaalid kõigi x-muutujate vastu. Kõigepealt ühendame resid vektori irise tabeliga, et oleks mugavam plottida. 
+residuaalid standardhälbe ühikutes saab ja ka tuleks plottida kõigi x-muutujate suhtes.
 ```{r}
-iris2 <- iris %>% 
-  cbind(resid) %>% 
-  mutate(st_resid = Estimate / sd(resid))
-ggplot(iris2, aes(Petal.Length, st_resid, color = Species)) + 
+iris2 <- iris %>% cbind(resid)  
+ggplot(iris2, aes(Petal.Length, Estimate, color = Species)) + 
   geom_point() +
   geom_hline(yintercept = 0, linetype = "dashed")
 ```
 
 Tsiteerides klassikuid: "Pole paha!". Mudel ennustab hästi, aga mõne punkti jaoks on ennustus 2 sd kaugusel.
 ```{r}
-ggplot(iris2, aes(Sepal.Width, st_resid, color = Species)) + 
+ggplot(iris2, aes(Sepal.Width, Estimate, color = Species)) + 
   geom_point() +
   geom_hline(yintercept = 0, linetype = "dashed")
 ```
 
 ```{r}
-ggplot(iris2, aes(Species, st_resid)) + 
+ggplot(iris2, aes(Species, Estimate)) + 
   geom_boxplot() +
   geom_hline(yintercept = 0, linetype = "dashed") +
   geom_jitter(width = 0.1)

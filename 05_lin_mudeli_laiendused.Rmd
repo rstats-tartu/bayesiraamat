@@ -266,9 +266,33 @@ ggplot(a_m3, aes(`.fitted`, `.resid`)) +
   geom_smooth()
 ```
 
-### Cooki kaugus - outlierid {-}
 
-.cooksd on Cook-i kaugus, mis näitab võimalikke outliereid. rusikareeglina tähendab cooksd > 3 cooksd keskväärtust, et tegu võiks olla outlieriga. Teine võimalus on pidada igat punkti, mis on kõrgem kui 4/n, outlieriks. Kolmanadad arvavad jälle, et outlierina võiks vaadelda iga teistest väga erinevat väärtust, või et .cooksd > 1 v .cooksd > 0.5 on indikatsiooniks nn mõjukast väärtusest (influencial value).
+### Mõjukuse plot {-}
+
+* *outlier*id -- studentideeritud residuaalid > 2 või < -2. Studentiseeritud residuaali saab (ligikaudu) jagades vaatluse residuaali residuaalide standardhälbega. See protseduur võimaldab paremini võrrelda erinevate vaatluste residuaale. 
+
+Standardiseeritud residuaali arvutamine: Kui $E_i$ on i-s residuaal, k on mudeli regressorite arv ja n on vaatluste arv, siis $h_i = 1/n + E_i/\sum~E^2$, $S_E = (E^2/(n - k -1))^{1/2}$  ja $E_{st} = E_i/(S_E(1 - h_i)^{1/2})$ kus E~st on standardiseeritud residuaal, mis suurtel valimitel on väga sarnane studentiseeritud residuaaliga (mis erineb selle poolest, et välistab iga residuaali S~E-st seda residuaali genereerinud vaatluse). Kui n on suur, siis kehtib enam-vähem seos $E_{st} = E_i/sd(E)$, kus E_st on nii standardiseeritud kui studentiseeritud residuaal.  
+
+* *high leverage* vaatlused -- hat > 1 - sugereerib *high leverage* vaatlust 
+Keskmine hat value = (k + 1)/n, kus k on regressorite arv (mitte arvestades intercepti) ja n on vaatluste arv. NB! Kuna *high leverage* vaatlused tõmbavad regressioonijoon enda suunas, siis on neil sageli madalad residuaalid (erinevalt outlieritest, mis ei ole *high leverage* vaatlused)
+
+```{r message=FALSE, warning=FALSE}
+library(car)
+influencePlot(m3, id.method="identify", main="Influence Plot",
+              sub="Circle size is proportional to Cook's distance")
+```
+
+Horisontaalsed referentsjooned näitavad 0, 2 ja -2 studentiseeritud residuaale.
+Vertikaalsed referentsjooned näitavad hat-väärtusi 2h ja 3h.
+
+> Regressiooni *outlier* on vaatlus, mille y-muutja väärtus on ebatavaline X-muujutuja väärtuse kontekstis. Seega annab *outlier* mudeli fittimisel kõrge residuaaliga punkti. Lihtsalt (mitte-konditsionaalselt) ebatavalised Y-i või X-i väärtused ei pruugi olla *outlier*id. Kui peaks juhuma, et *outlier* langeb kokku ebatavalise X-i väärtusega, siis selle punkti eemaldamine muudab märkimisväärselt mudeli koefitsiente. Selline *outlier* on ühtlasi ka *high leverage* vaatlus. Siit jõuame mõjukate vaatluste (*Influential observations*) defineerimisele --- Mõjukus mudeli koefitsientidele =  *Leverage* x *"outlierness"*. *High leverage* andmepunktid on x-muutujate ekstreemsed punktid, mille lähedal ei ole n-mõõtmelises ruumis (kui teil on n x-muutujat) teisi punkte. Seetõttu läheb fititud mudel just nende punktide lähedalt mõõda. Mõjukad punktid on tüüpiliselt ka *high leverage* punktid, kuid vastupidine ei kehti!
+
+
+### Cooki kaugus - mõjukus {-}
+
+.cooksd on Cook-i kaugus, mis näitab mõjukust. Rusikareeglina tähendab cooksd > 3 cooksd keskväärtust, et tegu võiks olla mõjuka vaatlusega. Teine võimalus on pidada mõjukaks igat punkti, mis on kõrgem kui 4/n. Kolmanadad arvavad jälle, et .cooksd > 1 v .cooksd > 0.5 viitab mõjukale vaatlusele.
+
+Cooki D andmepunktile saame valemist $D_i = \frac{E'_i}{k+1} + \frac{h_i}{1-h_i}$, kus $D_i$ on i-ndale vaatlusele vastav Cooki kaugus ja ${E'_i}$ on sellele vaatlusele vastav studentiseeritud residuaal.
 
 ```{r}
 ggplot(data = NULL, aes(x = 1:150, y = a_m3$`.cooksd`)) + geom_col() + 
@@ -276,17 +300,6 @@ ggplot(data = NULL, aes(x = 1:150, y = a_m3$`.cooksd`)) + geom_col() +
   geom_hline(yintercept = 3*mean(a_m3$`.cooksd`), lty = 2)
 ```
 
-### Mõjukuse plot {-}
-
-outlierid - studentideeritud residuaalid > 2 või < -2
-hat > 1 - sugereerib high leverage andmepunkte 
-```{r message=FALSE, warning=FALSE}
-library(car)
-influencePlot(m3, id.method="identify", main="Influence Plot",
-              sub="Circle size is proportional to Cook's distance")
-```
-
-> Mõjukad punktid (Influential observations) omavad suurt mõju mudeli ennustustele. High Leverage andmepunktid on x-muutujate ekstreemsed punktid, mille lähedal ei ole n-mõõtmelises ruumis (kui teil on n x-muutujat) teisi punkte. Seetõttu läheb fititud mudel nende punktide lähedalt mõõda. Mõjukad punktid on tüüpiliselt ka high leverage punktid, kuid vastupidine ei kehti!
 
 ### Residuaalide normaalsus - qq plot {-}
 
@@ -327,7 +340,7 @@ ggplot(a_m3, aes(Sepal.Length, `.std.resid`, color=Species)) +
 ```
 Ideaalsed residuaalid! 
 
-## Teeme mudeli põhjal ennustusi (marginal plots) {-}
+## 3. Teeme mudeli põhjal ennustusi (marginal plots)
 
 Me ennustame Y-i keskmisi väärtuseid etteantud X-i väärtustel.
 
@@ -372,7 +385,7 @@ Nii saab sisestada üksikuid parameetriväärtusi ja neile ennustusi teha:
 (mydf1 <- ggpredict(m3, terms = c("Sepal.Length [5, 22]", "Species [setosa, versicolor]")))
 ```
 
-## Võrdleme mudeleid {-}
+## 4. Võrdleme mudeleid
 
 1. Eeldus - kõik võrreldavad mudelid on fititud täpselt samade andmete peal.
 
