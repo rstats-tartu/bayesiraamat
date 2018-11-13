@@ -839,7 +839,7 @@ write_rds(ln_m1, "ln_m1.rds")
 ```
 
 ```{r echo=FALSE}
-ln_m1 <- read_rds("ln_m1.rds")
+ln_m1 <- read_rds("data/ln_m1.rds")
 ```
 
 ```{r}
@@ -860,7 +860,7 @@ write_rds(ln_m2, "ln_m2.rds")
 ```
 
 ```{r}
-ln_m2 <- read_rds("ln_m2.rds")
+ln_m2 <- read_rds("data/ln_m2.rds")
 ```
 
 ```{r}
@@ -908,7 +908,7 @@ imputeerime enne mudeli fittimist kasutades multiple imputation meetodit mice pa
 Siin imputeerime iga puuduva väärtuse kasutades kõigi teiste parameetrite väärtusi, ja me teeme seda 5 korda.
 
 
-```{r}
+```{r }
 library(mice)
 imp <- mice(iris_na, m = 5, print = FALSE)
 ```
