@@ -10,7 +10,7 @@ library(broom)
 library(car)
 ```
 
-## Mitme sõltumatu prediktoriga mudel {-}
+## Mitme sõltumatu prediktoriga mudel 
 
 
 Esiteks vaatame mudelit, kus on mitu prediktorit $x_1$, $x_2$, ... $x_n$, mis on aditiivse mõjuga.
@@ -21,6 +21,8 @@ $$y = a + b_1x_1~ + b_2x_2~ +~ ... +~ b_nx_n$$
 
 > Mitme prediktoriga mudeli iga prediktori tõus (beta koefitsient) ütleb, mitme ühiku võrra ennustab mudel y muutumist juhul kui see prediktor muutub ühe ühiku võrra ja kõik teised prediktorid ei muutu üldse (Yule, 1899). 
 
+Milliseid muutujaid (regressoreid) peaks üks hea lineaarne mudel sisaldama, milliseid peaks me mudelist välja viskama ja milliseid igal juhul sisse panema?
+Matemaatiliselt põhjustab regressorite eemaldamine ülejäänud regressorite koefitsientide ebakonsistentsust, välja arvatud siis, kui (i) välja visatud regressorid ei ole korreleeritud sisse jäetud regressoritega või (ii) välja vistatud regressorite koefitsiendid võrduvad nulliga, mis muudab nad ebarelevantseteks. Kuidas sa tead, et kõik vajalikud regressorid on sul üldse olemas (olematuid andmeid ei saa ka mudelisse lisada)? Loomulikult ei teagi, mis tähendab lihtsalt, et mudeldamine on keeruline protsess, nagu teaduski. Pane ka tähele, et koefitsiendi "mitte-oluline" p väärtus ei tähenda iseenesest, et koefitsient tõenäoliselt võrdub nulliga või on nulli lähedal, vaid seda, et meil pole piisavalt andmeid, et vastupidist kinnitada. Koefitsiendi hinnangu usalduspiirid on selles osas palju parem töövahend.
 
 Kui meie andmed on kolmedimensionaalsed (me mõõdame igal mõõteobjektil kolme muutujat) ja me tahame ennnustada ühe muutuja väärtust kahe teise muutuja väärtuste põhjal (meil on kaks prediktorit), siis tuleb meie kolme parameetriga lineaarne regressioonimudel tasapinna kujul. 
 Kui meil on kolme prediktoriga mudel, siis me liigume juba neljamõõtmelisse ruumi.
@@ -70,7 +72,7 @@ AIC-i järgi on m2 kõvasti parem kui m1, lisakoefitsendi (Petal.Length) kaasami
 AIC(m1, m2)
 ```
 
-**Ennustused sõltumatute prediktoritega mudelist**
+### Ennustused sõltumatute prediktoritega mudelist {-}
 
 Siin on idee kasutada fititud mudeli struktuuri ennustamaks y keskmisi väärtusi erinevatel $x_1$ ja $x_2$ väärtustel.
 Kuna mudel on fititud, on parameetrite väärtused fikseeritud. 
@@ -107,7 +109,7 @@ dfr <- data_frame(Sepal_width_predicted, Sepal_length, Petal_length)
 with(dfr, scatterplot3d(Sepal_length, Petal_length, Sepal_width_predicted, col.axis = "blue", col.grid = "lightblue", type = "l", lwd = 2, zlim = c(3.1, 3.18)))
 ```
 
-## Interaktsioonimudel {-}
+## Interaktsioonimudel 
 
 Interaktsioonimudelis sõltub ühe prediktori mõju teise prediktori väärtusest:
 
@@ -117,7 +119,8 @@ Interaktsiooni modelleerime korrutamistehtena, mistõttu on interaktsioonimudeli
 
 Sageli on nii, et prediktoreid, mille mõju y-le on suur, tasub mudeldada ka interaktsioonimudelis (näiteks suitsetamise mõju vähimudelites kipub olema interaktsiooniga). 
 Interaktsioonimudelis on b~1~ otse tõlgendatav ainult siis, kui x~2~ = 0 (ja b~2~ ainult siis, kui x~1~ = 0).
-Samas, kui interaktsioonimudel fititakse standardiseeritud x-muutujate peal, mille keskväärtus = 0, siis muutub koefitsientide tõlgendamine lihtsamaks - b~1~ tõlgendame x~2~ keskväärtusel (ja vastupidi, b~2~ x~1~ keskväärtusel).
+
+Samas, kui interaktsioonimudel fititakse standardiseeritud x-muutujate peal, mille keskväärtus = 0, siis muutub koefitsientide tõlgendamine lihtsamaks - b~1~ tõlgendame x~2~ keskväärtusel (ja vastupidi, b~2~ x~1~ keskväärtusel). NB! Ärge standardiseerige faktormuutujaid ehk *dummy*-regressoreid kujul 1, 0 (ega ka interaktsiooniregressoreid)  -- neid on lihtsam tõlgendada algsel kujul.
 
 Edaspidi õpime selliseid mudeleid graafiliselt tõlgendama, kuna koefitsientide otse tõlgendamine ei ole siin sageli perspektiivikas.
 
@@ -153,6 +156,9 @@ $$y= 0 + b_3X_1X_2$$
 
 Mudeldab eraldi nende faktorite tasemete kõikvõimalud kombinatsioonid.
 
+> Oletame, et meil on lisaks pidevale prediktorile X~1~ ka faktor-prediktor X~2~.
+Diskreetsed  e faktor-prediktorid rekodeeritakse automaatselt nn *dummy*-muutujateks. Kahevalentse e binaarse muutuja, näit sex = c("male", "female"), korral läheb  regressioonivõrrandisse uus dummy-muutuja, sex_female, kus kõik emased on 1-d ja isased 0-d. Üldine intercept vastab siis isaste mõjule ja sex_female intercept annab emaste erinevuse isastest. Kui meil on n-tasemega diskreetne muutuja, rekodeerime selle n-1 *dummy*-muutujana, millest igaüks on 0/1 kodeeringus ja millest igaühe interceptid annavad erinevuse null-taseme (selle taseme, mis ei ole rekodeeritud dummy-muutujana) interceptist. Mudeli seisukohast pole oluline, millise faktortunnuse taseme me nulltasemeks võtame. Terminoloogiliselt on meie n-tasemega faktortunnus *seletav muutuja* (*explanatory variable*), millest tehakse n-1 *regressorit*. 
+
 
 Interaktsioonimudeli 2D avaldus on kurvatuuriga tasapind, kusjuures kurvatuuri määrab b~3~. 
 
@@ -164,7 +170,7 @@ AIC(m1, m2, m3)
 ```
 
 
-**Ennustused interaktsioonimudelist**  
+### Ennustused interaktsioonimudelist {-}  
 
 Kõigepealt anname rea väärtusi x~1~-le ja hoiame x~2~ konstantsena. 
 
@@ -215,7 +221,7 @@ m3 <- lm(Sepal.Width ~ Sepal.Length * Species, data = iris)
 ```
 
 
-## 1. vaatame mudeli koefitsiente
+## 1. vaatame mudeli koefitsiente {-}
 
 ```{r}
 tidy(m3)
@@ -239,7 +245,7 @@ summary(m3)$adj.r.squared
 
 0.61 tähendab, et mudel suudab seletada mitte rohkem kui 61% y-muutuja (Sepal.Width) varieeruvusest. 
 
-## 2. Testime mudeli eeldusi
+## 2. Testime mudeli eeldusi {-}
 
 Nii saab fititud väärtused (.fitted), residuaalid (.resid), fittitud väätruste standardvead (.se.fit). Residuaal = Y data value - fitted value. Seega positiivne residuaal näitab, et mudeli ennustus keskmisele y väärtusele mingil x-muutujate väärtusel on madalam kui juhutb olema tegelik y-i andmepunkti väärtus. See võib olla tingitud y-muutuja normaalsest bioloogilisest varieeruvusest, aga ka sellest, et mudel ei kirjelda täiuslikult x-ide ja y tegelikku seost.
 
@@ -251,7 +257,7 @@ Nii saab fititud väärtused (.fitted), residuaalid (.resid), fittitud väätrus
 
 .std.resid on studentiseeritud residuaal, mis on sd ühikutes (.resid/sd(.resid))
 
-### Lineaarsus - residuaalid~fitted plot
+### Lineaarsus - residuaalid~fitted plot {-}
 
 Residuals vs fitted plot testib lineaarsuse eeldust - kui .resid punktid jaotuvad ühtlaselt nulli ümber, siis mudel püüab kinni kogu süstemaatilise varieeruvuse teie andmetest ja see mis üle jääb on juhuslik varieeruvus.
 ```{r}
@@ -260,7 +266,7 @@ ggplot(a_m3, aes(`.fitted`, `.resid`)) +
   geom_smooth()
 ```
 
-### Cooki kaugus - outlierid
+### Cooki kaugus - outlierid {-}
 
 .cooksd on Cook-i kaugus, mis näitab võimalikke outliereid. rusikareeglina tähendab cooksd > 3 cooksd keskväärtust, et tegu võiks olla outlieriga. Teine võimalus on pidada igat punkti, mis on kõrgem kui 4/n, outlieriks. Kolmanadad arvavad jälle, et outlierina võiks vaadelda iga teistest väga erinevat väärtust, või et .cooksd > 1 v .cooksd > 0.5 on indikatsiooniks nn mõjukast väärtusest (influencial value).
 
@@ -270,7 +276,7 @@ ggplot(data = NULL, aes(x = 1:150, y = a_m3$`.cooksd`)) + geom_col() +
   geom_hline(yintercept = 3*mean(a_m3$`.cooksd`), lty = 2)
 ```
 
-### Mõjukuse plot
+### Mõjukuse plot {-}
 
 outlierid - studentideeritud residuaalid > 2 või < -2
 hat > 1 - sugereerib high leverage andmepunkte 
@@ -282,14 +288,14 @@ influencePlot(m3, id.method="identify", main="Influence Plot",
 
 > Mõjukad punktid (Influential observations) omavad suurt mõju mudeli ennustustele. High Leverage andmepunktid on x-muutujate ekstreemsed punktid, mille lähedal ei ole n-mõõtmelises ruumis (kui teil on n x-muutujat) teisi punkte. Seetõttu läheb fititud mudel nende punktide lähedalt mõõda. Mõjukad punktid on tüüpiliselt ka high leverage punktid, kuid vastupidine ei kehti!
 
-### Residuaalide normaalsus - qq plot
+### Residuaalide normaalsus - qq plot {-}
 
 Kas residuaalid on normaaljaotusega?
 ```{r}
 car::qqPlot(a_m3$`.std.resid`, distribution = "norm")
 ```
 
-### Homoskedastilisus - Scale-location plot
+### Homoskedastilisus - Scale-location plot {-}
 
 Scale-location plot - homoskedastilisuse eeldust ehk seda, et varieeruvus ei sõltuks prediktormuutuja väärtusest. Y-teljel on ruutjuur studentiseeritud residuaalide absoluutväärtusest
 ```{r message=FALSE}
@@ -300,7 +306,7 @@ ggplot(a_m3, aes(`.fitted`, `.resid` %>% abs %>% sqrt)) +
 ```
 
 
-## Residuaalid y ja x muutujate vastu
+## Residuaalid y ja x muutujate vastu {-}
 
 Kõigepealt residuaalid y-muutja vastu
 ```{r}
@@ -321,7 +327,7 @@ ggplot(a_m3, aes(Sepal.Length, `.std.resid`, color=Species)) +
 ```
 Ideaalsed residuaalid! 
 
-## Teeme mudeli põhjal ennustusi (marginal plots)
+## Teeme mudeli põhjal ennustusi (marginal plots) {-}
 
 Me ennustame Y-i keskmisi väärtuseid etteantud X-i väärtustel.
 
@@ -366,7 +372,7 @@ Nii saab sisestada üksikuid parameetriväärtusi ja neile ennustusi teha:
 (mydf1 <- ggpredict(m3, terms = c("Sepal.Length [5, 22]", "Species [setosa, versicolor]")))
 ```
 
-## Võrdleme mudeleid
+## Võrdleme mudeleid {-}
 
 1. Eeldus - kõik võrreldavad mudelid on fititud täpselt samade andmete peal.
 
@@ -395,7 +401,7 @@ Lineaarsed transformatsioonid võivad hõlbustada mudeli koefitsientide tõlgend
 
 Kui muutujal saavad olla ainult positiivsed väärtused, siis on logaritmimine vahest hea mõte. Enne logaritmima asumist paeb andmetest kaotama ka nullid, näiteks asendades need mingi väikese positiivse arvuga. Logaritmilises skaalas andmetele fititud mudelite β koefitsiendid peaaegu alati < 1. 
 
-### Miks ja millal muutujaid logaritmida
+### Miks ja millal muutujaid logaritmida {-}
 
 1. Muutuja(te) logaritmimine muudab muutujate vahelised suhted mitte-lineaarseks, samas säilitades mudeli lineaarsuse. Ja vastupidi, kui tavalises meetrilises skaalas juhtuvad additiivse mudeli muutujate vahelised seosed olema mitte-lineaarsed, siis x-muutuja(te) logaritmimine võib need muuta lineaarseks, ja sellega päästa ühe olulisema lineaarse regressiooni eelduse (vt ka ptk 4.2).
 
@@ -416,7 +422,7 @@ Kui muutujal saavad olla ainult positiivsed väärtused, siis on logaritmimine v
 Mudeli fiti kvaliteedi koha pealt pole suurt vahet, millist logaritmi te kasutate -- olulised erinevused on "pelgalt" mudeli koefitsientide tõlgendustes.
  Naturaallogaritmitud log(x) andmete peal fititud mudeli korral on algses lineaarses skaalas tõlgendatav logaritmitud andmete peal fititud β, aga log-skaalas muutujate väärtused ei tähenda peale vaadates suurt midagi. Vastupidiselt on  kümnendlogaritmitud log10(x) või kahendlogaritmitud log2(x) andmed log skaalas tõlgendatavad, aga mitte neil fititud β lineaarses skaalas. Igal juhul eelistavad loodusteadlased kasutada log2 ja log10 skaalasid, mida on mugavam otse log-skaalas tõlgendada. log2 skaalas vastab üheühikuline muutus kahekordsele muutusele algses skaalas ja anti-logaritm on $2^{log2(x)}$. Log10 skaalas vastab üheühikuline muutus 10-kordsele muutusele algses skaalas ja anti-logaritm on $10^{log10(x)}$. 
 
-### Naturaallogaritmitud andmetega töötamine
+### Naturaallogaritmitud andmetega töötamine {-}
 
 Järgnevalt õpetame naturaallogaritmitud andmetega fititud mudelite β koefitsiendite tõlgendamist algses, meetrilises skaalas ja suhtelises protsendiskaalas.  
 
@@ -523,9 +529,6 @@ Hoitatus: standardiseeritud koefitsiente ei tohi kasutada, et võrrelda samade p
 ## Pidev või diskreetne muutuja?
 
 Tavaliselt on mõistlik fittida mudel pidevale y muutujale ka siis, kui tahame lõpuks tõlgenada tulemusi diskreetsel skaalal. Pidev muutuja sisaldab rohkem informatsiooni ja seetõttu on meil lootust saada parem fit. Erandiks on sellised pidevad x muutujad, mille mõju y-le on mittelineaarne (näiteks vanuse mõju suremusele). Siin on vahest mõistlik konverteerida pidev muutuja faktormuutujaks ja saada hinnang näiteks igale vanuseklassile eraldi. 
-
-Oletame, et meil on lisaks pidevale prediktorile X1 ka faktor-prediktor X2.
-Diskreetsed  e faktor-prediktorid rekodeeritakse automaatselt nn *dummy*-muutujateks. Kahevalentse e binaarse muutuja, näit sex = c("male", "female"), korral läheb  regressioonivõrrandisse uus dummy-muutuja, sex_female, kus kõik emased on 1-d ja isased 0-d. Üldine intercept vastab siis isaste mõjule ja sex_female intercept annab emaste erinevuse isastest. Kui meil on n-tasemega diskreetne muutuja, rekodeerime selle n-1 *dummy*-muutujana, millest igaüks on 0/1 kodeeringus ja millest igaühe interceptid annavad erinevuse null-taseme (selle taseme, mis ei ole rekodeeritud dummy-muutujana) interceptist. Mudeli seisukohast pole oluline, millise faktortunnuse taseme me nulltasemeks võtame. Terminoloogiliselt on meie n-tasemega faktortunnus *seletav muutuja* (*explanatory variable*), millest tehakse n-1 *regressorit*. 
 
 Additiivne mudel eeldab, et emaste ja isaste tõusud on võrdsed, mistõttu need fititakse sama beta koefitsiendiga, mis tähendab, et X2 mõju pidelvale prediktorile X1 on, et me saame mudeli ennustusena faktori n tasemele vastavad n paralleelset sirget, millest igaüks näitab pideva X1 seost pideva Y-ga erinevatel X2 tasemetel. 0/1 kodeeringus regressorite interceptid annavad nende paralleelsete sirgete vahelised kaugused üldise-intercepti poolt antud faktori taseme ennustusest.
 
