@@ -183,7 +183,7 @@ coef(m)
 
 Siin a = (Intercept) ja b = Petal.Length ehk 0.41.
 
-## Ennustus lineaarsest mudelist {-}
+## Ennustus lineaarsest mudelist 
 
 Anname x-le rea väärtusi, et ennustada y keskmisi väärtusi nendel x-i väärtustel. 
 Siin me ennustame y (Sepal_length) keskväärtusi erinevatel x-i (Petal_length) väärtustel, mitte individuaalseid Sepal_length väärtusi. Me kasutame selleks deterministlikku mudelit kujul Sepal_length =  a + b*Petal_length. Hiljem õpime ka bayesiaanlike meetoditega individuaalseid Sepal_length-e ennustama. 
@@ -234,7 +234,7 @@ Fititud mudel valib kõikide võimalike seda tüüpi mudelite hulgast välja tä
 Mudel on matemaatilise formalism, mis püüab kirjeldada füüsikalist protsessi.
 Statistilise mudeli struktuuris on komponent, mis kirjeldab ideaalseid ennustusi (nn protsessi mudel) ja eraldi veakomponent (ehk veamudel), mis kirjeldab looduse varieeruvust nende ideaalsete ennustuste ümber. Mudeli koostisosad on (i) muutuja, mille väärtusi ennustatakse, (ii), muutuja(d), mille väärtuste põhjal ennustatakse, (iii) parameetrid, mille väärtused fititakse ii põhjal ja (iv) konstandid.  
 
-## Mudeli fittimine {-}
+## Mudeli fittimine 
 
 Mudelid sisaldavad nii (1) matemaatilisi struktuure, mis määravad mudeli tüübi, kui (2) parameetreid, mida saab andmete põhjal tuunida, niiviisi täpsustades mudeli kuju ehk paiknemist matemaatlises ruumis. 
 Näiteks võrrand $y = a + bx$ määrab mudeli, kus $y = x$ on see struktuur, mis tagab, et mudeli tüüp on sirge, ning $a$ ja $b$ on parameetrid, mis määravad sirge asendi. 
@@ -264,7 +264,7 @@ Siiski, kui mudeli matemaatiline struktuur loodi andmeid genreeeriva loodusliku 
  
 > Fititud mudelist ennustamine: X-le saab omistada ükskõik millise väärtuse; parameetrite väärtused on fikseeritud; Y väärtus arvutatakse mudelist.
   
-## Üle- ja alafittimine {-}
+### Üle- ja alafittimine
   
 Osad mudelite tüübid on vähem paindlikud kui teised (parameetreid tuunides on neil vähem liikumisruumi). 
 Kuigi sellised mudelid sobituvad halvemini andmetega, võivad need  ikkagi paremini kui mõni paindlikum mudel välja tuua andmete peidetud olemuse. 
@@ -321,16 +321,43 @@ AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel?
 
 > Ülefittimise vältimiseks kasutavad Bayesi mudelid informatiivseid prioreid, mis välistavad ekstreemsed parameetriväärtused. Vt http://elevanth.org/blog/2017/08/22/there-is-always-prior-information/
 
-## Regressiooni eeldused
+## Lineaarse regressiooni eeldused
 
-Tähtsuse järjekorras:
+### Matemaatilised eeldused: {-}
+
+1. Lineaarsus: ennustus Y-muutujale on lineaarne funktsioon prediktoritest  $y = β_1x_1 + β_2x_2 +···$, ehk ekvivalentselt: kõikidel X-i väärtustel keksmine residuaal = 0.
+
+2. homoskedastilisus e konstantne  Y-muutuja suunaline varieeruvus kõigil X-i väärtustel. See tähendab muidugi mudeli residuaalide konsrtantset varieeruvust.
+
+3. Normaalsus - residuaalid on normaaljaotusega ehk Y-mmuutuja on normaaljaotusega kõigil X-i väärtustel.
+
+4. Sõltumatus - residuaalide väärtused ei ole omavahel korreleeritud.
+
+5. X-muutuja on fikseeritud: X-i suunal puudub täielikult mõõtmisviga ja ebakindlus, mis tähendab, et x-i väärtused on täpselt teada (me ei ennusta neid). See eeldus on tähtis siis, kui me püüame anda regresioonimudelile põhusliku tõlgenduse. Mudelis $Y = a + b_1X_1 + b_2X_2$ viib mõõtmisviga $X_2$-s viib $b_2$ koefitsiendi nulli suunas ja ühtlasi vähendab $b_2X_2$ liikme mõju b1 fittimisel.  
+
+6. X-muutuja ei ole konstant vaid sisaldab erinevaid väärtusi. 
+
+7. mitme predikrotiga lineaarse regressiooni puhul tuleb veel lisaks kollineaarsuse eeldus: me eeldame, et ükski prediktorite paar pole täiuslikult lineaarselt korreleeritud (pole lineaarne funktsioon üksteisest).
+
+### Eeldused praktilise tähtsuse järjekorras: {-}
 
 1. Valiidsus -- sa mõõdad asju, mis on relevantsed teadusliku küsimuse seisukohast. Näiteks, kui soovite mõõta kolesterooli alandava ravimi mõju, on mõistlik mõõta suremust, mitte pelgalt kolesterooli taset veres.
 
 2. Esinduslikkus -- andmed peaksid olema esinduslikud laiema populatsiooni suhtes. Väikesed ja kallutatud valimid ei ole sageli esinduslikud.
 
-3. Additiivsus ja lineaarsus. Väga tähtis on, et lineaarse regressiooniga mõõdetavad seosed oleks ka tõesti lineaarsed. Y-i deterministlik komponent on lineaarne funktsioon prediktoritest  $y = β_1x_1 + β_2x_2 +···$. Kui sellega on probleeme, siis võib aidata prediktorite transformeerimine (log(x) või 1/x) või uute prediktorite mudelisse lisamine. Samuti on võimalik prediktoritena lisada nii $x$ kui $x^2$. Näiteks kui me paneme mudelisse nii muutuja $vanus$ kui $vanus^2$, siis saame modelleerida seost kus y vanuse kasvades alguses kasvab ja siis kahaneb (aga ka U kujulist seost vanusega). Sellisel juhul võib olla mõistlik rekodeerida vanus kategooriliseks muutujaks (näit 4 vanuseklassi), mille tasemeid saab siis ükshaaval vaadata.
+3. Lineaarsus ja sellest tulenev mudeli additiivsus. Väga tähtis on, et lineaarse regressiooniga mõõdetavad seosed oleks ka tõesti lineaarsed. Kui lineaarsusega on probleeme, võib aidata prediktorite transformeerimine (log(x) või 1/x) või uute prediktorite mudelisse lisamine. Samuti on võimalik prediktoritena samasse mudelisse panna nii $x$ kui $x^2$. Näiteks kui me paneme mudelisse nii muutuja $vanus$ kui ka $vanus^2$, saame modelleerida seost, kus y vanuse kasvades alguses kasvab ja siis kahaneb (aga ka U kujulist seost vanusega). Sellisel juhul võib olla mõistlik rekodeerida vanus kategooriliseks muutujaks (näit 4 vanuseklassi), mille tasemeid saab siis ükshaaval vaadata.
 
-4. Vigade e residuaalide sõltumatus
+4. Sõltumatus. Selle eelduse rikkumine viib liiga kitsastele usalduspiiridele.
 
 5. Vigade võrdne varieeruvus (homoskedastilisus) ja vigade normaalsus on vähemtähtsad. Log-normaalsete vigadega võiks lineaarsel regresioonil mudeldada log(Y) skaalas (vähimruutude meetodil) või Bayesi regressioonil mittelineaarset lognormaalset tõepäramudelit kasutades (vt. ptk 13). 
+
+### Regressioon kui kirjeldus ja kui põhjuslik hüpotees {-}
+
+Regressioonanalüüsi võib vaadelda 1) empiirilise kirjeldusena y ja x-i koos-varieerumisest või 2) muutujate vaheliste struktuursete põhjuslike suhetena. Esimesel juhul ei tõlgenda me x ja y suhet x-i mõjuna y-le. Seega, senikaua kui mudeli fit on piisavalt hea, ei ole võimalik, et me fitime vale struktuuriga mudeli. 
+Kui me fitime 2 mudelit (i) $Y = a + b_1X_1$ ja (ii) $Y = a + b_1X_1 + b_2X_2$, siis eeldame, et kahe mudeli $b_1$ koefitsiendid tulevad erinevad. Aga sellest pole midagi, sest need on vaid empiirilised seosed. 
+
+Teisel, põhjuslikul juhul on kõik teisiti. Eeldades et $X_2$ on üks Y-i põhjustest, on nüüd (i) mudeli veakomponendis peidus ka $b_2X_2$. Kui $X_1$ ja $X_2$ on omavahel korreleeritud, siis tekib meil seetõttu ka korrelatsioon $X_1$ ja veakomponendi vahel -- ja see rikub mudeli eeldusi, kallutades mudeli fittimisel meie hinnangut $b_1$-le, misläbi osa $X_2$ mõjust Y-le omistatakse ekslikult $X_1$-le. See kõik juhtub siis, kui (ii) mudeli $b_2$ ei ole null ja esineb $X_1$ ja $X_2$ vaheline korrelatsioon. 
+
+Selle kallutatuse tõlgendamine sõltub omakorda $X_1$ ja $X_2$ vahelise põhjusliku seose struktuurist. Kui meil on põhjuslik rida $X_1$ --> $X_2$ --> $Y$ ($X_2$ vahendab $X_1$ mõju Y-le), Siis kallutatus on pelgalt $X_1$-e kaudne mõju Y-le, mida vahendab $X_2$. Kui aga $X_2$ on ühine põhjus nii $X_1$-le kui Y-le, siis on $X_2$ mudelisse lisamine väga tähtis, et saada mõistlik hinnang $X_1$ mõjule Y-le. Samas, kui me esimesel ($X_1$ --> $X_2$ --> $Y$) juhul tahame hinnata $X_1$ mõju Y-le, ei peaks me üldse $X_2$-e mudelisse panema.
+
+

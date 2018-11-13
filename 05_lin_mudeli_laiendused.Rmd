@@ -113,15 +113,46 @@ Interaktsioonimudelis sõltub ühe prediktori mõju teise prediktori väärtuses
 
 $$y = a + b_1x_1 + b_2x_2 + b_3x_1x_2$$
 
-Sageli on nii, et prediktoreid, mille mõju y-le on suur, tasub mudeldada ka interaktsioonimudelis (näiteks suitsetamise mõju vähimudelites kipub olema interaktsiooniga). 
+Interaktsiooni modelleerime korrutamistehtena, mistõttu on interaktsioonimudelid multiplikatiivsed ja interaktsioonid neis mittelineaarsed (tavaline lineaarne mudel on alati additiivne). Kaks muutujat võivad inteakteeruda sõltumata sellest, kas nad on korreleeritud või mitte -- interaktsioon ei impitseeri korrelatsiooni, ega korraletsioon implikatsiooni.
 
-Interaktsioonimudeli koefitsientide tõlgendamine on keerulisem. 
-b~1~ on otse tõlgendatav ainult siis, kui x~2~ = 0 (ja b~2~ ainult siis, kui x~1~ = 0).
+Sageli on nii, et prediktoreid, mille mõju y-le on suur, tasub mudeldada ka interaktsioonimudelis (näiteks suitsetamise mõju vähimudelites kipub olema interaktsiooniga). 
+Interaktsioonimudelis on b~1~ otse tõlgendatav ainult siis, kui x~2~ = 0 (ja b~2~ ainult siis, kui x~1~ = 0).
 Samas, kui interaktsioonimudel fititakse standardiseeritud x-muutujate peal, mille keskväärtus = 0, siis muutub koefitsientide tõlgendamine lihtsamaks - b~1~ tõlgendame x~2~ keskväärtusel (ja vastupidi, b~2~ x~1~ keskväärtusel).
 
 Edaspidi õpime selliseid mudeleid graafiliselt tõlgendama, kuna koefitsientide otse tõlgendamine ei ole siin sageli perspektiivikas.
 
 > Interaktsioonimudelis sõltub x~1~ mõju tugevus y-le x~2~ väärtusest. Selle sõltuvuse määra kirjeldab b~3~ (x~1~ ja x~2~ interaktsiooni tugevus). Samamoodi ja sümmeetriliselt erineb ka x~2~ mõju erinevatel x~1~ väärtustel. Ainult siis, kui x~2~ = 0, ennustab x~1~ tõus 1 ühiku võrra y muutust b~1~ ühiku võrra.
+
+Kui meil on mudelis interaktsiooniterm X~1X~2, siis on enamasti mõistlik ka lisada eraldi termidena ka X~1 ja X~2. 
+
+Näiteks mudel, milles on pidev y-muutuja, pidev prediktor "education" ja binaarne prediktor "sex_male" (1 ja 0): 
+
+$$score = a + b_1 * education + b_2 * sex_{male} + b_3 * education * sex_{male}$$
+
+Variandis
+
+$$score = a + b_1 * education + b_3 * education * sex_{male}$$
+
+surume meeste ja naiste intercepti pidevale muutujale "education" samasse punkti, aga samas lubame sellele erinevad tõusud meeste ja naiste lõikes.
+
+Samamoodi, variandis 
+
+$$score = a +  b_2 * sex_{male} + b_3 * education * sex_{male}$$
+
+on naiste tõus surutud nulli, aga interceptid võivad erineda, mis on kokkuvõttes üsna imelik, kuigi tehniliselt on mudel ok ja seda võib edukalt fittida.
+
+Ja variandis 
+
+$$score = 0 + b_3 * education * sex_{male}$$
+
+On meil meeste ja naiste intercept surutud nulli, aga meeste ja naiste tõusud võivad erineda.
+
+Kui meil on kaks faktor-prediktorit, siis mudel kujul
+
+$$y= 0 + b_3X_1X_2$$
+
+Mudeldab eraldi nende faktorite tasemete kõikvõimalud kombinatsioonid.
+
 
 Interaktsioonimudeli 2D avaldus on kurvatuuriga tasapind, kusjuures kurvatuuri määrab b~3~. 
 
@@ -411,13 +442,13 @@ Naturaallogaritmi alus on e ≈ 2.71828 ja sellel on järgmised matemaatilised o
 
 Lineaarsel regressioonil saab log-transformatsiooni kasutada kolmel erineval viisil:
 
-* Y = α + βX lineaarne mudel (transformeerimata)
+* Y = α + βX --- lineaarne mudel (transformeerimata)
 
-* Y = α + β * log(X) lineaar-log mudel (transformeeritud on prediktor(id))
+* Y = α + β * log(X) --- lineaar-log mudel (transformeeritud on prediktor(id))
 
-* log(Y) = α + βX log-lineaar mudel (transformeeritud on y-muutuja)
+* log(Y) = α + βX --- log-lineaar mudel (transformeeritud on y-muutuja)
 
-* log(Y) = α + β * log(X) log-log mudel (transformeeritud on y ja x muutujad)
+* log(Y) = α + β * log(X) --- log-log mudel (transformeeritud on y ja x muutujad)
 
 **Lineaarses** mudelis Y = α + βX, annab β selle, mitu ühikut muutub Y keskväärtus, kui X muutub ühe ühiku võrra.  
 
@@ -427,9 +458,9 @@ Kui me juba kasutasime naturaallogaritmimist, siis tahame ilmselt tõlgendust pi
 
 * β on oodatud Y muutus, kui X kasvab eX korda. 
 
-* Kui β on väike, siis saab seda tõlgendada kui suhtelist erinevust. Näiteks, kui beta = 0.06, siis 1 ühikuline X-i muutus viib u 6%-sele Y muutusele. Sedamõõda kuidas β kaugeneb nullist (näiteks β = 0.4), hakkab selline hinnang tõsiselt alahindama tegelikku x-i mõju y väärtusele. 
+* Kui β on väike, siis saab seda tõlgendada kui suhtelist erinevust. Näiteks, kui β = 0.06, siis 1 ühikuline X-i muutus viib u 6%-sele Y muutusele. Sedamõõda kuidas β kaugeneb nullist (näiteks β = 0.4), hakkab selline hinnang tõsiselt alahindama tegelikku x-i mõju y väärtusele. 
 
-* Oodatud Y muutus kui X kasvab p protsenti on β * log([100 + p]/100). Näit, kui X kasvab 10% võrra, siis log(110/100) = 0.095 ja 0.095β on oodatud Y muutus, kui X korrutada 1.1-ga (ehk kui X kasvab 10% võrra). 
+* Oodatud Y muutus kui X kasvab p protsenti on β * log([100 + p]/100). Näit, kui X kasvab 10% võrra (ehk kui korrutame X-i 1.1-ga), siis log(110/100) = 0.095 ja 0.095β on oodatud Y muutus. 
 
 **Log-lineaarse** mudeli korral, 
 
@@ -448,9 +479,11 @@ Kui me juba kasutasime naturaallogaritmimist, siis tahame ilmselt tõlgendust pi
 
 ## Standardiseerimine
 
+Kui prediktor $X_1$ on mõõdetud näiteks eurodes ja prediktor $X_2$ aastates, siis on meil fititud koefitsientidele $b_1$ ja $b_2$ peale vaadates raske öelda, kumb mõjutab Y-muutuja väärtust rohkem. Kuna euro ühik on palju granuleeritum kui aasta, siis võib ka väga väike nullist erinev $b_1$ omada mudeli seisukohast suuremat tähtsust kui suhteliselt suur $b_2$. 
+
 $x.z = (x - mean(x))/sd(x)$
 
-Sellisel viisil standardiseeritud andmete keskväärtus on 0 ja sd = 1. Seega on kõik predikorid samas skaalas ja me mõõdame efekte sd ühikutes. See muudab lihtsaks algeslt erinevas skaalas prediktorite võrdlemise. Intecept tähendab nüüd keskmist ennustust, juhul kui kõik prediktorid on fikseeritud oma keskväärtustel. 
+Sellisel viisil standardiseeritud andmete keskväärtus on 0 ja sd = 1. Seega on kõik predikorid samas skaalas ja me mõõdame efekte sd ühikutes. See lubab võrrelda algselt erinevas skaalas prediktoreid. Intecept tähendab nüüd keskmist ennustust, juhul kui kõik prediktorid on fikseeritud oma keskväärtustel. 
 
 Kui mudel sisaldab lisaks pidevatele prediktoritele ka binaarseid prediktoreid, siis on kasulikum standardiseerida üle 2xSD, jättes binaarsed muutujad muutmata.
 
@@ -458,7 +491,9 @@ $x.z2 = (x - mean(x))/(2 * sd(x))$
 
 Nüüd tähendab 1 ühikuline muutus efekti -1 SD-st kuni 1 SD-ni üle keskväärtuse.
 
-### Korrelatsioon üle regressiooni ja regressioon keskmisele
+Prediktorite standardiseerimine, eesmärgiga võrrelda võrreldamatut, on paraku samavõrd kahtlane kui levinud meetod. Esiteks, varieeruvuse mõõtmine sd ühikutes on mõtekas siis, kui prediktorid on enam-vähem normaaljaotusega, mida nad sageli ei ole, ega puhtalt regressiooni seisukohalt ei peagi olema. Ja teiseks, kujutlege, et teil on kaks võrreldavat prediktorit, mõlemad näiteks mõõdetud aastates, aga need prediktorid on erineva diapasooniga (ja seega ka erineva varieeruvusega). Kui teile tundub, et nende muutujate standardiseerimine oleks võrreldav oma analüüsi kummist joonlaua sisse toomisega, kuidas te siis põhjendate sama protseduuri, kui muutujad ei ole mõõdetud samades ühikutes?   
+
+### Korrelatsioon üle regressiooni ja regressioon keskmisele {-}
 
 Kui standardiseerime nii y kui x-i
 
@@ -476,14 +511,23 @@ x.c1 = x - mean(x) annab keskväärtuseks nulli aga jätab varieeruvused algsess
 
 Teine võimalus on tsentreerida mõnele teaduslikult mõistlikule väärtusele. Näiteks IQ-d saab tsentreerida 100-le (x - 100). 
 
-### Mudeli koefitsientide transformeerimine
+## Mudeli koefitsientide transformeerimine
 
 Ilma interaktsioonideta mudeli korral saab sama tulemuse, mis prediktoreid tsentreerides, kui me reskaleerime tavalises skaalas fititud mudeli koefitsiendid, korrutades iga β oma prediktori kahekordse sd-ga ($β.x = β * 2* sd(x)$). Nende β.x-de pealt näeb iga muutuja suhtelist tähtsust mudelis. 
+
+Teine võimalus beta koefitsientide transformeerimiseks, mis ei eelda prediktorite normaalsust, on korrutada betad läbi vastavate muutujate interkvartiilsete range-dega (IQR).
+
+Hoitatus: standardiseeritud koefitsiente ei tohi kasutada, et võrrelda samade prediktorite mõju erinevate andmete peal fititud sama struktuuriga mudelile.
  
 
 ## Pidev või diskreetne muutuja?
 
 Tavaliselt on mõistlik fittida mudel pidevale y muutujale ka siis, kui tahame lõpuks tõlgenada tulemusi diskreetsel skaalal. Pidev muutuja sisaldab rohkem informatsiooni ja seetõttu on meil lootust saada parem fit. Erandiks on sellised pidevad x muutujad, mille mõju y-le on mittelineaarne (näiteks vanuse mõju suremusele). Siin on vahest mõistlik konverteerida pidev muutuja faktormuutujaks ja saada hinnang näiteks igale vanuseklassile eraldi. 
+
+Oletame, et meil on lisaks pidevale prediktorile X1 ka faktor-prediktor X2.
+Diskreetsed  e faktor-prediktorid rekodeeritakse automaatselt nn *dummy*-muutujateks. Kahevalentse e binaarse muutuja, näit sex = c("male", "female"), korral läheb  regressioonivõrrandisse uus dummy-muutuja, sex_female, kus kõik emased on 1-d ja isased 0-d. Üldine intercept vastab siis isaste mõjule ja sex_female intercept annab emaste erinevuse isastest. Kui meil on n-tasemega diskreetne muutuja, rekodeerime selle n-1 *dummy*-muutujana, millest igaüks on 0/1 kodeeringus ja millest igaühe interceptid annavad erinevuse null-taseme (selle taseme, mis ei ole rekodeeritud dummy-muutujana) interceptist. Mudeli seisukohast pole oluline, millise faktortunnuse taseme me nulltasemeks võtame. Terminoloogiliselt on meie n-tasemega faktortunnus *seletav muutuja* (*explanatory variable*), millest tehakse n-1 *regressorit*. 
+
+Additiivne mudel eeldab, et emaste ja isaste tõusud on võrdsed, mistõttu need fititakse sama beta koefitsiendiga, mis tähendab, et X2 mõju pidelvale prediktorile X1 on, et me saame mudeli ennustusena faktori n tasemele vastavad n paralleelset sirget, millest igaüks näitab pideva X1 seost pideva Y-ga erinevatel X2 tasemetel. 0/1 kodeeringus regressorite interceptid annavad nende paralleelsete sirgete vahelised kaugused üldise-intercepti poolt antud faktori taseme ennustusest.
 
 ## mitmese regressiooni üldised printsiibid
 

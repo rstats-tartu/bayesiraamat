@@ -1023,7 +1023,7 @@ y <- exp(x)/(1+exp(x))
 plot(y~x)
 ```
 
-Kui me logistilise regressiooniga fititud mudeli y = a + bx korral muudame x-i väärtust ühe ühiku võrra, siis muutuvad *log-odds*-id b võrra, mis on sama, mis õelda, et *odds* muutub exp(b) võrra. Samas b ei vasta P(Y = 1 | X) muutusele X-i muutumisel ühe ühiku võrra. See, kui kiiresti P(Y = 1 | X) muutub, sõltub X-i väärtusest. Siiski, senikaua kuni b > 0, kaasneb X-i kasvuga alati tõenäosuse P(Y = 1) kasv (ja vastupidi). 
+Kui me logistilise regressiooniga fititud mudeli y = a + bx korral muudame x-i väärtust ühe ühiku võrra, siis muutub *log-odds* b võrra, mis on sama, mis õelda, et *odds* muutub exp(b) võrra. Samas b ei vasta P(Y = 1 | X) muutusele X-i muutumisel ühe ühiku võrra. See, kui kiiresti P(Y = 1 | X) muutub, sõltub X-i väärtusest. Siiski, senikaua kuni b > 0, kaasneb X-i kasvuga alati tõenäosuse P(Y = 1) kasv (ja vastupidi). 
  
 
 Kahe tõenäosuse logitite vahe on sama, mis logaritm *odds-ratio*-st (log(OR) ehk shanside suhe)
@@ -1070,7 +1070,7 @@ skim(chimpanzees)
 ```
 
 
-#### Intercept-i mudel
+#### Intercept-i mudel ilma tõusuta {-} 
 
 ```{r eval=FALSE}
 m_logreg_1 <- brm(data = chimpanzees, 
