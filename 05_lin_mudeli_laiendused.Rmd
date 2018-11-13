@@ -290,7 +290,7 @@ Vertikaalsed referentsjooned näitavad hat-väärtusi 2h ja 3h.
 
 ### Cooki kaugus - mõjukus {-}
 
-.cooksd on Cook-i kaugus, mis näitab mõjukust. Rusikareeglina tähendab cooksd > 3 cooksd keskväärtust, et tegu võiks olla mõjuka vaatlusega. Teine võimalus on pidada mõjukaks igat punkti, mis on kõrgem kui 4/n. Kolmanadad arvavad jälle, et .cooksd > 1 v .cooksd > 0.5 viitab mõjukale vaatlusele.
+.cooksd on Cook-i kaugus, mis näitab mõjukust. Rusikareeglina tähendab cooksd > 3 cooksd keskväärtust, et tegu võiks olla mõjuka vaatlusega. Teine võimalus on pidada mõjukaks igat punkti, mis on kõrgem kui 4/n. Kolmanadad arvavad jälle, et .cooksd > 1 v .cooksd > 0.5 viitab mõjukale vaatlusele. Üldiselt on kõigi mudeli eelduste kontrollidega nii, et vastava statistiku jaotuse jõllitamine on sageli kasulikum kui automaatselt mingi *cut-offi* järgi talitamine.
 
 Cooki D andmepunktile saame valemist $D_i = \frac{E'_i}{k+1} + \frac{h_i}{1-h_i}$, kus $D_i$ on i-ndale vaatlusele vastav Cooki kaugus ja ${E'_i}$ on sellele vaatlusele vastav studentiseeritud residuaal.
 
