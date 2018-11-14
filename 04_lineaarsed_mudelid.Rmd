@@ -217,7 +217,7 @@ plot(Sepal_length ~ Petal_length, type = "b")
 
 > Mudelist saab kahte tüüpi ennustusi: (1) saame ennustada Y keskmist väärtust X-i konkreetsel väärtusel ja (2) saame ennustada individuaalseid Y väärtusi X-i konkreetsel väärtusel. Viimase kohta vt ptk...
 
-## Neli mõistet {-}
+## Neli mõistet
 
 Mudelis $y = a + bx$ on $x$ ja $y$ muutujad, ning $a$ ja $b$ on parameetrid. 
 Muutujate väärtused fikseeritakse andmetega, parameetrid fititakse andmete põhjal. 
@@ -329,11 +329,11 @@ AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel?
 
 2. homoskedastilisus e konstantne  Y-muutuja suunaline varieeruvus kõigil X-i väärtustel. See tähendab muidugi mudeli residuaalide konsrtantset varieeruvust.
 
-3. Normaalsus - residuaalid on normaaljaotusega ehk Y-mmuutuja on normaaljaotusega kõigil X-i väärtustel.
+3. Normaalsus - residuaalid on normaaljaotusega ehk Y-muutuja on normaaljaotusega kõigil X-i väärtustel.
 
 4. Sõltumatus - residuaalide väärtused ei ole omavahel korreleeritud.
 
-5. X-muutuja on fikseeritud: X-i suunal puudub täielikult mõõtmisviga ja ebakindlus, mis tähendab, et x-i väärtused on täpselt teada (me ei ennusta neid). See eeldus on tähtis siis, kui me püüame anda regresioonimudelile põhusliku tõlgenduse. Mudelis $Y = a + b_1X_1 + b_2X_2$ viib mõõtmisviga $X_2$-s viib $b_2$ koefitsiendi nulli suunas ja ühtlasi vähendab $b_2X_2$ liikme mõju b1 fittimisel.  
+5. X-muutuja suunal puudub mõõtmisviga ja ebakindlus, mis tähendab, et x-i väärtused on täpselt teada (me ei ennusta neid). See eeldus on tähtis siis, kui püüame anda regresioonimudelile põhjusliku tõlgenduse. Mudelis $Y = a + b_1X_1 + b_2X_2$ viib mõõtmisviga $X_2$-s $b_2$ koefitsiendi nulli suunas ja ühtlasi vähendab $b_2X_2$ liikme mõju $b_1$ fittimisel.  
 
 6. X-muutuja ei ole konstant vaid sisaldab erinevaid väärtusi. 
 
@@ -345,7 +345,7 @@ AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel?
 
 2. Esinduslikkus -- andmed peaksid olema esinduslikud laiema populatsiooni suhtes. Väikesed ja kallutatud valimid ei ole sageli esinduslikud.
 
-3. Lineaarsus ja sellest tulenev mudeli additiivsus. Väga tähtis on, et lineaarse regressiooniga mõõdetavad seosed oleks ka tõesti lineaarsed. Kui lineaarsusega on probleeme, võib aidata prediktorite transformeerimine (log(x) või 1/x) või uute prediktorite mudelisse lisamine. Samuti on võimalik prediktoritena samasse mudelisse panna nii $x$ kui $x^2$. Näiteks kui me paneme mudelisse nii muutuja $vanus$ kui ka $vanus^2$, saame modelleerida seost, kus y vanuse kasvades alguses kasvab ja siis kahaneb (aga ka U kujulist seost vanusega). Sellisel juhul võib olla mõistlik rekodeerida vanus kategooriliseks muutujaks (näit 4 vanuseklassi), mille tasemeid saab siis ükshaaval vaadata.
+3. Lineaarsus ja sellest tulenev mudeli additiivsus. Väga tähtis on, et lineaarse regressiooniga mõõdetavad seosed oleks ka tõesti lineaarsed. Kui lineaarsusega on probleeme, võib aidata prediktorite transformeerimine (log(x) või 1/x) või uute prediktorite mudelisse lisamine. Samuti on võimalik prediktoritena samasse mudelisse panna nii $x$ kui $x^2$. Näiteks kui me paneme mudelisse nii muutuja $vanus$ kui ka $vanus^2$, saame modelleerida seost, kus y vanuse kasvades alguses kasvab ja siis kahaneb (aga ka U kujulist seost vanusega). Sellisel juhul võib olla ka mõistlik rekodeerida vanus kategooriliseks muutujaks (näit 4 vanuseklassi), mille tasemeid saab siis ükshaaval vaadata.
 
 4. Sõltumatus. Selle eelduse rikkumine viib liiga kitsastele usalduspiiridele.
 
@@ -356,7 +356,7 @@ AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel?
 Regressioonanalüüsi võib vaadelda 1) empiirilise kirjeldusena y ja x-i koos-varieerumisest või 2) muutujate vaheliste struktuursete põhjuslike suhetena. Esimesel juhul ei tõlgenda me x ja y suhet x-i mõjuna y-le. Seega, senikaua kui mudeli fit on piisavalt hea, ei ole võimalik, et me fitime vale struktuuriga mudeli. 
 Kui me fitime 2 mudelit (i) $Y = a + b_1X_1$ ja (ii) $Y = a + b_1X_1 + b_2X_2$, siis eeldame, et kahe mudeli $b_1$ koefitsiendid tulevad erinevad. Aga sellest pole midagi, sest need on vaid empiirilised seosed. 
 
-Teisel, põhjuslikul juhul on kõik teisiti. Eeldades et $X_2$ on üks Y-i põhjustest, on nüüd (i) mudeli veakomponendis peidus ka $b_2X_2$. Kui $X_1$ ja $X_2$ on omavahel korreleeritud, siis tekib meil seetõttu ka korrelatsioon $X_1$ ja veakomponendi vahel -- ja see rikub mudeli eeldusi, kallutades mudeli fittimisel meie hinnangut $b_1$-le, misläbi osa $X_2$ mõjust Y-le omistatakse ekslikult $X_1$-le. See kõik juhtub siis, kui (ii) mudeli $b_2$ ei ole null ja esineb $X_1$ ja $X_2$ vaheline korrelatsioon. 
+Teisel, põhjuslikul juhul on kõik teisiti. Eeldades et $X_2$ on üks Y-i põhjustest, on nüüd esimese mudeli veakomponendis peidus ka $b_2X_2$. Kui $X_1$ ja $X_2$ on omavahel korreleeritud, siis tekib meil seetõttu ka korrelatsioon $X_1$ ja veakomponendi vahel -- ja see rikub mudeli eeldusi, kallutades mudeli fittimisel meie hinnangut $b_1$-le, misläbi osa $X_2$ mõjust Y-le omistatakse ekslikult $X_1$-le. See kõik juhtub siis, kui teise mudeli $b_2$ ei ole null ja esineb $X_1$ ja $X_2$ vaheline korrelatsioon. 
 
 Selle kallutatuse tõlgendamine sõltub omakorda $X_1$ ja $X_2$ vahelise põhjusliku seose struktuurist. Kui meil on põhjuslik rida $X_1$ --> $X_2$ --> $Y$ ($X_2$ vahendab $X_1$ mõju Y-le), Siis kallutatus on pelgalt $X_1$-e kaudne mõju Y-le, mida vahendab $X_2$. Kui aga $X_2$ on ühine põhjus nii $X_1$-le kui Y-le, siis on $X_2$ mudelisse lisamine väga tähtis, et saada mõistlik hinnang $X_1$ mõjule Y-le. Samas, kui me esimesel ($X_1$ --> $X_2$ --> $Y$) juhul tahame hinnata $X_1$ mõju Y-le, ei peaks me üldse $X_2$-e mudelisse panema.
 
