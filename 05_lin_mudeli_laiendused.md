@@ -135,18 +135,37 @@ Interaktsioonimudelis sõltub ühe prediktori mõju teise prediktori väärtuses
 
 $$y = a + b_1x_1 + b_2x_2 + b_3x_1x_2$$
 
-Interaktsiooni modelleerime korrutamistehtena, mistõttu on interaktsioonimudelid multiplikatiivsed ja interaktsioonid neis mittelineaarsed (tavaline lineaarne mudel on alati additiivne). Kaks muutujat võivad inteakteeruda sõltumata sellest, kas nad on korreleeritud või mitte -- interaktsioon ei impitseeri korrelatsiooni, ega korraletsioon implikatsiooni.
+Sellega ekvivalntne viis interaktsiooni spetsifitseerida on läbi võrrandisüsteemi:
+$$y = a + \gamma x_1 + b_2x_2$$
+$$\gamma = b_1 + b_3x_2$$
+Siit on hästi näha, et me teeme kaks lineaarset regressiooni, millest teine modelleerib $X_1$ muutuja koefitsiendi sõltuvust $X_2$ muutuja väärtusest.
+
+Samamoodi kehtib ka ümberkirjutus 
+$$y = a + \gamma x_2 + b_1x_1$$
+$$\gamma = b_2 + b_3x_1$$
+
+mis tähendab, et ühtlasi modelleerime me ka $X_2$ koefitsiendi sõltuvust $X_1$-st. Seega teeb mudeli koefitsientide tõlgendamise keeruliseks, et kuna gamma parameetri väärtus sõltub kolmest asjast, tuleb ka selle tõlgendamisel kõik kolm arvesse võtta.
+
+Interaktsiooni modelleerime korrutamistehtena, seega on interaktsioonimudelid multiplikatiivsed ja interaktsioonid neis mittelineaarsed (tavaline lineaarne mudel on alati additiivne). Kaks muutujat võivad inteakteeruda sõltumata sellest, kas nad on korreleeritud või mitte -- interaktsioon ei impitseeri korrelatsiooni, ega korraletsioon implikatsiooni.
 
 Sageli on nii, et prediktoreid, mille mõju y-le on suur, tasub mudeldada ka interaktsioonimudelis (näiteks suitsetamise mõju vähimudelites kipub olema interaktsiooniga). 
 Interaktsioonimudelis on b~1~ otse tõlgendatav ainult siis, kui x~2~ = 0 (ja b~2~ ainult siis, kui x~1~ = 0).
 
-Samas, kui interaktsioonimudel fititakse standardiseeritud x-muutujate peal, mille keskväärtus = 0, siis muutub koefitsientide tõlgendamine lihtsamaks - b~1~ tõlgendame x~2~ keskväärtusel (ja vastupidi, b~2~ x~1~ keskväärtusel). NB! Ärge standardiseerige faktormuutujaid ehk *dummy*-regressoreid kujul 1, 0 (ega ka interaktsiooniregressoreid)  -- neid on lihtsam tõlgendada algsel kujul.
+ Kui interaktsioonimudel fititakse tsentreeritud x-muutujate peal, mille keskväärtus = 0 (või standardiseeritud muutujatel), siis muutub koefitsientide tõlgendamine lihtsamaks: 
+
+* b~1~ annab y tõusu, kui X~1~ tõuseb 1 ühiku võrra ja X~2~ on fikseeritud oma keskväärtusel 
+
+* b~2~ annab y tõusu, kui X~2~ tõuseb 1 ühiku võrra ja X~1~ on fikseeritud oma keskväärtusel). 
+
+* b~3~ ütleb, kui palju muutub X~1~ mõju Y-le kui X~2~ muutub ühe ühiku võrra. Samamoodi, b~3~ ütleb, kui palju muutub X~2~ mõju Y-le kui X~1~ muutub ühe ühiku võrra.
+
+NB! Ärge standardiseerige faktormuutujaid ehk *dummy*-regressoreid kujul 1, 0 (ega ka interaktsiooniregressoreid)  -- neid on lihtsam tõlgendada algsel kujul.
 
 Edaspidi õpime selliseid mudeleid graafiliselt tõlgendama, kuna koefitsientide otse tõlgendamine ei ole siin sageli perspektiivikas.
 
 > Interaktsioonimudelis sõltub x~1~ mõju tugevus y-le x~2~ väärtusest. Selle sõltuvuse määra kirjeldab b~3~ (x~1~ ja x~2~ interaktsiooni tugevus). Samamoodi ja sümmeetriliselt erineb ka x~2~ mõju erinevatel x~1~ väärtustel. Ainult siis, kui x~2~ = 0, ennustab x~1~ tõus 1 ühiku võrra y muutust b~1~ ühiku võrra.
 
-Kui meil on mudelis interaktsiooniterm X~1X~2, siis on enamasti mõistlik ka lisada eraldi termidena ka X~1 ja X~2. 
+Kui meil on mudelis interaktsiooniterm $X_1X_2$, siis on enamasti mõistlik ka lisada eraldi termidena ka $X_1$ ja $X_2$. 
 
 Näiteks mudel, milles on pidev y-muutuja, pidev prediktor "education" ja binaarne prediktor "sex_male" (1 ja 0): 
 
@@ -176,8 +195,7 @@ $$y= 0 + b_3X_1X_2$$
 
 Mudeldab eraldi nende faktorite tasemete kõikvõimalud kombinatsioonid.
 
-> Oletame, et meil on lisaks pidevale prediktorile X~1~ ka faktor-prediktor X~2~.
-Diskreetsed  e faktor-prediktorid rekodeeritakse automaatselt nn *dummy*-muutujateks. Kahevalentse e binaarse muutuja, näit sex = c("male", "female"), korral läheb  regressioonivõrrandisse uus dummy-muutuja, sex_female, kus kõik emased on 1-d ja isased 0-d. Üldine intercept vastab siis isaste mõjule ja sex_female intercept annab emaste erinevuse isastest. Kui meil on n-tasemega diskreetne muutuja, rekodeerime selle n-1 *dummy*-muutujana, millest igaüks on 0/1 kodeeringus ja millest igaühe interceptid annavad erinevuse null-taseme (selle taseme, mis ei ole rekodeeritud dummy-muutujana) interceptist. Mudeli seisukohast pole oluline, millise faktortunnuse taseme me nulltasemeks võtame. Terminoloogiliselt on meie n-tasemega faktortunnus *seletav muutuja* (*explanatory variable*), millest tehakse n-1 *regressorit*. 
+> Oletame, et meil on lisaks pidevale prediktorile X~1~ ka faktor-prediktor X~2~. Diskreetsed  e faktor-prediktorid rekodeeritakse automaatselt nn *dummy*-muutujateks. Kahevalentse e binaarse muutuja, näit sex = c("male", "female"), korral läheb  regressioonivõrrandisse uus dummy-muutuja, sex_female, kus kõik emased on 1-d ja isased 0-d. Üldine intercept vastab siis isaste mõjule ja sex_female intercept annab emaste erinevuse isastest. Kui meil on n-tasemega diskreetne muutuja, rekodeerime selle n-1 *dummy*-muutujana, millest igaüks on 0/1 kodeeringus ja millest igaühe interceptid annavad erinevuse null-taseme (selle taseme, mis ei ole rekodeeritud *dummy*-muutujana) interceptist. Mudeli seisukohast pole oluline, millise faktortunnuse taseme me nulltasemeks võtame. Terminoloogiliselt on meie n-tasemega faktortunnus *seletav muutuja* (*explanatory variable*), millest tehakse n-1 *regressorit*. Seega tehniliselt on mudeli liikmed regressorid, mitte seletavad muutujad. Üks seletav muutuja võib anda välja mitu regressorit (nagu eelmises näites) ja üks regressor võib põhineda mitmel muutujal (näit X~1X~2 interaktsiooniterm). 
 
 
 Interaktsioonimudeli 2D avaldus on kurvatuuriga tasapind, kusjuures kurvatuuri määrab b~3~. 
@@ -532,7 +550,7 @@ Probleem AIC-i taga on selles, et parem fit valimiandmetega võib tähendada mud
 
 # Andmete transformeerimine
 
-Lineaarsed transformatsioonid võivad hõlbustada mudeli koefitsientide tõlgendamist (näit. skaala millimeetritest meetritessse, tsentreerimine, standardiseerimine). Mittelineaarsed transformatsioonid (logaritmimine, jms) muudavad mudeli fitti ja võivad olla kasulikud mudeli aditiivsuse/lineaarsuse parandamisel. 
+Lineaarsed transformatsioonid võivad hõlbustada mudeli koefitsientide tõlgendamist (näit. skaala millimeetritest meetritessse, tsentreerimine, standardiseerimine). Mittelineaarsed transformatsioonid (logaritmimine, jms) muudavad mudeli fitti ja võivad olla kasulikud mudeli aditiivsuse/lineaarsuse parandamisel. Oluline on mõista, et transformeeritud andmetega mudeleid tuleb tõlgendada transformeeritud skaalas. Seega, kui algsel skaalal pole muud tõlgendust, kui et väärtused on monotoonilised (näiteks suurem number on alati tähtsam kui väiksem number), siis sobib meile sama hästi iga lineaarne transformatsioon sellest skaalast (näiteks ruutjuure võtmine vms). Bioloogias enamasti asjad nii lihtsad ei ole ja seetõttu keskendume siin paremini tõlgendatavatele transformatsioonidele. 
 
 ## Logaritmimine
 

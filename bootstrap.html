@@ -126,11 +126,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html"><i class="fa fa-check"></i><b>4</b> Lineaarsed mudelid</a><ul>
 <li class="chapter" data-level="4.1" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#sirge-vorrand"><i class="fa fa-check"></i><b>4.1</b> Sirge võrrand</a></li>
 <li class="chapter" data-level="4.2" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#ennustus-lineaarsest-mudelist"><i class="fa fa-check"></i><b>4.2</b> Ennustus lineaarsest mudelist</a></li>
-<li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#neli-moistet"><i class="fa fa-check"></i>Neli mõistet</a></li>
-<li class="chapter" data-level="4.3" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#mudeli-fittimine"><i class="fa fa-check"></i><b>4.3</b> Mudeli fittimine</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#ule--ja-alafittimine"><i class="fa fa-check"></i><b>4.3.1</b> Üle- ja alafittimine</a></li>
+<li class="chapter" data-level="4.3" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#neli-moistet"><i class="fa fa-check"></i><b>4.3</b> Neli mõistet</a></li>
+<li class="chapter" data-level="4.4" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#mudeli-fittimine"><i class="fa fa-check"></i><b>4.4</b> Mudeli fittimine</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#ule--ja-alafittimine"><i class="fa fa-check"></i><b>4.4.1</b> Üle- ja alafittimine</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#lineaarse-regressiooni-eeldused"><i class="fa fa-check"></i><b>4.4</b> Lineaarse regressiooni eeldused</a><ul>
+<li class="chapter" data-level="4.5" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#lineaarse-regressiooni-eeldused"><i class="fa fa-check"></i><b>4.5</b> Lineaarse regressiooni eeldused</a><ul>
 <li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#matemaatilised-eeldused"><i class="fa fa-check"></i>Matemaatilised eeldused:</a></li>
 <li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#eeldused-praktilise-tahtsuse-jarjekorras"><i class="fa fa-check"></i>Eeldused praktilise tähtsuse järjekorras:</a></li>
 <li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#regressioon-kui-kirjeldus-ja-kui-pohjuslik-hupotees"><i class="fa fa-check"></i>Regressioon kui kirjeldus ja kui põhjuslik hüpotees</a></li>
@@ -426,7 +426,7 @@ Joonis 11.1: Bootstrapitud posteerior USA presidentide keskmisele pikkusele. Jä
 <span class="kw">plot</span>(heights_bb, <span class="dt">compVal =</span> <span class="dv">185</span>)
 <span class="kw">HPDI</span>(heights_bb<span class="op">$</span>V1, <span class="dt">prob =</span> <span class="fl">0.95</span>)
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt;   182   187</span></code></pre></div>
+<span class="co">#&gt;   183   187</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:bayesboot"></span>
 <img src="09_bootstrap_files/figure-html/bayesboot-1.png" alt="Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele." width="70%" />
 <p class="caption">
@@ -440,7 +440,7 @@ Joonis 11.2: Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele.
                          <span class="dt">use.weights =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>Tõenäosus, et keskmine on suurem kui 182 cm</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(heights_bb[, <span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">182</span>)
-<span class="co">#&gt; [1] 0.992</span></code></pre></div>
+<span class="co">#&gt; [1] 0.993</span></code></pre></div>
 <p>Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):</p>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)

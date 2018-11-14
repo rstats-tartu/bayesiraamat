@@ -126,11 +126,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html"><i class="fa fa-check"></i><b>4</b> Lineaarsed mudelid</a><ul>
 <li class="chapter" data-level="4.1" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#sirge-vorrand"><i class="fa fa-check"></i><b>4.1</b> Sirge võrrand</a></li>
 <li class="chapter" data-level="4.2" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#ennustus-lineaarsest-mudelist"><i class="fa fa-check"></i><b>4.2</b> Ennustus lineaarsest mudelist</a></li>
-<li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#neli-moistet"><i class="fa fa-check"></i>Neli mõistet</a></li>
-<li class="chapter" data-level="4.3" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#mudeli-fittimine"><i class="fa fa-check"></i><b>4.3</b> Mudeli fittimine</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#ule--ja-alafittimine"><i class="fa fa-check"></i><b>4.3.1</b> Üle- ja alafittimine</a></li>
+<li class="chapter" data-level="4.3" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#neli-moistet"><i class="fa fa-check"></i><b>4.3</b> Neli mõistet</a></li>
+<li class="chapter" data-level="4.4" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#mudeli-fittimine"><i class="fa fa-check"></i><b>4.4</b> Mudeli fittimine</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#ule--ja-alafittimine"><i class="fa fa-check"></i><b>4.4.1</b> Üle- ja alafittimine</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#lineaarse-regressiooni-eeldused"><i class="fa fa-check"></i><b>4.4</b> Lineaarse regressiooni eeldused</a><ul>
+<li class="chapter" data-level="4.5" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#lineaarse-regressiooni-eeldused"><i class="fa fa-check"></i><b>4.5</b> Lineaarse regressiooni eeldused</a><ul>
 <li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#matemaatilised-eeldused"><i class="fa fa-check"></i>Matemaatilised eeldused:</a></li>
 <li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#eeldused-praktilise-tahtsuse-jarjekorras"><i class="fa fa-check"></i>Eeldused praktilise tähtsuse järjekorras:</a></li>
 <li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#regressioon-kui-kirjeldus-ja-kui-pohjuslik-hupotees"><i class="fa fa-check"></i>Regressioon kui kirjeldus ja kui põhjuslik hüpotees</a></li>
@@ -698,12 +698,12 @@ pars &lt;-<span class="st"> </span><span class="kw">colnames</span>(model2)
 <span class="st">  </span><span class="kw">cbind</span>(newx, .)
 <span class="kw">head</span>(predict_interval_brms2)
 <span class="co">#&gt;   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5</span>
-<span class="co">#&gt; 1         1.00        3.06  setosa     4.50     0.325 3.84  5.11</span>
-<span class="co">#&gt; 2         1.04        3.06  setosa     4.52     0.316 3.90  5.14</span>
-<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.322 3.91  5.19</span>
-<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.326 3.95  5.25</span>
-<span class="co">#&gt; 5         1.16        3.06  setosa     4.62     0.319 4.02  5.26</span>
-<span class="co">#&gt; 6         1.20        3.06  setosa     4.64     0.325 4.02  5.30</span></code></pre></div>
+<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.314 3.89  5.09</span>
+<span class="co">#&gt; 2         1.04        3.06  setosa     4.52     0.317 3.91  5.16</span>
+<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.318 3.94  5.20</span>
+<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.321 3.95  5.19</span>
+<span class="co">#&gt; 5         1.16        3.06  setosa     4.61     0.322 3.95  5.25</span>
+<span class="co">#&gt; 6         1.20        3.06  setosa     4.64     0.326 4.02  5.27</span></code></pre></div>
 <p><code>predict()</code> ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele</p>
 <p>Siin siis eraldi ennustused kahele liigile kolmest, kaasa arvatud petal length väärtusvahemikule, kus selle liigi isendeid valimis ei ole (ja võib-olla ei saagi olla)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">no_versicolor &lt;-<span class="st"> </span><span class="kw">filter</span>(iris, Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>)

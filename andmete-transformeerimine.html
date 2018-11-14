@@ -126,11 +126,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html"><i class="fa fa-check"></i><b>4</b> Lineaarsed mudelid</a><ul>
 <li class="chapter" data-level="4.1" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#sirge-vorrand"><i class="fa fa-check"></i><b>4.1</b> Sirge võrrand</a></li>
 <li class="chapter" data-level="4.2" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#ennustus-lineaarsest-mudelist"><i class="fa fa-check"></i><b>4.2</b> Ennustus lineaarsest mudelist</a></li>
-<li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#neli-moistet"><i class="fa fa-check"></i>Neli mõistet</a></li>
-<li class="chapter" data-level="4.3" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#mudeli-fittimine"><i class="fa fa-check"></i><b>4.3</b> Mudeli fittimine</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#ule--ja-alafittimine"><i class="fa fa-check"></i><b>4.3.1</b> Üle- ja alafittimine</a></li>
+<li class="chapter" data-level="4.3" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#neli-moistet"><i class="fa fa-check"></i><b>4.3</b> Neli mõistet</a></li>
+<li class="chapter" data-level="4.4" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#mudeli-fittimine"><i class="fa fa-check"></i><b>4.4</b> Mudeli fittimine</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#ule--ja-alafittimine"><i class="fa fa-check"></i><b>4.4.1</b> Üle- ja alafittimine</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#lineaarse-regressiooni-eeldused"><i class="fa fa-check"></i><b>4.4</b> Lineaarse regressiooni eeldused</a><ul>
+<li class="chapter" data-level="4.5" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#lineaarse-regressiooni-eeldused"><i class="fa fa-check"></i><b>4.5</b> Lineaarse regressiooni eeldused</a><ul>
 <li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#matemaatilised-eeldused"><i class="fa fa-check"></i>Matemaatilised eeldused:</a></li>
 <li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#eeldused-praktilise-tahtsuse-jarjekorras"><i class="fa fa-check"></i>Eeldused praktilise tähtsuse järjekorras:</a></li>
 <li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#regressioon-kui-kirjeldus-ja-kui-pohjuslik-hupotees"><i class="fa fa-check"></i>Regressioon kui kirjeldus ja kui põhjuslik hüpotees</a></li>
@@ -346,7 +346,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="andmete-transformeerimine" class="section level1">
 <h1><span class="header-section-number">7</span> Andmete transformeerimine</h1>
-<p>Lineaarsed transformatsioonid võivad hõlbustada mudeli koefitsientide tõlgendamist (näit. skaala millimeetritest meetritessse, tsentreerimine, standardiseerimine). Mittelineaarsed transformatsioonid (logaritmimine, jms) muudavad mudeli fitti ja võivad olla kasulikud mudeli aditiivsuse/lineaarsuse parandamisel.</p>
+<p>Lineaarsed transformatsioonid võivad hõlbustada mudeli koefitsientide tõlgendamist (näit. skaala millimeetritest meetritessse, tsentreerimine, standardiseerimine). Mittelineaarsed transformatsioonid (logaritmimine, jms) muudavad mudeli fitti ja võivad olla kasulikud mudeli aditiivsuse/lineaarsuse parandamisel. Oluline on mõista, et transformeeritud andmetega mudeleid tuleb tõlgendada transformeeritud skaalas. Seega, kui algsel skaalal pole muud tõlgendust, kui et väärtused on monotoonilised (näiteks suurem number on alati tähtsam kui väiksem number), siis sobib meile sama hästi iga lineaarne transformatsioon sellest skaalast (näiteks ruutjuure võtmine vms). Bioloogias enamasti asjad nii lihtsad ei ole ja seetõttu keskendume siin paremini tõlgendatavatele transformatsioonidele.</p>
 <div id="logaritmimine" class="section level2">
 <h2><span class="header-section-number">7.1</span> Logaritmimine</h2>
 <p>Kui muutujal saavad olla ainult positiivsed väärtused, siis on logaritmimine vahest hea mõte. Enne logaritmima asumist paeb andmetest kaotama ka nullid, näiteks asendades need mingi väikese positiivse arvuga. Logaritmilises skaalas andmetele fititud mudelite β koefitsiendid peaaegu alati &lt; 1.</p>
