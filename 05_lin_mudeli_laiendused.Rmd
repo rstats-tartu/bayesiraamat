@@ -131,7 +131,7 @@ Interaktsiooni modelleerime korrutamistehtena, seega on interaktsioonimudelid mu
 Sageli on nii, et prediktoreid, mille mõju y-le on suur, tasub mudeldada ka interaktsioonimudelis (näiteks suitsetamise mõju vähimudelites kipub olema interaktsiooniga). 
 Interaktsioonimudelis on b~1~ otse tõlgendatav ainult siis, kui x~2~ = 0 (ja b~2~ ainult siis, kui x~1~ = 0).
 
- Kui interaktsioonimudel fititakse tsentreeritud x-muutujate peal, mille keskväärtus = 0, siis muutub koefitsientide tõlgendamine lihtsamaks: 
+ Kui interaktsioonimudel fititakse tsentreeritud x-muutujate peal, mille keskväärtus = 0 (või standardiseeritud muutujatel), siis muutub koefitsientide tõlgendamine lihtsamaks: 
 
 * b~1~ annab y tõusu, kui X~1~ tõuseb 1 ühiku võrra ja X~2~ on fikseeritud oma keskväärtusel 
 
