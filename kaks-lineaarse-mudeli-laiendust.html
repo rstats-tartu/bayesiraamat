@@ -437,28 +437,28 @@ Joonis 5.4: Kahe prediktoriga mudeli ennustus 3D ruumis.
 <h2><span class="header-section-number">5.2</span> Interaktsioonimudel</h2>
 <p>Interaktsioonimudelis sõltub ühe prediktori mõju teise prediktori väärtusest:</p>
 <p><span class="math display">\[y = a + b_1x_1 + b_2x_2 + b_3x_1x_2\]</span></p>
-<p>Sellega ekvivalntne viis interaktsiooni spetsifitseerida on läbi võrrandisüsteemi: <span class="math display">\[y = a + \gamma x_1 + b_2x_2\]</span> <span class="math display">\[\gamma = b_1 + b_3x_2\]</span> Siit on hästi näha, et me teeme kaks lineaarset regressiooni, millest teine modelleerib <span class="math inline">\(X_1\)</span> muutuja koefitsiendi sõltuvust <span class="math inline">\(X_2\)</span> muutuja väärtusest.</p>
+<p>Ekvivalntne viis interaktsiooni spetsifitseerida on läbi võrrandisüsteemi: <span class="math display">\[y = a + \gamma x_1 + b_2x_2\]</span> <span class="math display">\[\gamma = b_1 + b_3x_2\]</span> Siit on hästi näha, et me teeme kaks lineaarset regressiooni, millest teine modelleerib <span class="math inline">\(X_1\)</span> muutuja koefitsiendi sõltuvust <span class="math inline">\(X_2\)</span> muutuja väärtusest.</p>
 <p>Samamoodi kehtib ka ümberkirjutus <span class="math display">\[y = a + \gamma x_2 + b_1x_1\]</span> <span class="math display">\[\gamma = b_2 + b_3x_1\]</span></p>
-<p>mis tähendab, et ühtlasi modelleerime me ka <span class="math inline">\(X_2\)</span> koefitsiendi sõltuvust <span class="math inline">\(X_1\)</span>-st. Seega teeb mudeli koefitsientide tõlgendamise keeruliseks, et kuna gamma parameetri väärtus sõltub kolmest asjast, tuleb ka selle tõlgendamisel kõik kolm arvesse võtta.</p>
-<p>Interaktsiooni modelleerime korrutamistehtena, seega on interaktsioonimudelid multiplikatiivsed ja interaktsioonid neis mittelineaarsed (tavaline lineaarne mudel on alati additiivne). Kaks muutujat võivad inteakteeruda sõltumata sellest, kas nad on korreleeritud või mitte – interaktsioon ei impitseeri korrelatsiooni, ega korraletsioon implikatsiooni.</p>
-<p>Sageli on nii, et prediktoreid, mille mõju y-le on suur, tasub mudeldada ka interaktsioonimudelis (näiteks suitsetamise mõju vähimudelites kipub olema interaktsiooniga). Interaktsioonimudelis on b<sub>1</sub> otse tõlgendatav ainult siis, kui x<sub>2</sub> = 0 (ja b<sub>2</sub> ainult siis, kui x<sub>1</sub> = 0).</p>
+<p>mis tähendab, et ühtlasi modelleerime me ka <span class="math inline">\(X_2\)</span> koefitsiendi sõltuvust <span class="math inline">\(X_1\)</span>-st. Mudeli koefitsientide tõlgendamise teeb keeruliseks, et gamma tõlgendamisel tuleb arvesse võtta kolm asja – b<sub>2</sub>, b<sub>3</sub> ja X<sub>1</sub>.</p>
+<p>Kaks muutujat võivad inteakteeruda sõltumata sellest, kas nad on korreleeritud või mitte – interaktsioon ei impitseeri korrelatsiooni, ega korraletsioon implikatsiooni.</p>
+<p>Sageli on nii, et prediktoreid, mille mõju y-le on suur, tasub mudeldada ka interaktsioonimudelis (näiteks suitsetamise mõju vähimudelites kipub olema interaktsiooniga). Interaktsioonimudelis on b<sub>1</sub> koefitsient otse tõlgendatav ainult siis, kui x<sub>2</sub> = 0 (ja b<sub>2</sub> ainult siis, kui x<sub>1</sub> = 0).</p>
 <p>Kui interaktsioonimudel fititakse tsentreeritud x-muutujate peal, mille keskväärtus = 0 (või standardiseeritud muutujatel), siis muutub koefitsientide tõlgendamine lihtsamaks:</p>
 <ul>
 <li><p>b<sub>1</sub> annab y tõusu, kui X<sub>1</sub> tõuseb 1 ühiku võrra ja X<sub>2</sub> on fikseeritud oma keskväärtusel</p></li>
 <li><p>b<sub>2</sub> annab y tõusu, kui X<sub>2</sub> tõuseb 1 ühiku võrra ja X<sub>1</sub> on fikseeritud oma keskväärtusel).</p></li>
-<li><p>b<sub>3</sub> ütleb, kui palju muutub X<sub>1</sub> mõju Y-le kui X<sub>2</sub> muutub ühe ühiku võrra. Samamoodi, b<sub>3</sub> ütleb, kui palju muutub X<sub>2</sub> mõju Y-le kui X<sub>1</sub> muutub ühe ühiku võrra.</p></li>
+<li><p>b<sub>3</sub> ütleb, kui palju muutub X<sub>1</sub> mõju Y-le, kui X<sub>2</sub> muutub ühe ühiku võrra. Samamoodi, b<sub>3</sub> ütleb, kui palju muutub X<sub>2</sub> mõju Y-le, kui X<sub>1</sub> muutub ühe ühiku võrra.</p></li>
 </ul>
-<p>NB! Ärge standardiseerige faktormuutujaid ehk <em>dummy</em>-regressoreid kujul 1, 0 (ega ka interaktsiooniregressoreid) – neid on lihtsam tõlgendada algsel kujul.</p>
+<p>NB! Ärge standardiseerige faktormuutujaid ehk <em>dummy</em>-regressoreid kujul 1, 0 – neid on lihtsam tõlgendada algsel kujul 0/1 skaalas.</p>
 <p>Edaspidi õpime selliseid mudeleid graafiliselt tõlgendama, kuna koefitsientide otse tõlgendamine ei ole siin sageli perspektiivikas.</p>
 <blockquote>
 <p>Interaktsioonimudelis sõltub x<sub>1</sub> mõju tugevus y-le x<sub>2</sub> väärtusest. Selle sõltuvuse määra kirjeldab b<sub>3</sub> (x<sub>1</sub> ja x<sub>2</sub> interaktsiooni tugevus). Samamoodi ja sümmeetriliselt erineb ka x<sub>2</sub> mõju erinevatel x<sub>1</sub> väärtustel. Ainult siis, kui x<sub>2</sub> = 0, ennustab x<sub>1</sub> tõus 1 ühiku võrra y muutust b<sub>1</sub> ühiku võrra.</p>
 </blockquote>
-<p>Kui meil on mudelis interaktsiooniterm <span class="math inline">\(X_1X_2\)</span>, siis on enamasti mõistlik ka lisada eraldi termidena ka <span class="math inline">\(X_1\)</span> ja <span class="math inline">\(X_2\)</span>.</p>
+<p>Kui meil on mudelis interaktsiooniliige <span class="math inline">\(X_1X_2\)</span>, siis on enamasti mõistlik ka lisada eraldi liikmetena ka <span class="math inline">\(X_1\)</span> ja <span class="math inline">\(X_2\)</span>.</p>
 <p>Näiteks mudel, milles on pidev y-muutuja, pidev prediktor “education” ja binaarne prediktor “sex_male” (1 ja 0):</p>
 <p><span class="math display">\[score = a + b_1 * education + b_2 * sex_{male} + b_3 * education * sex_{male}\]</span></p>
 <p>Variandis</p>
 <p><span class="math display">\[score = a + b_1 * education + b_3 * education * sex_{male}\]</span></p>
-<p>surume meeste ja naiste intercepti pidevale muutujale “education” samasse punkti, aga samas lubame sellele erinevad tõusud meeste ja naiste lõikes.</p>
+<p>surume meeste ja naiste intercepti pidevale muutujale “education” ühte punkti, aga samas modelleerime sellele erinevad tõusud meeste ja naiste lõikes.</p>
 <p>Samamoodi, variandis</p>
 <p><span class="math display">\[score = a +  b_2 * sex_{male} + b_3 * education * sex_{male}\]</span></p>
 <p>on naiste tõus surutud nulli, aga interceptid võivad erineda, mis on kokkuvõttes üsna imelik, kuigi tehniliselt on mudel ok ja seda võib edukalt fittida.</p>
