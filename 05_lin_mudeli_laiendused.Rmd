@@ -115,7 +115,7 @@ Interaktsioonimudelis sõltub ühe prediktori mõju teise prediktori väärtuses
 
 $$y = a + b_1x_1 + b_2x_2 + b_3x_1x_2$$
 
-Sellega ekvivalntne viis interaktsiooni spetsifitseerida on läbi võrrandisüsteemi:
+Ekvivalntne viis interaktsiooni spetsifitseerida on läbi võrrandisüsteemi:
 $$y = a + \gamma x_1 + b_2x_2$$
 $$\gamma = b_1 + b_3x_2$$
 Siit on hästi näha, et me teeme kaks lineaarset regressiooni, millest teine modelleerib $X_1$ muutuja koefitsiendi sõltuvust $X_2$ muutuja väärtusest.
@@ -124,12 +124,12 @@ Samamoodi kehtib ka ümberkirjutus
 $$y = a + \gamma x_2 + b_1x_1$$
 $$\gamma = b_2 + b_3x_1$$
 
-mis tähendab, et ühtlasi modelleerime me ka $X_2$ koefitsiendi sõltuvust $X_1$-st. Seega teeb mudeli koefitsientide tõlgendamise keeruliseks, et kuna gamma parameetri väärtus sõltub kolmest asjast, tuleb ka selle tõlgendamisel kõik kolm arvesse võtta.
+mis tähendab, et ühtlasi modelleerime me ka $X_2$ koefitsiendi sõltuvust $X_1$-st. Mudeli koefitsientide tõlgendamise teeb keeruliseks, et gamma tõlgendamisel tuleb arvesse võtta kolm asja -- b~2~, b~3~ ja X~1~.
 
-Interaktsiooni modelleerime korrutamistehtena, seega on interaktsioonimudelid multiplikatiivsed ja interaktsioonid neis mittelineaarsed (tavaline lineaarne mudel on alati additiivne). Kaks muutujat võivad inteakteeruda sõltumata sellest, kas nad on korreleeritud või mitte -- interaktsioon ei impitseeri korrelatsiooni, ega korraletsioon implikatsiooni.
+Kaks muutujat võivad inteakteeruda sõltumata sellest, kas nad on korreleeritud või mitte -- interaktsioon ei impitseeri korrelatsiooni, ega korraletsioon implikatsiooni.
 
 Sageli on nii, et prediktoreid, mille mõju y-le on suur, tasub mudeldada ka interaktsioonimudelis (näiteks suitsetamise mõju vähimudelites kipub olema interaktsiooniga). 
-Interaktsioonimudelis on b~1~ otse tõlgendatav ainult siis, kui x~2~ = 0 (ja b~2~ ainult siis, kui x~1~ = 0).
+Interaktsioonimudelis on b~1~ koefitsient otse tõlgendatav ainult siis, kui x~2~ = 0 (ja b~2~ ainult siis, kui x~1~ = 0).
 
  Kui interaktsioonimudel fititakse tsentreeritud x-muutujate peal, mille keskväärtus = 0 (või standardiseeritud muutujatel), siis muutub koefitsientide tõlgendamine lihtsamaks: 
 
@@ -137,15 +137,15 @@ Interaktsioonimudelis on b~1~ otse tõlgendatav ainult siis, kui x~2~ = 0 (ja b~
 
 * b~2~ annab y tõusu, kui X~2~ tõuseb 1 ühiku võrra ja X~1~ on fikseeritud oma keskväärtusel). 
 
-* b~3~ ütleb, kui palju muutub X~1~ mõju Y-le kui X~2~ muutub ühe ühiku võrra. Samamoodi, b~3~ ütleb, kui palju muutub X~2~ mõju Y-le kui X~1~ muutub ühe ühiku võrra.
+* b~3~ ütleb, kui palju muutub X~1~ mõju Y-le, kui X~2~ muutub ühe ühiku võrra. Samamoodi, b~3~ ütleb, kui palju muutub X~2~ mõju Y-le, kui X~1~ muutub ühe ühiku võrra.
 
-NB! Ärge standardiseerige faktormuutujaid ehk *dummy*-regressoreid kujul 1, 0 (ega ka interaktsiooniregressoreid)  -- neid on lihtsam tõlgendada algsel kujul.
+NB! Ärge standardiseerige faktormuutujaid ehk *dummy*-regressoreid kujul 1, 0  -- neid on lihtsam tõlgendada algsel kujul 0/1 skaalas.
 
 Edaspidi õpime selliseid mudeleid graafiliselt tõlgendama, kuna koefitsientide otse tõlgendamine ei ole siin sageli perspektiivikas.
 
 > Interaktsioonimudelis sõltub x~1~ mõju tugevus y-le x~2~ väärtusest. Selle sõltuvuse määra kirjeldab b~3~ (x~1~ ja x~2~ interaktsiooni tugevus). Samamoodi ja sümmeetriliselt erineb ka x~2~ mõju erinevatel x~1~ väärtustel. Ainult siis, kui x~2~ = 0, ennustab x~1~ tõus 1 ühiku võrra y muutust b~1~ ühiku võrra.
 
-Kui meil on mudelis interaktsiooniterm $X_1X_2$, siis on enamasti mõistlik ka lisada eraldi termidena ka $X_1$ ja $X_2$. 
+Kui meil on mudelis interaktsiooniliige $X_1X_2$, siis on enamasti mõistlik ka lisada eraldi liikmetena ka $X_1$ ja $X_2$. 
 
 Näiteks mudel, milles on pidev y-muutuja, pidev prediktor "education" ja binaarne prediktor "sex_male" (1 ja 0): 
 
@@ -155,7 +155,7 @@ Variandis
 
 $$score = a + b_1 * education + b_3 * education * sex_{male}$$
 
-surume meeste ja naiste intercepti pidevale muutujale "education" samasse punkti, aga samas lubame sellele erinevad tõusud meeste ja naiste lõikes.
+surume meeste ja naiste intercepti pidevale muutujale "education" ühte punkti, aga samas modelleerime sellele erinevad tõusud meeste ja naiste lõikes.
 
 Samamoodi, variandis 
 
