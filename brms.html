@@ -244,12 +244,13 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="18.2" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeline-mudel-r-i-mudelikeeles"><i class="fa fa-check"></i><b>18.2</b> mitmetasemeline mudel R-i mudelikeeles</a></li>
 <li class="chapter" data-level="18.3" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeliste-mudelite-lisaeeldused"><i class="fa fa-check"></i><b>18.3</b> Mitmetasemeliste mudelite lisaeeldused</a></li>
-<li class="chapter" data-level="18.4" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeline-mudel-tootab-korraga-mitmel-tasmel"><i class="fa fa-check"></i><b>18.4</b> Mitmetasemeline mudel töötab korraga mitmel tasmel</a></li>
+<li class="chapter" data-level="18.4" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeline-mudel-tootab-korraga-mitmel-tasmel"><i class="fa fa-check"></i><b>18.4</b> Mitmetasemeline mudel töötab korraga mitmel tasmel</a><ul>
 <li class="chapter" data-level="" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#shrinkage"><i class="fa fa-check"></i>Shrinkage</a></li>
-<li class="chapter" data-level="" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#anova-laadne-mudel"><i class="fa fa-check"></i>ANOVA-laadne mudel</a></li>
-<li class="chapter" data-level="" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#vabad-interceptid-klassikalises-regressioonimudelis"><i class="fa fa-check"></i>Vabad interceptid klassikalises regressioonimudelis</a></li>
-<li class="chapter" data-level="" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#vabad-tousud-ja-interceptid"><i class="fa fa-check"></i>Vabad tõusud ja interceptid</a></li>
-<li class="chapter" data-level="" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#hierarhiline-mudel-pidevate-prediktoritega"><i class="fa fa-check"></i>Hierarhiline mudel pidevate prediktoritega</a></li>
+</ul></li>
+<li class="chapter" data-level="18.5" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#anova-laadne-mudel"><i class="fa fa-check"></i><b>18.5</b> ANOVA-laadne mudel</a></li>
+<li class="chapter" data-level="18.6" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#vabad-interceptid-klassikalises-regressioonimudelis"><i class="fa fa-check"></i><b>18.6</b> Vabad interceptid klassikalises regressioonimudelis</a></li>
+<li class="chapter" data-level="18.7" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#vabad-tousud-ja-interceptid"><i class="fa fa-check"></i><b>18.7</b> Vabad tõusud ja interceptid</a></li>
+<li class="chapter" data-level="18.8" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#hierarhiline-mudel-pidevate-prediktoritega"><i class="fa fa-check"></i><b>18.8</b> Hierarhiline mudel pidevate prediktoritega</a></li>
 </ul></li>
 <li class="chapter" data-level="19" data-path="brms.html"><a href="brms.html"><i class="fa fa-check"></i><b>19</b> brms</a><ul>
 <li class="chapter" data-level="19.1" data-path="brms.html"><a href="brms.html#brms-i-toovoog"><i class="fa fa-check"></i><b>19.1</b> brms-i töövoog</a><ul>
@@ -697,12 +698,12 @@ pars &lt;-<span class="st"> </span><span class="kw">colnames</span>(model2)
 <span class="st">  </span><span class="kw">cbind</span>(newx, .)
 <span class="kw">head</span>(predict_interval_brms2)
 <span class="co">#&gt;   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5</span>
-<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.320 3.89  5.11</span>
-<span class="co">#&gt; 2         1.04        3.06  setosa     4.52     0.321 3.88  5.16</span>
-<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.318 3.93  5.16</span>
-<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.321 3.96  5.23</span>
-<span class="co">#&gt; 5         1.16        3.06  setosa     4.62     0.329 3.99  5.24</span>
-<span class="co">#&gt; 6         1.20        3.06  setosa     4.64     0.319 4.02  5.28</span></code></pre></div>
+<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.320 3.85  5.10</span>
+<span class="co">#&gt; 2         1.04        3.06  setosa     4.52     0.315 3.91  5.14</span>
+<span class="co">#&gt; 3         1.08        3.06  setosa     4.56     0.319 3.93  5.20</span>
+<span class="co">#&gt; 4         1.12        3.06  setosa     4.59     0.322 3.93  5.22</span>
+<span class="co">#&gt; 5         1.16        3.06  setosa     4.61     0.318 3.98  5.20</span>
+<span class="co">#&gt; 6         1.20        3.06  setosa     4.63     0.315 4.01  5.24</span></code></pre></div>
 <p><code>predict()</code> ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele</p>
 <p>Siin siis eraldi ennustused kahele liigile kolmest, kaasa arvatud petal length väärtusvahemikule, kus selle liigi isendeid valimis ei ole (ja võib-olla ei saagi olla)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">no_versicolor &lt;-<span class="st"> </span><span class="kw">filter</span>(iris, Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>)

@@ -244,12 +244,13 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="18.2" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeline-mudel-r-i-mudelikeeles"><i class="fa fa-check"></i><b>18.2</b> mitmetasemeline mudel R-i mudelikeeles</a></li>
 <li class="chapter" data-level="18.3" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeliste-mudelite-lisaeeldused"><i class="fa fa-check"></i><b>18.3</b> Mitmetasemeliste mudelite lisaeeldused</a></li>
-<li class="chapter" data-level="18.4" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeline-mudel-tootab-korraga-mitmel-tasmel"><i class="fa fa-check"></i><b>18.4</b> Mitmetasemeline mudel töötab korraga mitmel tasmel</a></li>
+<li class="chapter" data-level="18.4" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeline-mudel-tootab-korraga-mitmel-tasmel"><i class="fa fa-check"></i><b>18.4</b> Mitmetasemeline mudel töötab korraga mitmel tasmel</a><ul>
 <li class="chapter" data-level="" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#shrinkage"><i class="fa fa-check"></i>Shrinkage</a></li>
-<li class="chapter" data-level="" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#anova-laadne-mudel"><i class="fa fa-check"></i>ANOVA-laadne mudel</a></li>
-<li class="chapter" data-level="" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#vabad-interceptid-klassikalises-regressioonimudelis"><i class="fa fa-check"></i>Vabad interceptid klassikalises regressioonimudelis</a></li>
-<li class="chapter" data-level="" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#vabad-tousud-ja-interceptid"><i class="fa fa-check"></i>Vabad tõusud ja interceptid</a></li>
-<li class="chapter" data-level="" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#hierarhiline-mudel-pidevate-prediktoritega"><i class="fa fa-check"></i>Hierarhiline mudel pidevate prediktoritega</a></li>
+</ul></li>
+<li class="chapter" data-level="18.5" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#anova-laadne-mudel"><i class="fa fa-check"></i><b>18.5</b> ANOVA-laadne mudel</a></li>
+<li class="chapter" data-level="18.6" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#vabad-interceptid-klassikalises-regressioonimudelis"><i class="fa fa-check"></i><b>18.6</b> Vabad interceptid klassikalises regressioonimudelis</a></li>
+<li class="chapter" data-level="18.7" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#vabad-tousud-ja-interceptid"><i class="fa fa-check"></i><b>18.7</b> Vabad tõusud ja interceptid</a></li>
+<li class="chapter" data-level="18.8" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#hierarhiline-mudel-pidevate-prediktoritega"><i class="fa fa-check"></i><b>18.8</b> Hierarhiline mudel pidevate prediktoritega</a></li>
 </ul></li>
 <li class="chapter" data-level="19" data-path="brms.html"><a href="brms.html"><i class="fa fa-check"></i><b>19</b> brms</a><ul>
 <li class="chapter" data-level="19.1" data-path="brms.html"><a href="brms.html#brms-i-toovoog"><i class="fa fa-check"></i><b>19.1</b> brms-i töövoog</a><ul>
@@ -456,9 +457,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li><p>Nad modelleerivad indiviidi-tasemel regressioonikoefitsientide varieeruvust.</p></li>
 <li><p>Nad võimaldavad paremini määrata indiviidi tasemel regressioonikoefitsiente endid, eriti kui erinevates gruppides on erinev arv indiviide.</p></li>
 </ol>
-</div>
-<div id="shrinkage" class="section level2 unnumbered">
-<h2>Shrinkage</h2>
+<div id="shrinkage" class="section level3 unnumbered">
+<h3>Shrinkage</h3>
 <p>Oletame, et te plaanite reisi Kopenhaagenisse ja soovite sellega seoses teada, kui kallis on keskeltläbi õlu selle linna kõrtsides. Teile on teada õlle hind kolmes Kopenhaageni kõrtsis, mida ei ole just palju. Aga sellele lisaks on teile teada ka õlle hind 6-s Viini, 4-s Praha ja 5-s Pariisi kõrtsis. Nüüd on teil põhimõtteliselt kolm võimalust, kuidas sellele probleemile läheneda.</p>
 <ol style="list-style-type: decimal">
 <li><p>Te arvestate ainult Kopenhaageni andmeid ja ignoreerite teisi, kui ebarelevantseid. See meetod töötab hästi siis, kui teil on Kopenhaageni kohta palju andmeid (aga teil ei ole).</p></li>
@@ -478,14 +478,15 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>Shrinkage kui nähtuse avastas Francis Galton 1870-ndatel aastatel. Galton ja tema sõbrad veetsid nimelt kümme aastat üle Inglismaa taimi kasvatades ja mõõtes erinevate põlvkondade seemnete suurusi. Eesmärk oli luua tühjale kohale uus teadus, pidevate tunnuste geneetika, ja katsete tulemus oli rabav. Nimelt leiti tugev seaduspära, mille kohaselt suurte seemnetega emataimede tütred andsid keskeltläbi väiksemaid seemneid kui nende vanemad ja vastupidi, väikeste seemnetega emade tütred andsid keskeltläbi suuremaid seemneid. Galtoni usk, et ta on avastanud tähtsa bioloogiaseaduse, purunes ca 1885, kui ta pääses analüüsima tuhatkonna inimese pikkusi andmestikus, mis sisaldas vanemate ja täiskasvanud laste pikkusi, ning leidis seal sama nähtuse. Sertifitseeritud geeniusena mõistis Galton, et ta ei olnud avastanud mitte niivõrd geneetikaseaduse, vaid peaaegu, et loogikaseaduse. Tema enda sõnadega: The average regression of the offspring to a constant fraction of their mid-parental deviations, is now shown to be a perfectly reasonable law which might have been deductively foreseen. It is of so simple a character that I have made an arrangement with pulleys and weights by which the probable average height of the children of known parents can be mechanically reckoned. (vt joonis). Sellega avastas Galton regressiooni keskmisele, mis on sisuliselt sama asi, mis shrinkage. Galton nägi, et shrinkagel on järgmised omadused: 1. “The mean filial regression towards mediocrity was directly proportional to the parental deviation from it.” Ehk, mida kaugemal on vanemad keskmisest, seda suurema amplituudiga on nende laste shrinkage 2. “The child inherits partly from his parents, partly from his ancestry. …the further his genealogy goes back, the more numerous and varied will his ancestry become … Their mean stature will then be the same as that of the race; in other words, it will be mediocre.” Ehk, shrinkage toimub alati, kui tunnuse väärtus ei ole deterministlikult määratud (shrinkage taandub korrelatsioonile vanemate ja laste varieeruvuse vahel) 3. “This law tells heavily against the full hereditary transmission of any gift. The more exceptional the amount of the gift, the more exceptional will be the good fortune of a parent who has a son who equals him in that respect.” Ehk, pidevate tunnuste korral on korrelatsioon alati &lt;1 &amp; &gt;-1 4. “The law is even-handed; it levies the same heavy succession-tax on the transmission of badness as well as of goodness. If it discourages the extravagant expectations of gifted parents that their children will inherit all their powers, it no less discountenances extravagant fears that they will inherit all their weaknesses and diseases.” Ehk shrinkage töötab võrdselt mõlemas suunas (ülevalt alla ja alt üles, aga ka vanematelt lastele ja lastelt vanematele). Seega ei ole shrinkage ajas toimuv, põhjuslik, ega isegi mitte füüsikaline protsess, vaid tõenäosusteooriast tulenev loogiline paratamatus. Samamoodi nagu shrinkage esineb vanemate-laste vahel esineb see ka valimi-kordusvalimi vahel kõigi valimite keskmise suunas (valimiefektid taanduvad välja sedamõõda, kuidas valimeid juurde tuleb). Ja samamoodi, kui me võtame valimi testitulemusi mitmest koolist, siis eeldusel, et õpilased on kõikides koolides sarnased (aga mitte identsed), toimub shrinkage kõikide koolide keskmise suunas. Seega, nihutades mingi kooli keskmist testitulemust koolide keskmise suunas, saame parema hinnangu selle kooli õpilaste teadmisetele kui pelgalt selles koolis õpilaste teadmisi mõõtes!</p>
 </blockquote>
 <div class="figure" style="text-align: center"><span id="fig:parun"></span>
-<img src="img/galton.jpg" alt="(ref:Galton (1886), The Journal of the Anthropological Institute of Great Britain and Ireland, Vol. 15, pp. 246-263)" width="70%" />
+<img src="img/galton.jpg" alt="(ref:Galton (1886), The Journal of the Anthropological Institute of Great Britain and Ireland, Vol. 15, pp. 246-263)" width="150%" />
 <p class="caption">
 Joonis 10.3: (ref:Galton (1886), The Journal of the Anthropological Institute of Great Britain and Ireland, Vol. 15, pp. 246-263)
 </p>
 </div>
 </div>
-<div id="anova-laadne-mudel" class="section level2 unnumbered">
-<h2>ANOVA-laadne mudel</h2>
+</div>
+<div id="anova-laadne-mudel" class="section level2">
+<h2><span class="header-section-number">18.5</span> ANOVA-laadne mudel</h2>
 <p>Lihtne ANOVA on sageduslik test, mis võrdleb gruppide keskmisi mitmese testimise kontekstis. Siin ehitame selle Bayesi analoogi, mis samuti hindab gruppide keskmisi mitmese testimise kontekstis. Põhiline erinevus seisneb selles, et kui ANOVA punktennustus iga grupi keskväärtusele võrdub valimi keskväärtusega ja ANOVA pelgalt kohandab usaldusintervalle selle keskväärtuse ümber, siis bayesiaanlik mudel püüab ennustada igale grupile selle tegelikku kõige tõenäolisemat keskväärtust arvestades kõigi gruppide andmeid. Shrinkage-i roll on ekstreemseid gruppe “tagasi tõmmates” vähendada ebakindlust iga grupi keskmise ennustuse ümber. Shrinkage käigus tõmmatakse gruppe kõikide gruppide keskmise poole seda tugevamalt, mida kaugemal nad sellest keskmisest on. Sellega kaasneb paratamatult mõningane süstemaatiline viga, kus tõelised efektid tulevad välja väiksematena, kui nad tegelikult on. Kui ilma tegelike efektideta gruppide arv on väga suur võrreldes päris efektidega gruppidega, siis võib shrinkage meie pärisefektid sootuks ära kaotada. Kahjuks on see loogiline paratamatus; alternatiiviks on olukord, kus meie üksikud pärisefektid upuvad sama suurte pseudoefektide merre.</p>
 <p>Ok, aitab mulast, laadime vajalikud raamatukogud ja andmed ning vaatame mis saab.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
@@ -547,8 +548,8 @@ Joonis 4.6: Mudelite koefitsiendid.
 </div>
 <p>Siin on hästi näha shrinkage m3 puhul võrreldes m2-ga, mis ei tee multiple testingu korrektsiooni. Nende koolide puhul, kus usaldusintervall on laiem, on ka suurem shrinkage (mudel võtab nende kohta suhteliselt rohkem infot teistest koolidest sest need koolid ise on mingil põhjusel suhteliselt infovaesed).</p>
 </div>
-<div id="vabad-interceptid-klassikalises-regressioonimudelis" class="section level2 unnumbered">
-<h2>Vabad interceptid klassikalises regressioonimudelis</h2>
+<div id="vabad-interceptid-klassikalises-regressioonimudelis" class="section level2">
+<h2><span class="header-section-number">18.6</span> Vabad interceptid klassikalises regressioonimudelis</h2>
 <p>Ennustame score1 sõltuvust sex-ist. Küsimus: kui palju poiste ja tüdrukute matemaatikaoskused erinevad? Fitime mudeli, mis laseb vabaks intercepti. <strong>Selle mudeli eeldus on, et igal koolil on oma baastase (oma intercept), aga kõikide koolide efektid (mudeli tõusu-koefitsient) on identsed.</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">describe</span>(schools)
 <span class="co">#&gt;         vars    n    mean      sd median trimmed   mad  min  max  range</span>
@@ -636,8 +637,8 @@ Joonis 17.3: Poiste skoori posteerior.
 </div>
 <p>Siin on eeldus, et kõikides koolides on sama poiste ja tüdrukute vaheline erinevus (b_sex1), kuid erinevad matemaatikateadmiste baastasemed (mudeli intercept on koolide vahel vabaks lastud, kuid tõus mitte).</p>
 </div>
-<div id="vabad-tousud-ja-interceptid" class="section level2 unnumbered">
-<h2>Vabad tõusud ja interceptid</h2>
+<div id="vabad-tousud-ja-interceptid" class="section level2">
+<h2><span class="header-section-number">18.7</span> Vabad tõusud ja interceptid</h2>
 <p>Milline näeb välja mudel, kus me laseme vabaks nii intercepti kui tõusu?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">schools_f2 &lt;-<span class="st"> </span><span class="kw">glimmer</span>(score1 <span class="op">~</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>sex <span class="op">|</span><span class="st"> </span>school), <span class="dt">data =</span> schools)
 <span class="co">#&gt; alist(</span>
@@ -761,8 +762,8 @@ Joonis 14.12: mida suurem on koolis poiste skoor, seda väiksem on poiste ja tü
 <p>Muide sel joonisel tähendavad negatiivsed väärtused alla keskmist väärtust, mitte tingimata negatiivset erinevust või negatiivset skoori. Miks?</p>
 <p>Arvutage nüüd poiste ja tüdrukute keskmine skoor kooli kaupa ja vaadake uuesti sõltuvust samasse erinevusesse. Mis on õigem viis: kas fittida ilma interceptita mudel (nagu eelmises peatükis) ja kasutada otse selle koefitsiente või kasutada meie m2 mudelit ning arvutada selle mudeli koefitsientide põhjal uus statistik (kaalutud keskmine näiteks)? Miks?</p>
 </div>
-<div id="hierarhiline-mudel-pidevate-prediktoritega" class="section level2 unnumbered">
-<h2>Hierarhiline mudel pidevate prediktoritega</h2>
+<div id="hierarhiline-mudel-pidevate-prediktoritega" class="section level2">
+<h2><span class="header-section-number">18.8</span> Hierarhiline mudel pidevate prediktoritega</h2>
 <p>Siin püüame ennustada score1 mõju score2 väärtusele.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(schools<span class="op">$</span>score2, schools<span class="op">$</span>score1)
 <span class="kw">abline</span>(<span class="kw">lm</span>(score1 <span class="op">~</span><span class="st"> </span>score2, <span class="dt">data =</span> schools))</code></pre></div>

@@ -190,7 +190,7 @@ Mudeli muudab mitmetasemeliseks see, et me määrame veamudelit kasutades mitte 
 3. Nad võimaldavad paremini määrata indiviidi tasemel regressioonikoefitsiente endid, eriti kui erinevates gruppides on erinev arv indiviide.
 
 
-## Shrinkage {-}
+### Shrinkage {-}
 
 Oletame, et te plaanite reisi Kopenhaagenisse ja soovite sellega seoses teada, kui kallis on keskeltläbi õlu selle linna kõrtsides. Teile on teada õlle hind kolmes Kopenhaageni kõrtsis, mida ei ole just palju. Aga sellele lisaks on teile teada ka õlle hind 6-s Viini, 4-s Praha ja 5-s Pariisi kõrtsis. Nüüd on teil põhimõtteliselt kolm võimalust, kuidas sellele probleemile läheneda. 
 
@@ -237,12 +237,12 @@ Selline mudel usub, et erinevate koolide keskmine tase erineb (seda näitab iga 
 Samamoodi nagu shrinkage esineb vanemate-laste vahel esineb see ka valimi-kordusvalimi vahel kõigi valimite keskmise suunas (valimiefektid taanduvad välja sedamõõda, kuidas valimeid juurde tuleb). Ja samamoodi, kui me võtame valimi testitulemusi mitmest koolist, siis eeldusel, et õpilased on kõikides koolides sarnased (aga mitte identsed), toimub shrinkage kõikide koolide keskmise suunas. Seega, nihutades mingi kooli keskmist testitulemust koolide keskmise suunas, saame parema hinnangu selle kooli õpilaste teadmisetele kui pelgalt selles koolis õpilaste teadmisi mõõtes! 
 
 <div class="figure" style="text-align: center">
-<img src="img/galton.jpg" alt="(ref:Galton (1886), The Journal of the Anthropological Institute of Great Britain and Ireland, Vol. 15, pp. 246-263)" width="70%" />
+<img src="img/galton.jpg" alt="(ref:Galton (1886), The Journal of the Anthropological Institute of Great Britain and Ireland, Vol. 15, pp. 246-263)" width="150%" />
 <p class="caption">(\#fig:parun)(ref:Galton (1886), The Journal of the Anthropological Institute of Great Britain and Ireland, Vol. 15, pp. 246-263)</p>
 </div>
 
 
-## ANOVA-laadne mudel {-}
+## ANOVA-laadne mudel 
 
 Lihtne ANOVA on sageduslik test, mis võrdleb gruppide keskmisi mitmese testimise kontekstis. 
 Siin ehitame selle Bayesi analoogi, mis samuti hindab gruppide keskmisi mitmese testimise kontekstis. 
@@ -368,7 +368,7 @@ coeftab_plot(coeftab(schoolm2, schoolm3), cex = 0.5)
 Siin on hästi näha shrinkage m3 puhul võrreldes m2-ga, mis ei tee multiple testingu korrektsiooni. 
 Nende koolide puhul, kus usaldusintervall on laiem, on ka suurem shrinkage (mudel võtab nende kohta suhteliselt rohkem infot teistest koolidest sest need koolid ise on mingil põhjusel suhteliselt infovaesed).
 
-## Vabad interceptid klassikalises regressioonimudelis {-}
+## Vabad interceptid klassikalises regressioonimudelis 
 
 Ennustame score1 sõltuvust sex-ist. Küsimus: kui palju poiste ja tüdrukute matemaatikaoskused erinevad? Fitime mudeli, mis laseb vabaks intercepti. **Selle mudeli eeldus on, et igal koolil on oma baastase (oma intercept), aga kõikide koolide efektid (mudeli tõusu-koefitsient) on identsed.**
 
@@ -505,7 +505,7 @@ dens(school_2_boys)
 
 Siin on eeldus, et kõikides koolides on sama poiste ja tüdrukute vaheline erinevus (b_sex1), kuid erinevad matemaatikateadmiste baastasemed (mudeli intercept on koolide vahel vabaks lastud, kuid tõus mitte). 
 
-## Vabad tõusud ja interceptid {-}
+## Vabad tõusud ja interceptid 
 
 Milline näeb välja mudel, kus me laseme vabaks nii intercepti kui tõusu?
 
@@ -677,7 +677,7 @@ Muide sel joonisel tähendavad negatiivsed väärtused alla keskmist väärtust,
 Arvutage nüüd poiste ja tüdrukute keskmine skoor kooli kaupa ja vaadake uuesti sõltuvust samasse erinevusesse. Mis on õigem viis: kas fittida ilma interceptita mudel (nagu eelmises peatükis) ja kasutada otse selle koefitsiente või kasutada meie m2 mudelit ning arvutada selle mudeli koefitsientide põhjal uus statistik (kaalutud keskmine näiteks)? Miks?
 
 
-## Hierarhiline mudel pidevate prediktoritega {-}
+## Hierarhiline mudel pidevate prediktoritega 
 
 Siin püüame ennustada score1 mõju score2 väärtusele.
 
