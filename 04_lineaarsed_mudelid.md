@@ -49,7 +49,7 @@ plot(y ~ x,
 
 Sirge mudeli lihtsaim matemaatiline formalism on Y = X. 
 See on äärmiselt jäik mudel: sirge, mille asukoht on rangelt fikseeritud.
-Sirge lõikab y telge alati 0-s (mudeli keeles: sirge intercept ehk lõikepunkt Y teljel = 0) ja tema tõusunurk saab olla ainult 45 kraadi (mudeli keeles: mudeli slope ehk tõus = 1). 
+Sirge lõikab y telge alati 0-s (mudeli keeles: sirge *intercept* ehk lõikepunkt Y teljel = 0) ja tema tõusunurk saab olla ainult 45 kraadi (mudeli keeles *slope* ehk tõus = 1). 
 Selle mudeli jäikus tuleneb sellest, et temas ei ole parameetreid, mille väärtusi me saaksime vabalt muuta ehk tuunida.  
 
 Mis juhtub, kui me lisame mudelisse konstandi, mille liidame x-i väärtustele? 
