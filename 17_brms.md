@@ -610,12 +610,12 @@ predict_interval_brms2 <- predict(m2, newdata = newx, re_formula = NULL) %>%
   cbind(newx, .)
 head(predict_interval_brms2)
 #>   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5
-#> 1         1.00        3.06  setosa     4.49     0.320 3.85  5.10
-#> 2         1.04        3.06  setosa     4.52     0.315 3.91  5.14
-#> 3         1.08        3.06  setosa     4.56     0.319 3.93  5.20
-#> 4         1.12        3.06  setosa     4.59     0.322 3.93  5.22
-#> 5         1.16        3.06  setosa     4.61     0.318 3.98  5.20
-#> 6         1.20        3.06  setosa     4.63     0.315 4.01  5.24
+#> 1         1.00        3.06  setosa     4.48     0.316 3.87  5.11
+#> 2         1.04        3.06  setosa     4.52     0.320 3.90  5.15
+#> 3         1.08        3.06  setosa     4.56     0.320 3.94  5.19
+#> 4         1.12        3.06  setosa     4.58     0.312 3.98  5.19
+#> 5         1.16        3.06  setosa     4.61     0.322 4.00  5.25
+#> 6         1.20        3.06  setosa     4.64     0.318 4.02  5.25
 ```
 
 `predict()` ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele

@@ -360,7 +360,11 @@ x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</spa
 y &lt;-<span class="st"> </span>x</code></pre></div>
 <p>Selle mudeli saame graafiliselt kujutada nii:</p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Weight in kg&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Heigth in cm&quot;</span>, <span class="dt">main =</span> <span class="kw">bquote</span>(y <span class="op">==</span><span class="st"> </span>x))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, 
+     <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Weight in kg&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="st">&quot;Heigth in cm&quot;</span>, 
+     <span class="dt">main =</span> <span class="kw">bquote</span>(y <span class="op">==</span><span class="st"> </span>x))</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:lihtnemudel"></span>
 <img src="04_lineaarsed_mudelid_files/figure-html/lihtnemudel-1.png" alt="Lihtne mudel y ~ x, mille lõikepunkt = 0 ja tõus = 1." width="70%" />
 <p class="caption">

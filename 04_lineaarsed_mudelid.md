@@ -33,7 +33,11 @@ Selle mudeli saame graafiliselt kujutada nii:
 
 
 ```r
-plot(y ~ x, type = "l", xlab = "Weight in kg", ylab = "Heigth in cm", main = bquote(y == x))
+plot(y ~ x, 
+     type = "l", 
+     xlab = "Weight in kg", 
+     ylab = "Heigth in cm", 
+     main = bquote(y == x))
 ```
 
 <div class="figure" style="text-align: center">
