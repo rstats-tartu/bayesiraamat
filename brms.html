@@ -149,13 +149,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#testime-mudeli-eeldusi"><i class="fa fa-check"></i>2. Testime mudeli eeldusi</a><ul>
 <li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#lineaarsus---residuaalidfitted-plot"><i class="fa fa-check"></i>Lineaarsus - residuaalid~fitted plot</a></li>
 <li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#mojukuse-plot"><i class="fa fa-check"></i>Mõjukuse plot</a></li>
-<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#cooki-kaugus---mojukus"><i class="fa fa-check"></i>Cooki kaugus - mõjukus</a></li>
 <li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#residuaalide-normaalsus---qq-plot"><i class="fa fa-check"></i>Residuaalide normaalsus - qq plot</a></li>
 <li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#homoskedastilisus---scale-location-plot"><i class="fa fa-check"></i>Homoskedastilisus - Scale-location plot</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#residuaalid-y-ja-x-muutujate-vastu"><i class="fa fa-check"></i>Residuaalid y ja x muutujate vastu</a></li>
-<li class="chapter" data-level="6.1" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#teeme-mudeli-pohjal-ennustusi-marginal-plots"><i class="fa fa-check"></i><b>6.1</b> 3. Teeme mudeli põhjal ennustusi (marginal plots)</a></li>
-<li class="chapter" data-level="6.2" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#vordleme-mudeleid"><i class="fa fa-check"></i><b>6.2</b> 4. Võrdleme mudeleid</a></li>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#teeme-mudeli-pohjal-ennustusi-marginal-plots"><i class="fa fa-check"></i>3. Teeme mudeli põhjal ennustusi (marginal plots)</a></li>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#vordleme-mudeleid"><i class="fa fa-check"></i>4. Võrdleme mudeleid</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html"><i class="fa fa-check"></i><b>7</b> Andmete transformeerimine</a><ul>
 <li class="chapter" data-level="7.1" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#logaritmimine"><i class="fa fa-check"></i><b>7.1</b> Logaritmimine</a><ul>
@@ -698,12 +697,12 @@ pars &lt;-<span class="st"> </span><span class="kw">colnames</span>(model2)
 <span class="st">  </span><span class="kw">cbind</span>(newx, .)
 <span class="kw">head</span>(predict_interval_brms2)
 <span class="co">#&gt;   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5</span>
-<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.314 3.89  5.10</span>
-<span class="co">#&gt; 2         1.04        3.06  setosa     4.52     0.308 3.93  5.12</span>
-<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.322 3.95  5.20</span>
-<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.321 3.96  5.20</span>
-<span class="co">#&gt; 5         1.16        3.06  setosa     4.61     0.315 4.00  5.24</span>
-<span class="co">#&gt; 6         1.20        3.06  setosa     4.64     0.319 4.00  5.26</span></code></pre></div>
+<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.320 3.89  5.11</span>
+<span class="co">#&gt; 2         1.04        3.06  setosa     4.52     0.321 3.88  5.16</span>
+<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.318 3.93  5.16</span>
+<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.321 3.96  5.23</span>
+<span class="co">#&gt; 5         1.16        3.06  setosa     4.62     0.329 3.99  5.24</span>
+<span class="co">#&gt; 6         1.20        3.06  setosa     4.64     0.319 4.02  5.28</span></code></pre></div>
 <p><code>predict()</code> ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele</p>
 <p>Siin siis eraldi ennustused kahele liigile kolmest, kaasa arvatud petal length väärtusvahemikule, kus selle liigi isendeid valimis ei ole (ja võib-olla ei saagi olla)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">no_versicolor &lt;-<span class="st"> </span><span class="kw">filter</span>(iris, Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>)

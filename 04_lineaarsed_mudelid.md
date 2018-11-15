@@ -346,7 +346,7 @@ AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel?
 
 6. X-muutuja ei ole konstant vaid sisaldab erinevaid väärtusi. 
 
-7. mitme predikrotiga lineaarse regressiooni puhul tuleb veel lisaks kollineaarsuse eeldus: me eeldame, et ükski prediktorite paar pole täiuslikult lineaarselt korreleeritud (pole lineaarne funktsioon üksteisest).
+7. Mitme predikrotiga lineaarse regressiooni puhul tuleb veel lisaks kollineaarsuse eeldus: me eeldame, et ükski prediktorite paar pole täiuslikult lineaarselt korreleeritud (pole lineaarne funktsioon üksteisest). Täieliku kolineaarsuse korral mudel ei lahendu, aga põhjuseks on enamasti viga mudeli spetsifitseerimisel. Osaline kollineaarsus, mis on praktikas pigem haruldane probleem, viib koefitsientide laiadele veapiiridele -- ja kui veapiirid pole laiad, siis pole ka kollineaarsust.
 
 ### Eeldused praktilise tähtsuse järjekorras: {-}
 

@@ -278,7 +278,7 @@ Kuidas saada ennustusi kindlale l_GDP väärtusele? Näiteks tulp V10 vastab l_G
 dens(sim.length$V10)
 HPDI(sim.length$V10, prob = 0.95)
 #> |0.95 0.95| 
-#>  40.3  68.2
+#>  39.2  66.5
 ```
 
 <div class="figure" style="text-align: center">

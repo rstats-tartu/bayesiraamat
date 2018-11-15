@@ -381,7 +381,7 @@ Vertikaalsed referentsjooned näitavad hat-väärtusi 2h ja 3h.
 > Regressiooni *outlier* on vaatlus, mille y-muutja väärtus on ebatavaline X-muujutuja väärtuse kontekstis. Seega annab *outlier* mudeli fittimisel kõrge residuaaliga punkti. Lihtsalt (mitte-konditsionaalselt) ebatavalised Y-i või X-i väärtused ei pruugi olla *outlier*id. Kui peaks juhuma, et *outlier* langeb kokku ebatavalise X-i väärtusega, siis selle punkti eemaldamine muudab märkimisväärselt mudeli koefitsiente. Selline *outlier* on ühtlasi ka *high leverage* vaatlus. Siit jõuame mõjukate vaatluste (*Influential observations*) defineerimisele --- Mõjukus mudeli koefitsientidele =  *Leverage* x *"outlierness"*. *High leverage* andmepunktid on x-muutujate ekstreemsed punktid, mille lähedal ei ole n-mõõtmelises ruumis (kui teil on n x-muutujat) teisi punkte. Seetõttu läheb fititud mudel just nende punktide lähedalt mõõda. Mõjukad punktid on tüüpiliselt ka *high leverage* punktid, kuid vastupidine ei kehti!
 
 
-### Cooki kaugus - mõjukus {-}
+#### Cooki kaugus - mõjukus {-}
 
 .cooksd on Cook-i kaugus, mis näitab mõjukust. Rusikareeglina tähendab cooksd > 3 cooksd keskväärtust, et tegu võiks olla mõjuka vaatlusega. Teine võimalus on pidada mõjukaks igat punkti, mis on kõrgem kui 4/n. Kolmanadad arvavad jälle, et .cooksd > 1 v .cooksd > 0.5 viitab mõjukale vaatlusele. Üldiselt on kõigi mudeli eelduste kontrollidega nii, et vastava statistiku jaotuse jõllitamine on sageli kasulikum kui automaatselt mingi *cut-offi* järgi talitamine.
 
@@ -399,14 +399,24 @@ ggplot(data = NULL, aes(x = 1:150, y = a_m3$`.cooksd`)) + geom_col() +
 
 ### Residuaalide normaalsus - qq plot {-}
 
-Kas residuaalid on normaaljaotusega?
+Kas residuaalid on normaaljaotusega? NB! studentiseeritud residuaalid on studenti t jaotusega ja üldiselt on targem vaadata neid, kui tavalisi residuaale. Studenti t jaotusele pean ette andma ka vabadusastmete arvu e df-i.
 
 ```r
-car::qqPlot(a_m3$`.std.resid`, distribution = "norm")
+car::qqPlot(a_m3$`.std.resid`, distribution = "t", df=149)
 #> [1] 42 69
 ```
 
 <img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" />
+QQ-plot näitab erinevust normaaljaotusest (t jaotusest) eelkõige residuaalide jaotuse sabades. Antud juhul on kõik hästi.
+
+Isegi oluisem on vaadata, et residuaalide jaotus ei oleks mitmetipuline. Kui on, siis võib see olla märgiks, et mudelist on puudu mõni faktormuutuja, mis andmetes olevad diskreetsed loomulikud alampopulatsioonid lahku ajaks.
+
+```r
+ggplot(a_m3, aes(`.std.resid`))+ geom_density()
+```
+
+<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" />
+
 
 ### Homoskedastilisus - Scale-location plot {-}
 
@@ -419,7 +429,8 @@ ggplot(a_m3, aes(`.fitted`, `.resid` %>% abs %>% sqrt)) +
   geom_smooth(se = FALSE)
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;" />
+
 
 
 ## Residuaalid y ja x muutujate vastu {-}
@@ -431,7 +442,7 @@ ggplot(a_m3, aes(Sepal.Width, `.std.resid`)) + geom_point(aes(color=Species)) + 
   geom_smooth( se=F, color="black", size=0.5)
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;" />
 
 Mudel paistab süstemaatiliselt alahindama Sepal Width-i seal kus Sepal Length on kõrge, ja vastupidi. Horisontaalne punktiirjoon näitab, kus mudel vastab täpselt andmetele.
 
@@ -446,10 +457,10 @@ ggplot(a_m3, aes(Sepal.Length, `.std.resid`, color=Species)) +
   geom_smooth(se=F, color="black", size=0.5)
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" />
 Ideaalsed residuaalid! 
 
-## 3. Teeme mudeli põhjal ennustusi (marginal plots)
+## 3. Teeme mudeli põhjal ennustusi (marginal plots) {-}
 
 Me ennustame Y-i keskmisi väärtuseid etteantud X-i väärtustel.
 
@@ -477,7 +488,7 @@ ggplot(mydf, aes(x, predicted)) +
   theme_classic()
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" />
 
 >terms argument võtab kuni 3 muutujat, neist 2 peavad olema faktormuutujad ja 3 muutuja korral tekib tabelisse veerg nimega facet, mille abil saab tulemused facet_wrap()-ga välja plottida.
 
@@ -492,7 +503,7 @@ ggplot(mydf, aes(x, predicted)) +
   ylab("predicted sepal width")
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 Nii saab sisestada üksikuid parameetriväärtusi ja neile ennustusi teha:
@@ -514,7 +525,7 @@ Nii saab sisestada üksikuid parameetriväärtusi ja neile ennustusi teha:
 #>  22      7.91     5.53     10.28
 ```
 
-## 4. Võrdleme mudeleid
+## 4. Võrdleme mudeleid {-}
 
 1. Eeldus - kõik võrreldavad mudelid on fititud täpselt samade andmete peal.
 

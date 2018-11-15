@@ -149,13 +149,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#testime-mudeli-eeldusi"><i class="fa fa-check"></i>2. Testime mudeli eeldusi</a><ul>
 <li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#lineaarsus---residuaalidfitted-plot"><i class="fa fa-check"></i>Lineaarsus - residuaalid~fitted plot</a></li>
 <li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#mojukuse-plot"><i class="fa fa-check"></i>Mõjukuse plot</a></li>
-<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#cooki-kaugus---mojukus"><i class="fa fa-check"></i>Cooki kaugus - mõjukus</a></li>
 <li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#residuaalide-normaalsus---qq-plot"><i class="fa fa-check"></i>Residuaalide normaalsus - qq plot</a></li>
 <li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#homoskedastilisus---scale-location-plot"><i class="fa fa-check"></i>Homoskedastilisus - Scale-location plot</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#residuaalid-y-ja-x-muutujate-vastu"><i class="fa fa-check"></i>Residuaalid y ja x muutujate vastu</a></li>
-<li class="chapter" data-level="6.1" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#teeme-mudeli-pohjal-ennustusi-marginal-plots"><i class="fa fa-check"></i><b>6.1</b> 3. Teeme mudeli põhjal ennustusi (marginal plots)</a></li>
-<li class="chapter" data-level="6.2" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#vordleme-mudeleid"><i class="fa fa-check"></i><b>6.2</b> 4. Võrdleme mudeleid</a></li>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#teeme-mudeli-pohjal-ennustusi-marginal-plots"><i class="fa fa-check"></i>3. Teeme mudeli põhjal ennustusi (marginal plots)</a></li>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#vordleme-mudeleid"><i class="fa fa-check"></i>4. Võrdleme mudeleid</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html"><i class="fa fa-check"></i><b>7</b> Andmete transformeerimine</a><ul>
 <li class="chapter" data-level="7.1" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#logaritmimine"><i class="fa fa-check"></i><b>7.1</b> Logaritmimine</a><ul>
@@ -373,7 +372,7 @@ m1 &lt;-<span class="st"> </span><span class="kw">map</span>(
 <span class="kw">dens</span>(samples<span class="op">$</span>p)
 <span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt; 0.349 0.969</span></code></pre></div>
+<span class="co">#&gt; 0.358 0.973</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:pullpost"></span>
 <img src="11_mudelite_keel_files/figure-html/pullpost-1.png" alt="Tõmbame valimi posteeriorist." width="70%" />
 <p class="caption">
@@ -396,7 +395,7 @@ Joonis 13.1: Tõmbame valimi posteeriorist.
 <span class="co">#PI(samples$p, prob = 0.95) # Leaves out equal 2.5% at both sides</span>
 <span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt; 0.570 0.764</span></code></pre></div>
+<span class="co">#&gt; 0.576 0.769</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:perse"></span>
 <img src="11_mudelite_keel_files/figure-html/perse-1.png" alt="Veel üks valim posteeriorist (60 surma 90st)." width="70%" />
 <p class="caption">
@@ -442,7 +441,7 @@ samples &lt;-<span class="st"> </span><span class="kw">extract.samples</span>(m3
 <span class="co">#&gt; p 0.67   0.03 0.62  0.71</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt; 0.616 0.721</span>
+<span class="co">#&gt; 0.616 0.719</span>
 <span class="kw">dens</span>(samples<span class="op">$</span>p)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
 <img src="11_mudelite_keel_files/figure-html/unnamed-chunk-5-1.png" alt="Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist." width="70%" />
