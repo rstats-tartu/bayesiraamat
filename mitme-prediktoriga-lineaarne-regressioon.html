@@ -320,10 +320,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#tulemuste-tolgendamine"><i class="fa fa-check"></i>Tulemuste tõlgendamine</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#kahe-paradigma-erinevused"><i class="fa fa-check"></i>Kahe paradigma erinevused</a><ul>
-<li class="chapter" data-level="A.0.1" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#sageduslik-ja-teaduslik-hupoteesitestimine."><i class="fa fa-check"></i><b>A.0.1</b> Sageduslik ja teaduslik hüpoteesitestimine.</a></li>
+<li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#sageduslik-ja-teaduslik-hupoteesitestimine"><i class="fa fa-check"></i>Sageduslik ja teaduslik hüpoteesitestimine</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#statistiline-ennustus-kui-mitmetasandiline-protsess"><i class="fa fa-check"></i>Statistiline ennustus kui mitmetasandiline protsess</a><ul>
-<li class="chapter" data-level="A.0.2" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#ajaloolist-juttu-normaaljaotus-bayes-ja-sageduslik-statistika"><i class="fa fa-check"></i><b>A.0.2</b> Ajaloolist juttu: normaaljaotus, Bayes ja sageduslik statistika</a></li>
+<li class="chapter" data-level="A.0.1" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#ajaloolist-juttu-normaaljaotus-bayes-ja-sageduslik-statistika"><i class="fa fa-check"></i><b>A.0.1</b> Ajaloolist juttu: normaaljaotus, Bayes ja sageduslik statistika</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="B" data-path="sonastik.html"><a href="sonastik.html"><i class="fa fa-check"></i><b>B</b> Sõnastik</a></li>
@@ -542,9 +542,9 @@ diab_Bvs &lt;-<span class="st"> </span><span class="kw">Bvs</span>(<span class="
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
 <span class="kw">vif</span>(<span class="kw">lm</span>(hdl <span class="op">~</span><span class="st"> </span>chol <span class="op">+</span><span class="st"> </span>stab.glu <span class="op">+</span><span class="st"> </span>ratio <span class="op">+</span><span class="st"> </span>glyhb <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>height <span class="op">+</span><span class="st"> </span>weight <span class="op">+</span><span class="st">  </span>bp.1s <span class="op">+</span><span class="st"> </span>bp.1d <span class="op">+</span><span class="st"> </span>waist, <span class="dt">data =</span> diab))
 <span class="co">#&gt;     chol stab.glu    ratio    glyhb      age   height   weight    bp.1s </span>
-<span class="co">#&gt;     1.41     2.34     1.51     2.47     1.63     1.22     4.94     2.13 </span>
+<span class="co">#&gt;     1.41     2.34     1.51     2.46     1.63     1.21     4.98     2.13 </span>
 <span class="co">#&gt;    bp.1d    waist </span>
-<span class="co">#&gt;     1.78     4.74</span></code></pre></div>
+<span class="co">#&gt;     1.77     4.80</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(diab_Bvs)
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
@@ -554,20 +554,20 @@ diab_Bvs &lt;-<span class="st"> </span><span class="kw">Bvs</span>(<span class="
 <span class="co">#&gt; Inclusion Probabilities:</span>
 <span class="co">#&gt;             Incl.prob. HPM MPM</span>
 <span class="co">#&gt; chol                 1   *   *</span>
-<span class="co">#&gt; stab.glu        0.0245        </span>
+<span class="co">#&gt; stab.glu        0.0247        </span>
 <span class="co">#&gt; ratio                1   *   *</span>
-<span class="co">#&gt; glyhb           0.0216        </span>
-<span class="co">#&gt; age             0.0401        </span>
-<span class="co">#&gt; gendermale      0.0174        </span>
-<span class="co">#&gt; height          0.0453        </span>
-<span class="co">#&gt; weight          0.0861        </span>
-<span class="co">#&gt; framelarge       0.037        </span>
+<span class="co">#&gt; glyhb           0.0235        </span>
+<span class="co">#&gt; age             0.0399        </span>
+<span class="co">#&gt; gendermale      0.0176        </span>
+<span class="co">#&gt; height          0.0425        </span>
+<span class="co">#&gt; weight          0.0733        </span>
+<span class="co">#&gt; framelarge      0.0367        </span>
 <span class="co">#&gt; framemedium      0.014        </span>
-<span class="co">#&gt; framesmall      0.0234        </span>
+<span class="co">#&gt; framesmall      0.0223        </span>
 <span class="co">#&gt; bp.1s           0.0152        </span>
-<span class="co">#&gt; bp.1d           0.0143        </span>
-<span class="co">#&gt; waist           0.0517        </span>
-<span class="co">#&gt; hip             0.5084   *   *</span>
+<span class="co">#&gt; bp.1d           0.0137        </span>
+<span class="co">#&gt; waist           0.0518        </span>
+<span class="co">#&gt; hip              0.509   *   *</span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Code: HPM stands for Highest posterior Probability Model and</span>
 <span class="co">#&gt;  MPM for Median Probability Model.</span>
@@ -589,20 +589,20 @@ diab_Bvs &lt;-<span class="st"> </span><span class="kw">Bvs</span>(<span class="
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Inclusion Probabilities:</span>
 <span class="co">#&gt;             Incl.prob. HPM MPM</span>
-<span class="co">#&gt; stab.glu        0.0634        </span>
+<span class="co">#&gt; stab.glu        0.0574        </span>
 <span class="co">#&gt; ratio                1   *   *</span>
-<span class="co">#&gt; glyhb           0.1148        </span>
-<span class="co">#&gt; age             0.9789   *   *</span>
-<span class="co">#&gt; gendermale      0.1314        </span>
-<span class="co">#&gt; height          0.0654        </span>
-<span class="co">#&gt; weight          0.1806        </span>
-<span class="co">#&gt; framelarge      0.6958   *   *</span>
-<span class="co">#&gt; framemedium     0.1239        </span>
-<span class="co">#&gt; framesmall      0.0858        </span>
-<span class="co">#&gt; bp.1s            0.092        </span>
-<span class="co">#&gt; bp.1d           0.6281       *</span>
-<span class="co">#&gt; waist           0.1359        </span>
-<span class="co">#&gt; hip             0.1722        </span>
+<span class="co">#&gt; glyhb            0.105        </span>
+<span class="co">#&gt; age             0.9837   *   *</span>
+<span class="co">#&gt; gendermale      0.1076        </span>
+<span class="co">#&gt; height          0.0579        </span>
+<span class="co">#&gt; weight          0.1381        </span>
+<span class="co">#&gt; framelarge      0.7186   *   *</span>
+<span class="co">#&gt; framemedium     0.1144        </span>
+<span class="co">#&gt; framesmall      0.0796        </span>
+<span class="co">#&gt; bp.1s           0.0801        </span>
+<span class="co">#&gt; bp.1d           0.4729        </span>
+<span class="co">#&gt; waist           0.1259        </span>
+<span class="co">#&gt; hip             0.1567        </span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Code: HPM stands for Highest posterior Probability Model and</span>
 <span class="co">#&gt;  MPM for Median Probability Model.</span>
@@ -633,7 +633,7 @@ nullmodel &lt;-<span class="st"> </span>hdl <span class="op">~</span><span class
 <span class="co">#&gt; ---------</span>
 <span class="co">#&gt; Bayes factors (expressed in relation to H0)</span>
 <span class="co">#&gt;  H0.to.H0  H1.to.H0  H2.to.H0  H3.to.H0 </span>
-<span class="co">#&gt;  1.00e+00 1.79e+131 1.99e+142  1.28e+55 </span>
+<span class="co">#&gt;  1.00e+00 1.33e+131 1.34e+142  1.97e+55 </span>
 <span class="co">#&gt; ---------</span>
 <span class="co">#&gt; Posterior probabilities:</span>
 <span class="co">#&gt; H0 H1 H2 H3 </span>
@@ -648,8 +648,8 @@ regs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span clas
 <p><img src="14_mitu-prediktorit_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Peale 2. muutuja lisamist jääb adjusteeritud r-ruut stabiilseks. Seega piisab kahest muutujast.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">reg.summary<span class="op">$</span>adjr2
-<span class="co">#&gt;  [1] 0.469 0.488 0.501 0.508 0.510 0.513 0.513 0.513 0.512 0.511 0.510</span>
-<span class="co">#&gt; [12] 0.509 0.507 0.506</span></code></pre></div>
+<span class="co">#&gt;  [1] 0.470 0.489 0.502 0.508 0.510 0.512 0.513 0.512 0.512 0.511 0.510</span>
+<span class="co">#&gt; [12] 0.508 0.507 0.506</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(regfit.full)
 <span class="co">#&gt; Subset selection object</span>
 <span class="co">#&gt; Call: regsubsets.formula(hdl ~ stab.glu + ratio + glyhb + age + gender + </span>
@@ -698,7 +698,7 @@ regs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span clas
 <span class="co">#&gt; 7  ( 1 )  &quot; &quot;         &quot; &quot;        &quot; &quot;   &quot;*&quot;   &quot; &quot;   &quot;*&quot;</span>
 <span class="co">#&gt; 8  ( 1 )  &quot; &quot;         &quot; &quot;        &quot; &quot;   &quot;*&quot;   &quot; &quot;   &quot;*&quot;</span>
 <span class="co">#&gt; 9  ( 1 )  &quot; &quot;         &quot; &quot;        &quot; &quot;   &quot;*&quot;   &quot; &quot;   &quot;*&quot;</span>
-<span class="co">#&gt; 10  ( 1 ) &quot;*&quot;         &quot; &quot;        &quot; &quot;   &quot;*&quot;   &quot; &quot;   &quot;*&quot;</span>
+<span class="co">#&gt; 10  ( 1 ) &quot; &quot;         &quot; &quot;        &quot;*&quot;   &quot;*&quot;   &quot; &quot;   &quot;*&quot;</span>
 <span class="co">#&gt; 11  ( 1 ) &quot;*&quot;         &quot; &quot;        &quot;*&quot;   &quot;*&quot;   &quot; &quot;   &quot;*&quot;</span>
 <span class="co">#&gt; 12  ( 1 ) &quot;*&quot;         &quot; &quot;        &quot;*&quot;   &quot;*&quot;   &quot; &quot;   &quot;*&quot;</span>
 <span class="co">#&gt; 13  ( 1 ) &quot;*&quot;         &quot;*&quot;        &quot;*&quot;   &quot;*&quot;   &quot; &quot;   &quot;*&quot;</span>

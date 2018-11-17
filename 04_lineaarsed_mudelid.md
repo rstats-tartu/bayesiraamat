@@ -338,19 +338,19 @@ AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel?
 
 ### Matemaatilised eeldused: {-}
 
-1. Lineaarsus: ennustus Y-muutujale on lineaarne funktsioon prediktoritest  $y = β_1x_1 + β_2x_2 +···$, ehk ekvivalentselt: kõikidel X-i väärtustel keksmine residuaal = 0.
+1. Lineaarsus: ennustus Y-muutujale on lineaarne funktsioon prediktoritest  $Y = β_1X_1 + β_2X_2 +···β_nX_n$, ehk ekvivalentselt: kõikidel X-i väärtustel keksmine residuaal = 0.
 
-2. homoskedastilisus e konstantne  Y-muutuja suunaline varieeruvus kõigil X-i väärtustel. See tähendab muidugi mudeli residuaalide konsrtantset varieeruvust.
+2. homoskedastilisus ehk konstantne  Y-muutuja suunaline varieeruvus kõigil X-i väärtustel. See tähendab ühtlasi residuaalide konstantset varieeruvust.
 
-3. Normaalsus - residuaalid on normaaljaotusega ehk Y-muutuja on normaaljaotusega kõigil X-i väärtustel.
+3. Normaalsus - residuaalid on normaaljaotusega, ehk Y-muutuja on normaaljaotusega kõigil X-i väärtustel.
 
 4. Sõltumatus - residuaalide väärtused ei ole omavahel korreleeritud.
 
-5. X-muutuja suunal puudub mõõtmisviga ja ebakindlus, mis tähendab, et x-i väärtused on täpselt teada (me ei ennusta neid). See eeldus on tähtis siis, kui püüame anda regresioonimudelile põhjusliku tõlgenduse. Mudelis $Y = a + b_1X_1 + b_2X_2$ viib mõõtmisviga $X_2$-s $b_2$ koefitsiendi nulli suunas ja ühtlasi vähendab $b_2X_2$ liikme mõju $b_1$ fittimisel.  
+5. X-muutuja suunal puudub mõõtmisviga ja ebakindlus, mis tähendab, et x-i väärtused on täpselt teada (me ei ennusta neid). See eeldus on tähtis siis, kui püüame anda regresioonimudelile põhjusliku tõlgenduse. Mudelis $Y = \alpha + \beta_1X_1 + \beta_2X_2$ viib mõõtmisviga $X_2$-s $\beta_2$ koefitsiendi nulli suunas ja ühtlasi vähendab $\beta_2X_2$ liikme mõju $\beta_1$ fittimisel.  
 
 6. X-muutuja ei ole konstant vaid sisaldab erinevaid väärtusi. 
 
-7. Mitme predikrotiga lineaarse regressiooni puhul tuleb veel lisaks kollineaarsuse eeldus: me eeldame, et ükski prediktorite paar pole täiuslikult lineaarselt korreleeritud (pole lineaarne funktsioon üksteisest). Täieliku kolineaarsuse korral mudel ei lahendu, aga põhjuseks on enamasti viga mudeli spetsifitseerimisel. Osaline kollineaarsus, mis on praktikas pigem haruldane probleem, viib koefitsientide laiadele veapiiridele -- ja kui veapiirid pole laiad, siis pole ka kollineaarsust.
+7. Mitme prediktoriga lineaarse regressiooni puhul tuleb sisse veel kollineaarsuse eeldus: me eeldame, et ükski prediktorite paar pole täiuslikult lineaarselt korreleeritud (pole lineaarne funktsioon üksteisest). 
 
 ### Eeldused praktilise tähtsuse järjekorras: {-}
 
@@ -364,13 +364,15 @@ AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel?
 
 5. Vigade võrdne varieeruvus (homoskedastilisus) ja vigade normaalsus on vähemtähtsad. Log-normaalsete vigadega võiks lineaarsel regresioonil mudeldada log(Y) skaalas (vähimruutude meetodil) või Bayesi regressioonil mittelineaarset lognormaalset tõepäramudelit kasutades (vt. ptk 13). 
 
+6. Kollineaarsus. Täieliku kolineaarsuse korral mudel ei lahendu, aga sellisel juhul on põhjuseks enamasti viga mudeli spetsifitseerimisel. Osaline, aga ikkagi väga kõrge, kollineaarsus, mis õnneks on praktikas pigem haruldane, viib koefitsientide laiadele veapiiridele. Kui veapiirid pole laiad, siis pole ka kollineaarsust. 
+
 ### Regressioon kui kirjeldus ja kui põhjuslik hüpotees {-}
 
-Regressioonanalüüsi võib vaadelda 1) empiirilise kirjeldusena y ja x-i koos-varieerumisest või 2) muutujate vaheliste struktuursete põhjuslike suhetena. Esimesel juhul ei tõlgenda me x ja y suhet x-i mõjuna y-le. Seega, senikaua kui mudeli fit on piisavalt hea, ei ole võimalik, et me fitime vale struktuuriga mudeli. 
-Kui me fitime 2 mudelit (i) $Y = a + b_1X_1$ ja (ii) $Y = a + b_1X_1 + b_2X_2$, siis eeldame, et kahe mudeli $b_1$ koefitsiendid tulevad erinevad. Aga sellest pole midagi, sest need on vaid empiirilised seosed. 
+Regressioonanalüüsi võib vaadelda 1) empiirilise kirjeldusena y ja x-i koos-varieerumisest või 2) muutujate vaheliste põhjuslike suhete analüüsina. Esimesel juhul ei tõlgenda me x ja y suhet x-i mõjuna y-le. Seega, senikaua kui mudeli fit on piisavalt hea, ei ole võimalik, et me fitime vale struktuuriga mudeli. 
+Kui me fitime 2 mudelit (i) $Y = \alpha + \beta_1X_1$ ja (ii) $Y = \alpha + \beta_1X_1 + \beta_2X_2$, siis eeldame, et kahe mudeli $\beta_1$ koefitsiendid tulevad erinevad. Aga sellest pole midagi, sest need kirjeldavad mõlemal juhul vaid empiirilisi seoseid. 
 
-Teisel, põhjuslikul juhul on kõik teisiti. Eeldades et $X_2$ on üks Y-i põhjustest, on nüüd esimese mudeli veakomponendis peidus ka $b_2X_2$. Kui $X_1$ ja $X_2$ on omavahel korreleeritud, siis tekib meil seetõttu ka korrelatsioon $X_1$ ja veakomponendi vahel -- ja see rikub mudeli eeldusi, kallutades mudeli fittimisel meie hinnangut $b_1$-le, misläbi osa $X_2$ mõjust Y-le omistatakse ekslikult $X_1$-le. See kõik juhtub siis, kui teise mudeli $b_2$ ei ole null ja esineb $X_1$ ja $X_2$ vaheline korrelatsioon. 
+Teisel, põhjuslikul juhul on kõik teisiti. Eeldades et $X_2$ on üks Y-i põhjustest, on nüüd esimese mudeli veakomponendis peidus ka $\beta_2X_2$. Kui $X_1$ ja $X_2$ on omavahel korreleeritud, siis tekib meil seetõttu ka korrelatsioon $X_1$ ja veakomponendi vahel -- ja see rikub mudeli eeldusi, kallutades mudeli fittimisel meie hinnangut $\beta_1$-le, misläbi osa $X_2$ mõjust Y-le omistatakse ekslikult $X_1$-le. See kõik juhtub siis, kui teise mudeli $\beta_2$ ei ole null ja esineb $X_1$ ja $X_2$ vaheline korrelatsioon. 
 
-Selle kallutatuse tõlgendamine sõltub omakorda $X_1$ ja $X_2$ vahelise põhjusliku seose struktuurist. Kui meil on põhjuslik rida $X_1$ --> $X_2$ --> $Y$ ($X_2$ vahendab $X_1$ mõju Y-le), Siis kallutatus on pelgalt $X_1$-e kaudne mõju Y-le, mida vahendab $X_2$. Kui aga $X_2$ on ühine põhjus nii $X_1$-le kui Y-le, siis on $X_2$ mudelisse lisamine väga tähtis, et saada mõistlik hinnang $X_1$ mõjule Y-le. Samas, kui me esimesel ($X_1$ --> $X_2$ --> $Y$) juhul tahame hinnata $X_1$ mõju Y-le, ei peaks me üldse $X_2$-e mudelisse panema.
+Selle kallutatuse tõlgendamine sõltub omakorda $X_1$ ja $X_2$ vahelise põhjusliku seose struktuurist. Kui meil on põhjuslik rida $X_1$ --> $X_2$ --> $Y$ ($X_2$ vahendab $X_1$ mõju Y-le), siis kallutatus on vaid $X_1$-e kaudne mõju Y-le, mida vahendab $X_2$. Kui aga $X_2$ on ühine põhjus nii $X_1$-le kui Y-le, siis on $X_2$ mudelisse lisamine väga tähtis, et saada mõistlik hinnang $X_1$ mõjule Y-le. Samas, kui me esimesel juhul ($X_1$ --> $X_2$ --> $Y$) tahame hinnata $X_1$ mõju Y-le, ei peaks me üldse $X_2$-e mudelisse panema.
 
 

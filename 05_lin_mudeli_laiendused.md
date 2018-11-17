@@ -511,18 +511,18 @@ Nii saab sisestada üksikuid parameetriväärtusi ja neile ennustusi teha:
 ```r
 (mydf1 <- ggpredict(m3, terms = c("Sepal.Length [5, 22]", "Species [setosa, versicolor]")))
 #> 
-#> # Predicted values for Sepal.Width 
+#> # Predicted values of Sepal.Width 
 #> # x = Sepal.Length 
 #> 
 #> # setosa
-#>   x predicted conf.low conf.high
-#>   5      3.42     3.35       3.5
-#>  22     17.00    13.32      20.7
+#>   x predicted std.error conf.low conf.high
+#>   5      3.42     0.039     3.35       3.5
+#>  22     17.00     1.876    13.32      20.7
 #> 
 #> # versicolor
-#>   x predicted conf.low conf.high
-#>   5      2.47     2.31      2.63
-#>  22      7.91     5.53     10.28
+#>   x predicted std.error conf.low conf.high
+#>   5      2.47      0.08     2.31      2.63
+#>  22      7.91      1.21     5.53     10.28
 ```
 
 ## 4. Võrdleme mudeleid {-}

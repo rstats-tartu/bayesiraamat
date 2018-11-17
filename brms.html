@@ -320,10 +320,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#tulemuste-tolgendamine"><i class="fa fa-check"></i>Tulemuste tõlgendamine</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#kahe-paradigma-erinevused"><i class="fa fa-check"></i>Kahe paradigma erinevused</a><ul>
-<li class="chapter" data-level="A.0.1" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#sageduslik-ja-teaduslik-hupoteesitestimine."><i class="fa fa-check"></i><b>A.0.1</b> Sageduslik ja teaduslik hüpoteesitestimine.</a></li>
+<li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#sageduslik-ja-teaduslik-hupoteesitestimine"><i class="fa fa-check"></i>Sageduslik ja teaduslik hüpoteesitestimine</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#statistiline-ennustus-kui-mitmetasandiline-protsess"><i class="fa fa-check"></i>Statistiline ennustus kui mitmetasandiline protsess</a><ul>
-<li class="chapter" data-level="A.0.2" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#ajaloolist-juttu-normaaljaotus-bayes-ja-sageduslik-statistika"><i class="fa fa-check"></i><b>A.0.2</b> Ajaloolist juttu: normaaljaotus, Bayes ja sageduslik statistika</a></li>
+<li class="chapter" data-level="A.0.1" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#ajaloolist-juttu-normaaljaotus-bayes-ja-sageduslik-statistika"><i class="fa fa-check"></i><b>A.0.1</b> Ajaloolist juttu: normaaljaotus, Bayes ja sageduslik statistika</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="B" data-path="sonastik.html"><a href="sonastik.html"><i class="fa fa-check"></i><b>B</b> Sõnastik</a></li>
@@ -698,12 +698,12 @@ pars &lt;-<span class="st"> </span><span class="kw">colnames</span>(model2)
 <span class="st">  </span><span class="kw">cbind</span>(newx, .)
 <span class="kw">head</span>(predict_interval_brms2)
 <span class="co">#&gt;   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5</span>
-<span class="co">#&gt; 1         1.00        3.06  setosa     4.48     0.321 3.84  5.09</span>
-<span class="co">#&gt; 2         1.04        3.06  setosa     4.52     0.318 3.88  5.13</span>
-<span class="co">#&gt; 3         1.08        3.06  setosa     4.54     0.334 3.89  5.18</span>
-<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.320 3.94  5.21</span>
-<span class="co">#&gt; 5         1.16        3.06  setosa     4.61     0.319 3.99  5.24</span>
-<span class="co">#&gt; 6         1.20        3.06  setosa     4.64     0.317 4.03  5.27</span></code></pre></div>
+<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.316 3.87  5.09</span>
+<span class="co">#&gt; 2         1.04        3.06  setosa     4.51     0.312 3.89  5.13</span>
+<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.327 3.92  5.21</span>
+<span class="co">#&gt; 4         1.12        3.06  setosa     4.59     0.320 3.97  5.24</span>
+<span class="co">#&gt; 5         1.16        3.06  setosa     4.61     0.319 4.01  5.23</span>
+<span class="co">#&gt; 6         1.20        3.06  setosa     4.63     0.320 4.00  5.25</span></code></pre></div>
 <p><code>predict()</code> ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele</p>
 <p>Siin siis eraldi ennustused kahele liigile kolmest, kaasa arvatud petal length väärtusvahemikule, kus selle liigi isendeid valimis ei ole (ja võib-olla ei saagi olla)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">no_versicolor &lt;-<span class="st"> </span><span class="kw">filter</span>(iris, Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>)

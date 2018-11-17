@@ -320,10 +320,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#tulemuste-tolgendamine"><i class="fa fa-check"></i>Tulemuste tõlgendamine</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#kahe-paradigma-erinevused"><i class="fa fa-check"></i>Kahe paradigma erinevused</a><ul>
-<li class="chapter" data-level="A.0.1" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#sageduslik-ja-teaduslik-hupoteesitestimine."><i class="fa fa-check"></i><b>A.0.1</b> Sageduslik ja teaduslik hüpoteesitestimine.</a></li>
+<li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#sageduslik-ja-teaduslik-hupoteesitestimine"><i class="fa fa-check"></i>Sageduslik ja teaduslik hüpoteesitestimine</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#statistiline-ennustus-kui-mitmetasandiline-protsess"><i class="fa fa-check"></i>Statistiline ennustus kui mitmetasandiline protsess</a><ul>
-<li class="chapter" data-level="A.0.2" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#ajaloolist-juttu-normaaljaotus-bayes-ja-sageduslik-statistika"><i class="fa fa-check"></i><b>A.0.2</b> Ajaloolist juttu: normaaljaotus, Bayes ja sageduslik statistika</a></li>
+<li class="chapter" data-level="A.0.1" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#ajaloolist-juttu-normaaljaotus-bayes-ja-sageduslik-statistika"><i class="fa fa-check"></i><b>A.0.1</b> Ajaloolist juttu: normaaljaotus, Bayes ja sageduslik statistika</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="B" data-path="sonastik.html"><a href="sonastik.html"><i class="fa fa-check"></i><b>B</b> Sõnastik</a></li>
@@ -514,18 +514,18 @@ mydf2 &lt;-<span class="st"> </span><span class="kw">ggpredict</span>(lm2, <span
 <p>Nii saab sisestada üksikuid parameetriväärtusi ja neile ennustusi teha:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(mydf1 &lt;-<span class="st"> </span><span class="kw">ggpredict</span>(m3, <span class="dt">terms =</span> <span class="kw">c</span>(<span class="st">&quot;Sepal.Length [5, 22]&quot;</span>, <span class="st">&quot;Species [setosa, versicolor]&quot;</span>)))
 <span class="co">#&gt; </span>
-<span class="co">#&gt; # Predicted values for Sepal.Width </span>
+<span class="co">#&gt; # Predicted values of Sepal.Width </span>
 <span class="co">#&gt; # x = Sepal.Length </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # setosa</span>
-<span class="co">#&gt;   x predicted conf.low conf.high</span>
-<span class="co">#&gt;   5      3.42     3.35       3.5</span>
-<span class="co">#&gt;  22     17.00    13.32      20.7</span>
+<span class="co">#&gt;   x predicted std.error conf.low conf.high</span>
+<span class="co">#&gt;   5      3.42     0.039     3.35       3.5</span>
+<span class="co">#&gt;  22     17.00     1.876    13.32      20.7</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # versicolor</span>
-<span class="co">#&gt;   x predicted conf.low conf.high</span>
-<span class="co">#&gt;   5      2.47     2.31      2.63</span>
-<span class="co">#&gt;  22      7.91     5.53     10.28</span></code></pre></div>
+<span class="co">#&gt;   x predicted std.error conf.low conf.high</span>
+<span class="co">#&gt;   5      2.47      0.08     2.31      2.63</span>
+<span class="co">#&gt;  22      7.91      1.21     5.53     10.28</span></code></pre></div>
 </div>
 <div id="vordleme-mudeleid" class="section level2 unnumbered">
 <h2>4. Võrdleme mudeleid</h2>
