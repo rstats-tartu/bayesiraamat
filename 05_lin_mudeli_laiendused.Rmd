@@ -458,7 +458,7 @@ Kui muutujal saavad olla ainult positiivsed väärtused, siis on logaritmimine v
 
 8. Logaritmimine võib lihtsustada mudelit, vähendades interaktsiooniliikmete arvu.
 
-Mudeli fiti kvaliteedi koha pealt pole suurt vahet, millist logaritmi te kasutate -- olulised erinevused on "pelgalt" mudeli koefitsientide tõlgendustes.
+Mudeli fiti kvaliteedi koha pealt pole vahet, millist logaritmi te kasutate --  erinevused on "pelgalt" mudeli koefitsientide tõlgendustes.
  Naturaallogaritmitud log(x) andmete peal fititud mudeli korral on algses lineaarses skaalas tõlgendatav logaritmitud andmete peal fititud β, aga log-skaalas muutujate väärtused ei tähenda peale vaadates suurt midagi. Vastupidiselt on  kümnendlogaritmitud log10(x) või kahendlogaritmitud log2(x) andmed log skaalas tõlgendatavad, aga mitte neil fititud β lineaarses skaalas. Igal juhul eelistavad loodusteadlased kasutada log2 ja log10 skaalasid, mida on mugavam otse log-skaalas tõlgendada. log2 skaalas vastab üheühikuline muutus kahekordsele muutusele algses skaalas ja anti-logaritm on $2^{log2(x)}$. Log10 skaalas vastab üheühikuline muutus 10-kordsele muutusele algses skaalas ja anti-logaritm on $10^{log10(x)}$. 
 
 ### Naturaallogaritmitud andmetega töötamine {-}
