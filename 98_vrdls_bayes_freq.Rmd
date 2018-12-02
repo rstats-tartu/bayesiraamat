@@ -240,7 +240,7 @@ Kui valimi keskväärtuse kohal on H~0~ jaotus kõrge, siis on andmete tõenäos
 Ja vastupidi, kui valimi keskväärtuse kohal on H~0~ madal, siis on andmete esinemise tõenäosus H~0~ all madal. 
 Seda tõenäosust kutsutakse p väärtuseks. 
 Mida väiksem on p, seda vähem tõenäolised on teie andmed juhul, kui H~0 on tõene ja katseefekt võrdub nulliga. 
-P on defineeritud kui "teie andmete või 0-st veel kaugemal asuvate andmete esinemise pikaajaline suhteline sagedus tingimusel, et H~0 kehtib". 
+P on defineeritud kui "teie andmete või 0-st veel kaugemal asuvate andmete esinemise pikaajaline suhteline sagedus tingimusel, et H~0~ kehtib". 
 
 ### Tulemuste tõlgendamine {-}
 Kui sageduslik statistik kirjutab, et tema "efekti suurus on statistiliselt oluline 0.05 olulisusnivool", siis ta ütleb sellega, et tema poolt arvutatud p < 0.05.
