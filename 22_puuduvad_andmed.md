@@ -1,0 +1,130 @@
+
+
+
+# Puuduvad andmed
+
+Järgnev koodirida tagab, et lm() funktsioon teeb automaatselt drop_na():
+`options(na.action = na.omit)`  
+
+`(na.action(fit))` annab lm() mudeli objekti pealt tabelist välja visatud ridade numbrid
+
+`naprint(na.action(fit))` annab selliste ridade arvu
+
+`colSums(is.na(airquality))` annab veeru kaupa NA-de arvu
+
+Andmete puudumise mehhanismid:
+
+1. missing completely at random (MCAR) - sisuliselt on NA-d jaotunud juhuvalimina. NA-dega ridade eemaldamine on õigustatud ainult selles kategoorias, igal pool mujal kallutab see pahasti teie poolt arvutatud statistikute väärtusi. 
+
+2. missing at random (MAR) - Andmed on jagatavad gruppidesse ja iga grupi sees on NA-d juhuvalimina. Kui meil on NA-d muutujas A, siis andmete puudumine ei sõltu A väärtusest, aga ta võib sõltuda muutujate B, C, jne väärtustest (see ei tähenda, et me tingimata teaksime muutujate B, C jne olemasolust). Kaasaegsed imputatsioonimeetodid kasutavad enamasti MAR-eeldust. 
+
+3. missing not at random (MNAR) - NA-d muutujas A sõltuvad A väärtusest. Üldiset, kui andmed ei ole MCAR ega MAR, siis me eeldame, et nad on MNAR. MNAR imputatsioon vajab eraldi mudelit, mis arvestaks NA-sid genereeriva mehhanismiga --- see on raske asi.
+
+Seda, millisesse kategooriasse mingi andmeset kuulub, ei saa üldjuhus öelda andmete endi põhjal. Selleks tuleb tunda andmeid genreerivat mehhanismi. Seega on oma andmete paigutamine ühte kolmest kategooriast sageli üsna ebakindel.
+
+## Algelised meetodid
+
+Siin peatükis on meetodid, mida om lihtne mõista, aga mille kasutamist tuleks niipalju vältida, kui võimalik. 
+
+### NA-dega ridade eemaldamine
+
+Pealiskaudsel vaatlusel võib tunduda, et see on üks hea ja mittekallutatud meetod, eriti siis kui meil on andmetes vaid väike NA-de osakaal, aga tegelikult ei ole see nii.
+NA-dega ridade eemaldamist (drop_na) tuleks kasutada kitsalt, vaid kolmel erijuhul: 
+
+1. MCAR juhul, ei kalluta see keskmist, regressioonikoefitsiente ega korrelatsiooni, ehkki ülehindab SEM-i. 
+
+2. Kui meil on NA-d ainult Y-muutujas, siis on NA-dega ridade eemaldamine sama hea meetod kui mitmene imputatsioon ka MAR juhul (eeldades, et mitmene imputatsioon kasutab samu x-muutujaid, mis imputeeritud andmetga regressioongi).
+
+3. NA-dega ridade väljaviskamine on eelistatud meetod logistiline analüüsimudeli korral, juhul kui NA-d esinevad ainult dihhotoomses Y või dihhotoomses X muutujas (mitte mõlemas) ja tõenäosus kohata NA-d sõltub ainult Y-väärtusest (mitte X-st).
+
+Siiski, kui meil on mitmene regressioon ja igas X-muutujas on ka väike osa NA-sid, siis nende kombinatsioonid tagavad ikkagi paljude ridade eemaldamise ja seega kalli informatsiooni ära viskamise.
+
+### Paariviisiline deleteerimine
+
+Kui muutujad on multivariaatselt normaalsed, nende vahel ei ole korrelatsioone ja meil on MCAR olukord, siis on hea kasutada pairwise deletion e available case meetodit, mis arvutab igale muutujale olemasolevate andmete pealt keskmise ja sem-i ja kasutab korrelatsioonide jms jaoks kõiki ridu, kus andmepaarid on täielikud. Regressioonil tuleb meil lm() asemel kasutada lavaan raamatukogu. 
+
+
+```r
+data <- airquality[, c("Ozone", "Solar.R", "Wind")]
+mu <- colMeans(data, na.rm = TRUE)
+cv <- cov(data, use = "pairwise")
+
+library(lavaan)
+fit <- lavaan("Ozone ~ 1 + Wind + Solar.R
+              Ozone ~~ Ozone",
+             sample.mean = mu, sample.cov = cv,
+             sample.nobs = sum(complete.cases(data)))
+```
+
+### Keskmise imputatsioon ja regressiooniga imputatsioon
+
+Kasutame mice raamatukogu.
+
+
+```r
+imp <- mice(airquality, method = "mean", m = 1, maxit = 1)
+```
+
+See on kindel viis varieeruvust alahinnata ja tekitada kummalisi andmejaotusi. Kui meil on MCAR andmed, siis tuleb vähemalt keskmise hinnang nihketa, aga pea kõik teised statistikud lähevad puusse. Seda meetodit tuleks vältida.
+
+Regressiooniga imputatsioonil fitime mudeli olemasolevatel andmetel ja seejärel ennustame seda kasutades puuduvad andmepunktid
+
+
+```r
+fit <- lm(Ozone ~ Solar.R, data = airquality)
+pred <- predict(fit, newdata = ic(airquality))
+```
+
+See on jällegi hea viis, kuidas kunstlikult andmete varieervust vähendada ja nende jaotust muuta. Ühtlasi tõstab see meetod kunstlikult muutujate vahelist korrelastsiooni. Enam halvemaks ei saa minna!
+
+### Stohhastiline regressiooniga imputatsioon
+
+Lisab eelnevasse müra ja töötab ka MAR andmete peal. Kõigepealt fitib lm()-ga mudeli koefitsiendid, siis ennustab nende pealt puuduvad väärtused ja lõpuks liidab igale neist juhusliku residuaali algsest mudelist.
+
+
+```r
+data <- airquality[, c("Ozone", "Solar.R")]
+imp <- mice(data, method = "norm.nob", m = 1, maxit = 1,
+            seed = 1, print = FALSE)
+```
+
+See meetod võib anda negatiivseid väärtusi muidu positiivsetesse muutujatesse, ekstreemsed väärtused pole hästi mudeliga kaetud, ennustused vastavad regressioonieeldustele (homoskedastiöisus jne) ka siis, kui andmed nendele ei vasta. Siiski, kuna see pigem algeline meetod säilitab korrelatsioonid muutujate vahel ja ei kalluta regressioonikoefitsiente, ei saa ta liiga halb olla. Sellelt põhjalt on ehitatud paljud kaasaegsed imputatsioonomeetodid.
+
+### Eelmise vaatluse kopeerimine (LOCF).
+
+See on *ad hoc* meetod aegridadele, mida rakendab `tydyr::fill()`. Seda on hea kasutada siis, kui muutuja väärtus kirjutatakse üles ainult siis, kui see muutub. LOCF võib olla kallutatud isegi MCAR juhul.  
+
+## Mitmene imputatsioon
+
+See meetod loodi Donald Rubini poolt 1970ndatel ja üldskeem on järgmine:
+
+1. Tekita mitu imputeeritud andmeraami (igaüks on ilma NA-deta), mis erinevad ainult imputeeritud väärtuste poolest. Iga NA asemele imputeeritakse arvud omast jaotusest, mille laius on kommentaar meie ebakindlusele selle konkreetse imputatsiooni kohta. 
+
+2. Analüüsi igat andmeraami eraldi, aga tavapärasel viisil
+
+3. kombineeri tulemused lõplikuks keskmiseks ja sem-iks.
+
+Näide: mitmene imputatsioon lm()-ga ja CI-d koefitsientidele
+
+
+```r
+imp <- mice(nhanes, print = FALSE, m = 10, seed = 24415)
+fit <- with(imp, lm(bmi ~ age))
+est <- pool(fit)
+summary(est, conf.int = TRUE)
+```
+
+m=10 loob 10 iseseisvat andmeraami. 
+
+> Kaasaegne soovitus on, kui võimalik, sättida m kuhugi 20-100 vahele.
+
+
+
+
+
+
+
+
+
+
+

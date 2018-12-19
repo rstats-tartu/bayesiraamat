@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Bayesi statistika kasutades R keelt</title>
+  <title>19 brms | Bayesi statistika kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid.">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Bayesi statistika kasutades R keelt" />
+  <meta property="og:title" content="19 brms | Bayesi statistika kasutades R keelt" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="img/cyclo.png" />
@@ -17,7 +17,7 @@
   <meta name="github-repo" content="rstats-tartu/bayesiraamat" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Bayesi statistika kasutades R keelt" />
+  <meta name="twitter:title" content="19 brms | Bayesi statistika kasutades R keelt" />
   
   <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
   <meta name="twitter:image" content="img/cyclo.png" />
@@ -309,6 +309,16 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="21.3.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#autocorrelation-parameters"><i class="fa fa-check"></i><b>21.3.6</b> Autocorrelation parameters</a></li>
 <li class="chapter" data-level="21.3.7" data-path="brms-suntaks.html"><a href="brms-suntaks.html#parameters-for-specific-families"><i class="fa fa-check"></i><b>21.3.7</b> Parameters for specific families</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html"><i class="fa fa-check"></i><b>22</b> Puuduvad andmed</a><ul>
+<li class="chapter" data-level="22.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#algelised-meetodid"><i class="fa fa-check"></i><b>22.1</b> Algelised meetodid</a><ul>
+<li class="chapter" data-level="22.1.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#na-dega-ridade-eemaldamine"><i class="fa fa-check"></i><b>22.1.1</b> NA-dega ridade eemaldamine</a></li>
+<li class="chapter" data-level="22.1.2" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#paariviisiline-deleteerimine"><i class="fa fa-check"></i><b>22.1.2</b> Paariviisiline deleteerimine</a></li>
+<li class="chapter" data-level="22.1.3" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#keskmise-imputatsioon-ja-regressiooniga-imputatsioon"><i class="fa fa-check"></i><b>22.1.3</b> Keskmise imputatsioon ja regressiooniga imputatsioon</a></li>
+<li class="chapter" data-level="22.1.4" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#stohhastiline-regressiooniga-imputatsioon"><i class="fa fa-check"></i><b>22.1.4</b> Stohhastiline regressiooniga imputatsioon</a></li>
+<li class="chapter" data-level="22.1.5" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#eelmise-vaatluse-kopeerimine-locf."><i class="fa fa-check"></i><b>22.1.5</b> Eelmise vaatluse kopeerimine (LOCF).</a></li>
+</ul></li>
+<li class="chapter" data-level="22.2" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#mitmene-imputatsioon"><i class="fa fa-check"></i><b>22.2</b> Mitmene imputatsioon</a></li>
 </ul></li>
 <li class="appendix"><span><b>Lisa</b></span></li>
 <li class="chapter" data-level="A" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html"><i class="fa fa-check"></i><b>A</b> Bayesi ja sagedusliku statistika võrdlus</a><ul>
@@ -698,12 +708,12 @@ pars &lt;-<span class="st"> </span><span class="kw">colnames</span>(model2)
 <span class="st">  </span><span class="kw">cbind</span>(newx, .)
 <span class="kw">head</span>(predict_interval_brms2)
 <span class="co">#&gt;   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5</span>
-<span class="co">#&gt; 1         1.00        3.06  setosa     4.48     0.310 3.87  5.09</span>
-<span class="co">#&gt; 2         1.04        3.06  setosa     4.52     0.319 3.87  5.15</span>
-<span class="co">#&gt; 3         1.08        3.06  setosa     4.54     0.315 3.94  5.14</span>
-<span class="co">#&gt; 4         1.12        3.06  setosa     4.59     0.319 3.97  5.21</span>
-<span class="co">#&gt; 5         1.16        3.06  setosa     4.62     0.315 3.97  5.20</span>
-<span class="co">#&gt; 6         1.20        3.06  setosa     4.64     0.318 4.01  5.26</span></code></pre></div>
+<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.318 3.86  5.12</span>
+<span class="co">#&gt; 2         1.04        3.06  setosa     4.52     0.330 3.90  5.17</span>
+<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.316 3.92  5.17</span>
+<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.316 3.96  5.19</span>
+<span class="co">#&gt; 5         1.16        3.06  setosa     4.61     0.317 4.00  5.22</span>
+<span class="co">#&gt; 6         1.20        3.06  setosa     4.64     0.317 4.02  5.28</span></code></pre></div>
 <p><code>predict()</code> ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele</p>
 <p>Siin siis eraldi ennustused kahele liigile kolmest, kaasa arvatud petal length väärtusvahemikule, kus selle liigi isendeid valimis ei ole (ja võib-olla ei saagi olla)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">no_versicolor &lt;-<span class="st"> </span><span class="kw">filter</span>(iris, Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>)
