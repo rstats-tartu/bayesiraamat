@@ -311,14 +311,21 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="22" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html"><i class="fa fa-check"></i><b>22</b> Puuduvad andmed</a><ul>
-<li class="chapter" data-level="22.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#algelised-meetodid"><i class="fa fa-check"></i><b>22.1</b> Algelised meetodid</a><ul>
-<li class="chapter" data-level="22.1.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#na-dega-ridade-eemaldamine"><i class="fa fa-check"></i><b>22.1.1</b> NA-dega ridade eemaldamine</a></li>
+<li class="chapter" data-level="22.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#uhekaupa-imputatsiooni-meetodid"><i class="fa fa-check"></i><b>22.1</b> ühekaupa imputatsiooni meetodid</a><ul>
+<li class="chapter" data-level="22.1.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#na-dega-ridade-eemaldamine-drop_na"><i class="fa fa-check"></i><b>22.1.1</b> NA-dega ridade eemaldamine (drop_na)</a></li>
 <li class="chapter" data-level="22.1.2" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#paariviisiline-deleteerimine"><i class="fa fa-check"></i><b>22.1.2</b> Paariviisiline deleteerimine</a></li>
 <li class="chapter" data-level="22.1.3" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#keskmise-imputatsioon-ja-regressiooniga-imputatsioon"><i class="fa fa-check"></i><b>22.1.3</b> Keskmise imputatsioon ja regressiooniga imputatsioon</a></li>
 <li class="chapter" data-level="22.1.4" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#stohhastiline-regressiooniga-imputatsioon"><i class="fa fa-check"></i><b>22.1.4</b> Stohhastiline regressiooniga imputatsioon</a></li>
 <li class="chapter" data-level="22.1.5" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#eelmise-vaatluse-kopeerimine-locf."><i class="fa fa-check"></i><b>22.1.5</b> Eelmise vaatluse kopeerimine (LOCF).</a></li>
 </ul></li>
 <li class="chapter" data-level="22.2" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#mitmene-imputatsioon"><i class="fa fa-check"></i><b>22.2</b> Mitmene imputatsioon</a></li>
+<li class="chapter" data-level="22.3" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#predictive-mean-matching"><i class="fa fa-check"></i><b>22.3</b> Predictive mean matching</a></li>
+<li class="chapter" data-level="22.4" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#imputeerimine-mitte-normaalsete-jaotuste-korral"><i class="fa fa-check"></i><b>22.4</b> Imputeerimine mitte-normaalsete jaotuste korral</a></li>
+<li class="chapter" data-level="22.5" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#kategoorilised-muutujad"><i class="fa fa-check"></i><b>22.5</b> Kategoorilised muutujad</a></li>
+<li class="chapter" data-level="" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#countid-sisaldavad-nulle"><i class="fa fa-check"></i>countid (sisaldavad nulle)</a></li>
+<li class="chapter" data-level="22.6" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#mitme-prediktoriga-imputatsioon"><i class="fa fa-check"></i><b>22.6</b> Mitme prediktoriga imputatsioon</a><ul>
+<li class="chapter" data-level="22.6.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#monotooniline-muster"><i class="fa fa-check"></i><b>22.6.1</b> monotooniline muster</a></li>
+</ul></li>
 </ul></li>
 <li class="appendix"><span><b>Lisa</b></span></li>
 <li class="chapter" data-level="A" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html"><i class="fa fa-check"></i><b>A</b> Bayesi ja sagedusliku statistika võrdlus</a><ul>
@@ -367,11 +374,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li><p>missing not at random (MNAR) - NA-d muutujas A sõltuvad A väärtusest. Üldiset, kui andmed ei ole MCAR ega MAR, siis me eeldame, et nad on MNAR. MNAR imputatsioon vajab eraldi mudelit, mis arvestaks NA-sid genereeriva mehhanismiga — see on raske asi.</p></li>
 </ol>
 <p>Seda, millisesse kategooriasse mingi andmeset kuulub, ei saa üldjuhus öelda andmete endi põhjal. Selleks tuleb tunda andmeid genreerivat mehhanismi. Seega on oma andmete paigutamine ühte kolmest kategooriast sageli üsna ebakindel.</p>
-<div id="algelised-meetodid" class="section level2">
-<h2><span class="header-section-number">22.1</span> Algelised meetodid</h2>
-<p>Siin peatükis on meetodid, mida om lihtne mõista, aga mille kasutamist tuleks niipalju vältida, kui võimalik.</p>
-<div id="na-dega-ridade-eemaldamine" class="section level3">
-<h3><span class="header-section-number">22.1.1</span> NA-dega ridade eemaldamine</h3>
+<div id="uhekaupa-imputatsiooni-meetodid" class="section level2">
+<h2><span class="header-section-number">22.1</span> ühekaupa imputatsiooni meetodid</h2>
+<p>Siin käsitleme meetodeid, mis annavad tulemuseks ühe imputeeritud tabeli, kus iga NA asemel on üks ja ainult üks number. Neid meetodeid on lihtne mõista, aga nende kasutamist tuleks niipalju vältida, kui võimalik.</p>
+<div id="na-dega-ridade-eemaldamine-drop_na" class="section level3">
+<h3><span class="header-section-number">22.1.1</span> NA-dega ridade eemaldamine (drop_na)</h3>
 <p>Pealiskaudsel vaatlusel võib tunduda, et see on üks hea ja mittekallutatud meetod, eriti siis kui meil on andmetes vaid väike NA-de osakaal, aga tegelikult ei ole see nii. NA-dega ridade eemaldamist (drop_na) tuleks kasutada kitsalt, vaid kolmel erijuhul:</p>
 <ol style="list-style-type: decimal">
 <li><p>MCAR juhul, ei kalluta see keskmist, regressioonikoefitsiente ega korrelatsiooni, ehkki ülehindab SEM-i.</p></li>
@@ -382,7 +389,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="paariviisiline-deleteerimine" class="section level3">
 <h3><span class="header-section-number">22.1.2</span> Paariviisiline deleteerimine</h3>
-<p>Kui muutujad on multivariaatselt normaalsed, nende vahel ei ole korrelatsioone ja meil on MCAR olukord, siis on hea kasutada pairwise deletion e available case meetodit, mis arvutab igale muutujale olemasolevate andmete pealt keskmise ja sem-i ja kasutab korrelatsioonide jms jaoks kõiki ridu, kus andmepaarid on täielikud. Regressioonil tuleb meil lm() asemel kasutada lavaan raamatukogu.</p>
+<p>Kui muutujad on multivariaatselt normaalsed, nende vahel ei ole korrelatsioone ja meil on MCAR olukord, siis on hea kasutada <em>pairwise deletion</em> e <em>available case</em> meetodit, mis arvutab igale muutujale olemasolevate andmete pealt keskmise ja sem-i ja kasutab korrelatsioonide jms jaoks kõiki ridu, kus andmepaarid on täielikud. Siinkohal tuleb küll mainida, et sellist olukorda praktikas naljalt ette ei tule.</p>
+<p>Regressioonil tuleb meil lm() asemel kasutada lavaan raamatukogu.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span>airquality[, <span class="kw">c</span>(<span class="st">&quot;Ozone&quot;</span>, <span class="st">&quot;Solar.R&quot;</span>, <span class="st">&quot;Wind&quot;</span>)]
 mu &lt;-<span class="st"> </span><span class="kw">colMeans</span>(data, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
 cv &lt;-<span class="st"> </span><span class="kw">cov</span>(data, <span class="dt">use =</span> <span class="st">&quot;pairwise&quot;</span>)
@@ -409,11 +417,12 @@ pred &lt;-<span class="st"> </span><span class="kw">predict</span>(fit, <span cl
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span>airquality[, <span class="kw">c</span>(<span class="st">&quot;Ozone&quot;</span>, <span class="st">&quot;Solar.R&quot;</span>)]
 imp &lt;-<span class="st"> </span><span class="kw">mice</span>(data, <span class="dt">method =</span> <span class="st">&quot;norm.nob&quot;</span>, <span class="dt">m =</span> <span class="dv">1</span>, <span class="dt">maxit =</span> <span class="dv">1</span>,
             <span class="dt">seed =</span> <span class="dv">1</span>, <span class="dt">print =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<p>See meetod võib anda negatiivseid väärtusi muidu positiivsetesse muutujatesse, ekstreemsed väärtused pole hästi mudeliga kaetud, ennustused vastavad regressioonieeldustele (homoskedastiöisus jne) ka siis, kui andmed nendele ei vasta. Siiski, kuna see pigem algeline meetod säilitab korrelatsioonid muutujate vahel ja ei kalluta regressioonikoefitsiente, ei saa ta liiga halb olla. Sellelt põhjalt on ehitatud paljud kaasaegsed imputatsioonomeetodid.</p>
+<p>Eeldus, mis kunagi ei kehti, on et mudeli koefitsiendid vastavad tegelikkusele. Seega puudub siin koefitsientide määramise ebakindlus (seda saab arvutada kas Bayesi meetoditega tõmmates parameetriväärtuste ebakindluse otse posteerioritest, või bootstrappides).</p>
+<p>Stohhastiline regressiooniga imputatsioon võib anda negatiivseid väärtusi muidu positiivsetesse muutujatesse, ekstreemsed väärtused pole hästi mudeliga kaetud ja ennustused/imputatsioonid vastavad regressioonieeldustele (homoskedastilisus jne) ka siis, kui andmed nendele ei vasta. Siiski, kuna see pigem algeline meetod säilitab korrelatsioonid muutujate vahel ja ei kalluta regressioonikoefitsiente, ei saa see liiga halb olla. Sellelt põhjalt on ehitatud paljud kaasaegsed imputatsioonomeetodid.</p>
 </div>
 <div id="eelmise-vaatluse-kopeerimine-locf." class="section level3">
 <h3><span class="header-section-number">22.1.5</span> Eelmise vaatluse kopeerimine (LOCF).</h3>
-<p>See on <em>ad hoc</em> meetod aegridadele, mida rakendab <code>tydyr::fill()</code>. Seda on hea kasutada siis, kui muutuja väärtus kirjutatakse üles ainult siis, kui see muutub. LOCF võib olla kallutatud isegi MCAR juhul.</p>
+<p>See on <em>ad hoc</em> meetod aegridadele, mida rakendab <code>tydyr::fill()</code>. Seda on hea kasutada siis, kui muutuja väärtus kirjutatakse üles ainult siis, kui see muutub. Muidu, LOCF võib olla kallutatud isegi MCAR juhul.</p>
 </div>
 </div>
 <div id="mitmene-imputatsioon" class="section level2">
@@ -433,7 +442,186 @@ est &lt;-<span class="st"> </span><span class="kw">pool</span>(fit)
 <blockquote>
 <p>Kaasaegne soovitus on, kui võimalik, sättida m kuhugi 20-100 vahele.</p>
 </blockquote>
+<p>Kogu järgnev imputatsioonijutt käib vaikimisi mitmese imputatsiooni kohta.</p>
+<p>Imputatsiooni mudel peaks</p>
+<ul>
+<li><p>arvestama protsessiga, mis genereeris NAd (NMAR juhul)</p></li>
+<li><p>säilitama andmetes leiduvad omavahelised suhted</p></li>
+<li><p>säilitama nende suhete ümber laiuva ebakindluse määra</p></li>
+</ul>
+<p>Selle nimel peame tegema 7 valikut selles järjekorras:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Kas me loeme MAR eelduse kehtivaks?</strong> MNAR imputatsioon toob sisse lisaeeldused. MNAR juhul on kaks võimalust: toome sisse uued muutujad, mis enustaks NAde paiknemist lootuses, et läheneme MAR-olukorrale, või kasutame lisamudelit, mis arvestab protsessiga, mis genereeris NAd.</p></li>
+<li><p><strong>Milline imputatsioonimudel (nii mudeli struktuurne osa kui eeldatud vigade jaotus)?</strong> <em>Fully conditional specification</em> (FCS) imputeerib multivariiatseid NA-sid muutuja haaval. Seega peab mudeli kuju spetsifitseerima igale NA-dega muutujale eraldi, arvestades ka muutujate vahelisi seoseid.</p></li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Method</th>
+<th align="left">Description</th>
+<th align="left">Scale Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">pmm</td>
+<td align="left">Predictive mean matching</td>
+<td align="left">Any*</td>
+</tr>
+<tr class="even">
+<td align="left">midastouch</td>
+<td align="left">Weighted predictive mean matching</td>
+<td align="left">Any</td>
+</tr>
+<tr class="odd">
+<td align="left">sample</td>
+<td align="left">Random sample from observed values</td>
+<td align="left">Any</td>
+</tr>
+<tr class="even">
+<td align="left">cart</td>
+<td align="left">Classification and regression trees</td>
+<td align="left">Any</td>
+</tr>
+<tr class="odd">
+<td align="left">rf</td>
+<td align="left">Random forest imputation</td>
+<td align="left">Any</td>
+</tr>
+<tr class="even">
+<td align="left">norm</td>
+<td align="left">Bayesian linear regression</td>
+<td align="left">numeric</td>
+</tr>
+<tr class="odd">
+<td align="left">norm.boot</td>
+<td align="left">Normal imputation with bootstrap</td>
+<td align="left">Numeric</td>
+</tr>
+<tr class="even">
+<td align="left">quadratic</td>
+<td align="left">Imputation of quadratic terms</td>
+<td align="left">Numeric</td>
+</tr>
+<tr class="odd">
+<td align="left">ri</td>
+<td align="left">Random indicator for nonignorable data</td>
+<td align="left">Numeric</td>
+</tr>
+<tr class="even">
+<td align="left">logreg</td>
+<td align="left">Logistic regression</td>
+<td align="left">Binary*</td>
+</tr>
+<tr class="odd">
+<td align="left">logreg.boot</td>
+<td align="left">Logistic regression with bootstrap</td>
+<td align="left">Binary</td>
+</tr>
+<tr class="even">
+<td align="left">polr</td>
+<td align="left">Proportional odds model</td>
+<td align="left">ordinal*</td>
+</tr>
+<tr class="odd">
+<td align="left">polyreg</td>
+<td align="left">Polytomous logistic regression</td>
+<td align="left">Nominal*</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><ul>
+<li>vaikemudel antud andmetüübile</li>
+</ul></li>
+</ul>
+<p>Normaalsetele muutujatele on norm efektiivsem, kui pmm. norm.boot on kiirem mitte-bayesiaanlik alternatiiv. Kui pmm töötab halvasti (näit ei ole piisavalt ennustuse lähedasi doonorarve), kasuta norm meetodeid. Harvade kategooriliste andmepunktide korral eelista pmm-i, pigem kui logreg, polr või polyreg. sample on kiirmeetod imputeerimiseks ilma kovariaatideta.</p>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>Milliseid muutujaid kasutada imputatsioonimudelis prediktoritena?</strong> Üldine soovitus on lisada kõik relevantsed muutujad ja nende relevantsed interaktsioonid.</li>
+</ol>
+<p>predictorMatrix argument on maatriks suurusega ncol(data), mis sisaldab 0/1. Iga rida ütleb, milliseid prediktoreid kasutatkse muutujale, mille nimi on reanimes.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">imp &lt;-<span class="st"> </span><span class="kw">mice</span>(nhanes, <span class="dt">print =</span> <span class="ot">FALSE</span>)
+imp<span class="op">$</span>predictorMatrix
+<span class="co">#&gt;     age bmi hyp chl</span>
+<span class="co">#&gt; age   0   1   1   1</span>
+<span class="co">#&gt; bmi   1   0   1   1</span>
+<span class="co">#&gt; hyp   1   1   0   1</span>
+<span class="co">#&gt; chl   1   1   1   0</span></code></pre></div>
+<p>Kõikide muutujate kasutamine on ok, kui meil on &lt; 20-30 muutuja, mille vahel ei ole keerulisi interakstsioone. Rohkem muutujaid muudab ka MAR eelduse täitmise tõenäolisemaks. Muidu võta sisse (i) kogu hiljem kasutatava regressioonimudeli, (2) lisa muutujad, mis võiksid ennustada NA-de teket (mille jaotused erinevad andmete ja NA-de korral imputeeritavas muutujas), (3) lisa muutujad, mis on korreleeritud imputeeritava muutujaga. quickpred() annab kiire viisi prediktormaatriksi defineerimiseks.</p>
+<ol start="4" style="list-style-type: decimal">
+<li><strong>Kas imputeerida muutujaid, mis on teiste NA-dega muutujate funktsioonid (suhted jms)?</strong> Lihtsaim vastus on “ei”.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span>boys[, <span class="kw">c</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;hgt&quot;</span>, <span class="st">&quot;wgt&quot;</span>, <span class="st">&quot;hc&quot;</span>, <span class="st">&quot;reg&quot;</span>)]
+imp &lt;-<span class="st"> </span><span class="kw">mice</span>(data, <span class="dt">print =</span> <span class="ot">FALSE</span>, <span class="dt">seed =</span> <span class="dv">71712</span>)
+long &lt;-<span class="st"> </span>mice<span class="op">::</span><span class="kw">complete</span>(imp, <span class="st">&quot;long&quot;</span>, <span class="dt">include =</span> <span class="ot">TRUE</span>)
+long<span class="op">$</span>whr &lt;-<span class="st"> </span><span class="kw">with</span>(long, <span class="dv">100</span> <span class="op">*</span><span class="st"> </span>wgt <span class="op">/</span><span class="st"> </span>hgt)
+imp.itt &lt;-<span class="st"> </span><span class="kw">as.mids</span>(long)</code></pre></div>
+<p>See ei ole täiuslik meetod, aga suhetega töötamine teistel meetoditel ei ole lihtne.</p>
+<ol start="5" style="list-style-type: decimal">
+<li><p><strong>Mis järjekorras muutujaid imputeerida?</strong></p></li>
+<li><p><strong>Mitu iteratsiooni teha?</strong></p></li>
+<li><p><strong>Mitu imputatsiooni teha?</strong> Liiga suur m viib suurele simulatsiooniveale ja statistilisele ebaefektiivsusele</p></li>
+</ol>
+</div>
+<div id="predictive-mean-matching" class="section level2">
+<h2><span class="header-section-number">22.3</span> Predictive mean matching</h2>
+<p>See on enimkasutatud mitmese imputatsiooni meetod:</p>
+<ol style="list-style-type: decimal">
+<li><p>ennusta NA asemele parim oodatud väärtus regressioonimudelist</p></li>
+<li><p>leia mingi arv (3, 5 v 10) oodatud väärtusega sarnaseid kandidaatväärtusi (ehk doonorväärtusi d=) olemasolevatest andmetest</p></li>
+<li><p>võta nende seast üks juhuslik väärtus ja imputeeri see.</p></li>
+</ol>
+<p>See põhineb eeldusel, et kandidaatväärtused on sama jaotusega, kui puuduvad väärtused. Meetod on robustne andmete tranformatsioonidele ja töötab üldiselt hästi pidevatel muutujatel, juhul kui valim on suur. Kui N&gt;100, kasuta d=5, väikeste valimite korral aga d=1. Kui N on ligikaudu 10, siis on eelis adaptatiivsel meetodil <code>midastouch</code>.</p>
+<p><em>Predictive mean matching</em> d=5 on mice vaikemudel pidevatele muutujatele. Vaikemudel on lineaarne additiivne mudel üle kõikide prediktorite. Kui päris regressioonimudel on vaikemudelist erinev (interaktsioonid!), siis tuleks seda kasutada ka imputatsioonil. Meetod võib töötada halvasti väikesel valimitel, seda ei saa kasutada andmetest välja ekstrapoleerimiseks ja ka andmete sees, juhul kui andmete tihedus on madal.</p>
+</div>
+<div id="imputeerimine-mitte-normaalsete-jaotuste-korral" class="section level2">
+<h2><span class="header-section-number">22.4</span> Imputeerimine mitte-normaalsete jaotuste korral</h2>
+<p>Kui n &gt; 400, pole enamasti probleemi imputeeritud andmete pealt keskmise arvutamisega (isegi kui muutujas on 75% NA-sid), kuid varieeruvusnäitajad võivad siiski olla problemaatilised. Üks võimalus on transformeerida andmed nii, et nad oleksid normaalsed, siis imputeerida ja seejärel andmed uuesti tagasi transformeerida. Siiski ei ole garantiid, et selline trikitamine asja hoopis hullemaks ei tee. Teine võimalus on imputeerida, kastudades mitte-normaalseid jaotusi. Näiteks saab kasutada studenti t jaotust, et saada imputatsioonil robustsemaid tulemusi, juhul kui andmetes on outlierid, mis kajastavad tegelikke olusid.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;ImputeRobust&quot;</span>)
+<span class="kw">library</span>(<span class="st">&quot;gamlss&quot;</span>)
+imp &lt;-<span class="st"> </span><span class="kw">mice</span>(data2, <span class="dt">m =</span> <span class="dv">1</span>, <span class="dt">meth =</span> <span class="st">&quot;gamlssTF&quot;</span>, <span class="dt">print =</span> <span class="ot">FALSE</span>)</code></pre></div>
+</div>
+<div id="kategoorilised-muutujad" class="section level2">
+<h2><span class="header-section-number">22.5</span> Kategoorilised muutujad</h2>
+<p>Binaarse muutuja korral kasutame logistilist mudelit, rohkem kui kahe tasemega mittejärjestatud juhul multinominaalset logistilist mudelit ja järjestatud tasemetega juhul <em>ordered logit</em> mudelit või <em>proportional odds</em> mudelit.</p>
+<p>Kategooriliste muutujate imputeerimine on raske. Logistilises regressioonis vajame me reeglina vähemalt 10 sündmust prediktori kohta. Seega, kui me imputeerime 10 binaarset NAd, vajame me 100 sündmust ja kui sündmuse tõenäosus on 0.1, siis üle 1000 katse. Kui muutuja tasemete arv kasvab, siis need numbrid kasvavad väga kiiresti.</p>
+<p>Vaikimisi töötavad logreg, polyreg ja polr on tavaliselt ok. Kui suhe sündmuste arv/fititud parameetrite arv langeb alla 10, siis võiks kasutada robustsemaid meetodeid: pmm, cart või rf.</p>
+</div>
+<div id="countid-sisaldavad-nulle" class="section level2 unnumbered">
+<h2>countid (sisaldavad nulle)</h2>
+<p>Meetodid:</p>
+<ol style="list-style-type: decimal">
+<li><p>Predictive mean matching.</p></li>
+<li><p>Ordered categorical imputation.</p></li>
+<li><p>(Zero-inflated) Poisson regression.</p></li>
+<li><p>(Zero-inflated) negative binomial regression.</p></li>
+</ol>
+<p>Poisson mudeldab haruldaste sündmuste summat, negatiivne binoommudel on paindlikum versioon Poissonist, mida saab kasutada siis, kui meil on andmetes üle-dispersioon (poisson eeldab kindlat dispersioonimäära). Zero-inflated versioonid mõlemast töötavad siis, kui meil on andmetes oodatust rohkem nulle.</p>
+<p>ImputeRobust raamatukogu kasutab mice meetodeid: <code>gamlssPO</code> (Poisson), <code>gamlssZIBI</code> (zero-inflated binomial) ja <code>gamlssZIP</code> (zero-inflated Poisson).</p>
+</div>
+<div id="mitme-prediktoriga-imputatsioon" class="section level2">
+<h2><span class="header-section-number">22.6</span> Mitme prediktoriga imputatsioon</h2>
+<div id="monotooniline-muster" class="section level3">
+<h3><span class="header-section-number">22.6.1</span> monotooniline muster</h3>
+<p>NA-de muster on monotooniline siis, kui muutujaid saab järjestada nõnda, et kui esimeses muutujas on NA, siis ka kõikides järgnevates muutujates on selles reas NA. (Näiteks, kui aegreas mõni subjekt välja kukub.)</p>
+<p>Näiteks siin on meil 3 monotoonilist muutujat</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mice)
+data &lt;-<span class="st"> </span>nhanes2[, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]
+<span class="kw">md.pattern</span>(data, <span class="dt">plot =</span> <span class="ot">FALSE</span>)
+<span class="co">#&gt;    age hyp bmi   </span>
+<span class="co">#&gt; 16   1   1   1  0</span>
+<span class="co">#&gt; 1    1   1   0  1</span>
+<span class="co">#&gt; 8    1   0   0  2</span>
+<span class="co">#&gt;      0   8   9 17</span></code></pre></div>
+<p>Meil on 16 ilma NA-deta rida, 1 rida, kus puudub bmi üksi ja 8 rida, kus puuduvad bmi ja hyp. Paremas servas on veerg rea kaupa NA-de arvuga igale kombinatsioonile ja alumine rida annab NA-de arvu igale veerule ja totaalse NAde arvu (17).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">imp &lt;-<span class="st"> </span><span class="kw">mice</span>(data, <span class="dt">visit =</span> <span class="st">&quot;monotone&quot;</span>, <span class="dt">maxit =</span> <span class="dv">1</span>, <span class="dt">m =</span> <span class="dv">2</span>,
+            <span class="dt">print =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p>Argument visit = monotone määrab monotoonilise imputatsiooni, ehk kõigepealt imputeeritakse need muutujad, milles on vähem NA-sid (enne hyp ja siis bmi). Siin imputeeritakse hyp logistilise regressiooniga ja bmi prediktive matching-uga, mis on vaikesettingud vastavalt binaarsetele ja pidevatele muutujatele.</p>
+<blockquote>
+<p>Monotooniline imputatsioon eeldab, et NA-de muster on monotooniline ja et muutujad ei sõltu üksteisest (muutujate distinktsust).</p>
+</blockquote>
 
+</div>
 </div>
 </div>
 
