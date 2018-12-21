@@ -159,7 +159,7 @@ Tõenäosus, et keskmine on suurem kui 182 cm
 
 ```r
 mean(heights_bb[, 1] > 182)
-#> [1] 0.992
+#> [1] 0.99
 ```
 
 Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):
