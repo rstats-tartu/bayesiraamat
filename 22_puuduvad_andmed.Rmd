@@ -7,6 +7,8 @@ library(mice)
 
 # Puuduvad andmed
 
+Siin me eeldame, et teil on andmetabel, mis sisadab NA-sid ja mida te tahate kasutada regresioon-analüüsil. NA-dega tabeleid tuleb muidugi ette ka mujal, aga just mitmesel regressioonil on nad eriline probleem, sest mudeli fittimisel kasutatakse ainult neid tabeli ridu, mis ei sisalda ühtegi NA-d. Seega on meie huvides asendada NA-d mingite enam-vähem mõistlikke väärtustega, sest vastasel kombel võib meie efektiivne valim väga kokku kuivada, mis omakorda viib alla analüüsi sensitiivsuse.
+
 Järgnev koodirida tagab, et lm() funktsioon teeb automaatselt drop_na():
 `options(na.action = na.omit)`  
 
@@ -16,32 +18,32 @@ Järgnev koodirida tagab, et lm() funktsioon teeb automaatselt drop_na():
 
 `colSums(is.na(airquality))` annab veeru kaupa NA-de arvu
 
-Andmete puudumise mehhanismid:
+## Andmete puudumise mehhanismid:
 
-1. missing completely at random (MCAR) - sisuliselt on NA-d jaotunud juhuvalimina. NA-dega ridade eemaldamine on õigustatud ainult selles kategoorias, igal pool mujal kallutab see pahasti teie poolt arvutatud statistikute väärtusi. 
+1. *missing completely at random (MCAR)* - sisuliselt on NA-d jaotunud juhuvalimina. NA-dega ridade eemaldamine on õigustatud ainult selles kategoorias, igal pool mujal kallutab see pahasti teie poolt arvutatud statistikute väärtusi. 
 
-2. missing at random (MAR) - Andmed on jagatavad gruppidesse ja iga grupi sees on NA-d juhuvalimina. Kui meil on NA-d muutujas A, siis andmete puudumine ei sõltu A väärtusest, aga ta võib sõltuda muutujate B, C, jne väärtustest (see ei tähenda, et me tingimata teaksime muutujate B, C jne olemasolust). Kaasaegsed imputatsioonimeetodid kasutavad enamasti MAR-eeldust. 
+2. *missing at random (MAR)* - Andmed on jagatavad gruppidesse ja iga grupi sees on NA-d juhuvalimina. Kui meil on NA-d muutujas A, siis andmete puudumine ei sõltu A väärtusest, aga ta võib sõltuda muutujate B, C, jne väärtustest (see ei tähenda, et me tingimata teaksime muutujate B, C jne olemasolust). Kaasaegsed imputatsioonimeetodid kasutavad enamasti MAR-eeldust. 
 
-3. missing not at random (MNAR) - NA-d muutujas A sõltuvad A väärtusest. Üldiset, kui andmed ei ole MCAR ega MAR, siis me eeldame, et nad on MNAR. MNAR imputatsioon vajab eraldi mudelit, mis arvestaks NA-sid genereeriva mehhanismiga --- see on raske asi.
+3. *missing not at random (MNAR)* - NA-d muutujas A sõltuvad A väärtusest. Üldiset, kui andmed ei ole MCAR ega MAR, siis me eeldame, et nad on MNAR. MNAR imputatsioon vajab eraldi mudelit, mis arvestaks NA-sid genereeriva mehhanismiga --- see on raske asi.
 
 Seda, millisesse kategooriasse mingi andmeset kuulub, ei saa üldjuhus öelda andmete endi põhjal. Selleks tuleb tunda andmeid genreerivat mehhanismi. Seega on oma andmete paigutamine ühte kolmest kategooriast sageli üsna ebakindel.
 
-## ühekaupa imputatsiooni meetodid
+## Ühekaupa imputatsiooni meetodid
 
-Siin käsitleme meetodeid, mis annavad tulemuseks ühe imputeeritud tabeli, kus iga NA asemel on üks ja ainult üks number. Neid meetodeid on lihtne mõista, aga nende kasutamist tuleks niipalju vältida, kui võimalik. 
+Siin käsitleme meetodeid, mis annavad tulemuseks ühe imputeeritud tabeli, kus iga NA asemel on üks ja ainult üks number. Neid meetodeid on lihtne mõista, aga nende kasutamist tuleks vältida. 
 
 ### NA-dega ridade eemaldamine (drop_na)
 
-Pealiskaudsel vaatlusel võib tunduda, et see on üks hea ja mittekallutatud meetod, eriti siis kui meil on andmetes vaid väike NA-de osakaal, aga tegelikult ei ole see nii.
-NA-dega ridade eemaldamist (drop_na) tuleks kasutada kitsalt, vaid kolmel erijuhul: 
+Pealiskaudsel vaatlusel võib tunduda, et see on üks hea ja mittekallutatud meetod, eriti siis kui meil on andmetes vaid väike NA-de osakaal. Tegelikult see ei ole nii.
+NA-dega ridade eemaldamist (drop_na) on mõistlik kasutada vaid kolmel erijuhul: 
 
-1. MCAR juhul, ei kalluta see keskmist, regressioonikoefitsiente ega korrelatsiooni, ehkki ülehindab SEM-i. 
+1. MCAR juhul ei kalluta see keskmist, regressioonikoefitsiente ega korrelatsiooni, kuid vähendab analüüsi sensitiivsust. Kui laseme regressiooni paljude X-muutujatega, millest igas on ka väike osa NA-sid, siis nende juhuslikud kombinatsioonid viivad paraku enamuse ridade eemaldamisele tabelist ja massivsele informatsioonikaole. 
 
-2. Kui meil on NA-d ainult Y-muutujas, siis on NA-dega ridade eemaldamine sama hea meetod kui mitmene imputatsioon ka MAR juhul (eeldades, et mitmene imputatsioon kasutab samu x-muutujaid, mis imputeeritud andmetga regressioongi).
+2. Kui meil on NA-d ainult Y-muutujas (ehk muutujas, mida me soovime oma regressioonimudelis ennustada), siis on NA-dega ridade eemaldamine sama hea meetod kui mitmene imputatsioon ka MAR juhul (eeldades, et mitmene imputatsioon kasutab samu x-muutujaid, mis imputeeritud andmetga regressioon).
 
-3. NA-dega ridade väljaviskamine on eelistatud meetod logistiline analüüsimudeli korral, juhul kui NA-d esinevad ainult dihhotoomses Y või dihhotoomses X muutujas (mitte mõlemas) ja tõenäosus kohata NA-d sõltub ainult Y-väärtusest (mitte X-st).
+3. NA-dega ridade väljaviskamine on eelistatud meetod logistilise analüüsimudeli korral, juhul kui NA-d esinevad ainult dihhotoomses Y või dihhotoomses X muutujas (aga mitte mõlemas) ja tõenäosus kohata NA-d sõltub ainult Y-väärtusest (mitte X-st).
 
-Siiski, kui meil on mitmene regressioon ja igas X-muutujas on ka väike osa NA-sid, siis nende kombinatsioonid tagavad ikkagi paljude ridade eemaldamise ja seega kalli informatsiooni ära viskamise.
+
 
 ### Paariviisiline deleteerimine
 
@@ -241,8 +243,7 @@ ImputeRobust raamatukogu kasutab mice meetodeid: `gamlssPO` (Poisson), `gamlssZI
 NA-de muster on monotooniline siis, kui muutujaid saab järjestada nõnda, et kui esimeses muutujas on NA, siis ka kõikides järgnevates muutujates on selles reas NA. (Näiteks, kui aegreas mõni subjekt välja kukub.)
 
 Näiteks siin on meil 3 monotoonilist muutujat
-```{r}
-library(mice)
+```{r message=FALSE}
 data <- nhanes2[, 1:3]
 md.pattern(data, plot = FALSE)
 ```
@@ -254,7 +255,7 @@ imp <- mice(data, visit = "monotone", maxit = 1, m = 2,
             print = FALSE)
 ```
 
-Argument visit = monotone määrab monotoonilise imputatsiooni, ehk kõigepealt imputeeritakse need muutujad, milles on vähem NA-sid (enne hyp ja siis bmi). Siin imputeeritakse hyp logistilise regressiooniga ja bmi prediktive matching-uga, mis on vaikesettingud vastavalt binaarsetele ja pidevatele muutujatele.
+Argument `visit = monotone` määrab monotoonilise imputatsiooni, ehk kõigepealt imputeeritakse need muutujad, milles on vähem NA-sid (enne hyp ja siis bmi). 
 
 > Monotooniline imputatsioon eeldab, et NA-de muster on monotooniline ja et muutujad ei sõltu üksteisest (muutujate distinktsust).
 
