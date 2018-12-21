@@ -313,7 +313,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="22" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html"><i class="fa fa-check"></i><b>22</b> Puuduvad andmed</a><ul>
 <li class="chapter" data-level="22.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#andmete-puudumise-mehhanismid"><i class="fa fa-check"></i><b>22.1</b> Andmete puudumise mehhanismid:</a></li>
 <li class="chapter" data-level="22.2" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#uhekaupa-imputatsiooni-meetodid"><i class="fa fa-check"></i><b>22.2</b> Ühekaupa imputatsiooni meetodid</a><ul>
-<li class="chapter" data-level="22.2.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#na-dega-ridade-eemaldamine-drop_na"><i class="fa fa-check"></i><b>22.2.1</b> NA-dega ridade eemaldamine (drop_na)</a></li>
+<li class="chapter" data-level="22.2.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#na-dega-ridade-eemaldamine"><i class="fa fa-check"></i><b>22.2.1</b> NA-dega ridade eemaldamine</a></li>
 <li class="chapter" data-level="22.2.2" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#paariviisiline-deleteerimine"><i class="fa fa-check"></i><b>22.2.2</b> Paariviisiline deleteerimine</a></li>
 <li class="chapter" data-level="22.2.3" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#keskmise-imputatsioon-ja-regressiooniga-imputatsioon"><i class="fa fa-check"></i><b>22.2.3</b> Keskmise imputatsioon ja regressiooniga imputatsioon</a></li>
 <li class="chapter" data-level="22.2.4" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#stohhastiline-regressiooniga-imputatsioon"><i class="fa fa-check"></i><b>22.2.4</b> Stohhastiline regressiooniga imputatsioon</a></li>
@@ -364,35 +364,60 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="puuduvad-andmed" class="section level1">
 <h1><span class="header-section-number">22</span> Puuduvad andmed</h1>
-<p>Siin me eeldame, et teil on andmetabel, mis sisadab NA-sid ja mida te tahate kasutada regresioon-analüüsil. NA-dega tabeleid tuleb muidugi ette ka mujal, aga just mitmesel regressioonil on nad eriline probleem, sest mudeli fittimisel kasutatakse ainult neid tabeli ridu, mis ei sisalda ühtegi NA-d. Seega on meie huvides asendada NA-d mingite enam-vähem mõistlikke väärtustega, sest vastasel kombel võib meie efektiivne valim väga kokku kuivada, mis omakorda viib alla analüüsi sensitiivsuse.</p>
-<p>Järgnev koodirida tagab, et lm() funktsioon teeb automaatselt drop_na(): <code>options(na.action = na.omit)</code></p>
-<p><code>(na.action(fit))</code> annab lm() mudeli objekti pealt tabelist välja visatud ridade numbrid</p>
-<p><code>naprint(na.action(fit))</code> annab selliste ridade arvu</p>
-<p><code>colSums(is.na(airquality))</code> annab veeru kaupa NA-de arvu</p>
+<p>Oletame, et meil on andmetabel, mis sisadab lisaks sisestatud andmetele ka NA-sid ja mille pealt te tahate fittida regresioonimudeli. NA-dega tabeleid tuleb muidugi ette ka mujal, aga just mitmesel regressioonil on nad eriline probleem, sest mudeli fittimisel saab kasutatada ainult neid tabeli ridu, mis ei sisalda ühtegi NA-d. Seega on meie huvides asendada NA-d mingite enam-vähem mõistlikke väärtustega, sest vastasel juhul võib meie efektiivne valim väga kokku kuivada, mis omakorda viib alla analüüsi sensitiivsuse. Sellist NA-de asendamist nimetame imputatsiooniks ja algoritmi, mille abil me NA-d väärtustega asendame, kutsume imputatsioonimudeliks. Imputatsiooni tulemuseks on üks või mitu andmetabelit, mis sisaldavad nii empiirilisi kui imputeeritud väärtusi ja reeglina ei sialda enam NA-sid. Nende tabelite pealt fitime siis oma päris regressioonimudeli. Imputatsioonimudel on sageli samuti regressioonimudel, aga see ei pruugi olla sama mudel samade muutujatega, kui hilisem “päris” regressioonimudel. Imputeeritud tabelilt ootame, et selle pealt arvutatud keskmised, varieeruvused jm mudeli koefitsiendid oleksid võimalikult sarnased müütilise tabeliga, kus ei olnud juba alguses puuduvaid väärtusi (mitte tegeliku NA-dega algtabeliga).</p>
+<p>Alustuseks mõned kasulikud nipid:</p>
+<ul>
+<li><p>Järgnev koodirida tagab, et lm() funktsioon teeb automaatselt drop_na(): <code>options(na.action = na.omit)</code></p></li>
+<li><p><code>na.action(fit)</code> annab lm() mudeli objekti pealt tabelist välja visatud ridade numbrid</p></li>
+<li><p><code>naprint(na.action(fit))</code> annab selliste ridade arvu</p></li>
+<li><p><code>colSums(is.na(airquality))</code> annab veeru kaupa NA-de arvu</p></li>
+<li><p><code>md.pattern(data, plot = FALSE)</code> annab NA-de paiknemise tabeli rea ja veeru kaupa.</p></li>
+<li><p><code>VIM::aggr(data, prop = FALSE, numbers = TRUE)</code> ja <code>VIM::matrixplot(data)</code> joonistavad NA-de mustrist pildi.</p></li>
+<li><p><code>dfs[is.na(dfs)] &lt;- 0</code> rekodeerib NA-d nullideks</p></li>
+<li><p><code>na_if(dfs, 0)</code> teeb 0-d NA-deks</p></li>
+<li><p><code>drop_na(data, c(column1, column2))</code> viskab välja NA-sid sisaldavad read 2st veerust.</p></li>
+<li><p><code>filter_all(weather, any_vars(is.na(.)))</code> näitab ridu, mis sisaldavad NA-sid</p></li>
+</ul>
+<p>Nii saab 2 vektori põhjal kolmanda nii, et NA-d asendatakse vastava väärtusega:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">5</span>)
+z &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)
+<span class="kw">coalesce</span>(y, z)
+<span class="co">#&gt; [1] 1 2 3 4 5</span></code></pre></div>
+<p>viska tabelist välja veerud, milles on &gt;80% NA-sid</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vekt &lt;-<span class="st"> </span><span class="kw">sapply</span>(df, <span class="cf">function</span>(x) <span class="kw">mean</span>(<span class="kw">is.na</span>(x))) 
+<span class="co">#NA-de protsent igas veerus</span>
+vekt
+vekt1 &lt;-<span class="st"> </span>nad[nad <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.8</span>] 
+<span class="co">#subsettisin vektori elemendid, mis on &lt; 0.8 (NA-sid alla 80%). 216 tk.</span>
+<span class="co">#nad1 is a named vector</span>
+vekt1n &lt;-<span class="st"> </span><span class="kw">names</span>(vekt1) <span class="co">#vektor named vektori vekt1 nimedest</span>
+df_with_fewer_cols &lt;-<span class="st"> </span><span class="kw">subset</span>(df, <span class="dt">select =</span> vekt1n)
+<span class="co">#subsetime (jätame alles) ainult need df-i veerud, </span>
+<span class="co">#mille nimele vastab mõni vektori nad1n element</span></code></pre></div>
 <div id="andmete-puudumise-mehhanismid" class="section level2">
 <h2><span class="header-section-number">22.1</span> Andmete puudumise mehhanismid:</h2>
 <ol style="list-style-type: decimal">
-<li><p><em>missing completely at random (MCAR)</em> - sisuliselt on NA-d jaotunud juhuvalimina. NA-dega ridade eemaldamine on õigustatud ainult selles kategoorias, igal pool mujal kallutab see pahasti teie poolt arvutatud statistikute väärtusi.</p></li>
-<li><p><em>missing at random (MAR)</em> - Andmed on jagatavad gruppidesse ja iga grupi sees on NA-d juhuvalimina. Kui meil on NA-d muutujas A, siis andmete puudumine ei sõltu A väärtusest, aga ta võib sõltuda muutujate B, C, jne väärtustest (see ei tähenda, et me tingimata teaksime muutujate B, C jne olemasolust). Kaasaegsed imputatsioonimeetodid kasutavad enamasti MAR-eeldust.</p></li>
-<li><p><em>missing not at random (MNAR)</em> - NA-d muutujas A sõltuvad A väärtusest. Üldiset, kui andmed ei ole MCAR ega MAR, siis me eeldame, et nad on MNAR. MNAR imputatsioon vajab eraldi mudelit, mis arvestaks NA-sid genereeriva mehhanismiga — see on raske asi.</p></li>
+<li><p><em>missing completely at random (MCAR)</em> - NA-d on jaotunud juhuslikult – põhimõtteliselt ei ole võimalik ennustada, et tabeli mingis positsioonis on NA erineva tõenäosusega kui igas teises. Ainult MCAR andmete korral on õigustatud NA-dega ridade eemaldamine. Igal pool mujal kallutab see pahasti teie poolt arvutatud statistikute väärtusi.</p></li>
+<li><p><em>missing at random (MAR)</em> - Andmed on jagatavad gruppidesse ja iga grupi sees on NA-d juhuvalimina. Kui meil on NA-d muutujas A, siis andmete puudumine ei sõltu A väärtusest, aga ta võib sõltuda muutujate B, C, jne väärtustest. Kaasaegsed imputatsioonimeetodid kasutavad enamasti MAR-eeldust, mis omakorda eeldab, et relevantsed muutujad on hõlmatud imputatsioonimudelisse (aga mitte tingimata regressioonimudelisse, mis fititakse imputeeritud andmetel).</p></li>
+<li><p><em>missing not at random (MNAR)</em> - NA-d muutujas A sõltuvad ainult A väärtusest. Kui andmed ei ole MCAR ega MAR, siis me eeldame, et nad on MNAR. MNAR imputatsioon vajab eraldi mudelit, mis arvestab NA-sid genereeriva mehhanismiga — see on raske asi.</p></li>
 </ol>
-<p>Seda, millisesse kategooriasse mingi andmeset kuulub, ei saa üldjuhus öelda andmete endi põhjal. Selleks tuleb tunda andmeid genreerivat mehhanismi. Seega on oma andmete paigutamine ühte kolmest kategooriast sageli üsna ebakindel.</p>
+<p>Seda, millisesse kategooriasse mingi andmeset kuulub, ei saa üldjuhul öelda andmete endi põhjal. Selleks tuleb tunda andmeid genereerivat mehhanismi. Seega on oma andmete paigutamine ühte kolmest kategooriast praktikas sageli üsna ebakindel.</p>
 </div>
 <div id="uhekaupa-imputatsiooni-meetodid" class="section level2">
 <h2><span class="header-section-number">22.2</span> Ühekaupa imputatsiooni meetodid</h2>
-<p>Siin käsitleme meetodeid, mis annavad tulemuseks ühe imputeeritud tabeli, kus iga NA asemel on üks ja ainult üks number. Neid meetodeid on lihtne mõista, aga nende kasutamist tuleks vältida.</p>
-<div id="na-dega-ridade-eemaldamine-drop_na" class="section level3">
-<h3><span class="header-section-number">22.2.1</span> NA-dega ridade eemaldamine (drop_na)</h3>
+<p>Siin käsitleme meetodeid, mis annavad tulemuseks ühe imputeeritud tabeli, kus iga NA asemel on üks ja ainult üks number. Neid meetodeid on lihtne mõista, aga nende kasutamist tuleks enamasti vältida.</p>
+<div id="na-dega-ridade-eemaldamine" class="section level3">
+<h3><span class="header-section-number">22.2.1</span> NA-dega ridade eemaldamine</h3>
 <p>Pealiskaudsel vaatlusel võib tunduda, et see on üks hea ja mittekallutatud meetod, eriti siis kui meil on andmetes vaid väike NA-de osakaal. Tegelikult see ei ole nii. NA-dega ridade eemaldamist (drop_na) on mõistlik kasutada vaid kolmel erijuhul:</p>
 <ol style="list-style-type: decimal">
-<li><p>MCAR juhul ei kalluta see keskmist, regressioonikoefitsiente ega korrelatsiooni, kuid vähendab analüüsi sensitiivsust. Kui laseme regressiooni paljude X-muutujatega, millest igas on ka väike osa NA-sid, siis nende juhuslikud kombinatsioonid viivad paraku enamuse ridade eemaldamisele tabelist ja massivsele informatsioonikaole.</p></li>
-<li><p>Kui meil on NA-d ainult Y-muutujas (ehk muutujas, mida me soovime oma regressioonimudelis ennustada), siis on NA-dega ridade eemaldamine sama hea meetod kui mitmene imputatsioon ka MAR juhul (eeldades, et mitmene imputatsioon kasutab samu x-muutujaid, mis imputeeritud andmetga regressioon).</p></li>
-<li><p>NA-dega ridade väljaviskamine on eelistatud meetod logistilise analüüsimudeli korral, juhul kui NA-d esinevad ainult dihhotoomses Y või dihhotoomses X muutujas (aga mitte mõlemas) ja tõenäosus kohata NA-d sõltub ainult Y-väärtusest (mitte X-st).</p></li>
+<li><p>MCAR juhul ei kalluta see keskmist, regressioonikoefitsiente ega korrelatsiooni, kuid vähendab analüüsi sensitiivsust. Kui laseme regressiooni paljude X-muutujatega, millest igas on kasvõi väike osa NA-sid, siis nende juhuslikud kombinatsioonid viivad paraku enamuse ridade eemaldamisele tabelist ja massiivsele informatsioonikaole.</p></li>
+<li><p>Kui meil on NA-d ainult Y-muutujas (ehk muutujas, mida soovime regressioonimudelis ennustada), siis on NA-dega ridade eemaldamine sama hea kui mitmene imputatsioon ka MAR juhul (eeldades, et mitmene imputatsioon kasutab samu x-muutujaid, mis imputeeritud andmetega regressioon).</p></li>
+<li><p>logistilise mudeli korral on NA-dega ridade väljaviskamine eelistatud meetod juhul kui NA-d esinevad ainult dihhotoomses Y või dihhotoomses X muutujas (aga mitte mõlemas) ja tõenäosus kohata NA-d sõltub ainult Y-väärtusest (mitte X-st).</p></li>
 </ol>
 </div>
 <div id="paariviisiline-deleteerimine" class="section level3">
 <h3><span class="header-section-number">22.2.2</span> Paariviisiline deleteerimine</h3>
-<p>Kui muutujad on multivariaatselt normaalsed, nende vahel ei ole korrelatsioone ja meil on MCAR olukord, siis on hea kasutada <em>pairwise deletion</em> e <em>available case</em> meetodit, mis arvutab igale muutujale olemasolevate andmete pealt keskmise ja sem-i ja kasutab korrelatsioonide jms jaoks kõiki ridu, kus andmepaarid on täielikud. Siinkohal tuleb küll mainida, et sellist olukorda praktikas naljalt ette ei tule.</p>
+<p>Kui muutujad on multivariaatselt normaalsed, nende vahel ei ole korrelatsioone ja kehtib MCAR eeldus, siis on hea kasutada <em>pairwise deletion</em> e <em>available case</em> meetodit, mis arvutab igale muutujale olemasolevate andmete pealt keskmise ja SEM-i ja kasutab korrelatsioonide jms arvutamisel kõiki ridu, kus andmepaarid on täielikud. Siinkohal tuleb küll mainida, et sellist olukorda praktikas naljalt ette ei tule.</p>
 <p>Regressioonil tuleb meil lm() asemel kasutada lavaan raamatukogu.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span>airquality[, <span class="kw">c</span>(<span class="st">&quot;Ozone&quot;</span>, <span class="st">&quot;Solar.R&quot;</span>, <span class="st">&quot;Wind&quot;</span>)]
 mu &lt;-<span class="st"> </span><span class="kw">colMeans</span>(data, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
@@ -408,31 +433,31 @@ fit &lt;-<span class="st"> </span><span class="kw">lavaan</span>(<span class="st
 <h3><span class="header-section-number">22.2.3</span> Keskmise imputatsioon ja regressiooniga imputatsioon</h3>
 <p>Kasutame mice raamatukogu.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">imp &lt;-<span class="st"> </span><span class="kw">mice</span>(airquality, <span class="dt">method =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">m =</span> <span class="dv">1</span>, <span class="dt">maxit =</span> <span class="dv">1</span>)</code></pre></div>
-<p>See on kindel viis varieeruvust alahinnata ja tekitada kummalisi andmejaotusi. Kui meil on MCAR andmed, siis tuleb vähemalt keskmise hinnang nihketa, aga pea kõik teised statistikud lähevad puusse. Seda meetodit tuleks vältida.</p>
+<p>See on kindel viis varieeruvust alahinnata ja tekitada kummalisi andmejaotusi. Kui meil on MCAR andmed, siis tuleb vähemalt keskmise hinnang nihketa, aga pea kõik teised statistikud lähevad puusse. Seda meetodit tuleks alati vältida.</p>
 <p>Regressiooniga imputatsioonil fitime mudeli olemasolevatel andmetel ja seejärel ennustame seda kasutades puuduvad andmepunktid</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit &lt;-<span class="st"> </span><span class="kw">lm</span>(Ozone <span class="op">~</span><span class="st"> </span>Solar.R, <span class="dt">data =</span> airquality)
 pred &lt;-<span class="st"> </span><span class="kw">predict</span>(fit, <span class="dt">newdata =</span> <span class="kw">ic</span>(airquality))</code></pre></div>
-<p>See on jällegi hea viis, kuidas kunstlikult andmete varieervust vähendada ja nende jaotust muuta. Ühtlasi tõstab see meetod kunstlikult muutujate vahelist korrelastsiooni. Enam halvemaks ei saa minna!</p>
+<p>See on jällegi hea viis, kuidas kunstlikult andmete varieervust vähendada ja nende jaotust muuta. Ühtlasi tõstab see meetod kunstlikult muutujate vahelist korrelatsiooni. Enam halvemaks ei saa minna!</p>
 </div>
 <div id="stohhastiline-regressiooniga-imputatsioon" class="section level3">
 <h3><span class="header-section-number">22.2.4</span> Stohhastiline regressiooniga imputatsioon</h3>
-<p>Lisab eelnevasse müra ja töötab ka MAR andmete peal. Kõigepealt fitib lm()-ga mudeli koefitsiendid, siis ennustab nende pealt puuduvad väärtused ja lõpuks liidab igale neist juhusliku residuaali algsest mudelist.</p>
+<p>lisab eelnevasse müra ja töötab ka MAR andmete peal. Kõigepealt fitib lm()-ga mudeli koefitsiendid, siis ennustab nende pealt puuduvad väärtused ja lõpuks liidab igale neist juhusliku residuaali algsest mudelist.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span>airquality[, <span class="kw">c</span>(<span class="st">&quot;Ozone&quot;</span>, <span class="st">&quot;Solar.R&quot;</span>)]
 imp &lt;-<span class="st"> </span><span class="kw">mice</span>(data, <span class="dt">method =</span> <span class="st">&quot;norm.nob&quot;</span>, <span class="dt">m =</span> <span class="dv">1</span>, <span class="dt">maxit =</span> <span class="dv">1</span>,
             <span class="dt">seed =</span> <span class="dv">1</span>, <span class="dt">print =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <p>Eeldus, mis kunagi ei kehti, on et mudeli koefitsiendid vastavad tegelikkusele. Seega puudub siin koefitsientide määramise ebakindlus (seda saab arvutada kas Bayesi meetoditega tõmmates parameetriväärtuste ebakindluse otse posteerioritest, või bootstrappides).</p>
-<p>Stohhastiline regressiooniga imputatsioon võib anda negatiivseid väärtusi muidu positiivsetesse muutujatesse, ekstreemsed väärtused pole hästi mudeliga kaetud ja ennustused/imputatsioonid vastavad regressioonieeldustele (homoskedastilisus jne) ka siis, kui andmed nendele ei vasta. Siiski, kuna see pigem algeline meetod säilitab korrelatsioonid muutujate vahel ja ei kalluta regressioonikoefitsiente, ei saa see liiga halb olla. Sellelt põhjalt on ehitatud paljud kaasaegsed imputatsioonomeetodid.</p>
+<p>Stohhastiline regressiooniga imputatsioon võib anda negatiivseid väärtusi muidu positiivsetesse muutujatesse, ekstreemsed väärtused pole hästi mudeliga kaetud ja ennustused/imputatsioonid vastavad regressioonieeldustele (homoskedastilisus jne) ka siis, kui andmed nendele ei vasta. Siiski, kuna see pigem algeline meetod säilitab korrelatsioonid muutujate vahel ja ei kalluta regressioonikoefitsiente, ei saa see liiga halb olla. Sellelt põhjalt on ehitatud paljud kaasaegsed imputatsioonimeetodid.</p>
 </div>
 <div id="eelmise-vaatluse-kopeerimine-locf." class="section level3">
 <h3><span class="header-section-number">22.2.5</span> Eelmise vaatluse kopeerimine (LOCF).</h3>
-<p>See on <em>ad hoc</em> meetod aegridadele, mida rakendab <code>tydyr::fill()</code>. Seda on hea kasutada siis, kui muutuja väärtus kirjutatakse üles ainult siis, kui see muutub. Muidu, LOCF võib olla kallutatud isegi MCAR juhul.</p>
+<p>See on <em>ad hoc</em> meetod aegridadele, mida rakendab <code>tydyr::fill()</code> ja mida on hea kasutada siis, kui muutuja väärtus kirjutatakse üles ainult siis, kui see muutub. Muidu, LOCF võib olla kallutatud isegi MCAR juhul.</p>
 </div>
 </div>
 <div id="mitmene-imputatsioon" class="section level2">
 <h2><span class="header-section-number">22.3</span> Mitmene imputatsioon</h2>
-<p>See meetod loodi Donald Rubini poolt 1970ndatel ja üldskeem on järgmine:</p>
+<p>See meetod loodi Donald Rubini poolt 1970ndatel üldskeemiga:</p>
 <ol style="list-style-type: decimal">
-<li><p>Tekita mitu imputeeritud andmeraami (igaüks on ilma NA-deta), mis erinevad ainult imputeeritud väärtuste poolest. Iga NA asemele imputeeritakse arvud omast jaotusest, mille laius on kommentaar meie ebakindlusele selle konkreetse imputatsiooni kohta.</p></li>
+<li><p>Tekita mitu imputeeritud andmeraami (igaüks on ilma NA-deta), mis erinevad ainult imputeeritud väärtuste poolest. Iga NA asemele imputeeritakse arvud omast jaotusest, mille laius arvestab meie ebakindlusega selle konkreetse positsiooni imputeerimisel.</p></li>
 <li><p>Analüüsi igat andmeraami eraldi, aga tavapärasel viisil</p></li>
 <li><p>kombineeri tulemused lõplikuks keskmiseks ja sem-iks.</p></li>
 </ol>
@@ -454,7 +479,7 @@ est &lt;-<span class="st"> </span><span class="kw">pool</span>(fit)
 </ul>
 <p>Selle nimel peame tegema 7 valikut selles järjekorras:</p>
 <ol style="list-style-type: decimal">
-<li><p><strong>Kas me loeme MAR eelduse kehtivaks?</strong> MNAR imputatsioon toob sisse lisaeeldused. MNAR juhul on kaks võimalust: toome sisse uued muutujad, mis enustaks NAde paiknemist lootuses, et läheneme MAR-olukorrale, või kasutame lisamudelit, mis arvestab protsessiga, mis genereeris NAd.</p></li>
+<li><p><strong>Kas me loeme MAR eelduse kehtivaks?</strong> MNAR imputatsioon toob sisse lisaeeldused. MNAR juhul on kaks võimalust: toome sisse uued muutujad, mis enustaks NAde paiknemist lootuses, et läheneme MAR-eelduse täitmisele; või kasutame lisamudelit, mis arvestab protsessiga, mis genereeris NAd.</p></li>
 <li><p><strong>Milline imputatsioonimudel (nii mudeli struktuurne osa kui eeldatud vigade jaotus)?</strong> <em>Fully conditional specification</em> (FCS) imputeerib multivariiatseid NA-sid muutuja haaval. Seega peab mudeli kuju spetsifitseerima igale NA-dega muutujale eraldi, arvestades ka muutujate vahelisi seoseid.</p></li>
 </ol>
 <table>

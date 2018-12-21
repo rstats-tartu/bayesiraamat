@@ -313,7 +313,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="22" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html"><i class="fa fa-check"></i><b>22</b> Puuduvad andmed</a><ul>
 <li class="chapter" data-level="22.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#andmete-puudumise-mehhanismid"><i class="fa fa-check"></i><b>22.1</b> Andmete puudumise mehhanismid:</a></li>
 <li class="chapter" data-level="22.2" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#uhekaupa-imputatsiooni-meetodid"><i class="fa fa-check"></i><b>22.2</b> Ühekaupa imputatsiooni meetodid</a><ul>
-<li class="chapter" data-level="22.2.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#na-dega-ridade-eemaldamine-drop_na"><i class="fa fa-check"></i><b>22.2.1</b> NA-dega ridade eemaldamine (drop_na)</a></li>
+<li class="chapter" data-level="22.2.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#na-dega-ridade-eemaldamine"><i class="fa fa-check"></i><b>22.2.1</b> NA-dega ridade eemaldamine</a></li>
 <li class="chapter" data-level="22.2.2" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#paariviisiline-deleteerimine"><i class="fa fa-check"></i><b>22.2.2</b> Paariviisiline deleteerimine</a></li>
 <li class="chapter" data-level="22.2.3" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#keskmise-imputatsioon-ja-regressiooniga-imputatsioon"><i class="fa fa-check"></i><b>22.2.3</b> Keskmise imputatsioon ja regressiooniga imputatsioon</a></li>
 <li class="chapter" data-level="22.2.4" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#stohhastiline-regressiooniga-imputatsioon"><i class="fa fa-check"></i><b>22.2.4</b> Stohhastiline regressiooniga imputatsioon</a></li>
@@ -560,9 +560,9 @@ diab_Bvs &lt;-<span class="st"> </span><span class="kw">Bvs</span>(<span class="
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
 <span class="kw">vif</span>(<span class="kw">lm</span>(hdl <span class="op">~</span><span class="st"> </span>chol <span class="op">+</span><span class="st"> </span>stab.glu <span class="op">+</span><span class="st"> </span>ratio <span class="op">+</span><span class="st"> </span>glyhb <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>height <span class="op">+</span><span class="st"> </span>weight <span class="op">+</span><span class="st">  </span>bp.1s <span class="op">+</span><span class="st"> </span>bp.1d <span class="op">+</span><span class="st"> </span>waist, <span class="dt">data =</span> diab))
 <span class="co">#&gt;     chol stab.glu    ratio    glyhb      age   height   weight    bp.1s </span>
-<span class="co">#&gt;     1.42     2.33     1.51     2.45     1.63     1.20     4.90     2.14 </span>
+<span class="co">#&gt;     1.42     2.33     1.51     2.45     1.64     1.20     4.92     2.12 </span>
 <span class="co">#&gt;    bp.1d    waist </span>
-<span class="co">#&gt;     1.79     4.73</span></code></pre></div>
+<span class="co">#&gt;     1.76     4.76</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(diab_Bvs)
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
@@ -572,20 +572,20 @@ diab_Bvs &lt;-<span class="st"> </span><span class="kw">Bvs</span>(<span class="
 <span class="co">#&gt; Inclusion Probabilities:</span>
 <span class="co">#&gt;             Incl.prob. HPM MPM</span>
 <span class="co">#&gt; chol                 1   *   *</span>
-<span class="co">#&gt; stab.glu        0.0252        </span>
+<span class="co">#&gt; stab.glu        0.0249        </span>
 <span class="co">#&gt; ratio                1   *   *</span>
-<span class="co">#&gt; glyhb           0.0207        </span>
-<span class="co">#&gt; age             0.0414        </span>
-<span class="co">#&gt; gendermale      0.0176        </span>
-<span class="co">#&gt; height          0.0406        </span>
-<span class="co">#&gt; weight          0.0794        </span>
-<span class="co">#&gt; framelarge      0.0367        </span>
-<span class="co">#&gt; framemedium     0.0142        </span>
-<span class="co">#&gt; framesmall      0.0229        </span>
-<span class="co">#&gt; bp.1s           0.0161        </span>
-<span class="co">#&gt; bp.1d           0.0147        </span>
-<span class="co">#&gt; waist           0.0542        </span>
-<span class="co">#&gt; hip              0.553   *   *</span>
+<span class="co">#&gt; glyhb           0.0247        </span>
+<span class="co">#&gt; age             0.0407        </span>
+<span class="co">#&gt; gendermale      0.0171        </span>
+<span class="co">#&gt; height          0.0391        </span>
+<span class="co">#&gt; weight          0.0744        </span>
+<span class="co">#&gt; framelarge      0.0364        </span>
+<span class="co">#&gt; framemedium      0.014        </span>
+<span class="co">#&gt; framesmall      0.0223        </span>
+<span class="co">#&gt; bp.1s           0.0157        </span>
+<span class="co">#&gt; bp.1d           0.0139        </span>
+<span class="co">#&gt; waist           0.0511        </span>
+<span class="co">#&gt; hip             0.5162   *   *</span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Code: HPM stands for Highest posterior Probability Model and</span>
 <span class="co">#&gt;  MPM for Median Probability Model.</span>
@@ -607,20 +607,20 @@ diab_Bvs &lt;-<span class="st"> </span><span class="kw">Bvs</span>(<span class="
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Inclusion Probabilities:</span>
 <span class="co">#&gt;             Incl.prob. HPM MPM</span>
-<span class="co">#&gt; stab.glu        0.0676        </span>
+<span class="co">#&gt; stab.glu         0.063        </span>
 <span class="co">#&gt; ratio                1   *   *</span>
-<span class="co">#&gt; glyhb           0.1249        </span>
-<span class="co">#&gt; age              0.979   *   *</span>
-<span class="co">#&gt; gendermale      0.1337        </span>
-<span class="co">#&gt; height          0.0693        </span>
-<span class="co">#&gt; weight          0.2198        </span>
-<span class="co">#&gt; framelarge       0.685   *   *</span>
-<span class="co">#&gt; framemedium     0.1233        </span>
-<span class="co">#&gt; framesmall      0.0907        </span>
-<span class="co">#&gt; bp.1s           0.0921        </span>
-<span class="co">#&gt; bp.1d           0.6822   *   *</span>
-<span class="co">#&gt; waist           0.1651        </span>
-<span class="co">#&gt; hip             0.2037        </span>
+<span class="co">#&gt; glyhb           0.1212        </span>
+<span class="co">#&gt; age             0.9803   *   *</span>
+<span class="co">#&gt; gendermale      0.1138        </span>
+<span class="co">#&gt; height          0.0637        </span>
+<span class="co">#&gt; weight          0.1744        </span>
+<span class="co">#&gt; framelarge      0.7082   *   *</span>
+<span class="co">#&gt; framemedium     0.1183        </span>
+<span class="co">#&gt; framesmall       0.086        </span>
+<span class="co">#&gt; bp.1s           0.0902        </span>
+<span class="co">#&gt; bp.1d           0.5585       *</span>
+<span class="co">#&gt; waist           0.1448        </span>
+<span class="co">#&gt; hip             0.1797        </span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Code: HPM stands for Highest posterior Probability Model and</span>
 <span class="co">#&gt;  MPM for Median Probability Model.</span>
@@ -651,7 +651,7 @@ nullmodel &lt;-<span class="st"> </span>hdl <span class="op">~</span><span class
 <span class="co">#&gt; ---------</span>
 <span class="co">#&gt; Bayes factors (expressed in relation to H0)</span>
 <span class="co">#&gt;  H0.to.H0  H1.to.H0  H2.to.H0  H3.to.H0 </span>
-<span class="co">#&gt;  1.00e+00 2.42e+131 2.40e+142  2.69e+55 </span>
+<span class="co">#&gt;  1.00e+00 1.46e+131 1.70e+142  2.68e+55 </span>
 <span class="co">#&gt; ---------</span>
 <span class="co">#&gt; Posterior probabilities:</span>
 <span class="co">#&gt; H0 H1 H2 H3 </span>
@@ -666,8 +666,8 @@ regs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span clas
 <p><img src="14_mitu-prediktorit_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Peale 2. muutuja lisamist jääb adjusteeritud r-ruut stabiilseks. Seega piisab kahest muutujast.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">reg.summary<span class="op">$</span>adjr2
-<span class="co">#&gt;  [1] 0.470 0.489 0.503 0.510 0.513 0.515 0.516 0.516 0.515 0.514 0.513</span>
-<span class="co">#&gt; [12] 0.511 0.510 0.509</span></code></pre></div>
+<span class="co">#&gt;  [1] 0.470 0.489 0.503 0.509 0.512 0.514 0.515 0.514 0.513 0.512 0.511</span>
+<span class="co">#&gt; [12] 0.510 0.509 0.507</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(regfit.full)
 <span class="co">#&gt; Subset selection object</span>
 <span class="co">#&gt; Call: regsubsets.formula(hdl ~ stab.glu + ratio + glyhb + age + gender + </span>
@@ -716,10 +716,10 @@ regs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span clas
 <span class="co">#&gt; 7  ( 1 )  &quot; &quot;         &quot; &quot;        &quot; &quot;   &quot;*&quot;   &quot; &quot;   &quot;*&quot;</span>
 <span class="co">#&gt; 8  ( 1 )  &quot; &quot;         &quot; &quot;        &quot; &quot;   &quot;*&quot;   &quot; &quot;   &quot;*&quot;</span>
 <span class="co">#&gt; 9  ( 1 )  &quot; &quot;         &quot; &quot;        &quot; &quot;   &quot;*&quot;   &quot; &quot;   &quot;*&quot;</span>
-<span class="co">#&gt; 10  ( 1 ) &quot; &quot;         &quot; &quot;        &quot;*&quot;   &quot;*&quot;   &quot; &quot;   &quot;*&quot;</span>
+<span class="co">#&gt; 10  ( 1 ) &quot;*&quot;         &quot; &quot;        &quot; &quot;   &quot;*&quot;   &quot; &quot;   &quot;*&quot;</span>
 <span class="co">#&gt; 11  ( 1 ) &quot;*&quot;         &quot; &quot;        &quot;*&quot;   &quot;*&quot;   &quot; &quot;   &quot;*&quot;</span>
 <span class="co">#&gt; 12  ( 1 ) &quot;*&quot;         &quot; &quot;        &quot;*&quot;   &quot;*&quot;   &quot; &quot;   &quot;*&quot;</span>
-<span class="co">#&gt; 13  ( 1 ) &quot;*&quot;         &quot; &quot;        &quot;*&quot;   &quot;*&quot;   &quot;*&quot;   &quot;*&quot;</span>
+<span class="co">#&gt; 13  ( 1 ) &quot;*&quot;         &quot;*&quot;        &quot;*&quot;   &quot;*&quot;   &quot; &quot;   &quot;*&quot;</span>
 <span class="co">#&gt; 14  ( 1 ) &quot;*&quot;         &quot;*&quot;        &quot;*&quot;   &quot;*&quot;   &quot;*&quot;   &quot;*&quot;</span></code></pre></div>
 
 </div>

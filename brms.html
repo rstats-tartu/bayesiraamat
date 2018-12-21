@@ -313,7 +313,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="22" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html"><i class="fa fa-check"></i><b>22</b> Puuduvad andmed</a><ul>
 <li class="chapter" data-level="22.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#andmete-puudumise-mehhanismid"><i class="fa fa-check"></i><b>22.1</b> Andmete puudumise mehhanismid:</a></li>
 <li class="chapter" data-level="22.2" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#uhekaupa-imputatsiooni-meetodid"><i class="fa fa-check"></i><b>22.2</b> Ühekaupa imputatsiooni meetodid</a><ul>
-<li class="chapter" data-level="22.2.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#na-dega-ridade-eemaldamine-drop_na"><i class="fa fa-check"></i><b>22.2.1</b> NA-dega ridade eemaldamine (drop_na)</a></li>
+<li class="chapter" data-level="22.2.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#na-dega-ridade-eemaldamine"><i class="fa fa-check"></i><b>22.2.1</b> NA-dega ridade eemaldamine</a></li>
 <li class="chapter" data-level="22.2.2" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#paariviisiline-deleteerimine"><i class="fa fa-check"></i><b>22.2.2</b> Paariviisiline deleteerimine</a></li>
 <li class="chapter" data-level="22.2.3" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#keskmise-imputatsioon-ja-regressiooniga-imputatsioon"><i class="fa fa-check"></i><b>22.2.3</b> Keskmise imputatsioon ja regressiooniga imputatsioon</a></li>
 <li class="chapter" data-level="22.2.4" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#stohhastiline-regressiooniga-imputatsioon"><i class="fa fa-check"></i><b>22.2.4</b> Stohhastiline regressiooniga imputatsioon</a></li>
@@ -716,12 +716,12 @@ pars &lt;-<span class="st"> </span><span class="kw">colnames</span>(model2)
 <span class="st">  </span><span class="kw">cbind</span>(newx, .)
 <span class="kw">head</span>(predict_interval_brms2)
 <span class="co">#&gt;   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5</span>
-<span class="co">#&gt; 1         1.00        3.06  setosa     4.50     0.316 3.87  5.10</span>
-<span class="co">#&gt; 2         1.04        3.06  setosa     4.52     0.323 3.88  5.14</span>
-<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.316 3.93  5.18</span>
-<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.324 3.94  5.21</span>
-<span class="co">#&gt; 5         1.16        3.06  setosa     4.61     0.323 3.97  5.22</span>
-<span class="co">#&gt; 6         1.20        3.06  setosa     4.65     0.323 4.02  5.29</span></code></pre></div>
+<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.314 3.86  5.10</span>
+<span class="co">#&gt; 2         1.04        3.06  setosa     4.51     0.319 3.88  5.14</span>
+<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.321 3.92  5.16</span>
+<span class="co">#&gt; 4         1.12        3.06  setosa     4.59     0.322 3.97  5.23</span>
+<span class="co">#&gt; 5         1.16        3.06  setosa     4.60     0.324 3.98  5.24</span>
+<span class="co">#&gt; 6         1.20        3.06  setosa     4.64     0.318 4.03  5.27</span></code></pre></div>
 <p><code>predict()</code> ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele</p>
 <p>Siin siis eraldi ennustused kahele liigile kolmest, kaasa arvatud petal length väärtusvahemikule, kus selle liigi isendeid valimis ei ole (ja võib-olla ei saagi olla)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">no_versicolor &lt;-<span class="st"> </span><span class="kw">filter</span>(iris, Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>)

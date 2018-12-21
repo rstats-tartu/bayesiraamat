@@ -61,7 +61,7 @@ samples <- extract.samples(m1)
 dens(samples$p)
 HPDI(samples$p, prob = 0.95) # Highest density 95% at the center
 #> |0.95 0.95| 
-#> 0.362 0.967
+#> 0.360 0.979
 ```
 
 <div class="figure" style="text-align: center">
@@ -94,7 +94,7 @@ dens(samples$p)
 #PI(samples$p, prob = 0.95) # Leaves out equal 2.5% at both sides
 HPDI(samples$p, prob = 0.95) # Highest density 95% at the center
 #> |0.95 0.95| 
-#> 0.573 0.768
+#> 0.566 0.757
 ```
 
 <div class="figure" style="text-align: center">
@@ -171,7 +171,7 @@ precis(m3)
 ```r
 HPDI(samples$p, prob = 0.95) # Highest density 95% at the center
 #> |0.95 0.95| 
-#> 0.614 0.718
+#> 0.614 0.720
 dens(samples$p)
 ```
 

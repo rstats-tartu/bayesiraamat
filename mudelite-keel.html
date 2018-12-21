@@ -313,7 +313,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="22" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html"><i class="fa fa-check"></i><b>22</b> Puuduvad andmed</a><ul>
 <li class="chapter" data-level="22.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#andmete-puudumise-mehhanismid"><i class="fa fa-check"></i><b>22.1</b> Andmete puudumise mehhanismid:</a></li>
 <li class="chapter" data-level="22.2" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#uhekaupa-imputatsiooni-meetodid"><i class="fa fa-check"></i><b>22.2</b> Ühekaupa imputatsiooni meetodid</a><ul>
-<li class="chapter" data-level="22.2.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#na-dega-ridade-eemaldamine-drop_na"><i class="fa fa-check"></i><b>22.2.1</b> NA-dega ridade eemaldamine (drop_na)</a></li>
+<li class="chapter" data-level="22.2.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#na-dega-ridade-eemaldamine"><i class="fa fa-check"></i><b>22.2.1</b> NA-dega ridade eemaldamine</a></li>
 <li class="chapter" data-level="22.2.2" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#paariviisiline-deleteerimine"><i class="fa fa-check"></i><b>22.2.2</b> Paariviisiline deleteerimine</a></li>
 <li class="chapter" data-level="22.2.3" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#keskmise-imputatsioon-ja-regressiooniga-imputatsioon"><i class="fa fa-check"></i><b>22.2.3</b> Keskmise imputatsioon ja regressiooniga imputatsioon</a></li>
 <li class="chapter" data-level="22.2.4" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#stohhastiline-regressiooniga-imputatsioon"><i class="fa fa-check"></i><b>22.2.4</b> Stohhastiline regressiooniga imputatsioon</a></li>
@@ -391,7 +391,7 @@ m1 &lt;-<span class="st"> </span><span class="kw">map</span>(
 <span class="kw">dens</span>(samples<span class="op">$</span>p)
 <span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt; 0.362 0.967</span></code></pre></div>
+<span class="co">#&gt; 0.360 0.979</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:pullpost"></span>
 <img src="11_mudelite_keel_files/figure-html/pullpost-1.png" alt="Tõmbame valimi posteeriorist." width="70%" />
 <p class="caption">
@@ -414,7 +414,7 @@ Joonis 13.1: Tõmbame valimi posteeriorist.
 <span class="co">#PI(samples$p, prob = 0.95) # Leaves out equal 2.5% at both sides</span>
 <span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt; 0.573 0.768</span></code></pre></div>
+<span class="co">#&gt; 0.566 0.757</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:perse"></span>
 <img src="11_mudelite_keel_files/figure-html/perse-1.png" alt="Veel üks valim posteeriorist (60 surma 90st)." width="70%" />
 <p class="caption">
@@ -460,7 +460,7 @@ samples &lt;-<span class="st"> </span><span class="kw">extract.samples</span>(m3
 <span class="co">#&gt; p 0.67   0.03 0.62  0.71</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt; 0.614 0.718</span>
+<span class="co">#&gt; 0.614 0.720</span>
 <span class="kw">dens</span>(samples<span class="op">$</span>p)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
 <img src="11_mudelite_keel_files/figure-html/unnamed-chunk-5-1.png" alt="Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist." width="70%" />
