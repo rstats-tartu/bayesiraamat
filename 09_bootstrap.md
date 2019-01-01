@@ -137,7 +137,7 @@ heights_bb <- bayesboot(heights$value, mean)
 plot(heights_bb, compVal = 185)
 HPDI(heights_bb$V1, prob = 0.95)
 #> |0.95 0.95| 
-#>   182   187
+#>   183   187
 ```
 
 <div class="figure" style="text-align: center">
@@ -159,7 +159,7 @@ Tõenäosus, et keskmine on suurem kui 182 cm
 
 ```r
 mean(heights_bb[, 1] > 182)
-#> [1] 0.991
+#> [1] 0.992
 ```
 
 Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):

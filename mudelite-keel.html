@@ -323,10 +323,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="22.4" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#predictive-mean-matching"><i class="fa fa-check"></i><b>22.4</b> Predictive mean matching</a></li>
 <li class="chapter" data-level="22.5" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#imputeerimine-mitte-normaalsete-jaotuste-korral"><i class="fa fa-check"></i><b>22.5</b> Imputeerimine mitte-normaalsete jaotuste korral</a></li>
 <li class="chapter" data-level="22.6" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#kategoorilised-muutujad"><i class="fa fa-check"></i><b>22.6</b> Kategoorilised muutujad</a></li>
-<li class="chapter" data-level="" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#countid-sisaldavad-nulle"><i class="fa fa-check"></i>countid (sisaldavad nulle)</a></li>
-<li class="chapter" data-level="22.7" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#mitme-prediktoriga-imputatsioon"><i class="fa fa-check"></i><b>22.7</b> Mitme prediktoriga imputatsioon</a><ul>
-<li class="chapter" data-level="22.7.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#monotooniline-muster"><i class="fa fa-check"></i><b>22.7.1</b> monotooniline muster</a></li>
-</ul></li>
+<li class="chapter" data-level="22.7" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#countid-sisaldavad-nulle"><i class="fa fa-check"></i><b>22.7</b> countid (sisaldavad nulle)</a></li>
+<li class="chapter" data-level="22.8" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#graafilised-meetodid"><i class="fa fa-check"></i><b>22.8</b> Graafilised meetodid</a></li>
+<li class="chapter" data-level="22.9" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#tulemuste-avaldamine"><i class="fa fa-check"></i><b>22.9</b> Tulemuste avaldamine</a></li>
 </ul></li>
 <li class="appendix"><span><b>Lisa</b></span></li>
 <li class="chapter" data-level="A" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html"><i class="fa fa-check"></i><b>A</b> Bayesi ja sagedusliku statistika võrdlus</a><ul>
@@ -391,7 +390,7 @@ m1 &lt;-<span class="st"> </span><span class="kw">map</span>(
 <span class="kw">dens</span>(samples<span class="op">$</span>p)
 <span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt; 0.360 0.979</span></code></pre></div>
+<span class="co">#&gt; 0.354 0.966</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:pullpost"></span>
 <img src="11_mudelite_keel_files/figure-html/pullpost-1.png" alt="Tõmbame valimi posteeriorist." width="70%" />
 <p class="caption">
@@ -414,7 +413,7 @@ Joonis 13.1: Tõmbame valimi posteeriorist.
 <span class="co">#PI(samples$p, prob = 0.95) # Leaves out equal 2.5% at both sides</span>
 <span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt; 0.566 0.757</span></code></pre></div>
+<span class="co">#&gt; 0.567 0.763</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:perse"></span>
 <img src="11_mudelite_keel_files/figure-html/perse-1.png" alt="Veel üks valim posteeriorist (60 surma 90st)." width="70%" />
 <p class="caption">
@@ -460,7 +459,7 @@ samples &lt;-<span class="st"> </span><span class="kw">extract.samples</span>(m3
 <span class="co">#&gt; p 0.67   0.03 0.62  0.71</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt; 0.614 0.720</span>
+<span class="co">#&gt; 0.617 0.722</span>
 <span class="kw">dens</span>(samples<span class="op">$</span>p)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
 <img src="11_mudelite_keel_files/figure-html/unnamed-chunk-5-1.png" alt="Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist." width="70%" />

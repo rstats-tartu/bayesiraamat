@@ -323,10 +323,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="22.4" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#predictive-mean-matching"><i class="fa fa-check"></i><b>22.4</b> Predictive mean matching</a></li>
 <li class="chapter" data-level="22.5" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#imputeerimine-mitte-normaalsete-jaotuste-korral"><i class="fa fa-check"></i><b>22.5</b> Imputeerimine mitte-normaalsete jaotuste korral</a></li>
 <li class="chapter" data-level="22.6" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#kategoorilised-muutujad"><i class="fa fa-check"></i><b>22.6</b> Kategoorilised muutujad</a></li>
-<li class="chapter" data-level="" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#countid-sisaldavad-nulle"><i class="fa fa-check"></i>countid (sisaldavad nulle)</a></li>
-<li class="chapter" data-level="22.7" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#mitme-prediktoriga-imputatsioon"><i class="fa fa-check"></i><b>22.7</b> Mitme prediktoriga imputatsioon</a><ul>
-<li class="chapter" data-level="22.7.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#monotooniline-muster"><i class="fa fa-check"></i><b>22.7.1</b> monotooniline muster</a></li>
-</ul></li>
+<li class="chapter" data-level="22.7" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#countid-sisaldavad-nulle"><i class="fa fa-check"></i><b>22.7</b> countid (sisaldavad nulle)</a></li>
+<li class="chapter" data-level="22.8" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#graafilised-meetodid"><i class="fa fa-check"></i><b>22.8</b> Graafilised meetodid</a></li>
+<li class="chapter" data-level="22.9" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#tulemuste-avaldamine"><i class="fa fa-check"></i><b>22.9</b> Tulemuste avaldamine</a></li>
 </ul></li>
 <li class="appendix"><span><b>Lisa</b></span></li>
 <li class="chapter" data-level="A" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html"><i class="fa fa-check"></i><b>A</b> Bayesi ja sagedusliku statistika võrdlus</a><ul>
@@ -374,15 +373,15 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div id="kahetasemeline-mudel-algebra-keeles" class="section level2">
 <h2><span class="header-section-number">18.1</span> kahetasemeline mudel algebra keeles</h2>
 <ol style="list-style-type: decimal">
-<li>tase on õpilse tase, 2. tase on klassi tase. meil on j klassi, milles on erinev arv õpilasi. Iga õpilase kohta teame populaarsusindeksit (y - muutuja) ja sugu (x - muutuja). Klassi tasemel teame õpetaja staazi aastates (z - muutuja). Alustuseks on meil eraldi regressioonivõrrand igale klassile.</li>
+<li>tase on õpilse tase, 2. tase on klassi tase. meil on j klassi, milles on erinev arv õpilasi. Iga õpilase kohta teame populaarsusindeksit (y - muutuja) ja sugu (x - muutuja). Klassi tasemel teame õpetaja staazi aastates (z - muutuja). Alustuseks on meil j regressioonivõrrandit, eraldi võrrand igale klassile</li>
 </ol>
 <p><span class="math display">\[y_{ij} = b_{0j} + b_{1j}X_{ij} + e_{ij}\]</span> (1. võrrand)</p>
-<p>kus subskript j tähistab klassi ja i tähistab õpilast. Näit <span class="math inline">\(b_{1j}\)</span> tähendab, et me fitime iga klassi kohta ühe <span class="math inline">\(b_1\)</span> koefitsiendi (ja <span class="math inline">\(b_{0j}\)</span>, et fitime iga klassi kohta ühe <span class="math inline">\(b_0\)</span>-i). Me eeldame, et igal klassil on erinevad <span class="math inline">\(b_0\)</span> ja <span class="math inline">\(b_1\)</span>, mis tulevad vastavatest klassiülestest normaaljaotustest. Enamasti eeldame, et kõikide klasside varieeruvus on sama. Me modelleerime <span class="math inline">\(b_0\)</span> ja <span class="math inline">\(b_1\)</span> jaotusi, tuues sisse klassi tasemel muutuja z:</p>
+<p>kus subskript j tähistab klassi ja i tähistab õpilast. Näit <span class="math inline">\(b_{1j}\)</span> tähendab, et me fitime igale klassile oma <span class="math inline">\(b_1\)</span> koefitsiendi (ja <span class="math inline">\(b_{0j}\)</span>, et fitime igale klassile oma <span class="math inline">\(b_0\)</span>-i). Me eeldame, et igal klassil on erinevad <span class="math inline">\(b_0\)</span> ja <span class="math inline">\(b_1\)</span>, mis tulevad vastavatest klassiülestest normaaljaotustest. Enamasti eeldame, et kõikide klasside varieeruvus on sama. Me modelleerime <span class="math inline">\(b_0\)</span> ja <span class="math inline">\(b_1\)</span> jaotusi, tuues sisse klassi tasemel muutuja z:</p>
 <p><span class="math display">\[b_{0j} = \gamma_{00} + \gamma_{01} Z_j + u_{0j}\]</span> (2. võrrand)</p>
 <p><span class="math display">\[b_{1j} = \gamma_{10} + \gamma_{11} Z_j + u_{1j}\]</span> (3. võrrand)</p>
 <ol start="2" style="list-style-type: decimal">
 <li>võrrand ennustab klassi keskmist populaarsusindeksit vastavalt õpetaja staazile.</li>
-<li>võrrand ütleb, et populaarsuse ja soo seose tugevus sõltub õpetaja staazist. kui <span class="math inline">\(\gamma_{11} &gt; 0\)</span>, siis on seos seda tugevam, mida staazikam on õpetaja. <span class="math inline">\(u_{0j}\)</span> ja <span class="math inline">\(u_{1j}\)</span> on residuaalide vead klassi tasemel, mille kohta me eeldame, et mean = 0 ja sõltumatust residuaalide vigadest õpilase tasemel (<span class="math inline">\(e_{ij}\)</span>). <span class="math inline">\(u_{0j}\)</span> residuaalide vigade dispersioon on <span class="math inline">\(\sigma^2_{u0}\)</span> jne. <span class="math inline">\(u_{0j}\)</span> ja <span class="math inline">\(u_{1j}\)</span> covariance on <span class="math inline">\(\sigma^2_{u01}\)</span> ja me ei eelda, et see = 0. Gamma koefitsiendid ei varieeru klasside vahel.</li>
+<li>võrrand ütleb, et populaarsuse ja soo seose tugevus sõltub õpetaja staazist – kui <span class="math inline">\(\gamma_{11} &gt; 0\)</span>, siis on seos seda tugevam, mida staazikam on õpetaja. <span class="math inline">\(u_{0j}\)</span> ja <span class="math inline">\(u_{1j}\)</span> on residuaalide vead klassi tasemel, mille kohta me eeldame, et mean = 0 ja sõltumatust residuaalide vigadest õpilase tasemel (<span class="math inline">\(e_{ij}\)</span>). <span class="math inline">\(u_{0j}\)</span> residuaalide vigade dispersioon on <span class="math inline">\(\sigma^2_{u0}\)</span> jne. <span class="math inline">\(u_{0j}\)</span> ja <span class="math inline">\(u_{1j}\)</span> covariance on <span class="math inline">\(\sigma^2_{u01}\)</span> ja me ei eelda, et see = 0. Gamma koefitsiendid ei varieeru klasside vahel.</li>
 </ol>
 <p>Asendades 1. võrrandis <span class="math inline">\(b_{0j}\)</span> ja <span class="math inline">\(b_{1j}\)</span>, saame oma võrrandisüsteemi muuta üheks pikaks võrrandiks.</p>
 <p><span class="math display">\[Y_{ij} = \gamma_{00} + \gamma_{10} X_{ij} + \gamma_{01} Z_j + \gamma_{11}X_{ij} Z_j + u_{1j} X_{ij} + u_{0j} + e_{ij}\]</span></p>
@@ -400,9 +399,15 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>Standardiseeritud andmete kasutamine muudab varieeruvuskomponentide fitte, aga jätab b koefitsientide fitid olemuselt samaks (see kehtib X-muutujate suvaliste lineaarsete transformatsioonide korral). Kui me jagame X-muutuja 2-ga, siis <span class="math inline">\(uus ~b_1 = 2 ~x~vana~ b_1\)</span>. Mudeli poolt seletamata varieeruvuse proportsioon ei muutu. Eelnev kehtib senikaua, kuni mudeli tõusud (<span class="math inline">\(b_1\)</span>) ei ole vabaks lastud, st need ei varieeru klassist klassi.</p>
 <p>Tsentreerimine (<span class="math inline">\(x_i - mean(x)\)</span>) mõjutab <span class="math inline">\(b_0\)</span> aga mitte <span class="math inline">\(b_1\)</span> koefitsiente, mis võib rääkida selle meetodi kasuks üle standardiseerimise ((<span class="math inline">\(\frac {x_i - mean(x)}{sd(x)}\)</span>), mis tekitab X muutujate jaotused, mille mean = 0 ja sd = 1.</p>
 <p>NB! grupi tasemel tsentreerimine, ehki vahest kasulik, töötab hoopis teistmoodi kui üle kõikide gruppide tsentreerimine ja viib täiesti erineva mudelini - sellest tuleks hoiduda, senikaua kui te ei tea täpselt, mida te teete.</p>
+<blockquote>
+<p>Mitmetasemelised mudelid on erilised, sest nad hõlmavad mitut varieeruvuse allikat, ei eelda konsantset vigade jaotust, ning modelleerivad seoseid erinevate mudeli tasemete vahel.</p>
+</blockquote>
 <div id="aegread" class="section level3">
 <h3><span class="header-section-number">18.1.1</span> Aegread</h3>
 <p>Aegridasid saab analüüsida mitmetasemilisena, kus korduvad mõõtmised (1. tase) on grupeeritud indiviidide sisse (2. tase). Nii saab analüüsida ka ebaühtlase ajavahemiku järel tehtud mõõtmisi.</p>
+<blockquote>
+<p>Aegridade analüüsi lisaprobleem võrreldes tavalise mitmetasemelise mudeliga on, et me ei saa enam eeldada, et 1. taseme (indiviidi taseme) vead on üksteisest sõltumatud. Aegridade vaatluste vead on sageli ajas autokorreleeritud.</p>
+</blockquote>
 <p><span class="math inline">\(Y_{ti}\)</span> - indiviidi i õpitulemus ajapunktis t.</p>
 <p><span class="math inline">\(T_{ti}\)</span> - ajapunkt</p>
 <p><span class="math inline">\(X_{ti}\)</span> - ajas muutuv covariaat - kas õpilane töötab</p>

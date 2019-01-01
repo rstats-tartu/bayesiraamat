@@ -323,10 +323,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="22.4" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#predictive-mean-matching"><i class="fa fa-check"></i><b>22.4</b> Predictive mean matching</a></li>
 <li class="chapter" data-level="22.5" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#imputeerimine-mitte-normaalsete-jaotuste-korral"><i class="fa fa-check"></i><b>22.5</b> Imputeerimine mitte-normaalsete jaotuste korral</a></li>
 <li class="chapter" data-level="22.6" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#kategoorilised-muutujad"><i class="fa fa-check"></i><b>22.6</b> Kategoorilised muutujad</a></li>
-<li class="chapter" data-level="" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#countid-sisaldavad-nulle"><i class="fa fa-check"></i>countid (sisaldavad nulle)</a></li>
-<li class="chapter" data-level="22.7" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#mitme-prediktoriga-imputatsioon"><i class="fa fa-check"></i><b>22.7</b> Mitme prediktoriga imputatsioon</a><ul>
-<li class="chapter" data-level="22.7.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#monotooniline-muster"><i class="fa fa-check"></i><b>22.7.1</b> monotooniline muster</a></li>
-</ul></li>
+<li class="chapter" data-level="22.7" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#countid-sisaldavad-nulle"><i class="fa fa-check"></i><b>22.7</b> countid (sisaldavad nulle)</a></li>
+<li class="chapter" data-level="22.8" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#graafilised-meetodid"><i class="fa fa-check"></i><b>22.8</b> Graafilised meetodid</a></li>
+<li class="chapter" data-level="22.9" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#tulemuste-avaldamine"><i class="fa fa-check"></i><b>22.9</b> Tulemuste avaldamine</a></li>
 </ul></li>
 <li class="appendix"><span><b>Lisa</b></span></li>
 <li class="chapter" data-level="A" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html"><i class="fa fa-check"></i><b>A</b> Bayesi ja sagedusliku statistika võrdlus</a><ul>
@@ -465,7 +464,13 @@ imp &lt;-<span class="st"> </span><span class="kw">mice</span>(data, <span class
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">imp &lt;-<span class="st"> </span><span class="kw">mice</span>(nhanes, <span class="dt">print =</span> <span class="ot">FALSE</span>, <span class="dt">m =</span> <span class="dv">10</span>, <span class="dt">seed =</span> <span class="dv">24415</span>)
 fit &lt;-<span class="st"> </span><span class="kw">with</span>(imp, <span class="kw">lm</span>(bmi <span class="op">~</span><span class="st"> </span>age))
 est &lt;-<span class="st"> </span><span class="kw">pool</span>(fit)
-<span class="kw">summary</span>(est, <span class="dt">conf.int =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<span class="kw">summary</span>(est, <span class="dt">conf.int =</span> <span class="ot">TRUE</span>)
+
+<span class="kw">complete</span>(imp, <span class="dv">3</span>) <span class="co">#annab 3. imputeeritud tabeli (nii uued kui orig andmed)</span>
+<span class="kw">complete</span>(imp, <span class="st">&quot;long&quot;</span>) <span class="co">#annab kõik imputeeritud tabelid pikas formaadis</span>
+<span class="kw">complete</span>(imp, <span class="st">&quot;broad&quot;</span>) <span class="co">#sama laias formaadis</span>
+imp<span class="op">$</span>data <span class="co">#originaalsed andmed NAdega</span>
+imp<span class="op">$</span>imp <span class="co">#ainult imputeeritud andmed</span></code></pre></div>
 <p>m=10 loob 10 iseseisvat andmeraami.</p>
 <blockquote>
 <p>Kaasaegne soovitus on, kui võimalik, sättida m kuhugi 20-100 vahele.</p>
@@ -558,11 +563,15 @@ est &lt;-<span class="st"> </span><span class="kw">pool</span>(fit)
 </tr>
 </tbody>
 </table>
-<ul>
-<li><ul>
-<li>vaikemudel antud andmetüübile</li>
-</ul></li>
-</ul>
+<p>\* - vaikemudel antud andmetüübile</p>
+<p>Nii saab trükkida kasutatud imputatsioonimeetodi veeru kaupa:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">imp<span class="op">$</span>meth
+<span class="kw">methods</span>(mice) <span class="co">#annab mice meetodite loendi</span>
+
+ini &lt;-<span class="st"> </span><span class="kw">mice</span>(nhanes2, <span class="dt">maxit =</span> <span class="dv">0</span>)
+meth &lt;-<span class="st"> </span>ini<span class="op">$</span>meth
+meth[<span class="st">&quot;bmi&quot;</span>] &lt;-<span class="st"> &quot;norm&quot;</span> <span class="co">#muudab meetodit muutujale &quot;bmi&quot;</span>
+imp &lt;-<span class="st"> </span><span class="kw">mice</span>(nhanes2, <span class="dt">meth =</span> meth, <span class="dt">print=</span>F)</code></pre></div>
 <p>Normaalsetele muutujatele on norm efektiivsem, kui pmm. norm.boot on kiirem mitte-bayesiaanlik alternatiiv. Kui pmm töötab halvasti (näit ei ole piisavalt ennustuse lähedasi doonorarve), kasuta norm meetodeid. Harvade kategooriliste andmepunktide korral eelista pmm-i, pigem kui logreg, polr või polyreg. sample on kiirmeetod imputeerimiseks ilma kovariaatideta.</p>
 <ol start="3" style="list-style-type: decimal">
 <li><strong>Milliseid muutujaid kasutada imputatsioonimudelis prediktoritena?</strong> Üldine soovitus on lisada kõik relevantsed muutujad ja nende relevantsed interaktsioonid.</li>
@@ -576,19 +585,103 @@ imp<span class="op">$</span>predictorMatrix
 <span class="co">#&gt; hyp   1   1   0   1</span>
 <span class="co">#&gt; chl   1   1   1   0</span></code></pre></div>
 <p>Kõikide muutujate kasutamine on ok, kui meil on &lt; 20-30 muutuja, mille vahel ei ole keerulisi interakstsioone. Rohkem muutujaid muudab ka MAR eelduse täitmise tõenäolisemaks. Muidu võta sisse (i) kogu hiljem kasutatava regressioonimudeli, (2) lisa muutujad, mis võiksid ennustada NA-de teket (mille jaotused erinevad andmete ja NA-de korral imputeeritavas muutujas), (3) lisa muutujad, mis on korreleeritud imputeeritava muutujaga. quickpred() annab kiire viisi prediktormaatriksi defineerimiseks.</p>
+<p>Nii saab prediktor maatriksi ilma tegelikku impoutatsiooni läbi tegemata:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ini &lt;-<span class="st"> </span><span class="kw">mice</span>(nhanes, <span class="dt">maxit=</span><span class="dv">0</span>, <span class="dt">print=</span>F)
+pred &lt;-<span class="st"> </span>ini<span class="op">$</span>pred
+pred[ ,<span class="st">&quot;hyp&quot;</span>] &lt;-<span class="st"> </span><span class="dv">0</span> <span class="co">#rekodeerime veeru &quot;hyp&quot;, </span>
+<span class="co">#mida ei kasutata enam imputatsioonil</span>
+imp &lt;-<span class="st"> </span><span class="kw">mice</span>(nhanes, <span class="dt">pred=</span>pred, <span class="dt">print=</span>F)</code></pre></div>
+<p><code>quickpred()</code> teeb ise prediktorite valiku, mida imputatsioonil kasutada</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ini &lt;-<span class="st"> </span><span class="kw">mice</span>(nhanes, <span class="dt">pred=</span><span class="kw">quickpred</span>(nhanes, <span class="dt">mincor=</span>.<span class="dv">3</span>), <span class="dt">print=</span>F)
+ini<span class="op">$</span>pred</code></pre></div>
+<p>Nii kirjutame imputatsioonimudelisse sisse interaktsiooni kahele muutujale, kus me kõigepealt lahutame kummagist muutujast tema keskmise (tsentreerime) ja siis korrutame need muutujad</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">expr &lt;-<span class="st"> </span><span class="kw">expression</span>((wgt <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(wgt)) <span class="op">*</span><span class="st"> </span>(hc <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(hc)))
+boys<span class="op">$</span>wgt.hc &lt;-<span class="st"> </span><span class="kw">with</span>(boys, <span class="kw">eval</span>(expr))
+meth &lt;-<span class="st"> </span><span class="kw">make.method</span>(boys)
+meth[<span class="st">&quot;wgt.hc&quot;</span>] &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;~I(&quot;</span>, expr, <span class="st">&quot;)&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)
+<span class="co">#I() lubab argumendi (wgt - mean(wgt)) * (hc - mean(hc)) </span>
+<span class="co">#ära tunda literaase valemina.</span>
+meth[<span class="st">&quot;bmi&quot;</span>] &lt;-<span class="st"> &quot;&quot;</span>
+pred &lt;-<span class="st"> </span><span class="kw">make.predictorMatrix</span>(boys)
+pred[<span class="kw">c</span>(<span class="st">&quot;wgt&quot;</span>, <span class="st">&quot;hc&quot;</span>), <span class="st">&quot;wgt.hc&quot;</span>] &lt;-<span class="st"> </span><span class="dv">0</span>
+<span class="co">#et katkestada võimalikke tagasisidestusega luupe wgt.hc ja </span>
+<span class="co">#wgt&amp;hc vahel, viime sisse muutused prediktormaatriksisse.</span>
+imp.int &lt;-<span class="st"> </span><span class="kw">mice</span>(boys, <span class="dt">m =</span> <span class="dv">1</span>, <span class="dt">meth =</span> meth, <span class="dt">pred =</span> pred,
+                <span class="dt">print =</span> <span class="ot">FALSE</span>, <span class="dt">seed =</span> <span class="dv">62587</span>, <span class="dt">maxit =</span> <span class="dv">10</span>)</code></pre></div>
+<p>Kategooriliste muutujate interaktsioone saab imputeerida jagades andmed gruppidesse ja imputeerides neid eraldi, misjärel kombineerida tulemused taas rbind() abil.</p>
+<p>Kompositsioonilised andmed – mitu muutujat summeeruvad ühele (100%-le). Selliste andmete imputeerimiseks vt robCompositions raamatukogu.</p>
 <ol start="4" style="list-style-type: decimal">
-<li><strong>Kas imputeerida muutujaid, mis on teiste NA-dega muutujate funktsioonid (suhted jms)?</strong> Lihtsaim vastus on “ei”.</li>
+<li><strong>Kas imputeerida muutujaid, mis on teiste NA-dega muutujate funktsioonid (suhted jms)?</strong> Lihtsaim vastus on “ei”. Siin imputeerime kõigepealt wght ja hgth muutujad ja siis arvutame nende pealt suhte (whr).</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span>boys[, <span class="kw">c</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;hgt&quot;</span>, <span class="st">&quot;wgt&quot;</span>, <span class="st">&quot;hc&quot;</span>, <span class="st">&quot;reg&quot;</span>)]
 imp &lt;-<span class="st"> </span><span class="kw">mice</span>(data, <span class="dt">print =</span> <span class="ot">FALSE</span>, <span class="dt">seed =</span> <span class="dv">71712</span>)
 long &lt;-<span class="st"> </span>mice<span class="op">::</span><span class="kw">complete</span>(imp, <span class="st">&quot;long&quot;</span>, <span class="dt">include =</span> <span class="ot">TRUE</span>)
 long<span class="op">$</span>whr &lt;-<span class="st"> </span><span class="kw">with</span>(long, <span class="dv">100</span> <span class="op">*</span><span class="st"> </span>wgt <span class="op">/</span><span class="st"> </span>hgt)
 imp.itt &lt;-<span class="st"> </span><span class="kw">as.mids</span>(long)</code></pre></div>
-<p>See ei ole täiuslik meetod, aga suhetega töötamine teistel meetoditel ei ole lihtne.</p>
+<p>See ei ole täiuslik meetod: päris regressioonimudelis saavad kõikide muutujate koefitsiendid, mis sõltuvad whr-ist, kallutatud nulli suunas.</p>
+<p>Alternatiivne meetod on nn <strong>passiivne imputatsioon</strong>, kus transformatsioon tehakse koos imputatsiooniga samas algoritmis. Passiivseks imputatsiooniks on vaja alustada imputatsioonimeetodi defineerimist ~ (tilde) sümboliga.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span>boys[, <span class="kw">c</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;hgt&quot;</span>, <span class="st">&quot;wgt&quot;</span>, <span class="st">&quot;hc&quot;</span>, <span class="st">&quot;reg&quot;</span>)]
+data<span class="op">$</span>whr &lt;-<span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span>data<span class="op">$</span>wgt <span class="op">/</span><span class="st"> </span>data<span class="op">$</span>hgt
+meth &lt;-<span class="st"> </span><span class="kw">make.method</span>(data)
+meth[<span class="st">&quot;whr&quot;</span>] &lt;-<span class="st"> &quot;~I(100 * wgt / hgt)&quot;</span>
+<span class="co">#I() lubab argumendi 100*wght/hgth ära tunda literaase valemina.</span>
+pred &lt;-<span class="st"> </span><span class="kw">make.predictorMatrix</span>(data)
+pred[<span class="kw">c</span>(<span class="st">&quot;wgt&quot;</span>, <span class="st">&quot;hgt&quot;</span>), <span class="st">&quot;whr&quot;</span>] &lt;-<span class="st"> </span><span class="dv">0</span>
+<span class="co">#et katkestada võimalikke tagasisidestusega luupe whr-i ja </span>
+<span class="co">#wgt&amp;hgt vahel, viime sisse muutused prediktormaatriksisse.</span>
+imp.pas &lt;-<span class="st"> </span><span class="kw">mice</span>(data, <span class="dt">meth =</span> meth, <span class="dt">pred =</span> pred, <span class="dt">print =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p>whr imputatsioonid saadakse hgt ja wgt-st vastavalt 100*wght/hgth valemile. Kuna whr on andmetabeli viimane veerg, imputeeritakse see peale wgt ja hgt-d. Kahjuks kallutab ka passivne imputasioon koefitsiente nulli suunas. Suhteid ongi raske imputeerida!</p>
+<p>Suhete, ruutliikmete ja interaktsioonide imputeerimiseks on arvatavasti parim meetod järgmine:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(smcfcs)
+data &lt;-<span class="st"> </span>pop
+data[<span class="kw">sample</span>(<span class="kw">nrow</span>(data), <span class="dt">size =</span> <span class="dv">100</span>), <span class="st">&quot;wgt&quot;</span>] &lt;-<span class="st"> </span><span class="ot">NA</span>
+data[<span class="kw">sample</span>(<span class="kw">nrow</span>(data), <span class="dt">size =</span> <span class="dv">100</span>), <span class="st">&quot;hgt&quot;</span>] &lt;-<span class="st"> </span><span class="ot">NA</span>
+data<span class="op">$</span>whr &lt;-<span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span>data<span class="op">$</span>wgt <span class="op">/</span><span class="st"> </span>data<span class="op">$</span>hgt
+meth &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;norm&quot;</span>, <span class="st">&quot;norm&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="st">&quot;norm&quot;</span>)
+imps &lt;-<span class="st"> </span><span class="kw">smcfcs</span>(<span class="dt">originaldata =</span> data, <span class="dt">meth =</span> meth, <span class="dt">smtype =</span> <span class="st">&quot;lm&quot;</span>,
+               <span class="dt">smformula =</span> <span class="st">&quot;hc ~ age + hgt + wgt + whr&quot;</span>)
+fit &lt;-<span class="st"> </span><span class="kw">lapply</span>(imps<span class="op">$</span>impDatasets, lm,
+              <span class="dt">formula =</span> hc <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>hgt <span class="op">+</span><span class="st"> </span>wgt <span class="op">+</span><span class="st"> </span>whr)
+<span class="kw">summary</span>(<span class="kw">pool</span>(fit))</code></pre></div>
 <ol start="5" style="list-style-type: decimal">
-<li><p><strong>Mis järjekorras muutujaid imputeerida?</strong></p></li>
-<li><p><strong>Mitu iteratsiooni teha?</strong></p></li>
-<li><p><strong>Mitu imputatsiooni teha?</strong> Liiga suur m viib suurele simulatsiooniveale ja statistilisele ebaefektiivsusele</p></li>
+<li><strong>Mis järjekorras muutujaid imputeerida?</strong></li>
+</ol>
+<p>Tavaliselt imputeeritakse muutujaid järjekorras vasakult paremale ja see on hea küll. Imputeerimise järjekorrale tasub tähelepanu põõrata siis, kui NA-de muster on monotooniline. NA-de muster on monotooniline siis, kui muutujaid saab järjestada nõnda, et kui esimeses muutujas on NA, siis ka kõikides järgnevates muutujates on selles reas NA. (Näiteks, kui aegreas mõni subjekt välja kukub.)</p>
+<p>Näiteks siin on meil 3 monotoonilist muutujat</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span>nhanes2[, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]
+<span class="kw">md.pattern</span>(data, <span class="dt">plot =</span> <span class="ot">FALSE</span>)
+<span class="co">#&gt;    age hyp bmi   </span>
+<span class="co">#&gt; 16   1   1   1  0</span>
+<span class="co">#&gt; 1    1   1   0  1</span>
+<span class="co">#&gt; 8    1   0   0  2</span>
+<span class="co">#&gt;      0   8   9 17</span></code></pre></div>
+<p>Meil on 16 ilma NA-deta rida, 1 rida, kus puudub bmi üksi ja 8 rida, kus puuduvad bmi ja hyp. Paremas servas on veerg rea kaupa NA-de arvuga igale kombinatsioonile ja alumine rida annab NA-de arvu igale veerule ja totaalse NAde arvu (17).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">imp &lt;-<span class="st"> </span><span class="kw">mice</span>(data, <span class="dt">visit =</span> <span class="st">&quot;monotone&quot;</span>, <span class="dt">maxit =</span> <span class="dv">1</span>, <span class="dt">m =</span> <span class="dv">2</span>,
+            <span class="dt">print =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p>Argument <code>visit = monotone</code> määrab monotoonilise imputatsiooni, ehk kõigepealt imputeeritakse need muutujad, milles on vähem NA-sid (enne hyp ja siis bmi). Monotooniline imputatsioon eeldab, et NA-de muster on monotooniline ja et muutujad ei sõltu üksteisest (muutujate distinktsust).</p>
+<ol start="6" style="list-style-type: decimal">
+<li><strong>Mitu iteratsiooni teha?</strong></li>
+</ol>
+<p>Nii saab mc agelate konvergeerumist graafiliselt kontrollida.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(imp)
+<span class="kw">mice.mids</span>(imp, <span class="dt">maxit=</span><span class="dv">35</span>, <span class="dt">print=</span>F) 
+<span class="co">#&gt; Class: mids</span>
+<span class="co">#&gt; Number of multiple imputations:  5 </span>
+<span class="co">#&gt; Imputation methods:</span>
+<span class="co">#&gt;   age   bmi   hyp   chl </span>
+<span class="co">#&gt;    &quot;&quot; &quot;pmm&quot; &quot;pmm&quot; &quot;pmm&quot; </span>
+<span class="co">#&gt; PredictorMatrix:</span>
+<span class="co">#&gt;     age bmi hyp chl</span>
+<span class="co">#&gt; age   0   1   1   1</span>
+<span class="co">#&gt; bmi   1   0   1   1</span>
+<span class="co">#&gt; hyp   1   1   0   1</span>
+<span class="co">#&gt; chl   1   1   1   0</span>
+<span class="co">#tõstab mc iteratsioonide arvu 35-le.</span>
+<span class="co">#võtab imputeeritud mids objekti ja lisab iteratsioone, </span>
+<span class="co">#toodab uue mids objeki</span></code></pre></div>
+<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" /> Joonisel on igale iteratsioonile imputeeritud väärtuste (aga mitte algsete väärtuste) keskmine ja SD.</p>
+<ol start="7" style="list-style-type: decimal">
+<li><strong>Mitu imputatsiooni teha?</strong> Liiga suur m viib suurele simulatsiooniveale ja statistilisele ebaefektiivsusele. Vaikeväärtus on 5.</li>
 </ol>
 </div>
 <div id="predictive-mean-matching" class="section level2">
@@ -615,8 +708,8 @@ imp &lt;-<span class="st"> </span><span class="kw">mice</span>(data2, <span clas
 <p>Kategooriliste muutujate imputeerimine on raske. Logistilises regressioonis vajame me reeglina vähemalt 10 sündmust prediktori kohta. Seega, kui me imputeerime 10 binaarset NAd, vajame me 100 sündmust ja kui sündmuse tõenäosus on 0.1, siis üle 1000 katse. Kui muutuja tasemete arv kasvab, siis need numbrid kasvavad väga kiiresti.</p>
 <p>Vaikimisi töötavad logreg, polyreg ja polr on tavaliselt ok. Kui suhe sündmuste arv/fititud parameetrite arv langeb alla 10, siis võiks kasutada robustsemaid meetodeid: pmm, cart või rf.</p>
 </div>
-<div id="countid-sisaldavad-nulle" class="section level2 unnumbered">
-<h2>countid (sisaldavad nulle)</h2>
+<div id="countid-sisaldavad-nulle" class="section level2">
+<h2><span class="header-section-number">22.7</span> countid (sisaldavad nulle)</h2>
 <p>Meetodid:</p>
 <ol style="list-style-type: decimal">
 <li><p>Predictive mean matching.</p></li>
@@ -627,28 +720,48 @@ imp &lt;-<span class="st"> </span><span class="kw">mice</span>(data2, <span clas
 <p>Poisson mudeldab haruldaste sündmuste summat, negatiivne binoommudel on paindlikum versioon Poissonist, mida saab kasutada siis, kui meil on andmetes üle-dispersioon (poisson eeldab kindlat dispersioonimäära). Zero-inflated versioonid mõlemast töötavad siis, kui meil on andmetes oodatust rohkem nulle.</p>
 <p>ImputeRobust raamatukogu kasutab mice meetodeid: <code>gamlssPO</code> (Poisson), <code>gamlssZIBI</code> (zero-inflated binomial) ja <code>gamlssZIP</code> (zero-inflated Poisson).</p>
 </div>
-<div id="mitme-prediktoriga-imputatsioon" class="section level2">
-<h2><span class="header-section-number">22.7</span> Mitme prediktoriga imputatsioon</h2>
-<div id="monotooniline-muster" class="section level3">
-<h3><span class="header-section-number">22.7.1</span> monotooniline muster</h3>
-<p>NA-de muster on monotooniline siis, kui muutujaid saab järjestada nõnda, et kui esimeses muutujas on NA, siis ka kõikides järgnevates muutujates on selles reas NA. (Näiteks, kui aegreas mõni subjekt välja kukub.)</p>
-<p>Näiteks siin on meil 3 monotoonilist muutujat</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span>nhanes2[, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]
-<span class="kw">md.pattern</span>(data, <span class="dt">plot =</span> <span class="ot">FALSE</span>)
-<span class="co">#&gt;    age hyp bmi   </span>
-<span class="co">#&gt; 16   1   1   1  0</span>
-<span class="co">#&gt; 1    1   1   0  1</span>
-<span class="co">#&gt; 8    1   0   0  2</span>
-<span class="co">#&gt;      0   8   9 17</span></code></pre></div>
-<p>Meil on 16 ilma NA-deta rida, 1 rida, kus puudub bmi üksi ja 8 rida, kus puuduvad bmi ja hyp. Paremas servas on veerg rea kaupa NA-de arvuga igale kombinatsioonile ja alumine rida annab NA-de arvu igale veerule ja totaalse NAde arvu (17).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">imp &lt;-<span class="st"> </span><span class="kw">mice</span>(data, <span class="dt">visit =</span> <span class="st">&quot;monotone&quot;</span>, <span class="dt">maxit =</span> <span class="dv">1</span>, <span class="dt">m =</span> <span class="dv">2</span>,
-            <span class="dt">print =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<p>Argument <code>visit = monotone</code> määrab monotoonilise imputatsiooni, ehk kõigepealt imputeeritakse need muutujad, milles on vähem NA-sid (enne hyp ja siis bmi).</p>
-<blockquote>
-<p>Monotooniline imputatsioon eeldab, et NA-de muster on monotooniline ja et muutujad ei sõltu üksteisest (muutujate distinktsust).</p>
-</blockquote>
-
+<div id="graafilised-meetodid" class="section level2">
+<h2><span class="header-section-number">22.8</span> Graafilised meetodid</h2>
+<p>konditsionaalne plot muutujale “age” erinevatel muutuja “gen” väärtustel</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">histogram</span>(<span class="op">~</span>age<span class="op">|</span>gen, <span class="dt">data=</span>boys)</code></pre></div>
+<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-23-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>Vanuste jaotus on erinev sõltuvalt sellest, kas gen muutuja on NA v mitte.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">R &lt;-<span class="st"> </span><span class="kw">is.na</span>(boys<span class="op">$</span>gen) 
+<span class="kw">histogram</span>(<span class="op">~</span>age<span class="op">|</span>R, <span class="dt">data=</span>boys)</code></pre></div>
+<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-24-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>näitab algseid ja imputeeritud andmeid üksteise peal muutujale “chl”</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">stripplot</span>(imp, chl<span class="op">~</span>.imp, <span class="dt">pch=</span><span class="dv">20</span>, <span class="dt">cex=</span><span class="dv">2</span>)</code></pre></div>
+<p>Imputeeritud andmed on punased.</p>
+<p>suru imputeeritud andmed 1 ja 25 vahele</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ini &lt;-<span class="st"> </span><span class="kw">mice</span>(boys, <span class="dt">maxit =</span> <span class="dv">0</span>)
+meth &lt;-<span class="st"> </span>ini<span class="op">$</span>meth
+meth[<span class="st">&quot;tv&quot;</span>] &lt;-<span class="st"> &quot;norm&quot;</span>
+post &lt;-<span class="st"> </span>ini<span class="op">$</span>post
+post[<span class="st">&quot;tv&quot;</span>] &lt;-<span class="st"> &quot;imp[[j]][, i] &lt;- squeeze(imp[[j]][, i], c(1, 25))&quot;</span>
+imp &lt;-<span class="st"> </span><span class="kw">mice</span>(boys, <span class="dt">meth=</span>meth, <span class="dt">post=</span>post, <span class="dt">print=</span><span class="ot">FALSE</span>)</code></pre></div>
+<p>scatterplot, kus on nii imputeeritud kui päris andmed</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">miss &lt;-<span class="st"> </span><span class="kw">is.na</span>(imp<span class="op">$</span>data<span class="op">$</span>bmi)
+<span class="kw">xyplot</span>(imp, bmi <span class="op">~</span><span class="st"> </span><span class="kw">I</span> (wgt <span class="op">/</span><span class="st"> </span>(hgt <span class="op">/</span><span class="st"> </span><span class="dv">100</span>)<span class="op">^</span><span class="dv">2</span>),
+       <span class="dt">na.groups =</span> miss, <span class="dt">cex =</span> <span class="kw">c</span>(<span class="fl">0.8</span>, <span class="fl">1.2</span>), <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">20</span>),
+       <span class="dt">ylab =</span> <span class="st">&quot;BMI (kg/m2) Imputed&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;BMI (kg/m2) Calculated&quot;</span>)</code></pre></div>
+<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
+<div id="tulemuste-avaldamine" class="section level2">
+<h2><span class="header-section-number">22.9</span> Tulemuste avaldamine</h2>
+<p>Avaldatud töö võiks sisaldada vastuseid järgmistele küsimustele</p>
+<ol style="list-style-type: decimal">
+<li><p>Kui palju NAsid on igas muutujas? Mis oleks valimi suurus <em>complete-cases</em> analüüsile, kui me teeme drop_na()? Kui NA-d tekivad erinevates ajapunktides (drop-out), siis kirjelda seda ajapunkti kaupa.</p></li>
+<li><p>Mis võiks põhjustada andmete puudumist?</p></li>
+<li><p>Kas mõõteobjektid, millel esineb NA-sid, erinevad süstemaatiliselt neist, millel ei ole NA-sid? Kas need grupid erinevad keskmise ja/või varieeruvuse poolest? Kuidas erineb <em>complete case</em> analüüsi tulemus imputeeritud regressioonist?</p></li>
+<li><p>Imputatsiooni meetod, selle eeldused (MAR).</p></li>
+<li><p>Software ja selle mitte-vaikesettingud.</p></li>
+<li><p>Mitu imputatsiooni tabeli kohta?</p></li>
+<li><p>Imputatsiooni mudeli kirjeldus: millised muutujad, kas kasutati automaatset muutujate selektsiooni, kuidas imputeeriti mitte-normaalseid ja kategoorilisi muutujaid, kuidas võeti arvesse katse hierarhilist struktuuri?</p></li>
+<li><p>Kuidas imputeeriti transformeeritud muutujaid (bmi, suhted jms)?</p></li>
+<li><p>algse ja imputeeritud andmete võrdlus, konvergentsi diagnostika. Kas imputeeritud andmed on usutavad?</p></li>
+</ol>
+<p>Punktid 1, 2, 4, 5 ja 6 on krutsiaalsed.</p>
+
 </div>
 </div>
 
