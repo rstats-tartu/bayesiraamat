@@ -60,7 +60,7 @@ df_with_fewer_cols <- subset(df, select = vekt1n)
 
 2. *missing at random (MAR)* - Andmed on jagatavad gruppidesse ja iga grupi sees on NA-d juhuvalimina. Kui meil on NA-d muutujas A, siis andmete puudumine ei sõltu A väärtusest, aga ta võib sõltuda muutujate B, C, jne väärtustest. Kaasaegsed imputatsioonimeetodid kasutavad enamasti MAR-eeldust, mis omakorda eeldab, et relevantsed muutujad on hõlmatud imputatsioonimudelisse (aga mitte tingimata regressioonimudelisse, mis fititakse imputeeritud andmetel). 
 
-3. *missing not at random (MNAR)* - NA-d muutujas A sõltuvad ainult A väärtusest. Kui andmed ei ole MCAR ega MAR, siis me eeldame, et nad on MNAR. MNAR imputatsioon vajab eraldi mudelit, mis arvestab NA-sid genereeriva mehhanismiga --- see on raske asi.
+3. *missing not at random (MNAR)* - NA-d muutujas A sõltuvad ainult A väärtusest. Kui andmed ei ole MCAR ega MAR, siis me eeldame, et nad on MNAR. MNAR imputatsioon vajab eraldi mudelit, mis arvestab NA-sid genereeriva mehhanismiga --- see on raske asi. 
 
 Seda, millisesse kategooriasse mingi andmeset kuulub, ei saa üldjuhul öelda andmete endi põhjal. Selleks tuleb tunda andmeid genereerivat mehhanismi. Seega on oma andmete paigutamine ühte kolmest kategooriast praktikas sageli üsna ebakindel.
 
@@ -151,6 +151,12 @@ imp <- mice(nhanes, print = FALSE, m = 10, seed = 24415)
 fit <- with(imp, lm(bmi ~ age))
 est <- pool(fit)
 summary(est, conf.int = TRUE)
+
+complete(imp, 3) #annab 3. imputeeritud tabeli (nii uued kui orig andmed)
+complete(imp, "long") #annab kõik imputeeritud tabelid pikas formaadis
+complete(imp, "broad") #sama laias formaadis
+imp$data #originaalsed andmed NAdega
+imp$imp #ainult imputeeritud andmed
 ```
 
 m=10 loob 10 iseseisvat andmeraami. 
@@ -190,7 +196,19 @@ Selle nimel peame tegema 7 valikut selles järjekorras:
         "polyreg", "Polytomous logistic regression", "Nominal*") %>% knitr::kable()
 ```
 
-* - vaikemudel antud andmetüübile
+\\* - vaikemudel antud andmetüübile
+
+Nii saab trükkida kasutatud imputatsioonimeetodi veeru kaupa:
+```{r eval=FALSE}
+imp$meth
+methods(mice) #annab mice meetodite loendi
+
+ini <- mice(nhanes2, maxit = 0)
+meth <- ini$meth
+meth["bmi"] <- "norm" #muudab meetodit muutujale "bmi"
+imp <- mice(nhanes2, meth = meth, print=F)
+```
+
 
 Normaalsetele muutujatele on norm efektiivsem, kui pmm. norm.boot on kiirem mitte-bayesiaanlik alternatiiv. Kui pmm töötab halvasti (näit ei ole piisavalt ennustuse lähedasi doonorarve), kasuta norm meetodeid. Harvade kategooriliste andmepunktide korral eelista pmm-i, pigem kui logreg, polr või polyreg. sample on kiirmeetod imputeerimiseks ilma kovariaatideta. 
 
@@ -204,24 +222,122 @@ imp$predictorMatrix
 ```
 Kõikide muutujate kasutamine on ok, kui meil on < 20-30 muutuja, mille vahel ei ole keerulisi interakstsioone. Rohkem muutujaid muudab ka MAR eelduse täitmise tõenäolisemaks. Muidu võta sisse (i) kogu hiljem kasutatava regressioonimudeli, (2) lisa muutujad, mis võiksid ennustada NA-de teket (mille jaotused erinevad andmete ja NA-de korral imputeeritavas muutujas), (3) lisa muutujad, mis on korreleeritud imputeeritava muutujaga. quickpred() annab kiire viisi prediktormaatriksi defineerimiseks. 
 
-4. **Kas imputeerida muutujaid, mis on teiste NA-dega muutujate funktsioonid (suhted jms)?** Lihtsaim vastus on "ei". 
-```{r}
+Nii saab prediktor maatriksi ilma tegelikku impoutatsiooni läbi tegemata:
+```{r eval=FALSE}
+ini <- mice(nhanes, maxit=0, print=F)
+pred <- ini$pred
+pred[ ,"hyp"] <- 0 #rekodeerime veeru "hyp", 
+#mida ei kasutata enam imputatsioonil
+imp <- mice(nhanes, pred=pred, print=F)
+```
+
+`quickpred()` teeb ise prediktorite valiku, mida imputatsioonil kasutada
+
+```{r eval=FALSE}
+ini <- mice(nhanes, pred=quickpred(nhanes, mincor=.3), print=F)
+ini$pred
+```
+
+
+Nii kirjutame imputatsioonimudelisse sisse interaktsiooni kahele muutujale, kus me kõigepealt lahutame kummagist muutujast tema keskmise (tsentreerime) ja siis korrutame need muutujad
+ 
+```{r eval=FALSE}
+expr <- expression((wgt - mean(wgt)) * (hc - mean(hc)))
+boys$wgt.hc <- with(boys, eval(expr))
+meth <- make.method(boys)
+meth["wgt.hc"] <- paste("~I(", expr, ")", sep = "")
+#I() lubab argumendi (wgt - mean(wgt)) * (hc - mean(hc)) 
+#ära tunda literaase valemina.
+meth["bmi"] <- ""
+pred <- make.predictorMatrix(boys)
+pred[c("wgt", "hc"), "wgt.hc"] <- 0
+#et katkestada võimalikke tagasisidestusega luupe wgt.hc ja 
+#wgt&hc vahel, viime sisse muutused prediktormaatriksisse.
+imp.int <- mice(boys, m = 1, meth = meth, pred = pred,
+                print = FALSE, seed = 62587, maxit = 10)
+```
+ Kategooriliste muutujate interaktsioone saab imputeerida jagades andmed gruppidesse ja imputeerides neid eraldi, misjärel kombineerida tulemused taas rbind() abil.
+
+Kompositsioonilised andmed -- mitu muutujat summeeruvad ühele (100%-le). Selliste andmete imputeerimiseks vt robCompositions raamatukogu. 
+
+4. **Kas imputeerida muutujaid, mis on teiste NA-dega muutujate funktsioonid (suhted jms)?** Lihtsaim vastus on "ei". Siin imputeerime kõigepealt wght ja hgth muutujad ja siis arvutame nende pealt suhte (whr).
+```{r eval=FALSE}
 data <- boys[, c("age", "hgt", "wgt", "hc", "reg")]
 imp <- mice(data, print = FALSE, seed = 71712)
 long <- mice::complete(imp, "long", include = TRUE)
 long$whr <- with(long, 100 * wgt / hgt)
 imp.itt <- as.mids(long)
 ```
-See ei ole täiuslik meetod, aga suhetega töötamine teistel meetoditel ei ole lihtne.
+See ei ole täiuslik meetod: päris regressioonimudelis saavad kõikide muutujate koefitsiendid, mis sõltuvad whr-ist, kallutatud nulli suunas.
+
+Alternatiivne meetod on nn **passiivne imputatsioon**, kus transformatsioon tehakse koos imputatsiooniga samas algoritmis. Passiivseks imputatsiooniks on vaja alustada imputatsioonimeetodi defineerimist ~ (tilde) sümboliga.
+
+```{r eval=FALSE}
+data <- boys[, c("age", "hgt", "wgt", "hc", "reg")]
+data$whr <- 100 * data$wgt / data$hgt
+meth <- make.method(data)
+meth["whr"] <- "~I(100 * wgt / hgt)"
+#I() lubab argumendi 100*wght/hgth ära tunda literaase valemina.
+pred <- make.predictorMatrix(data)
+pred[c("wgt", "hgt"), "whr"] <- 0
+#et katkestada võimalikke tagasisidestusega luupe whr-i ja 
+#wgt&hgt vahel, viime sisse muutused prediktormaatriksisse.
+imp.pas <- mice(data, meth = meth, pred = pred, print = FALSE)
+```
+ whr imputatsioonid saadakse hgt ja wgt-st vastavalt 100*wght/hgth valemile. Kuna whr on andmetabeli viimane veerg, imputeeritakse see peale wgt ja hgt-d. Kahjuks kallutab ka passivne imputasioon koefitsiente nulli suunas. Suhteid ongi raske imputeerida!
+ 
+Suhete, ruutliikmete ja interaktsioonide imputeerimiseks on arvatavasti parim meetod järgmine:
+```{r eval=FALSE}
+library(smcfcs)
+data <- pop
+data[sample(nrow(data), size = 100), "wgt"] <- NA
+data[sample(nrow(data), size = 100), "hgt"] <- NA
+data$whr <- 100 * data$wgt / data$hgt
+meth <- c("", "norm", "norm", "", "", "norm")
+imps <- smcfcs(originaldata = data, meth = meth, smtype = "lm",
+               smformula = "hc ~ age + hgt + wgt + whr")
+fit <- lapply(imps$impDatasets, lm,
+              formula = hc ~ age + hgt + wgt + whr)
+summary(pool(fit))
+```
 
 5. **Mis järjekorras muutujaid imputeerida?** 
 
+Tavaliselt imputeeritakse muutujaid järjekorras vasakult paremale ja see on hea küll.
+Imputeerimise järjekorrale tasub tähelepanu põõrata siis, kui NA-de muster on monotooniline. NA-de muster on monotooniline siis, kui muutujaid saab järjestada nõnda, et kui esimeses muutujas on NA, siis ka kõikides järgnevates muutujates on selles reas NA. (Näiteks, kui aegreas mõni subjekt välja kukub.)
+
+Näiteks siin on meil 3 monotoonilist muutujat
+```{r message=FALSE}
+data <- nhanes2[, 1:3]
+md.pattern(data, plot = FALSE)
+```
+
+Meil on 16 ilma NA-deta rida, 1 rida, kus puudub bmi üksi ja 8 rida, kus puuduvad bmi ja hyp. Paremas servas on veerg rea kaupa NA-de arvuga igale kombinatsioonile ja alumine rida annab NA-de arvu igale veerule ja totaalse NAde arvu (17).
+
+```{r eval=FALSE}
+imp <- mice(data, visit = "monotone", maxit = 1, m = 2,
+            print = FALSE)
+```
+
+Argument `visit = monotone` määrab monotoonilise imputatsiooni, ehk kõigepealt imputeeritakse need muutujad, milles on vähem NA-sid (enne hyp ja siis bmi). Monotooniline imputatsioon eeldab, et NA-de muster on monotooniline ja et muutujad ei sõltu üksteisest (muutujate distinktsust).
+
+
 6. **Mitu iteratsiooni teha?**  
 
-7. **Mitu imputatsiooni teha?** Liiga suur m viib suurele simulatsiooniveale ja statistilisele ebaefektiivsusele  
+Nii saab mc agelate konvergeerumist graafiliselt kontrollida.
+```{r }
+plot(imp)
+mice.mids(imp, maxit=35, print=F) 
+#tõstab mc iteratsioonide arvu 35-le.
+#võtab imputeeritud mids objekti ja lisab iteratsioone, 
+#toodab uue mids objeki
+```
+Joonisel on igale iteratsioonile imputeeritud väärtuste (aga mitte algsete väärtuste) keskmine ja SD.
+
+7. **Mitu imputatsiooni teha?** Liiga suur m viib suurele simulatsiooniveale ja statistilisele ebaefektiivsusele. Vaikeväärtus on 5.  
 
 
-## Predictive mean matching
+## Predictive mean matching 
 
 See on enimkasutatud mitmese imputatsiooni meetod:
 
@@ -254,7 +370,7 @@ Kategooriliste muutujate imputeerimine on raske. Logistilises regressioonis vaja
 
 Vaikimisi töötavad logreg, polyreg ja polr on tavaliselt ok. Kui suhe sündmuste arv/fititud parameetrite arv langeb alla 10, siis võiks kasutada robustsemaid meetodeid: pmm, cart või rf.
 
-## countid (sisaldavad nulle) {-}
+## countid (sisaldavad nulle)
 
 Meetodid:
 
@@ -270,34 +386,73 @@ Poisson mudeldab haruldaste sündmuste summat, negatiivne binoommudel on paindli
 
 ImputeRobust raamatukogu kasutab mice meetodeid: `gamlssPO` (Poisson), `gamlssZIBI` (zero-inflated binomial) ja `gamlssZIP` (zero-inflated Poisson). 
 
-## Mitme prediktoriga imputatsioon
 
-### monotooniline muster
 
-NA-de muster on monotooniline siis, kui muutujaid saab järjestada nõnda, et kui esimeses muutujas on NA, siis ka kõikides järgnevates muutujates on selles reas NA. (Näiteks, kui aegreas mõni subjekt välja kukub.)
+## Graafilised meetodid
 
-Näiteks siin on meil 3 monotoonilist muutujat
-```{r message=FALSE}
-data <- nhanes2[, 1:3]
-md.pattern(data, plot = FALSE)
+
+konditsionaalne plot muutujale "age" erinevatel muutuja "gen" väärtustel
+```{r}
+histogram(~age|gen, data=boys)
 ```
 
-Meil on 16 ilma NA-deta rida, 1 rida, kus puudub bmi üksi ja 8 rida, kus puuduvad bmi ja hyp. Paremas servas on veerg rea kaupa NA-de arvuga igale kombinatsioonile ja alumine rida annab NA-de arvu igale veerule ja totaalse NAde arvu (17).
+Vanuste jaotus on erinev sõltuvalt sellest, kas gen muutuja on NA v mitte.
+```{r}
+R <- is.na(boys$gen) 
+histogram(~age|R, data=boys)
+```
 
+
+
+
+
+näitab algseid ja imputeeritud andmeid üksteise peal muutujale "chl"
 ```{r eval=FALSE}
-imp <- mice(data, visit = "monotone", maxit = 1, m = 2,
-            print = FALSE)
+stripplot(imp, chl~.imp, pch=20, cex=2)
+```
+Imputeeritud andmed on punased.
+
+suru imputeeritud andmed 1 ja 25 vahele
+```{r}
+ini <- mice(boys, maxit = 0)
+meth <- ini$meth
+meth["tv"] <- "norm"
+post <- ini$post
+post["tv"] <- "imp[[j]][, i] <- squeeze(imp[[j]][, i], c(1, 25))"
+imp <- mice(boys, meth=meth, post=post, print=FALSE)
 ```
 
-Argument `visit = monotone` määrab monotoonilise imputatsiooni, ehk kõigepealt imputeeritakse need muutujad, milles on vähem NA-sid (enne hyp ja siis bmi). 
+scatterplot, kus on nii imputeeritud kui päris andmed
+```{r}
+miss <- is.na(imp$data$bmi)
+xyplot(imp, bmi ~ I (wgt / (hgt / 100)^2),
+       na.groups = miss, cex = c(0.8, 1.2), pch = c(1, 20),
+       ylab = "BMI (kg/m2) Imputed", xlab = "BMI (kg/m2) Calculated")
+```
 
-> Monotooniline imputatsioon eeldab, et NA-de muster on monotooniline ja et muutujad ei sõltu üksteisest (muutujate distinktsust).
+## Tulemuste avaldamine
 
+Avaldatud töö võiks sisaldada vastuseid järgmistele küsimustele
 
+1. Kui palju NAsid on igas muutujas? Mis oleks valimi suurus *complete-cases* analüüsile, kui me teeme drop_na()? Kui NA-d tekivad erinevates ajapunktides (drop-out), siis kirjelda seda ajapunkti kaupa.
 
+2. Mis võiks põhjustada andmete puudumist?
 
+3. Kas mõõteobjektid, millel esineb NA-sid, erinevad süstemaatiliselt neist, millel ei ole NA-sid? Kas need grupid erinevad keskmise ja/või varieeruvuse poolest? Kuidas erineb *complete case* analüüsi tulemus imputeeritud regressioonist?
 
+4. Imputatsiooni meetod, selle eeldused (MAR).
 
+5. Software ja selle mitte-vaikesettingud.
+
+6. Mitu imputatsiooni tabeli kohta?
+
+7. Imputatsiooni mudeli kirjeldus: millised muutujad, kas kasutati automaatset muutujate selektsiooni, kuidas imputeeriti mitte-normaalseid ja kategoorilisi muutujaid, kuidas võeti arvesse katse hierarhilist struktuuri?
+
+8. Kuidas imputeeriti transformeeritud muutujaid (bmi, suhted jms)?
+
+9. algse ja imputeeritud andmete võrdlus, konvergentsi diagnostika. Kas imputeeritud andmed on usutavad?
+
+Punktid 1, 2, 4, 5 ja 6 on krutsiaalsed.
 
 
 

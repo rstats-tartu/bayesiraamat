@@ -10,25 +10,24 @@ Tavapärane lähenemine oleks kõigepealt keskmistada andmed iga klassi sees nin
 
 Mitmetasemelised mudelid on eriti kasulikud, kui teil on osades klastrites vähem andmepunkte kui teistes, sest nad vaatavad andmeid korraga nii klastrite vahel kui klastrite sees ning kannavad informatsiooni üle klastritest, kus on rohkem andmepunkte, nendesse klastritesse, kus on vähe andmeid. See tõstab hinnangute täpsust.
 
-
 Tavapärane regressioonimudel on sageli vaadeldav mitmetasandilise mudeli erijuhuna. Näiteks kujutage ette mudelit, kus laste õppedukust on mõõdetud mitmes koolis. Kui gruppide (koolide) vaheline varieeruvus on väga madal, siis annab mitmetasemeline mudel sarnase tulemuse lihtsa mudeliga, kus kõik koolid on ühte patta kokku pandud. Ja vastupidi, kui koolid on üksteisest väga erinevad, siis võime sama hästi modelleerida iga kooli eraldi ja teistest sõltumatult. Samuti, kui meil on andmeid väga väheste koolide kohta, siis võib mitmetasandilsest mudelist saadav kasu olla tagasihoidlik, sest meil pole piisavalt andmeid, et modelleerida koolide vahelist varieeruvust. Samuti, kui meil on iga kooli kohta piisavalt palju andmeid, siis saame iga kooli eraldi modelleerides praktiliselt sama tulemuse kui mitmetasemelisest mudelist. Muudel juhtudel on tõenäoliselt mõistlikum modelleerida õppedukust kahetasemelises mudelis, korraga õpilase tasemel ja kooli tasemel. 
 
 ## kahetasemeline mudel algebra keeles
 
 1. tase on õpilse tase, 2. tase on klassi tase.
 meil on j klassi, milles on erinev arv õpilasi. Iga õpilase kohta teame populaarsusindeksit (y - muutuja) ja sugu (x - muutuja). Klassi tasemel teame õpetaja staazi aastates (z - muutuja).
-Alustuseks on meil eraldi regressioonivõrrand igale klassile. 
+Alustuseks on meil j regressioonivõrrandit, eraldi võrrand igale klassile 
 
 $$y_{ij} = b_{0j} + b_{1j}X_{ij} + e_{ij}$$ (1. võrrand)
 
-kus subskript j tähistab klassi ja i tähistab õpilast. Näit $b_{1j}$ tähendab, et me fitime iga klassi kohta ühe $b_1$ koefitsiendi (ja $b_{0j}$, et fitime iga klassi kohta ühe $b_0$-i). Me eeldame, et igal klassil on erinevad $b_0$ ja $b_1$, mis tulevad vastavatest klassiülestest normaaljaotustest. Enamasti eeldame, et kõikide klasside varieeruvus on sama. Me modelleerime $b_0$ ja $b_1$ jaotusi, tuues sisse klassi tasemel muutuja z:
+kus subskript j tähistab klassi ja i tähistab õpilast. Näit $b_{1j}$ tähendab, et me fitime igale klassile oma $b_1$ koefitsiendi (ja $b_{0j}$, et fitime igale klassile  oma $b_0$-i). Me eeldame, et igal klassil on erinevad $b_0$ ja $b_1$, mis tulevad vastavatest klassiülestest normaaljaotustest. Enamasti eeldame, et kõikide klasside varieeruvus on sama. Me modelleerime $b_0$ ja $b_1$ jaotusi, tuues sisse klassi tasemel muutuja z:
 
 $$b_{0j} = \gamma_{00} + \gamma_{01} Z_j + u_{0j}$$ (2. võrrand)
 
 $$b_{1j} = \gamma_{10} + \gamma_{11} Z_j + u_{1j}$$ (3. võrrand)
 
 2. võrrand ennustab klassi keskmist populaarsusindeksit vastavalt õpetaja staazile.
-3. võrrand ütleb, et populaarsuse ja soo seose tugevus sõltub õpetaja staazist. kui $\gamma_{11} > 0$, siis on seos seda tugevam, mida staazikam on õpetaja. $u_{0j}$ ja $u_{1j}$ on residuaalide vead klassi tasemel, mille kohta me eeldame, et mean = 0 ja sõltumatust residuaalide vigadest õpilase tasemel ($e_{ij}$). $u_{0j}$ residuaalide vigade dispersioon on $\sigma^2_{u0}$ jne. $u_{0j}$ ja $u_{1j}$ covariance on $\sigma^2_{u01}$ ja me ei eelda, et see = 0. Gamma koefitsiendid ei varieeru klasside vahel.
+3. võrrand ütleb, et populaarsuse ja soo seose tugevus sõltub õpetaja staazist -- kui $\gamma_{11} > 0$, siis on seos seda tugevam, mida staazikam on õpetaja. $u_{0j}$ ja $u_{1j}$ on residuaalide vead klassi tasemel, mille kohta me eeldame, et mean = 0 ja sõltumatust residuaalide vigadest õpilase tasemel ($e_{ij}$). $u_{0j}$ residuaalide vigade dispersioon on $\sigma^2_{u0}$ jne. $u_{0j}$ ja $u_{1j}$ covariance on $\sigma^2_{u01}$ ja me ei eelda, et see = 0. Gamma koefitsiendid ei varieeru klasside vahel.
 
 Asendades 1. võrrandis $b_{0j}$ ja $b_{1j}$, saame oma võrrandisüsteemi muuta üheks pikaks võrrandiks. 
 
@@ -64,9 +63,13 @@ Tsentreerimine ($x_i - mean(x)$) mõjutab $b_0$ aga mitte $b_1$ koefitsiente, mi
 
 NB! grupi tasemel tsentreerimine, ehki vahest kasulik, töötab hoopis teistmoodi kui üle kõikide gruppide tsentreerimine ja viib täiesti erineva mudelini - sellest tuleks hoiduda, senikaua kui te ei tea täpselt, mida te teete.
 
+> Mitmetasemelised mudelid on erilised, sest nad hõlmavad mitut varieeruvuse allikat, ei eelda konsantset vigade jaotust, ning modelleerivad seoseid erinevate mudeli tasemete vahel. 
+
 ### Aegread
 
-Aegridasid saab analüüsida mitmetasemilisena, kus korduvad mõõtmised (1. tase) on grupeeritud indiviidide sisse (2. tase). Nii saab analüüsida ka ebaühtlase ajavahemiku järel tehtud mõõtmisi.
+Aegridasid saab analüüsida mitmetasemilisena, kus korduvad mõõtmised (1. tase) on grupeeritud indiviidide sisse (2. tase). Nii saab analüüsida ka ebaühtlase ajavahemiku järel tehtud mõõtmisi. 
+
+> Aegridade analüüsi lisaprobleem võrreldes tavalise mitmetasemelise mudeliga on, et me ei saa enam eeldada, et 1. taseme (indiviidi taseme) vead on üksteisest sõltumatud. Aegridade vaatluste vead on sageli ajas autokorreleeritud.
 
 $Y_{ti}$ - indiviidi i õpitulemus ajapunktis t.
 
