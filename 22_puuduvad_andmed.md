@@ -462,6 +462,8 @@ näitab algseid ja imputeeritud andmeid üksteise peal muutujale "chl"
 ```r
 stripplot(imp, chl~.imp, pch=20, cex=2)
 ```
+
+<img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-25-1.png" width="70%" style="display: block; margin: auto;" />
 Imputeeritud andmed on punased.
 
 suru imputeeritud andmed 1 ja 25 vahele
@@ -485,6 +487,41 @@ xyplot(imp, bmi ~ I (wgt / (hgt / 100)^2),
 ```
 
 <img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+
+```r
+imp <- mice(boys, maxit=1)
+#> 
+#>  iter imp variable
+#>   1   1  hgt  wgt  bmi  hc  gen  phb  tv  reg
+#>   1   2  hgt  wgt  bmi  hc  gen  phb  tv  reg
+#>   1   3  hgt  wgt  bmi  hc  gen  phb  tv  reg
+#>   1   4  hgt  wgt  bmi  hc  gen  phb  tv  reg
+#>   1   5  hgt  wgt  bmi  hc  gen  phb  tv  reg
+
+### xyplot: scatterplot by imputation number
+### observe the erroneous outlying imputed values
+### (caused by imputing hgt from bmi)
+xyplot(imp, hgt~age|.imp, pch=c(1,20),cex=c(1,1.5))
+```
+
+<img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+```r
+### same, but label with missingness of wgt (four cases)
+xyplot(imp, hgt~age|.imp, na.group=wgt, pch=c(1,20),cex=c(1,1.5))
+```
+
+<img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+```r
+xyplot(imp, hgt~age, pch=c(1,20),cex=c(1,1.5))
+```
+
+<img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-30-1.png" width="70%" style="display: block; margin: auto;" />
 
 ## Tulemuste avaldamine
 

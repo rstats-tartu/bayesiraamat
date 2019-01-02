@@ -731,7 +731,7 @@ imp &lt;-<span class="st"> </span><span class="kw">mice</span>(data2, <span clas
 <p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-24-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>näitab algseid ja imputeeritud andmeid üksteise peal muutujale “chl”</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">stripplot</span>(imp, chl<span class="op">~</span>.imp, <span class="dt">pch=</span><span class="dv">20</span>, <span class="dt">cex=</span><span class="dv">2</span>)</code></pre></div>
-<p>Imputeeritud andmed on punased.</p>
+<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-25-1.png" width="70%" style="display: block; margin: auto;" /> Imputeeritud andmed on punased.</p>
 <p>suru imputeeritud andmed 1 ja 25 vahele</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ini &lt;-<span class="st"> </span><span class="kw">mice</span>(boys, <span class="dt">maxit =</span> <span class="dv">0</span>)
 meth &lt;-<span class="st"> </span>ini<span class="op">$</span>meth
@@ -745,6 +745,25 @@ imp &lt;-<span class="st"> </span><span class="kw">mice</span>(boys, <span class
        <span class="dt">na.groups =</span> miss, <span class="dt">cex =</span> <span class="kw">c</span>(<span class="fl">0.8</span>, <span class="fl">1.2</span>), <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">20</span>),
        <span class="dt">ylab =</span> <span class="st">&quot;BMI (kg/m2) Imputed&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;BMI (kg/m2) Calculated&quot;</span>)</code></pre></div>
 <p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">imp &lt;-<span class="st"> </span><span class="kw">mice</span>(boys, <span class="dt">maxit=</span><span class="dv">1</span>)
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  iter imp variable</span>
+<span class="co">#&gt;   1   1  hgt  wgt  bmi  hc  gen  phb  tv  reg</span>
+<span class="co">#&gt;   1   2  hgt  wgt  bmi  hc  gen  phb  tv  reg</span>
+<span class="co">#&gt;   1   3  hgt  wgt  bmi  hc  gen  phb  tv  reg</span>
+<span class="co">#&gt;   1   4  hgt  wgt  bmi  hc  gen  phb  tv  reg</span>
+<span class="co">#&gt;   1   5  hgt  wgt  bmi  hc  gen  phb  tv  reg</span>
+
+### xyplot: scatterplot by imputation number
+### observe the erroneous outlying imputed values
+### (caused by imputing hgt from bmi)
+<span class="kw">xyplot</span>(imp, hgt<span class="op">~</span>age<span class="op">|</span>.imp, <span class="dt">pch=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">20</span>),<span class="dt">cex=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="fl">1.5</span>))</code></pre></div>
+<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### same, but label with missingness of wgt (four cases)
+<span class="kw">xyplot</span>(imp, hgt<span class="op">~</span>age<span class="op">|</span>.imp, <span class="dt">na.group=</span>wgt, <span class="dt">pch=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">20</span>),<span class="dt">cex=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="fl">1.5</span>))</code></pre></div>
+<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">xyplot</span>(imp, hgt<span class="op">~</span>age, <span class="dt">pch=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">20</span>),<span class="dt">cex=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="fl">1.5</span>))</code></pre></div>
+<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-30-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="tulemuste-avaldamine" class="section level2">
 <h2><span class="header-section-number">22.9</span> Tulemuste avaldamine</h2>
