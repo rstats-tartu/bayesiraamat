@@ -407,7 +407,7 @@ histogram(~age|R, data=boys)
 
 
 näitab algseid ja imputeeritud andmeid üksteise peal muutujale "chl"
-```{r eval=FALSE}
+```{r }
 stripplot(imp, chl~.imp, pch=20, cex=2)
 ```
 Imputeeritud andmed on punased.
@@ -428,6 +428,25 @@ miss <- is.na(imp$data$bmi)
 xyplot(imp, bmi ~ I (wgt / (hgt / 100)^2),
        na.groups = miss, cex = c(0.8, 1.2), pch = c(1, 20),
        ylab = "BMI (kg/m2) Imputed", xlab = "BMI (kg/m2) Calculated")
+```
+
+
+```{r}
+imp <- mice(boys, maxit=1)
+
+### xyplot: scatterplot by imputation number
+### observe the erroneous outlying imputed values
+### (caused by imputing hgt from bmi)
+xyplot(imp, hgt~age|.imp, pch=c(1,20),cex=c(1,1.5))
+```
+
+```{r}
+### same, but label with missingness of wgt (four cases)
+xyplot(imp, hgt~age|.imp, na.group=wgt, pch=c(1,20),cex=c(1,1.5))
+```
+
+```{r}
+xyplot(imp, hgt~age, pch=c(1,20),cex=c(1,1.5))
 ```
 
 ## Tulemuste avaldamine
