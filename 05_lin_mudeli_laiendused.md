@@ -124,6 +124,12 @@ Nüüd joonistame 3D pildi olukorrast, kus nii x~1~ kui x~2~ omandavad rea vää
 
 (ref:kaksprediktorit) Kahe prediktoriga mudeli ennustus 3D ruumis.
 
+
+```
+#> Warning: `data_frame()` is deprecated, use `tibble()`.
+#> This warning is displayed once per session.
+```
+
 <div class="figure" style="text-align: center">
 <img src="05_lin_mudeli_laiendused_files/figure-html/kaksprediktorit-1.png" alt="(ref:kaksprediktorit)" width="70%" />
 <p class="caption">(\#fig:kaksprediktorit)(ref:kaksprediktorit)</p>
@@ -323,14 +329,14 @@ Nii saab fititud väärtused (.fitted), residuaalid (.resid), fittitud väätrus
 (a_m3 <- augment(m3))
 #> # A tibble: 150 x 10
 #>   Sepal.Width Sepal.Length Species .fitted .se.fit   .resid   .hat .sigma
-#> *       <dbl>        <dbl> <fct>     <dbl>   <dbl>    <dbl>  <dbl>  <dbl>
+#>         <dbl>        <dbl> <fct>     <dbl>   <dbl>    <dbl>  <dbl>  <dbl>
 #> 1         3.5          5.1 setosa     3.50  0.0399 -0.00306 0.0215  0.273
 #> 2         3            4.9 setosa     3.34  0.0403 -0.343   0.0218  0.272
 #> 3         3.2          4.7 setosa     3.18  0.0512  0.0163  0.0354  0.273
 #> 4         3.1          4.6 setosa     3.10  0.0591 -0.00380 0.0471  0.273
 #> 5         3.6          5   setosa     3.42  0.0385  0.177   0.0200  0.273
 #> 6         3.9          5.4 setosa     3.74  0.0581  0.157   0.0455  0.273
-#> # ... with 144 more rows, and 2 more variables: .cooksd <dbl>,
+#> # … with 144 more rows, and 2 more variables: .cooksd <dbl>,
 #> #   .std.resid <dbl>
 ```
 
@@ -514,12 +520,12 @@ Nii saab sisestada üksikuid parameetriväärtusi ja neile ennustusi teha:
 #> # Predicted values of Sepal.Width 
 #> # x = Sepal.Length 
 #> 
-#> # setosa
+#> # Species = setosa
 #>   x predicted std.error conf.low conf.high
 #>   5      3.42     0.039     3.35       3.5
 #>  22     17.00     1.876    13.32      20.7
 #> 
-#> # versicolor
+#> # Species = versicolor
 #>   x predicted std.error conf.low conf.high
 #>   5      2.47      0.08     2.31      2.63
 #>  22      7.91      1.21     5.53     10.28
@@ -538,7 +544,7 @@ tidy(anova(lm1, lm2, m3))
 #> Warning: Unknown or uninitialised column: 'term'.
 #> # A tibble: 3 x 6
 #>   res.df   rss    df sumsq statistic   p.value
-#> *  <dbl> <dbl> <dbl> <dbl>     <dbl>     <dbl>
+#>    <dbl> <dbl> <dbl> <dbl>     <dbl>     <dbl>
 #> 1    148  27.9    NA NA         NA   NA       
 #> 2    147  15.4     1 12.5      169.   4.83e-26
 #> 3    144  10.7     3  4.71      21.2  2.06e-11

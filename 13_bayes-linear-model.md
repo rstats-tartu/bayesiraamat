@@ -220,6 +220,8 @@ Praktikas soovime aga enamasti meie poolt ette antud l_GDP väärtustel põhinev
 # link() draws from the posterior 1000 mu values for each l_GDP value in the width object; out pops a table with 1000 rows and 41 columns. 
 mu1 <- as_tibble(link(gapmod8, data = list(l_GDP = seq(2, 6, 0.1))))
 #> [ 100 / 1000 ][ 200 / 1000 ][ 300 / 1000 ][ 400 / 1000 ][ 500 / 1000 ][ 600 / 1000 ][ 700 / 1000 ][ 800 / 1000 ][ 900 / 1000 ][ 1000 / 1000 ]
+#> Warning: `as_tibble.matrix()` requires a matrix with column names or a `.name_repair` argument. Using compatibility `.name_repair`.
+#> This warning is displayed once per session.
 ```
 
 Nüüd on meil mu1 objektis 41 l_GDP väärtust, millest igale vastab 1000 ennustust keskmise eluea kohta sellel l_GDP-l. 
@@ -235,6 +237,8 @@ mu.mean <- apply(mu1, 2, mean) # applies the FUN mean() to each column
 mu.HPDI <- apply(mu1, 2, HPDI, prob = 0.95) %>% 
   t() %>% 
   as_data_frame()
+#> Warning: `as_data_frame()` is deprecated, use `as_tibble()` (but mind the new semantics).
+#> This warning is displayed once per session.
 mu.HPDI <- bind_cols(width = seq(2, 6, 0.1), mu.HPDI)
 colnames(mu.HPDI) <- c("width", "lower", "upper")
 sim.length <- as_tibble(sim(gapmod8, data = list(l_GDP = seq(2, 6, 0.1))))
@@ -258,6 +262,8 @@ ggplot(g2007) +
   labs(caption = "Dark grey, 95% HDPI - highest posterior density.\nLight grey, 95% PI - percentile interval.") +
   theme(legend.title = element_blank()) +
   scale_color_viridis(discrete = TRUE)
+#> Warning: `data_frame()` is deprecated, use `tibble()`.
+#> This warning is displayed once per session.
 ```
 
 <div class="figure" style="text-align: center">
@@ -278,7 +284,7 @@ Kuidas saada ennustusi kindlale l_GDP väärtusele? Näiteks tulp V10 vastab l_G
 dens(sim.length$V10)
 HPDI(sim.length$V10, prob = 0.95)
 #> |0.95 0.95| 
-#>  40.4  69.1
+#>  39.6  67.5
 ```
 
 <div class="figure" style="text-align: center">

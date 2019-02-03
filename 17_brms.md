@@ -610,12 +610,12 @@ predict_interval_brms2 <- predict(m2, newdata = newx, re_formula = NULL) %>%
   cbind(newx, .)
 head(predict_interval_brms2)
 #>   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5
-#> 1         1.00        3.06  setosa     4.49     0.311 3.90  5.10
-#> 2         1.04        3.06  setosa     4.53     0.319 3.91  5.17
-#> 3         1.08        3.06  setosa     4.55     0.315 3.93  5.19
-#> 4         1.12        3.06  setosa     4.58     0.321 3.94  5.20
-#> 5         1.16        3.06  setosa     4.60     0.320 3.97  5.22
-#> 6         1.20        3.06  setosa     4.64     0.313 4.05  5.26
+#> 1         1.00        3.06  setosa     4.49     0.315 3.89  5.12
+#> 2         1.04        3.06  setosa     4.52     0.314 3.89  5.14
+#> 3         1.08        3.06  setosa     4.55     0.318 3.92  5.16
+#> 4         1.12        3.06  setosa     4.58     0.313 3.95  5.18
+#> 5         1.16        3.06  setosa     4.62     0.324 3.97  5.24
+#> 6         1.20        3.06  setosa     4.65     0.309 4.03  5.26
 ```
 
 `predict()` ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele
@@ -655,6 +655,8 @@ as_data_frame(residuals(m2)) %>%
   coord_flip() +
   theme(text = element_text(size = 8), axis.title.y = element_blank()) +
   xlab("Residuals (95 CI)")
+#> Warning: `as_data_frame()` is deprecated, use `as_tibble()` (but mind the new semantics).
+#> This warning is displayed once per session.
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-51-1.png" width="70%" style="display: block; margin: auto;" />

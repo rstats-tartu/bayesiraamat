@@ -715,12 +715,12 @@ pars &lt;-<span class="st"> </span><span class="kw">colnames</span>(model2)
 <span class="st">  </span><span class="kw">cbind</span>(newx, .)
 <span class="kw">head</span>(predict_interval_brms2)
 <span class="co">#&gt;   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5</span>
-<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.311 3.90  5.10</span>
-<span class="co">#&gt; 2         1.04        3.06  setosa     4.53     0.319 3.91  5.17</span>
-<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.315 3.93  5.19</span>
-<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.321 3.94  5.20</span>
-<span class="co">#&gt; 5         1.16        3.06  setosa     4.60     0.320 3.97  5.22</span>
-<span class="co">#&gt; 6         1.20        3.06  setosa     4.64     0.313 4.05  5.26</span></code></pre></div>
+<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.315 3.89  5.12</span>
+<span class="co">#&gt; 2         1.04        3.06  setosa     4.52     0.314 3.89  5.14</span>
+<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.318 3.92  5.16</span>
+<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.313 3.95  5.18</span>
+<span class="co">#&gt; 5         1.16        3.06  setosa     4.62     0.324 3.97  5.24</span>
+<span class="co">#&gt; 6         1.20        3.06  setosa     4.65     0.309 4.03  5.26</span></code></pre></div>
 <p><code>predict()</code> ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele</p>
 <p>Siin siis eraldi ennustused kahele liigile kolmest, kaasa arvatud petal length väärtusvahemikule, kus selle liigi isendeid valimis ei ole (ja võib-olla ei saagi olla)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">no_versicolor &lt;-<span class="st"> </span><span class="kw">filter</span>(iris, Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>)
@@ -744,7 +744,9 @@ pars &lt;-<span class="st"> </span><span class="kw">colnames</span>(model2)
 <span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> Q2.<span class="dv">5</span>, <span class="dt">ymax =</span> Q97.<span class="dv">5</span>), <span class="dt">fatten =</span> <span class="fl">0.1</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">8</span>), <span class="dt">axis.title.y =</span> <span class="kw">element_blank</span>()) <span class="op">+</span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Residuals (95 CI)&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Residuals (95 CI)&quot;</span>)
+<span class="co">#&gt; Warning: `as_data_frame()` is deprecated, use `as_tibble()` (but mind the new semantics).</span>
+<span class="co">#&gt; This warning is displayed once per session.</span></code></pre></div>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-51-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Ok, isendid nr 15 ja 44 paistavad olema vastavalt palju suurema ja väiksema Sepal Lengthiga kui mudel ennustab. Võib küsida, miks?</p>
 <p>Nüüd plotime usaldusintervalli mudeli fitile (‘keskmisele’ Y väärtusele igal määratud X-i väärtusel), mitte Y-ennustusele andmepunkti kaupa. Selleks on hea fitted() funktsioon. Me ennustame m2 mudelist vastavalt newdata parameetriväärtustele. Kui me newdata argumendi tühjaks jätame, siis võtab fitted() selleks automaatselt algse iris tabeli (ehk valimi väärtused).</p>

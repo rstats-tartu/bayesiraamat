@@ -408,14 +408,14 @@ m3 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Width <span cl
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(a_m3 &lt;-<span class="st"> </span><span class="kw">augment</span>(m3))
 <span class="co">#&gt; # A tibble: 150 x 10</span>
 <span class="co">#&gt;   Sepal.Width Sepal.Length Species .fitted .se.fit   .resid   .hat .sigma</span>
-<span class="co">#&gt; *       &lt;dbl&gt;        &lt;dbl&gt; &lt;fct&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt;         &lt;dbl&gt;        &lt;dbl&gt; &lt;fct&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
 <span class="co">#&gt; 1         3.5          5.1 setosa     3.50  0.0399 -0.00306 0.0215  0.273</span>
 <span class="co">#&gt; 2         3            4.9 setosa     3.34  0.0403 -0.343   0.0218  0.272</span>
 <span class="co">#&gt; 3         3.2          4.7 setosa     3.18  0.0512  0.0163  0.0354  0.273</span>
 <span class="co">#&gt; 4         3.1          4.6 setosa     3.10  0.0591 -0.00380 0.0471  0.273</span>
 <span class="co">#&gt; 5         3.6          5   setosa     3.42  0.0385  0.177   0.0200  0.273</span>
 <span class="co">#&gt; 6         3.9          5.4 setosa     3.74  0.0581  0.157   0.0455  0.273</span>
-<span class="co">#&gt; # ... with 144 more rows, and 2 more variables: .cooksd &lt;dbl&gt;,</span>
+<span class="co">#&gt; # … with 144 more rows, and 2 more variables: .cooksd &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   .std.resid &lt;dbl&gt;</span></code></pre></div>
 <p>.hat &gt;1 sugereerib high leverage andmepunkte</p>
 <p>.std.resid on studentiseeritud residuaal, mis on sd ühikutes (.resid/sd(.resid))</p>
@@ -534,12 +534,12 @@ mydf2 &lt;-<span class="st"> </span><span class="kw">ggpredict</span>(lm2, <span
 <span class="co">#&gt; # Predicted values of Sepal.Width </span>
 <span class="co">#&gt; # x = Sepal.Length </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; # setosa</span>
+<span class="co">#&gt; # Species = setosa</span>
 <span class="co">#&gt;   x predicted std.error conf.low conf.high</span>
 <span class="co">#&gt;   5      3.42     0.039     3.35       3.5</span>
 <span class="co">#&gt;  22     17.00     1.876    13.32      20.7</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; # versicolor</span>
+<span class="co">#&gt; # Species = versicolor</span>
 <span class="co">#&gt;   x predicted std.error conf.low conf.high</span>
 <span class="co">#&gt;   5      2.47      0.08     2.31      2.63</span>
 <span class="co">#&gt;  22      7.91      1.21     5.53     10.28</span></code></pre></div>
@@ -555,7 +555,7 @@ mydf2 &lt;-<span class="st"> </span><span class="kw">ggpredict</span>(lm2, <span
 <span class="co">#&gt; Warning: Unknown or uninitialised column: &#39;term&#39;.</span>
 <span class="co">#&gt; # A tibble: 3 x 6</span>
 <span class="co">#&gt;   res.df   rss    df sumsq statistic   p.value</span>
-<span class="co">#&gt; *  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span>
+<span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span>
 <span class="co">#&gt; 1    148  27.9    NA NA         NA   NA       </span>
 <span class="co">#&gt; 2    147  15.4     1 12.5      169.   4.83e-26</span>
 <span class="co">#&gt; 3    144  10.7     3  4.71      21.2  2.06e-11</span></code></pre></div>
