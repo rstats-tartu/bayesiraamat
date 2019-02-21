@@ -66,21 +66,23 @@ Sümbolite tähendused:
 
 Tõenäosusteooria põhituletised:
 
-1. Kui B on A alamhulk, siis $P(B) \leq P(A)$ 
+1. konjunktsioon: kui B on A alamhulk, siis $P(B) \leq P(A)$, ehk $P(A \And B) \le P(A)$ 
 
 2. Def: A ja B on üksteisest sõltumatud siis ja ainult siis kui $P(A~ \vert B) = P(A)$ 
 
 3. Kui A ja B on üksteisest sõltumatud, siis $P(A \land B) = P(A)P(B) = P(A~\vert~B)P(B)$ 
 
-4. Kui A ja B on üksteist välistavad, siis $P(A \lor B) = P(A) + P(B)$. 
+4. summareegel: kui A ja B on üksteist välistavad, siis $P(A \lor B) = P(A) + P(B)$. 
+
+4.1. Kui A ja B ei ole üksteist välistavad, siis $P(A \lor B) = P(A) + P(B) - P(A \And B)$. Kolmele sündmusele: $P(A \lor B \lor C) = P(A) + P(B) + (C) - P(A \And B) - P(B \And C) - P(A \And C) + P(A \And B \And C)$ 
 
 5. Kui A ja B ei ole üksteist välistavad, siis $P(A \lor B) = P(A) + P(B) - P(A \land B)$
 
 6. Def: $P(A~\vert~B) = P(A \land B)/P(B)$ -- Tinglik tõenäosus
 
-7. Totaalne tõenäosus: $P(A) = P(A~\vert~B)P(B) + P(A~\vert~\lnot B)P(\lnot B)$ -- , tuletatud 6. punktist.  
+7. Totaalne ehk marginaalne tõenäosus: $P(A) = P(A~\vert~B)P(B) + P(A~\vert~\lnot B)P(\lnot B)$, ehk $P(A) = P(A~\vert~B_1)P(B_1) + P(A~\vert~ B_2)P( B_2) + ... + P(A~\vert~ B_n)P(B_n)$ kõikidele võimalikele B-le   -- , tuletatud 6. punktist.  
 
-8. Bayesi teoreem: $P(A~\vert~B) = P(A)P(B~\vert~A)/P(B)$ -- tuletatud 6. punktist --, kus $P(B) = P(A)P(B~\vert~A) + P(\lnot A)P(B~\vert~\lnot A)$ -- 7. punktist.     
+8. Bayesi teoreem: $P(A~\vert~B) = P(A)P(B~\vert~A)/P(B)$ -- tuletatud 6. punktist --, kus $P(B) = P(A)P(B~\vert~A) + P(\lnot A)P(B~\vert~\lnot A)$  -- 7. punktist.     
 
 Bayesi teoreemi kasutatakse määramaks hüpoteesi tõenäosuse pärast uute faktide (andmete) lisandumist olemasolevatele teadmistele. Selleks peab hüpoteesiruum olema jagatud vähemalt kaheks ammendavaks ja üksteist välistavaks hüpoteesiks. 
 Kui A on H~1~ ning mitte-A on ammendav ja välistav H~2~ ja B tähistab andmeid (data), saame Bayesi teoreemi ümber kirjutada 
@@ -103,6 +105,8 @@ Järgnevatel näidetel on ühist kaks asja: need on matemaatiliselt triviaalselt
 **Punkt 1.** Linda on 31 aastane, vallaline, sõnakas ja väga nutikas. Ta õppis ülikoolis filosoofiat ja muretses sel ajal sügavalt diskrimineerimise ja sotsiaalse õigluse pärast ning osales tuumarelva vastastel meeleavaldustel. Kumb on tõenäolisem? Linda on pangateller. Või Linda on pangateller, kes osaleb feministlikus liikumises. Kuigi enamus vastajatest eelistab 2. varianti, on see sõna otses mõttes loogikavastane.
 
 **Punkt 3.** Kui me viskame täringut 3 korda, kui suure tõenäosusega saame vähemalt ühe kuue? Naiivselt võiks arvata, et see tõenäosus on 50%. Kuid rakendades tõenäosusteooriat saame teistsuguse vastuse. Lihtsuse huvides defineerime küsimuse ümber: kui suure tõenäosusega ei saa me 3-l viskel ühtegi kuute? Vastus: kui igal viskel on 0 kuue tõenäosus 5/6, siis $(5/6)*(5/6)*(5/6) = 0.58$ ja $1 - 0.58 = 0.42$, mis tähendab, et vähemalt 1 kuue (või ükskõik mis numbri ühest kuueni) saame 42% tõenäosusega. Teine näide (NYT 03-12-2017): te ostate maja Texases Hustonis, millele müüja annab garantii, et üleujutuse tõenäosus on 1% aastas. Seadus nimetab seda näidikut "100 aasta suurvee-tasemeks". 1% näidu puhul ei pea te seaduse järgi ostma üleujutusekindlustust. Kui suure tõenäosusega tabab teie maja üleujutus pangalaenu perioodi vältel (30 aastat)? Vastus: $1 - (99/100)^{30} = 0.26$.
+
+**Punkt 4** Kui tõenäosus, et homme sajab pussnuge on 0.1 ja et ülehomme sajab pussnuge on 0.1, siis millise tõenäosusega sajab vähemalt ühel neist päevadest? Eeldades sündmuste sõltumatust: $P(homme~ sajab \lor ülehomme~ sajab) = 0.1 + 0.1 - 0.1 \times 0.1 = 0.19$. Kui me aga teame, et sadu erinevatel päevadel on korreleeritud näiteks nii: $P(ülehomme~ sajab~ \vert~homme~sajab)= 0.2$, $P(ülehomme~ sajab~ \vert~ \lnot homme~sajab)= 0.15$, siis $P(homme~ sajab \lor ülehomme~ sajab) = P(homme~ sajab) + P(ülehomme~ sajab) - P(homme~ sajab~ \And~ ülehomme~ sajab)$. Nüüd peame arvutama $P(ülehomme~sajab)$, kasutades 7. punkti (marginaliseerimist), ja seejärel saame kasutada valemit $P(A \lor B)= P(A)+P(B)-P(A)P(B ~\vert~A)$. Kui vihm on korreleeritud, siis väheneb tõenäosus, et sajab vähemalt ühel päeval.   
 
 **Punkt 6.** Meil on kolm pannkooki, millest esimesel on mõlemad küljed moosised, teisel on üks külg moosine ja kolmandal pole üldse moosi. Juhtus nii, et meile pandi taldrikule pannkook, mille pealmine külg on moosine. Millise tõenäosusega on moosine ka selle pannkoogi alumine külg? NB! Vastus ei ole 50%. Lahendus: Kui A - moos all, B - moos üleval, siis vastavalt tingliku tõenäosuse definitsioonile $P(moos~ all~ \lvert ~moos~üleval ) = P(moos~all \land ~moos~üleval)/P(moos~all)$ Tõenäosus, et moos on all ja üleval on 1/3 (me teame, et 1 pannkook 3st on mõlemalt küljelt moosine) ja tõenäosus, et moos on all, on keskmine kolmest tõenäosusest, millega me kolmel pannkoogil moosise külje saame: mean(c(1, 0.5, 0)) = 1/2. Seega, vastus on $(1/3)/(1/2) = 2/3$. Kui me saame moosise ülemise külje, siis on tõenäosus 2/3, et ka all on moos!
 
