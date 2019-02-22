@@ -78,11 +78,11 @@ Tõenäosusteooria põhituletised:
 
 5. Kui A ja B ei ole üksteist välistavad, siis $P(A \lor B) = P(A) + P(B) - P(A \land B)$
 
-6. Def: $P(A~\vert~B) = P(A \land B)/P(B)$ -- Tinglik tõenäosus
+6. Def: $P(A~\vert~B) = \frac{P(A \land B)}{P(B)}$ -- Tinglik tõenäosus
 
 7. Totaalne ehk marginaalne tõenäosus: $P(A) = P(A~\vert~B)P(B) + P(A~\vert~\lnot B)P(\lnot B)$, ehk $P(A) = P(A~\vert~B_1)P(B_1) + P(A~\vert~ B_2)P( B_2) + ... + P(A~\vert~ B_n)P(B_n)$ kõikidele võimalikele B-le   -- , tuletatud 6. punktist.  
 
-8. Bayesi teoreem: $P(A~\vert~B) = P(A)P(B~\vert~A)/P(B)$ -- tuletatud 6. punktist --, kus $P(B) = P(A)P(B~\vert~A) + P(\lnot A)P(B~\vert~\lnot A)$  -- 7. punktist.     
+8. Bayesi teoreem: $P(A~\vert~B) =\frac{P(A)P(B~\vert~A)}{P(B)}$ -- tuletatud 6. punktist --, kus $P(B) = P(A)P(B~\vert~A) + P(\lnot A)P(B~\vert~\lnot A)$  -- 7. punktist.     
 
 Bayesi teoreemi kasutatakse määramaks hüpoteesi tõenäosuse pärast uute faktide (andmete) lisandumist olemasolevatele teadmistele. Selleks peab hüpoteesiruum olema jagatud vähemalt kaheks ammendavaks ja üksteist välistavaks hüpoteesiks. 
 Kui A on H~1~ ning mitte-A on ammendav ja välistav H~2~ ja B tähistab andmeid (data), saame Bayesi teoreemi ümber kirjutada 
