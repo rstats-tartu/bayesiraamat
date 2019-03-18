@@ -1286,7 +1286,7 @@ Ohhoo, kui vaadata deparmente eraldi, pole mingit kinnitust, et meestel oleks pa
 marginal_effects(m_ucadmit2, effects ="dept", conditions = data.frame(male = c(0, 1)))
 ```
 
-### y muutujal 3+ kategoorilist väärtust
+### Y-muutujal 3+ kategoorilist väärtust
 
  Building a generalized linear model from a multinomial likelihood is complicated, because as the event types multiply, so too do your modeling choices. And there are two different approaches to constructing the likelihoods, as well.  The  First is based directly on the multinomial likelihood and uses a generalization of the logit link. 
 
@@ -1294,6 +1294,8 @@ When more than two types of unordered events are possible, and the probability o
 
 
 Estimate the association between person’s family income and which career (there are 3 choiches) he chooses. 
+
+
 
 ```{r}
 N <- 100
@@ -1338,6 +1340,16 @@ ggplot(pred1_l, aes(income, value)) + geom_point() + facet_wrap(~variable)+
   ylab("Pr of career choice at a given income") 
 ```
  
+ 
+#### Y-muutujal on 3+ kategoorilist väärtust, mis on ordinaalselt järjestatud
+
+Kui näiteks Y-muutuja väärtused on "vähe", "rohkem", "palju rohkem", siis me saame aru, et 3 väärtuse vahelised kaugused andmeruumis ei pruugi olla võrdsed.
+Nüüd kasutame mudelit vormis:
+```{r eval=FALSE}
+brm(y ~ x + (1|id), data=d, family=cumulative("logit"), threshold="flexible")
+```
+
+
 
 ### zero inflated mudelid
 
@@ -1466,6 +1478,7 @@ bf_back <- bf(back ~ s(hatchdate) + (1|p|fosternest) + (1|q|dam)) +
   gaussian()
 fit3 <- brm(bf_tarsus + bf_back + set_rescor(FALSE), data = BTdata)
 ```
+
 
 ### Mittelineaarsed mudelid
 
