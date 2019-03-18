@@ -1341,14 +1341,18 @@ ggplot(pred1_l, aes(income, value)) + geom_point() + facet_wrap(~variable)+
 ```
  
  
-#### Y-muutujal on 3+ kategoorilist väärtust, mis on ordinaalselt järjestatud
+#### Y-muutujal on 3+ kategoorilist väärtust, mis on ordinaalselt järjestatud {-}
 
-Kui näiteks Y-muutuja väärtused on "vähe", "rohkem", "palju rohkem", siis me saame aru, et 3 väärtuse vahelised kaugused andmeruumis ei pruugi olla võrdsed.
+Kui näiteks Y-muutuja väärtused on "vähe", "rohkem", "palju rohkem", siis me saame aru, et 3 väärtust on küll järjestatud, aga nende vahelised kaugused andmeruumis ei pruugi olla võrdsed.
 Nüüd kasutame mudelit vormis:
 ```{r eval=FALSE}
-brm(y ~ x + (1|id), data=d, family=cumulative("logit"), threshold="flexible")
+brm(y ~ x + (1|id), 
+    data=d, 
+    family=cumulative("logit"), 
+    threshold="flexible")
 ```
 
+Kumulatiivse mudeliga ordinaalse logistilise regressiooni üks eeldustest (proportional odds assumption) on, et y-muutuja tasemete iga võimalik paar on sama tõusuga (identsed beta koefitsiendid, erinevad ainult interceptid). Tasub ka meeles pidada, et mudelisse X-muutujaid lisades võime selle eelduse pekki keerata.
 
 
 ### zero inflated mudelid
