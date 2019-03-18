@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>11 Bootstrap | Bayesi statistika kasutades R keelt</title>
-  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid.">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
+  <meta name="generator" content="bookdown  and GitBook 2.6.7" />
 
   <meta property="og:title" content="11 Bootstrap | Bayesi statistika kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -22,14 +21,14 @@
   <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
   <meta name="twitter:image" content="img/cyclo.png" />
 
-<meta name="author" content="Taavi Päll">
-<meta name="author" content="Ülo Maiväli">
+<meta name="author" content="Taavi Päll" />
+<meta name="author" content="Ülo Maiväli" />
 
 
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
 <link rel="prev" href="jareldav-statistika.html">
@@ -280,7 +279,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="20.4" data-path="brms-mudelid.html"><a href="brms-mudelid.html#binoomjaotusega-mudelid"><i class="fa fa-check"></i><b>20.4</b> Binoomjaotusega mudelid</a><ul>
 <li class="chapter" data-level="20.4.1" data-path="brms-mudelid.html"><a href="brms-mudelid.html#logistiline-regressioon"><i class="fa fa-check"></i><b>20.4.1</b> Logistiline regressioon</a></li>
-<li class="chapter" data-level="20.4.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#y-muutujal-3-kategoorilist-vaartust"><i class="fa fa-check"></i><b>20.4.2</b> y muutujal 3+ kategoorilist väärtust</a></li>
+<li class="chapter" data-level="20.4.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#y-muutujal-3-kategoorilist-vaartust"><i class="fa fa-check"></i><b>20.4.2</b> Y-muutujal 3+ kategoorilist väärtust</a></li>
 <li class="chapter" data-level="20.4.3" data-path="brms-mudelid.html"><a href="brms-mudelid.html#zero-inflated-mudelid"><i class="fa fa-check"></i><b>20.4.3</b> zero inflated mudelid</a></li>
 <li class="chapter" data-level="20.4.4" data-path="brms-mudelid.html"><a href="brms-mudelid.html#additiivsed-distributsioonilised-mudelid"><i class="fa fa-check"></i><b>20.4.4</b> additiivsed distributsioonilised mudelid</a></li>
 </ul></li>
@@ -363,9 +362,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="bootstrap" class="section level1">
 <h1><span class="header-section-number">11</span> Bootstrap</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
-<span class="kw">library</span>(rethinking)
-<span class="kw">library</span>(bayesboot)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rethinking)
+<span class="kw">library</span>(bayesboot)
+<span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(purrr)
+<span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(modelr)</code></pre></div>
 <blockquote>
 <p>Populatsioon on valimile sama, mis on valim bootstrappitud valimile.</p>
 </blockquote>
@@ -384,15 +386,14 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>Mis on USA presidentide keskmine pikkus? Meil on viimase 11 presidendi pikkused.</p>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">heights &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">value =</span> <span class="kw">c</span>(<span class="dv">183</span>, <span class="dv">192</span>, <span class="dv">182</span>, <span class="dv">183</span>, <span class="dv">177</span>, <span class="dv">185</span>, <span class="dv">188</span>, <span class="dv">188</span>, <span class="dv">182</span>, <span class="dv">185</span>, <span class="dv">188</span>))
-B &lt;-<span class="st"> </span><span class="dv">2000</span> <span class="co">#the number of bootstrap samples</span>
+B &lt;-<span class="st"> </span><span class="dv">1000</span> <span class="co"># the number of bootstrap samples</span>
 
-boot_mean &lt;-<span class="st"> </span>heights <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span>broom<span class="op">::</span><span class="kw">bootstrap</span>(B) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">do</span>(<span class="kw">summarise</span>(., <span class="dt">Mean =</span> <span class="kw">mean</span>(value)))
-<span class="co">#&gt; Warning: &#39;broom::bootstrap&#39; is deprecated.</span>
-<span class="co">#&gt; See help(&quot;Deprecated&quot;)</span>
+mean_value &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">mean</span>(<span class="kw">as.data.frame</span>(x)<span class="op">$</span>value, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="co"># helper function</span>
+boot &lt;-<span class="st"> </span><span class="kw">bootstrap</span>(heights, B)
+boot &lt;-<span class="st"> </span>boot <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">            </span><span class="kw">mutate</span>(<span class="dt">Mean =</span> <span class="kw">map_dbl</span>(strap, mean_value))
 
-<span class="kw">ggplot</span>(boot_mean, <span class="kw">aes</span>(Mean)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>()</code></pre></div>
+<span class="kw">ggplot</span>(boot, <span class="kw">aes</span>(Mean)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:bootpost"></span>
 <img src="09_bootstrap_files/figure-html/bootpost-1.png" alt="Bootstrapitud posteerior USA presidentide keskmisele pikkusele. Järgnevas koodis ütleme me kõigepealt, et B = 2000 (et me võtame 2000 bootstrap valimit) kasutades selleks broom paketi käsku boot(), millele on lihtne lisada dplyri funktsioon summarise(). Siiski peame seda tegema dplyr::do() abil. Pane tähele, et “tänu” do() kasutamisele peame me summarise() funktsioonis näitama punktiga koha, kuhu lähevad %&gt;% torust tulnud bootstrap valimid. Aga muidu on kõik tavapärane tidyverse." width="70%" />
 <p class="caption">
@@ -457,7 +458,7 @@ Joonis 11.2: Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele.
                          <span class="dt">use.weights =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>Tõenäosus, et keskmine on suurem kui 182 cm</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(heights_bb[, <span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">182</span>)
-<span class="co">#&gt; [1] 0.99</span></code></pre></div>
+<span class="co">#&gt; [1] 0.986</span></code></pre></div>
 <p>Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):</p>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)

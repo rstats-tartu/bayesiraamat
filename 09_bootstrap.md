@@ -6,9 +6,12 @@
 
 
 ```r
-library(tidyverse)
 library(rethinking)
 library(bayesboot)
+library(dplyr)
+library(purrr)
+library(ggplot2)
+library(modelr)
 ```
 
 
@@ -45,15 +48,14 @@ Mis on USA presidentide keskmine pikkus? Meil on viimase 11 presidendi pikkused.
 
 ```r
 heights <- tibble(value = c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185, 188))
-B <- 2000 #the number of bootstrap samples
+B <- 1000 # the number of bootstrap samples
 
-boot_mean <- heights %>% 
-  broom::bootstrap(B) %>% 
-  do(summarise(., Mean = mean(value)))
-#> Warning: 'broom::bootstrap' is deprecated.
-#> See help("Deprecated")
+mean_value <- function(x) mean(as.data.frame(x)$value, na.rm = TRUE) # helper function
+boot <- bootstrap(heights, B)
+boot <- boot %>% 
+            mutate(Mean = map_dbl(strap, mean_value))
 
-ggplot(boot_mean, aes(Mean)) + geom_density()
+ggplot(boot, aes(Mean)) + geom_density()
 ```
 
 <div class="figure" style="text-align: center">
@@ -159,7 +161,7 @@ Tõenäosus, et keskmine on suurem kui 182 cm
 
 ```r
 mean(heights_bb[, 1] > 182)
-#> [1] 0.99
+#> [1] 0.986
 ```
 
 Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):

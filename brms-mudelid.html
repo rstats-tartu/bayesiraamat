@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>20 Brms mudelid | Bayesi statistika kasutades R keelt</title>
-  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid.">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
+  <meta name="generator" content="bookdown  and GitBook 2.6.7" />
 
   <meta property="og:title" content="20 Brms mudelid | Bayesi statistika kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -22,14 +21,14 @@
   <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
   <meta name="twitter:image" content="img/cyclo.png" />
 
-<meta name="author" content="Taavi Päll">
-<meta name="author" content="Ülo Maiväli">
+<meta name="author" content="Taavi Päll" />
+<meta name="author" content="Ülo Maiväli" />
 
 
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
 <link rel="prev" href="brms.html">
@@ -280,7 +279,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="20.4" data-path="brms-mudelid.html"><a href="brms-mudelid.html#binoomjaotusega-mudelid"><i class="fa fa-check"></i><b>20.4</b> Binoomjaotusega mudelid</a><ul>
 <li class="chapter" data-level="20.4.1" data-path="brms-mudelid.html"><a href="brms-mudelid.html#logistiline-regressioon"><i class="fa fa-check"></i><b>20.4.1</b> Logistiline regressioon</a></li>
-<li class="chapter" data-level="20.4.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#y-muutujal-3-kategoorilist-vaartust"><i class="fa fa-check"></i><b>20.4.2</b> y muutujal 3+ kategoorilist väärtust</a></li>
+<li class="chapter" data-level="20.4.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#y-muutujal-3-kategoorilist-vaartust"><i class="fa fa-check"></i><b>20.4.2</b> Y-muutujal 3+ kategoorilist väärtust</a></li>
 <li class="chapter" data-level="20.4.3" data-path="brms-mudelid.html"><a href="brms-mudelid.html#zero-inflated-mudelid"><i class="fa fa-check"></i><b>20.4.3</b> zero inflated mudelid</a></li>
 <li class="chapter" data-level="20.4.4" data-path="brms-mudelid.html"><a href="brms-mudelid.html#additiivsed-distributsioonilised-mudelid"><i class="fa fa-check"></i><b>20.4.4</b> additiivsed distributsioonilised mudelid</a></li>
 </ul></li>
@@ -901,7 +900,7 @@ post <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mut
 </div>
 </div>
 <div id="y-muutujal-3-kategoorilist-vaartust" class="section level3">
-<h3><span class="header-section-number">20.4.2</span> y muutujal 3+ kategoorilist väärtust</h3>
+<h3><span class="header-section-number">20.4.2</span> Y-muutujal 3+ kategoorilist väärtust</h3>
 <p>Building a generalized linear model from a multinomial likelihood is complicated, because as the event types multiply, so too do your modeling choices. And there are two different approaches to constructing the likelihoods, as well. The First is based directly on the multinomial likelihood and uses a generalization of the logit link.</p>
 <p>When more than two types of unordered events are possible, and the probability of each type of event is constant across trials, then the maximum entropy distribution is the multinomial distribution. The conventional and natural link is this context is the multinomial logit. This link function takes a vector of scores, one for each K event types, and computed the probability of a particular type of event K.</p>
 <p>Estimate the association between person’s family income and which career (there are 3 choiches) he chooses.</p>
@@ -936,6 +935,15 @@ pred1_l &lt;-<span class="st"> </span>pred1_l <span class="op">%&gt;%</span><spa
 <span class="kw">ggplot</span>(pred1_l, <span class="kw">aes</span>(income, value)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>variable)<span class="op">+</span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Pr of career choice at a given income&quot;</span>) </code></pre></div>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-152-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div id="y-muutujal-on-3-kategoorilist-vaartust-mis-on-ordinaalselt-jarjestatud" class="section level4 unnumbered">
+<h4>Y-muutujal on 3+ kategoorilist väärtust, mis on ordinaalselt järjestatud</h4>
+<p>Kui näiteks Y-muutuja väärtused on “vähe”, “rohkem”, “palju rohkem”, siis me saame aru, et 3 väärtust on küll järjestatud, aga nende vahelised kaugused andmeruumis ei pruugi olla võrdsed. Nüüd kasutame mudelit vormis:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">brm</span>(y <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id), 
+    <span class="dt">data=</span>d, 
+    <span class="dt">family=</span><span class="kw">cumulative</span>(<span class="st">&quot;logit&quot;</span>), 
+    <span class="dt">threshold=</span><span class="st">&quot;flexible&quot;</span>)</code></pre></div>
+<p>Kumulatiivse mudeliga ordinaalse logistilise regressiooni üks eeldustest (proportional odds assumption) on, et y-muutuja tasemete iga võimalik paar on sama tõusuga (identsed beta koefitsiendid, erinevad ainult interceptid). Tasub ka meeles pidada, et mudelisse X-muutujaid lisades võime selle eelduse pekki keerata.</p>
+</div>
 </div>
 <div id="zero-inflated-mudelid" class="section level3">
 <h3><span class="header-section-number">20.4.3</span> zero inflated mudelid</h3>

@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>10 Järeldav statistika | Bayesi statistika kasutades R keelt</title>
-  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid.">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
+  <meta name="generator" content="bookdown  and GitBook 2.6.7" />
 
   <meta property="og:title" content="10 Järeldav statistika | Bayesi statistika kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -22,14 +21,14 @@
   <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
   <meta name="twitter:image" content="img/cyclo.png" />
 
-<meta name="author" content="Taavi Päll">
-<meta name="author" content="Ülo Maiväli">
+<meta name="author" content="Taavi Päll" />
+<meta name="author" content="Ülo Maiväli" />
 
 
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
 <link rel="prev" href="eda-eksploratoorne-andmeanaluus.html">
@@ -280,7 +279,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="20.4" data-path="brms-mudelid.html"><a href="brms-mudelid.html#binoomjaotusega-mudelid"><i class="fa fa-check"></i><b>20.4</b> Binoomjaotusega mudelid</a><ul>
 <li class="chapter" data-level="20.4.1" data-path="brms-mudelid.html"><a href="brms-mudelid.html#logistiline-regressioon"><i class="fa fa-check"></i><b>20.4.1</b> Logistiline regressioon</a></li>
-<li class="chapter" data-level="20.4.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#y-muutujal-3-kategoorilist-vaartust"><i class="fa fa-check"></i><b>20.4.2</b> y muutujal 3+ kategoorilist väärtust</a></li>
+<li class="chapter" data-level="20.4.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#y-muutujal-3-kategoorilist-vaartust"><i class="fa fa-check"></i><b>20.4.2</b> Y-muutujal 3+ kategoorilist väärtust</a></li>
 <li class="chapter" data-level="20.4.3" data-path="brms-mudelid.html"><a href="brms-mudelid.html#zero-inflated-mudelid"><i class="fa fa-check"></i><b>20.4.3</b> zero inflated mudelid</a></li>
 <li class="chapter" data-level="20.4.4" data-path="brms-mudelid.html"><a href="brms-mudelid.html#additiivsed-distributsioonilised-mudelid"><i class="fa fa-check"></i><b>20.4.4</b> additiivsed distributsioonilised mudelid</a></li>
 </ul></li>
@@ -380,11 +379,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <blockquote>
 <p>Statistika arvutab H-i kehtimise tõenäosuse lähtuvalt kogutud andmetest, matemaatilistest mudelitest ning teaduslikest taustateadmistest.</p>
 </blockquote>
-<p><strong>Tõenäosusteooria aksioomid</strong> ütlevad tõlkes inimkeelde, et tõenäosused (P) jäävad 0 ja 1 vahele, et <em>P(A) = 1</em> tähendab, et A on tõene, et <em>P(A) = 0</em> tähendab, et A on väär, ning kui A ja B on hüpoteesiruumi ammendavad üksteist välistavad hüpoteesid, siis <em>P(A) + P(B) = 1</em>. Need aksioomid peaksid olema iseenesestmõistetavad ja ainult neist on tuletatud kogu tõenäosusteooria.</p>
-<p>Need aksioomid, mis oma matemaatilises vormis postuleeriti Andrei Kolmogorovi poolt ca 1930, on tuletatavad järgmistest eeldustest:</p>
+<p><strong>Tõenäosusteooria aksioomid</strong>, mida on kolm tükki, ütlevad tõlkes inimkeelde, (1) et iga sündmuse tõenäosus on suurem või võrdne nulliga, (2) et loogiliselt paratamatu sündmuse tõenäosus on üks (niiviisi sidudes tõenäosusteooria lausearvutusliku loogikaga) ja (3) et üksteist välistavate sündmuse puhul võrdub tõenäosus, et toimub üks või teine nende sündmuste tõenäosuste summaga (<span class="math inline">\(P(A \lor B) = P(A) + P(B)\)</span>). Need aksioomid peaksid olema iseenesestmõistetavad ja ainult neist on tuletatud kogu tõenäosusteooria.</p>
+<p>Need aksioomid, mis oma matemaatilises vormis postuleeriti Andrei Kolmogorovi poolt ca 1933, on tuletatavad järgmistest eeldustest:</p>
 <ul>
+<li><p>usutavuse määra saab kirjeldada reaalarvudega 0 ja 1 vahel</p></li>
 <li><p>ratsionaalne mõtlemine vastab kvalitatiivselt tervele mõistusele: lisatõendusmaterjal hüpoteesi kasuks tõstab selle hüpoteesi usutavust.</p></li>
-<li><p>mõtlemine peab olema konsistentne: kui me võime järeldusi teha rohkem kui ühel viisil, peame lõpuks ikkagi alati samale lõppjäreldusele jõudma</p></li>
+<li><p>mõtlemine peab olema konsistentne: kui me saame järeldusi teha rohkem kui ühel viisil, peame lõpuks ikkagi alati samale lõppjäreldusele jõudma</p></li>
 <li><p>kogu kättesaadav relevantne informatsioon tuleb järelduste tegemisel arvesse võtta (totaalse informatsiooni printsiip)</p></li>
 <li><p>ekvivalentsed teadmised on representeeritud ekvivalentsete numbritega.</p></li>
 </ul>
@@ -401,14 +401,13 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 <p>Tõenäosusteooria põhituletised:</p>
 <ol style="list-style-type: decimal">
-<li><p>Kui B on A alamhulk, siis <span class="math inline">\(P(B) \leq P(A)\)</span></p></li>
-<li><p>Def: A ja B on üksteisest sõltumatud siis ja ainult siis kui <span class="math inline">\(P(A~ \vert B) = P(A)\)</span></p></li>
+<li><p>konjunktsioon: <span class="math inline">\(P(A \And B) \le P(A)\)</span>, ehk kui B on A alamhulk, siis <span class="math inline">\(P(B) \leq P(A)\)</span>.</p></li>
+<li><p>Definitsioon: A ja B on üksteisest sõltumatud siis ja ainult siis kui <span class="math inline">\(P(A~ \vert B) = P(A)\)</span></p></li>
 <li><p>Kui A ja B on üksteisest sõltumatud, siis <span class="math inline">\(P(A \land B) = P(A)P(B) = P(A~\vert~B)P(B)\)</span></p></li>
-<li><p>Kui A ja B on üksteist välistavad, siis <span class="math inline">\(P(A \lor B) = P(A) + P(B)\)</span>.</p></li>
-<li><p>Kui A ja B ei ole üksteist välistavad, siis <span class="math inline">\(P(A \lor B) = P(A) + P(B) - P(A \land B)\)</span></p></li>
-<li><p>Def: <span class="math inline">\(P(A~\vert~B) = P(A \land B)/P(B)\)</span> – Tinglik tõenäosus</p></li>
-<li><p>Totaalne tõenäosus: <span class="math inline">\(P(A) = P(A~\vert~B)P(B) + P(A~\vert~\lnot B)P(\lnot B)\)</span> – , tuletatud 6. punktist.</p></li>
-<li><p>Bayesi teoreem: <span class="math inline">\(P(A~\vert~B) = P(A)P(B~\vert~A)/P(B)\)</span> – tuletatud 6. punktist –, kus <span class="math inline">\(P(B) = P(A)P(B~\vert~A) + P(\lnot A)P(B~\vert~\lnot A)\)</span> – 7. punktist.</p></li>
+<li><p>Kui A ja B ei ole üksteist välistavad, siis <span class="math inline">\(P(A \lor B) = P(A) + P(B) - P(A \And B)\)</span>. Kolmele sündmusele: <span class="math inline">\(P(A \lor B \lor C) = P(A) + P(B) + (C) - P(A \And B) - P(B \And C) - P(A \And C) + P(A \And B \And C)\)</span>.</p></li>
+<li><p>Tingliku tõenäosuse definitsioon: <span class="math inline">\(P(A~\vert~B) = \frac{P(A \land B)}{P(B)}\)</span>.</p></li>
+<li><p>Totaalne ehk marginaalne tõenäosus: <span class="math inline">\(P(A) = P(A~\vert~B)P(B) + P(A~\vert~\lnot B)P(\lnot B)\)</span>, ehk <span class="math inline">\(P(A) = P(A~\vert~B_1)P(B_1) + P(A~\vert~ B_2)P(B_2) + ...\)</span> kõikidele võimalikele B-le, tuletatud 5. punktist.</p></li>
+<li><p>Bayesi teoreem: <span class="math inline">\(P(A~\vert~B) =\frac{P(A)P(B~\vert~A)}{P(B)}\)</span> – tuletatud 5. punktist, kus <span class="math inline">\(P(B) = P(A)P(B~\vert~A) + P(\lnot A)P(B~\vert~\lnot A)\)</span> tuleb 6. punktist.</p></li>
 </ol>
 <p>Bayesi teoreemi kasutatakse määramaks hüpoteesi tõenäosuse pärast uute faktide (andmete) lisandumist olemasolevatele teadmistele. Selleks peab hüpoteesiruum olema jagatud vähemalt kaheks ammendavaks ja üksteist välistavaks hüpoteesiks. Kui A on H<sub>1</sub> ning mitte-A on ammendav ja välistav H<sub>2</sub> ja B tähistab andmeid (data), saame Bayesi teoreemi ümber kirjutada</p>
 <p><span class="math inline">\(P(H_1~\vert~data) = P(H_1)P(data~\vert~H_1) /( P(H_1)P(data~\vert~H_1) + P(H_2)P(data~ \vert ~H_2) )\)</span></p>
@@ -420,12 +419,13 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div id="naited-toenaosusteooria-tuletiste-rakendamisest" class="section level3 unnumbered">
 <h3>Näited tõenäosusteooria tuletiste rakendamisest</h3>
 <p>Järgnevatel näidetel on ühist kaks asja: need on matemaatiliselt triviaalselt lihtsad, aga intuitiivselt lootusetult keerulised. Kõigi nende puhul on inimestel tugev intuitsioon, mis on vale – ja tõenäosusteooria tundmine ei anna meile paremat intuitsiooni. Seega, ainus, mis üle jääb, on iga probleemi taandamine tõenäosusteooria valemitele ja selle tuimalt läbi arvutamine.</p>
-<p><strong>Punkt 1.</strong> Linda on 31 aastane, vallaline, sõnakas ja väga nutikas. Ta õppis ülikoolis filosoofiat ja muretses sel ajal sügavalt diskrimineerimise ja sotsiaalse õigluse pärast ning osales tuumarelva vastastel meeleavaldustel. Kumb on tõenäolisem? Linda on pangateller. Või Linda on pangateller, kes osaleb feministlikus liikumises. Kuigi enamus vastajatest eelistab 2. varianti, on see sõna otses mõttes loogikavastane.</p>
-<p><strong>Punkt 3.</strong> Kui me viskame täringut 3 korda, kui suure tõenäosusega saame vähemalt ühe kuue? Naiivselt võiks arvata, et see tõenäosus on 50%. Kuid rakendades tõenäosusteooriat saame teistsuguse vastuse. Lihtsuse huvides defineerime küsimuse ümber: kui suure tõenäosusega ei saa me 3-l viskel ühtegi kuute? Vastus: kui igal viskel on 0 kuue tõenäosus 5/6, siis <span class="math inline">\((5/6)*(5/6)*(5/6) = 0.58\)</span> ja <span class="math inline">\(1 - 0.58 = 0.42\)</span>, mis tähendab, et vähemalt 1 kuue (või ükskõik mis numbri ühest kuueni) saame 42% tõenäosusega. Teine näide (NYT 03-12-2017): te ostate maja Texases Hustonis, millele müüja annab garantii, et üleujutuse tõenäosus on 1% aastas. Seadus nimetab seda näidikut “100 aasta suurvee-tasemeks”. 1% näidu puhul ei pea te seaduse järgi ostma üleujutusekindlustust. Kui suure tõenäosusega tabab teie maja üleujutus pangalaenu perioodi vältel (30 aastat)? Vastus: <span class="math inline">\(1 - (99/100)^{30} = 0.26\)</span>.</p>
-<p><strong>Punkt 6.</strong> Meil on kolm pannkooki, millest esimesel on mõlemad küljed moosised, teisel on üks külg moosine ja kolmandal pole üldse moosi. Juhtus nii, et meile pandi taldrikule pannkook, mille pealmine külg on moosine. Millise tõenäosusega on moosine ka selle pannkoogi alumine külg? NB! Vastus ei ole 50%. Lahendus: Kui A - moos all, B - moos üleval, siis vastavalt tingliku tõenäosuse definitsioonile <span class="math inline">\(P(moos~ all~ \lvert ~moos~üleval ) = P(moos~all \land ~moos~üleval)/P(moos~all)\)</span> Tõenäosus, et moos on all ja üleval on 1/3 (me teame, et 1 pannkook 3st on mõlemalt küljelt moosine) ja tõenäosus, et moos on all, on keskmine kolmest tõenäosusest, millega me kolmel pannkoogil moosise külje saame: mean(c(1, 0.5, 0)) = 1/2. Seega, vastus on <span class="math inline">\((1/3)/(1/2) = 2/3\)</span>. Kui me saame moosise ülemise külje, siis on tõenäosus 2/3, et ka all on moos!</p>
-<p><strong>Punkt 7.</strong> Kui A tähistab sündmust “ma sooritan eksami edukalt” ja B tähistab sündmust “ma õpin eksamiks”, ning meil on dihhotoomne valik: õpin / ei õpi, siis <span class="math inline">\(P(hea~hinne) = P(õpin)P(hea~hinne~ \lvert ~õpin) + P(ei~ õpi)P(hea~hinne~ \lvert ~ei~õpi)\)</span>. Ehk sõnadega kirjutatult: Hea hinde tõenäosus võrdub korrutisega kahest tõenäosusest – tõenäosus, et ma eksamiks õpin, ja tõenäosus, et ma saan hea hinde siis kui ma õpin –, millele tuleb liita teine korrutis kahest tõenäosustest – tõenäosus, et ma ei õpi, ja tõenäosus, et ma saan hea hinde ka ilma õppimata.<br />
+<p><strong>1. Punkt</strong> Linda on 31 aastane, vallaline, sõnakas ja väga nutikas. Ta õppis ülikoolis filosoofiat ja muretses sel ajal sügavalt diskrimineerimise ja sotsiaalse õigluse pärast ning osales tuumarelva vastastel meeleavaldustel. Kumb on tõenäolisem? Linda on pangateller. Või Linda on pangateller, kes osaleb feministlikus liikumises. Kuigi enamus vastajatest eelistab 2. varianti, on see sõna otses mõttes loogikavastane.</p>
+<p><strong>3. Punkt</strong> Kui me viskame täringut 3 korda, kui suure tõenäosusega saame vähemalt ühe kuue? Naiivselt võiks arvata, et see tõenäosus on 50%. Kuid rakendades tõenäosusteooriat saame teistsuguse vastuse. Lihtsuse huvides defineerime küsimuse ümber: kui suure tõenäosusega ei saa me 3-l viskel ühtegi kuute? Vastus: kui igal viskel on 0 kuue tõenäosus 5/6, siis <span class="math inline">\((5/6)*(5/6)*(5/6) = 0.58\)</span> ja <span class="math inline">\(1 - 0.58 = 0.42\)</span>, mis tähendab, et vähemalt 1 kuue (või ükskõik mis numbri ühest kuueni) saame 42% tõenäosusega. Teine näide (NYT 03-12-2017): te ostate maja Texases Hustonis, millele müüja annab garantii, et üleujutuse tõenäosus on 1% aastas. Seadus nimetab seda näidikut “100 aasta suurvee-tasemeks”. 1% näidu puhul ei pea te seaduse järgi ostma üleujutusekindlustust. Kui suure tõenäosusega tabab teie maja üleujutus pangalaenu perioodi vältel (30 aastat)? Vastus: <span class="math inline">\(1 - (99/100)^{30} = 0.26\)</span>.</p>
+<p><strong>4. Punkt</strong> Kui tõenäosus, et homme sajab pussnuge on 0.1 ja et ülehomme sajab pussnuge on 0.1, siis millise tõenäosusega sajab vähemalt ühel neist päevadest? Eeldades sündmuste sõltumatust: <span class="math inline">\(P(homme~ sajab \lor ülehomme~ sajab) = 0.1 + 0.1 - 0.1 \times 0.1 = 0.19\)</span>. Kui me aga teame, et sadu erinevatel päevadel on korreleeritud näiteks nii: <span class="math inline">\(P(ülehomme~ sajab~ \vert~homme~sajab)= 0.2\)</span>, <span class="math inline">\(P(ülehomme~ sajab~ \vert~ \lnot homme~sajab)= 0.15\)</span>, siis <span class="math inline">\(P(homme~ sajab \lor ülehomme~ sajab) = P(homme~ sajab) + P(ülehomme~ sajab) - P(homme~ sajab~ \And~ ülehomme~ sajab)\)</span>. Nüüd peame arvutama <span class="math inline">\(P(ülehomme~sajab)\)</span>, kasutades 6. punkti (marginaliseerimist), ja seejärel saame kasutada valemit <span class="math inline">\(P(A \lor B)= P(A)+P(B)-P(A)P(B ~\vert~A)\)</span>. Kui vihm on korreleeritud, siis väheneb tõenäosus, et sajab vähemalt ühel päeval.</p>
+<p><strong>5. Punkt</strong> Meil on kolm pannkooki, millest esimesel on mõlemad küljed moosised, teisel on üks külg moosine ja kolmandal pole üldse moosi. Juhtus nii, et meile pandi taldrikule pannkook, mille pealmine külg on moosine. Millise tõenäosusega on moosine ka selle pannkoogi alumine külg? NB! Vastus ei ole 50%. Lahendus: Kui A - moos all, B - moos üleval, siis vastavalt tingliku tõenäosuse definitsioonile <span class="math inline">\(P(moos~ all~ \lvert ~moos~üleval ) = P(moos~all \land ~moos~üleval)/P(moos~all)\)</span> Tõenäosus, et moos on all ja üleval on 1/3 (me teame, et 1 pannkook 3st on mõlemalt küljelt moosine) ja tõenäosus, et moos on all, on keskmine kolmest tõenäosusest, millega me kolmel pannkoogil moosise külje saame: mean(c(1, 0.5, 0)) = 1/2. Seega, vastus on <span class="math inline">\((1/3)/(1/2) = 2/3\)</span>. Kui me saame moosise ülemise külje, siis on tõenäosus 2/3, et ka all on moos!</p>
+<p><strong>6. Punkt</strong> Kui A tähistab sündmust “ma sooritan eksami edukalt” ja B tähistab sündmust “ma õpin eksamiks”, ning meil on dihhotoomne valik: õpin / ei õpi, siis <span class="math inline">\(P(hea~hinne) = P(õpin)P(hea~hinne~ \lvert ~õpin) + P(ei~ õpi)P(hea~hinne~ \lvert ~ei~õpi)\)</span>. Ehk sõnadega kirjutatult: Hea hinde tõenäosus võrdub korrutisega kahest tõenäosusest – tõenäosus, et ma eksamiks õpin, ja tõenäosus, et ma saan hea hinde siis kui ma õpin –, millele tuleb liita teine korrutis kahest tõenäosustest – tõenäosus, et ma ei õpi, ja tõenäosus, et ma saan hea hinde ka ilma õppimata.<br />
 Siit saad ise enda jaoks välja arvutada ennustuse, millise tõenäosusega just sina selle kursuse edukalt läbid.</p>
-<p><strong>Punkt8.</strong> Bayesi teoreemi rakendamine diskreetsetele hüpoteesidele: Oletame, et 45 aastane naine saab rinnavähi sõeluuringus mammograafias positiivse tulemuse. Millise tõenäosusega on tal rinnavähk? Kõigepealt jagame hüpoteesiruumi kahe diskreetse hüpoteesi vahel: H<sub>1</sub> - vähk ja H<sub>2</sub> - mitte vähk. Edasi omistame numbrilised väärtused järgmistele parameetritele:</p>
+<p><strong>7. Punkt</strong> Bayesi teoreemi rakendamine diskreetsetele hüpoteesidele: Oletame, et 45 aastane naine saab rinnavähi sõeluuringus mammograafias positiivse tulemuse. Millise tõenäosusega on tal rinnavähk? Kõigepealt jagame hüpoteesiruumi kahe diskreetse hüpoteesi vahel: H<sub>1</sub> - vähk ja H<sub>2</sub> - mitte vähk. Edasi omistame numbrilised väärtused järgmistele parameetritele:</p>
 <ol style="list-style-type: decimal">
 <li><p>H<sub>1</sub> tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil on rinnavähk (testi sensitiivsus): <span class="math inline">\(P( +~\vert~H_1) = 0.9\)</span></p></li>
 <li><p>H<sub>2</sub> tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil ei ole rinnavähki (1 - testi spetsiifilisus): <span class="math inline">\(P( +~\vert~H_2) = 0.08\)</span>. Pane tähele, et 0.9 + 0.08 ei võrdu ühega, mis tähendab, et tõepära pole tõenäosusteooria mõttes päris tõenäosus.</p></li>
@@ -455,7 +455,7 @@ posterior2
 </div>
 <div id="toenaosuse-tolgendus" class="section level3 unnumbered">
 <h3>Tõenäosuse tõlgendus</h3>
-<p>Kolmogorovi aksioomid õpetavad meid tõenäosustega matemaatiliselt ümber käima, aga nad ei anna meile seost matemaatiliste tõenäosuste ja päris maailma vahel, ega ei ütle, mida tõenäosus teaduses tähendab. Need on pigem küsimused teadlastele ja filosoofidele, kui matemaatikutele. Kaasajal eksisteerib kaks põhilist tõenäosuse tõlgendust, bayesiaanlik ja sageduslik, millest me siin käsitleme esimest. Sagedisliku tõlgenduse kohta vt lisa 1.</p>
+<p>Tõenäosus P() ei ole matemaatiliselt midagi enamat, kui reaalarv, mis rahuldab Kolmogorovi aksioomide poolt seatud tingimusi. Seevastu tõenäosuse mõiste tõlgendus, mis rahuldaks teaduse vajadusi, on pigem filosoofiline kui matemaatiline probleem. Teisisõnu, tõenäosusteooria õpetab meid tõenäosustega matemaatiliselt ümber käima, kuid ei anna meile seost matemaatiliste tõenäosuste ja päris maailma vahel, ega ei ütle, mida tõenäosus teaduses tähendab. Kaasajal eksisteerib kaks põhilist tõenäosuse tõlgendust, bayesiaanlik ja sageduslik, millest me siin käsitleme esimest. Sagedisliku tõlgenduse kohta vt lisa 1.</p>
 <p>Bayesiaanlik statistika opereerib episteemilise tõenäosusega. See tähendab, et tõenäosus annab numbrilise mõõdu meie ebakindluse määrale mõne hüpoteesi ehk parameetriväärtuse kehtimise kohta. Seega mõõdab tõenäosus meie teadmiste kindlust (või ebakindlust). Näiteks, kui Bayesi arvutus väidab, et vihma tõenäosus homme on 60%, siis me oleme 60% kindlad, et homme tuleb vihma. Aga hoolimata sellest, mida me vihma kohta usume, homme kas sajab vihma või mitte, ja seega on objektiivne vihma tõenäosus meie akna taga 0% või 100% – mitte kunagi 60%.</p>
 <blockquote>
 <p>Tõenäosuse formaalne tõlgendus tuleb otse kihlveokontorist. Kui sa arvutasid, et vihma tõenäosus homme on 60%, siis see tähendab, et sa oled ratsionaalse olendina nõus maksma mitte rohkem kui 60 senti kihlveo eest, mis võidu korral toob sulle sisse 1 EUR – ehk 40 senti kasumit.</p>

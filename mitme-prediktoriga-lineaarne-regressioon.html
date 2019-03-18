@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>16 Mitme prediktoriga lineaarne regressioon | Bayesi statistika kasutades R keelt</title>
-  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid.">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
+  <meta name="generator" content="bookdown  and GitBook 2.6.7" />
 
   <meta property="og:title" content="16 Mitme prediktoriga lineaarne regressioon | Bayesi statistika kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -22,14 +21,14 @@
   <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
   <meta name="twitter:image" content="img/cyclo.png" />
 
-<meta name="author" content="Taavi Päll">
-<meta name="author" content="Ülo Maiväli">
+<meta name="author" content="Taavi Päll" />
+<meta name="author" content="Ülo Maiväli" />
 
 
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
 <link rel="prev" href="bayesi-meetodil-lineaarse-mudeli-fittimine.html">
@@ -280,7 +279,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="20.4" data-path="brms-mudelid.html"><a href="brms-mudelid.html#binoomjaotusega-mudelid"><i class="fa fa-check"></i><b>20.4</b> Binoomjaotusega mudelid</a><ul>
 <li class="chapter" data-level="20.4.1" data-path="brms-mudelid.html"><a href="brms-mudelid.html#logistiline-regressioon"><i class="fa fa-check"></i><b>20.4.1</b> Logistiline regressioon</a></li>
-<li class="chapter" data-level="20.4.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#y-muutujal-3-kategoorilist-vaartust"><i class="fa fa-check"></i><b>20.4.2</b> y muutujal 3+ kategoorilist väärtust</a></li>
+<li class="chapter" data-level="20.4.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#y-muutujal-3-kategoorilist-vaartust"><i class="fa fa-check"></i><b>20.4.2</b> Y-muutujal 3+ kategoorilist väärtust</a></li>
 <li class="chapter" data-level="20.4.3" data-path="brms-mudelid.html"><a href="brms-mudelid.html#zero-inflated-mudelid"><i class="fa fa-check"></i><b>20.4.3</b> zero inflated mudelid</a></li>
 <li class="chapter" data-level="20.4.4" data-path="brms-mudelid.html"><a href="brms-mudelid.html#additiivsed-distributsioonilised-mudelid"><i class="fa fa-check"></i><b>20.4.4</b> additiivsed distributsioonilised mudelid</a></li>
 </ul></li>
@@ -559,9 +558,9 @@ diab_Bvs &lt;-<span class="st"> </span><span class="kw">Bvs</span>(<span class="
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
 <span class="kw">vif</span>(<span class="kw">lm</span>(hdl <span class="op">~</span><span class="st"> </span>chol <span class="op">+</span><span class="st"> </span>stab.glu <span class="op">+</span><span class="st"> </span>ratio <span class="op">+</span><span class="st"> </span>glyhb <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>height <span class="op">+</span><span class="st"> </span>weight <span class="op">+</span><span class="st">  </span>bp.1s <span class="op">+</span><span class="st"> </span>bp.1d <span class="op">+</span><span class="st"> </span>waist, <span class="dt">data =</span> diab))
 <span class="co">#&gt;     chol stab.glu    ratio    glyhb      age   height   weight    bp.1s </span>
-<span class="co">#&gt;     1.41     2.29     1.50     2.42     1.62     1.21     4.95     2.08 </span>
+<span class="co">#&gt;     1.41     2.34     1.51     2.46     1.63     1.20     4.89     2.14 </span>
 <span class="co">#&gt;    bp.1d    waist </span>
-<span class="co">#&gt;     1.74     4.77</span></code></pre></div>
+<span class="co">#&gt;     1.78     4.73</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(diab_Bvs)
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
@@ -571,20 +570,20 @@ diab_Bvs &lt;-<span class="st"> </span><span class="kw">Bvs</span>(<span class="
 <span class="co">#&gt; Inclusion Probabilities:</span>
 <span class="co">#&gt;             Incl.prob. HPM MPM</span>
 <span class="co">#&gt; chol                 1   *   *</span>
-<span class="co">#&gt; stab.glu        0.0246        </span>
+<span class="co">#&gt; stab.glu        0.0251        </span>
 <span class="co">#&gt; ratio                1   *   *</span>
-<span class="co">#&gt; glyhb           0.0288        </span>
-<span class="co">#&gt; age             0.0397        </span>
-<span class="co">#&gt; gendermale      0.0172        </span>
-<span class="co">#&gt; height          0.0397        </span>
-<span class="co">#&gt; weight          0.0773        </span>
-<span class="co">#&gt; framelarge      0.0367        </span>
-<span class="co">#&gt; framemedium      0.014        </span>
-<span class="co">#&gt; framesmall      0.0228        </span>
-<span class="co">#&gt; bp.1s           0.0146        </span>
-<span class="co">#&gt; bp.1d           0.0139        </span>
-<span class="co">#&gt; waist           0.0527        </span>
-<span class="co">#&gt; hip              0.518   *   *</span>
+<span class="co">#&gt; glyhb           0.0228        </span>
+<span class="co">#&gt; age              0.042        </span>
+<span class="co">#&gt; gendermale      0.0174        </span>
+<span class="co">#&gt; height          0.0406        </span>
+<span class="co">#&gt; weight          0.0859        </span>
+<span class="co">#&gt; framelarge      0.0366        </span>
+<span class="co">#&gt; framemedium     0.0143        </span>
+<span class="co">#&gt; framesmall       0.024        </span>
+<span class="co">#&gt; bp.1s            0.016        </span>
+<span class="co">#&gt; bp.1d           0.0154        </span>
+<span class="co">#&gt; waist            0.054        </span>
+<span class="co">#&gt; hip             0.5706   *   *</span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Code: HPM stands for Highest posterior Probability Model and</span>
 <span class="co">#&gt;  MPM for Median Probability Model.</span>
@@ -606,20 +605,20 @@ diab_Bvs &lt;-<span class="st"> </span><span class="kw">Bvs</span>(<span class="
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Inclusion Probabilities:</span>
 <span class="co">#&gt;             Incl.prob. HPM MPM</span>
-<span class="co">#&gt; stab.glu        0.0612        </span>
+<span class="co">#&gt; stab.glu        0.0639        </span>
 <span class="co">#&gt; ratio                1   *   *</span>
-<span class="co">#&gt; glyhb           0.1221        </span>
-<span class="co">#&gt; age             0.9813   *   *</span>
-<span class="co">#&gt; gendermale      0.1164        </span>
-<span class="co">#&gt; height          0.0612        </span>
-<span class="co">#&gt; weight          0.1514        </span>
-<span class="co">#&gt; framelarge      0.7096   *   *</span>
-<span class="co">#&gt; framemedium       0.12        </span>
-<span class="co">#&gt; framesmall      0.0825        </span>
-<span class="co">#&gt; bp.1s           0.0834        </span>
-<span class="co">#&gt; bp.1d           0.5193       *</span>
-<span class="co">#&gt; waist           0.1292        </span>
-<span class="co">#&gt; hip              0.161        </span>
+<span class="co">#&gt; glyhb           0.1199        </span>
+<span class="co">#&gt; age             0.9794   *   *</span>
+<span class="co">#&gt; gendermale       0.128        </span>
+<span class="co">#&gt; height          0.0654        </span>
+<span class="co">#&gt; weight           0.178        </span>
+<span class="co">#&gt; framelarge       0.701   *   *</span>
+<span class="co">#&gt; framemedium     0.1223        </span>
+<span class="co">#&gt; framesmall      0.0863        </span>
+<span class="co">#&gt; bp.1s           0.0917        </span>
+<span class="co">#&gt; bp.1d           0.6012       *</span>
+<span class="co">#&gt; waist            0.143        </span>
+<span class="co">#&gt; hip               0.18        </span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Code: HPM stands for Highest posterior Probability Model and</span>
 <span class="co">#&gt;  MPM for Median Probability Model.</span>
@@ -650,7 +649,7 @@ nullmodel &lt;-<span class="st"> </span>hdl <span class="op">~</span><span class
 <span class="co">#&gt; ---------</span>
 <span class="co">#&gt; Bayes factors (expressed in relation to H0)</span>
 <span class="co">#&gt;  H0.to.H0  H1.to.H0  H2.to.H0  H3.to.H0 </span>
-<span class="co">#&gt;  1.00e+00 1.51e+131 1.73e+142  1.48e+55 </span>
+<span class="co">#&gt;  1.00e+00 1.71e+131 1.68e+142  2.44e+55 </span>
 <span class="co">#&gt; ---------</span>
 <span class="co">#&gt; Posterior probabilities:</span>
 <span class="co">#&gt; H0 H1 H2 H3 </span>
@@ -665,8 +664,8 @@ regs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span clas
 <p><img src="14_mitu-prediktorit_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Peale 2. muutuja lisamist jääb adjusteeritud r-ruut stabiilseks. Seega piisab kahest muutujast.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">reg.summary<span class="op">$</span>adjr2
-<span class="co">#&gt;  [1] 0.469 0.488 0.501 0.508 0.509 0.512 0.513 0.513 0.512 0.511 0.510</span>
-<span class="co">#&gt; [12] 0.508 0.507 0.506</span></code></pre></div>
+<span class="co">#&gt;  [1] 0.470 0.489 0.502 0.510 0.512 0.514 0.515 0.515 0.514 0.513 0.511</span>
+<span class="co">#&gt; [12] 0.510 0.509 0.508</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(regfit.full)
 <span class="co">#&gt; Subset selection object</span>
 <span class="co">#&gt; Call: regsubsets.formula(hdl ~ stab.glu + ratio + glyhb + age + gender + </span>

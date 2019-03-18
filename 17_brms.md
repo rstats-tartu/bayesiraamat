@@ -268,17 +268,70 @@ Siin me võrdleme neid nelja mudelit. Väikseim looic (leave-one-out information
 
 ```r
 loo(m1, m2, m3, m4)
-#>          LOOIC    SE
-#> m1      106.43 16.65
-#> m2       81.61 16.11
-#> m3       80.06 15.77
-#> m4      100.55 16.41
-#> m1 - m2  24.82  9.63
-#> m1 - m3  26.37 10.66
-#> m1 - m4   5.88 15.28
-#> m2 - m3   1.55  3.34
-#> m2 - m4 -18.94  9.90
-#> m3 - m4 -20.49  9.95
+#> Warning: Passing multiple brmsfit objects to 'loo' and related methods is
+#> deprecated. Please see ?loo.brmsfit for the recommended workflow.
+#> Output of model 'm1':
+#> 
+#> Computed from 3000 by 150 log-likelihood matrix
+#> 
+#>          Estimate   SE
+#> elpd_loo    -53.2  8.3
+#> p_loo         4.8  0.7
+#> looic       106.4 16.6
+#> ------
+#> Monte Carlo SE of elpd_loo is 0.0.
+#> 
+#> All Pareto k estimates are good (k < 0.5).
+#> See help('pareto-k-diagnostic') for details.
+#> 
+#> Output of model 'm2':
+#> 
+#> Computed from 3000 by 150 log-likelihood matrix
+#> 
+#>          Estimate   SE
+#> elpd_loo    -40.8  8.1
+#> p_loo         5.6  0.7
+#> looic        81.6 16.1
+#> ------
+#> Monte Carlo SE of elpd_loo is 0.0.
+#> 
+#> All Pareto k estimates are good (k < 0.5).
+#> See help('pareto-k-diagnostic') for details.
+#> 
+#> Output of model 'm3':
+#> 
+#> Computed from 3000 by 150 log-likelihood matrix
+#> 
+#>          Estimate   SE
+#> elpd_loo    -40.0  7.9
+#> p_loo         7.1  0.9
+#> looic        80.0 15.8
+#> ------
+#> Monte Carlo SE of elpd_loo is 0.1.
+#> 
+#> All Pareto k estimates are good (k < 0.5).
+#> See help('pareto-k-diagnostic') for details.
+#> 
+#> Output of model 'm4':
+#> 
+#> Computed from 3000 by 150 log-likelihood matrix
+#> 
+#>          Estimate   SE
+#> elpd_loo    -50.3  8.2
+#> p_loo         3.5  0.5
+#> looic       100.5 16.4
+#> ------
+#> Monte Carlo SE of elpd_loo is 0.0.
+#> 
+#> All Pareto k estimates are good (k < 0.5).
+#> See help('pareto-k-diagnostic') for details.
+#> 
+#> Model comparisons:
+#>    elpd_diff se_diff
+#> m3   0.0       0.0  
+#> m2  -0.8       1.7  
+#> m4 -10.3       5.0  
+#> m1 -13.2       5.3
 ```
 
 Siin on m1 ja m2/m3 mudeli erinevus 25 ühikut ja selle erinevuse standardviga on 10 ühikut. 2 SE-d annab umbkaudu 95% usaldusintervalli, ja see ei kata antud juhul nulli. Seega järeldame, et m2 ja m3, mis kasutavad ennustamiseks lisamuutujat, on selgelt eelistatud. Samas ei saa me õelda, et hierarhiline mudel m2 oleks parem või halvem kui interaktsioonimudel m3. Ka puudub oluline erinevus m1 ja m4 fiti vahel. Tundub, et selle ennustusjõu, mille me võidame lisaparameetrit mudeldades, kaotame omakorda liike ühte patta pannes (neid mitte osaliselt iseseisvana modelleerides).
@@ -288,17 +341,54 @@ Alternatiivina kasutame `brms::waic` kriteeriumit mudelite võrdlemiseks. See t�
 
 ```r
 waic(m1, m2, m3, m4)
-#>           WAIC    SE
-#> m1      106.40 16.64
-#> m2       81.55 16.10
-#> m3       79.96 15.76
-#> m4      100.53 16.41
-#> m1 - m2  24.85  9.63
-#> m1 - m3  26.44 10.67
-#> m1 - m4   5.87 15.28
-#> m2 - m3   1.60  3.34
-#> m2 - m4 -18.98  9.90
-#> m3 - m4 -20.57  9.95
+#> Warning: Passing multiple brmsfit objects to 'loo' and related methods is
+#> deprecated. Please see ?loo.brmsfit for the recommended workflow.
+#> Output of model 'm1':
+#> 
+#> Computed from 3000 by 150 log-likelihood matrix
+#> 
+#>           Estimate   SE
+#> elpd_waic    -53.2  8.3
+#> p_waic         4.8  0.7
+#> waic         106.4 16.6
+#> Warning: 1 (0.7%) p_waic estimates greater than 0.4. We recommend trying
+#> loo instead.
+#> 
+#> Output of model 'm2':
+#> 
+#> Computed from 3000 by 150 log-likelihood matrix
+#> 
+#>           Estimate   SE
+#> elpd_waic    -40.8  8.0
+#> p_waic         5.6  0.7
+#> waic          81.6 16.1
+#> 
+#> Output of model 'm3':
+#> 
+#> Computed from 3000 by 150 log-likelihood matrix
+#> 
+#>           Estimate   SE
+#> elpd_waic    -40.0  7.9
+#> p_waic         7.0  0.9
+#> waic          80.0 15.8
+#> Warning: 1 (0.7%) p_waic estimates greater than 0.4. We recommend trying
+#> loo instead.
+#> 
+#> Output of model 'm4':
+#> 
+#> Computed from 3000 by 150 log-likelihood matrix
+#> 
+#>           Estimate   SE
+#> elpd_waic    -50.3  8.2
+#> p_waic         3.5  0.5
+#> waic         100.5 16.4
+#> 
+#> Model comparisons:
+#>    elpd_diff se_diff
+#> m3   0.0       0.0  
+#> m2  -0.8       1.7  
+#> m4 -10.3       5.0  
+#> m1 -13.2       5.3
 ```
 
 Nagu näha, annavad LOO ja waic sageli väga sarnaseid tulemusi.
@@ -610,12 +700,12 @@ predict_interval_brms2 <- predict(m2, newdata = newx, re_formula = NULL) %>%
   cbind(newx, .)
 head(predict_interval_brms2)
 #>   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5
-#> 1         1.00        3.06  setosa     4.49     0.315 3.89  5.12
-#> 2         1.04        3.06  setosa     4.52     0.314 3.89  5.14
-#> 3         1.08        3.06  setosa     4.55     0.318 3.92  5.16
-#> 4         1.12        3.06  setosa     4.58     0.313 3.95  5.18
-#> 5         1.16        3.06  setosa     4.62     0.324 3.97  5.24
-#> 6         1.20        3.06  setosa     4.65     0.309 4.03  5.26
+#> 1         1.00        3.06  setosa     4.49     0.320 3.88  5.11
+#> 2         1.04        3.06  setosa     4.52     0.309 3.93  5.16
+#> 3         1.08        3.06  setosa     4.55     0.319 3.93  5.17
+#> 4         1.12        3.06  setosa     4.58     0.319 3.96  5.22
+#> 5         1.16        3.06  setosa     4.60     0.314 3.96  5.20
+#> 6         1.20        3.06  setosa     4.65     0.312 4.03  5.26
 ```
 
 `predict()` ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele
@@ -1777,7 +1867,7 @@ marginal_effects(m_ucadmit2, effects ="dept", conditions = data.frame(male = c(0
 
 <img src="17_brms_files/figure-html/unnamed-chunk-148-1.png" width="70%" style="display: block; margin: auto;" />
 
-### y muutujal 3+ kategoorilist väärtust
+### Y-muutujal 3+ kategoorilist väärtust
 
  Building a generalized linear model from a multinomial likelihood is complicated, because as the event types multiply, so too do your modeling choices. And there are two different approaches to constructing the likelihoods, as well.  The  First is based directly on the multinomial likelihood and uses a generalization of the logit link. 
 
@@ -1785,6 +1875,8 @@ When more than two types of unordered events are possible, and the probability o
 
 
 Estimate the association between person’s family income and which career (there are 3 choiches) he chooses. 
+
+
 
 
 ```r
@@ -1832,6 +1924,21 @@ ggplot(pred1_l, aes(income, value)) + geom_point() + facet_wrap(~variable)+
 
 <img src="17_brms_files/figure-html/unnamed-chunk-152-1.png" width="70%" style="display: block; margin: auto;" />
  
+ 
+#### Y-muutujal on 3+ kategoorilist väärtust, mis on ordinaalselt järjestatud {-}
+
+Kui näiteks Y-muutuja väärtused on "vähe", "rohkem", "palju rohkem", siis me saame aru, et 3 väärtust on küll järjestatud, aga nende vahelised kaugused andmeruumis ei pruugi olla võrdsed.
+Nüüd kasutame mudelit vormis:
+
+```r
+brm(y ~ x + (1|id), 
+    data=d, 
+    family=cumulative("logit"), 
+    threshold="flexible")
+```
+
+Kumulatiivse mudeliga ordinaalse logistilise regressiooni üks eeldustest (proportional odds assumption) on, et y-muutuja tasemete iga võimalik paar on sama tõusuga (identsed beta koefitsiendid, erinevad ainult interceptid). Tasub ka meeles pidada, et mudelisse X-muutujaid lisades võime selle eelduse pekki keerata.
+
 
 ### zero inflated mudelid
 
@@ -1982,6 +2089,7 @@ bf_back <- bf(back ~ s(hatchdate) + (1|p|fosternest) + (1|q|dam)) +
   gaussian()
 fit3 <- brm(bf_tarsus + bf_back + set_rescor(FALSE), data = BTdata)
 ```
+
 
 ### Mittelineaarsed mudelid
 

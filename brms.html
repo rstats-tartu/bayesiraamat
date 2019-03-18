@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>19 brms | Bayesi statistika kasutades R keelt</title>
-  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid.">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
+  <meta name="generator" content="bookdown  and GitBook 2.6.7" />
 
   <meta property="og:title" content="19 brms | Bayesi statistika kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -22,14 +21,14 @@
   <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
   <meta name="twitter:image" content="img/cyclo.png" />
 
-<meta name="author" content="Taavi Päll">
-<meta name="author" content="Ülo Maiväli">
+<meta name="author" content="Taavi Päll" />
+<meta name="author" content="Ülo Maiväli" />
 
 
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
 <link rel="prev" href="mitmetasemelised-mudelid.html">
@@ -280,7 +279,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="20.4" data-path="brms-mudelid.html"><a href="brms-mudelid.html#binoomjaotusega-mudelid"><i class="fa fa-check"></i><b>20.4</b> Binoomjaotusega mudelid</a><ul>
 <li class="chapter" data-level="20.4.1" data-path="brms-mudelid.html"><a href="brms-mudelid.html#logistiline-regressioon"><i class="fa fa-check"></i><b>20.4.1</b> Logistiline regressioon</a></li>
-<li class="chapter" data-level="20.4.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#y-muutujal-3-kategoorilist-vaartust"><i class="fa fa-check"></i><b>20.4.2</b> y muutujal 3+ kategoorilist väärtust</a></li>
+<li class="chapter" data-level="20.4.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#y-muutujal-3-kategoorilist-vaartust"><i class="fa fa-check"></i><b>20.4.2</b> Y-muutujal 3+ kategoorilist väärtust</a></li>
 <li class="chapter" data-level="20.4.3" data-path="brms-mudelid.html"><a href="brms-mudelid.html#zero-inflated-mudelid"><i class="fa fa-check"></i><b>20.4.3</b> zero inflated mudelid</a></li>
 <li class="chapter" data-level="20.4.4" data-path="brms-mudelid.html"><a href="brms-mudelid.html#additiivsed-distributsioonilised-mudelid"><i class="fa fa-check"></i><b>20.4.4</b> additiivsed distributsioonilised mudelid</a></li>
 </ul></li>
@@ -524,31 +523,121 @@ y &lt;-<span class="st"> </span><span class="kw">dstudent_t</span>(x, <span clas
 <span class="kw">write_rds</span>(m4, <span class="dt">path =</span> <span class="st">&quot;data/m4.fit&quot;</span>)</code></pre></div>
 <p>Siin me võrdleme neid nelja mudelit. Väikseim looic (leave-one-out information criterion) võidab. See on suhteline võrdlus – looic abs väärtus ei mängi mingit rolli.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">loo</span>(m1, m2, m3, m4)
-<span class="co">#&gt;          LOOIC    SE</span>
-<span class="co">#&gt; m1      106.43 16.65</span>
-<span class="co">#&gt; m2       81.61 16.11</span>
-<span class="co">#&gt; m3       80.06 15.77</span>
-<span class="co">#&gt; m4      100.55 16.41</span>
-<span class="co">#&gt; m1 - m2  24.82  9.63</span>
-<span class="co">#&gt; m1 - m3  26.37 10.66</span>
-<span class="co">#&gt; m1 - m4   5.88 15.28</span>
-<span class="co">#&gt; m2 - m3   1.55  3.34</span>
-<span class="co">#&gt; m2 - m4 -18.94  9.90</span>
-<span class="co">#&gt; m3 - m4 -20.49  9.95</span></code></pre></div>
+<span class="co">#&gt; Warning: Passing multiple brmsfit objects to &#39;loo&#39; and related methods is</span>
+<span class="co">#&gt; deprecated. Please see ?loo.brmsfit for the recommended workflow.</span>
+<span class="co">#&gt; Output of model &#39;m1&#39;:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Computed from 3000 by 150 log-likelihood matrix</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;          Estimate   SE</span>
+<span class="co">#&gt; elpd_loo    -53.2  8.3</span>
+<span class="co">#&gt; p_loo         4.8  0.7</span>
+<span class="co">#&gt; looic       106.4 16.6</span>
+<span class="co">#&gt; ------</span>
+<span class="co">#&gt; Monte Carlo SE of elpd_loo is 0.0.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; All Pareto k estimates are good (k &lt; 0.5).</span>
+<span class="co">#&gt; See help(&#39;pareto-k-diagnostic&#39;) for details.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Output of model &#39;m2&#39;:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Computed from 3000 by 150 log-likelihood matrix</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;          Estimate   SE</span>
+<span class="co">#&gt; elpd_loo    -40.8  8.1</span>
+<span class="co">#&gt; p_loo         5.6  0.7</span>
+<span class="co">#&gt; looic        81.6 16.1</span>
+<span class="co">#&gt; ------</span>
+<span class="co">#&gt; Monte Carlo SE of elpd_loo is 0.0.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; All Pareto k estimates are good (k &lt; 0.5).</span>
+<span class="co">#&gt; See help(&#39;pareto-k-diagnostic&#39;) for details.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Output of model &#39;m3&#39;:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Computed from 3000 by 150 log-likelihood matrix</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;          Estimate   SE</span>
+<span class="co">#&gt; elpd_loo    -40.0  7.9</span>
+<span class="co">#&gt; p_loo         7.1  0.9</span>
+<span class="co">#&gt; looic        80.0 15.8</span>
+<span class="co">#&gt; ------</span>
+<span class="co">#&gt; Monte Carlo SE of elpd_loo is 0.1.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; All Pareto k estimates are good (k &lt; 0.5).</span>
+<span class="co">#&gt; See help(&#39;pareto-k-diagnostic&#39;) for details.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Output of model &#39;m4&#39;:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Computed from 3000 by 150 log-likelihood matrix</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;          Estimate   SE</span>
+<span class="co">#&gt; elpd_loo    -50.3  8.2</span>
+<span class="co">#&gt; p_loo         3.5  0.5</span>
+<span class="co">#&gt; looic       100.5 16.4</span>
+<span class="co">#&gt; ------</span>
+<span class="co">#&gt; Monte Carlo SE of elpd_loo is 0.0.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; All Pareto k estimates are good (k &lt; 0.5).</span>
+<span class="co">#&gt; See help(&#39;pareto-k-diagnostic&#39;) for details.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Model comparisons:</span>
+<span class="co">#&gt;    elpd_diff se_diff</span>
+<span class="co">#&gt; m3   0.0       0.0  </span>
+<span class="co">#&gt; m2  -0.8       1.7  </span>
+<span class="co">#&gt; m4 -10.3       5.0  </span>
+<span class="co">#&gt; m1 -13.2       5.3</span></code></pre></div>
 <p>Siin on m1 ja m2/m3 mudeli erinevus 25 ühikut ja selle erinevuse standardviga on 10 ühikut. 2 SE-d annab umbkaudu 95% usaldusintervalli, ja see ei kata antud juhul nulli. Seega järeldame, et m2 ja m3, mis kasutavad ennustamiseks lisamuutujat, on selgelt eelistatud. Samas ei saa me õelda, et hierarhiline mudel m2 oleks parem või halvem kui interaktsioonimudel m3. Ka puudub oluline erinevus m1 ja m4 fiti vahel. Tundub, et selle ennustusjõu, mille me võidame lisaparameetrit mudeldades, kaotame omakorda liike ühte patta pannes (neid mitte osaliselt iseseisvana modelleerides).</p>
 <p>Alternatiivina kasutame <code>brms::waic</code> kriteeriumit mudelite võrdlemiseks. See töötab kiiremini kui LOO ja tõlgendus on sarnane - väikseim waic võidab ja absolutväärtusi ei saa ükshaaval tõlgendada.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">waic</span>(m1, m2, m3, m4)
-<span class="co">#&gt;           WAIC    SE</span>
-<span class="co">#&gt; m1      106.40 16.64</span>
-<span class="co">#&gt; m2       81.55 16.10</span>
-<span class="co">#&gt; m3       79.96 15.76</span>
-<span class="co">#&gt; m4      100.53 16.41</span>
-<span class="co">#&gt; m1 - m2  24.85  9.63</span>
-<span class="co">#&gt; m1 - m3  26.44 10.67</span>
-<span class="co">#&gt; m1 - m4   5.87 15.28</span>
-<span class="co">#&gt; m2 - m3   1.60  3.34</span>
-<span class="co">#&gt; m2 - m4 -18.98  9.90</span>
-<span class="co">#&gt; m3 - m4 -20.57  9.95</span></code></pre></div>
+<span class="co">#&gt; Warning: Passing multiple brmsfit objects to &#39;loo&#39; and related methods is</span>
+<span class="co">#&gt; deprecated. Please see ?loo.brmsfit for the recommended workflow.</span>
+<span class="co">#&gt; Output of model &#39;m1&#39;:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Computed from 3000 by 150 log-likelihood matrix</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;           Estimate   SE</span>
+<span class="co">#&gt; elpd_waic    -53.2  8.3</span>
+<span class="co">#&gt; p_waic         4.8  0.7</span>
+<span class="co">#&gt; waic         106.4 16.6</span>
+<span class="co">#&gt; Warning: 1 (0.7%) p_waic estimates greater than 0.4. We recommend trying</span>
+<span class="co">#&gt; loo instead.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Output of model &#39;m2&#39;:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Computed from 3000 by 150 log-likelihood matrix</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;           Estimate   SE</span>
+<span class="co">#&gt; elpd_waic    -40.8  8.0</span>
+<span class="co">#&gt; p_waic         5.6  0.7</span>
+<span class="co">#&gt; waic          81.6 16.1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Output of model &#39;m3&#39;:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Computed from 3000 by 150 log-likelihood matrix</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;           Estimate   SE</span>
+<span class="co">#&gt; elpd_waic    -40.0  7.9</span>
+<span class="co">#&gt; p_waic         7.0  0.9</span>
+<span class="co">#&gt; waic          80.0 15.8</span>
+<span class="co">#&gt; Warning: 1 (0.7%) p_waic estimates greater than 0.4. We recommend trying</span>
+<span class="co">#&gt; loo instead.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Output of model &#39;m4&#39;:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Computed from 3000 by 150 log-likelihood matrix</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;           Estimate   SE</span>
+<span class="co">#&gt; elpd_waic    -50.3  8.2</span>
+<span class="co">#&gt; p_waic         3.5  0.5</span>
+<span class="co">#&gt; waic         100.5 16.4</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Model comparisons:</span>
+<span class="co">#&gt;    elpd_diff se_diff</span>
+<span class="co">#&gt; m3   0.0       0.0  </span>
+<span class="co">#&gt; m2  -0.8       1.7  </span>
+<span class="co">#&gt; m4 -10.3       5.0  </span>
+<span class="co">#&gt; m1 -13.2       5.3</span></code></pre></div>
 <p>Nagu näha, annavad LOO ja waic sageli väga sarnaseid tulemusi.</p>
 <p>Me ei süvene LOOIC ega waic-i statistilisse mõttesse, sest bayesi mudelite võrdlemine on kiiresti arenev ala, kus ühte parimat lahendust pole veel leitud.</p>
 </div>
@@ -715,12 +804,12 @@ pars &lt;-<span class="st"> </span><span class="kw">colnames</span>(model2)
 <span class="st">  </span><span class="kw">cbind</span>(newx, .)
 <span class="kw">head</span>(predict_interval_brms2)
 <span class="co">#&gt;   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5</span>
-<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.315 3.89  5.12</span>
-<span class="co">#&gt; 2         1.04        3.06  setosa     4.52     0.314 3.89  5.14</span>
-<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.318 3.92  5.16</span>
-<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.313 3.95  5.18</span>
-<span class="co">#&gt; 5         1.16        3.06  setosa     4.62     0.324 3.97  5.24</span>
-<span class="co">#&gt; 6         1.20        3.06  setosa     4.65     0.309 4.03  5.26</span></code></pre></div>
+<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.320 3.88  5.11</span>
+<span class="co">#&gt; 2         1.04        3.06  setosa     4.52     0.309 3.93  5.16</span>
+<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.319 3.93  5.17</span>
+<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.319 3.96  5.22</span>
+<span class="co">#&gt; 5         1.16        3.06  setosa     4.60     0.314 3.96  5.20</span>
+<span class="co">#&gt; 6         1.20        3.06  setosa     4.65     0.312 4.03  5.26</span></code></pre></div>
 <p><code>predict()</code> ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele</p>
 <p>Siin siis eraldi ennustused kahele liigile kolmest, kaasa arvatud petal length väärtusvahemikule, kus selle liigi isendeid valimis ei ole (ja võib-olla ei saagi olla)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">no_versicolor &lt;-<span class="st"> </span><span class="kw">filter</span>(iris, Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>)
