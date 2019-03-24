@@ -804,12 +804,12 @@ pars &lt;-<span class="st"> </span><span class="kw">colnames</span>(model2)
 <span class="st">  </span><span class="kw">cbind</span>(newx, .)
 <span class="kw">head</span>(predict_interval_brms2)
 <span class="co">#&gt;   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5</span>
-<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.320 3.88  5.11</span>
-<span class="co">#&gt; 2         1.04        3.06  setosa     4.52     0.309 3.93  5.16</span>
-<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.319 3.93  5.17</span>
-<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.319 3.96  5.22</span>
-<span class="co">#&gt; 5         1.16        3.06  setosa     4.60     0.314 3.96  5.20</span>
-<span class="co">#&gt; 6         1.20        3.06  setosa     4.65     0.312 4.03  5.26</span></code></pre></div>
+<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.312 3.88  5.10</span>
+<span class="co">#&gt; 2         1.04        3.06  setosa     4.51     0.316 3.90  5.13</span>
+<span class="co">#&gt; 3         1.08        3.06  setosa     4.54     0.322 3.91  5.17</span>
+<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.318 3.98  5.21</span>
+<span class="co">#&gt; 5         1.16        3.06  setosa     4.60     0.320 3.96  5.23</span>
+<span class="co">#&gt; 6         1.20        3.06  setosa     4.63     0.314 4.03  5.24</span></code></pre></div>
 <p><code>predict()</code> ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele</p>
 <p>Siin siis eraldi ennustused kahele liigile kolmest, kaasa arvatud petal length väärtusvahemikule, kus selle liigi isendeid valimis ei ole (ja võib-olla ei saagi olla)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">no_versicolor &lt;-<span class="st"> </span><span class="kw">filter</span>(iris, Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>)

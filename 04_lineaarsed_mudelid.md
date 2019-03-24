@@ -6,6 +6,7 @@
 
 ```r
 library(tidyverse)
+library(ggthemes)
 library(broom)
 library(modelr)
 library(viridis)
