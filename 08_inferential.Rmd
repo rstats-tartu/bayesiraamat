@@ -74,7 +74,7 @@ Tõenäosusteooria põhituletised:
 
 3. Kui A ja B on üksteisest sõltumatud, siis $P(A \land B) = P(A)P(B) = P(A~\vert~B)P(B)$ 
 
-4. Kui A ja B ei ole üksteist välistavad, siis $P(A \lor B) = P(A) + P(B) - P(A \And B)$. Kolmele sündmusele: $P(A \lor B \lor C) = P(A) + P(B) + (C) - P(A \And B) - P(B \And C) - P(A \And C) + P(A \And B \And C)$. 
+4. Kui A ja B ei ole üksteist välistavad, siis $P(A \lor B) = P(A) + P(B) - P(A \land B)$. Kolmele sündmusele: $P(A \lor B \lor C) = P(A) + P(B) + (C) - P(A \land B) - P(B \land C) - P(A \land C) + P(A \land B \land C)$. 
 
 5. Tingliku tõenäosuse definitsioon: $P(A~\vert~B) = \frac{P(A \land B)}{P(B)}$. 
 
