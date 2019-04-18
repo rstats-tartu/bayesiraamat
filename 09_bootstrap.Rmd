@@ -4,9 +4,12 @@
 # Bootstrap
 
 ```{r}
-library(tidyverse)
 library(rethinking)
 library(bayesboot)
+library(dplyr)
+library(purrr)
+library(ggplot2)
+library(modelr)
 ```
 
 
@@ -42,13 +45,14 @@ Mis on USA presidentide keskmine pikkus? Meil on viimase 11 presidendi pikkused.
 
 ```{r bootpost, fig.cap="(ref:bootpost)"}
 heights <- tibble(value = c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185, 188))
-B <- 2000 #the number of bootstrap samples
+B <- 1000 # the number of bootstrap samples
 
-boot_mean <- heights %>% 
-  broom::bootstrap(B) %>% 
-  do(summarise(., Mean = mean(value)))
+mean_value <- function(x) mean(as.data.frame(x)$value, na.rm = TRUE) # helper function
+boot <- bootstrap(heights, B)
+boot <- boot %>% 
+            mutate(Mean = map_dbl(strap, mean_value))
 
-ggplot(boot_mean, aes(Mean)) + geom_density()
+ggplot(boot, aes(Mean)) + geom_density()
 ```
 
 Mida selline keskväärtuste jaotus tähendab? Me võime seda vaadelda posterioorse tõenäosusjaotusena. Selle tõlgenduse kohaselt iseloomustab see jaotus täpselt meie usku presidentide keskmise pikkuse kohta, niipalju kui see usk põhineb bootstrappimises kasutatud andmetel. Senikaua, kui meil pole muud relevantset teavet, on kõik, mida me usume teadvat USA presidentide keskmise pikkuse kohta, peidus selles jaotuses. Need pikkused, mille kohal jaotus on kõrgem, sisaldavad meie jaoks tõenäolisemalt tegelikku USA presidentide keskmist pikkust kui need pikkused, mille kohal posterioorne jaotus on madalam.   

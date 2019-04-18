@@ -1,6 +1,5 @@
 ```{r include=FALSE, cache=FALSE}
 
-rm(list = ls(all.names = TRUE))
 set.seed(19)
 
 options(digits = 3,
@@ -18,16 +17,13 @@ knitr::opts_chunk$set(
   fig.asp = 0.7,  # 1 / phi
   fig.show = "hold"
 )
-
-library(ggplot2)
-library(ggthemes)
-old <- theme_set(theme_tufte())
 ```
 
 # Lineaarsed mudelid
 
 ```{r}
 library(tidyverse)
+library(ggthemes)
 library(broom)
 library(modelr)
 library(viridis)
