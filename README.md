@@ -3,4 +3,4 @@
 
 # Bayesiraamat
 
-R Bayes statistics brochure, in estonian.
+R Bayes statistics brochure in Estonian.
