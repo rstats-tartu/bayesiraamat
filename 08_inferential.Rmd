@@ -390,9 +390,9 @@ Statistikas pööratakse tõenäosusteoreetiline ülesanne pea peale ja küsitak
 
 **Tõenäosusteooria aksioomid**, mida on neli tükki, ütlevad tõlkes inimkeelde, 
 
-(1) et iga sündmuse tõenäosus on suurem või võrdne nulliga, 
+(1) et iga sündmuse tõenäosus on suurem või võrdne nulliga - $P(A) \geq 0$, 
 
-(2) et loogiliselt paratamatu sündmuse tõenäosus on üks,  
+(2) et loogiliselt paratamatu sündmuse tõenäosus on üks - $P(\Omega)=1$. $\Omega$ on *sample space*, mis koosneb üksteist välistavatest ja ammendavatest hüpoteesidest. Nende hüpoteeside tõenäosuste summa on 1, mis tähendab, et täpselt üks neist kehtib paratamatult.  
 
 (3) et üksteist välistavate sündmuse puhul võrdub tõenäosus, et toimub üks või teine sündmus, nende sündmuste tõenäosuste summaga, ehk $P(A \lor B) = P(A) + P(B)$. 
 
@@ -420,24 +420,34 @@ Me anname siin 9 tuletust ilma tõestuskäikudeta, mis on aga lihtsad. Siin või
 
 Tõenäosusteooria põhituletised:
 
-5. $P(A \And B) \le P(A)$, ehk kui B on A alamhulk $[A \lor (B \land \lnot A)  \Leftrightarrow B]$, siis $P(B) \leq P(A)$.  
+5. $0 \leq P(A) \leq 1$ - tõenäosused jäävad 0 ja 1 vahele
 
-5.1. Kui tõendusmaterjal e on hüpoteesi h alamhulk, ehk kui h ennustab e-d, ja kui on täidetud tingimused (*i*) $P(h) > 0$ ja (*ii*) $P(e) < 1$, siis $P(h \lvert~ e) > P(h)$, ehk e esinemine tõstab h tõenäosust.
+6. $P(\lnot A) = 1 - P(A)$, üksteist välistavate ammendavate hüpoteeside tõenäosused summeeruvad ühiktõenäosusele. 
 
-6. Definitsioon: A ja B on üksteisest sõltumatud siis ja ainult siis kui $P(A~ \vert B) = P(A)$ 
+7. $P(A \And B) \le P(A)$; $P(B) \leq P(A \lor B)$
 
-7. Kui A ja B on üksteisest sõltumatud, siis $P(A \land B) = P(A)P(B) = P(A~\vert~B)P(B)$ 
+8. Kui B tuleneb deduktiivselt A-st ja $P(A) > 0$, siis $P(B~ \vert ~A) = 1$ ja $P(\lnot B~ \vert A) = 0$. Siit tuleleb, et kui tõendusmaterjal *e* tuleneb deduktiivselt hüpoteesist *H* (*H* ennustab *e*-d) ja kui $P(H) > 0$ ning $P(e) < 1$, siis $P(H~ \lvert~ e) > P(H)$, ehk *e* tõstab *H* tõenäosust.
 
-8. Kui A ja B ei ole üksteist välistavad, siis $P(A \lor B) = P(A) + P(B) - P(A \land B)$. Kolmele sündmusele: $P(A \lor B \lor C) = P(A) + P(B) + (C) - P(A \land B) - P(B \land C) - P(A \land C) + P(A \land B \land C)$. 
+9. Kui B tuleneb deduktiivselt A-st $[A \lor (B \land \lnot A)  \Leftrightarrow B]$, siis $P(B) \leq P(A)$.
+ 
+10. Loogiliselt ekvivalentsed propositsioonid/hüpoteesid on sama tõenäosusega -- kui $A \Leftrightarrow B$, siis $P(A) = P(B)$
 
-9. Totaalne ehk marginaalne tõenäosus: $P(A) = P(A~\vert~B)P(B) + P(A~\vert~\lnot B)P(\lnot B)$, ehk $P(A) = P(A~\vert~B_1)P(B_1) + P(A~\vert~ B_2)P(B_2) + ...$ kõikidele võimalikele B-le, tuletatud 5. punktist.  
+11. Üksteist välistavate propositsioonide korral $P(A_1 \lor A_2 \lor ... \lor A_n) = P(A_1) + P(A_2) + ... + P(A_n)$ -- see on *finiitse additiivsuse printsiip*.
 
-10. Bayesi teoreem: $P(A~\vert~B) =\frac{P(A)P(B~\vert~A)}{P(B)}$ -- tuletatud 5. punktist, kus $P(B) = P(A)P(B~\vert~A) + P(\lnot A)P(B~\vert~\lnot A)$ tuleb 6. punktist.     
+12. Definitsioon: A ja B on üksteisest sõltumatud siis ja ainult siis kui $P(A~ \vert B) = P(A)$ 
+
+13. Kui A ja B on üksteisest sõltumatud, siis $$P(A\land B) = P(A)P(B)$$ 
+
+14. Kui A ja B ei ole üksteisest sõltumatud, siis $$P(A \lor B) = P(A) + P(B) - P(A \land B)$$ ja kolmele sündmusele: $$\begin{array}{lcl} P(A \lor B \lor C) = P(A) + P(B) + P(C) - \\P(A \land B) - P(B \land C) - P(A \land C) + \\P(A \land B \land C) \end{array}$$ 
+
+15. Totaalne ehk marginaalne tõenäosus: $$P(A) = P(A~\vert~B)P(B) + P(A~\vert~\lnot B)P(\lnot B)$$ ehk $$P(A) = P(A~\vert~B_1)P(B_1) + P(A~\vert~ B_2)P(B_2) + ...$$ üksteist välistavatele B-dele.  
+
+16. Bayesi teoreem: $$P(A~\vert~B) =\frac{P(A)P(B~\vert~A)}{P(B)}$$ kus vastavalt 15. punktile $$P(B) = P(A)P(B~\vert~A) + P(\lnot A)P(B~\vert~\lnot A)$$ või $$P(B) = P(A_1)P(B~\vert~A_1) + P(A_2)P(B~\vert~A_2) + ...$$     
 
 Bayesi teoreemi kasutatakse määramaks hüpoteesi tõenäosuse pärast uute faktide (andmete) lisandumist olemasolevatele teadmistele. Selleks peab hüpoteesiruum olema jagatud vähemalt kaheks ammendavaks ja üksteist välistavaks hüpoteesiks. 
-Kui A on H~1~ ning mitte-A on ammendav ja välistav H~2~ ja B tähistab andmeid (data), saame Bayesi teoreemi ümber kirjutada 
+Kui A on H~1~ ning mitte-A on ammendav ja välistav H~2~ ja B tähistab andmeid (data), saame Bayesi teoreemi ümber kirjutada
 
-$P(H_1~\vert~data) =  P(H_1)P(data~\vert~H_1) /( P(H_1)P(data~\vert~H_1) + P(H_2)P(data~ \vert ~H_2) )$
+$$P(H_1~\vert~data) =  \frac{P(H_1)P(data~\vert~H_1)}{ P(H_1)P(data~\vert~H_1) + P(H_2)P(data~ \vert ~H_2)}$$
 
 $P(H_1~\vert~data)$ on $H_1$ kehtimise tõenäosus meie andmete korral -- ehk posteerior, 
 
@@ -446,31 +456,32 @@ $P(H_1)$ on $H_1$ kehtimise eelnev, ehk meie andmetest sõltumatu, tõenäosus -
 $P(data~\vert~H_1)$ on andmete esinemise tõenäosus tingimusel, et H~1~ kehtib -- ehk tõepära.
 
 Jagamistehe tehakse ainult selle pärast, et normaliseerida 1-le kõikide hüpoteeside tõenäosuste summa meie andmete korral ja seega viia posteerior vastavusse tõenäosusteooria aksioomidega --- kui meil on i ammendavat üksteist välistavat hüpoteesi, siis murrujoone alla läheb $\sum~P(data~\vert~H_i)P(H_i) = 1$. 
+
 Bayesi teoreem on triviaalne tuletus tõenäosusteooria aksioomidest, milles pole midagi maagilist. See ei ole automaatne meetod, mis tagaks inimkonna teadmiste kasvu, vaid lihtsalt parim võimalik viis andmemudeli ja taustateadmiste mudeli ühendamiseks ja normaliseerimiseks tinglikuks tõenäosuseks (hüpoteesi tõenäosus meie andmete ja taustateadmiste korral). Edasi sõltub kõik mudelite, andmete ja taustateadmiste kvaliteedist.
 
 ### Näited tõenäosusteooria tuletiste rakendamisest {-}
 
 Järgnevatel näidetel on ühist kaks asja: need on matemaatiliselt triviaalselt lihtsad, aga intuitiivselt lootusetult keerulised. Kõigi nende puhul on inimestel tugev intuitsioon, mis on vale -- ja tõenäosusteooria tundmine ei anna meile paremat intuitsiooni. Seega, ainus, mis üle jääb, on iga probleemi taandamine tõenäosusteooria valemitele ja selle tuimalt läbi arvutamine.
 
-**5. Punkt** Linda on 31 aastane, vallaline, sõnakas ja väga nutikas. Ta õppis ülikoolis filosoofiat ja muretses sel ajal sügavalt diskrimineerimise ja sotsiaalse õigluse pärast ning osales tuumarelva vastastel meeleavaldustel. Kumb on tõenäolisem? Linda on pangateller. Või Linda on pangateller, kes osaleb feministlikus liikumises. Kuigi enamus vastajatest eelistab 2. varianti, on see sõna otses mõttes loogikavastane.
+**7. Punkt** Linda on 31 aastane, vallaline, sõnakas ja väga nutikas. Ta õppis ülikoolis filosoofiat ja muretses sel ajal sügavalt diskrimineerimise ja sotsiaalse õigluse pärast ning osales tuumarelva vastastel meeleavaldustel. Kumb on tõenäolisem? Linda on pangateller. Või Linda on pangateller, kes osaleb feministlikus liikumises. Kuigi enamus vastajatest eelistab 2. varianti, on see sõna otses mõttes loogikavastane.
 
-**7. Punkt** Kui me viskame täringut 3 korda, kui suure tõenäosusega saame vähemalt ühe kuue? Naiivselt võiks arvata, et see tõenäosus on 50%. Kuid rakendades tõenäosusteooriat saame teistsuguse vastuse. Lihtsuse huvides defineerime küsimuse ümber: kui suure tõenäosusega ei saa me 3-l viskel ühtegi kuute? Vastus: kui igal viskel on 0 kuue tõenäosus 5/6, siis $(5/6)*(5/6)*(5/6) = 0.58$ ja $1 - 0.58 = 0.42$, mis tähendab, et vähemalt 1 kuue (või ükskõik mis numbri ühest kuueni) saame 42% tõenäosusega. Teine näide (NYT 03-12-2017): te ostate maja Texases Hustonis, millele müüja annab garantii, et üleujutuse tõenäosus on 1% aastas. Seadus nimetab seda näidikut "100 aasta suurvee-tasemeks". 1% näidu puhul ei pea te seaduse järgi ostma üleujutusekindlustust. Kui suure tõenäosusega tabab teie maja üleujutus pangalaenu perioodi vältel (30 aastat)? Vastus: $1 - (99/100)^{30} = 0.26$.
+**13. Punkt** Kui me viskame täringut 3 korda, kui suure tõenäosusega saame vähemalt ühe kuue? Naiivselt võiks arvata, et see tõenäosus on 50%. Kuid rakendades tõenäosusteooriat saame teistsuguse vastuse. Lihtsuse huvides defineerime küsimuse ümber: kui suure tõenäosusega ei saa me 3-l viskel ühtegi kuute? Vastus: kui igal viskel on 0 kuue tõenäosus 5/6, siis $(5/6)*(5/6)*(5/6) = 0.58$ ja $1 - 0.58 = 0.42$, mis tähendab, et vähemalt 1 kuue (või ükskõik mis numbri ühest kuueni) saame 42% tõenäosusega. Teine näide (NYT 03-12-2017): te ostate maja Texases Hustonis, millele müüja annab garantii, et üleujutuse tõenäosus on 1% aastas. Seadus nimetab seda näidikut "100 aasta suurvee-tasemeks". 1% näidu puhul ei pea te seaduse järgi ostma üleujutusekindlustust. Kui suure tõenäosusega tabab teie maja üleujutus pangalaenu perioodi vältel (30 aastat)? Vastus: $1 - (99/100)^{30} = 0.26$.
 
-**8. Punkt** Kui tõenäosus, et homme sajab pussnuge on 0.1 ja et ülehomme sajab pussnuge on 0.1, siis millise tõenäosusega sajab vähemalt ühel neist päevadest? Eeldades sündmuste sõltumatust: $P(homme~ sajab \lor ülehomme~ sajab) = 0.1 + 0.1 - 0.1 \times 0.1 = 0.19$. Kui me aga teame, et sadu erinevatel päevadel on korreleeritud näiteks nii: $P(ülehomme~ sajab~ \vert~homme~sajab)= 0.2$, $P(ülehomme~ sajab~ \vert~ \lnot homme~sajab)= 0.15$, siis $P(homme~ sajab \lor ülehomme~ sajab) = P(homme~ sajab) + P(ülehomme~ sajab) - P(homme~ sajab~ \And~ ülehomme~ sajab)$. Nüüd peame arvutama $P(ülehomme~sajab)$, kasutades 6. punkti (marginaliseerimist), ja seejärel saame kasutada valemit $P(A \lor B)= P(A)+P(B)-P(A)P(B ~\vert~A)$. Kui vihm on korreleeritud, siis väheneb tõenäosus, et sajab vähemalt ühel päeval.   
+**14. Punkt** Kui tõenäosus, et homme sajab pussnuge on 0.1 ja et ülehomme sajab pussnuge on 0.1, siis millise tõenäosusega sajab vähemalt ühel neist päevadest? Eeldades sündmuste sõltumatust: $$\begin{array}{lcl} P(homme~ sajab \lor ülehomme~ sajab) = \\0.1 + 0.1 - 0.1 \times 0.1 = 0.19\end{array}$$ Kui me aga teame, et sadu erinevatel päevadel on korreleeritud näiteks nii: $$P(ülehomme~ sajab~ \vert~homme~sajab)= 0.2$$ $$P(ülehomme~ sajab~ \vert~ \lnot homme~sajab)= 0.15$$ siis $$\begin{array}{lcl} P(homme~ sajab \lor ülehomme~ sajab) = \\P(homme~ sajab) + P(ülehomme~ sajab) - \\P(homme~ sajab~ \And~ ülehomme~ sajab) \end{array}$$ Nüüd peame arvutama $P(ülehomme~sajab)$, kasutades 15. punkti (marginaliseerimist), misjärel saame valemi $$P(A \lor B)= P(A)+P(B)-P(A)P(B ~\vert~A)$$ Kui vihm on korreleeritud, siis väheneb tõenäosus, et sajab vähemalt ühel päeval.   
 
-**4. Punkt** Meil on kolm pannkooki, millest esimesel on mõlemad küljed moosised, teisel on üks külg moosine ja kolmandal pole üldse moosi. Juhtus nii, et meile pandi taldrikule pannkook, mille pealmine külg on moosine. Millise tõenäosusega on moosine ka selle pannkoogi alumine külg? NB! Vastus ei ole 50%. Lahendus: Kui A - moos all, B - moos üleval, siis vastavalt 4. aksioomile $P(moos~ all~ \lvert ~moos~üleval ) = P(moos~all \land ~moos~üleval)/P(moos~all)$ Tõenäosus, et moos on all ja üleval on 1/3 (me teame, et 1 pannkook 3st on mõlemalt küljelt moosine) ja tõenäosus, et moos on all, on keskmine kolmest tõenäosusest, millega me kolmel pannkoogil moosise külje saame: mean(c(1, 0.5, 0)) = 1/2. Seega, vastus on $(1/3)/(1/2) = 2/3$. Kui me saame moosise ülemise külje, siis on tõenäosus 2/3, et ka all on moos!
+**4. Punkt** Meil on kolm pannkooki, millest esimesel on mõlemad küljed moosised, teisel on üks külg moosine ja kolmandal pole üldse moosi. Juhtus nii, et meile pandi taldrikule pannkook, mille pealmine külg on moosine. Millise tõenäosusega on moosine ka selle pannkoogi alumine külg? NB! Vastus ei ole 50%. Lahendus: Kui A - moos all, B - moos üleval, siis vastavalt 4. aksioomile $$P(moos~ all~ \lvert ~moos~üleval ) = \frac{P(moos~all \land ~moos~üleval)}{P(moos~all)}$$ 
+Tõenäosus, et moos on all ja üleval on 1/3 (me teame, et 1 pannkook 3st on mõlemalt küljelt moosine) ja tõenäosus, et moos on all, on keskmine kolmest tõenäosusest, millega me kolmel pannkoogil moosise külje saame: mean(c(1, 0.5, 0)) = 1/2. Seega, vastus on $(1/3)/(1/2) = 2/3$. Kui me saame moosise ülemise külje, siis on tõenäosus 2/3, et ka all on moos!
 
-**9. Punkt** Kui A tähistab sündmust "ma sooritan eksami edukalt" ja B tähistab sündmust "ma õpin eksamiks", ning meil on dihhotoomne valik: õpin / ei õpi, siis $P(hea~hinne) = P(õpin)P(hea~hinne~ \lvert ~õpin) + P(ei~ õpi)P(hea~hinne~ \lvert ~ei~õpi)$. Ehk sõnadega kirjutatult: Hea hinde tõenäosus võrdub korrutisega kahest tõenäosusest -- tõenäosus, et ma eksamiks õpin, ja tõenäosus, et ma saan hea hinde siis kui ma õpin --, millele tuleb liita teine korrutis kahest tõenäosustest -- tõenäosus, et ma ei õpi, ja tõenäosus, et ma saan hea hinde ka ilma õppimata.  
-Siit saad ise enda jaoks välja arvutada ennustuse, millise tõenäosusega just sina selle kursuse edukalt läbid. 
+**15. Punkt** Kui A tähistab sündmust "ma sooritan eksami edukalt" ja B tähistab sündmust "ma õpin eksamiks", ning meil on dihhotoomne valik: õpin / ei õpi, siis $$\begin{array}{lcl} P(hea~hinne) = P(õpin)P(hea~hinne~ \lvert ~õpin) + \\P(ei~ õpi)P(hea~hinne~ \lvert ~ei~õpi) \end{array}$$ Ehk sõnadega kirjutatult: Hea hinde tõenäosus võrdub korrutisega kahest tõenäosusest -- tõenäosus, et ma eksamiks õpin, ja tõenäosus, et ma saan hea hinde siis kui ma õpin --, millele tuleb liita teine korrutis kahest tõenäosustest -- tõenäosus, et ma ei õpi, ja tõenäosus, et ma saan hea hinde ka ilma õppimata. Siit saad ise enda jaoks välja arvutada ennustuse, millise tõenäosusega just sina selle kursuse edukalt läbid. 
 
-**10. Punkt** Bayesi teoreemi rakendamine diskreetsetele hüpoteesidele:
+**16. Punkt** Bayesi teoreemi rakendamine diskreetsetele hüpoteesidele:
 Oletame, et 45 aastane naine saab rinnavähi sõeluuringus mammograafias positiivse tulemuse. Millise tõenäosusega on tal rinnavähk? Kõigepealt jagame hüpoteesiruumi kahe diskreetse hüpoteesi vahel: H~1~ - vähk ja H~2~ - mitte vähk. Edasi omistame numbrilised väärtused järgmistele parameetritele: 
 
 1. H~1~ tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil on rinnavähk (testi sensitiivsus): $P( +~\vert~H_1) = 0.9$
 
 2. H~2~ tõepära, ehk tõenäosus saada positiivne mammogramm juhul, kui patsiendil ei ole rinnavähki (1 - testi spetsiifilisus): $P( +~\vert~H_2) = 0.08$. Pane tähele, et 0.9 + 0.08 ei võrdu ühega, mis tähendab, et tõepära pole tõenäosusteooria mõttes päris tõenäosus.
 
-3. Eelnev tõenäosus, et patsiendil on rinnavähk $P(H_1) = 0.01$ (see on rinnavähi sagedus 45 a naiste populatsioonis; kui me teame patsiendi genoomi järjestust või rinnavähijuhte tema lähisugulastel, võib P(H~1) tulla väga erinev).
+3. Eelnev tõenäosus, et patsiendil on rinnavähk $P(H_1) = 0.01$ (see on rinnavähi sagedus 45 a naiste populatsioonis; kui me teame patsiendi genoomi järjestust või rinnavähijuhte tema lähisugulastel, võib P(H~1~) tulla väga erinev).
 
 4. $P(H_2) = 1 - P(H_1) = 0.99$
 
@@ -481,7 +492,9 @@ likelihood_H1 <- 0.9
 likelihood_H2 <- 0.08
 prior_H1 <- 0.01
 prior_H2 <- 1 - prior_H1
-posterior1 <- likelihood_H1*prior_H1/(likelihood_H1*prior_H1 + likelihood_H2*prior_H2)
+posterior1 <- likelihood_H1*prior_H1/
+  (likelihood_H1*prior_H1 + 
+     likelihood_H2*prior_H2)
 posterior1
 ```
 
@@ -496,7 +509,9 @@ likelihood_H1 <- 0.9
 likelihood_H2 <- 0.08
 prior_H1 <- posterior1
 prior_H2 <- 1 - prior_H1
-posterior2 <- likelihood_H1*prior_H1/(likelihood_H1*prior_H1 + likelihood_H2*prior_H2)
+posterior2 <- likelihood_H1*prior_H1/
+  (likelihood_H1*prior_H1 + 
+     likelihood_H2*prior_H2)
 posterior2
 ```
 
@@ -504,7 +519,8 @@ Patsiendile võib pärast kordustesti positiivset tulemust öelda, et ta on 44% 
 
 Bayesi teoreemi kasutamine pideva suuruse (näiteks keskväärtuse või standardhälbe) hindamiseks on põhimõtteliselt samasugune, ainult et nüüd on meil lõpmata suur arv hüpoteese (iga teoreetiliselt võimalik parameetri väärtus on siin "hüpotees"), mis tähendab, et vastavalt Bayesi teoreemile on meil vaja ka lõpmata hulka tõepärasid ja lõpmata hulka prioreid. Lõpmata hulk tõepärasid ja prioreid tähendab lihtsalt, et me avaldame need kahe pideva funktsioonina, misjärel saame neist kahest funktsioonist arvutada kolmanda pideva funktsiooni, posteeriori. Posteeriorist saab omakorda arvutada iga mõeldava parameetriväärtuste vahemiku tõenäosuse või usalduspiirid, milles mingi meie poolt etteantud tõenäosusega paikneb parameetri tegelik väärtus (vt ptk 10). Ja posterioorse funktsiooni tipp (mood) vastab kõige tõenäolisemale parameetriväärtusele. 
 
-Mida kitsam on posteerior, seda kitsamad tulevad sellest arvutatud usalduspiirid. Siit tuleneb, et kui võimalik peaksime oma mudelitesse panema parameetreid (statistikuid), mille posteeriorid tulevad maksimaalselt kitsad (vt allpool ptk "ajalooline vahepala" selle kohta, kuidas aritmeetiline keskmine on selline statistik).  
+Mida kitsam on posteerior, seda kitsamad tulevad sellest arvutatud usalduspiirid. Seega peaksime püüdma panna oma mudelitesse  parameetreid (statistikuid), mille posteeriorid tulevad võimalikult kitsad (vt allpool ptk "ajalooline vahepala" selle kohta, kuidas aritmeetiline keskmine on selline statistik).  
+
 
 ### Tõenäosuse episteemiline tõlgendus {-}
 
