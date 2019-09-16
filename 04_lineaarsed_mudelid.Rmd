@@ -39,7 +39,6 @@ Veelgi enam, sama mudel ennustab, et kui Juhani kaal = 80 tonni, siis on Juhan s
 
 ```{r}
 #Genereerime andmed: x = pikkus ja y = kaal:
-
 x <- 0:100
 y <- x
 ```
