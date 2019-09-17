@@ -53,28 +53,21 @@ Selle teadmise konverteerime tõepärafunktsiooniks.
 
 
 ```r
-# Parameter space as a grid
+library(tidyverse)
+# Parameter space: all possible futures
 x <- seq(from = 0, to = 3)
-# Likelihood
+
+# Likelihoods for each x value, or P(deaths I x)
 y <- c(1, 3, 3, 1)
+
+ggplot(data=NULL, aes(x, y)) + 
+  geom_point()+ 
+  geom_line()+
+  xlab("hypothetical nr of deaths")+ 
+  ylab("plausibility")
 ```
 
-(ref:prob) Tõepärafunktsioon.
-
-
-```r
-plot(x, y, 
-     ylab = "Number of possibilities", 
-     xlab = "Number of deaths", 
-     type = "b", 
-     main = "Likelihood")
-```
-
-<div class="figure" style="text-align: center">
-<img src="10_bayesi_printsiip_files/figure-html/prob-1.png" alt="(ref:prob)" width="70%" />
-<p class="caption">(\#fig:prob)(ref:prob)</p>
-</div>
-
+<img src="10_bayesi_printsiip_files/figure-html/unnamed-chunk-2-1.png" width="70%" style="display: block; margin: auto;" />
 
 Siit näeme, et üks surm ja kaks surma on sama tõenäolised ja üks surm on kolm korda tõenäolisem kui null surma (või kolm surma). 
 Tõepära annab meile tõenäosuse Pr(mortality=0.5 & N=3) igale loogiliselt võimalikule surmade arvule (0 kuni 3). 
@@ -84,24 +77,15 @@ Me saame sama tulemuse kasutades formaalsel viisil binoomjaotuse mudelit. Ainus 
 
 ```r
 y <- dbinom(x, 3, 0.5)
+
+ggplot(data=NULL, aes(x, y)) + 
+  geom_point()+
+  geom_line()+
+  xlab("hypothetical nr of deaths")+ 
+  ylab("probability")
 ```
 
-(ref:binom) Tõepärafunktsioon binoomjaotuse mudelist.
-
-
-```r
-plot(x, y, 
-     type = "b",
-     xlab = "Number of deaths",
-     ylab = "Probability of x deaths",
-     main = "Probability of x deaths out of 3 patients\nif P(Heads) = 0.5")
-```
-
-<div class="figure" style="text-align: center">
-<img src="10_bayesi_printsiip_files/figure-html/binom-1.png" alt="(ref:binom)" width="70%" />
-<p class="caption">(\#fig:binom)(ref:binom)</p>
-</div>
-
+<img src="10_bayesi_printsiip_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" />
 
 Proovime seda koodi olukorras, kus meil on 9 patsienti ja suremus on 0.67:
 
@@ -109,23 +93,15 @@ Proovime seda koodi olukorras, kus meil on 9 patsienti ja suremus on 0.67:
 ```r
 x <- seq(from = 0, to = 9)
 y <- dbinom(x, 9, 0.67)
+
+ggplot(data=NULL, aes(x, y)) + 
+  geom_point()+
+  geom_line()+
+  xlab("hypothetical nr of deaths")+ 
+  ylab("probability")
 ```
 
-(ref:veelyks) Veel üks tõepärafunktsioon.
-
-
-```r
-plot(x, y, 
-     type = "b", 
-     xlab = "Number of deaths", 
-     ylab = "Probability of x deaths", 
-     main = "Probability of x out of 9 deaths\nif P(Heads) = 0.67")
-```
-
-<div class="figure" style="text-align: center">
-<img src="10_bayesi_printsiip_files/figure-html/veelyks-1.png" alt="(ref:veelyks)" width="70%" />
-<p class="caption">(\#fig:veelyks)(ref:veelyks)</p>
-</div>
+<img src="10_bayesi_printsiip_files/figure-html/unnamed-chunk-4-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 Lisame sellele tõepärafunktsioonile tasase priori (lihtsuse huvides) ja arvutame posterioorse jaotuse kasutades Bayesi teoreemi. Igale parameetri väärtusele on tõepära * prior proportsionaalne posterioorse tõenäosusega, et just see parameetri väärtus on see ainus tõene väärtus. Posterioorsed tõenäosused normaliseeritakse nii, et nad summeeruksid 1-le.
@@ -136,9 +112,8 @@ Me defineerime X telje kui rea 10-st arvust (0 kuni 9 surma) ja arvutame tõepä
 
 
 ```r
-# Define grid
 x <- seq(from = 0 , to = 9)
-# Define flat prior
+# flat prior
 prior <- rep(1 , 10)
 
 # Compute likelihood at each value in grid
@@ -149,20 +124,15 @@ unstd.posterior <- likelihood * prior
 
 # Normalize the posterior, so that it sums to 1
 posterior <- unstd.posterior / sum(unstd.posterior)
-sum(posterior) == 1
-#> [1] TRUE
 
-plot(x, posterior, 
-     type = "b",
-     xlab = "Number of deaths", 
-     ylab = "Posterior probability", 
-     main = "Posterior distribution")
+ggplot(data = NULL, aes(x, posterior)) + 
+  geom_point() +
+  geom_line() +
+  xlab("hypothetical nr of deaths") + 
+  ylab("posterior probability")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="10_bayesi_printsiip_files/figure-html/posterior-1.png" alt="(ref:posterior)" width="70%" />
-<p class="caption">(\#fig:posterior)(ref:posterior)</p>
-</div>
+<img src="10_bayesi_printsiip_files/figure-html/unnamed-chunk-5-1.png" width="70%" style="display: block; margin: auto;" />
 
 See on parim võimalik teadmine, mitu kirstu tasuks tellida, arvestades meie priori ja likelihoodi mudelitega. Näiteks, sedapalju, kui surmad ei ole üksteisest sõltumatud, on meie tõepäramudel (binoomjaotus) vale. 
 
@@ -188,7 +158,7 @@ Seega on meil:
 
 
 ```r
-# Define grid (mortality at 20 evenly spaced probabilities from 0 to 1)
+# mortality at 20 evenly spaced probabilities from 0 to 1
 x <- seq(from = 0 , to = 1, length.out = 20)
 
 # Define prior
@@ -197,27 +167,18 @@ prior <- rep(1 , 20)
 # Compute likelihood at each value in grid
 likelihood <- dbinom(6, size = 9 , prob = x)
 
-# Plot prior
-plot(x, prior, type = "b", main = "Prior")
-
-# Plot likelihood
-plot(x, likelihood, type = "b", main = "The likelihood function")
-
 # Compute product of likelihood and prior & standardize the posterior
 posterior <- likelihood * prior / sum(likelihood * prior)
 
-# Plot posterior
-plot(x, posterior, 
-     type = "b", 
-     xlab = "Mortality" , 
-     ylab = "Posterior probability", 
-     main = "Posterior distribution")
+#put everithing into a tibble for plotting
+a <- tibble(x=rep(x=x, 3),
+            y= c(prior, likelihood, posterior),
+            legend= rep(c("prior","likelihood", "posterior"), each=20))
+
+ggplot(data=a) + geom_line(aes(x, y, color=legend))
 ```
 
-<div class="figure" style="text-align: center">
-<img src="10_bayesi_printsiip_files/figure-html/trinity-1.png" alt="(ref:trinity)" width="30%" /><img src="10_bayesi_printsiip_files/figure-html/trinity-2.png" alt="(ref:trinity)" width="30%" /><img src="10_bayesi_printsiip_files/figure-html/trinity-3.png" alt="(ref:trinity)" width="30%" />
-<p class="caption">(\#fig:trinity)(ref:trinity)</p>
-</div>
+<img src="10_bayesi_printsiip_files/figure-html/unnamed-chunk-6-1.png" width="70%" style="display: block; margin: auto;" />
 
 Nüüd on meil posterioorne tõenäosusfunktsioon, mis summeerub 1-le ja mis sisaldab kogu meie teadmist suremuse kohta.
 
@@ -246,10 +207,8 @@ prior <- rep(1, 20)
 likelihood <- dbinom(1, size = 1, prob = x)
 posterior <- likelihood * prior / sum(likelihood * prior)
 
-plot(x, posterior, 
-     type = "b", 
-     xlab = "Mortality", 
-     ylab = "Posterior probability" )
+ggplot(data=NULL)+
+  geom_line(aes(x, posterior), color= "blue")
 ```
 
 <div class="figure" style="text-align: center">
@@ -263,6 +222,7 @@ Esimene patsient suri - 0 mortaalsus ei ole enam loogiliselt võimalik (välja a
 
 
 ```r
+x <- seq(from = 0, to = 1, length.out = 20)
 # Define prior
 prior <- posterior
 
@@ -270,10 +230,9 @@ prior <- posterior
 likelihood <- dbinom(1 , size = 1, prob = x)
 posterior1 <- likelihood * prior / sum(likelihood * prior)
 
-plot(x, posterior1, 
-     type = "b", 
-     xlab = "Mortality" , 
-     ylab = "Posterior probability" )
+ggplot(data=NULL)+
+  geom_line(aes(x, prior))+
+  geom_line(aes(x, posterior1), color="blue")
 ```
 
 <div class="figure" style="text-align: center">
@@ -289,6 +248,7 @@ Posteerior on kaldu 100 protsendi poole, mis on ikka kõige tõenäolisem väär
 
 
 ```r
+x <- seq(from = 0, to = 1, length.out = 20)
 # Define prior
 prior <- posterior1
 
@@ -298,10 +258,9 @@ likelihood <- dbinom(0, size = 1, prob = x)
 # Compute product of likelihood and prior
 posterior2 <- likelihood * prior / sum(likelihood * prior)
 
-plot(x, posterior2, 
-     type = "b", 
-     xlab = "Mortality", 
-     ylab = "Posterior probability")
+ggplot(data=NULL)+
+  geom_line(aes(x, prior))+
+  geom_line(aes(x, posterior2), color="blue")
 ```
 
 <div class="figure" style="text-align: center">
@@ -317,30 +276,21 @@ Teeme sedasama prioriga, mis ei ole tasane. See illustreerib tõsiasja, et kui N
 
 
 ```r
+x <- seq(from = 0, to = 1, length.out = 20)
 # Define prior
-prior <- c(seq(1:10), seq(from = 10, to = 1))
+prior <- c(seq(0.01, 0.1, length.out = 10), seq(0.1, 0.01, length.out = 10))
 
 # Compute likelihood at each value in grid
 likelihood <- dbinom(1, size = 1 , prob = x)
 posterior <- likelihood * prior / sum(likelihood * prior)
 
-def.par <- par(no.readonly = TRUE)
-par(mfrow = c(1, 2))
-plot(1:20, prior, 
-     type = "b", 
-     main = "Prior")
-plot(x, posterior, 
-     type = "b", 
-     xlab = "Mortality", 
-     ylab = "Posterior probability", 
-     main = "Posterior")
-par(def.par)
+ggplot(data=NULL)+
+  geom_line(aes(x, prior))+
+  geom_line(aes(x, likelihood), color="red")+
+  geom_line(aes(x, posterior), color="blue")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="10_bayesi_printsiip_files/figure-html/informatiivse-prioriga-1.png" alt="(ref:informatiivse-prioriga)" width="70%" />
-<p class="caption">(\#fig:informatiivse-prioriga)(ref:informatiivse-prioriga)</p>
-</div>
+<img src="10_bayesi_printsiip_files/figure-html/unnamed-chunk-7-1.png" width="70%" style="display: block; margin: auto;" />
 1. patsient suri
 
 (ref:fuck) N=2 informatiivse prioriga.
@@ -351,22 +301,15 @@ par(def.par)
 prior <- posterior
 
 # Compute likelihood at each value in grid
-likelihood <- dbinom(1, size = 1, prob = x)
+likelihood <- dbinom(2, size = 2, prob = x)
 
 # Compute product of likelihood and prior
 posterior1 <- likelihood * prior / sum(likelihood * prior)
 
-def.par <- par(no.readonly = TRUE)
-par(mfrow = c(1, 2))
-plot(1:20, prior, 
-     type = "b", 
-     main = "Prior")
-plot(x, posterior1, 
-     type = "b", 
-     xlab = "Mortality", 
-     ylab = "Posterior probability", 
-     main = "Posterior")
-par(def.par)
+ggplot(data=NULL)+
+  geom_line(aes(x, prior))+
+  geom_line(aes(x, likelihood), color="red")+
+  geom_line(aes(x, posterior1), color="blue")
 ```
 
 <div class="figure" style="text-align: center">
@@ -384,22 +327,15 @@ Teine patsient suri.
 prior2 <- posterior1
 
 # Compute likelihood at each value in grid
-likelihood <- dbinom(0, size = 1, prob = x)
+likelihood <- dbinom(2, size = 3, prob = x)
 
 # Compute product of likelihood and prior
 posterior2 <- likelihood * prior2 / sum(likelihood * prior2)
 
-def.par <- par(no.readonly = TRUE)
-par(mfrow = c(1, 2))
-plot(1:20, prior2, 
-     type = "b", 
-     main = "Prior")
-plot(x, posterior2, 
-     type = "b", 
-     xlab = "Mortality", 
-     ylab = "Posterior probability", 
-     main = "Posterior")
-par(def.par)
+ggplot(data=NULL)+
+  geom_line(aes(x, prior2))+
+  geom_line(aes(x, likelihood), color="red")+
+  geom_line(aes(x, posterior2), color="blue")
 ```
 
 <div class="figure" style="text-align: center">

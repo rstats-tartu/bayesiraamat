@@ -23,7 +23,6 @@ Veelgi enam, sama mudel ennustab, et kui Juhani kaal = 80 tonni, siis on Juhan s
 
 ```r
 #Genereerime andmed: x = pikkus ja y = kaal:
-
 x <- 0:100
 y <- x
 ```
@@ -312,6 +311,12 @@ Selline mudel on täpselt sama informatiivne kui andmed, mille põhjal see fitit
   
 
 
+
+
+```
+#> Warning: `cols` is now required.
+#> Please use `cols = c(preds)`
+```
 
 <div class="figure" style="text-align: center">
 <img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-16-1.png" alt="Kasvava paindlikusega polünoomsed mudelid." width="70%" />

@@ -120,11 +120,16 @@ R.sim <- sim(m5, data = pred.data)
 #> [ 100 / 1000 ][ 200 / 1000 ][ 300 / 1000 ][ 400 / 1000 ][ 500 / 1000 ][ 600 / 1000 ][ 700 / 1000 ][ 800 / 1000 ][ 900 / 1000 ][ 1000 / 1000 ]
 R.sim <- na.omit(R.sim)
 R.PI <- apply(R.sim, 2, PI)
+pred.data$mu.mean <- mu.mean
+pred.data$lower <- mu.PI[1,]
+pred.data$upper <- mu.PI[2,]
+pred.data$lower1 <- R.PI[1,]
+pred.data$upper1 <- R.PI[2,]
 
 ggplot(pred.data, aes(lGDP_s, mu.mean)) +
-  geom_line(y = mu.mean) +
-  geom_ribbon(ymin = mu.PI[1,], ymax = mu.PI[2,], fill = "grey60", alpha = 0.3) +
-  geom_ribbon(ymin = R.PI[1,], ymax = R.PI[2,], fill = "grey10", alpha = 0.3)
+  geom_line() +
+  geom_ribbon(aes(ymin = lower, ymax = upper), fill = "grey60", alpha = 0.3) +
+  geom_ribbon(aes(ymin = lower1, ymax = upper1), fill = "grey10", alpha = 0.3)
 ```
 
 <div class="figure" style="text-align: center">

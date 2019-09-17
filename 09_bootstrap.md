@@ -63,6 +63,20 @@ ggplot(boot, aes(Mean)) + geom_density()
 <p class="caption">(\#fig:bootpost)(ref:bootpost)</p>
 </div>
 
+ehk sama asi ilma bootsrtap functsiooni kasutamata. 
+
+```r
+heights <- tibble(value = c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185, 188))
+n <- nrow(heights) #empirical sample size
+B <- 1000 #nr of bootstrap samples
+boot1 <-  replicate(B, sample_n(heights, n, replace = TRUE)) 
+
+df22 <- boot1 %>% #boot1 object is a list
+  as.data.frame() %>% #convert this list into a data frame 
+  summarise_all(mean) %>% t() %>% as_tibble() 
+
+ggplot(df22, aes(V1)) + geom_histogram()
+```
 Mida selline keskväärtuste jaotus tähendab? Me võime seda vaadelda posterioorse tõenäosusjaotusena. Selle tõlgenduse kohaselt iseloomustab see jaotus täpselt meie usku presidentide keskmise pikkuse kohta, niipalju kui see usk põhineb bootstrappimises kasutatud andmetel. Senikaua, kui meil pole muud relevantset teavet, on kõik, mida me usume teadvat USA presidentide keskmise pikkuse kohta, peidus selles jaotuses. Need pikkused, mille kohal jaotus on kõrgem, sisaldavad meie jaoks tõenäolisemalt tegelikku USA presidentide keskmist pikkust kui need pikkused, mille kohal posterioorne jaotus on madalam.   
 
 Kuidas selle jaotusega edasi töötada? See on lihtne: meil on 2000 arvu (2000 bootstrapitud statistiku väärtust) ja me teeme nendega kõike seda, mida parasjagu tahame.
@@ -161,7 +175,7 @@ Tõenäosus, et keskmine on suurem kui 182 cm
 
 ```r
 mean(heights_bb[, 1] > 182)
-#> [1] 0.991
+#> [1] 0.994
 ```
 
 Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):

@@ -32,13 +32,13 @@ skim(iris)
 #>  n obs: 150 
 #>  n variables: 5 
 #> 
-#> ── Variable type:factor ───────────────────────────────────────────────────
+#> ── Variable type:factor ────────────────────────────────────────────
 #>  variable missing complete   n n_unique                       top_counts
 #>   Species       0      150 150        3 set: 50, ver: 50, vir: 50, NA: 0
 #>  ordered
 #>    FALSE
 #> 
-#> ── Variable type:numeric ──────────────────────────────────────────────────
+#> ── Variable type:numeric ───────────────────────────────────────────
 #>      variable missing complete   n mean   sd  p0 p25  p50 p75 p100
 #>  Petal.Length       0      150 150 3.76 1.77 1   1.6 4.35 5.1  6.9
 #>   Petal.Width       0      150 150 1.2  0.76 0.1 0.3 1.3  1.8  2.5
@@ -268,8 +268,6 @@ Siin me võrdleme neid nelja mudelit. Väikseim looic (leave-one-out information
 
 ```r
 loo(m1, m2, m3, m4)
-#> Warning: Passing multiple brmsfit objects to 'loo' and related methods is
-#> deprecated. Please see ?loo.brmsfit for the recommended workflow.
 #> Output of model 'm1':
 #> 
 #> Computed from 3000 by 150 log-likelihood matrix
@@ -279,7 +277,7 @@ loo(m1, m2, m3, m4)
 #> p_loo         4.8  0.7
 #> looic       106.4 16.6
 #> ------
-#> Monte Carlo SE of elpd_loo is 0.0.
+#> Monte Carlo SE of elpd_loo is 0.1.
 #> 
 #> All Pareto k estimates are good (k < 0.5).
 #> See help('pareto-k-diagnostic') for details.
@@ -293,7 +291,7 @@ loo(m1, m2, m3, m4)
 #> p_loo         5.6  0.7
 #> looic        81.6 16.1
 #> ------
-#> Monte Carlo SE of elpd_loo is 0.0.
+#> Monte Carlo SE of elpd_loo is 0.1.
 #> 
 #> All Pareto k estimates are good (k < 0.5).
 #> See help('pareto-k-diagnostic') for details.
@@ -341,8 +339,6 @@ Alternatiivina kasutame `brms::waic` kriteeriumit mudelite võrdlemiseks. See t�
 
 ```r
 waic(m1, m2, m3, m4)
-#> Warning: Passing multiple brmsfit objects to 'loo' and related methods is
-#> deprecated. Please see ?loo.brmsfit for the recommended workflow.
 #> Output of model 'm1':
 #> 
 #> Computed from 3000 by 150 log-likelihood matrix
@@ -443,18 +439,18 @@ m2
 #> 
 #> Group-Level Effects: 
 #> ~Species (Number of levels: 3) 
-#>               Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-#> sd(Intercept)     1.72      1.53     0.36     5.98        515 1.00
+#>               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+#> sd(Intercept)     1.72      1.53     0.36     5.98 1.00      591      813
 #> 
 #> Population-Level Effects: 
-#>              Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-#> Intercept        1.71      1.03    -0.36     4.08        594 1.01
-#> Petal.Length     0.76      0.06     0.63     0.88       1478 1.00
-#> Sepal.Width      0.44      0.08     0.27     0.60       1893 1.00
+#>              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+#> Intercept        1.71      1.03    -0.36     4.08 1.01      725      678
+#> Petal.Length     0.76      0.06     0.63     0.88 1.00     1524     1640
+#> Sepal.Width      0.44      0.08     0.27     0.60 1.00     1937     1686
 #> 
 #> Family Specific Parameters: 
-#>       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-#> sigma     0.31      0.02     0.28     0.35       1882 1.00
+#>       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+#> sigma     0.31      0.02     0.28     0.35 1.00     1896     1525
 #> 
 #> Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
 #> is a crude measure of effective sample size, and Rhat is the potential 
@@ -700,12 +696,12 @@ predict_interval_brms2 <- predict(m2, newdata = newx, re_formula = NULL) %>%
   cbind(newx, .)
 head(predict_interval_brms2)
 #>   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5
-#> 1         1.00        3.06  setosa     4.49     0.312 3.88  5.10
-#> 2         1.04        3.06  setosa     4.51     0.316 3.90  5.13
-#> 3         1.08        3.06  setosa     4.54     0.322 3.91  5.17
-#> 4         1.12        3.06  setosa     4.58     0.318 3.98  5.21
-#> 5         1.16        3.06  setosa     4.60     0.320 3.96  5.23
-#> 6         1.20        3.06  setosa     4.63     0.314 4.03  5.24
+#> 1         1.00        3.06  setosa     4.50     0.314 3.86  5.11
+#> 2         1.04        3.06  setosa     4.53     0.318 3.91  5.14
+#> 3         1.08        3.06  setosa     4.55     0.319 3.94  5.17
+#> 4         1.12        3.06  setosa     4.59     0.316 3.97  5.20
+#> 5         1.16        3.06  setosa     4.61     0.318 4.00  5.22
+#> 6         1.20        3.06  setosa     4.65     0.316 4.02  5.24
 ```
 
 `predict()` ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele
@@ -1122,7 +1118,7 @@ t.test(Sepal.Length ~ Species, data = no_versicolor)
 #> 	Welch Two Sample t-test
 #> 
 #> data:  Sepal.Length by Species
-#> t = -20, df = 80, p-value <2e-16
+#> t = -15, df = 77, p-value <2e-16
 #> alternative hypothesis: true difference in means is not equal to 0
 #> 95 percent confidence interval:
 #>  -1.79 -1.38
@@ -1176,7 +1172,7 @@ t.test(value ~ key, data = df1)
 #> 	Welch Two Sample t-test
 #> 
 #> data:  value by key
-#> t = -1, df = 30, p-value = 0.3
+#> t = -1, df = 32, p-value = 0.3
 #> alternative hypothesis: true difference in means is not equal to 0
 #> 95 percent confidence interval:
 #>  -2.417  0.777
@@ -1247,15 +1243,15 @@ get_prior(gdpPercap~lifeExp, family = "lognormal", data=g2007)
 
 
 ```r
-prior <- c(prior(normal(0, 10), class="Intercept"),
-           prior(normal(0,10), class ="b"),
-           prior(student(6,0,5)), class ="sigma")
+prior <- c(prior(normal(0, 10), class = "Intercept"),
+           prior(normal(0,10), class = "b"),
+           prior(student(6, 0, 5), class = "sigma"))
 ```
 
 
 
 ```r
-ln_m1 <- brm(gdpPercap~lifeExp, family = "lognormal", prior=prior, data=g2007, cores=4)
+ln_m1 <- brm(gdpPercap ~ lifeExp, family = "lognormal", prior = prior, data = g2007, cores = 4)
 write_rds(ln_m1, "ln_m1.rds")
 ```
 
@@ -1273,14 +1269,14 @@ tidy(ln_m1)
 
 
 ```r
-plot(marginal_effects(ln_m1), points=TRUE)
+plot(marginal_effects(ln_m1), points = TRUE)
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-98-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 ```r
-plot(marginal_effects(ln_m1, method="predict"), points=TRUE)
+plot(marginal_effects(ln_m1, method = "predict"), points = TRUE)
 ```
 
 <img src="17_brms_files/figure-html/unnamed-chunk-99-1.png" width="70%" style="display: block; margin: auto;" />
@@ -1556,7 +1552,7 @@ skim(chimpanzees)
 #>  n obs: 504 
 #>  n variables: 8 
 #> 
-#> ── Variable type:integer ──────────────────────────────────────────────────
+#> ── Variable type:integer ───────────────────────────────────────────
 #>      variable missing complete   n  mean    sd p0 p25  p50 p75 p100
 #>         actor       0      504 504  4     2     1   2  4     6    7
 #>         block       0      504 504  3.5   1.71  1   2  3.5   5    6
@@ -1682,8 +1678,8 @@ logit.pred <- factor(glm.probs > .5, levels=c(FALSE, TRUE),
  table(chimpanzees$pulled_left, logit.pred, dnn=c("Actual", "Predicted"))
 #>       Predicted
 #> Actual right left
-#>      0    10  202
-#>      1    13  279
+#>      0     8  204
+#>      1    14  278
 ```
 
 Siin, 0.5-se *cut-off*-iga tõenäosuse tabelis on meil 204 ahvi tõmmanud vasakule, samas kui mudel on ennustanud tõmmet paremale. Lisaks on 279 ahvi tõmmanud vasakule kooskõlas mudeli ennustusele, 8 ahvi on tõmmanud paremale kooskõlas mudeli ennustusega ja 13 ahvi on tõmmanud paremale hoolimata mudeli vastupidisest ennustusest.
@@ -1710,7 +1706,7 @@ Nagu näha, kui spetsiifilisus on kõrge, siis sensitiivsus on madal ja vastupid
 
 ```r
 auc(roccurve)
-#> Area under the curve: 0.592
+#> Area under the curve: 0.577
 ```
 
 Sarnase mudeli saab fittida ka siis, kui n>1 ja meil on igale ahvile countide suhted nr of pull-left/total pulls. Nüüd on meil vaja lisada trials(), kuhu läheb n kas ühe numbrina või muutujana, mis indekseerib sündmuste arvu ehk n-i. Antud juhul on kõikidel ahvidel katsete arv (n) 18.
