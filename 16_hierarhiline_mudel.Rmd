@@ -61,7 +61,7 @@ Standardiseeritud andmete kasutamine muudab varieeruvuskomponentide fitte, aga j
 
 Tsentreerimine ($x_i - mean(x)$) mõjutab $b_0$ aga mitte $b_1$ koefitsiente, mis võib rääkida selle meetodi kasuks üle standardiseerimise (($\frac {x_i - mean(x)}{sd(x)}$), mis tekitab X muutujate jaotused, mille mean = 0 ja sd = 1. 
 
-NB! grupi tasemel tsentreerimine, ehki vahest kasulik, töötab hoopis teistmoodi kui üle kõikide gruppide tsentreerimine ja viib täiesti erineva mudelini - sellest tuleks hoiduda, senikaua kui te ei tea täpselt, mida te teete.
+NB! grupi tasemel tsentreerimine, ehkki vahest kasulik, töötab hoopis teistmoodi kui üle kõikide gruppide tsentreerimine ja viib täiesti erineva mudelini - sellest tuleks hoiduda, senikaua kui te ei tea täpselt, mida te teete.
 
 > Mitmetasemelised mudelid on erilised, sest nad hõlmavad mitut varieeruvuse allikat, ei eelda konsantset vigade jaotust, ning modelleerivad seoseid erinevate mudeli tasemete vahel. 
 
