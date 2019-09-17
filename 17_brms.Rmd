@@ -827,14 +827,14 @@ get_prior(gdpPercap~lifeExp, family = "lognormal", data=g2007)
 ```
 
 ```{r}
-prior <- c(prior(normal(0, 10), class="Intercept"),
-           prior(normal(0,10), class ="b"),
-           prior(student(6,0,5)), class ="sigma")
+prior <- c(prior(normal(0, 10), class = "Intercept"),
+           prior(normal(0,10), class = "b"),
+           prior(student(6, 0, 5), class = "sigma"))
 ```
 
 
 ```{r, eval=FALSE}
-ln_m1 <- brm(gdpPercap~lifeExp, family = "lognormal", prior=prior, data=g2007, cores=4)
+ln_m1 <- brm(gdpPercap ~ lifeExp, family = "lognormal", prior = prior, data = g2007, cores = 4)
 write_rds(ln_m1, "ln_m1.rds")
 ```
 
@@ -847,11 +847,11 @@ tidy(ln_m1)
 ```
 
 ```{r}
-plot(marginal_effects(ln_m1), points=TRUE)
+plot(marginal_effects(ln_m1), points = TRUE)
 ```
 
 ```{r}
-plot(marginal_effects(ln_m1, method="predict"), points=TRUE)
+plot(marginal_effects(ln_m1, method = "predict"), points = TRUE)
 ```
 
 ```{r eval=FALSE}

@@ -51,6 +51,7 @@ Nüüd teame parameetriruumi iga liikme kohta, kui suure tõenäosusega me ootam
 Selle teadmise konverteerime tõepärafunktsiooniks.
 
 ```{r}
+library(tidyverse)
 # Parameter space: all possible futures
 x <- seq(from = 0, to = 3)
 
@@ -113,10 +114,10 @@ unstd.posterior <- likelihood * prior
 # Normalize the posterior, so that it sums to 1
 posterior <- unstd.posterior / sum(unstd.posterior)
 
-ggplot(data=NULL, aes(x, posterior)) + 
-  geom_point()+
-  geom_line()+
-  xlab("hypothetical nr of deaths")+ 
+ggplot(data = NULL, aes(x, posterior)) + 
+  geom_point() +
+  geom_line() +
+  xlab("hypothetical nr of deaths") + 
   ylab("posterior probability")
 ```
 

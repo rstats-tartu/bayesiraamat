@@ -215,8 +215,8 @@ anscombe_r <- anscombe_long %>%
 anscombe_long %>% 
   ggplot(aes(x, y)) +
   geom_point() +
-  annotate("text", x = 10, y = 12, label = sprintf("r = %s", anscombe_r$R)) +
   facet_wrap(~q) +
+  geom_text(data = anscombe_r, x = 10, y = 12, aes(label = sprintf("r = %s", R))) +
   theme(strip.text = element_text(hjust = 0))
 ```
 
