@@ -324,7 +324,7 @@ AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel?
 
 ### Matemaatilised eeldused: {-}
 
-1. Lineaarsus: ennustus Y-muutujale on lineaarne funktsioon prediktoritest  $Y = β_1X_1 + β_2X_2 +···β_nX_n$, ehk ekvivalentselt: kõikidel X-i väärtustel keksmine residuaal = 0.
+1. Lineaarsus: ennustus Y-muutujale on lineaarne funktsioon prediktoritest  $Y = \beta_1X_1 + \beta_2X_2 +···\beta_nX_n$, ehk ekvivalentselt: kõikidel X-i väärtustel keksmine residuaal = 0.
 
 2. homoskedastilisus ehk konstantne  Y-muutuja suunaline varieeruvus kõigil X-i väärtustel. See tähendab ühtlasi residuaalide konstantset varieeruvust.
 

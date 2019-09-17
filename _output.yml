@@ -8,4 +8,6 @@ bookdown::gitbook:
       collapse: section
       before: |
         <li><a href="./">Bayesi statistika kasutades R keelt</a></li>
-    download: ["pdf"]
+    download: ["pdf", "epub"]
+bookdown::pdf_book:
+  keep_tex: yes

@@ -329,9 +329,9 @@ plot(log(x), y, type = "l")
 
 Lognormaaljaotuse keskväärtus, standardhälve, mood ja mediaan:
 
-$$keskv\ddot{a}\ddot{a}rtus = \exp(\mu + 1/2 \times σ^2)$$ 
+$$keskv\ddot{a}\ddot{a}rtus = \exp(\mu + 1/2 \times \sigma^2)$$ 
 
-$$sd = \exp(\mu + 1/2 \times \sigma^2) \times \sqrt{\exp(\sigma^2) − 1}$$
+$$sd = \exp(\mu + 1/2 \times \sigma^2) \times \sqrt{\exp(\sigma^2) - 1}$$
 $$mood = e^{\mu - \sigma^2}$$
 
 $$mediaan = e^\mu$$
@@ -339,7 +339,7 @@ Siin on siis $\mu$ ja $\sigma$ arvutatud logaritmitud andmete pealt.
 
 ### Binoomjaotus
 
-Kui teil on binaarne muutuja (sellel saab olla ainult kaks väärtust, näiteks sees/väljas, 1/0), mis kajastab sõltumatuid sündmusi, siis modelleerib seda binoomjaotus $y ∼ Binomial(n, p)$.
+Kui teil on binaarne muutuja (sellel saab olla ainult kaks väärtust, näiteks sees/väljas, 1/0), mis kajastab sõltumatuid sündmusi, siis modelleerib seda binoomjaotus $y \sim Binomial(n, p)$.
 Kus *n* on edukate sündmuste arv ja *p* on nende suhteline sagedus (p = n / N, kus *N* on kõikide sündmuste kopguarv). 
 Sõltumatud sündmused on sellised, kus ühe sündmuse esinemise järgi ei saa ennustada teise sündmuse esinemist (st puudub korrelatsioon sündmuste esinemise vahel). 
 Tehniliselt on binoomjaotusel veel omadus, et valim võetakse replacementiga, mis tähendab, et iga sündmus pannakse populatsiooni tagasi, kus seda saab uuesti valimisse tõmmata. 
@@ -360,7 +360,7 @@ Kui Np võrdub täisarvuga, siis mediaan = mood = keskväärtus
 
 $$sd = sqrt(N \times p(1 - p))$$
 
-Standardviga proportsioonile $p = \sqrt{\frac{p(1 − p)}{N}}$
+Standardviga proportsioonile $p = \sqrt{\frac{p(1 - p)}{N}}$
 See standardviga (*standard error*) on teiste sõnadega standardhälve meie hinangule proportsiooni väärtusele. 
 Kui n = 0 või N - n = 0, siis on selline SE arvutus eksitav. 
 
