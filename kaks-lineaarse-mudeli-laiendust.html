@@ -402,8 +402,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>Milliseid muutujaid (regressoreid) peaks üks hea lineaarne mudel sisaldama, milliseid peaks me mudelist välja viskama ja milliseid igal juhul sisse panema? Matemaatiliselt põhjustab regressorite eemaldamine ülejäänud regressorite koefitsientide ebakonsistentsust, välja arvatud siis, kui (i) välja visatud regressorid ei ole korreleeritud sisse jäetud regressoritega või (ii) välja vistatud regressorite koefitsiendid võrduvad nulliga, mis muudab nad ebarelevantseteks. Kuidas sa tead, et kõik vajalikud regressorid on sul üldse olemas (olematuid andmeid ei saa ka mudelisse lisada)? Loomulikult ei teagi, mis tähendab lihtsalt, et mudeldamine on keeruline protsess, nagu teaduski. Pane ka tähele, et koefitsiendi “mitte-oluline” p väärtus ei tähenda iseenesest, et koefitsient tõenäoliselt võrdub nulliga või on nulli lähedal, vaid seda, et meil pole piisavalt andmeid, et vastupidist kinnitada. Koefitsiendi hinnangu usalduspiirid on selles osas palju parem töövahend.</p>
 <p>Kui meie andmed on kolmedimensionaalsed (me mõõdame igal mõõteobjektil kolme muutujat) ja me tahame ennnustada ühe muutuja väärtust kahe teise muutuja väärtuste põhjal (meil on kaks prediktorit), siis tuleb meie kolme parameetriga lineaarne regressioonimudel tasapinna kujul. Kui meil on kolme prediktoriga mudel, siis me liigume juba neljamõõtmelisse ruumi.</p>
 
-<div class="figure" style="text-align: center"><span id="fig:regressioonitasand"></span>
-<img src="05_lin_mudeli_laiendused_files/figure-html/regressioonitasand-1.png" alt="Regressioonitasand 3D andmetele. Kahe prediktoriga mudel, kus Sepal.Length ja Petal.Length on prediktorid ja Sepal.Width ennustatav muutuja." width="70%" />
+<div class="figure"><span id="fig:regressioonitasand"></span>
+<img src="05_lin_mudeli_laiendused_files/figure-html/regressioonitasand-1.png" alt="Regressioonitasand 3D andmetele. Kahe prediktoriga mudel, kus Sepal.Length ja Petal.Length on prediktorid ja Sepal.Width ennustatav muutuja." width="672" />
 <p class="caption">
 Joonis 5.1: Regressioonitasand 3D andmetele. Kahe prediktoriga mudel, kus Sepal.Length ja Petal.Length on prediktorid ja Sepal.Width ennustatav muutuja.
 </p>
@@ -422,8 +422,8 @@ p2 &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">deparse</span>(<span class="kw">formula</span>(m1)))
 devtools<span class="op">::</span><span class="kw">source_gist</span>(<span class="st">&quot;8b4d6ab6a333ef1cd14e8067c3badbae&quot;</span>, <span class="dt">filename =</span> <span class="st">&quot;grid_arrange_shared_legend.R&quot;</span>)
 <span class="kw">grid_arrange_shared_legend</span>(p1, p2)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:lin2d"></span>
-<img src="05_lin_mudeli_laiendused_files/figure-html/lin2d-1.png" alt="2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Vasemal, muutuja Petal.Length on kollapseeritud konstandile. Siin on regressioonijoon hoopis teises kohas, kui lihtsas ühe prediktoriga mudelis (paremal)." width="70%" />
+<div class="figure"><span id="fig:lin2d"></span>
+<img src="05_lin_mudeli_laiendused_files/figure-html/lin2d-1.png" alt="2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Vasemal, muutuja Petal.Length on kollapseeritud konstandile. Siin on regressioonijoon hoopis teises kohas, kui lihtsas ühe prediktoriga mudelis (paremal)." width="672" />
 <p class="caption">
 Joonis 5.2: 2D-le kollapseeritud graafiline kujutus 3D andmete põhjal fititud mudelist. Vasemal, muutuja Petal.Length on kollapseeritud konstandile. Siin on regressioonijoon hoopis teises kohas, kui lihtsas ühe prediktoriga mudelis (paremal).
 </p>
@@ -457,8 +457,8 @@ Sepal_width_predicted &lt;-<span class="st"> </span>a <span class="op">+</span><
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(Sepal_width_predicted <span class="op">~</span><span class="st"> </span>Sepal_length, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
 <span class="co"># Prediction from the single predictor model</span>
 <span class="kw">abline</span>(m1, <span class="dt">lty =</span> <span class="st">&quot;dashed&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:yksversuskaks"></span>
-<img src="05_lin_mudeli_laiendused_files/figure-html/yksversuskaks-1.png" alt="Ennustatud y väärtused erinevatel \(x_1\) väärtustel kui \(x_2\) on konstantne, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus." width="70%" />
+<div class="figure"><span id="fig:yksversuskaks"></span>
+<img src="05_lin_mudeli_laiendused_files/figure-html/yksversuskaks-1.png" alt="Ennustatud y väärtused erinevatel \(x_1\) väärtustel kui \(x_2\) on konstantne, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus." width="672" />
 <p class="caption">
 Joonis 5.3: Ennustatud y väärtused erinevatel <span class="math inline">\(x_1\)</span> väärtustel kui <span class="math inline">\(x_2\)</span> on konstantne, punane joon. Katkendjoon, ühe prediktoriga mudeli ennustus.
 </p>
@@ -467,8 +467,8 @@ Joonis 5.3: Ennustatud y väärtused erinevatel <span class="math inline">\(x_1\
 
 <pre><code>#&gt; Warning: `data_frame()` is deprecated, use `tibble()`.
 #&gt; This warning is displayed once per session.</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:kaksprediktorit"></span>
-<img src="05_lin_mudeli_laiendused_files/figure-html/kaksprediktorit-1.png" alt="Kahe prediktoriga mudeli ennustus 3D ruumis." width="70%" />
+<div class="figure"><span id="fig:kaksprediktorit"></span>
+<img src="05_lin_mudeli_laiendused_files/figure-html/kaksprediktorit-1.png" alt="Kahe prediktoriga mudeli ennustus 3D ruumis." width="672" />
 <p class="caption">
 Joonis 5.4: Kahe prediktoriga mudeli ennustus 3D ruumis.
 </p>
@@ -533,8 +533,8 @@ b3 &lt;-<span class="st"> </span><span class="kw">coef</span>(m3)[<span class="s
 Sepal_width_predicted &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b1 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">+</span><span class="st"> </span>b2 <span class="op">*</span><span class="st"> </span>Petal_length <span class="op">+</span><span class="st"> </span>b3 <span class="op">*</span><span class="st"> </span>Sepal_length <span class="op">*</span><span class="st"> </span>Petal_length
 <span class="kw">plot</span>(Sepal_width_predicted <span class="op">~</span><span class="st"> </span>Sepal_length, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">6</span>))
 <span class="kw">abline</span>(<span class="kw">coef</span>(m2)[<span class="kw">c</span>(<span class="st">&quot;(Intercept)&quot;</span>, <span class="st">&quot;Sepal.Length&quot;</span>)], <span class="dt">lty =</span> <span class="st">&quot;dashed&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:ennustus-interaktsioonimudelist"></span>
-<img src="05_lin_mudeli_laiendused_files/figure-html/ennustus-interaktsioonimudelist-1.png" alt="Ennustus interaktsioonimudelist, kus x1 (Sepal_Length) on antud rida väärtusi ja x2 (Petal_length) hoitakse konstantsena (pidevjoon). Interaktsioonimudeli regressioonijoon on paraleelne ilma interaktsioonita mudeli ennustusele (katkendjoon)." width="70%" />
+<div class="figure"><span id="fig:ennustus-interaktsioonimudelist"></span>
+<img src="05_lin_mudeli_laiendused_files/figure-html/ennustus-interaktsioonimudelist-1.png" alt="Ennustus interaktsioonimudelist, kus x1 (Sepal_Length) on antud rida väärtusi ja x2 (Petal_length) hoitakse konstantsena (pidevjoon). Interaktsioonimudeli regressioonijoon on paraleelne ilma interaktsioonita mudeli ennustusele (katkendjoon)." width="672" />
 <p class="caption">
 Joonis 5.5: Ennustus interaktsioonimudelist, kus x<sub>1</sub> (Sepal_Length) on antud rida väärtusi ja x<sub>2</sub> (Petal_length) hoitakse konstantsena (pidevjoon). Interaktsioonimudeli regressioonijoon on paraleelne ilma interaktsioonita mudeli ennustusele (katkendjoon).
 </p>
@@ -542,8 +542,8 @@ Joonis 5.5: Ennustus interaktsioonimudelist, kus x<sub>1</sub> (Sepal_Length) on
 <p>Nagu näha viib korrutamistehe selleni, et interaktsioonimudeli tõus erineb ilma interaktsioonita mudeli tõusust.</p>
 <p>Kui aga interaktsioonimudel plottida välja 3D-s üle paljude x<sub>1</sub> ja x<sub>2</sub> väärtuste, saame me regressioonikurvi (mitte sirge), kus b<sub>3</sub> annab kurvatuuri.</p>
 
-<div class="figure" style="text-align: center"><span id="fig:ennustused3d-interaktsioonimudelist"></span>
-<img src="05_lin_mudeli_laiendused_files/figure-html/ennustused3d-interaktsioonimudelist-1.png" alt="Ennustused 3D interaktsioonimudelist üle paljude x1 (Sepal_Length) ja x2 (Petal_length) väärtuste." width="70%" />
+<div class="figure"><span id="fig:ennustused3d-interaktsioonimudelist"></span>
+<img src="05_lin_mudeli_laiendused_files/figure-html/ennustused3d-interaktsioonimudelist-1.png" alt="Ennustused 3D interaktsioonimudelist üle paljude x1 (Sepal_Length) ja x2 (Petal_length) väärtuste." width="672" />
 <p class="caption">
 Joonis 5.6: Ennustused 3D interaktsioonimudelist üle paljude x<sub>1</sub> (Sepal_Length) ja x<sub>2</sub> (Petal_length) väärtuste.
 </p>
@@ -595,7 +595,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["_main.pdf"],
 "toc": {
 "collapse": "section"
 }

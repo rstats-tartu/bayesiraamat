@@ -31,14 +31,7 @@ Järgnevad nõuanded on rangelt soovituslikud:
 
 (ref:lognorm) Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete "keskväärtusest"? Miks?
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{03_andmed_files/figure-latex/lognorm-1} 
-
-}
-
-\caption{(ref:lognorm)}(\#fig:lognorm)
-\end{figure}
+![(\#fig:lognorm)(ref:lognorm)](03_andmed_files/figure-latex/lognorm-1.pdf) 
 
 
 ## Muutuja sisene varieeruvus {-}
@@ -108,13 +101,13 @@ multiplicative_sd(andmed) %>% knitr::kable()
 \hline
 SD & MEAN & lower & upper\\
 \hline
-multiplicative\_SD & 1.09 & 0.374 & 3.17\\
+multiplicative\_SD & 0.938 & 0.319 & 2.76\\
 \hline
-multiplicative\_2\_SD & 1.09 & 0.128 & 9.25\\
+multiplicative\_2\_SD & 0.938 & 0.108 & 8.13\\
 \hline
-additive\_SD & 1.87 & -0.467 & 4.21\\
+additive\_SD & 1.630 & -0.477 & 3.74\\
 \hline
-additive\_2\_SD & 1.87 & -2.805 & 6.55\\
+additive\_2\_SD & 1.630 & -2.585 & 5.85\\
 \hline
 \end{tabular}
 
@@ -151,17 +144,13 @@ QQ-plot (kvantiil-kvantiil plot) võrdleb andmete jaotust ideaalse normaaljaotus
 
 ```r
 qqPlot(andmed)
-#> [1] 29 17
 ```
 
-\begin{figure}
+![(\#fig:qqnorm)(ref:qqnorm)](03_andmed_files/figure-latex/qqnorm-1.pdf) 
 
-{\centering \includegraphics[width=0.7\linewidth]{03_andmed_files/figure-latex/qqnorm-1} 
-
-}
-
-\caption{(ref:qqnorm)}(\#fig:qqnorm)
-\end{figure}
+```
+#> [1] 44 61
+```
 
 Nüüd joonistame qq-ploti logaritmitud andmetele. 
 
@@ -170,17 +159,13 @@ Nüüd joonistame qq-ploti logaritmitud andmetele.
 
 ```r
 qqPlot(log(andmed))
-#> [1] 29 17
 ```
 
-\begin{figure}
+![(\#fig:qqlognorm)(ref:qqlognorm)](03_andmed_files/figure-latex/qqlognorm-1.pdf) 
 
-{\centering \includegraphics[width=0.7\linewidth]{03_andmed_files/figure-latex/qqlognorm-1} 
-
-}
-
-\caption{(ref:qqlognorm)}(\#fig:qqlognorm)
-\end{figure}
+```
+#> [1] 36 24
+```
 
 Pole kahtlust, andmed on logaritmitud kujul normaaljaotusega.
 
@@ -197,17 +182,17 @@ Lognormaalsete andmetega:
 
 ```r
 mad(andmed, constant = 1); sd(andmed); mad(andmed)
-#> [1] 0.79
-#> [1] 2.34
-#> [1] 1.17
+#> [1] 0.614
+#> [1] 2.11
+#> [1] 0.91
 ```
 
 
 ```r
 mad(log10(andmed), constant = 1); sd(log10(andmed)); mad(log10(andmed))
-#> [1] 0.316
-#> [1] 0.465
+#> [1] 0.333
 #> [1] 0.469
+#> [1] 0.494
 ```
 
 mad = median(abs(median(x) - x)), mida on väga lihtne mõista. Samas R-i funktsioon mad() korrutab default-ina mad-i läbi konstandiga 1.4826, mis muudab mad()-i tulemuse võrreldavaks sd-ga, tehes sellest sd robustse analoogi. Robustse sellepärast, et mad-i arvutuskäik, mis sõltub mediaanist, mitte aritmeetilisest keskmisest, ei ole tundlik outlierite suhtes. Seega, kui tahate arvutada mad-i, siis fikseerige mad() funktsioonis argument *constant* ühele.
@@ -222,7 +207,7 @@ Funktsioon quantile võimaldab valida, milliseid kvantiile soovite näha. Järgn
 ```r
 quantile(andmed, c(0.025, 0.25, 0.5, 0.75, 0.95))
 #>  2.5%   25%   50%   75%   95% 
-#> 0.146 0.461 1.183 2.280 5.437
+#> 0.114 0.421 1.012 1.845 5.642
 ```
 
 
@@ -255,14 +240,7 @@ Lisaks, korrelatsioonikordaja mõõdab vaid andmete *lineaarset* koos-varieeruvu
 
 (ref:anscombe) Anscombe'i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: neli andmestikku annavad identse korrelatsioonikordaja (Pearsons'r), ehkki tegelikud seosed andmete vahel on täiesti erinevad.
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{03_andmed_files/figure-latex/anscombe-1} 
-
-}
-
-\caption{(ref:anscombe)}(\#fig:anscombe)
-\end{figure}
+![(\#fig:anscombe)(ref:anscombe)](03_andmed_files/figure-latex/anscombe-1.pdf) 
 
 
 Moraal seisneb selles, et enne korrelatsioonikordaja arvutamist tasub alati plottida andmed, et veenduda võimaliku seose lineaarsuses. 

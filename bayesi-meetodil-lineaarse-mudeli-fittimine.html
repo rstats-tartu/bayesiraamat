@@ -440,8 +440,8 @@ intercept_only &lt;-<span class="st"> </span><span class="kw">glimmer</span>(lif
 <span class="co">#&gt; gapmod5 1486   0.8 458.8      0  7.29 15.70</span></code></pre></div>
 <p>Jälle on täismudel võitja ja kui intercept nulli suruda, saame kehveima tulemuse. Siin me kasutame AIC-i Bayesi analoogi WAIC, mis nende mudelite peal peaks töötama veidi paremini kui AIC. Aga see on tehniline detail. WAIC abil mudeleid võrreldes saame muuhulgas mudeli kaalu. Antud juhul on 100% kaalust gapmo6-l ja ülejäänud mudelitele ei jää midagi.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">coeftab</span>(gapmod4, gapmod5, gapmod6))</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-15"></span>
-<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-15-1.png" alt="Mudelite võrdlusplot." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-15"></span>
+<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-15-1.png" alt="Mudelite võrdlusplot." width="672" />
 <p class="caption">
 Joonis 16.1: Mudelite võrdlusplot.
 </p>
@@ -471,10 +471,10 @@ gapmod8 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(<span cla
 <span class="co">#&gt; gapmod6 1028   2.6  62.4   0.00 14.07 18.21</span>
 <span class="co">#&gt; gapmod4 1113   1.5 148.1   0.00 12.09 23.18</span>
 <span class="co">#&gt; gapmod5 1486   0.8 521.1   0.00  7.29 26.82</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-19"></span>
-<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-19-1.png" alt="Log skaalas töötab nulli surutud interceptiga mudel sama hästi kui täismudel. See ei ole paraku mudeldamise üldine omadus." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-19"></span>
+<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-19-1.png" alt="Log skaalas töötab nulli surutud interceptiga mudel sama hästi kui täismudel. See ei ole paraku mudeldamise üldine omadus." width="672" />
 <p class="caption">
-Joonis 15.9: Log skaalas töötab nulli surutud interceptiga mudel sama hästi kui täismudel. See ei ole paraku mudeldamise üldine omadus.
+Joonis 15.10: Log skaalas töötab nulli surutud interceptiga mudel sama hästi kui täismudel. See ei ole paraku mudeldamise üldine omadus.
 </p>
 </div>
 <p>Kuna Bayesi mudelite fittimine on keerulisem kui <code>lm()</code> abil, on eriti tähtis fititud mudel välja plottida. See on esimene kaitseliin lollide vigade ja halvasti jooksvate Markovi ahelate vastu.</p>
@@ -483,8 +483,8 @@ Joonis 15.9: Log skaalas töötab nulli surutud interceptiga mudel sama hästi k
 <p>Siin me fitime pedagooglistel kaalutlustel kõike Bayesiga aga praktikas jätavad paljud mõistlikud inimesed Bayesi hierarhiliste mudelite jaoks ja kasutavad lihtsate mudelite jaoks <code>lm()</code>.</p>
 <p>Tagasi gapmod7 ja gapmod8 mudelite juurde. Plotime nende koefitsiendid koos usalduspiiridega.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">coeftab</span>(gapmod7, gapmod8))</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-20"></span>
-<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-20-1.png" alt="Mudelite võrdlusplot." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-20"></span>
+<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-20-1.png" alt="Mudelite võrdlusplot." width="672" />
 <p class="caption">
 Joonis 16.2: Mudelite võrdlusplot.
 </p>
@@ -551,24 +551,24 @@ height.PI &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span clas
 <span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> <span class="ot">TRUE</span>)
 <span class="co">#&gt; Warning: `data_frame()` is deprecated, use `tibble()`.</span>
 <span class="co">#&gt; This warning is displayed once per session.</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-24"></span>
-<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-24-1.png" alt="Ennustused mudelist." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-24"></span>
+<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-24-1.png" alt="Ennustused mudelist." width="672" />
 <p class="caption">
 Joonis 16.3: Ennustused mudelist.
 </p>
 </div>
 <p>Nüüd ütleb laiem hall ala, et me oleme üsna kindlad, et nende riikide puhul, mille puhul mudel töötab, kohtame individaalsete riikide keskmiseid eluigasid halli ala sees ja mitte sealt väljas. Nagu näha, on meil ka riike, mis jäävad hallist alast kaugele ja mille keskmine eluiga on kõvasti madalam, kui mudel ennustab. Need on äkki riigid, kus parasjagu on sõda üle käinud ja mille eluiga ei ole näiteks seetõttu SKP-ga lihtsas põhjuslikus seoses. Igal juhul tasuks need ükshaaval üle vaadata sest punktid, mida mudel ei seleta, võivad varjata endas mõnd huvitavat saladust, mis pikisilmi ootab avastajat. Lisaks: pane tähele, et mudel eeldab, et riikide keskmise eluea SD on muutumatu igal GDP väärtusel.</p>
 <p>Kuidas saada ennustusi kindlale l_GDP väärtusele? Näiteks tulp V10 vastab l_GDP väärtusele 2.9. Järgnevalt arvutame oodatavad keskmised eluead sellele SKP väärtusele (fiksionaalsetele riikidele, millel võiks olla täpselt selline SKP):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dens</span>(sim.length<span class="op">$</span>V10)
-<span class="kw">HPDI</span>(sim.length<span class="op">$</span>V10, <span class="dt">prob =</span> <span class="fl">0.95</span>)
-<span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt;  38.6  68.0</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-25"></span>
-<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-25-1.png" alt="Ennustus mudelist kindlale log GDP väärtusele." width="70%" />
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dens</span>(sim.length<span class="op">$</span>V10)</code></pre></div>
+<div class="figure"><span id="fig:unnamed-chunk-25"></span>
+<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-25-1.png" alt="Ennustus mudelist kindlale log GDP väärtusele." width="672" />
 <p class="caption">
 Joonis 16.4: Ennustus mudelist kindlale log GDP väärtusele.
 </p>
 </div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">HPDI</span>(sim.length<span class="op">$</span>V10, <span class="dt">prob =</span> <span class="fl">0.95</span>)
+<span class="co">#&gt; |0.95 0.95| </span>
+<span class="co">#&gt;  39.4  67.2</span></code></pre></div>
 <p>Nagu näha, võib mudeli kohaselt sellise riigi keskmine eluiga tulla nii madal, kui 40 aastat ja nii kõrge kui 67 aastat.</p>
 </div>
 <div id="lognormaalne-toeparamudel" class="section level2 unnumbered">
@@ -589,8 +589,8 @@ Joonis 16.4: Ennustus mudelist kindlale log GDP väärtusele.
 <p><span class="math display">\[e^{\sigma^2}(e^{\sigma^2} - 1)e^{2\sigma} =\sigma\]</span></p>
 <p>ja saadud <span class="math inline">\(\sigma\)</span> on tavaline additiivne standardhälve</p>
 <p>Seekord ennustame GDP-d keskmise eluea põhjal (mis, nagu näha jooniselt, ei ole küll päris lognormaalne).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-26"></span>
-<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-26-1.png" alt="SKP-de jaotus" width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-26"></span>
+<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-26-1.png" alt="SKP-de jaotus" width="672" />
 <p class="caption">
 Joonis 16.5: SKP-de jaotus
 </p>
@@ -622,10 +622,10 @@ y1 &lt;-<span class="st"> </span><span class="kw">exp</span>( a <span class="op"
 
 <span class="kw">plot</span>( a, y, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;a value&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;slope&quot;</span> )
 <span class="kw">lines</span>( a, y1, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span> )</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-30"></span>
-<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-30-1.png" alt="Mudeli tõus sõltub interceptist." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-30"></span>
+<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-30-1.png" alt="Mudeli tõus sõltub interceptist." width="672" />
 <p class="caption">
-Joonis 15.10: Mudeli tõus sõltub interceptist.
+Joonis 15.11: Mudeli tõus sõltub interceptist.
 </p>
 </div>
 <p>Must joon näitab mudeli tõusu sõltuvust parameetri a väärtusest, kui parameeter b = 2. Punane joon teeb sedasama, kui b = 3.</p>
@@ -633,8 +633,8 @@ Joonis 15.10: Mudeli tõus sõltub interceptist.
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s_ln1 &lt;-<span class="st"> </span><span class="kw">extract.samples</span>( m_ln1 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()
 beta &lt;-<span class="st"> </span><span class="kw">exp</span>(s_ln1<span class="op">$</span>a <span class="op">+</span><span class="st"> </span>s_ln1<span class="op">$</span>b) <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>(s_ln1<span class="op">$</span>a)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dens</span>(beta)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-32"></span>
-<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-32-1.png" alt="Mudeli tõusude (beta) posteerior." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-32"></span>
+<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-32-1.png" alt="Mudeli tõusude (beta) posteerior." width="672" />
 <p class="caption">
 Joonis 16.6: Mudeli tõusude (beta) posteerior.
 </p>
@@ -664,8 +664,8 @@ i_mean &lt;-<span class="st"> </span><span class="kw">exp</span>(s_ln1<span clas
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continent), <span class="dt">size =</span> <span class="fl">0.8</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>( <span class="dt">ymin =</span> sim_ci[<span class="dv">1</span>,], <span class="dt">ymax =</span> sim_ci[<span class="dv">2</span>,]), <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-35"></span>
-<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-35-1.png" alt="Ennustus mudelist." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-35"></span>
+<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-35-1.png" alt="Ennustus mudelist." width="672" />
 <p class="caption">
 Joonis 16.7: Ennustus mudelist.
 </p>
@@ -717,7 +717,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["_main.pdf"],
 "toc": {
 "collapse": "section"
 }

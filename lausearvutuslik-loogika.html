@@ -469,7 +469,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 #&gt; 2 T     F     T        
 #&gt; 3 F     T     T        
 #&gt; 4 F     F     F</code></pre>
-<p>Kuna nende tabelite läbiarvutamisel saadud tõeväärtused on identsed, on laused <span class="math inline">\((A \lor B) \land \neg (A \land B) \Leftrightarrow A ~xor ~B\)</span> <em>loogiliselt ekvivalentsed</em>. Ekvivalentsed võivad olla ka laused, mis ei koosne samadest atomaarlausetest, senikaua kui nende tõetabeli kõik read on sama tõeväärtusega (näiteks A ja A∧(B∨¬B)).</p>
+<p>Kuna nende tabelite läbiarvutamisel saadud tõeväärtused on identsed, on laused <span class="math inline">\((A \lor B) \land \neg (A \land B) \Leftrightarrow A ~ xor ~B\)</span> <em>loogiliselt ekvivalentsed</em>. Ekvivalentsed võivad olla ka laused, mis ei koosne samadest atomaarlausetest, senikaua kui nende tõetabeli kõik read on sama tõeväärtusega (näiteks A ja <span class="math inline">\(A\land(B\lor\neg B\)</span>)).</p>
 <p>Disjunktsiooni ja konjunktsiooni on võimalik avaldada teineteise kaudu:</p>
 <p><span class="math display">\[\neg (A \land B) \Leftrightarrow \neg A \lor \neg B\]</span></p>
 <p><span class="math display">\[\neg (A \lor B) \Leftrightarrow \neg A \land \neg B\]</span></p>
@@ -599,7 +599,7 @@ This form of inference is called `scientific method`.</code></pre>
 <p>Seega oli Popperi retsept teadlastele (loe: füüsikutele)</p>
 <ol style="list-style-type: decimal">
 <li><p>postuleeri üldine teooria vormis: kõik X-d on Y.</p></li>
-<li><p>Dedutseeri sellest mõni teaduslikult testitav alamteooria vormis x_i on Y.</p></li>
+<li><p>Dedutseeri sellest mõni teaduslikult testitav alamteooria vormis <span class="math inline">\(x_i\)</span> on Y.</p></li>
 <li><p>Juhul kui me suudame empiiriliselt näidata, et see alamteooria on väär, oleme sellega deduktiivselt ümber lükanud ka üldise teooria kehtimise.</p></li>
 </ol>
 <p>Seda skeemi illustreerib hästi Enrico Fermi tsitaat:</p>
@@ -661,7 +661,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["_main.pdf"],
 "toc": {
 "collapse": "section"
 }

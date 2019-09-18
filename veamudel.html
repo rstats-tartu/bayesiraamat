@@ -413,7 +413,7 @@ sigma populatsiooni liikmete vaheliste erinevuste määra hinnanguna. </code></p
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234321</span>)
 andmed &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">a=</span> <span class="kw">rnorm</span>(<span class="dv">4</span>))
 <span class="kw">plot</span>(andmed)</code></pre></div>
-<p><img src="06_veamudel_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="06_veamudel_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(andmed<span class="op">$</span>a); <span class="kw">sd</span>(andmed<span class="op">$</span>a)
 <span class="co">#&gt; [1] 1.24</span>
 <span class="co">#&gt; [1] 0.662</span></code></pre></div>
@@ -462,8 +462,8 @@ Oletame, et bakteri kasvukiirust mõjutavad 12 geeni, mille mõjud võivad olla 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kasv &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">10000</span>, <span class="kw">sum</span>(<span class="kw">runif</span>(<span class="dv">12</span>, <span class="dv">1</span>, <span class="dv">100</span>))) 
 p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">tibble</span>(kasv), <span class="kw">aes</span>(kasv)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>()
 p</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:normaaljaotus-tekib"></span>
-<img src="06_veamudel_files/figure-html/normaaljaotus-tekib-1.png" alt="Normaaljaotus tekib sõltumatutest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi summa tihedusdiagramm." width="70%" />
+<div class="figure"><span id="fig:normaaljaotus-tekib"></span>
+<img src="06_veamudel_files/figure-html/normaaljaotus-tekib-1.png" alt="Normaaljaotus tekib sõltumatutest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi summa tihedusdiagramm." width="672" />
 <p class="caption">
 Joonis 8.1: Normaaljaotus tekib sõltumatutest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi summa tihedusdiagramm.
 </p>
@@ -473,8 +473,8 @@ Joonis 8.1: Normaaljaotus tekib sõltumatutest efektidest. Kümne tuhande N = 12
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kasv &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">10000</span>, <span class="kw">prod</span>(<span class="kw">runif</span>(<span class="dv">12</span>, <span class="dv">1</span>, <span class="fl">1.1</span>))) 
 p <span class="op">%+%</span><span class="st"> </span><span class="kw">tibble</span>(kasv)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:soltuvatest-efektidest"></span>
-<img src="06_veamudel_files/figure-html/soltuvatest-efektidest-1.png" alt="Normaaljaotus tekib väikestest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Ühegi geeni mõju ei domineeri teiste üle." width="70%" />
+<div class="figure"><span id="fig:soltuvatest-efektidest"></span>
+<img src="06_veamudel_files/figure-html/soltuvatest-efektidest-1.png" alt="Normaaljaotus tekib väikestest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Ühegi geeni mõju ei domineeri teiste üle." width="672" />
 <p class="caption">
 Joonis 8.2: Normaaljaotus tekib väikestest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Ühegi geeni mõju ei domineeri teiste üle.
 </p>
@@ -483,8 +483,8 @@ Joonis 8.2: Normaaljaotus tekib väikestest sõltuvatest efektidest. Kümne tuha
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kasv &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">10000</span>, <span class="kw">prod</span>(<span class="kw">runif</span>(<span class="dv">12</span>, <span class="dv">1</span>, <span class="dv">2</span>)))
 p <span class="op">%+%</span><span class="st"> </span><span class="kw">tibble</span>(kasv)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:lognormaal"></span>
-<img src="06_veamudel_files/figure-html/lognormaal-1.png" alt="Lognormaaljaotus tekib suurematest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel." width="70%" />
+<div class="figure"><span id="fig:lognormaal"></span>
+<img src="06_veamudel_files/figure-html/lognormaal-1.png" alt="Lognormaaljaotus tekib suurematest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel." width="672" />
 <p class="caption">
 Joonis 8.3: Lognormaaljaotus tekib suurematest sõltuvatest efektidest. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel.
 </p>
@@ -494,8 +494,8 @@ Joonis 8.3: Lognormaaljaotus tekib suurematest sõltuvatest efektidest. Kümne t
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kasv &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">10000</span>, <span class="kw">log10</span>(<span class="kw">prod</span>(<span class="kw">runif</span>(<span class="dv">12</span>, <span class="dv">1</span>, <span class="dv">2</span>))))
 p <span class="op">%+%</span><span class="st"> </span><span class="kw">tibble</span>(kasv) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;kasv, log10&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:logskaalas"></span>
-<img src="06_veamudel_files/figure-html/logskaalas-1.png" alt="Logaritmilises skaalas lognormaalsed efektid on normaaljaotusega. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel." width="70%" />
+<div class="figure"><span id="fig:logskaalas"></span>
+<img src="06_veamudel_files/figure-html/logskaalas-1.png" alt="Logaritmilises skaalas lognormaalsed efektid on normaaljaotusega. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel." width="672" />
 <p class="caption">
 Joonis 8.4: Logaritmilises skaalas lognormaalsed efektid on normaaljaotusega. Kümne tuhande N = 12 suuruse juhuvalimi korrutiste tihedusdiagramm. Mõnel geenil on kuni 2 korda suurem mõju kui teisel.
 </p>
@@ -509,8 +509,8 @@ Joonis 8.4: Logaritmilises skaalas lognormaalsed efektid on normaaljaotusega. K�
 <p>Aga pidage meeles, et selle mudeli fittimiseks kasutame me ainult neid andmeid, mis meil päriselt on — ja kui meil on ainult 3 andmepunkti, on tõenäoline, et fititud mudel ei kajasta hästi tegelikkust.</p>
 <p>Kuidas panna skeptik uskuma, et statistilised meetodid töötavad halvasti väikestel valimitel? Järgnevalt illustreerime seda ühe võimaliku valimiga paljudest, mis on tõmmatud imaginaarsest populatsioonist, mille parameetreid me teame. Me tõmbame 3-se valimi ning üritame selle valimi põhjal ennustada selleasama populatsiooni struktuuri. Kuna tegemist on simulatsiooniga, teame täpselt, et populatsioon, kust me tõmbame oma kolmese valimi, on normaaljaotusega, et tema keskväärtus = 0 ja et tema sd = 1. Seega saame võrrelda oma ennustust populatsiooni tõeliste parameetriväärtustega. Me fitime oma valimiandmetega 2 erinevat mudelit: normaaljaotuse ja Studenti t jaotuse.</p>
 
-<div class="figure" style="text-align: center"><span id="fig:juhuvalim-normaaljaotusest"></span>
-<img src="06_veamudel_files/figure-html/juhuvalim-normaaljaotusest-1.png" alt="Juhuvalim normaaljaotusest, mille keskmine = 0 ja sd = 1 (n=3; andmepunktid on näidatud mustade munadena). Sinine joon - populatsioon, millest tõmmati valim; punane joon - normaaljaotuse mudel, mis on fititud valimi andmetel; must joon - Studenti t jaotuse mudel, mis on fititud samade andmetega. Mustad punktid, valim. Katkendjoon, populatsiooni keskmine, millest valim tõmmati." width="70%" />
+<div class="figure"><span id="fig:juhuvalim-normaaljaotusest"></span>
+<img src="06_veamudel_files/figure-html/juhuvalim-normaaljaotusest-1.png" alt="Juhuvalim normaaljaotusest, mille keskmine = 0 ja sd = 1 (n=3; andmepunktid on näidatud mustade munadena). Sinine joon - populatsioon, millest tõmmati valim; punane joon - normaaljaotuse mudel, mis on fititud valimi andmetel; must joon - Studenti t jaotuse mudel, mis on fititud samade andmetega. Mustad punktid, valim. Katkendjoon, populatsiooni keskmine, millest valim tõmmati." width="672" />
 <p class="caption">
 Joonis 8.5: Juhuvalim normaaljaotusest, mille keskmine = 0 ja sd = 1 (n=3; andmepunktid on näidatud mustade munadena). Sinine joon - populatsioon, millest tõmmati valim; punane joon - normaaljaotuse mudel, mis on fititud valimi andmetel; must joon - Studenti t jaotuse mudel, mis on fititud samade andmetega. Mustad punktid, valim. Katkendjoon, populatsiooni keskmine, millest valim tõmmati.
 </p>
@@ -532,8 +532,8 @@ simulated_data &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span
 <span class="co"># arvutame simuleeritud andmete keskmise ja sd ning joonistame neist histogrammi</span>
 <span class="kw">ggplot</span>(<span class="kw">tibble</span>(simulated_data), <span class="kw">aes</span>(simulated_data)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">15</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:kasutame-fititud"></span>
-<img src="06_veamudel_files/figure-html/kasutame-fititud-1.png" alt="Kasutame fititud mudeleid uute andmete simuleerimiseks." width="70%" />
+<div class="figure"><span id="fig:kasutame-fititud"></span>
+<img src="06_veamudel_files/figure-html/kasutame-fititud-1.png" alt="Kasutame fititud mudeleid uute andmete simuleerimiseks." width="672" />
 <p class="caption">
 Joonis 8.6: Kasutame fititud mudeleid uute andmete simuleerimiseks.
 </p>
@@ -596,28 +596,28 @@ Joonis 8.6: Kasutame fititud mudeleid uute andmete simuleerimiseks.
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dt">length.out =</span> <span class="dv">1000</span>)
 y &lt;-<span class="st"> </span><span class="kw">dlnorm</span>(x)
 <span class="kw">plot</span>(x, y, <span class="dt">typ =</span> <span class="st">&quot;l&quot;</span>)</code></pre></div>
-<p><img src="06_veamudel_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="06_veamudel_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>Seda jaotust, mis ei ulatu kunagi teisele poole nulli, iseloomustab, et x-i logaritmimine annab tulemuseks normaaljaotuse.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">log</span>(x), y, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>)</code></pre></div>
-<p><img src="06_veamudel_files/figure-html/unnamed-chunk-11-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="06_veamudel_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <p>Lognormaaljaotuse keskväärtus, standardhälve, mood ja mediaan:</p>
-<p><span class="math display">\[keskv\ddot{a}\ddot{a}rtus = \exp(\mu + 1/2 \times σ^2)\]</span></p>
-<p><span class="math display">\[sd = \exp(\mu + 1/2 \times \sigma^2) \times \sqrt{\exp(\sigma^2) − 1}\]</span> <span class="math display">\[mood = e^{\mu - \sigma^2}\]</span></p>
+<p><span class="math display">\[keskv\ddot{a}\ddot{a}rtus = \exp(\mu + 1/2 \times \sigma^2)\]</span></p>
+<p><span class="math display">\[sd = \exp(\mu + 1/2 \times \sigma^2) \times \sqrt{\exp(\sigma^2) - 1}\]</span> <span class="math display">\[mood = e^{\mu - \sigma^2}\]</span></p>
 <p><span class="math display">\[mediaan = e^\mu\]</span> Siin on siis <span class="math inline">\(\mu\)</span> ja <span class="math inline">\(\sigma\)</span> arvutatud logaritmitud andmete pealt.</p>
 </div>
 <div id="binoomjaotus" class="section level3">
 <h3><span class="header-section-number">8.3.2</span> Binoomjaotus</h3>
-<p>Kui teil on binaarne muutuja (sellel saab olla ainult kaks väärtust, näiteks sees/väljas, 1/0), mis kajastab sõltumatuid sündmusi, siis modelleerib seda binoomjaotus <span class="math inline">\(y ∼ Binomial(n, p)\)</span>. Kus <em>n</em> on edukate sündmuste arv ja <em>p</em> on nende suhteline sagedus (p = n / N, kus <em>N</em> on kõikide sündmuste kopguarv). Sõltumatud sündmused on sellised, kus ühe sündmuse esinemise järgi ei saa ennustada teise sündmuse esinemist (st puudub korrelatsioon sündmuste esinemise vahel). Tehniliselt on binoomjaotusel veel omadus, et valim võetakse replacementiga, mis tähendab, et iga sündmus pannakse populatsiooni tagasi, kus seda saab uuesti valimisse tõmmata. Siit tuleb, et binoomjaotuse mudel kehtib päris maailmas mõõndustega ja et seda mudelit on kindlam kasutada siis, kui N &gt;&gt; n. Kui N on suur, siis meenutab binoomjaotus normaaljaotust (läheneb selle kujule).</p>
+<p>Kui teil on binaarne muutuja (sellel saab olla ainult kaks väärtust, näiteks sees/väljas, 1/0), mis kajastab sõltumatuid sündmusi, siis modelleerib seda binoomjaotus <span class="math inline">\(y \sim Binomial(n, p)\)</span>. Kus <em>n</em> on edukate sündmuste arv ja <em>p</em> on nende suhteline sagedus (p = n / N, kus <em>N</em> on kõikide sündmuste kopguarv). Sõltumatud sündmused on sellised, kus ühe sündmuse esinemise järgi ei saa ennustada teise sündmuse esinemist (st puudub korrelatsioon sündmuste esinemise vahel). Tehniliselt on binoomjaotusel veel omadus, et valim võetakse replacementiga, mis tähendab, et iga sündmus pannakse populatsiooni tagasi, kus seda saab uuesti valimisse tõmmata. Siit tuleb, et binoomjaotuse mudel kehtib päris maailmas mõõndustega ja et seda mudelit on kindlam kasutada siis, kui N &gt;&gt; n. Kui N on suur, siis meenutab binoomjaotus normaaljaotust (läheneb selle kujule).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="dv">10</span> <span class="co"># sündmuste koguarv</span>
 x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, n) <span class="co"># kõik võimalikud õnnestumiste arvud 10st sündmusest</span>
 p &lt;-<span class="st"> </span><span class="fl">0.3</span> <span class="co"># 30% õnnestumisi (sagedus)</span>
 y &lt;-<span class="st"> </span><span class="kw">dbinom</span>(x, n, p)
 <span class="kw">plot</span>(x, y)</code></pre></div>
-<p><img src="06_veamudel_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="06_veamudel_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p><span class="math display">\[keskv\ddot{a}\ddot{a}rtus = N \times p\]</span></p>
 <p>Kui Np võrdub täisarvuga, siis mediaan = mood = keskväärtus</p>
 <p><span class="math display">\[sd = sqrt(N \times p(1 - p))\]</span></p>
-<p>Standardviga proportsioonile <span class="math inline">\(p = \sqrt{\frac{p(1 − p)}{N}}\)</span> See standardviga (<em>standard error</em>) on teiste sõnadega standardhälve meie hinangule proportsiooni väärtusele. Kui n = 0 või N - n = 0, siis on selline SE arvutus eksitav.</p>
+<p>Standardviga proportsioonile <span class="math inline">\(p = \sqrt{\frac{p(1 - p)}{N}}\)</span> See standardviga (<em>standard error</em>) on teiste sõnadega standardhälve meie hinangule proportsiooni väärtusele. Kui n = 0 või N - n = 0, siis on selline SE arvutus eksitav.</p>
 </div>
 <div id="poissoni-jaotus" class="section level3">
 <h3><span class="header-section-number">8.3.3</span> Poissoni jaotus</h3>
@@ -674,7 +674,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["_main.pdf"],
 "toc": {
 "collapse": "section"
 }

@@ -686,8 +686,9 @@ fit &lt;-<span class="st"> </span><span class="kw">lapply</span>(imps<span class
 <li><strong>Mitu iteratsiooni teha?</strong></li>
 </ol>
 <p>Nii saab mc agelate konvergeerumist graafiliselt kontrollida.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(imp)
-<span class="kw">mice.mids</span>(imp, <span class="dt">maxit=</span><span class="dv">35</span>, <span class="dt">print=</span>F) 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(imp)</code></pre></div>
+<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mice.mids</span>(imp, <span class="dt">maxit=</span><span class="dv">35</span>, <span class="dt">print=</span>F) 
 <span class="co">#&gt; Class: mids</span>
 <span class="co">#&gt; Number of multiple imputations:  5 </span>
 <span class="co">#&gt; Imputation methods:</span>
@@ -702,7 +703,7 @@ fit &lt;-<span class="st"> </span><span class="kw">lapply</span>(imps<span class
 <span class="co">#tõstab mc iteratsioonide arvu 35-le.</span>
 <span class="co">#võtab imputeeritud mids objekti ja lisab iteratsioone, </span>
 <span class="co">#toodab uue mids objeki</span></code></pre></div>
-<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" /> Joonisel on igale iteratsioonile imputeeritud väärtuste (aga mitte algsete väärtuste) keskmine ja SD.</p>
+<p>Joonisel on igale iteratsioonile imputeeritud väärtuste (aga mitte algsete väärtuste) keskmine ja SD.</p>
 <ol start="7" style="list-style-type: decimal">
 <li><strong>Mitu imputatsiooni teha?</strong> Liiga suur m viib suurele simulatsiooniveale ja statistilisele ebaefektiivsusele. Vaikeväärtus on 5.</li>
 </ol>
@@ -747,14 +748,14 @@ imp &lt;-<span class="st"> </span><span class="kw">mice</span>(data2, <span clas
 <h2><span class="header-section-number">23.8</span> Graafilised meetodid</h2>
 <p>konditsionaalne plot muutujale “age” erinevatel muutuja “gen” väärtustel</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">histogram</span>(<span class="op">~</span>age<span class="op">|</span>gen, <span class="dt">data=</span>boys)</code></pre></div>
-<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-23-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 <p>Vanuste jaotus on erinev sõltuvalt sellest, kas gen muutuja on NA v mitte.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">R &lt;-<span class="st"> </span><span class="kw">is.na</span>(boys<span class="op">$</span>gen) 
 <span class="kw">histogram</span>(<span class="op">~</span>age<span class="op">|</span>R, <span class="dt">data=</span>boys)</code></pre></div>
-<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-24-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 <p>näitab algseid ja imputeeritud andmeid üksteise peal muutujale “chl”</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">stripplot</span>(imp, chl<span class="op">~</span>.imp, <span class="dt">pch=</span><span class="dv">20</span>, <span class="dt">cex=</span><span class="dv">2</span>)</code></pre></div>
-<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-25-1.png" width="70%" style="display: block; margin: auto;" /> Imputeeritud andmed on punased.</p>
+<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-25-1.png" width="672" /> Imputeeritud andmed on punased.</p>
 <p>suru imputeeritud andmed 1 ja 25 vahele</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ini &lt;-<span class="st"> </span><span class="kw">mice</span>(boys, <span class="dt">maxit =</span> <span class="dv">0</span>)
 meth &lt;-<span class="st"> </span>ini<span class="op">$</span>meth
@@ -767,7 +768,7 @@ imp &lt;-<span class="st"> </span><span class="kw">mice</span>(boys, <span class
 <span class="kw">xyplot</span>(imp, bmi <span class="op">~</span><span class="st"> </span><span class="kw">I</span> (wgt <span class="op">/</span><span class="st"> </span>(hgt <span class="op">/</span><span class="st"> </span><span class="dv">100</span>)<span class="op">^</span><span class="dv">2</span>),
        <span class="dt">na.groups =</span> miss, <span class="dt">cex =</span> <span class="kw">c</span>(<span class="fl">0.8</span>, <span class="fl">1.2</span>), <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">20</span>),
        <span class="dt">ylab =</span> <span class="st">&quot;BMI (kg/m2) Imputed&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;BMI (kg/m2) Calculated&quot;</span>)</code></pre></div>
-<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">imp &lt;-<span class="st"> </span><span class="kw">mice</span>(boys, <span class="dt">maxit=</span><span class="dv">1</span>)
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  iter imp variable</span>
@@ -781,12 +782,12 @@ imp &lt;-<span class="st"> </span><span class="kw">mice</span>(boys, <span class
 ### observe the erroneous outlying imputed values
 ### (caused by imputing hgt from bmi)
 <span class="kw">xyplot</span>(imp, hgt<span class="op">~</span>age<span class="op">|</span>.imp, <span class="dt">pch=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">20</span>),<span class="dt">cex=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="fl">1.5</span>))</code></pre></div>
-<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### same, but label with missingness of wgt (four cases)
 <span class="kw">xyplot</span>(imp, hgt<span class="op">~</span>age<span class="op">|</span>.imp, <span class="dt">na.group=</span>wgt, <span class="dt">pch=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">20</span>),<span class="dt">cex=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="fl">1.5</span>))</code></pre></div>
-<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">xyplot</span>(imp, hgt<span class="op">~</span>age, <span class="dt">pch=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">20</span>),<span class="dt">cex=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="fl">1.5</span>))</code></pre></div>
-<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-30-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 </div>
 <div id="tulemuste-avaldamine" class="section level2">
 <h2><span class="header-section-number">23.9</span> Tulemuste avaldamine</h2>
@@ -852,7 +853,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["_main.pdf"],
 "toc": {
 "collapse": "section"
 }

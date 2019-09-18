@@ -427,8 +427,8 @@ m.resid &lt;-<span class="st"> </span>g2007<span class="op">$</span>lifeExp <spa
 <span class="st">  </span><span class="kw">geom_segment</span>( <span class="kw">aes</span>( <span class="dt">xend =</span> lGDP_s, <span class="dt">yend =</span> <span class="dv">0</span> ), <span class="dt">size =</span> <span class="fl">0.2</span> ) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>( <span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">type =</span> <span class="dv">1</span> )
 <span class="co">#&gt; Warning: Ignoring unknown parameters: type</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
-<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-7-1.png" alt="Mudeli residuaalide plot (m.resid ~ X1)." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-7"></span>
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-7-1.png" alt="Mudeli residuaalide plot (m.resid ~ X1)." width="672" />
 <p class="caption">
 Joonis 4.3: Mudeli residuaalide plot (m.resid ~ X1).
 </p>
@@ -440,8 +440,8 @@ Joonis 4.3: Mudeli residuaalide plot (m.resid ~ X1).
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">color =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">linetype =</span> <span class="dv">2</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
-<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-8-1.png" alt="m.resid ~ Y plot" width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-8"></span>
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-8-1.png" alt="m.resid ~ Y plot" width="672" />
 <p class="caption">
 Joonis 18.1: m.resid ~ Y plot
 </p>
@@ -496,8 +496,8 @@ pred.data<span class="op">$</span>upper1 &lt;-<span class="st"> </span>R.PI[<spa
 <span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> lower, <span class="dt">ymax =</span> upper), <span class="dt">fill =</span> <span class="st">&quot;grey60&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> lower1, <span class="dt">ymax =</span> upper1), <span class="dt">fill =</span> <span class="st">&quot;grey10&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.3</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-9"></span>
-<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-9-1.png" alt="Ennustav plot" width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-9"></span>
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-9-1.png" alt="Ennustav plot" width="672" />
 <p class="caption">
 Joonis 4.4: Ennustav plot
 </p>
@@ -522,8 +522,8 @@ Joonis 4.4: Ennustav plot
 [ <span class="dv">900</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> ]
 [ <span class="dv">1000</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> ]
 <span class="kw">ppc_dens</span>(g2007<span class="op">$</span>lifeExp, yrep[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ])</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-10"></span>
-<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-10-1.png" alt="Valimi andmed vs. mudeli poolt ennustatud andmed." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-10"></span>
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-10-1.png" alt="Valimi andmed vs. mudeli poolt ennustatud andmed." width="672" />
 <p class="caption">
 Joonis 18.2: Valimi andmed vs. mudeli poolt ennustatud andmed.
 </p>
@@ -557,8 +557,8 @@ g2007<span class="op">$</span>mu.mean &lt;-<span class="st"> </span>mu.mean
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Predicted life expectancy&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Observed life expectancy&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>( <span class="dt">xlim=</span><span class="kw">c</span>( <span class="dv">40</span>, <span class="dv">85</span> ), <span class="dt">ylim=</span><span class="kw">c</span>( <span class="dv">40</span>, <span class="dv">85</span> ))</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
-<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-11-1.png" alt="Ennustus vs. valimi väärtus" width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-11"></span>
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-11-1.png" alt="Ennustus vs. valimi väärtus" width="672" />
 <p class="caption">
 Joonis 4.5: Ennustus vs. valimi väärtus
 </p>
@@ -589,10 +589,10 @@ sim.PI &lt;-<span class="st"> </span><span class="kw">apply</span>( mu_sim , <sp
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>),
         <span class="dt">axis.title.y =</span> <span class="kw">element_blank</span>())</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
-<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-12-1.png" alt="Ennustused riigi kaupa." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-12"></span>
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-12-1.png" alt="Ennustused riigi kaupa." width="672" />
 <p class="caption">
-Joonis 15.6: Ennustused riigi kaupa.
+Joonis 15.7: Ennustused riigi kaupa.
 </p>
 </div>
 <p>punased jooned näitavad 89% ennustuspiire igale residuaalile riigi tasemel (89% kõikvõimalike riikide keskmiste eluigade residuaalidest sellel SKPl jääb punasesse vahemikku).</p>
@@ -630,8 +630,8 @@ Joonis 15.6: Ennustused riigi kaupa.
 <span class="co">#&gt; )</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m1 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(f1<span class="op">$</span>f, f1<span class="op">$</span>d)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">precis</span>(m1))</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-16"></span>
-<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-16-1.png" alt="Mudeli koefitsientide plot." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-16"></span>
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-16-1.png" alt="Mudeli koefitsientide plot." width="672" />
 <p class="caption">
 Joonis 4.7: Mudeli koefitsientide plot.
 </p>
@@ -672,10 +672,10 @@ mu.Africa.PI &lt;-<span class="st"> </span><span class="kw">apply</span>(mu.Afri
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> mu.Africa.PI[<span class="dv">1</span>,], <span class="dt">ymax =</span> mu.Africa.PI[<span class="dv">2</span>,]), <span class="dt">alpha =</span> <span class="fl">0.15</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> mu.Africa.mean))</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-18"></span>
-<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-18-1.png" alt="Ennustusplot Aafrikale." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-18"></span>
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-18-1.png" alt="Ennustusplot Aafrikale." width="672" />
 <p class="caption">
-Joonis 15.8: Ennustusplot Aafrikale.
+Joonis 15.9: Ennustusplot Aafrikale.
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dd1 &lt;-<span class="st"> </span>dd <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(continentEurope <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)
@@ -697,10 +697,10 @@ mu.Europe.PI &lt;-<span class="st"> </span><span class="kw">apply</span>( mu.Eur
 <span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_ribbon</span>( <span class="kw">aes</span>(<span class="dt">ymin=</span>mu.Europe.PI[<span class="dv">1</span>,], <span class="dt">ymax=</span>mu.Europe.PI[<span class="dv">2</span>,]), <span class="dt">alpha=</span><span class="fl">0.15</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>( <span class="kw">aes</span>( <span class="dt">y=</span>mu.Europe.mean))</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-19"></span>
-<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-19-1.png" alt="Ennustusplot Euroopale." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-19"></span>
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-19-1.png" alt="Ennustusplot Euroopale." width="672" />
 <p class="caption">
-Joonis 15.9: Ennustusplot Euroopale.
+Joonis 15.10: Ennustusplot Euroopale.
 </p>
 </div>
 <p>Nagu näha, on meil nüüd üsna erinevad sirge tõusunurgad.</p>
@@ -723,8 +723,8 @@ d2 &lt;-<span class="st"> </span>d1 <span class="op">%&gt;%</span><span class="s
         sigma <span class="op">~</span><span class="st"> </span><span class="kw">dcauchy</span>( <span class="dv">0</span>, <span class="dv">1</span> )
 ), <span class="dt">data =</span> d2)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">precis</span>(m2))</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-23"></span>
-<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-23-1.png" alt="mudeli koefitsientide plot" width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-23"></span>
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-23-1.png" alt="mudeli koefitsientide plot" width="672" />
 <p class="caption">
 Joonis 18.3: mudeli koefitsientide plot
 </p>
@@ -779,8 +779,8 @@ p0 &lt;-<span class="st"> </span><span class="kw">waist_fun</span>(<span class="
 p1 &lt;-<span class="st"> </span><span class="kw">waist_fun</span>(<span class="dv">1</span>, m2, m3)
 <span class="kw">grid.arrange</span>(p_<span class="dv">1</span>, p0, p1, <span class="dt">ncol =</span> <span class="dv">3</span>)
 <span class="co">#&gt; Warning: Removed 2 rows containing missing values (geom_path).</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-29"></span>
-<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-29-1.png" alt="Ennustusplot üle kahe mudeli." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-29"></span>
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-29-1.png" alt="Ennustusplot üle kahe mudeli." width="672" />
 <p class="caption">
 Joonis 18.4: Ennustusplot üle kahe mudeli.
 </p>
@@ -790,10 +790,10 @@ Joonis 18.4: Ennustusplot üle kahe mudeli.
 w_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">waist_fun</span>(<span class="dv">0</span>, m2)
 w1 &lt;-<span class="st"> </span><span class="kw">waist_fun</span>(<span class="dv">1</span>, m2)
 <span class="kw">grid.arrange</span>(w0, w_<span class="dv">1</span>, w1, <span class="dt">ncol =</span> <span class="dv">3</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-30"></span>
-<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-30-1.png" alt="Ennustusplot m2-le." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-30"></span>
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-30-1.png" alt="Ennustusplot m2-le." width="672" />
 <p class="caption">
-Joonis 15.10: Ennustusplot m2-le.
+Joonis 15.11: Ennustusplot m2-le.
 </p>
 </div>
 <p>Nüüd on hästi näha, et interaktsioonimudel laseb sirge tõusunurgad vabaks!</p>
@@ -846,7 +846,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["_main.pdf"],
 "toc": {
 "collapse": "section"
 }

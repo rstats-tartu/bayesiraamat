@@ -410,16 +410,16 @@ m1 &lt;-<span class="st"> </span><span class="kw">map</span>(
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">samples &lt;-<span class="st"> </span><span class="kw">extract.samples</span>(m1)
 <span class="co"># hist(samples$p)</span>
-<span class="kw">dens</span>(samples<span class="op">$</span>p)
-<span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
-<span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt; 0.355 0.972</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:pullpost"></span>
-<img src="11_mudelite_keel_files/figure-html/pullpost-1.png" alt="Tõmbame valimi posteeriorist." width="70%" />
+<span class="kw">dens</span>(samples<span class="op">$</span>p)</code></pre></div>
+<div class="figure"><span id="fig:pullpost"></span>
+<img src="11_mudelite_keel_files/figure-html/pullpost-1.png" alt="Tõmbame valimi posteeriorist." width="672" />
 <p class="caption">
 Joonis 14.1: Tõmbame valimi posteeriorist.
 </p>
 </div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
+<span class="co">#&gt; |0.95 0.95| </span>
+<span class="co">#&gt; 0.359 0.979</span></code></pre></div>
 <p>Kuus patsienti üheksast surid ja nüüd me usume, et tegelik suremus võib olla nii madal kui 37% ja nii kõrge kui 97%. Kui me tahame paremat hinnangut on meil vaja kas rohkem patsiente või informatiivsemat priorit (paremat taustainfot).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m2 &lt;-<span class="st"> </span><span class="kw">map</span>(
     <span class="kw">alist</span>(
@@ -432,17 +432,17 @@ Joonis 14.1: Tõmbame valimi posteeriorist.
 <span class="co">#&gt; p 0.67   0.05 0.59  0.75</span></code></pre></div>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">samples &lt;-<span class="st"> </span><span class="kw">extract.samples</span>(m2)
-<span class="kw">dens</span>(samples<span class="op">$</span>p)
-<span class="co">#PI(samples$p, prob = 0.95) # Leaves out equal 2.5% at both sides</span>
-<span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
-<span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt; 0.572 0.764</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:perse"></span>
-<img src="11_mudelite_keel_files/figure-html/perse-1.png" alt="Veel üks valim posteeriorist (60 surma 90st)." width="70%" />
+<span class="kw">dens</span>(samples<span class="op">$</span>p)</code></pre></div>
+<div class="figure"><span id="fig:perse"></span>
+<img src="11_mudelite_keel_files/figure-html/perse-1.png" alt="Veel üks valim posteeriorist (60 surma 90st)." width="672" />
 <p class="caption">
 Joonis 14.2: Veel üks valim posteeriorist (60 surma 90st).
 </p>
 </div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#PI(samples$p, prob = 0.95) # Leaves out equal 2.5% at both sides</span>
+<span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
+<span class="co">#&gt; |0.95 0.95| </span>
+<span class="co">#&gt; 0.567 0.761</span></code></pre></div>
 <p>10 korda rohkem andmeid: nüüd on suremus määratud kuskile 57% ja 77% vahele (suure tõenäosusega)</p>
 <div id="beta-prior" class="section level2 unnumbered">
 <h2>Beta prior</h2>
@@ -450,8 +450,8 @@ Joonis 14.2: Veel üks valim posteeriorist (60 surma 90st).
 <p>Beta-prior katab vahemiku 0st 1ni ja sellel on 2 parameetrit, a ja b.</p>
 <p>Siin mõned näited erinevatest beta parametriseeringutest.</p>
 
-<div class="figure" style="text-align: center"><span id="fig:betaparm"></span>
-<img src="11_mudelite_keel_files/figure-html/betaparm-1.png" alt="Beta jaotuse parametriseeringuid." width="70%" />
+<div class="figure"><span id="fig:betaparm"></span>
+<img src="11_mudelite_keel_files/figure-html/betaparm-1.png" alt="Beta jaotuse parametriseeringuid." width="672" />
 <p class="caption">
 Joonis 14.3: Beta jaotuse parametriseeringuid.
 </p>
@@ -482,10 +482,10 @@ samples &lt;-<span class="st"> </span><span class="kw">extract.samples</span>(m3
 <span class="co">#&gt; p 0.67   0.03 0.62  0.71</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt; 0.618 0.722</span>
+<span class="co">#&gt; 0.618 0.721</span>
 <span class="kw">dens</span>(samples<span class="op">$</span>p)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
-<img src="11_mudelite_keel_files/figure-html/unnamed-chunk-5-1.png" alt="Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-5"></span>
+<img src="11_mudelite_keel_files/figure-html/unnamed-chunk-5-1.png" alt="Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist." width="672" />
 <p class="caption">
 Joonis 14.4: Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist.
 </p>
@@ -545,7 +545,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["_main.pdf"],
 "toc": {
 "collapse": "section"
 }

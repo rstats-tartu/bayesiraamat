@@ -407,8 +407,8 @@ Milliseid summaarseid statistikuid arvutada ja milliseid vältida, sõltub stati
 <li><p>Valimi kõige levinumat esindajat iseloomustab mood ehk jaotuse tipp. Seda on aga raskem täpselt määrata ja mitmetipulisel jaotusel on mitu moodi. Töötamisel posterioorsete jaotustega on mood sageli parim lahendus.</p></li>
 </ol>
 
-<div class="figure" style="text-align: center"><span id="fig:lognorm"></span>
-<img src="03_andmed_files/figure-html/lognorm-1.png" alt="Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete “keskväärtusest”? Miks?" width="70%" />
+<div class="figure"><span id="fig:lognorm"></span>
+<img src="03_andmed_files/figure-html/lognorm-1.png" alt="Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete “keskväärtusest”? Miks?" width="672" />
 <p class="caption">
 Joonis 3.1: Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete “keskväärtusest”? Miks?
 </p>
@@ -474,27 +474,27 @@ andmed &lt;-<span class="st"> </span><span class="kw">rlnorm</span>(<span class=
 <tbody>
 <tr class="odd">
 <td align="left">multiplicative_SD</td>
-<td align="right">0.93</td>
-<td align="right">0.342</td>
-<td align="right">2.53</td>
+<td align="right">1.21</td>
+<td align="right">0.478</td>
+<td align="right">3.05</td>
 </tr>
 <tr class="even">
 <td align="left">multiplicative_2_SD</td>
-<td align="right">0.93</td>
-<td align="right">0.126</td>
-<td align="right">6.88</td>
+<td align="right">1.21</td>
+<td align="right">0.189</td>
+<td align="right">7.70</td>
 </tr>
 <tr class="odd">
 <td align="left">additive_SD</td>
-<td align="right">1.55</td>
-<td align="right">-0.534</td>
-<td align="right">3.64</td>
+<td align="right">1.88</td>
+<td align="right">-0.421</td>
+<td align="right">4.18</td>
 </tr>
 <tr class="even">
 <td align="left">additive_2_SD</td>
-<td align="right">1.55</td>
-<td align="right">-2.620</td>
-<td align="right">5.72</td>
+<td align="right">1.88</td>
+<td align="right">-2.719</td>
+<td align="right">6.47</td>
 </tr>
 </tbody>
 </table>
@@ -542,24 +542,24 @@ andmed &lt;-<span class="st"> </span><span class="kw">rlnorm</span>(<span class=
 </blockquote>
 <p>Vahest tekkib teil vajadus empiiriliselt määrata, kas teie andmed on normaaljaotusega. Enne kui seda tegema asute, peaksite mõistma, et see, et teie valim ei ole normaalne, ei tähenda automaatselt, et populatsioon, millest see valim tõmmati, ei oleks normaaljaotusega. Igal juhul, valimiandmete normaalsuse määramiseks on kõige mõistlikum kasutada qq-plotti. QQ-plot (kvantiil-kvantiil plot) võrdleb andmete jaotust ideaalse normaaljaotusega andmepunkti haaval. Kui empiiriline jaotus kattub referentsjaotusega, siis on tulemuseks sirgel paiknevad punktid. Järgneval qq plotil on näha, mis juhtub, kui plottida lognormaalseid andmeid normaaljaotuse vastu:</p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqPlot</span>(andmed)
-<span class="co">#&gt; [1] 65 37</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:qqnorm"></span>
-<img src="03_andmed_files/figure-html/qqnorm-1.png" alt="QQ-plot lognormaalsetele andmetele. Plotil võrreldakse lognormaalsete andmete jaotust referentsjaotusega, milleks on antud juhul normaaljaotus. Punased katkendjooned annavad standardveapõhise usaldusvahemiku (arvutatud simuleeritud juhuvalimist normaaljaotusega referentspopulatsioonist), millesse peaks jääma enamus andmepunkte juhul kui andmepunktid pärineksid normaaljaotusest." width="70%" />
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqPlot</span>(andmed)</code></pre></div>
+<div class="figure"><span id="fig:qqnorm"></span>
+<img src="03_andmed_files/figure-html/qqnorm-1.png" alt="QQ-plot lognormaalsetele andmetele. Plotil võrreldakse lognormaalsete andmete jaotust referentsjaotusega, milleks on antud juhul normaaljaotus. Punased katkendjooned annavad standardveapõhise usaldusvahemiku (arvutatud simuleeritud juhuvalimist normaaljaotusega referentspopulatsioonist), millesse peaks jääma enamus andmepunkte juhul kui andmepunktid pärineksid normaaljaotusest." width="672" />
 <p class="caption">
 Joonis 3.2: QQ-plot lognormaalsetele andmetele. Plotil võrreldakse lognormaalsete andmete jaotust referentsjaotusega, milleks on antud juhul normaaljaotus. Punased katkendjooned annavad standardveapõhise usaldusvahemiku (arvutatud simuleeritud juhuvalimist normaaljaotusega referentspopulatsioonist), millesse peaks jääma enamus andmepunkte juhul kui andmepunktid pärineksid normaaljaotusest.
 </p>
 </div>
+<pre><code>#&gt; [1] 84 32</code></pre>
 <p>Nüüd joonistame qq-ploti logaritmitud andmetele.</p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqPlot</span>(<span class="kw">log</span>(andmed))
-<span class="co">#&gt; [1] 65 40</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:qqlognorm"></span>
-<img src="03_andmed_files/figure-html/qqlognorm-1.png" alt="QQ-plot normaalsetele andmetele (logaritmitud lognormaalsed andmed)." width="70%" />
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqPlot</span>(<span class="kw">log</span>(andmed))</code></pre></div>
+<div class="figure"><span id="fig:qqlognorm"></span>
+<img src="03_andmed_files/figure-html/qqlognorm-1.png" alt="QQ-plot normaalsetele andmetele (logaritmitud lognormaalsed andmed)." width="672" />
 <p class="caption">
 Joonis 3.3: QQ-plot normaalsetele andmetele (logaritmitud lognormaalsed andmed).
 </p>
 </div>
+<pre><code>#&gt; [1] 84 48</code></pre>
 <p>Pole kahtlust, andmed on logaritmitud kujul normaaljaotusega.</p>
 <blockquote>
 <p>qqPlot() võimaldab võrrelda teie andmeid ükskõik millise R-is defineeritud jaotusega (?car::qqPlot).</p>
@@ -571,13 +571,13 @@ Joonis 3.3: QQ-plot normaalsetele andmetele (logaritmitud lognormaalsed andmed).
 <p>MAD –– median absolute deviation — on vähem tundlik outlierite suhtes ja ei eelda normaaljaotust. Puuduseks on, et MAD ei oma tõlgendust, mille kohaselt ta hõlmaks kindlat protsenti populatsiooni või valimi andmejaotusest. Seevastu sd puhul võime olla kindlad, et isegi kõige hullema jaotuse korral jäävad vähemalt 75% andmetest 2 SD piiridesse.</p>
 <p>Lognormaalsete andmetega:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mad</span>(andmed, <span class="dt">constant =</span> <span class="dv">1</span>); <span class="kw">sd</span>(andmed); <span class="kw">mad</span>(andmed)
-<span class="co">#&gt; [1] 0.487</span>
-<span class="co">#&gt; [1] 2.09</span>
-<span class="co">#&gt; [1] 0.722</span></code></pre></div>
+<span class="co">#&gt; [1] 0.648</span>
+<span class="co">#&gt; [1] 2.3</span>
+<span class="co">#&gt; [1] 0.961</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mad</span>(<span class="kw">log10</span>(andmed), <span class="dt">constant =</span> <span class="dv">1</span>); <span class="kw">sd</span>(<span class="kw">log10</span>(andmed)); <span class="kw">mad</span>(<span class="kw">log10</span>(andmed))
-<span class="co">#&gt; [1] 0.304</span>
-<span class="co">#&gt; [1] 0.435</span>
-<span class="co">#&gt; [1] 0.451</span></code></pre></div>
+<span class="co">#&gt; [1] 0.287</span>
+<span class="co">#&gt; [1] 0.402</span>
+<span class="co">#&gt; [1] 0.425</span></code></pre></div>
 <p>mad = median(abs(median(x) - x)), mida on väga lihtne mõista. Samas R-i funktsioon mad() korrutab default-ina mad-i läbi konstandiga 1.4826, mis muudab mad()-i tulemuse võrreldavaks sd-ga, tehes sellest sd robustse analoogi. Robustse sellepärast, et mad-i arvutuskäik, mis sõltub mediaanist, mitte aritmeetilisest keskmisest, ei ole tundlik outlierite suhtes. Seega, kui tahate arvutada mad-i, siis fikseerige mad() funktsioonis argument <em>constant</em> ühele.</p>
 <blockquote>
 <p>Ära kunagi avalda andmeid vormis: mean (MAD) või median (SD). Korrektne vorm on mean (SD) või median (MAD).</p>
@@ -585,7 +585,7 @@ Joonis 3.3: QQ-plot normaalsetele andmetele (logaritmitud lognormaalsed andmed).
 <p>Veel üks viis andmejaotuse summeerimiseks on kasutada kvantiile. Siin saame me tüüpiliselt rohkem kui ühe numbri, aga sageli on selline viis informatiivsem, kui ühenumbrilised summaarsed statistikud. Funktsioon quantile võimaldab valida, milliseid kvantiile soovite näha. Järgnevas koodist saame teada, millisest vektori “andmed” väärtusest allapoole jääb 2.5%, 25%, 50%, 75% ja 95% väärtusi.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">quantile</span>(andmed, <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.95</span>))
 <span class="co">#&gt;  2.5%   25%   50%   75%   95% </span>
-<span class="co">#&gt; 0.142 0.482 0.858 1.839 5.178</span></code></pre></div>
+<span class="co">#&gt; 0.234 0.647 1.232 2.413 5.605</span></code></pre></div>
 </div>
 <div id="muutujate-koosvarieeruvus" class="section level2 unnumbered">
 <h2>Muutujate koosvarieeruvus</h2>
@@ -603,8 +603,8 @@ Kuidas tõlgendame aga tulemust <span class="math inline">\(r = 0.9\)</span>? Mi
 <p>Korrelatsioonikordaja väärtus sõltub mitte ainult andmete koosvarieeruvusest vaid ka andmete ulatusest. Suurema ulatusega andmed X ja/või Y teljel annavad keskeltläbi 0-st kaugemal oleva korrelatsioonikordaja. Selle pärast sobib korrelatsioon halvasti näiteks korduskatsete kooskõla mõõtmiseks.</p>
 <p>Lisaks, korrelatsioonikordaja mõõdab vaid andmete <em>lineaarset</em> koos-varieeruvust: kui andmed koos-varieeruvad mitte-lineaarselt, siis võivad ka väga tugevad koos-varieeruvused jääda märkamatuks.</p>
 
-<div class="figure" style="text-align: center"><span id="fig:anscombe"></span>
-<img src="03_andmed_files/figure-html/anscombe-1.png" alt="Anscombe’i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: neli andmestikku annavad identse korrelatsioonikordaja (Pearsons’r), ehkki tegelikud seosed andmete vahel on täiesti erinevad." width="70%" />
+<div class="figure"><span id="fig:anscombe"></span>
+<img src="03_andmed_files/figure-html/anscombe-1.png" alt="Anscombe’i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: neli andmestikku annavad identse korrelatsioonikordaja (Pearsons’r), ehkki tegelikud seosed andmete vahel on täiesti erinevad." width="672" />
 <p class="caption">
 Joonis 3.4: Anscombe’i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: neli andmestikku annavad identse korrelatsioonikordaja (Pearsons’r), ehkki tegelikud seosed andmete vahel on täiesti erinevad.
 </p>
@@ -708,7 +708,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["_main.pdf"],
 "toc": {
 "collapse": "section"
 }

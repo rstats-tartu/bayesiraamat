@@ -418,8 +418,8 @@ boot &lt;-<span class="st"> </span>boot <span class="op">%&gt;%</span><span clas
 <span class="st">            </span><span class="kw">mutate</span>(<span class="dt">Mean =</span> <span class="kw">map_dbl</span>(strap, mean_value))
 
 <span class="kw">ggplot</span>(boot, <span class="kw">aes</span>(Mean)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>()</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:bootpost"></span>
-<img src="09_bootstrap_files/figure-html/bootpost-1.png" alt="Bootstrapitud posteerior USA presidentide keskmisele pikkusele. Järgnevas koodis ütleme me kõigepealt, et B = 2000 (et me võtame 2000 bootstrap valimit) kasutades selleks broom paketi käsku boot(), millele on lihtne lisada dplyri funktsioon summarise(). Siiski peame seda tegema dplyr::do() abil. Pane tähele, et “tänu” do() kasutamisele peame me summarise() funktsioonis näitama punktiga koha, kuhu lähevad %&gt;% torust tulnud bootstrap valimid. Aga muidu on kõik tavapärane tidyverse." width="70%" />
+<div class="figure"><span id="fig:bootpost"></span>
+<img src="09_bootstrap_files/figure-html/bootpost-1.png" alt="Bootstrapitud posteerior USA presidentide keskmisele pikkusele. Järgnevas koodis ütleme me kõigepealt, et B = 2000 (et me võtame 2000 bootstrap valimit) kasutades selleks broom paketi käsku boot(), millele on lihtne lisada dplyri funktsioon summarise(). Siiski peame seda tegema dplyr::do() abil. Pane tähele, et “tänu” do() kasutamisele peame me summarise() funktsioonis näitama punktiga koha, kuhu lähevad %&gt;% torust tulnud bootstrap valimid. Aga muidu on kõik tavapärane tidyverse." width="672" />
 <p class="caption">
 Joonis 12.1: Bootstrapitud posteerior USA presidentide keskmisele pikkusele. Järgnevas koodis ütleme me kõigepealt, et B = 2000 (et me võtame 2000 bootstrap valimit) kasutades selleks broom paketi käsku boot(), millele on lihtne lisada dplyri funktsioon summarise(). Siiski peame seda tegema dplyr::do() abil. Pane tähele, et “tänu” do() kasutamisele peame me summarise() funktsioonis näitama punktiga koha, kuhu lähevad %&gt;% torust tulnud bootstrap valimid. Aga muidu on kõik tavapärane tidyverse.
 </p>
@@ -476,16 +476,16 @@ df22 &lt;-<span class="st"> </span>boot1 <span class="op">%&gt;%</span><span cla
 <p>Näited sellest, kuidas kasutada bayesbooti standardhälbe, korrelatsioonikoefitsiendi ja lineaarse mudeli koefitsientide usalduspiiride arvutamiseks leiate <code>?bayesboot</code> käsuga.</p>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">heights_bb &lt;-<span class="st"> </span><span class="kw">bayesboot</span>(heights<span class="op">$</span>value, mean)
-<span class="kw">plot</span>(heights_bb, <span class="dt">compVal =</span> <span class="dv">185</span>)
-<span class="kw">HPDI</span>(heights_bb<span class="op">$</span>V1, <span class="dt">prob =</span> <span class="fl">0.95</span>)
-<span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt;   183   187</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:bayesboot"></span>
-<img src="09_bootstrap_files/figure-html/bayesboot-1.png" alt="Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele." width="70%" />
+<span class="kw">plot</span>(heights_bb, <span class="dt">compVal =</span> <span class="dv">185</span>)</code></pre></div>
+<div class="figure"><span id="fig:bayesboot"></span>
+<img src="09_bootstrap_files/figure-html/bayesboot-1.png" alt="Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele." width="672" />
 <p class="caption">
 Joonis 12.2: Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele.
 </p>
 </div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">HPDI</span>(heights_bb<span class="op">$</span>V1, <span class="dt">prob =</span> <span class="fl">0.95</span>)
+<span class="co">#&gt; |0.95 0.95| </span>
+<span class="co">#&gt;   183   187</span></code></pre></div>
 <p>Vaikimisi pannakse <code>bayesboot()</code> funktsioonis statistiku arvutamisel kaalud (prior) valimi indeksile, mis annab erineva tulemuse kui näiteks kaalutud keskmise arvutamisel, kus kaalud (prior) pannakse valimi väärtustele.</p>
 <p>Aritmeetilise keskmise Bayesi bootstrap väärtused kasutades kaalutud keskmise funktsiooni <code>weighted.mean</code> saab niimoodi:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">heights_bb_w &lt;-<span class="st"> </span><span class="kw">bayesboot</span>(heights<span class="op">$</span>value, 
@@ -493,7 +493,7 @@ Joonis 12.2: Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele.
                          <span class="dt">use.weights =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>Tõenäosus, et keskmine on suurem kui 182 cm</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(heights_bb[, <span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">182</span>)
-<span class="co">#&gt; [1] 0.99</span></code></pre></div>
+<span class="co">#&gt; [1] 0.993</span></code></pre></div>
 <p>Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):</p>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
@@ -504,8 +504,8 @@ dfr &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt
               <span class="dt">c =</span> a <span class="op">-</span><span class="st"> </span>b)
 dfr_bb &lt;-<span class="st"> </span><span class="kw">bayesboot</span>(dfr<span class="op">$</span>c, weighted.mean, <span class="dt">use.weights =</span> <span class="ot">TRUE</span> )
 <span class="kw">plot</span>(dfr_bb, <span class="dt">compVal =</span> <span class="dv">0</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:bayeses"></span>
-<img src="09_bootstrap_files/figure-html/bayeses-1.png" alt="Bayesi bootstrap ES-le." width="70%" />
+<div class="figure"><span id="fig:bayeses"></span>
+<img src="09_bootstrap_files/figure-html/bayeses-1.png" alt="Bayesi bootstrap ES-le." width="672" />
 <p class="caption">
 Joonis 12.3: Bayesi bootstrap ES-le.
 </p>
@@ -527,19 +527,19 @@ sample_means_sum &lt;-<span class="st"> </span>sample_means <span class="op">%&g
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Mean =</span> <span class="kw">mean</span>(value))
 
 <span class="kw">ggplot</span>(sample_means_sum, <span class="kw">aes</span>(<span class="dt">x =</span> Mean)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">color =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">bins =</span> <span class="dv">20</span>)
-<span class="kw">HPDI</span>(sample_means_sum<span class="op">$</span>Mean)
-<span class="co">#&gt; |0.89 0.89| </span>
-<span class="co">#&gt;   183   187</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:paramboot"></span>
-<img src="09_bootstrap_files/figure-html/paramboot-1.png" alt="Parameetrilise bootstrapi posteerior USA presidentide keskmisele pikkusele." width="70%" />
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">color =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">bins =</span> <span class="dv">20</span>)</code></pre></div>
+<div class="figure"><span id="fig:paramboot"></span>
+<img src="09_bootstrap_files/figure-html/paramboot-1.png" alt="Parameetrilise bootstrapi posteerior USA presidentide keskmisele pikkusele." width="672" />
 <p class="caption">
 Joonis 12.4: Parameetrilise bootstrapi posteerior USA presidentide keskmisele pikkusele.
 </p>
 </div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">HPDI</span>(sample_means_sum<span class="op">$</span>Mean)
+<span class="co">#&gt; |0.89 0.89| </span>
+<span class="co">#&gt;   183   187</span></code></pre></div>
 <p>Üldiselt ei soovita me parameetrilist bootstrappi väga soojalt, sest täisbayesiaanlik alternatiiv, mida me kohe õppima asume, on sellest paindlikum.</p>
 
-<div class="figure" style="text-align: center"><span id="fig:bootmeth"></span>
+<div class="figure"><span id="fig:bootmeth"></span>
 <img src="img/boot1.pdf" alt="Bootstrappimise meetodid." width="50%" />
 <p class="caption">
 Joonis 12.5: Bootstrappimise meetodid.
@@ -601,7 +601,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["_main.pdf"],
 "toc": {
 "collapse": "section"
 }

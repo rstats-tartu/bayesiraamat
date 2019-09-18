@@ -42,14 +42,7 @@ y <- dcauchy(x, 0, 20)
 plot(y ~ x, type = "l" , main = "Cauchy prior for sd")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{12_pidev_files/figure-latex/cauchy-prior-1} 
-
-}
-
-\caption{(ref:cauchy-prior)}(\#fig:cauchy-prior)
-\end{figure}
+![(\#fig:cauchy-prior)(ref:cauchy-prior)](12_pidev_files/figure-latex/cauchy-prior-1.pdf) 
 
 (ref:kaks-priorit) Kaks normaaljaotuse priorit.
 
@@ -58,18 +51,20 @@ plot(y ~ x, type = "l" , main = "Cauchy prior for sd")
 x <- 150:200
 y <- dnorm(x, 0, 200)
 plot(y ~ x, type = "l", main = "Normal prior for mean = 0 and sd = 200")
+```
+
+\begin{figure}
+\includegraphics[width=0.48\linewidth]{12_pidev_files/figure-latex/kaks-priorit-1} \caption{(ref:kaks-priorit)}(\#fig:kaks-priorit1)
+\end{figure}
+
+```r
 x <- 150:200
 y <- dnorm(x, 178, 10)
 plot(y ~ x, type = "l", main = "Normal prior for mean = 178 and sd = 10")
 ```
 
 \begin{figure}
-
-{\centering \includegraphics[width=0.48\linewidth]{12_pidev_files/figure-latex/kaks-priorit-1} \includegraphics[width=0.48\linewidth]{12_pidev_files/figure-latex/kaks-priorit-2} 
-
-}
-
-\caption{(ref:kaks-priorit)}(\#fig:kaks-priorit)
+\includegraphics[width=0.48\linewidth]{12_pidev_files/figure-latex/kaks-priorit-2} \caption{(ref:kaks-priorit)}(\#fig:kaks-priorit2)
 \end{figure}
 
 Siin on valida kahe priori vahel mu-le. 
@@ -238,14 +233,7 @@ Selleks saab mugavalt kasutada `rethinking::tracerplot()` funktsiooni.
 tracerplot(m2)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{12_pidev_files/figure-latex/traceplot-1} 
-
-}
-
-\caption{(ref:traceplot)}(\#fig:traceplot)
-\end{figure}
+![(\#fig:traceplot)(ref:traceplot)](12_pidev_files/figure-latex/traceplot-1.pdf) 
 
 Pildilt on näha, et neli ahelat (4 värvi) on hästi konvergeerunud. Hall ala on nn warmup ala, mille tulemusi ei salvestata. Muidu astub iga ahel sammu kaupa ja iga edukas samm salvestatakse ühe posteeriori väärtusena. Ahel sämplib korraga mu, sigma ja nu väärtusi n-mõõtmelises ruumis (n = mudeli parameetrite arv), mis tähendab, et ahela iga samm salvestatakse n kõrvuti numbrina. 
 
@@ -259,14 +247,7 @@ Et kontrollida parameetrite posterioorsete väärtuste korrelatsioone kasutame f
 pairs(m2)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{12_pidev_files/figure-latex/korrelatsiooniplot-1} 
-
-}
-
-\caption{(ref:korrelatsiooniplot)}(\#fig:korrelatsiooniplot)
-\end{figure}
+![(\#fig:korrelatsiooniplot)(ref:korrelatsiooniplot)](12_pidev_files/figure-latex/korrelatsiooniplot-1.pdf) 
 
 Normaaljaotus on selle poolest eriline, et tema parameetrid mu ja sigma ei ole korreleeritud. 
 Paljud teised mudelid ei ole nii lahked. 
@@ -313,14 +294,7 @@ mcmc_intervals(fit2d,
                prob_outer = 0.90)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{12_pidev_files/figure-latex/postciplot-1} 
-
-}
-
-\caption{(ref:postciplot)}(\#fig:postciplot)
-\end{figure}
+![(\#fig:postciplot)(ref:postciplot)](12_pidev_files/figure-latex/postciplot-1.pdf) 
 
 Ja teiseks täis posteeriorid.
 
@@ -328,14 +302,7 @@ Ja teiseks täis posteeriorid.
 mcmc_areas(fit2d, pars = pars[1:2], prob = 0.8)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{12_pidev_files/figure-latex/unnamed-chunk-12-1} 
-
-}
-
-\caption{Posteeriorite tihedusplot.}(\#fig:unnamed-chunk-12)
-\end{figure}
+![(\#fig:unnamed-chunk-12)Posteeriorite tihedusplot.](12_pidev_files/figure-latex/unnamed-chunk-12-1.pdf) 
 
 
 Funktsiooniga `rethinking::extract.samples()` saame koos sämplitud parameetrite numbrid kõrvuti (rea kaupa) tabelisse. 
@@ -359,14 +326,7 @@ ggplot(m2sampl, aes(CV)) +
 #> Warning: Removed 609 rows containing non-finite values (stat_density).
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{12_pidev_files/figure-latex/unnamed-chunk-14-1} 
-
-}
-
-\caption{Posteerior uuele parameetrile}(\#fig:unnamed-chunk-14)
-\end{figure}
+![(\#fig:unnamed-chunk-14)Posteerior uuele parameetrile](12_pidev_files/figure-latex/unnamed-chunk-14-1.pdf) 
 
 Kuna posteerior iseloomustab meie teadmiste piire, siis võime selle abil küsida, kui suure tõenäosusega jääb tõeline CV näiteks parameetrivahemikku 2 kuni 5?
 
@@ -398,14 +358,7 @@ coeftab_plot(coeftab(m0, m1, m2, m3),
              prob = 0.5)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{12_pidev_files/figure-latex/unnamed-chunk-17-1} 
-
-}
-
-\caption{Võrdlev plot mitme mudeli posteerioritele.}(\#fig:unnamed-chunk-17)
-\end{figure}
+![(\#fig:unnamed-chunk-17)Võrdlev plot mitme mudeli posteerioritele.](12_pidev_files/figure-latex/unnamed-chunk-17-1.pdf) 
 
 Me sättisime usalduspiirid 0.5 peale, mis tähendab, et need ennustavad, kuhu peaks mudeli järgi jääma parameetri tegelik väärtus 50%-se tõenäosusega. 
 Nagu näha, on m2 ja m3 posteeriorid palju lähemal m0-le kui normaaljaotusega fititud m1 oma.
@@ -428,14 +381,7 @@ y <- dnorm(x, 0, 200)
 plot(x, y, main = "Prior for mu", type = "l")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{12_pidev_files/figure-latex/unnamed-chunk-18-1} 
-
-}
-
-\caption{Prior keskmisele.}(\#fig:unnamed-chunk-18)
-\end{figure}
+![(\#fig:unnamed-chunk-18)Prior keskmisele.](12_pidev_files/figure-latex/unnamed-chunk-18-1.pdf) 
 
 Siin kasutame nõrgalt informatiivseid prioreid. 
 Idee on selles, et normaaljaotus, mis on tsentreeritud 0 ümber, tõmbab meie posteeriorit nõrgalt nulli poole (nõrgalt, sest jaotus on hästi lai võrreldes tõepärafunktsiooniga). 
@@ -453,14 +399,7 @@ y <- dcauchy(x , 0, 10)
 plot(x, y, main = "Prior for sigma", type = "l")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{12_pidev_files/figure-latex/unnamed-chunk-19-1} 
-
-}
-
-\caption{Prior SD-le}(\#fig:unnamed-chunk-19)
-\end{figure}
+![(\#fig:unnamed-chunk-19)Prior SD-le](12_pidev_files/figure-latex/unnamed-chunk-19-1.pdf) 
 
 Tekitame andmeraami analüüsiks ja mudeli, mis põhineb normaalsel tõepärafunktsioonil.
 
@@ -591,14 +530,7 @@ potusm2.1 <- map2stan(
 tracerplot(potusm2.1, n_cols = 2)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{12_pidev_files/figure-latex/unnamed-chunk-30-1} 
-
-}
-
-\caption{Traceplot.}(\#fig:unnamed-chunk-30)
-\end{figure}
+![(\#fig:unnamed-chunk-30)Traceplot.](12_pidev_files/figure-latex/unnamed-chunk-30-1.pdf) 
 
 
 Tulemus ES-i osas tuleb üsna sarnane.
@@ -607,14 +539,7 @@ Tulemus ES-i osas tuleb üsna sarnane.
 plot(coeftab(potusm2, potusm2.1))
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{12_pidev_files/figure-latex/unnamed-chunk-31-1} 
-
-}
-
-\caption{mudelite võrdlusplot.}(\#fig:unnamed-chunk-31)
-\end{figure}
+![(\#fig:unnamed-chunk-31)mudelite võrdlusplot.](12_pidev_files/figure-latex/unnamed-chunk-31-1.pdf) 
 
 
 
@@ -637,14 +562,7 @@ samplespm2 <- extract.samples(potusm2) %>%
 dens(samplespm2$ES)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{12_pidev_files/figure-latex/unnamed-chunk-33-1} 
-
-}
-
-\caption{Posteerior ES-le.}(\#fig:unnamed-chunk-33)
-\end{figure}
+![(\#fig:unnamed-chunk-33)Posteerior ES-le.](12_pidev_files/figure-latex/unnamed-chunk-33-1.pdf) 
 
 
 ```r
@@ -778,14 +696,7 @@ p <- ggplot(g2007, aes(gdpPercap, lifeExp)) +
 p
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{12_pidev_files/figure-latex/unnamed-chunk-40-1} 
-
-}
-
-\caption{Nulli surutud interceptiga lineaarne regressioon eluea sõltuvusele SKP-st.}(\#fig:unnamed-chunk-40)
-\end{figure}
+![(\#fig:unnamed-chunk-40)Nulli surutud interceptiga lineaarne regressioon eluea sõltuvusele SKP-st.](12_pidev_files/figure-latex/unnamed-chunk-40-1.pdf) 
 
 
 Nüüd on intercept surutud väärtusele y = 0.
@@ -820,14 +731,7 @@ summary(gapmod3)
 p + geom_line(aes(y = .fitted), data = gapmod3, color = "blue")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{12_pidev_files/figure-latex/unnamed-chunk-42-1} 
-
-}
-
-\caption{Täismudeliga regressioon.}(\#fig:unnamed-chunk-42)
-\end{figure}
+![(\#fig:unnamed-chunk-42)Täismudeliga regressioon.](12_pidev_files/figure-latex/unnamed-chunk-42-1.pdf) 
 
 
 Kuidas me seda m3 mudelit tõlgendame?

@@ -470,7 +470,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>gr() lisatakse muidu automaatselt, aga seda spetsifitseerides saab kirjutada</p>
 <p><code>y ~ x + (1|gr(g1, by = g2))</code>, mis tähendab, et grupeeriva muutja g1 sees lahutatakse veel gruppidesse g2 muutuja tasemete järgi - ja iga g2 grupp modelleeritakse iseseisvalt (ilma shrinkageta)</p>
 <p>Mittelineaarne mudel:</p>
-<p>y = b1(1 − exp(−(x/b2)**b3 )</p>
+<p>y = b1(1 - exp(-(x/b2)**b3 )</p>
 <p>y ja x seos parameetritega b1..b3 Oletame, et tahame kõik parameetrid fittida grupeeriva muutuja g tasemete järgi ja et grupi tasmel efektid oleks omavahel korreleeritud. Lisaks ennustame me b1-e kovariaat z järgi. See kõik läheb järgmisesse võrrandisüsteemi kus, lisaks mitte-lineaarsele võrrandile, igale parameetrile b1…b3 vastab oma lineaarne võrrand:</p>
 <p><code>y ~ b1 * (1 - exp(-(x / b2) ^ b3)</code> <code>b1 ~ z + (1|ID|g)</code> <code>b2 ~ (1|ID|g)</code> <code>b3 ~ (1|ID|g)</code></p>
 <p>lisaks on mudeli keeles silumistermid s() ehk spline ja t2() ehk bivariate tensor spline, mis tulevad mgcv paketist. Näiteks <code>rentsqm ~ t2(area, yearc) + (1|district)</code></p>
@@ -679,7 +679,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["_main.pdf"],
 "toc": {
 "collapse": "section"
 }

@@ -392,7 +392,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">20</span>, <span class="dt">by =</span> .<span class="dv">1</span>)
 y =<span class="st"> </span><span class="kw">dgamma</span>(x, <span class="dt">shape =</span> <span class="dv">4</span>, <span class="dt">scale =</span> <span class="dv">1</span>)
 <span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x)</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-65-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_prior</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length, <span class="dt">data =</span> iris, <span class="dt">family =</span> <span class="st">&quot;student&quot;</span>)
 <span class="co">#&gt;                 prior     class         coef group resp dpar nlpar bound</span>
 <span class="co">#&gt; 1                             b                                         </span>
@@ -433,7 +433,7 @@ b2 &lt;-<span class="st"> </span><span class="kw">filter</span>(b_estimates, <sp
 <span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">title =</span> <span class="st">&quot;intercepts&quot;</span>)
 gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(b1, b2, <span class="dt">nrow =</span> <span class="dv">1</span>)</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-70-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
 <p>Kolme mudeli lõikepunktid ja tõusunurgad on sisuliselt võrdsed ja sama täpsusega hinnatud. Seega ei tee robustne mudel vähemal halba, kui meil on enam-vähem normaalsed andmed.</p>
 <p>Proovime ka robuststet versiooni 2 grupi võrdlusest (vastab t testile, kus kahe grupi sd-d hinnatakse eraldi)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">no_versicolor &lt;-<span class="st"> </span><span class="kw">filter</span>(iris, Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>)
@@ -489,7 +489,7 @@ gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(b1, b2, 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">r_1_df &lt;-<span class="st"> </span><span class="kw">posterior_samples</span>(robust_t_test1)
 mean_<span class="fl">2.</span>gr &lt;-<span class="st"> </span>r_1_df<span class="op">$</span>b_Intercept <span class="op">+</span><span class="st"> </span>r_1_df<span class="op">$</span>b_Speciesvirginica
 <span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="ot">NULL</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(mean_<span class="fl">2.</span>gr))</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-78-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-78-1.png" width="672" /></p>
 <p>Nii saab tekitada usaldusinetvalle, mis katavad 90% jaotuse alusest kõrgeimast tihedusest (mis ei ole päris sama, mis kvantiilide meetod)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rethinking<span class="op">::</span><span class="kw">HPDI</span>(mean_<span class="fl">2.</span>gr, <span class="dt">prob =</span> <span class="fl">0.9</span>)
 <span class="co">#&gt; |0.9 0.9| </span>
@@ -505,7 +505,7 @@ mean_<span class="fl">2.</span>gr &lt;-<span class="st"> </span>r_1_df<span clas
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sd_<span class="fl">2.</span>gr &lt;-<span class="st"> </span><span class="kw">exp</span>(r_1_df<span class="op">$</span>b_sigma_Intercept) <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(r_1_df<span class="op">$</span>b_sigma_Speciesvirginica)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="ot">NULL</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(sd_<span class="fl">2.</span>gr))</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-82-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
 <p>On tavaline, et sd-de posteeriorid ei ole normaaljaotusega (selle kohta vaata lähemalt Statistical Rethinking raamatust).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> no_versicolor)
 <span class="co">#&gt; </span>
@@ -525,7 +525,7 @@ mean_<span class="fl">2.</span>gr &lt;-<span class="st"> </span>r_1_df<span clas
 df1 &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">a =</span> <span class="kw">rnorm</span>(<span class="dv">30</span>), <span class="dt">b =</span> <span class="kw">c</span>(<span class="kw">rnorm</span>(<span class="dv">25</span>, <span class="dv">1</span>, <span class="fl">1.5</span>), <span class="fl">4.3</span>, <span class="fl">5.3</span>, <span class="dv">7</span>, <span class="op">-</span><span class="fl">8.1</span>, <span class="op">-</span><span class="dv">17</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>()
 <span class="kw">ggplot</span>(df1, <span class="kw">aes</span>(value, <span class="dt">fill =</span> key)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">alpha =</span> <span class="fl">0.7</span>, <span class="dt">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">bins =</span> <span class="dv">30</span>)</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-84-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-84-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">robust_t_test2 &lt;-<span class="st"> </span><span class="kw">brm</span>(<span class="kw">bf</span>(value<span class="op">~</span>key, sigma <span class="op">~</span><span class="st"> </span>key), 
             <span class="dt">data =</span> df1, 
             <span class="dt">family =</span> <span class="st">&quot;student&quot;</span>, 
@@ -577,8 +577,8 @@ b =<span class="st"> </span><span class="kw">c</span>(<span class="kw">rnorm</sp
 g2007 &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">l_GDP =</span> <span class="kw">log10</span>(gdpPercap))</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-92"></span>
-<img src="17_brms_files/figure-html/unnamed-chunk-92-1.png" alt="SKP-de jaotus" width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-92"></span>
+<img src="17_brms_files/figure-html/unnamed-chunk-92-1.png" alt="SKP-de jaotus" width="672" />
 <p class="caption">
 Joonis 21.1: SKP-de jaotus
 </p>
@@ -601,14 +601,14 @@ Joonis 21.1: SKP-de jaotus
 <span class="co">#&gt; 3       sigma  8.08e-01    0.0504  7.30e-01     0.895</span>
 <span class="co">#&gt; 4        lp__ -1.40e+03    1.2649 -1.40e+03 -1398.543</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(ln_m1), <span class="dt">points =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-98-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-98-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(ln_m1, <span class="dt">method =</span> <span class="st">&quot;predict&quot;</span>), <span class="dt">points =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-99-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-99-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ln_m2 &lt;-<span class="st"> </span><span class="kw">brm</span>(l_GDP<span class="op">~</span>lifeExp, <span class="dt">data=</span>g2007, <span class="dt">cores=</span><span class="dv">4</span>)
 <span class="kw">write_rds</span>(ln_m2, <span class="st">&quot;ln_m2.rds&quot;</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ln_m2 &lt;-<span class="st"> </span><span class="kw">read_rds</span>(<span class="st">&quot;data/ln_m2.rds&quot;</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(ln_m2, <span class="dt">method=</span><span class="st">&quot;predict&quot;</span>), <span class="dt">points=</span><span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-102-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-102-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bayes_R2</span>(ln_m1)
 <span class="co">#&gt;    Estimate Est.Error  Q2.5 Q97.5</span>
 <span class="co">#&gt; R2    0.587    0.0767 0.429 0.727</span></code></pre></div>
@@ -616,7 +616,7 @@ Joonis 21.1: SKP-de jaotus
 <span class="co">#&gt;    Estimate Est.Error Q2.5 Q97.5</span>
 <span class="co">#&gt; R2    0.652    0.0277 0.59 0.698</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(ln_m2), <span class="dt">points=</span><span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-105-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-105-1.png" width="672" /></p>
 </div>
 <div id="puuduvate-andmete-imputatsioon" class="section level2">
 <h2><span class="header-section-number">21.3</span> Puuduvate andmete imputatsioon</h2>
@@ -690,7 +690,7 @@ iris_imp3 &lt;-<span class="st"> </span><span class="kw">brm</span>(bform, <span
 </div>
 <div id="binoomjaotusega-mudelid" class="section level2">
 <h2><span class="header-section-number">21.4</span> Binoomjaotusega mudelid</h2>
-<p>y ∼ Binomial(n,p)</p>
+<p><span class="math display">\[y \sim Binomial(n, p)\]</span></p>
 <p>Me teeme n katset ja kodeerime iga eduka katse 1-ga ja mitteeduka katse 0-ga. Kui n=1, siis y on ühtedest ja nullidest koosnev vektor (muutuja) ja p on tõenäosus, et suvaline katse annab tulemuseks 1-e. Eeldades logistilist transformatsiooni on siin tegu logistilise regressiooniga. Kui n &gt; 1 (ja ikka eeldades logistilist transformatsiooni), siis on tegu aggregeeritud binoomse logistilise regressiooniga. Me lahendame allpool need mõlemad.</p>
 <div id="logistiline-regressioon" class="section level3">
 <h3><span class="header-section-number">21.4.1</span> Logistiline regressioon</h3>
@@ -702,19 +702,19 @@ iris_imp3 &lt;-<span class="st"> </span><span class="kw">brm</span>(bform, <span
 <pre><code>exp(a) tähendab &quot;e astmes a&quot;, kus e on Euleri arv, ehk arv, mille naturaal-logaritm = 1 
 (seega on e naturaal-logaritmi alus). e on umbes 2.71828 ja selle 
 saab valemist (1 + 1/n)^n, kui n läheneb lõpmatusele.</code></pre>
-<p>Logistiline transformatsioon viib lineaarse regressiooni tavapärasest y-muutuja skaalast [−∞,+∞] tõenäosuste skaalasse [0,1], andes sirge asemele S-kujulise kurvi, mis läheneb asümptootiliselt ühelt poolt 0-le ja teiselt poolt 1-le. Logistilise funktsiooni põõrdväärtus on logit funktsioon, mis annab “<em>odds</em>-i” ehk shansi ehk kihlveosuhte tõenäosusele p: <span class="math inline">\(odds = \frac {p}{1 − p}\)</span>. Tõenäosuse p logit ehk logit(p) on sama, mis log(odds):</p>
+<p>Logistiline transformatsioon viib lineaarse regressiooni tavapärasest y-muutuja skaalast [<span class="math inline">\(-\infty\)</span>,<span class="math inline">\(+\infty\)</span>] tõenäosuste skaalasse [0, 1], andes sirge asemele S-kujulise kurvi, mis läheneb asümptootiliselt ühelt poolt 0-le ja teiselt poolt 1-le. Logistilise funktsiooni põõrdväärtus on logit funktsioon, mis annab “<em>odds</em>-i” ehk shansi ehk kihlveosuhte tõenäosusele p: <span class="math inline">\(odds = \frac {p}{1 - p}\)</span>. Tõenäosuse p logit ehk logit(p) on sama, mis log(odds):</p>
 <p><span class="math display">\[logit(p)=\log \left({\frac {p}{1-p}}\right)=\log(p)-\log(1-p)\]</span></p>
 <p>y = a + bx mudeli korral tavalises meetrilises skaalas on <em>odds</em> exponent fititud lineaarsest mudelist:</p>
 <p><span class="math display">\[odds= \frac {P(Y = 1 ~|~ X)}{1-P(Y = 1 ~|~ X)} = exp(a+bx)\]</span></p>
 <p>ja ekvivalentselt <span class="math display">\[log(odds) = logit(p) = a + bx\]</span>.</p>
 <p>Matemaatiliselt pole vahet, kas me transformeerime prediktorid logistilise funktsiooniga või ennustatava muutuja logit funktsiooniga – need on sama asja erinevad kirjeldused.</p>
 <p>Kuidas suhtuvad <em>odds</em>-d tõenäosustesse? Näiteks tõenäosus 0.2 (20%) tähendab, et <span class="math inline">\(odds = 0.2/(1 - 0.2) = 1/4\)</span> ehk üks neljale ja tõenäosus 0.9 tähendab, et <span class="math inline">\(odds = 0.9/(1 - 0.9) = 9\)</span> ehk üheksa ühele. <em>Odds</em>-e kasutavad näiteks hipodroomid, sest nii on mänguril lihtne näha, et kui kihlveokontori poolt mingile hobusele omistatud odds on näiteks üks nelja vastu ja ta maksab kihlveo sõlmimisel 1 euro, siis ta saab võidu korral 4 eurot kasu (ehk 5 eurose kupüüri). Logaritm <em>odds</em>-idest ongi logit transformatsioon, mille pöördväärtus on omakorda logistiline transformatsioon!</p>
-<p>Suvalise arvu α logistiline funktsioon on logiti põõrdväärtus:</p>
+<p>Suvalise arvu <span class="math inline">\(\alpha\)</span> logistiline funktsioon on logiti põõrdväärtus:</p>
 <p><span class="math display">\[logit^{-1}\alpha=logistic (\alpha)={\frac {exp (\alpha) }{1+ exp (\alpha)}}\]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="op">-</span><span class="dv">10</span><span class="op">:</span><span class="dv">10</span>
-y &lt;-<span class="st"> </span><span class="kw">exp</span>(x)<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(x))
+y &lt;-<span class="st"> </span><span class="kw">exp</span>(x) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(x))
 <span class="kw">plot</span>(y<span class="op">~</span>x)</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-118-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-118-1.png" width="672" /></p>
 <p>Kui me logistilise regressiooniga fititud mudeli y = a + bx korral muudame x-i väärtust ühe ühiku võrra, siis muutub <em>log-odds</em> b võrra, mis on sama, mis õelda, et <em>odds</em> muutub exp(b) võrra. Samas b ei vasta P(Y = 1 | X) muutusele X-i muutumisel ühe ühiku võrra. See, kui kiiresti P(Y = 1 | X) muutub, sõltub X-i väärtusest. Siiski, senikaua kuni b &gt; 0, kaasneb X-i kasvuga alati tõenäosuse P(Y = 1) kasv (ja vastupidi).</p>
 <p>Kahe tõenäosuse logitite vahe on sama, mis logaritm <em>odds-ratio</em>-st (log(OR) ehk shanside suhe)</p>
 <p><span class="math display">\[{log} (OR)= {logit} (p_{1})- {logit} (p_{2})\]</span></p>
@@ -741,30 +741,1017 @@ suremuses (surma tõenäosus keskkonnamõju tingimustes) võib olla tühine. </c
 <h4><span class="header-section-number">21.4.1.1</span> Logistiline regressioon brms-s</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rethinking)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(chimpanzees)
-<span class="kw">skim</span>(chimpanzees)
-<span class="co">#&gt; Skim summary statistics</span>
-<span class="co">#&gt;  n obs: 504 </span>
-<span class="co">#&gt;  n variables: 8 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ── Variable type:integer ─────────────────────────────</span>
-<span class="co">#&gt;      variable missing complete   n  mean    sd p0 p25  p50 p75 p100</span>
-<span class="co">#&gt;         actor       0      504 504  4     2     1   2  4     6    7</span>
-<span class="co">#&gt;         block       0      504 504  3.5   1.71  1   2  3.5   5    6</span>
-<span class="co">#&gt;  chose_prosoc       0      504 504  0.57  0.5   0   0  1     1    1</span>
-<span class="co">#&gt;     condition       0      504 504  0.5   0.5   0   0  0.5   1    1</span>
-<span class="co">#&gt;   prosoc_left       0      504 504  0.5   0.5   0   0  0.5   1    1</span>
-<span class="co">#&gt;   pulled_left       0      504 504  0.58  0.49  0   0  1     1    1</span>
-<span class="co">#&gt;     recipient     252      252 504  5     2     2   3  5     7    8</span>
-<span class="co">#&gt;         trial       0      504 504 36.38 20.79  1  18 36    54   72</span>
-<span class="co">#&gt;      hist</span>
-<span class="co">#&gt;  ▇▇▇▇▁▇▇▇</span>
-<span class="co">#&gt;  ▇▇▁▇▇▁▇▇</span>
-<span class="co">#&gt;  ▆▁▁▁▁▁▁▇</span>
-<span class="co">#&gt;  ▇▁▁▁▁▁▁▇</span>
-<span class="co">#&gt;  ▇▁▁▁▁▁▁▇</span>
-<span class="co">#&gt;  ▆▁▁▁▁▁▁▇</span>
-<span class="co">#&gt;  ▇▇▇▇▁▇▇▇</span>
-<span class="co">#&gt;  ▇▇▇▇▇▇▇▇</span></code></pre></div>
+chimpanzees
+<span class="co">#&gt;     actor recipient condition block trial prosoc_left chose_prosoc</span>
+<span class="co">#&gt; 1       1        NA         0     1     2           0            1</span>
+<span class="co">#&gt; 2       1        NA         0     1     4           0            0</span>
+<span class="co">#&gt; 3       1        NA         0     1     6           1            0</span>
+<span class="co">#&gt; 4       1        NA         0     1     8           0            1</span>
+<span class="co">#&gt; 5       1        NA         0     1    10           1            1</span>
+<span class="co">#&gt; 6       1        NA         0     1    12           1            1</span>
+<span class="co">#&gt; 7       1        NA         0     2    14           1            0</span>
+<span class="co">#&gt; 8       1        NA         0     2    16           1            0</span>
+<span class="co">#&gt; 9       1        NA         0     2    18           0            1</span>
+<span class="co">#&gt; 10      1        NA         0     2    20           0            1</span>
+<span class="co">#&gt; 11      1        NA         0     2    22           0            0</span>
+<span class="co">#&gt; 12      1        NA         0     2    24           1            0</span>
+<span class="co">#&gt; 13      1        NA         0     3    26           0            0</span>
+<span class="co">#&gt; 14      1        NA         0     3    28           1            1</span>
+<span class="co">#&gt; 15      1        NA         0     3    30           0            1</span>
+<span class="co">#&gt; 16      1        NA         0     3    32           1            1</span>
+<span class="co">#&gt; 17      1        NA         0     3    34           1            0</span>
+<span class="co">#&gt; 18      1        NA         0     3    36           0            1</span>
+<span class="co">#&gt; 19      1        NA         0     4    38           1            1</span>
+<span class="co">#&gt; 20      1        NA         0     4    40           0            0</span>
+<span class="co">#&gt; 21      1        NA         0     4    42           0            0</span>
+<span class="co">#&gt; 22      1        NA         0     4    44           0            1</span>
+<span class="co">#&gt; 23      1        NA         0     4    46           1            1</span>
+<span class="co">#&gt; 24      1        NA         0     4    48           1            0</span>
+<span class="co">#&gt; 25      1        NA         0     5    50           0            1</span>
+<span class="co">#&gt; 26      1        NA         0     5    52           0            0</span>
+<span class="co">#&gt; 27      1        NA         0     5    54           1            0</span>
+<span class="co">#&gt; 28      1        NA         0     5    56           1            0</span>
+<span class="co">#&gt; 29      1        NA         0     5    58           0            1</span>
+<span class="co">#&gt; 30      1        NA         0     5    60           1            0</span>
+<span class="co">#&gt; 31      1        NA         0     6    62           0            1</span>
+<span class="co">#&gt; 32      1        NA         0     6    64           1            1</span>
+<span class="co">#&gt; 33      1        NA         0     6    66           1            1</span>
+<span class="co">#&gt; 34      1        NA         0     6    68           1            1</span>
+<span class="co">#&gt; 35      1        NA         0     6    70           0            1</span>
+<span class="co">#&gt; 36      1        NA         0     6    72           0            1</span>
+<span class="co">#&gt; 37      1         8         1     1     1           0            0</span>
+<span class="co">#&gt; 38      1         4         1     1     3           0            1</span>
+<span class="co">#&gt; 39      1         5         1     1     5           1            0</span>
+<span class="co">#&gt; 40      1         7         1     1     7           0            1</span>
+<span class="co">#&gt; 41      1         3         1     1     9           0            0</span>
+<span class="co">#&gt; 42      1         6         1     1    11           0            1</span>
+<span class="co">#&gt; 43      1         4         1     2    13           1            0</span>
+<span class="co">#&gt; 44      1         3         1     2    15           0            1</span>
+<span class="co">#&gt; 45      1         5         1     2    17           1            0</span>
+<span class="co">#&gt; 46      1         7         1     2    19           0            0</span>
+<span class="co">#&gt; 47      1         8         1     2    21           1            1</span>
+<span class="co">#&gt; 48      1         6         1     2    23           0            0</span>
+<span class="co">#&gt; 49      1         3         1     3    25           1            0</span>
+<span class="co">#&gt; 50      1         6         1     3    27           0            1</span>
+<span class="co">#&gt; 51      1         4         1     3    29           1            1</span>
+<span class="co">#&gt; 52      1         8         1     3    31           1            1</span>
+<span class="co">#&gt; 53      1         7         1     3    33           1            1</span>
+<span class="co">#&gt; 54      1         5         1     3    35           0            0</span>
+<span class="co">#&gt; 55      1         8         1     4    37           0            1</span>
+<span class="co">#&gt; 56      1         6         1     4    39           1            1</span>
+<span class="co">#&gt; 57      1         5         1     4    41           1            0</span>
+<span class="co">#&gt; 58      1         7         1     4    43           0            1</span>
+<span class="co">#&gt; 59      1         3         1     4    45           0            1</span>
+<span class="co">#&gt; 60      1         4         1     4    47           0            1</span>
+<span class="co">#&gt; 61      1         6         1     5    49           1            1</span>
+<span class="co">#&gt; 62      1         7         1     5    51           1            0</span>
+<span class="co">#&gt; 63      1         4         1     5    53           1            1</span>
+<span class="co">#&gt; 64      1         5         1     5    55           0            1</span>
+<span class="co">#&gt; 65      1         8         1     5    57           0            1</span>
+<span class="co">#&gt; 66      1         3         1     5    59           1            1</span>
+<span class="co">#&gt; 67      1         3         1     6    61           1            1</span>
+<span class="co">#&gt; 68      1         7         1     6    63           1            0</span>
+<span class="co">#&gt; 69      1         5         1     6    65           0            1</span>
+<span class="co">#&gt; 70      1         6         1     6    67           1            0</span>
+<span class="co">#&gt; 71      1         8         1     6    69           1            1</span>
+<span class="co">#&gt; 72      1         4         1     6    71           0            1</span>
+<span class="co">#&gt; 73      2        NA         0     1     1           1            1</span>
+<span class="co">#&gt; 74      2        NA         0     1     3           0            0</span>
+<span class="co">#&gt; 75      2        NA         0     1     5           0            0</span>
+<span class="co">#&gt; 76      2        NA         0     1     7           0            0</span>
+<span class="co">#&gt; 77      2        NA         0     1     9           1            1</span>
+<span class="co">#&gt; 78      2        NA         0     1    11           1            1</span>
+<span class="co">#&gt; 79      2        NA         0     2    13           1            1</span>
+<span class="co">#&gt; 80      2        NA         0     2    15           1            1</span>
+<span class="co">#&gt; 81      2        NA         0     2    17           1            1</span>
+<span class="co">#&gt; 82      2        NA         0     2    19           0            0</span>
+<span class="co">#&gt; 83      2        NA         0     2    21           0            0</span>
+<span class="co">#&gt; 84      2        NA         0     2    23           0            0</span>
+<span class="co">#&gt; 85      2        NA         0     3    25           0            0</span>
+<span class="co">#&gt; 86      2        NA         0     3    27           0            0</span>
+<span class="co">#&gt; 87      2        NA         0     3    29           1            1</span>
+<span class="co">#&gt; 88      2        NA         0     3    31           1            1</span>
+<span class="co">#&gt; 89      2        NA         0     3    33           0            0</span>
+<span class="co">#&gt; 90      2        NA         0     3    35           1            1</span>
+<span class="co">#&gt; 91      2        NA         0     4    37           0            0</span>
+<span class="co">#&gt; 92      2        NA         0     4    39           0            0</span>
+<span class="co">#&gt; 93      2        NA         0     4    41           1            1</span>
+<span class="co">#&gt; 94      2        NA         0     4    43           0            0</span>
+<span class="co">#&gt; 95      2        NA         0     4    45           1            1</span>
+<span class="co">#&gt; 96      2        NA         0     4    47           1            1</span>
+<span class="co">#&gt; 97      2        NA         0     5    49           0            0</span>
+<span class="co">#&gt; 98      2        NA         0     5    51           1            1</span>
+<span class="co">#&gt; 99      2        NA         0     5    53           0            0</span>
+<span class="co">#&gt; 100     2        NA         0     5    55           1            1</span>
+<span class="co">#&gt; 101     2        NA         0     5    57           0            0</span>
+<span class="co">#&gt; 102     2        NA         0     5    59           1            1</span>
+<span class="co">#&gt; 103     2        NA         0     6    61           1            1</span>
+<span class="co">#&gt; 104     2        NA         0     6    63           0            0</span>
+<span class="co">#&gt; 105     2        NA         0     6    65           1            1</span>
+<span class="co">#&gt; 106     2        NA         0     6    67           1            1</span>
+<span class="co">#&gt; 107     2        NA         0     6    69           0            0</span>
+<span class="co">#&gt; 108     2        NA         0     6    71           0            0</span>
+<span class="co">#&gt; 109     2         7         1     1     2           0            0</span>
+<span class="co">#&gt; 110     2         8         1     1     4           0            0</span>
+<span class="co">#&gt; 111     2         2         1     1     6           0            0</span>
+<span class="co">#&gt; 112     2         7         1     6     7           0            0</span>
+<span class="co">#&gt; 113     2         5         1     1     8           0            0</span>
+<span class="co">#&gt; 114     2         6         1     1    10           0            0</span>
+<span class="co">#&gt; 115     2         4         1     1    12           0            0</span>
+<span class="co">#&gt; 116     2         4         1     2    14           0            0</span>
+<span class="co">#&gt; 117     2         5         1     2    16           1            1</span>
+<span class="co">#&gt; 118     2         8         1     2    18           0            0</span>
+<span class="co">#&gt; 119     2         7         1     2    20           1            1</span>
+<span class="co">#&gt; 120     2         6         1     2    22           1            1</span>
+<span class="co">#&gt; 121     2         2         1     2    24           1            1</span>
+<span class="co">#&gt; 122     2         8         1     3    26           1            1</span>
+<span class="co">#&gt; 123     2         7         1     3    28           1            1</span>
+<span class="co">#&gt; 124     2         6         1     3    30           0            0</span>
+<span class="co">#&gt; 125     2         2         1     3    32           0            0</span>
+<span class="co">#&gt; 126     2         5         1     3    34           1            1</span>
+<span class="co">#&gt; 127     2         4         1     3    36           1            1</span>
+<span class="co">#&gt; 128     2         7         1     4    38           0            0</span>
+<span class="co">#&gt; 129     2         6         1     4    40           1            1</span>
+<span class="co">#&gt; 130     2         2         1     4    42           0            0</span>
+<span class="co">#&gt; 131     2         5         1     4    44           0            0</span>
+<span class="co">#&gt; 132     2         4         1     4    46           1            1</span>
+<span class="co">#&gt; 133     2         8         1     4    48           0            0</span>
+<span class="co">#&gt; 134     2         8         1     5    50           1            1</span>
+<span class="co">#&gt; 135     2         5         1     5    52           1            1</span>
+<span class="co">#&gt; 136     2         7         1     5    54           1            1</span>
+<span class="co">#&gt; 137     2         4         1     5    56           1            1</span>
+<span class="co">#&gt; 138     2         6         1     5    58           0            0</span>
+<span class="co">#&gt; 139     2         2         1     5    60           1            1</span>
+<span class="co">#&gt; 140     2         2         1     6    62           1            1</span>
+<span class="co">#&gt; 141     2         5         1     6    64           0            0</span>
+<span class="co">#&gt; 142     2         6         1     6    66           1            1</span>
+<span class="co">#&gt; 143     2         4         1     6    68           0            0</span>
+<span class="co">#&gt; 144     2         8         1     6    72           1            1</span>
+<span class="co">#&gt; 145     3        NA         0     1     1           0            1</span>
+<span class="co">#&gt; 146     3        NA         0     1     3           1            0</span>
+<span class="co">#&gt; 147     3        NA         0     1     5           1            0</span>
+<span class="co">#&gt; 148     3        NA         0     1     7           1            0</span>
+<span class="co">#&gt; 149     3        NA         0     1     9           0            1</span>
+<span class="co">#&gt; 150     3        NA         0     1    11           0            0</span>
+<span class="co">#&gt; 151     3        NA         0     2    13           1            1</span>
+<span class="co">#&gt; 152     3        NA         0     2    15           0            1</span>
+<span class="co">#&gt; 153     3        NA         0     2    17           1            1</span>
+<span class="co">#&gt; 154     3        NA         0     2    19           1            1</span>
+<span class="co">#&gt; 155     3        NA         0     2    21           0            1</span>
+<span class="co">#&gt; 156     3        NA         0     2    23           0            1</span>
+<span class="co">#&gt; 157     3        NA         0     3    25           1            0</span>
+<span class="co">#&gt; 158     3        NA         0     3    27           0            0</span>
+<span class="co">#&gt; 159     3        NA         0     3    29           0            1</span>
+<span class="co">#&gt; 160     3        NA         0     3    31           0            1</span>
+<span class="co">#&gt; 161     3        NA         0     3    33           1            0</span>
+<span class="co">#&gt; 162     3        NA         0     3    35           1            1</span>
+<span class="co">#&gt; 163     3        NA         0     4    37           1            1</span>
+<span class="co">#&gt; 164     3        NA         0     4    39           0            1</span>
+<span class="co">#&gt; 165     3        NA         0     4    41           0            0</span>
+<span class="co">#&gt; 166     3        NA         0     4    43           0            1</span>
+<span class="co">#&gt; 167     3        NA         0     4    45           1            0</span>
+<span class="co">#&gt; 168     3        NA         0     4    47           1            1</span>
+<span class="co">#&gt; 169     3        NA         0     5    49           0            1</span>
+<span class="co">#&gt; 170     3        NA         0     5    51           1            0</span>
+<span class="co">#&gt; 171     3        NA         0     5    53           1            1</span>
+<span class="co">#&gt; 172     3        NA         0     5    55           0            1</span>
+<span class="co">#&gt; 173     3        NA         0     5    57           0            1</span>
+<span class="co">#&gt; 174     3        NA         0     5    59           1            1</span>
+<span class="co">#&gt; 175     3        NA         0     6    61           0            1</span>
+<span class="co">#&gt; 176     3        NA         0     6    63           0            0</span>
+<span class="co">#&gt; 177     3        NA         0     6    65           1            1</span>
+<span class="co">#&gt; 178     3        NA         0     6    67           1            1</span>
+<span class="co">#&gt; 179     3        NA         0     6    69           0            0</span>
+<span class="co">#&gt; 180     3        NA         0     6    71           1            1</span>
+<span class="co">#&gt; 181     3         5         1     1     2           1            0</span>
+<span class="co">#&gt; 182     3         3         1     1     4           0            1</span>
+<span class="co">#&gt; 183     3         6         1     1     6           1            0</span>
+<span class="co">#&gt; 184     3         2         1     1     8           0            1</span>
+<span class="co">#&gt; 185     3         8         1     1    10           1            0</span>
+<span class="co">#&gt; 186     3         7         1     1    12           0            0</span>
+<span class="co">#&gt; 187     3         5         1     2    14           1            0</span>
+<span class="co">#&gt; 188     3         6         1     2    16           1            1</span>
+<span class="co">#&gt; 189     3         8         1     2    18           0            1</span>
+<span class="co">#&gt; 190     3         2         1     2    20           1            0</span>
+<span class="co">#&gt; 191     3         3         1     2    22           1            1</span>
+<span class="co">#&gt; 192     3         7         1     2    24           1            1</span>
+<span class="co">#&gt; 193     3         2         1     3    26           0            1</span>
+<span class="co">#&gt; 194     3         7         1     3    28           1            0</span>
+<span class="co">#&gt; 195     3         6         1     3    30           0            1</span>
+<span class="co">#&gt; 196     3         8         1     3    32           1            0</span>
+<span class="co">#&gt; 197     3         3         1     3    34           1            0</span>
+<span class="co">#&gt; 198     3         5         1     3    36           0            1</span>
+<span class="co">#&gt; 199     3         6         1     4    38           0            1</span>
+<span class="co">#&gt; 200     3         7         1     4    40           0            1</span>
+<span class="co">#&gt; 201     3         3         1     4    42           0            1</span>
+<span class="co">#&gt; 202     3         2         1     4    44           1            1</span>
+<span class="co">#&gt; 203     3         5         1     4    46           0            1</span>
+<span class="co">#&gt; 204     3         8         1     4    48           0            1</span>
+<span class="co">#&gt; 205     3         5         1     5    50           1            0</span>
+<span class="co">#&gt; 206     3         3         1     5    52           1            0</span>
+<span class="co">#&gt; 207     3         8         1     5    54           0            0</span>
+<span class="co">#&gt; 208     3         7         1     5    56           1            0</span>
+<span class="co">#&gt; 209     3         2         1     5    58           1            1</span>
+<span class="co">#&gt; 210     3         6         1     5    60           1            0</span>
+<span class="co">#&gt; 211     3         5         1     6    62           0            1</span>
+<span class="co">#&gt; 212     3         3         1     6    64           0            1</span>
+<span class="co">#&gt; 213     3         2         1     6    66           0            1</span>
+<span class="co">#&gt; 214     3         8         1     6    68           1            1</span>
+<span class="co">#&gt; 215     3         6         1     6    70           0            0</span>
+<span class="co">#&gt; 216     3         7         1     6    72           0            1</span>
+<span class="co">#&gt; 217     4        NA         0     1     1           0            1</span>
+<span class="co">#&gt; 218     4        NA         0     1     3           1            1</span>
+<span class="co">#&gt; 219     4        NA         0     1     5           0            0</span>
+<span class="co">#&gt; 220     4        NA         0     1     7           0            1</span>
+<span class="co">#&gt; 221     4        NA         0     1     9           1            0</span>
+<span class="co">#&gt; 222     4        NA         0     1    11           1            0</span>
+<span class="co">#&gt; 223     4        NA         0     2    13           0            1</span>
+<span class="co">#&gt; 224     4        NA         0     2    15           1            0</span>
+<span class="co">#&gt; 225     4        NA         0     2    17           0            0</span>
+<span class="co">#&gt; 226     4        NA         0     2    19           1            1</span>
+<span class="co">#&gt; 227     4        NA         0     2    21           0            1</span>
+<span class="co">#&gt; 228     4        NA         0     2    23           1            1</span>
+<span class="co">#&gt; 229     4        NA         0     3    25           1            0</span>
+<span class="co">#&gt; 230     4        NA         0     3    27           0            0</span>
+<span class="co">#&gt; 231     4        NA         0     3    29           1            1</span>
+<span class="co">#&gt; 232     4        NA         0     3    31           1            0</span>
+<span class="co">#&gt; 233     4        NA         0     3    33           0            1</span>
+<span class="co">#&gt; 234     4        NA         0     3    35           0            0</span>
+<span class="co">#&gt; 235     4        NA         0     4    37           0            1</span>
+<span class="co">#&gt; 236     4        NA         0     4    39           1            0</span>
+<span class="co">#&gt; 237     4        NA         0     4    41           0            1</span>
+<span class="co">#&gt; 238     4        NA         0     4    43           1            1</span>
+<span class="co">#&gt; 239     4        NA         0     4    45           0            0</span>
+<span class="co">#&gt; 240     4        NA         0     4    47           1            0</span>
+<span class="co">#&gt; 241     4        NA         0     5    49           1            1</span>
+<span class="co">#&gt; 242     4        NA         0     5    51           1            0</span>
+<span class="co">#&gt; 243     4        NA         0     5    53           0            0</span>
+<span class="co">#&gt; 244     4        NA         0     5    55           0            1</span>
+<span class="co">#&gt; 245     4        NA         0     5    57           1            1</span>
+<span class="co">#&gt; 246     4        NA         0     5    59           0            1</span>
+<span class="co">#&gt; 247     4        NA         0     6    61           0            1</span>
+<span class="co">#&gt; 248     4        NA         0     6    63           0            1</span>
+<span class="co">#&gt; 249     4        NA         0     6    65           1            0</span>
+<span class="co">#&gt; 250     4        NA         0     6    67           1            1</span>
+<span class="co">#&gt; 251     4        NA         0     6    69           0            1</span>
+<span class="co">#&gt; 252     4        NA         0     6    71           1            1</span>
+<span class="co">#&gt; 253     4         7         1     1     2           1            0</span>
+<span class="co">#&gt; 254     4         3         1     1     4           0            1</span>
+<span class="co">#&gt; 255     4         4         1     1     6           1            0</span>
+<span class="co">#&gt; 256     4         2         1     1     8           0            1</span>
+<span class="co">#&gt; 257     4         8         1     1    10           0            1</span>
+<span class="co">#&gt; 258     4         6         1     1    12           0            1</span>
+<span class="co">#&gt; 259     4         2         1     2    14           1            0</span>
+<span class="co">#&gt; 260     4         6         1     2    16           1            1</span>
+<span class="co">#&gt; 261     4         7         1     2    18           0            1</span>
+<span class="co">#&gt; 262     4         8         1     2    20           1            0</span>
+<span class="co">#&gt; 263     4         4         1     2    22           1            1</span>
+<span class="co">#&gt; 264     4         3         1     2    24           1            1</span>
+<span class="co">#&gt; 265     4         2         1     3    26           0            1</span>
+<span class="co">#&gt; 266     4         4         1     3    28           0            1</span>
+<span class="co">#&gt; 267     4         6         1     3    30           1            0</span>
+<span class="co">#&gt; 268     4         7         1     3    32           0            0</span>
+<span class="co">#&gt; 269     4         8         1     3    34           1            1</span>
+<span class="co">#&gt; 270     4         3         1     3    36           1            1</span>
+<span class="co">#&gt; 271     4         8         1     4    38           0            1</span>
+<span class="co">#&gt; 272     4         2         1     4    40           0            1</span>
+<span class="co">#&gt; 273     4         4         1     4    42           0            0</span>
+<span class="co">#&gt; 274     4         3         1     4    44           0            1</span>
+<span class="co">#&gt; 275     4         7         1     4    46           1            0</span>
+<span class="co">#&gt; 276     4         6         1     4    48           0            1</span>
+<span class="co">#&gt; 277     4         6         1     5    50           1            0</span>
+<span class="co">#&gt; 278     4         7         1     5    52           0            1</span>
+<span class="co">#&gt; 279     4         3         1     5    54           1            1</span>
+<span class="co">#&gt; 280     4         2         1     5    56           1            0</span>
+<span class="co">#&gt; 281     4         4         1     5    58           1            0</span>
+<span class="co">#&gt; 282     4         8         1     5    60           1            1</span>
+<span class="co">#&gt; 283     4         7         1     6    62           1            1</span>
+<span class="co">#&gt; 284     4         8         1     6    64           0            1</span>
+<span class="co">#&gt; 285     4         4         1     6    66           0            1</span>
+<span class="co">#&gt; 286     4         2         1     6    68           1            0</span>
+<span class="co">#&gt; 287     4         6         1     6    70           0            1</span>
+<span class="co">#&gt; 288     4         3         1     6    72           0            1</span>
+<span class="co">#&gt; 289     5        NA         0     1     2           1            1</span>
+<span class="co">#&gt; 290     5        NA         0     1     4           0            1</span>
+<span class="co">#&gt; 291     5        NA         0     1     6           0            0</span>
+<span class="co">#&gt; 292     5        NA         0     1     8           0            1</span>
+<span class="co">#&gt; 293     5        NA         0     1    10           1            1</span>
+<span class="co">#&gt; 294     5        NA         0     1    12           1            1</span>
+<span class="co">#&gt; 295     5        NA         0     2    14           0            0</span>
+<span class="co">#&gt; 296     5        NA         0     2    16           0            1</span>
+<span class="co">#&gt; 297     5        NA         0     2    18           1            1</span>
+<span class="co">#&gt; 298     5        NA         0     2    20           1            0</span>
+<span class="co">#&gt; 299     5        NA         0     2    22           0            0</span>
+<span class="co">#&gt; 300     5        NA         0     2    24           1            0</span>
+<span class="co">#&gt; 301     5        NA         0     3    26           1            0</span>
+<span class="co">#&gt; 302     5        NA         0     3    28           1            0</span>
+<span class="co">#&gt; 303     5        NA         0     3    30           0            0</span>
+<span class="co">#&gt; 304     5        NA         0     3    32           1            1</span>
+<span class="co">#&gt; 305     5        NA         0     3    34           0            1</span>
+<span class="co">#&gt; 306     5        NA         0     3    36           0            0</span>
+<span class="co">#&gt; 307     5        NA         0     4    38           1            1</span>
+<span class="co">#&gt; 308     5        NA         0     4    40           0            1</span>
+<span class="co">#&gt; 309     5        NA         0     4    42           1            1</span>
+<span class="co">#&gt; 310     5        NA         0     4    44           1            0</span>
+<span class="co">#&gt; 311     5        NA         0     4    46           0            1</span>
+<span class="co">#&gt; 312     5        NA         0     4    48           0            1</span>
+<span class="co">#&gt; 313     5        NA         0     5    50           1            0</span>
+<span class="co">#&gt; 314     5        NA         0     5    52           1            1</span>
+<span class="co">#&gt; 315     5        NA         0     5    54           1            1</span>
+<span class="co">#&gt; 316     5        NA         0     5    56           0            1</span>
+<span class="co">#&gt; 317     5        NA         0     5    58           0            1</span>
+<span class="co">#&gt; 318     5        NA         0     5    60           0            1</span>
+<span class="co">#&gt; 319     5        NA         0     6    62           1            0</span>
+<span class="co">#&gt; 320     5        NA         0     6    64           1            0</span>
+<span class="co">#&gt; 321     5        NA         0     6    66           0            1</span>
+<span class="co">#&gt; 322     5        NA         0     6    68           1            1</span>
+<span class="co">#&gt; 323     5        NA         0     6    70           0            0</span>
+<span class="co">#&gt; 324     5        NA         0     6    72           0            1</span>
+<span class="co">#&gt; 325     5         8         1     1     1           1            0</span>
+<span class="co">#&gt; 326     5         3         1     1     3           0            0</span>
+<span class="co">#&gt; 327     5         7         1     1     5           1            0</span>
+<span class="co">#&gt; 328     5         5         1     1     7           0            1</span>
+<span class="co">#&gt; 329     5         2         1     1     9           0            1</span>
+<span class="co">#&gt; 330     5         4         1     1    11           1            0</span>
+<span class="co">#&gt; 331     5         7         1     2    13           0            1</span>
+<span class="co">#&gt; 332     5         8         1     2    15           1            0</span>
+<span class="co">#&gt; 333     5         5         1     2    17           0            1</span>
+<span class="co">#&gt; 334     5         2         1     2    19           1            0</span>
+<span class="co">#&gt; 335     5         3         1     2    21           0            1</span>
+<span class="co">#&gt; 336     5         4         1     2    23           1            1</span>
+<span class="co">#&gt; 337     5         7         1     3    25           0            1</span>
+<span class="co">#&gt; 338     5         3         1     3    27           1            1</span>
+<span class="co">#&gt; 339     5         2         1     3    29           1            1</span>
+<span class="co">#&gt; 340     5         8         1     3    31           0            1</span>
+<span class="co">#&gt; 341     5         4         1     3    33           0            0</span>
+<span class="co">#&gt; 342     5         5         1     3    35           1            0</span>
+<span class="co">#&gt; 343     5         4         1     4    37           1            0</span>
+<span class="co">#&gt; 344     5         5         1     4    39           1            1</span>
+<span class="co">#&gt; 345     5         2         1     4    41           0            1</span>
+<span class="co">#&gt; 346     5         3         1     4    43           0            1</span>
+<span class="co">#&gt; 347     5         8         1     4    45           0            1</span>
+<span class="co">#&gt; 348     5         7         1     4    47           1            0</span>
+<span class="co">#&gt; 349     5         7         1     5    49           0            1</span>
+<span class="co">#&gt; 350     5         3         1     5    51           1            1</span>
+<span class="co">#&gt; 351     5         8         1     5    53           1            1</span>
+<span class="co">#&gt; 352     5         5         1     5    55           0            0</span>
+<span class="co">#&gt; 353     5         2         1     5    57           0            0</span>
+<span class="co">#&gt; 354     5         4         1     5    59           0            0</span>
+<span class="co">#&gt; 355     5         3         1     6    61           1            0</span>
+<span class="co">#&gt; 356     5         5         1     6    63           1            1</span>
+<span class="co">#&gt; 357     5         4         1     6    65           0            1</span>
+<span class="co">#&gt; 358     5         8         1     6    67           0            1</span>
+<span class="co">#&gt; 359     5         2         1     6    69           1            1</span>
+<span class="co">#&gt; 360     5         7         1     6    71           1            1</span>
+<span class="co">#&gt; 361     6        NA         0     1     2           1            1</span>
+<span class="co">#&gt; 362     6        NA         0     1     4           0            1</span>
+<span class="co">#&gt; 363     6        NA         0     1     6           0            1</span>
+<span class="co">#&gt; 364     6        NA         0     1     8           1            1</span>
+<span class="co">#&gt; 365     6        NA         0     1    10           0            0</span>
+<span class="co">#&gt; 366     6        NA         0     1    12           1            0</span>
+<span class="co">#&gt; 367     6        NA         0     2    14           1            0</span>
+<span class="co">#&gt; 368     6        NA         0     2    16           1            0</span>
+<span class="co">#&gt; 369     6        NA         0     2    18           1            0</span>
+<span class="co">#&gt; 370     6        NA         0     2    20           0            0</span>
+<span class="co">#&gt; 371     6        NA         0     2    22           0            0</span>
+<span class="co">#&gt; 372     6        NA         0     2    24           0            0</span>
+<span class="co">#&gt; 373     6        NA         0     3    26           0            0</span>
+<span class="co">#&gt; 374     6        NA         0     3    28           0            0</span>
+<span class="co">#&gt; 375     6        NA         0     3    30           0            0</span>
+<span class="co">#&gt; 376     6        NA         0     3    32           1            0</span>
+<span class="co">#&gt; 377     6        NA         0     3    34           1            1</span>
+<span class="co">#&gt; 378     6        NA         0     3    36           1            1</span>
+<span class="co">#&gt; 379     6        NA         0     4    38           0            0</span>
+<span class="co">#&gt; 380     6        NA         0     4    40           1            0</span>
+<span class="co">#&gt; 381     6        NA         0     4    42           0            0</span>
+<span class="co">#&gt; 382     6        NA         0     4    44           1            1</span>
+<span class="co">#&gt; 383     6        NA         0     4    46           0            0</span>
+<span class="co">#&gt; 384     6        NA         0     4    48           1            1</span>
+<span class="co">#&gt; 385     6        NA         0     5    50           1            1</span>
+<span class="co">#&gt; 386     6        NA         0     5    52           0            1</span>
+<span class="co">#&gt; 387     6        NA         0     5    54           0            0</span>
+<span class="co">#&gt; 388     6        NA         0     5    56           1            1</span>
+<span class="co">#&gt; 389     6        NA         0     5    58           0            0</span>
+<span class="co">#&gt; 390     6        NA         0     5    60           1            0</span>
+<span class="co">#&gt; 391     6        NA         0     6    62           0            0</span>
+<span class="co">#&gt; 392     6        NA         0     6    64           0            1</span>
+<span class="co">#&gt; 393     6        NA         0     6    66           1            1</span>
+<span class="co">#&gt; 394     6        NA         0     6    68           1            1</span>
+<span class="co">#&gt; 395     6        NA         0     6    70           1            1</span>
+<span class="co">#&gt; 396     6        NA         0     6    72           0            0</span>
+<span class="co">#&gt; 397     6         3         1     1     1           1            1</span>
+<span class="co">#&gt; 398     6         8         1     1     3           0            1</span>
+<span class="co">#&gt; 399     6         6         1     1     5           1            1</span>
+<span class="co">#&gt; 400     6         2         1     1     7           1            0</span>
+<span class="co">#&gt; 401     6         5         1     1     9           0            1</span>
+<span class="co">#&gt; 402     6         4         1     1    11           0            1</span>
+<span class="co">#&gt; 403     6         8         1     2    13           0            0</span>
+<span class="co">#&gt; 404     6         5         1     2    15           0            0</span>
+<span class="co">#&gt; 405     6         3         1     2    17           1            1</span>
+<span class="co">#&gt; 406     6         2         1     2    19           1            1</span>
+<span class="co">#&gt; 407     6         4         1     2    21           1            1</span>
+<span class="co">#&gt; 408     6         6         1     2    23           1            0</span>
+<span class="co">#&gt; 409     6         6         1     3    25           1            1</span>
+<span class="co">#&gt; 410     6         4         1     3    27           1            1</span>
+<span class="co">#&gt; 411     6         3         1     3    29           0            1</span>
+<span class="co">#&gt; 412     6         8         1     3    31           1            0</span>
+<span class="co">#&gt; 413     6         5         1     3    33           0            0</span>
+<span class="co">#&gt; 414     6         2         1     3    35           0            0</span>
+<span class="co">#&gt; 415     6         4         1     4    37           0            0</span>
+<span class="co">#&gt; 416     6         6         1     4    39           0            0</span>
+<span class="co">#&gt; 417     6         2         1     4    41           1            0</span>
+<span class="co">#&gt; 418     6         5         1     4    43           1            1</span>
+<span class="co">#&gt; 419     6         3         1     4    45           0            1</span>
+<span class="co">#&gt; 420     6         8         1     4    47           1            1</span>
+<span class="co">#&gt; 421     6         5         1     5    49           1            0</span>
+<span class="co">#&gt; 422     6         4         1     5    51           1            0</span>
+<span class="co">#&gt; 423     6         2         1     5    53           0            1</span>
+<span class="co">#&gt; 424     6         6         1     5    55           0            1</span>
+<span class="co">#&gt; 425     6         3         1     5    57           0            0</span>
+<span class="co">#&gt; 426     6         8         1     5    59           1            0</span>
+<span class="co">#&gt; 427     6         4         1     6    61           0            0</span>
+<span class="co">#&gt; 428     6         6         1     6    63           0            0</span>
+<span class="co">#&gt; 429     6         5         1     6    65           1            1</span>
+<span class="co">#&gt; 430     6         8         1     6    67           0            0</span>
+<span class="co">#&gt; 431     6         3         1     6    69           1            1</span>
+<span class="co">#&gt; 432     6         2         1     6    71           0            1</span>
+<span class="co">#&gt; 433     7        NA         0     1     1           1            1</span>
+<span class="co">#&gt; 434     7        NA         0     1     3           0            0</span>
+<span class="co">#&gt; 435     7        NA         0     1     5           0            1</span>
+<span class="co">#&gt; 436     7        NA         0     1     7           1            1</span>
+<span class="co">#&gt; 437     7        NA         0     1     9           1            0</span>
+<span class="co">#&gt; 438     7        NA         0     1    11           0            0</span>
+<span class="co">#&gt; 439     7        NA         0     2    13           0            0</span>
+<span class="co">#&gt; 440     7        NA         0     2    15           0            0</span>
+<span class="co">#&gt; 441     7        NA         0     2    17           1            1</span>
+<span class="co">#&gt; 442     7        NA         0     2    19           0            1</span>
+<span class="co">#&gt; 443     7        NA         0     2    21           1            1</span>
+<span class="co">#&gt; 444     7        NA         0     2    23           1            1</span>
+<span class="co">#&gt; 445     7        NA         0     3    25           1            0</span>
+<span class="co">#&gt; 446     7        NA         0     3    27           1            1</span>
+<span class="co">#&gt; 447     7        NA         0     3    29           0            0</span>
+<span class="co">#&gt; 448     7        NA         0     3    31           0            0</span>
+<span class="co">#&gt; 449     7        NA         0     3    33           0            0</span>
+<span class="co">#&gt; 450     7        NA         0     3    35           1            0</span>
+<span class="co">#&gt; 451     7        NA         0     4    37           0            0</span>
+<span class="co">#&gt; 452     7        NA         0     4    39           1            1</span>
+<span class="co">#&gt; 453     7        NA         0     4    41           0            0</span>
+<span class="co">#&gt; 454     7        NA         0     4    43           0            0</span>
+<span class="co">#&gt; 455     7        NA         0     4    45           1            1</span>
+<span class="co">#&gt; 456     7        NA         0     4    47           1            1</span>
+<span class="co">#&gt; 457     7        NA         0     5    49           1            1</span>
+<span class="co">#&gt; 458     7        NA         0     5    51           0            0</span>
+<span class="co">#&gt; 459     7        NA         0     5    53           0            0</span>
+<span class="co">#&gt; 460     7        NA         0     5    55           0            1</span>
+<span class="co">#&gt; 461     7        NA         0     5    57           1            1</span>
+<span class="co">#&gt; 462     7        NA         0     5    59           1            1</span>
+<span class="co">#&gt; 463     7        NA         0     6    61           1            1</span>
+<span class="co">#&gt; 464     7        NA         0     6    63           0            0</span>
+<span class="co">#&gt; 465     7        NA         0     6    65           0            1</span>
+<span class="co">#&gt; 466     7        NA         0     6    67           0            0</span>
+<span class="co">#&gt; 467     7        NA         0     6    69           1            1</span>
+<span class="co">#&gt; 468     7        NA         0     6    71           1            1</span>
+<span class="co">#&gt; 469     7         7         1     1     2           1            1</span>
+<span class="co">#&gt; 470     7         4         1     1     4           0            0</span>
+<span class="co">#&gt; 471     7         3         1     1     6           1            1</span>
+<span class="co">#&gt; 472     7         6         1     1     8           0            0</span>
+<span class="co">#&gt; 473     7         5         1     1    10           1            1</span>
+<span class="co">#&gt; 474     7         2         1     1    12           1            1</span>
+<span class="co">#&gt; 475     7         2         1     2    14           1            1</span>
+<span class="co">#&gt; 476     7         7         1     2    16           0            0</span>
+<span class="co">#&gt; 477     7         3         1     2    18           1            1</span>
+<span class="co">#&gt; 478     7         5         1     2    20           0            0</span>
+<span class="co">#&gt; 479     7         4         1     2    22           1            1</span>
+<span class="co">#&gt; 480     7         6         1     2    24           0            0</span>
+<span class="co">#&gt; 481     7         5         1     3    26           0            0</span>
+<span class="co">#&gt; 482     7         7         1     3    28           1            1</span>
+<span class="co">#&gt; 483     7         6         1     3    30           1            1</span>
+<span class="co">#&gt; 484     7         4         1     3    32           0            1</span>
+<span class="co">#&gt; 485     7         2         1     3    34           0            0</span>
+<span class="co">#&gt; 486     7         3         1     3    36           1            1</span>
+<span class="co">#&gt; 487     7         7         1     4    38           0            0</span>
+<span class="co">#&gt; 488     7         2         1     4    40           0            0</span>
+<span class="co">#&gt; 489     7         4         1     4    42           1            1</span>
+<span class="co">#&gt; 490     7         5         1     4    44           0            0</span>
+<span class="co">#&gt; 491     7         6         1     4    46           0            0</span>
+<span class="co">#&gt; 492     7         3         1     4    48           0            0</span>
+<span class="co">#&gt; 493     7         5         1     5    50           1            1</span>
+<span class="co">#&gt; 494     7         4         1     5    52           0            0</span>
+<span class="co">#&gt; 495     7         3         1     5    54           0            0</span>
+<span class="co">#&gt; 496     7         2         1     5    56           1            1</span>
+<span class="co">#&gt; 497     7         6         1     5    58           1            1</span>
+<span class="co">#&gt; 498     7         7         1     5    60           1            1</span>
+<span class="co">#&gt; 499     7         5         1     6    62           1            1</span>
+<span class="co">#&gt; 500     7         4         1     6    64           1            1</span>
+<span class="co">#&gt; 501     7         6         1     6    66           1            1</span>
+<span class="co">#&gt; 502     7         3         1     6    68           0            0</span>
+<span class="co">#&gt; 503     7         7         1     6    70           0            0</span>
+<span class="co">#&gt; 504     7         2         1     6    72           0            0</span>
+<span class="co">#&gt;     pulled_left</span>
+<span class="co">#&gt; 1             0</span>
+<span class="co">#&gt; 2             1</span>
+<span class="co">#&gt; 3             0</span>
+<span class="co">#&gt; 4             0</span>
+<span class="co">#&gt; 5             1</span>
+<span class="co">#&gt; 6             1</span>
+<span class="co">#&gt; 7             0</span>
+<span class="co">#&gt; 8             0</span>
+<span class="co">#&gt; 9             0</span>
+<span class="co">#&gt; 10            0</span>
+<span class="co">#&gt; 11            1</span>
+<span class="co">#&gt; 12            0</span>
+<span class="co">#&gt; 13            1</span>
+<span class="co">#&gt; 14            1</span>
+<span class="co">#&gt; 15            0</span>
+<span class="co">#&gt; 16            1</span>
+<span class="co">#&gt; 17            0</span>
+<span class="co">#&gt; 18            0</span>
+<span class="co">#&gt; 19            1</span>
+<span class="co">#&gt; 20            1</span>
+<span class="co">#&gt; 21            1</span>
+<span class="co">#&gt; 22            0</span>
+<span class="co">#&gt; 23            1</span>
+<span class="co">#&gt; 24            0</span>
+<span class="co">#&gt; 25            0</span>
+<span class="co">#&gt; 26            1</span>
+<span class="co">#&gt; 27            0</span>
+<span class="co">#&gt; 28            0</span>
+<span class="co">#&gt; 29            0</span>
+<span class="co">#&gt; 30            0</span>
+<span class="co">#&gt; 31            0</span>
+<span class="co">#&gt; 32            1</span>
+<span class="co">#&gt; 33            1</span>
+<span class="co">#&gt; 34            1</span>
+<span class="co">#&gt; 35            0</span>
+<span class="co">#&gt; 36            0</span>
+<span class="co">#&gt; 37            1</span>
+<span class="co">#&gt; 38            0</span>
+<span class="co">#&gt; 39            0</span>
+<span class="co">#&gt; 40            0</span>
+<span class="co">#&gt; 41            1</span>
+<span class="co">#&gt; 42            0</span>
+<span class="co">#&gt; 43            0</span>
+<span class="co">#&gt; 44            0</span>
+<span class="co">#&gt; 45            0</span>
+<span class="co">#&gt; 46            1</span>
+<span class="co">#&gt; 47            1</span>
+<span class="co">#&gt; 48            1</span>
+<span class="co">#&gt; 49            0</span>
+<span class="co">#&gt; 50            0</span>
+<span class="co">#&gt; 51            1</span>
+<span class="co">#&gt; 52            1</span>
+<span class="co">#&gt; 53            1</span>
+<span class="co">#&gt; 54            1</span>
+<span class="co">#&gt; 55            0</span>
+<span class="co">#&gt; 56            1</span>
+<span class="co">#&gt; 57            0</span>
+<span class="co">#&gt; 58            0</span>
+<span class="co">#&gt; 59            0</span>
+<span class="co">#&gt; 60            0</span>
+<span class="co">#&gt; 61            1</span>
+<span class="co">#&gt; 62            0</span>
+<span class="co">#&gt; 63            1</span>
+<span class="co">#&gt; 64            0</span>
+<span class="co">#&gt; 65            0</span>
+<span class="co">#&gt; 66            1</span>
+<span class="co">#&gt; 67            1</span>
+<span class="co">#&gt; 68            0</span>
+<span class="co">#&gt; 69            0</span>
+<span class="co">#&gt; 70            0</span>
+<span class="co">#&gt; 71            1</span>
+<span class="co">#&gt; 72            0</span>
+<span class="co">#&gt; 73            1</span>
+<span class="co">#&gt; 74            1</span>
+<span class="co">#&gt; 75            1</span>
+<span class="co">#&gt; 76            1</span>
+<span class="co">#&gt; 77            1</span>
+<span class="co">#&gt; 78            1</span>
+<span class="co">#&gt; 79            1</span>
+<span class="co">#&gt; 80            1</span>
+<span class="co">#&gt; 81            1</span>
+<span class="co">#&gt; 82            1</span>
+<span class="co">#&gt; 83            1</span>
+<span class="co">#&gt; 84            1</span>
+<span class="co">#&gt; 85            1</span>
+<span class="co">#&gt; 86            1</span>
+<span class="co">#&gt; 87            1</span>
+<span class="co">#&gt; 88            1</span>
+<span class="co">#&gt; 89            1</span>
+<span class="co">#&gt; 90            1</span>
+<span class="co">#&gt; 91            1</span>
+<span class="co">#&gt; 92            1</span>
+<span class="co">#&gt; 93            1</span>
+<span class="co">#&gt; 94            1</span>
+<span class="co">#&gt; 95            1</span>
+<span class="co">#&gt; 96            1</span>
+<span class="co">#&gt; 97            1</span>
+<span class="co">#&gt; 98            1</span>
+<span class="co">#&gt; 99            1</span>
+<span class="co">#&gt; 100           1</span>
+<span class="co">#&gt; 101           1</span>
+<span class="co">#&gt; 102           1</span>
+<span class="co">#&gt; 103           1</span>
+<span class="co">#&gt; 104           1</span>
+<span class="co">#&gt; 105           1</span>
+<span class="co">#&gt; 106           1</span>
+<span class="co">#&gt; 107           1</span>
+<span class="co">#&gt; 108           1</span>
+<span class="co">#&gt; 109           1</span>
+<span class="co">#&gt; 110           1</span>
+<span class="co">#&gt; 111           1</span>
+<span class="co">#&gt; 112           1</span>
+<span class="co">#&gt; 113           1</span>
+<span class="co">#&gt; 114           1</span>
+<span class="co">#&gt; 115           1</span>
+<span class="co">#&gt; 116           1</span>
+<span class="co">#&gt; 117           1</span>
+<span class="co">#&gt; 118           1</span>
+<span class="co">#&gt; 119           1</span>
+<span class="co">#&gt; 120           1</span>
+<span class="co">#&gt; 121           1</span>
+<span class="co">#&gt; 122           1</span>
+<span class="co">#&gt; 123           1</span>
+<span class="co">#&gt; 124           1</span>
+<span class="co">#&gt; 125           1</span>
+<span class="co">#&gt; 126           1</span>
+<span class="co">#&gt; 127           1</span>
+<span class="co">#&gt; 128           1</span>
+<span class="co">#&gt; 129           1</span>
+<span class="co">#&gt; 130           1</span>
+<span class="co">#&gt; 131           1</span>
+<span class="co">#&gt; 132           1</span>
+<span class="co">#&gt; 133           1</span>
+<span class="co">#&gt; 134           1</span>
+<span class="co">#&gt; 135           1</span>
+<span class="co">#&gt; 136           1</span>
+<span class="co">#&gt; 137           1</span>
+<span class="co">#&gt; 138           1</span>
+<span class="co">#&gt; 139           1</span>
+<span class="co">#&gt; 140           1</span>
+<span class="co">#&gt; 141           1</span>
+<span class="co">#&gt; 142           1</span>
+<span class="co">#&gt; 143           1</span>
+<span class="co">#&gt; 144           1</span>
+<span class="co">#&gt; 145           0</span>
+<span class="co">#&gt; 146           0</span>
+<span class="co">#&gt; 147           0</span>
+<span class="co">#&gt; 148           0</span>
+<span class="co">#&gt; 149           0</span>
+<span class="co">#&gt; 150           1</span>
+<span class="co">#&gt; 151           1</span>
+<span class="co">#&gt; 152           0</span>
+<span class="co">#&gt; 153           1</span>
+<span class="co">#&gt; 154           1</span>
+<span class="co">#&gt; 155           0</span>
+<span class="co">#&gt; 156           0</span>
+<span class="co">#&gt; 157           0</span>
+<span class="co">#&gt; 158           1</span>
+<span class="co">#&gt; 159           0</span>
+<span class="co">#&gt; 160           0</span>
+<span class="co">#&gt; 161           0</span>
+<span class="co">#&gt; 162           1</span>
+<span class="co">#&gt; 163           1</span>
+<span class="co">#&gt; 164           0</span>
+<span class="co">#&gt; 165           1</span>
+<span class="co">#&gt; 166           0</span>
+<span class="co">#&gt; 167           0</span>
+<span class="co">#&gt; 168           1</span>
+<span class="co">#&gt; 169           0</span>
+<span class="co">#&gt; 170           0</span>
+<span class="co">#&gt; 171           1</span>
+<span class="co">#&gt; 172           0</span>
+<span class="co">#&gt; 173           0</span>
+<span class="co">#&gt; 174           1</span>
+<span class="co">#&gt; 175           0</span>
+<span class="co">#&gt; 176           1</span>
+<span class="co">#&gt; 177           1</span>
+<span class="co">#&gt; 178           1</span>
+<span class="co">#&gt; 179           1</span>
+<span class="co">#&gt; 180           1</span>
+<span class="co">#&gt; 181           0</span>
+<span class="co">#&gt; 182           0</span>
+<span class="co">#&gt; 183           0</span>
+<span class="co">#&gt; 184           0</span>
+<span class="co">#&gt; 185           0</span>
+<span class="co">#&gt; 186           1</span>
+<span class="co">#&gt; 187           0</span>
+<span class="co">#&gt; 188           1</span>
+<span class="co">#&gt; 189           0</span>
+<span class="co">#&gt; 190           0</span>
+<span class="co">#&gt; 191           1</span>
+<span class="co">#&gt; 192           1</span>
+<span class="co">#&gt; 193           0</span>
+<span class="co">#&gt; 194           0</span>
+<span class="co">#&gt; 195           0</span>
+<span class="co">#&gt; 196           0</span>
+<span class="co">#&gt; 197           0</span>
+<span class="co">#&gt; 198           0</span>
+<span class="co">#&gt; 199           0</span>
+<span class="co">#&gt; 200           0</span>
+<span class="co">#&gt; 201           0</span>
+<span class="co">#&gt; 202           1</span>
+<span class="co">#&gt; 203           0</span>
+<span class="co">#&gt; 204           0</span>
+<span class="co">#&gt; 205           0</span>
+<span class="co">#&gt; 206           0</span>
+<span class="co">#&gt; 207           1</span>
+<span class="co">#&gt; 208           0</span>
+<span class="co">#&gt; 209           1</span>
+<span class="co">#&gt; 210           0</span>
+<span class="co">#&gt; 211           0</span>
+<span class="co">#&gt; 212           0</span>
+<span class="co">#&gt; 213           0</span>
+<span class="co">#&gt; 214           1</span>
+<span class="co">#&gt; 215           1</span>
+<span class="co">#&gt; 216           0</span>
+<span class="co">#&gt; 217           0</span>
+<span class="co">#&gt; 218           1</span>
+<span class="co">#&gt; 219           1</span>
+<span class="co">#&gt; 220           0</span>
+<span class="co">#&gt; 221           0</span>
+<span class="co">#&gt; 222           0</span>
+<span class="co">#&gt; 223           0</span>
+<span class="co">#&gt; 224           0</span>
+<span class="co">#&gt; 225           1</span>
+<span class="co">#&gt; 226           1</span>
+<span class="co">#&gt; 227           0</span>
+<span class="co">#&gt; 228           1</span>
+<span class="co">#&gt; 229           0</span>
+<span class="co">#&gt; 230           1</span>
+<span class="co">#&gt; 231           1</span>
+<span class="co">#&gt; 232           0</span>
+<span class="co">#&gt; 233           0</span>
+<span class="co">#&gt; 234           1</span>
+<span class="co">#&gt; 235           0</span>
+<span class="co">#&gt; 236           0</span>
+<span class="co">#&gt; 237           0</span>
+<span class="co">#&gt; 238           1</span>
+<span class="co">#&gt; 239           1</span>
+<span class="co">#&gt; 240           0</span>
+<span class="co">#&gt; 241           1</span>
+<span class="co">#&gt; 242           0</span>
+<span class="co">#&gt; 243           1</span>
+<span class="co">#&gt; 244           0</span>
+<span class="co">#&gt; 245           1</span>
+<span class="co">#&gt; 246           0</span>
+<span class="co">#&gt; 247           0</span>
+<span class="co">#&gt; 248           0</span>
+<span class="co">#&gt; 249           0</span>
+<span class="co">#&gt; 250           1</span>
+<span class="co">#&gt; 251           0</span>
+<span class="co">#&gt; 252           1</span>
+<span class="co">#&gt; 253           0</span>
+<span class="co">#&gt; 254           0</span>
+<span class="co">#&gt; 255           0</span>
+<span class="co">#&gt; 256           0</span>
+<span class="co">#&gt; 257           0</span>
+<span class="co">#&gt; 258           0</span>
+<span class="co">#&gt; 259           0</span>
+<span class="co">#&gt; 260           1</span>
+<span class="co">#&gt; 261           0</span>
+<span class="co">#&gt; 262           0</span>
+<span class="co">#&gt; 263           1</span>
+<span class="co">#&gt; 264           1</span>
+<span class="co">#&gt; 265           0</span>
+<span class="co">#&gt; 266           0</span>
+<span class="co">#&gt; 267           0</span>
+<span class="co">#&gt; 268           1</span>
+<span class="co">#&gt; 269           1</span>
+<span class="co">#&gt; 270           1</span>
+<span class="co">#&gt; 271           0</span>
+<span class="co">#&gt; 272           0</span>
+<span class="co">#&gt; 273           1</span>
+<span class="co">#&gt; 274           0</span>
+<span class="co">#&gt; 275           0</span>
+<span class="co">#&gt; 276           0</span>
+<span class="co">#&gt; 277           0</span>
+<span class="co">#&gt; 278           0</span>
+<span class="co">#&gt; 279           1</span>
+<span class="co">#&gt; 280           0</span>
+<span class="co">#&gt; 281           0</span>
+<span class="co">#&gt; 282           1</span>
+<span class="co">#&gt; 283           1</span>
+<span class="co">#&gt; 284           0</span>
+<span class="co">#&gt; 285           0</span>
+<span class="co">#&gt; 286           0</span>
+<span class="co">#&gt; 287           0</span>
+<span class="co">#&gt; 288           0</span>
+<span class="co">#&gt; 289           1</span>
+<span class="co">#&gt; 290           0</span>
+<span class="co">#&gt; 291           1</span>
+<span class="co">#&gt; 292           0</span>
+<span class="co">#&gt; 293           1</span>
+<span class="co">#&gt; 294           1</span>
+<span class="co">#&gt; 295           1</span>
+<span class="co">#&gt; 296           0</span>
+<span class="co">#&gt; 297           1</span>
+<span class="co">#&gt; 298           0</span>
+<span class="co">#&gt; 299           1</span>
+<span class="co">#&gt; 300           0</span>
+<span class="co">#&gt; 301           0</span>
+<span class="co">#&gt; 302           0</span>
+<span class="co">#&gt; 303           1</span>
+<span class="co">#&gt; 304           1</span>
+<span class="co">#&gt; 305           0</span>
+<span class="co">#&gt; 306           1</span>
+<span class="co">#&gt; 307           1</span>
+<span class="co">#&gt; 308           0</span>
+<span class="co">#&gt; 309           1</span>
+<span class="co">#&gt; 310           0</span>
+<span class="co">#&gt; 311           0</span>
+<span class="co">#&gt; 312           0</span>
+<span class="co">#&gt; 313           0</span>
+<span class="co">#&gt; 314           1</span>
+<span class="co">#&gt; 315           1</span>
+<span class="co">#&gt; 316           0</span>
+<span class="co">#&gt; 317           0</span>
+<span class="co">#&gt; 318           0</span>
+<span class="co">#&gt; 319           0</span>
+<span class="co">#&gt; 320           0</span>
+<span class="co">#&gt; 321           0</span>
+<span class="co">#&gt; 322           1</span>
+<span class="co">#&gt; 323           1</span>
+<span class="co">#&gt; 324           0</span>
+<span class="co">#&gt; 325           0</span>
+<span class="co">#&gt; 326           1</span>
+<span class="co">#&gt; 327           0</span>
+<span class="co">#&gt; 328           0</span>
+<span class="co">#&gt; 329           0</span>
+<span class="co">#&gt; 330           0</span>
+<span class="co">#&gt; 331           0</span>
+<span class="co">#&gt; 332           0</span>
+<span class="co">#&gt; 333           0</span>
+<span class="co">#&gt; 334           0</span>
+<span class="co">#&gt; 335           0</span>
+<span class="co">#&gt; 336           1</span>
+<span class="co">#&gt; 337           0</span>
+<span class="co">#&gt; 338           1</span>
+<span class="co">#&gt; 339           1</span>
+<span class="co">#&gt; 340           0</span>
+<span class="co">#&gt; 341           1</span>
+<span class="co">#&gt; 342           0</span>
+<span class="co">#&gt; 343           0</span>
+<span class="co">#&gt; 344           1</span>
+<span class="co">#&gt; 345           0</span>
+<span class="co">#&gt; 346           0</span>
+<span class="co">#&gt; 347           0</span>
+<span class="co">#&gt; 348           0</span>
+<span class="co">#&gt; 349           0</span>
+<span class="co">#&gt; 350           1</span>
+<span class="co">#&gt; 351           1</span>
+<span class="co">#&gt; 352           1</span>
+<span class="co">#&gt; 353           1</span>
+<span class="co">#&gt; 354           1</span>
+<span class="co">#&gt; 355           0</span>
+<span class="co">#&gt; 356           1</span>
+<span class="co">#&gt; 357           0</span>
+<span class="co">#&gt; 358           0</span>
+<span class="co">#&gt; 359           1</span>
+<span class="co">#&gt; 360           1</span>
+<span class="co">#&gt; 361           1</span>
+<span class="co">#&gt; 362           0</span>
+<span class="co">#&gt; 363           0</span>
+<span class="co">#&gt; 364           1</span>
+<span class="co">#&gt; 365           1</span>
+<span class="co">#&gt; 366           0</span>
+<span class="co">#&gt; 367           0</span>
+<span class="co">#&gt; 368           0</span>
+<span class="co">#&gt; 369           0</span>
+<span class="co">#&gt; 370           1</span>
+<span class="co">#&gt; 371           1</span>
+<span class="co">#&gt; 372           1</span>
+<span class="co">#&gt; 373           1</span>
+<span class="co">#&gt; 374           1</span>
+<span class="co">#&gt; 375           1</span>
+<span class="co">#&gt; 376           0</span>
+<span class="co">#&gt; 377           1</span>
+<span class="co">#&gt; 378           1</span>
+<span class="co">#&gt; 379           1</span>
+<span class="co">#&gt; 380           0</span>
+<span class="co">#&gt; 381           1</span>
+<span class="co">#&gt; 382           1</span>
+<span class="co">#&gt; 383           1</span>
+<span class="co">#&gt; 384           1</span>
+<span class="co">#&gt; 385           1</span>
+<span class="co">#&gt; 386           0</span>
+<span class="co">#&gt; 387           1</span>
+<span class="co">#&gt; 388           1</span>
+<span class="co">#&gt; 389           1</span>
+<span class="co">#&gt; 390           0</span>
+<span class="co">#&gt; 391           1</span>
+<span class="co">#&gt; 392           0</span>
+<span class="co">#&gt; 393           1</span>
+<span class="co">#&gt; 394           1</span>
+<span class="co">#&gt; 395           1</span>
+<span class="co">#&gt; 396           1</span>
+<span class="co">#&gt; 397           1</span>
+<span class="co">#&gt; 398           0</span>
+<span class="co">#&gt; 399           1</span>
+<span class="co">#&gt; 400           0</span>
+<span class="co">#&gt; 401           0</span>
+<span class="co">#&gt; 402           0</span>
+<span class="co">#&gt; 403           1</span>
+<span class="co">#&gt; 404           1</span>
+<span class="co">#&gt; 405           1</span>
+<span class="co">#&gt; 406           1</span>
+<span class="co">#&gt; 407           1</span>
+<span class="co">#&gt; 408           0</span>
+<span class="co">#&gt; 409           1</span>
+<span class="co">#&gt; 410           1</span>
+<span class="co">#&gt; 411           0</span>
+<span class="co">#&gt; 412           0</span>
+<span class="co">#&gt; 413           1</span>
+<span class="co">#&gt; 414           1</span>
+<span class="co">#&gt; 415           1</span>
+<span class="co">#&gt; 416           1</span>
+<span class="co">#&gt; 417           0</span>
+<span class="co">#&gt; 418           1</span>
+<span class="co">#&gt; 419           0</span>
+<span class="co">#&gt; 420           1</span>
+<span class="co">#&gt; 421           0</span>
+<span class="co">#&gt; 422           0</span>
+<span class="co">#&gt; 423           0</span>
+<span class="co">#&gt; 424           0</span>
+<span class="co">#&gt; 425           1</span>
+<span class="co">#&gt; 426           0</span>
+<span class="co">#&gt; 427           1</span>
+<span class="co">#&gt; 428           1</span>
+<span class="co">#&gt; 429           1</span>
+<span class="co">#&gt; 430           1</span>
+<span class="co">#&gt; 431           1</span>
+<span class="co">#&gt; 432           0</span>
+<span class="co">#&gt; 433           1</span>
+<span class="co">#&gt; 434           1</span>
+<span class="co">#&gt; 435           0</span>
+<span class="co">#&gt; 436           1</span>
+<span class="co">#&gt; 437           0</span>
+<span class="co">#&gt; 438           1</span>
+<span class="co">#&gt; 439           1</span>
+<span class="co">#&gt; 440           1</span>
+<span class="co">#&gt; 441           1</span>
+<span class="co">#&gt; 442           0</span>
+<span class="co">#&gt; 443           1</span>
+<span class="co">#&gt; 444           1</span>
+<span class="co">#&gt; 445           0</span>
+<span class="co">#&gt; 446           1</span>
+<span class="co">#&gt; 447           1</span>
+<span class="co">#&gt; 448           1</span>
+<span class="co">#&gt; 449           1</span>
+<span class="co">#&gt; 450           0</span>
+<span class="co">#&gt; 451           1</span>
+<span class="co">#&gt; 452           1</span>
+<span class="co">#&gt; 453           1</span>
+<span class="co">#&gt; 454           1</span>
+<span class="co">#&gt; 455           1</span>
+<span class="co">#&gt; 456           1</span>
+<span class="co">#&gt; 457           1</span>
+<span class="co">#&gt; 458           1</span>
+<span class="co">#&gt; 459           1</span>
+<span class="co">#&gt; 460           0</span>
+<span class="co">#&gt; 461           1</span>
+<span class="co">#&gt; 462           1</span>
+<span class="co">#&gt; 463           1</span>
+<span class="co">#&gt; 464           1</span>
+<span class="co">#&gt; 465           0</span>
+<span class="co">#&gt; 466           1</span>
+<span class="co">#&gt; 467           1</span>
+<span class="co">#&gt; 468           1</span>
+<span class="co">#&gt; 469           1</span>
+<span class="co">#&gt; 470           1</span>
+<span class="co">#&gt; 471           1</span>
+<span class="co">#&gt; 472           1</span>
+<span class="co">#&gt; 473           1</span>
+<span class="co">#&gt; 474           1</span>
+<span class="co">#&gt; 475           1</span>
+<span class="co">#&gt; 476           1</span>
+<span class="co">#&gt; 477           1</span>
+<span class="co">#&gt; 478           1</span>
+<span class="co">#&gt; 479           1</span>
+<span class="co">#&gt; 480           1</span>
+<span class="co">#&gt; 481           1</span>
+<span class="co">#&gt; 482           1</span>
+<span class="co">#&gt; 483           1</span>
+<span class="co">#&gt; 484           0</span>
+<span class="co">#&gt; 485           1</span>
+<span class="co">#&gt; 486           1</span>
+<span class="co">#&gt; 487           1</span>
+<span class="co">#&gt; 488           1</span>
+<span class="co">#&gt; 489           1</span>
+<span class="co">#&gt; 490           1</span>
+<span class="co">#&gt; 491           1</span>
+<span class="co">#&gt; 492           1</span>
+<span class="co">#&gt; 493           1</span>
+<span class="co">#&gt; 494           1</span>
+<span class="co">#&gt; 495           1</span>
+<span class="co">#&gt; 496           1</span>
+<span class="co">#&gt; 497           1</span>
+<span class="co">#&gt; 498           1</span>
+<span class="co">#&gt; 499           1</span>
+<span class="co">#&gt; 500           1</span>
+<span class="co">#&gt; 501           1</span>
+<span class="co">#&gt; 502           1</span>
+<span class="co">#&gt; 503           1</span>
+<span class="co">#&gt; 504           1</span></code></pre></div>
 </div>
 <div id="intercept-i-mudel-ilma-tousuta" class="section level4 unnumbered">
 <h4>Intercept-i mudel ilma tõusuta</h4>
@@ -798,7 +1785,7 @@ suremuses (surma tõenäosus keskkonnamõju tingimustes) võib olla tühine. </c
 <span class="co">#&gt; [1] 1.77</span></code></pre></div>
 <p>Proportsionaalne odds = 1.76 kujutab endast suhet kahest tõenäosusest - et sündmus toimub (y=1) ja et sündmus ei toimu (y=0).</p>
 <p>Kui prediktori prosoc_left väärtus muutumine 0-st 1-ks tõstab y=1 sündmuse <em>log-odds</em>-i 0.57 võrra, siis kasvab proportsionaalselt exp(0.57) = 1.76 ja <em>odds</em>, et toimub sündmus pull left ehk y=1 kasvab 76%.</p>
-<p>Tegelik tõenäosuse muutus sõltub ka interceptist (α) ja teistest prediktoritest. Logistiline regressioon erineb tavalisest lineaarsest regressioonist selle poolest, et see mudeldab igal juhul muutujate vahelisi interakstsioone. Näiteks kui α on piisavalt suur, et garanteerida sündmuse y = 1 toimumine, siis ei tähenda <em>odds</em>-ide tõus 73% võrra suurt midagi. Oletame, et α = 4. Siis on sündmuse tõenäosus, ignoreerides kõike muud <code>inv_logit_scaled(4)</code> = 0.98. Lisades sinna beta hinnagu 0.57 saame: <code>inv_logit_scaled(4 + 0.57)</code> = 0.99. See vastab 1% erinevusele, ehkki on samas 73% kasv suhtelise <em>odds</em>-i ühikutes.</p>
+<p>Tegelik tõenäosuse muutus sõltub ka interceptist (<span class="math inline">\(\alpha\)</span>) ja teistest prediktoritest. Logistiline regressioon erineb tavalisest lineaarsest regressioonist selle poolest, et see mudeldab igal juhul muutujate vahelisi interakstsioone. Näiteks kui <span class="math inline">\(\alpha\)</span> on piisavalt suur, et garanteerida sündmuse y = 1 toimumine, siis ei tähenda <em>odds</em>-ide tõus 73% võrra suurt midagi. Oletame, et <span class="math inline">\(\alpha\)</span> = 4. Siis on sündmuse tõenäosus, ignoreerides kõike muud <code>inv_logit_scaled(4)</code> = 0.98. Lisades sinna beta hinnagu 0.57 saame: <code>inv_logit_scaled(4 + 0.57)</code> = 0.99. See vastab 1% erinevusele, ehkki on samas 73% kasv suhtelise <em>odds</em>-i ühikutes.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">inv_logit_scaled</span>(<span class="fl">0.04562136</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.56590225</span>)
 <span class="co">#&gt; [1] 0.648</span></code></pre></div>
 <p>Pr(Y = 1 | X = 1) = 64%.</p>
@@ -831,7 +1818,7 @@ logit.pred &lt;-<span class="st"> </span><span class="kw">factor</span>(glm.prob
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pROC)
 roccurve &lt;-<span class="st"> </span><span class="kw">roc</span>(chimpanzees<span class="op">$</span>pulled_left <span class="op">~</span><span class="st"> </span>glm.probs)
 <span class="kw">plot</span>(roccurve, <span class="dt">cex.axis =</span> <span class="fl">0.7</span>, <span class="dt">cex.lab =</span> <span class="fl">0.8</span>)</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-132-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-132-1.png" width="672" /></p>
 <p>Nagu näha, kui spetsiifilisus on kõrge, siis sensitiivsus on madal ja vastupidi. See on alati nii. Fakt, et kurv ei kaugene kuigi palju keskjoonest, mis tähistab loll-mudeli ennustuse 50%-st tabavust, näitab et meie ennustuste kvaliteet on tagasihoidlik. <em>Area under the curve</em> ehk <em>auc</em> ütleb, et ennustuse tabavus on 59%.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">auc</span>(roccurve)
 <span class="co">#&gt; Area under the curve: 0.577</span></code></pre></div>
@@ -917,10 +1904,10 @@ post <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mut
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> applicant.gender), <span class="dt">position =</span> pd) <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;Proportion admitted&quot;</span>,
        <span class="dt">title =</span> <span class="st">&quot;Posterior validation check&quot;</span>) </code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-147-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-147-1.png" width="672" /></p>
 <p>Ohhoo, kui vaadata deparmente eraldi, pole mingit kinnitust, et meestel oleks paremad võimalused ülikooli sisse saada.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">marginal_effects</span>(m_ucadmit2, <span class="dt">effects =</span><span class="st">&quot;dept&quot;</span>, <span class="dt">conditions =</span> <span class="kw">data.frame</span>(<span class="dt">male =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)))</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-148-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-148-1.png" width="672" /></p>
 </div>
 </div>
 <div id="y-muutujal-3-kategoorilist-vaartust" class="section level3">
@@ -958,7 +1945,7 @@ pred1_l &lt;-<span class="st"> </span>pred1_l <span class="op">%&gt;%</span><spa
                               variable <span class="op">==</span><span class="st"> &quot;P(Y = 3)&quot;</span> <span class="op">~</span><span class="st"> &quot;career 3&quot;</span>))
 <span class="kw">ggplot</span>(pred1_l, <span class="kw">aes</span>(income, value)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>variable)<span class="op">+</span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Pr of career choice at a given income&quot;</span>) </code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-152-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-152-1.png" width="672" /></p>
 <div id="y-muutujal-on-3-kategoorilist-vaartust-mis-on-ordinaalselt-jarjestatud" class="section level4 unnumbered">
 <h4>Y-muutujal on 3+ kategoorilist väärtust, mis on ordinaalselt järjestatud</h4>
 <p>Kui näiteks Y-muutuja väärtused on “vähe”, “rohkem”, “palju rohkem”, siis me saame aru, et 3 väärtust on küll järjestatud, aga nende vahelised kaugused andmeruumis ei pruugi olla võrdsed. Nüüd kasutame mudelit vormis:</p>
@@ -1105,7 +2092,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["_main.pdf"],
 "toc": {
 "collapse": "section"
 }

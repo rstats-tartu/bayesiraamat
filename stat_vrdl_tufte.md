@@ -89,28 +89,14 @@ Bayesiaan alustab sellest, et ehitab kaks mudelit: andmete tõepäramudel ja tau
 Kui andmed on normaaljaotusega, siis on ka tõepäramudel normaaljaotus. 
 Alustame sellest, et fitime oma valimiandmed (üksikud efekti suurused) normaaljaotuse mudelisse.
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{stat_vrdl_tufte_files/figure-latex/vrdlssd-1} 
-
-}
-
-\caption{Paariviisiline katse - kontroll disain. Katset on korratud 30 korda. X-teljel on efektisuurused (ES). 30 üksikut efektisuurust on näidatud punktidena. Must joon näitab keskmist efektisuurust. Andmed on mudeldatud normaaljaotusena.}(\#fig:vrdlssd)
-\end{figure}
+![(\#fig:vrdlssd)Paariviisiline katse - kontroll disain. Katset on korratud 30 korda. X-teljel on efektisuurused (ES). 30 üksikut efektisuurust on näidatud punktidena. Must joon näitab keskmist efektisuurust. Andmed on mudeldatud normaaljaotusena.](stat_vrdl_tufte_files/figure-latex/vrdlssd-1.pdf) 
 
 
 See ei ole veel tõepäramudel, sest me tahame hinnangut ES **keskväärtuse** kõige tõenäolisemale väärtusele, ja lisaks veel hinnangut ebakindlusele selle punkt-hinnangu ümber (usalduslpiire).
 Seega tuleb eelmine jaotus kitsamaks tõmmata, et ta kajastaks meie teadmisi ES-ide keskväärtuste, mitte individuaalsete ES-de, kohta. 
 Uue jaotusmudeli sd = eelmise jaotuse sd/sqrt(30).
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{stat_vrdl_tufte_files/figure-latex/vrdlsse-1} 
-
-}
-
-\caption{See jaotus iseloomustab keskmise ES paiknemist puhtalt meie andmete põhjal.}(\#fig:vrdlsse)
-\end{figure}
+![(\#fig:vrdlsse)See jaotus iseloomustab keskmise ES paiknemist puhtalt meie andmete põhjal.](stat_vrdl_tufte_files/figure-latex/vrdlsse-1.pdf) 
 
 Täpsemalt, selle joonise põhjal võib arvutada, milline on meie valimi keskväärtuse kohtamise tõenäosus igal võimalikul tõelisel ES-i väärtusel. 
 Kõige tõenäolisemad on andmed siis, kui tegelik ES = andmete keskväärtusega (seda kohta näitab must joon). 
@@ -127,14 +113,7 @@ Kui sul on väike valim, siis sinu andmed vajavad sellist kantseldamist.
 
 Olgu meie taustateadmise mudel normaaljaotus keskväärtusega 0 ja standardhälbega 1.
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{stat_vrdl_tufte_files/figure-latex/vrdlssdse-1} 
-
-}
-
-\caption{Taustateadmiste mudel ehk prior on normaaljaotus (must joon), mille ülesanne on veidi vähendada ekstreemsete valimite kahjulikku mõju.}(\#fig:vrdlssdse)
-\end{figure}
+![(\#fig:vrdlssdse)Taustateadmiste mudel ehk prior on normaaljaotus (must joon), mille ülesanne on veidi vähendada ekstreemsete valimite kahjulikku mõju.](stat_vrdl_tufte_files/figure-latex/vrdlssdse-1.pdf) 
 
 Taustateadmiste mudel on sageli normaaljaotus. 
 Kui meil on palju taustateadmisi, siis on see jaotus kõrge ja kitsas, kui meil on vähe taustateadmisi, siis on see madal ja lai.
@@ -159,14 +138,7 @@ m99 <- map2stan(
 
 
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{stat_vrdl_tufte_files/figure-latex/vrdlstriplot-1} 
-
-}
-
-\caption{Triplot. Bayesi väljund on posterioorne tõenäosusjaotus (roheline). Nagu näha, ei ole selle jaotuse tipp täpselt samas kohas kui andmejaotuse tipp ehk keskväärtus. Prior tõmbab seda veidi nulli suunas. Lisaks on posteerior veidi kitsam kui andmemudel, mis tähendab, et hinnang ES-le tuleb väiksema ebakindluse määraga.}(\#fig:vrdlstriplot)
-\end{figure}
+![(\#fig:vrdlstriplot)Triplot. Bayesi väljund on posterioorne tõenäosusjaotus (roheline). Nagu näha, ei ole selle jaotuse tipp täpselt samas kohas kui andmejaotuse tipp ehk keskväärtus. Prior tõmbab seda veidi nulli suunas. Lisaks on posteerior veidi kitsam kui andmemudel, mis tähendab, et hinnang ES-le tuleb väiksema ebakindluse määraga.](stat_vrdl_tufte_files/figure-latex/vrdlstriplot-1.pdf) 
 
 Posteerior sisaldab endas kogu infot, mis meil ES-i tõelise väärtuse kohta on. 
 Siit saame arvutada:
@@ -188,14 +160,7 @@ Sageduslik lähenemine sisaldab ainult ühte mudelit, mida võrreldakse valimi a
 Sageduslik statistik alustab selles lihtsas näites täpselt samamoodi nagu bayesiaan, tekitades eelmisega identse andmemudeli, mis on keskendatud valimi keskväärtusele \@ref(fig:vrdlsse).
 Seejärel nihutab ta oma andmemudelit niipalju, et normaaljaotuse tipp ei ole enam valimi keskväärtuse kohal vaid hoopis 0-efekti kohal. Jaotuse laius nihutamisel ei muutu. 
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{stat_vrdl_tufte_files/figure-latex/vrdlsnull-1} 
-
-}
-
-\caption{Nullhüpotees (must kõver) ja tõepärafunktsioon (punane kõver).}(\#fig:vrdlsnull)
-\end{figure}
+![(\#fig:vrdlsnull)Nullhüpotees (must kõver) ja tõepärafunktsioon (punane kõver).](stat_vrdl_tufte_files/figure-latex/vrdlsnull-1.pdf) 
 
 
 Seda nullile tsentreeritud mudelit kutsutakse null-hüpoteesiks (H~0~). 

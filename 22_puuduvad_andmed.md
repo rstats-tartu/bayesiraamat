@@ -374,6 +374,11 @@ Nii saab mc agelate konvergeerumist graafiliselt kontrollida.
 
 ```r
 plot(imp)
+```
+
+![](22_puuduvad_andmed_files/figure-latex/unnamed-chunk-21-1.pdf)<!-- --> 
+
+```r
 mice.mids(imp, maxit=35, print=F) 
 #> Class: mids
 #> Number of multiple imputations:  5 
@@ -390,10 +395,6 @@ mice.mids(imp, maxit=35, print=F)
 #võtab imputeeritud mids objekti ja lisab iteratsioone, 
 #toodab uue mids objeki
 ```
-
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22_puuduvad_andmed_files/figure-latex/unnamed-chunk-21-1} \end{center}
 Joonisel on igale iteratsioonile imputeeritud väärtuste (aga mitte algsete väärtuste) keskmine ja SD.
 
 7. **Mitu imputatsiooni teha?** Liiga suur m viib suurele simulatsiooniveale ja statistilisele ebaefektiivsusele. Vaikeväärtus on 5.  
@@ -460,9 +461,7 @@ konditsionaalne plot muutujale "age" erinevatel muutuja "gen" väärtustel
 histogram(~age|gen, data=boys)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22_puuduvad_andmed_files/figure-latex/unnamed-chunk-23-1} \end{center}
+![](22_puuduvad_andmed_files/figure-latex/unnamed-chunk-23-1.pdf)<!-- --> 
 
 Vanuste jaotus on erinev sõltuvalt sellest, kas gen muutuja on NA v mitte.
 
@@ -471,9 +470,7 @@ R <- is.na(boys$gen)
 histogram(~age|R, data=boys)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22_puuduvad_andmed_files/figure-latex/unnamed-chunk-24-1} \end{center}
+![](22_puuduvad_andmed_files/figure-latex/unnamed-chunk-24-1.pdf)<!-- --> 
 
 
 
@@ -485,9 +482,7 @@ näitab algseid ja imputeeritud andmeid üksteise peal muutujale "chl"
 stripplot(imp, chl~.imp, pch=20, cex=2)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22_puuduvad_andmed_files/figure-latex/unnamed-chunk-25-1} \end{center}
+![](22_puuduvad_andmed_files/figure-latex/unnamed-chunk-25-1.pdf)<!-- --> 
 Imputeeritud andmed on punased.
 
 suru imputeeritud andmed 1 ja 25 vahele
@@ -510,9 +505,7 @@ xyplot(imp, bmi ~ I (wgt / (hgt / 100)^2),
        ylab = "BMI (kg/m2) Imputed", xlab = "BMI (kg/m2) Calculated")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22_puuduvad_andmed_files/figure-latex/unnamed-chunk-27-1} \end{center}
+![](22_puuduvad_andmed_files/figure-latex/unnamed-chunk-27-1.pdf)<!-- --> 
 
 
 
@@ -532,9 +525,7 @@ imp <- mice(boys, maxit=1)
 xyplot(imp, hgt~age|.imp, pch=c(1,20),cex=c(1,1.5))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22_puuduvad_andmed_files/figure-latex/unnamed-chunk-28-1} \end{center}
+![](22_puuduvad_andmed_files/figure-latex/unnamed-chunk-28-1.pdf)<!-- --> 
 
 
 ```r
@@ -542,18 +533,14 @@ xyplot(imp, hgt~age|.imp, pch=c(1,20),cex=c(1,1.5))
 xyplot(imp, hgt~age|.imp, na.group=wgt, pch=c(1,20),cex=c(1,1.5))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22_puuduvad_andmed_files/figure-latex/unnamed-chunk-29-1} \end{center}
+![](22_puuduvad_andmed_files/figure-latex/unnamed-chunk-29-1.pdf)<!-- --> 
 
 
 ```r
 xyplot(imp, hgt~age, pch=c(1,20),cex=c(1,1.5))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22_puuduvad_andmed_files/figure-latex/unnamed-chunk-30-1} \end{center}
+![](22_puuduvad_andmed_files/figure-latex/unnamed-chunk-30-1.pdf)<!-- --> 
 
 ## Tulemuste avaldamine
 

@@ -62,7 +62,7 @@ Standardiseeritud andmete kasutamine muudab varieeruvuskomponentide fitte, aga j
 
 Tsentreerimine ($x_i - mean(x)$) mõjutab $b_0$ aga mitte $b_1$ koefitsiente, mis võib rääkida selle meetodi kasuks üle standardiseerimise (($\frac {x_i - mean(x)}{sd(x)}$), mis tekitab X muutujate jaotused, mille mean = 0 ja sd = 1. 
 
-NB! grupi tasemel tsentreerimine, ehki vahest kasulik, töötab hoopis teistmoodi kui üle kõikide gruppide tsentreerimine ja viib täiesti erineva mudelini - sellest tuleks hoiduda, senikaua kui te ei tea täpselt, mida te teete.
+NB! grupi tasemel tsentreerimine, ehkki vahest kasulik, töötab hoopis teistmoodi kui üle kõikide gruppide tsentreerimine ja viib täiesti erineva mudelini - sellest tuleks hoiduda, senikaua kui te ei tea täpselt, mida te teete.
 
 > Mitmetasemelised mudelid on erilised, sest nad hõlmavad mitut varieeruvuse allikat, ei eelda konsantset vigade jaotust, ning modelleerivad seoseid erinevate mudeli tasemete vahel. 
 
@@ -133,7 +133,7 @@ data.temporalCor.brms = brm(y ~ x, data = d,
                             autocor = cor_ar( ~year, cov = TRUE))
 ```
 
-Lihtsuse mõttes eeldame, et iga ajapunkti oodatud väärtus = tavaline lin prediktor + autokorrelatsiooni parameeter ($ρ$) korrutatuna eelmise vaatluse residuaaliga + tavapärane sõltumatu müra ($σ^2$). 
+Lihtsuse mõttes eeldame, et iga ajapunkti oodatud väärtus = tavaline lin prediktor + autokorrelatsiooni parameeter ($\rho$) korrutatuna eelmise vaatluse residuaaliga + tavapärane sõltumatu müra ($\sigma^2$). 
 
 ## mitmetasemeline mudel R-i mudelikeeles
 
@@ -240,12 +240,7 @@ Selline mudel usub, et erinevate koolide keskmine tase erineb (seda näitab iga 
 Samamoodi nagu shrinkage esineb vanemate-laste vahel esineb see ka valimi-kordusvalimi vahel kõigi valimite keskmise suunas (valimiefektid taanduvad välja sedamõõda, kuidas valimeid juurde tuleb). Ja samamoodi, kui me võtame valimi testitulemusi mitmest koolist, siis eeldusel, et õpilased on kõikides koolides sarnased (aga mitte identsed), toimub shrinkage kõikide koolide keskmise suunas. Seega, nihutades mingi kooli keskmist testitulemust koolide keskmise suunas, saame parema hinnangu selle kooli õpilaste teadmisetele kui pelgalt selles koolis õpilaste teadmisi mõõtes! 
 
 \begin{figure}
-
-{\centering \includegraphics[width=1.5\linewidth]{img/galton} 
-
-}
-
-\caption{(ref:Galton (1886), The Journal of the Anthropological Institute of Great Britain and Ireland, Vol. 15, pp. 246-263)}(\#fig:parun)
+\includegraphics[width=1.5\linewidth]{img/galton} \caption{(ref:Galton (1886), The Journal of the Anthropological Institute of Great Britain and Ireland, Vol. 15, pp. 246-263)}(\#fig:parun)
 \end{figure}
 
 
@@ -367,14 +362,7 @@ Siit nähtub, et m3 on parim mudel, aga ka m2 omab mingit kaalu.
 coeftab_plot(coeftab(schoolm2, schoolm3), cex = 0.5)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-14-1} 
-
-}
-
-\caption{Mudelite koefitsiendid.}(\#fig:unnamed-chunk-14)
-\end{figure}
+![(\#fig:unnamed-chunk-14)Mudelite koefitsiendid.](16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-14-1.pdf) 
 
 Siin on hästi näha shrinkage m3 puhul võrreldes m2-ga, mis ei tee multiple testingu korrektsiooni. 
 Nende koolide puhul, kus usaldusintervall on laiem, on ka suurem shrinkage (mudel võtab nende kohta suhteliselt rohkem infot teistest koolidest sest need koolid ise on mingil põhjusel suhteliselt infovaesed).
@@ -451,14 +439,7 @@ Alternatiivne viis seda mudelit kirjutada oleks `mu <- Intercept[school] + b_sex
 plot(precis(schools_m1, depth = 2), cex = 0.5)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-20-1} 
-
-}
-
-\caption{Mudeli koefitsiendid}(\#fig:unnamed-chunk-20)
-\end{figure}
+![(\#fig:unnamed-chunk-20)Mudeli koefitsiendid](16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-20-1.pdf) 
 
 
 ```r
@@ -497,14 +478,7 @@ school_2_girls <- schools_m1_samples$Intercept +
 dens(school_2_girls)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-22-1} 
-
-}
-
-\caption{Tüdrukute skoori posteerior}(\#fig:unnamed-chunk-22)
-\end{figure}
+![(\#fig:unnamed-chunk-22)Tüdrukute skoori posteerior](16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-22-1.pdf) 
 
 
 Ja Poiste oma
@@ -516,14 +490,7 @@ school_2_boys <- schools_m1_samples$Intercept +
 dens(school_2_boys)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-23-1} 
-
-}
-
-\caption{Poiste skoori posteerior.}(\#fig:unnamed-chunk-23)
-\end{figure}
+![(\#fig:unnamed-chunk-23)Poiste skoori posteerior.](16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-23-1.pdf) 
 
 
 Siin on eeldus, et kõikides koolides on sama poiste ja tüdrukute vaheline erinevus (b_sex1), kuid erinevad matemaatikateadmiste baastasemed (mudeli intercept on koolide vahel vabaks lastud, kuid tõus mitte). 
@@ -562,14 +529,7 @@ R <- rlkjcorr(1e4, K = 2, eta = 2)
 dens(R[, 1, 2] , xlab = "correlation")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-25-1} 
-
-}
-
-\caption{Korrelatsiooni prior on nõrgalt informatiivne -- suunab posteeriori eemale ekstreemsetest korrelatsioonidest.}(\#fig:unnamed-chunk-25)
-\end{figure}
+![(\#fig:unnamed-chunk-25)Korrelatsiooni prior on nõrgalt informatiivne -- suunab posteeriori eemale ekstreemsetest korrelatsioonidest.](16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-25-1.pdf) 
 
 
 
@@ -597,14 +557,7 @@ schools_m2 <- map2stan(alist(
 plot(precis(schools_m2, depth = 2), cex = 0.5)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-28-1} 
-
-}
-
-\caption{Mudeli m2 koefitsiendid.}(\#fig:unnamed-chunk-28)
-\end{figure}
+![(\#fig:unnamed-chunk-28)Mudeli m2 koefitsiendid.](16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-28-1.pdf) 
 
 
 Posteerior korrelatsioonile intercepti ja tõusu vahel:
@@ -617,14 +570,7 @@ df1 <- schools_m2_samples$Rho_school %>% as.data.frame()
 dens(df1$V2)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-29-1} 
-
-}
-
-\caption{Posteerior korrelatsioonile intercepti ja tõusu vahel.}(\#fig:unnamed-chunk-29)
-\end{figure}
+![(\#fig:unnamed-chunk-29)Posteerior korrelatsioonile intercepti ja tõusu vahel.](16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-29-1.pdf) 
 
 
 Meil on negatiivne korrelatsioon intercepti ja tõusu vahel. Seega, mida väiksem on poiste keskmine skoor koolis (=intercept), seda suurem om erinevus poiste ja tüdrukute skooride vahel (= tõus).
@@ -700,14 +646,7 @@ Aga miks peaks erinevates Inglismaa koolides olema erinev vahe poiste ja tüdruk
 Kas olukorras kus meil on hea kool, läheb see vahe väiksemaks või suuremaks? 
 Tehke kindlaks!!! võrrelge graafiku slope vs. intercept.
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-33-1} 
-
-}
-
-\caption{mida suurem on koolis poiste skoor, seda väiksem on poiste ja tüdrukute erinevus}(\#fig:unnamed-chunk-33)
-\end{figure}
+![(\#fig:unnamed-chunk-33)mida suurem on koolis poiste skoor, seda väiksem on poiste ja tüdrukute erinevus](16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-33-1.pdf) 
 
 Tõepoolest: mida suurem on koolis poiste skoor (parem kool), seda väiksem on poiste ja tüdrukute erinevus. Aga seos on kaunis nõrk! 
 
@@ -726,14 +665,7 @@ plot(schools$score2, schools$score1)
 abline(lm(score1 ~ score2, data = schools))
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-34-1} 
-
-}
-
-\caption{score1 vs. score2}(\#fig:unnamed-chunk-34)
-\end{figure}
+![(\#fig:unnamed-chunk-34)score1 vs. score2](16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-34-1.pdf) 
 
 Kõigepealt lihtne regressioon `lm()` funktsiooniga (see ei ole hierarhiline mudel).
 

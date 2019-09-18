@@ -407,8 +407,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
          <span class="dt">upper.panel =</span> panel.ellipse,
          <span class="dt">diag.panel =</span> panel.density,
          <span class="dt">main =</span> <span class="st">&quot;Correlogram of Iris dataset&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:korrmaatriks"></span>
-<img src="07_EDA_files/figure-html/korrmaatriks-1.png" alt="Korrelatstioonimaatriks joonisena." width="70%" />
+<div class="figure"><span id="fig:korrmaatriks"></span>
+<img src="07_EDA_files/figure-html/korrmaatriks-1.png" alt="Korrelatstioonimaatriks joonisena." width="672" />
 <p class="caption">
 Joonis 9.1: Korrelatstioonimaatriks joonisena.
 </p>
@@ -434,23 +434,18 @@ Joonis 9.1: Korrelatstioonimaatriks joonisena.
 <span class="co">#&gt;  n obs: 150 </span>
 <span class="co">#&gt;  n variables: 5 </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; ── Variable type:factor ──────────────────────────────</span>
+<span class="co">#&gt; ── Variable type:factor ───────────────────────────────────────</span>
 <span class="co">#&gt;  variable missing complete   n n_unique                       top_counts</span>
 <span class="co">#&gt;   Species       0      150 150        3 set: 50, ver: 50, vir: 50, NA: 0</span>
 <span class="co">#&gt;  ordered</span>
 <span class="co">#&gt;    FALSE</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; ── Variable type:numeric ─────────────────────────────</span>
+<span class="co">#&gt; ── Variable type:numeric ──────────────────────────────────────</span>
 <span class="co">#&gt;      variable missing complete   n mean   sd  p0 p25  p50 p75 p100</span>
 <span class="co">#&gt;  Petal.Length       0      150 150 3.76 1.77 1   1.6 4.35 5.1  6.9</span>
 <span class="co">#&gt;   Petal.Width       0      150 150 1.2  0.76 0.1 0.3 1.3  1.8  2.5</span>
 <span class="co">#&gt;  Sepal.Length       0      150 150 5.84 0.83 4.3 5.1 5.8  6.4  7.9</span>
-<span class="co">#&gt;   Sepal.Width       0      150 150 3.06 0.44 2   2.8 3    3.3  4.4</span>
-<span class="co">#&gt;      hist</span>
-<span class="co">#&gt;  ▇▁▁▂▅▅▃▁</span>
-<span class="co">#&gt;  ▇▁▁▅▃▃▂▂</span>
-<span class="co">#&gt;  ▂▇▅▇▆▅▂▂</span>
-<span class="co">#&gt;  ▁▂▅▇▃▂▁▁</span></code></pre></div>
+<span class="co">#&gt;   Sepal.Width       0      150 150 3.06 0.44 2   2.8 3    3.3  4.4</span></code></pre></div>
 <p>Siin pööra kindlasti tähelepanu tulpadele min ja max, mis annavad kiire võimalusi outliereid ära tunda. Kontrolli, kas andmete keskmised (mediaan, mean ja trimmed mean) on üksteisele piisavalt lähedal — kui ei ole, siis on andmete jaotus pika õlaga, ja kindlasti mitte normaalne. Kontrolli, kas erinevate muutujate keskväärtused ja hälbed on teaduslikus mõttes usutavas vahemikus. Ära unusta, et ka väga väike standardhälve võib tähendada, et teie valim ei peegelda bioloogilist varieeruvust populatsioonis, mis teile teaduslikku huvi pakub. NB! selles <code>psych::describe()</code> funktsiooni väljundis on mad läbi korrutatud konstandiga <code>1.4826</code>, mis toob selle väärtuse lähemale sd-le. Seega on mad siin sd robustne analoog — kui mad on palju väiksem sd-st, siis on karta, et muutujas on outliereid.</p>
 <ol start="3" style="list-style-type: decimal">
 <li><p>kontrolli NA-de esinemist oma andmetes VIM paketi abil või käsitsi (vt esimene ptk). Kontrolli, et NA-d ei oleks tähistatud mingil muul viisil (näiteks 0-i või mõne muu numbriga). Kui vaja, rekodeeri NAd. Mõtle selle peale, millised protsessid looduses võiksid genreerida puuduvaid andmeid. Kui NA-d ei jaotu andmetes juhuslikult, võib olla hea mõte andmeid imputeerida (vt hilisemaid ptk, bayesiaanlik imputeerimine). Näiteks, kui ravimiuuringust kukuvad eeskätt välja patsiendid, kellel ravim ei tööta, on ilmselt halb mõte nende patsientide andmed lihtsalt uuringust välja vistata (muidugi, kui te ei esinda kasumit taotleva ettevõtte huve). Kui NA-d jaotuvad juhuslikult, mõtle sellele, kas sa tahad NA-dega read tabelist välja visata, või hoopis osad muutujad, mis sisaldavad liiga palju NA-sid, või mitte midagi välja vistata. NB! NA-dega andmed ei sobi hästi regresiooniks.</p></li>
@@ -459,7 +454,7 @@ Joonis 9.1: Korrelatstioonimaatriks joonisena.
 <li><p>Tulpdiagramm on hea valik siis, kui tahate kõrvuti näidata proportsioonide erinevust. Näiteks, kui meil on 3 liiki kalu, millest igas on erinevas proporstioonis parasiidid, võime joonistada 3 tulpa, millest igas on näidatud ühe kalaliigi parasiitide omavaheline proportsioon.</p></li>
 <li><p>Tulpdiagramm on hädaga pooleks kasutuskõlblik, kui iga muutuja kohta on vaid üks number, mida plottida. Kuigi, siin on meil parem võimalus — Cleveland plot. Olukorras, kus te tahate plottida valimi keskväärtust ja usalduspiire või varieeruvusnäitajat (sd, mad), on olemas selgelt paremad meetodid kui tulpdiagramm. Samas, ehki tulpdiagrammide kasutamine teaduskirjanduses on pikas langustrendis, kasutatakse neid ikkagi liiga palju just sellel viisil.</p></li>
 <li><p>Ära piirdu muutuja tasemel varieeruvuse plottimisega. Teaduslikult on sageli huvitavam mimte muutuja koosvarieerumine. Järgmistes peatükkides modelleerime seda formaalselt regresioonanalüüsis aga alati tasub alustada lihtsatest plottidest. Scatterplot on lihtne viis kovarieeruvuse vaatamiseks.</p></li>
-<li><p>Kui erinevad muutujad on mõõdetud erinevates skaalades (ühikutes), siis võib nende koosvarieeruvust olla kergem võrrelda, kui nad eelnevalt normaliseerida (kõigi muutujate keskväärtus = 0, aga varieeruvus jääb algsesse skaalasse) või standardiseerida (kõik keskväärtused = 0-ga ja sd-d = 1-ga). Standardiseerida tohib ainult normaaljaotusega muutujaid (seega võib olla vajalik muutuja kõigepealt logaritmida). Normaliseerimine: arvuta igale valimi väärtusele: <code>mean(x) - x</code>; standardiseerimine: <code>(mean(x) - x) / sd(x)</code>.</p></li>
+<li><p>Kui erinevad muutujad on mõõdetud erinevates skaalades (ühikutes), siis võib nende koosvarieeruvust olla kergem võrrelda, kui nad eelnevalt normaliseerida (kõigi muutujate keskväärtus = 0, aga varieeruvus jääb algsesse skaalasse) või standardiseerida (kõik keskväärtused = 0-ga ja sd-d = 1-ga). Normaliseerimine: arvuta igale valimi väärtusele: <code>mean(x) - x</code>; standardiseerimine: <code>(mean(x) - x) / sd(x)</code>.</p></li>
 <li><p>Visualiseeringu valik sõltub valimi suurusest. Väikse valimi korral (N&lt;10) boxploti, histogrammi vms kasutamine on lihtsalt rumal. Ära mängi lolli ja ploti parem punkti kaupa.</p></li>
 </ol>
 <ul>
@@ -473,8 +468,8 @@ Joonis 9.1: Korrelatstioonimaatriks joonisena.
 </ol>
 
 <pre><code>#&gt; Warning: Ignoring unknown parameters: bins</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:multisd"></span>
-<img src="07_EDA_files/figure-html/multisd-1.png" alt="Multiplikatiivse sd joonistamine." width="70%" />
+<div class="figure"><span id="fig:multisd"></span>
+<img src="07_EDA_files/figure-html/multisd-1.png" alt="Multiplikatiivse sd joonistamine." width="672" />
 <p class="caption">
 Joonis 9.2: Multiplikatiivse sd joonistamine.
 </p>
@@ -539,7 +534,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["_main.pdf"],
 "toc": {
 "collapse": "section"
 }

@@ -32,23 +32,18 @@ skim(iris)
 #>  n obs: 150 
 #>  n variables: 5 
 #> 
-#> -- Variable type:factor -------------------------------------------------
+#> -- Variable type:factor ---------------------------------------
 #>  variable missing complete   n n_unique                       top_counts
 #>   Species       0      150 150        3 set: 50, ver: 50, vir: 50, NA: 0
 #>  ordered
 #>    FALSE
 #> 
-#> -- Variable type:numeric ------------------------------------------------
+#> -- Variable type:numeric --------------------------------------
 #>      variable missing complete   n mean   sd  p0 p25  p50 p75 p100
 #>  Petal.Length       0      150 150 3.76 1.77 1   1.6 4.35 5.1  6.9
 #>   Petal.Width       0      150 150 1.2  0.76 0.1 0.3 1.3  1.8  2.5
 #>  Sepal.Length       0      150 150 5.84 0.83 4.3 5.1 5.8  6.4  7.9
 #>   Sepal.Width       0      150 150 3.06 0.44 2   2.8 3    3.3  4.4
-#>      hist
-#>  ▇▁▁▂▅▅▃▁
-#>  ▇▁▁▅▃▃▂▂
-#>  ▂▇▅▇▆▅▂▂
-#>  ▁▂▅▇▃▂▁▁
 ```
 
 
@@ -59,9 +54,7 @@ ggplot(iris, aes(Petal.Length, Sepal.Length)) +
   geom_smooth(method = "lm")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-4-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-4-1.pdf)<!-- --> 
 
 Loess fit viitab, et 3 liiki ühe sirgega mudeldada pole võib-olla optimaalne lahendus.
 
@@ -73,9 +66,7 @@ ggplot(iris, aes(Petal.Length, Sepal.Length, color = Species)) +
   geom_smooth(method = "lm")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-5-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-5-1.pdf)<!-- --> 
 
 Nüüd on loess ja lm heas kooskõlas - seos y~x vahel oleks nagu enam-vähem lineaarne. Siit tuleb ka välja, et kolme mudeli tõusud on sarnased, interceptid erinevad.
 
@@ -101,9 +92,7 @@ Posteeriorid ja mcmc ahelate konvergents
 plot(m_kiire)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-8-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-8-1.pdf)<!-- --> 
 
 Fiti kokkuvõte - koefitsiendid ja nende fittimise edukust hindavad statistikud (Eff.Sample, Rhat)
 
@@ -126,9 +115,7 @@ Ennustav plot ehk *marginal plot* -- mudeli fit 95% CI-ga.
 plot(marginal_effects(m_kiire), points = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-10-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-10-1.pdf)<!-- --> 
 
 ### Põhjalikum töövoog
 
@@ -175,9 +162,7 @@ y <- dstudent_t(x, df = 6, mu = 0, sigma = 2, log = FALSE)
 plot(y ~ x)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-13-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-13-1.pdf)<!-- --> 
 Sigma prior, mida **brms** kasutab, on vaikimisi pool sümmeetrilisest jaotusest, mis lõigatakse nulli kohalt pooleks nii, et seal puuduvad < 0 väärtused (seega ei saa varieeruvuse posteerior minna alla nulli).
 
 Me võime ka prioreid ilma likelihoodideta (tõepärafunktsioonideta) läbi mudeli lasta, misjärel tõmbame fititud mudelist priorite valimid (neid võiks kutsuda ka "priorite posteerioriteks") ja plotime kõik priorid koos. Seda pilti saab siis võrrelda koos andmetega fititud mudeli posteerioritega. Selle võimaluse kasutamine on tõusuteel, sest keerulisemate mudelite puhul võib priorite ükshaaval plottimine osutuda eksitavaks.
@@ -209,9 +194,7 @@ prior_samples(m1) %>%
   facet_wrap(~ key, scales = "free_x")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-16-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-16-1.pdf)<!-- --> 
 
 Kui kasutame `sample_prior = "only"` varianti, siis on esimene koodirida erinev: `samples1 = as.data.frame(m1$fit)`.
 
@@ -481,9 +464,7 @@ Divergentsed transitsioonid on halvad asjad - ahelad on läinud 17 korda metsa. 
 plot(m2)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-27-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-27-1.pdf)<!-- --> 
 
 Siit on näha, et ahelad on ilusti konvergeerunud. Ühtlasi on pildil posterioorsed jaotused fititud koefitsientidele.
 
@@ -493,9 +474,7 @@ Siit on näha, et ahelad on ilusti konvergeerunud. Ühtlasi on pildil posterioor
 plot(m2, pars = "r_")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-28-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-28-1.pdf)<!-- --> 
 
 Vaatame korrelatsioone erinevate parameetrite posterioorsete valimite vahel. (Markovi ahelad jooksevad n-mõõtmelises ruumis, kus n on mudeli parameetrite arv, mille väärtusi hinnatakse.)
 Pairs(m3) teeb pildi ära, aga ilusama pildi saab `GGally::ggpairs()` abil.
@@ -505,9 +484,7 @@ Pairs(m3) teeb pildi ära, aga ilusama pildi saab `GGally::ggpairs()` abil.
 pairs(m2, pars = "b_")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-29-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-29-1.pdf)<!-- --> 
 
 
 
@@ -518,9 +495,7 @@ posterior_samples(m2) %>%
   ggpairs()
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-30-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-30-1.pdf)<!-- --> 
 
 Siin on posteeriorite põhjal arvutatud 50% ja 95% CI ja see plotitud.
 
@@ -528,9 +503,7 @@ Siin on posteeriorite põhjal arvutatud 50% ja 95% CI ja see plotitud.
 stanplot(m2, pars = "r_", type = "intervals")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-31-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-31-1.pdf)<!-- --> 
 
 type = argument sisestamine võimaldab plottida erinevaid diagnostilisi näitajaid. Lubatud sisendid on "hist", "dens", "hist_by_chain", "dens_overlay", "violin", "intervals", "areas", "acf", "acf_bar", "trace", "trace_highlight", "scatter", "rhat", "rhat_hist", "neff", "neff_hist" "nuts_acceptance", "nuts_divergence", "nuts_stepsize", "nuts_treedepth" ja "nuts_energy".
 
@@ -539,9 +512,7 @@ type = argument sisestamine võimaldab plottida erinevaid diagnostilisi näitaja
 stanplot(m2, type = "neff")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-32-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-32-1.pdf)<!-- --> 
 
 Neff on efektiivne valimi suurus ja senikaua kuni Neff/N suhe ei ole < 0.1, pole põhjust selle pärast muretseda.
 
@@ -559,9 +530,7 @@ pars <- colnames(model)
 mcmc_intervals(model, regex_pars = "[^(lp__)]")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-34-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-34-1.pdf)<!-- --> 
 
 Näeme, et sigma hinnang on väga usaldusväärne, samas kui gruppide vahelise sd hinnang ei ole seda mitte (pane tähele posterioorse jaotuse ebasümmeetrilisust).
 
@@ -570,12 +539,15 @@ Näeme, et sigma hinnang on väga usaldusväärne, samas kui gruppide vahelise s
 model2 <- posterior_samples(m2)
 pars <- colnames(model2)
 mcmc_intervals(model2, regex_pars = "[^(lp__)]")
+```
+
+![](17_brms_files/figure-latex/unnamed-chunk-35-1.pdf)<!-- --> 
+
+```r
 mcmc_areas(model2,  pars = c("b_Petal.Length", "b_Sepal.Width"))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-35-1} \includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-35-2} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-35-2.pdf)<!-- --> 
 
 
 ### Bayesi versioon R-ruudust 
@@ -610,9 +582,7 @@ purrr::map(list(m1, m2, m3), pp_check, nsamples = 10) %>%
   grid.arrange(grobs = ., nrow = 3)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-38-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-38-1.pdf)<!-- --> 
 
 - y - tihedusplot empiirilistest andmetest
 - y_rep -- plotid mudeli poolt ennustatud iseseisvatest valimitest (igaüks sama suur kui empiiriline valim y) 
@@ -627,9 +597,7 @@ Teeme ennustused. Kõigepealt ennustame ühe keskmise mudeliga, mis ei arvesta m
 plot(marginal_effects(m2, effects = "Petal.Length", method = "predict", probs = c(0.1, 0.9)), points = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-39-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-39-1.pdf)<!-- --> 
 
 Ennustus on selles mõttes ok, et vaid väike osa punkte jääb sellest välja, aga laiavõitu teine!
 
@@ -639,9 +607,7 @@ Nüüd ennustame sama mudeli põhjal igale liigile eraldi. Seega kasutame mudeli
 plot(marginal_effects(m2, effects = "Petal.Length", method = "predict", conditions = make_conditions(iris, vars = "Species"), probs = c(0.1, 0.9), re_formula = NULL), points = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-40-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-40-1.pdf)<!-- --> 
 
 
 `method = "predict"` ennustab, millisesse vahemikku peaks mudeli järgi jääma 90% andmepunkte (k.a. uued andmepunktid, mida pole veel valimisse korjatud).
@@ -655,9 +621,7 @@ Järgneval pildil on `method = "fitted"`. Nüüd on enamus punkte väljaspool us
 plot(marginal_effects(m2, effects = "Petal.Length", method = "fitted", conditions = make_conditions(iris, vars = "Species"), probs = c(0.1, 0.9), re_formula = NULL), points = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-41-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-41-1.pdf)<!-- --> 
 `method = "fitted"` annab CI regressioonijoonele.
 
 Argumendid: 
@@ -691,9 +655,7 @@ Kõigepealt plotime mudeli ennustused, kuidas Sepal Length sõltub Petal Length-
 plot(marginal_effects(m5, effects = "Petal.Length:Sepal.Width"), points = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-44-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-44-1.pdf)<!-- --> 
 
 Ja siis sümmeetriliselt vastupidi.
 
@@ -701,9 +663,7 @@ Ja siis sümmeetriliselt vastupidi.
 plot(marginal_effects(m5, effects = "Sepal.Width:Petal.Length"), points = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-45-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-45-1.pdf)<!-- --> 
 
 
 Siin lisame enda soovitud Sepal Width väärtused (5 ja 1.2), mis on väljaspool seda, mida loodus pakub. Pane tähele ennustuse laiemaid CI-e.
@@ -713,9 +673,7 @@ conditions <- data.frame(Sepal.Width = c(5, 1.2))
 plot(marginal_effects(m5, effects = "Petal.Length", conditions = conditions, re_formula = NULL), points = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-46-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-46-1.pdf)<!-- --> 
 
 
 ### Alternatiivne tee
@@ -738,12 +696,12 @@ predict_interval_brms2 <- predict(m2, newdata = newx, re_formula = NULL) %>%
   cbind(newx, .)
 head(predict_interval_brms2)
 #>   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5
-#> 1         1.00        3.06  setosa     4.48     0.319 3.83  5.11
-#> 2         1.04        3.06  setosa     4.53     0.318 3.92  5.14
-#> 3         1.08        3.06  setosa     4.55     0.321 3.93  5.19
-#> 4         1.12        3.06  setosa     4.58     0.322 3.94  5.20
-#> 5         1.16        3.06  setosa     4.61     0.320 3.99  5.23
-#> 6         1.20        3.06  setosa     4.64     0.311 4.05  5.27
+#> 1         1.00        3.06  setosa     4.49     0.318 3.88  5.12
+#> 2         1.04        3.06  setosa     4.53     0.319 3.90  5.14
+#> 3         1.08        3.06  setosa     4.55     0.317 3.93  5.18
+#> 4         1.12        3.06  setosa     4.58     0.314 3.97  5.19
+#> 5         1.16        3.06  setosa     4.62     0.318 3.97  5.26
+#> 6         1.20        3.06  setosa     4.65     0.318 4.00  5.28
 ```
 
 `predict()` ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele
@@ -758,9 +716,7 @@ ggplot(data = predict_interval_brms2, aes(x = Petal.Length, y = Estimate)) +
   geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = Species), alpha = 1/3)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-49-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-49-1.pdf)<!-- --> 
 
 Ennustav plot - kuidas lähevad kokku mudeli ennustused reaalsete y-i andmepunktidega
 
@@ -772,9 +728,7 @@ ggplot(pr, aes(Sepal.Length, Estimate, color = Species)) +
   coord_cartesian(xlim = c(4, 8), ylim = c(4, 8))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-50-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-50-1.pdf)<!-- --> 
 
 Igale andmepunktile -- kui palju erineb selle residuaal 0-st kui hästi ennustab mudel just seda andmepunkti. Ruumi kokkuhoiuks plotime välja ainult irise valiku 50-st andmepunktist.
 
@@ -791,9 +745,7 @@ as_data_frame(residuals(m2)) %>%
 #> This warning is displayed once per session.
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-51-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-51-1.pdf)<!-- --> 
 
 Ok, isendid nr 15 ja 44 paistavad olema vastavalt palju suurema ja väiksema Sepal Lengthiga kui mudel ennustab. Võib küsida, miks?
 
@@ -823,9 +775,7 @@ ggplot(data = predict_interval_brms2f, aes(x = Petal.Length, y = Estimate, color
   scale_x_continuous(breaks = 0:10)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-53-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-53-1.pdf)<!-- --> 
 
 Mudeli genereeritud andmed ja valimiandmed mõõtmisobjekti (subjekti e taimeisendi) kaupa. See on sisuliselt posterior predictive plot (vt eespool). 
 
@@ -844,9 +794,7 @@ ggplot(data = predicted_subjects_brms, aes(x = Petal.Length, color = Species)) +
   geom_point(aes(y = Sepal.Length), shape = 3)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-55-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-55-1.pdf)<!-- --> 
 
 ### Alternatiiv -- ansambliennustus
 
@@ -870,9 +818,7 @@ loo_m2 <- loo(m2)
 plot(loo_m2)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-57-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-57-1.pdf)<!-- --> 
 
 Kui paljud andmepunktid on kahtlaselt mõjukad?
 
@@ -897,9 +843,7 @@ ggplot() +
   labs(x = "fitted", y = "residuals")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-59-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-59-1.pdf)<!-- --> 
 `type = "pearson"` annab standardiseeritud residuaalid $R = (Y - Y_p) / SD(Y)$,  kus SD(Y) on hinnang Y-muutuja SD-le. alternatiiv on `type = "ordinary"`, mis annab tavalised residuaalid.
 
 Residuals vs fitted plot testib lineaarsuse eeldust - kui .resid punktid jaotuvad ühtlaselt nulli ümber, siis mudel püüab kinni kogu süstemaatilise varieeruvuse teie andmetest ja see mis üle jääb on juhuslik varieeruvus.
@@ -910,9 +854,7 @@ Vaatame diagnostilist plotti autokorrelatsioonist residuaalide vahel.
 acf(resid[,1])
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-60-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-60-1.pdf)<!-- --> 
 
 Residuaalide autokorrelatsioonid on madalad - seega kõik paistab OK ja andmepunktide sõltumatus on tagatud.
 
@@ -924,9 +866,7 @@ ggplot(data = NULL) +
   geom_vline(xintercept = median(resid), linetype = "dashed")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-61-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-61-1.pdf)<!-- --> 
 
 Residuaalid on sümmeetrilise jaotusega ja meedian residuaal on peaaegu null. See on kõik hea.
 
@@ -940,9 +880,7 @@ ggplot(iris2, aes(Petal.Length, Estimate, color = Species)) +
   geom_hline(yintercept = 0, linetype = "dashed")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-62-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-62-1.pdf)<!-- --> 
 
 Tsiteerides klassikuid: "Pole paha!". Mudel ennustab hästi, aga mõne punkti jaoks on ennustus 2 sd kaugusel.
 
@@ -952,9 +890,7 @@ ggplot(iris2, aes(Sepal.Width, Estimate, color = Species)) +
   geom_hline(yintercept = 0, linetype = "dashed")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-63-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-63-1.pdf)<!-- --> 
 
 
 ```r
@@ -964,9 +900,7 @@ ggplot(iris2, aes(Species, Estimate)) +
   geom_jitter(width = 0.1)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-64-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-64-1.pdf)<!-- --> 
 
 # Brms mudelid
 
@@ -981,9 +915,7 @@ y = dgamma(x, shape = 4, scale = 1)
 plot(y ~ x)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-65-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-65-1.pdf)<!-- --> 
 
 
 ```r
@@ -1044,9 +976,7 @@ b2 <- filter(b_estimates, str_detect(term, "b_I")) %>%
 gridExtra::grid.arrange(b1, b2, nrow = 1)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-70-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-70-1.pdf)<!-- --> 
 
 Kolme mudeli lõikepunktid ja tõusunurgad on sisuliselt võrdsed ja sama täpsusega hinnatud. Seega ei tee robustne mudel vähemal halba, kui meil on enam-vähem normaalsed andmed.
 
@@ -1142,9 +1072,7 @@ mean_2.gr <- r_1_df$b_Intercept + r_1_df$b_Speciesvirginica
 ggplot(data = NULL) + geom_density(aes(mean_2.gr))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-78-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-78-1.pdf)<!-- --> 
 
 Nii saab tekitada usaldusinetvalle, mis katavad 90% jaotuse alusest kõrgeimast tihedusest (mis ei ole päris sama, mis kvantiilide meetod) 
 
@@ -1179,9 +1107,7 @@ ggplot(data = NULL) +
   geom_density(aes(sd_2.gr))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-82-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-82-1.pdf)<!-- --> 
 
 On tavaline, et sd-de posteeriorid ei ole normaaljaotusega (selle kohta vaata lähemalt Statistical Rethinking raamatust).
 
@@ -1213,9 +1139,7 @@ ggplot(df1, aes(value, fill = key)) +
   geom_histogram(alpha = 0.7, position = "identity", bins = 30)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-84-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-84-1.pdf)<!-- --> 
 
 
 ```r
@@ -1302,14 +1226,7 @@ g2007 <- gapminder %>%
   mutate(l_GDP = log10(gdpPercap))
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-92-1} 
-
-}
-
-\caption{SKP-de jaotus}(\#fig:unnamed-chunk-92)
-\end{figure}
+![(\#fig:unnamed-chunk-92)SKP-de jaotus](17_brms_files/figure-latex/unnamed-chunk-92-1.pdf) 
 
 
 ```r
@@ -1352,18 +1269,14 @@ tidy(ln_m1)
 plot(marginal_effects(ln_m1), points = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-98-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-98-1.pdf)<!-- --> 
 
 
 ```r
 plot(marginal_effects(ln_m1, method = "predict"), points = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-99-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-99-1.pdf)<!-- --> 
 
 
 ```r
@@ -1381,9 +1294,7 @@ ln_m2 <- read_rds("data/ln_m2.rds")
 plot(marginal_effects(ln_m2, method="predict"), points=TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-102-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-102-1.pdf)<!-- --> 
 
 
 ```r
@@ -1404,9 +1315,7 @@ bayes_R2(ln_m2)
 plot(marginal_effects(ln_m2), points=TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-105-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-105-1.pdf)<!-- --> 
 
 
 
@@ -1538,7 +1447,7 @@ tidy(iris_imp3) %>% head()
 
 ## Binoomjaotusega mudelid
 
-y ∼ Binomial(n,p)
+$$y \sim Binomial(n, p)$$
 
 Me teeme n katset ja kodeerime iga eduka katse 1-ga ja mitteeduka katse 0-ga. Kui n=1, siis y on ühtedest ja nullidest koosnev vektor (muutuja) ja p on tõenäosus, et suvaline katse annab tulemuseks 1-e. Eeldades logistilist transformatsiooni on siin tegu logistilise regressiooniga.
 Kui n > 1 (ja ikka eeldades logistilist transformatsiooni), siis on tegu aggregeeritud binoomse logistilise regressiooniga. Me lahendame allpool need mõlemad.
@@ -1561,7 +1470,7 @@ $$P(Y = 1 | X) =\frac{exp(a + bx)}{1 + exp(a + bx)}$$
     saab valemist (1 + 1/n)^n, kui n läheneb lõpmatusele.
 
 
- Logistiline transformatsioon viib lineaarse regressiooni tavapärasest y-muutuja skaalast [−∞,+∞] tõenäosuste skaalasse [0,1], andes sirge asemele S-kujulise kurvi, mis läheneb asümptootiliselt ühelt poolt 0-le ja teiselt poolt 1-le. Logistilise funktsiooni põõrdväärtus on logit funktsioon, mis annab "*odds*-i" ehk shansi ehk kihlveosuhte tõenäosusele p: $odds = \frac {p}{1 − p}$. Tõenäosuse p logit ehk logit(p) on sama, mis log(odds):
+ Logistiline transformatsioon viib lineaarse regressiooni tavapärasest y-muutuja skaalast [$-\infty$,$+\infty$] tõenäosuste skaalasse [0, 1], andes sirge asemele S-kujulise kurvi, mis läheneb asümptootiliselt ühelt poolt 0-le ja teiselt poolt 1-le. Logistilise funktsiooni põõrdväärtus on logit funktsioon, mis annab "*odds*-i" ehk shansi ehk kihlveosuhte tõenäosusele p: $odds = \frac {p}{1 - p}$. Tõenäosuse p logit ehk logit(p) on sama, mis log(odds):
 
 $$logit(p)=\log \left({\frac {p}{1-p}}\right)=\log(p)-\log(1-p)$$
 
@@ -1577,20 +1486,18 @@ Matemaatiliselt pole vahet, kas me transformeerime prediktorid logistilise funkt
 Kuidas suhtuvad *odds*-d tõenäosustesse?
 Näiteks tõenäosus 0.2 (20%) tähendab, et $odds = 0.2/(1 - 0.2) = 1/4$ ehk üks neljale ja tõenäosus 0.9 tähendab, et $odds = 0.9/(1 - 0.9) = 9$ ehk üheksa ühele. *Odds*-e kasutavad näiteks hipodroomid, sest nii on mänguril lihtne näha, et kui kihlveokontori poolt mingile hobusele omistatud odds on näiteks üks nelja vastu ja ta maksab kihlveo sõlmimisel 1 euro, siis ta saab võidu korral 4 eurot kasu (ehk 5 eurose kupüüri). Logaritm *odds*-idest ongi logit transformatsioon, mille pöördväärtus on omakorda logistiline transformatsioon!
 
-Suvalise arvu α logistiline funktsioon on logiti põõrdväärtus:
+Suvalise arvu $\alpha$ logistiline funktsioon on logiti põõrdväärtus:
 
 $$logit^{-1}\alpha=logistic (\alpha)={\frac {exp (\alpha) }{1+ exp (\alpha)}}$$
 
 
 ```r
 x <- -10:10
-y <- exp(x)/(1+exp(x))
+y <- exp(x) / (1+exp(x))
 plot(y~x)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-118-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-118-1.pdf)<!-- --> 
 
 Kui me logistilise regressiooniga fititud mudeli y = a + bx korral muudame x-i väärtust ühe ühiku võrra, siis muutub *log-odds* b võrra, mis on sama, mis õelda, et *odds* muutub exp(b) võrra. Samas b ei vasta P(Y = 1 | X) muutusele X-i muutumisel ühe ühiku võrra. See, kui kiiresti P(Y = 1 | X) muutub, sõltub X-i väärtusest. Siiski, senikaua kuni b > 0, kaasneb X-i kasvuga alati tõenäosuse P(Y = 1) kasv (ja vastupidi). 
  
@@ -1637,30 +1544,1017 @@ library(rethinking)
 
 ```r
 data(chimpanzees)
-skim(chimpanzees)
-#> Skim summary statistics
-#>  n obs: 504 
-#>  n variables: 8 
-#> 
-#> -- Variable type:integer ------------------------------------------------
-#>      variable missing complete   n  mean    sd p0 p25  p50 p75 p100
-#>         actor       0      504 504  4     2     1   2  4     6    7
-#>         block       0      504 504  3.5   1.71  1   2  3.5   5    6
-#>  chose_prosoc       0      504 504  0.57  0.5   0   0  1     1    1
-#>     condition       0      504 504  0.5   0.5   0   0  0.5   1    1
-#>   prosoc_left       0      504 504  0.5   0.5   0   0  0.5   1    1
-#>   pulled_left       0      504 504  0.58  0.49  0   0  1     1    1
-#>     recipient     252      252 504  5     2     2   3  5     7    8
-#>         trial       0      504 504 36.38 20.79  1  18 36    54   72
-#>      hist
-#>  ▇▇▇▇▁▇▇▇
-#>  ▇▇▁▇▇▁▇▇
-#>  ▆▁▁▁▁▁▁▇
-#>  ▇▁▁▁▁▁▁▇
-#>  ▇▁▁▁▁▁▁▇
-#>  ▆▁▁▁▁▁▁▇
-#>  ▇▇▇▇▁▇▇▇
-#>  ▇▇▇▇▇▇▇▇
+chimpanzees
+#>     actor recipient condition block trial prosoc_left chose_prosoc
+#> 1       1        NA         0     1     2           0            1
+#> 2       1        NA         0     1     4           0            0
+#> 3       1        NA         0     1     6           1            0
+#> 4       1        NA         0     1     8           0            1
+#> 5       1        NA         0     1    10           1            1
+#> 6       1        NA         0     1    12           1            1
+#> 7       1        NA         0     2    14           1            0
+#> 8       1        NA         0     2    16           1            0
+#> 9       1        NA         0     2    18           0            1
+#> 10      1        NA         0     2    20           0            1
+#> 11      1        NA         0     2    22           0            0
+#> 12      1        NA         0     2    24           1            0
+#> 13      1        NA         0     3    26           0            0
+#> 14      1        NA         0     3    28           1            1
+#> 15      1        NA         0     3    30           0            1
+#> 16      1        NA         0     3    32           1            1
+#> 17      1        NA         0     3    34           1            0
+#> 18      1        NA         0     3    36           0            1
+#> 19      1        NA         0     4    38           1            1
+#> 20      1        NA         0     4    40           0            0
+#> 21      1        NA         0     4    42           0            0
+#> 22      1        NA         0     4    44           0            1
+#> 23      1        NA         0     4    46           1            1
+#> 24      1        NA         0     4    48           1            0
+#> 25      1        NA         0     5    50           0            1
+#> 26      1        NA         0     5    52           0            0
+#> 27      1        NA         0     5    54           1            0
+#> 28      1        NA         0     5    56           1            0
+#> 29      1        NA         0     5    58           0            1
+#> 30      1        NA         0     5    60           1            0
+#> 31      1        NA         0     6    62           0            1
+#> 32      1        NA         0     6    64           1            1
+#> 33      1        NA         0     6    66           1            1
+#> 34      1        NA         0     6    68           1            1
+#> 35      1        NA         0     6    70           0            1
+#> 36      1        NA         0     6    72           0            1
+#> 37      1         8         1     1     1           0            0
+#> 38      1         4         1     1     3           0            1
+#> 39      1         5         1     1     5           1            0
+#> 40      1         7         1     1     7           0            1
+#> 41      1         3         1     1     9           0            0
+#> 42      1         6         1     1    11           0            1
+#> 43      1         4         1     2    13           1            0
+#> 44      1         3         1     2    15           0            1
+#> 45      1         5         1     2    17           1            0
+#> 46      1         7         1     2    19           0            0
+#> 47      1         8         1     2    21           1            1
+#> 48      1         6         1     2    23           0            0
+#> 49      1         3         1     3    25           1            0
+#> 50      1         6         1     3    27           0            1
+#> 51      1         4         1     3    29           1            1
+#> 52      1         8         1     3    31           1            1
+#> 53      1         7         1     3    33           1            1
+#> 54      1         5         1     3    35           0            0
+#> 55      1         8         1     4    37           0            1
+#> 56      1         6         1     4    39           1            1
+#> 57      1         5         1     4    41           1            0
+#> 58      1         7         1     4    43           0            1
+#> 59      1         3         1     4    45           0            1
+#> 60      1         4         1     4    47           0            1
+#> 61      1         6         1     5    49           1            1
+#> 62      1         7         1     5    51           1            0
+#> 63      1         4         1     5    53           1            1
+#> 64      1         5         1     5    55           0            1
+#> 65      1         8         1     5    57           0            1
+#> 66      1         3         1     5    59           1            1
+#> 67      1         3         1     6    61           1            1
+#> 68      1         7         1     6    63           1            0
+#> 69      1         5         1     6    65           0            1
+#> 70      1         6         1     6    67           1            0
+#> 71      1         8         1     6    69           1            1
+#> 72      1         4         1     6    71           0            1
+#> 73      2        NA         0     1     1           1            1
+#> 74      2        NA         0     1     3           0            0
+#> 75      2        NA         0     1     5           0            0
+#> 76      2        NA         0     1     7           0            0
+#> 77      2        NA         0     1     9           1            1
+#> 78      2        NA         0     1    11           1            1
+#> 79      2        NA         0     2    13           1            1
+#> 80      2        NA         0     2    15           1            1
+#> 81      2        NA         0     2    17           1            1
+#> 82      2        NA         0     2    19           0            0
+#> 83      2        NA         0     2    21           0            0
+#> 84      2        NA         0     2    23           0            0
+#> 85      2        NA         0     3    25           0            0
+#> 86      2        NA         0     3    27           0            0
+#> 87      2        NA         0     3    29           1            1
+#> 88      2        NA         0     3    31           1            1
+#> 89      2        NA         0     3    33           0            0
+#> 90      2        NA         0     3    35           1            1
+#> 91      2        NA         0     4    37           0            0
+#> 92      2        NA         0     4    39           0            0
+#> 93      2        NA         0     4    41           1            1
+#> 94      2        NA         0     4    43           0            0
+#> 95      2        NA         0     4    45           1            1
+#> 96      2        NA         0     4    47           1            1
+#> 97      2        NA         0     5    49           0            0
+#> 98      2        NA         0     5    51           1            1
+#> 99      2        NA         0     5    53           0            0
+#> 100     2        NA         0     5    55           1            1
+#> 101     2        NA         0     5    57           0            0
+#> 102     2        NA         0     5    59           1            1
+#> 103     2        NA         0     6    61           1            1
+#> 104     2        NA         0     6    63           0            0
+#> 105     2        NA         0     6    65           1            1
+#> 106     2        NA         0     6    67           1            1
+#> 107     2        NA         0     6    69           0            0
+#> 108     2        NA         0     6    71           0            0
+#> 109     2         7         1     1     2           0            0
+#> 110     2         8         1     1     4           0            0
+#> 111     2         2         1     1     6           0            0
+#> 112     2         7         1     6     7           0            0
+#> 113     2         5         1     1     8           0            0
+#> 114     2         6         1     1    10           0            0
+#> 115     2         4         1     1    12           0            0
+#> 116     2         4         1     2    14           0            0
+#> 117     2         5         1     2    16           1            1
+#> 118     2         8         1     2    18           0            0
+#> 119     2         7         1     2    20           1            1
+#> 120     2         6         1     2    22           1            1
+#> 121     2         2         1     2    24           1            1
+#> 122     2         8         1     3    26           1            1
+#> 123     2         7         1     3    28           1            1
+#> 124     2         6         1     3    30           0            0
+#> 125     2         2         1     3    32           0            0
+#> 126     2         5         1     3    34           1            1
+#> 127     2         4         1     3    36           1            1
+#> 128     2         7         1     4    38           0            0
+#> 129     2         6         1     4    40           1            1
+#> 130     2         2         1     4    42           0            0
+#> 131     2         5         1     4    44           0            0
+#> 132     2         4         1     4    46           1            1
+#> 133     2         8         1     4    48           0            0
+#> 134     2         8         1     5    50           1            1
+#> 135     2         5         1     5    52           1            1
+#> 136     2         7         1     5    54           1            1
+#> 137     2         4         1     5    56           1            1
+#> 138     2         6         1     5    58           0            0
+#> 139     2         2         1     5    60           1            1
+#> 140     2         2         1     6    62           1            1
+#> 141     2         5         1     6    64           0            0
+#> 142     2         6         1     6    66           1            1
+#> 143     2         4         1     6    68           0            0
+#> 144     2         8         1     6    72           1            1
+#> 145     3        NA         0     1     1           0            1
+#> 146     3        NA         0     1     3           1            0
+#> 147     3        NA         0     1     5           1            0
+#> 148     3        NA         0     1     7           1            0
+#> 149     3        NA         0     1     9           0            1
+#> 150     3        NA         0     1    11           0            0
+#> 151     3        NA         0     2    13           1            1
+#> 152     3        NA         0     2    15           0            1
+#> 153     3        NA         0     2    17           1            1
+#> 154     3        NA         0     2    19           1            1
+#> 155     3        NA         0     2    21           0            1
+#> 156     3        NA         0     2    23           0            1
+#> 157     3        NA         0     3    25           1            0
+#> 158     3        NA         0     3    27           0            0
+#> 159     3        NA         0     3    29           0            1
+#> 160     3        NA         0     3    31           0            1
+#> 161     3        NA         0     3    33           1            0
+#> 162     3        NA         0     3    35           1            1
+#> 163     3        NA         0     4    37           1            1
+#> 164     3        NA         0     4    39           0            1
+#> 165     3        NA         0     4    41           0            0
+#> 166     3        NA         0     4    43           0            1
+#> 167     3        NA         0     4    45           1            0
+#> 168     3        NA         0     4    47           1            1
+#> 169     3        NA         0     5    49           0            1
+#> 170     3        NA         0     5    51           1            0
+#> 171     3        NA         0     5    53           1            1
+#> 172     3        NA         0     5    55           0            1
+#> 173     3        NA         0     5    57           0            1
+#> 174     3        NA         0     5    59           1            1
+#> 175     3        NA         0     6    61           0            1
+#> 176     3        NA         0     6    63           0            0
+#> 177     3        NA         0     6    65           1            1
+#> 178     3        NA         0     6    67           1            1
+#> 179     3        NA         0     6    69           0            0
+#> 180     3        NA         0     6    71           1            1
+#> 181     3         5         1     1     2           1            0
+#> 182     3         3         1     1     4           0            1
+#> 183     3         6         1     1     6           1            0
+#> 184     3         2         1     1     8           0            1
+#> 185     3         8         1     1    10           1            0
+#> 186     3         7         1     1    12           0            0
+#> 187     3         5         1     2    14           1            0
+#> 188     3         6         1     2    16           1            1
+#> 189     3         8         1     2    18           0            1
+#> 190     3         2         1     2    20           1            0
+#> 191     3         3         1     2    22           1            1
+#> 192     3         7         1     2    24           1            1
+#> 193     3         2         1     3    26           0            1
+#> 194     3         7         1     3    28           1            0
+#> 195     3         6         1     3    30           0            1
+#> 196     3         8         1     3    32           1            0
+#> 197     3         3         1     3    34           1            0
+#> 198     3         5         1     3    36           0            1
+#> 199     3         6         1     4    38           0            1
+#> 200     3         7         1     4    40           0            1
+#> 201     3         3         1     4    42           0            1
+#> 202     3         2         1     4    44           1            1
+#> 203     3         5         1     4    46           0            1
+#> 204     3         8         1     4    48           0            1
+#> 205     3         5         1     5    50           1            0
+#> 206     3         3         1     5    52           1            0
+#> 207     3         8         1     5    54           0            0
+#> 208     3         7         1     5    56           1            0
+#> 209     3         2         1     5    58           1            1
+#> 210     3         6         1     5    60           1            0
+#> 211     3         5         1     6    62           0            1
+#> 212     3         3         1     6    64           0            1
+#> 213     3         2         1     6    66           0            1
+#> 214     3         8         1     6    68           1            1
+#> 215     3         6         1     6    70           0            0
+#> 216     3         7         1     6    72           0            1
+#> 217     4        NA         0     1     1           0            1
+#> 218     4        NA         0     1     3           1            1
+#> 219     4        NA         0     1     5           0            0
+#> 220     4        NA         0     1     7           0            1
+#> 221     4        NA         0     1     9           1            0
+#> 222     4        NA         0     1    11           1            0
+#> 223     4        NA         0     2    13           0            1
+#> 224     4        NA         0     2    15           1            0
+#> 225     4        NA         0     2    17           0            0
+#> 226     4        NA         0     2    19           1            1
+#> 227     4        NA         0     2    21           0            1
+#> 228     4        NA         0     2    23           1            1
+#> 229     4        NA         0     3    25           1            0
+#> 230     4        NA         0     3    27           0            0
+#> 231     4        NA         0     3    29           1            1
+#> 232     4        NA         0     3    31           1            0
+#> 233     4        NA         0     3    33           0            1
+#> 234     4        NA         0     3    35           0            0
+#> 235     4        NA         0     4    37           0            1
+#> 236     4        NA         0     4    39           1            0
+#> 237     4        NA         0     4    41           0            1
+#> 238     4        NA         0     4    43           1            1
+#> 239     4        NA         0     4    45           0            0
+#> 240     4        NA         0     4    47           1            0
+#> 241     4        NA         0     5    49           1            1
+#> 242     4        NA         0     5    51           1            0
+#> 243     4        NA         0     5    53           0            0
+#> 244     4        NA         0     5    55           0            1
+#> 245     4        NA         0     5    57           1            1
+#> 246     4        NA         0     5    59           0            1
+#> 247     4        NA         0     6    61           0            1
+#> 248     4        NA         0     6    63           0            1
+#> 249     4        NA         0     6    65           1            0
+#> 250     4        NA         0     6    67           1            1
+#> 251     4        NA         0     6    69           0            1
+#> 252     4        NA         0     6    71           1            1
+#> 253     4         7         1     1     2           1            0
+#> 254     4         3         1     1     4           0            1
+#> 255     4         4         1     1     6           1            0
+#> 256     4         2         1     1     8           0            1
+#> 257     4         8         1     1    10           0            1
+#> 258     4         6         1     1    12           0            1
+#> 259     4         2         1     2    14           1            0
+#> 260     4         6         1     2    16           1            1
+#> 261     4         7         1     2    18           0            1
+#> 262     4         8         1     2    20           1            0
+#> 263     4         4         1     2    22           1            1
+#> 264     4         3         1     2    24           1            1
+#> 265     4         2         1     3    26           0            1
+#> 266     4         4         1     3    28           0            1
+#> 267     4         6         1     3    30           1            0
+#> 268     4         7         1     3    32           0            0
+#> 269     4         8         1     3    34           1            1
+#> 270     4         3         1     3    36           1            1
+#> 271     4         8         1     4    38           0            1
+#> 272     4         2         1     4    40           0            1
+#> 273     4         4         1     4    42           0            0
+#> 274     4         3         1     4    44           0            1
+#> 275     4         7         1     4    46           1            0
+#> 276     4         6         1     4    48           0            1
+#> 277     4         6         1     5    50           1            0
+#> 278     4         7         1     5    52           0            1
+#> 279     4         3         1     5    54           1            1
+#> 280     4         2         1     5    56           1            0
+#> 281     4         4         1     5    58           1            0
+#> 282     4         8         1     5    60           1            1
+#> 283     4         7         1     6    62           1            1
+#> 284     4         8         1     6    64           0            1
+#> 285     4         4         1     6    66           0            1
+#> 286     4         2         1     6    68           1            0
+#> 287     4         6         1     6    70           0            1
+#> 288     4         3         1     6    72           0            1
+#> 289     5        NA         0     1     2           1            1
+#> 290     5        NA         0     1     4           0            1
+#> 291     5        NA         0     1     6           0            0
+#> 292     5        NA         0     1     8           0            1
+#> 293     5        NA         0     1    10           1            1
+#> 294     5        NA         0     1    12           1            1
+#> 295     5        NA         0     2    14           0            0
+#> 296     5        NA         0     2    16           0            1
+#> 297     5        NA         0     2    18           1            1
+#> 298     5        NA         0     2    20           1            0
+#> 299     5        NA         0     2    22           0            0
+#> 300     5        NA         0     2    24           1            0
+#> 301     5        NA         0     3    26           1            0
+#> 302     5        NA         0     3    28           1            0
+#> 303     5        NA         0     3    30           0            0
+#> 304     5        NA         0     3    32           1            1
+#> 305     5        NA         0     3    34           0            1
+#> 306     5        NA         0     3    36           0            0
+#> 307     5        NA         0     4    38           1            1
+#> 308     5        NA         0     4    40           0            1
+#> 309     5        NA         0     4    42           1            1
+#> 310     5        NA         0     4    44           1            0
+#> 311     5        NA         0     4    46           0            1
+#> 312     5        NA         0     4    48           0            1
+#> 313     5        NA         0     5    50           1            0
+#> 314     5        NA         0     5    52           1            1
+#> 315     5        NA         0     5    54           1            1
+#> 316     5        NA         0     5    56           0            1
+#> 317     5        NA         0     5    58           0            1
+#> 318     5        NA         0     5    60           0            1
+#> 319     5        NA         0     6    62           1            0
+#> 320     5        NA         0     6    64           1            0
+#> 321     5        NA         0     6    66           0            1
+#> 322     5        NA         0     6    68           1            1
+#> 323     5        NA         0     6    70           0            0
+#> 324     5        NA         0     6    72           0            1
+#> 325     5         8         1     1     1           1            0
+#> 326     5         3         1     1     3           0            0
+#> 327     5         7         1     1     5           1            0
+#> 328     5         5         1     1     7           0            1
+#> 329     5         2         1     1     9           0            1
+#> 330     5         4         1     1    11           1            0
+#> 331     5         7         1     2    13           0            1
+#> 332     5         8         1     2    15           1            0
+#> 333     5         5         1     2    17           0            1
+#> 334     5         2         1     2    19           1            0
+#> 335     5         3         1     2    21           0            1
+#> 336     5         4         1     2    23           1            1
+#> 337     5         7         1     3    25           0            1
+#> 338     5         3         1     3    27           1            1
+#> 339     5         2         1     3    29           1            1
+#> 340     5         8         1     3    31           0            1
+#> 341     5         4         1     3    33           0            0
+#> 342     5         5         1     3    35           1            0
+#> 343     5         4         1     4    37           1            0
+#> 344     5         5         1     4    39           1            1
+#> 345     5         2         1     4    41           0            1
+#> 346     5         3         1     4    43           0            1
+#> 347     5         8         1     4    45           0            1
+#> 348     5         7         1     4    47           1            0
+#> 349     5         7         1     5    49           0            1
+#> 350     5         3         1     5    51           1            1
+#> 351     5         8         1     5    53           1            1
+#> 352     5         5         1     5    55           0            0
+#> 353     5         2         1     5    57           0            0
+#> 354     5         4         1     5    59           0            0
+#> 355     5         3         1     6    61           1            0
+#> 356     5         5         1     6    63           1            1
+#> 357     5         4         1     6    65           0            1
+#> 358     5         8         1     6    67           0            1
+#> 359     5         2         1     6    69           1            1
+#> 360     5         7         1     6    71           1            1
+#> 361     6        NA         0     1     2           1            1
+#> 362     6        NA         0     1     4           0            1
+#> 363     6        NA         0     1     6           0            1
+#> 364     6        NA         0     1     8           1            1
+#> 365     6        NA         0     1    10           0            0
+#> 366     6        NA         0     1    12           1            0
+#> 367     6        NA         0     2    14           1            0
+#> 368     6        NA         0     2    16           1            0
+#> 369     6        NA         0     2    18           1            0
+#> 370     6        NA         0     2    20           0            0
+#> 371     6        NA         0     2    22           0            0
+#> 372     6        NA         0     2    24           0            0
+#> 373     6        NA         0     3    26           0            0
+#> 374     6        NA         0     3    28           0            0
+#> 375     6        NA         0     3    30           0            0
+#> 376     6        NA         0     3    32           1            0
+#> 377     6        NA         0     3    34           1            1
+#> 378     6        NA         0     3    36           1            1
+#> 379     6        NA         0     4    38           0            0
+#> 380     6        NA         0     4    40           1            0
+#> 381     6        NA         0     4    42           0            0
+#> 382     6        NA         0     4    44           1            1
+#> 383     6        NA         0     4    46           0            0
+#> 384     6        NA         0     4    48           1            1
+#> 385     6        NA         0     5    50           1            1
+#> 386     6        NA         0     5    52           0            1
+#> 387     6        NA         0     5    54           0            0
+#> 388     6        NA         0     5    56           1            1
+#> 389     6        NA         0     5    58           0            0
+#> 390     6        NA         0     5    60           1            0
+#> 391     6        NA         0     6    62           0            0
+#> 392     6        NA         0     6    64           0            1
+#> 393     6        NA         0     6    66           1            1
+#> 394     6        NA         0     6    68           1            1
+#> 395     6        NA         0     6    70           1            1
+#> 396     6        NA         0     6    72           0            0
+#> 397     6         3         1     1     1           1            1
+#> 398     6         8         1     1     3           0            1
+#> 399     6         6         1     1     5           1            1
+#> 400     6         2         1     1     7           1            0
+#> 401     6         5         1     1     9           0            1
+#> 402     6         4         1     1    11           0            1
+#> 403     6         8         1     2    13           0            0
+#> 404     6         5         1     2    15           0            0
+#> 405     6         3         1     2    17           1            1
+#> 406     6         2         1     2    19           1            1
+#> 407     6         4         1     2    21           1            1
+#> 408     6         6         1     2    23           1            0
+#> 409     6         6         1     3    25           1            1
+#> 410     6         4         1     3    27           1            1
+#> 411     6         3         1     3    29           0            1
+#> 412     6         8         1     3    31           1            0
+#> 413     6         5         1     3    33           0            0
+#> 414     6         2         1     3    35           0            0
+#> 415     6         4         1     4    37           0            0
+#> 416     6         6         1     4    39           0            0
+#> 417     6         2         1     4    41           1            0
+#> 418     6         5         1     4    43           1            1
+#> 419     6         3         1     4    45           0            1
+#> 420     6         8         1     4    47           1            1
+#> 421     6         5         1     5    49           1            0
+#> 422     6         4         1     5    51           1            0
+#> 423     6         2         1     5    53           0            1
+#> 424     6         6         1     5    55           0            1
+#> 425     6         3         1     5    57           0            0
+#> 426     6         8         1     5    59           1            0
+#> 427     6         4         1     6    61           0            0
+#> 428     6         6         1     6    63           0            0
+#> 429     6         5         1     6    65           1            1
+#> 430     6         8         1     6    67           0            0
+#> 431     6         3         1     6    69           1            1
+#> 432     6         2         1     6    71           0            1
+#> 433     7        NA         0     1     1           1            1
+#> 434     7        NA         0     1     3           0            0
+#> 435     7        NA         0     1     5           0            1
+#> 436     7        NA         0     1     7           1            1
+#> 437     7        NA         0     1     9           1            0
+#> 438     7        NA         0     1    11           0            0
+#> 439     7        NA         0     2    13           0            0
+#> 440     7        NA         0     2    15           0            0
+#> 441     7        NA         0     2    17           1            1
+#> 442     7        NA         0     2    19           0            1
+#> 443     7        NA         0     2    21           1            1
+#> 444     7        NA         0     2    23           1            1
+#> 445     7        NA         0     3    25           1            0
+#> 446     7        NA         0     3    27           1            1
+#> 447     7        NA         0     3    29           0            0
+#> 448     7        NA         0     3    31           0            0
+#> 449     7        NA         0     3    33           0            0
+#> 450     7        NA         0     3    35           1            0
+#> 451     7        NA         0     4    37           0            0
+#> 452     7        NA         0     4    39           1            1
+#> 453     7        NA         0     4    41           0            0
+#> 454     7        NA         0     4    43           0            0
+#> 455     7        NA         0     4    45           1            1
+#> 456     7        NA         0     4    47           1            1
+#> 457     7        NA         0     5    49           1            1
+#> 458     7        NA         0     5    51           0            0
+#> 459     7        NA         0     5    53           0            0
+#> 460     7        NA         0     5    55           0            1
+#> 461     7        NA         0     5    57           1            1
+#> 462     7        NA         0     5    59           1            1
+#> 463     7        NA         0     6    61           1            1
+#> 464     7        NA         0     6    63           0            0
+#> 465     7        NA         0     6    65           0            1
+#> 466     7        NA         0     6    67           0            0
+#> 467     7        NA         0     6    69           1            1
+#> 468     7        NA         0     6    71           1            1
+#> 469     7         7         1     1     2           1            1
+#> 470     7         4         1     1     4           0            0
+#> 471     7         3         1     1     6           1            1
+#> 472     7         6         1     1     8           0            0
+#> 473     7         5         1     1    10           1            1
+#> 474     7         2         1     1    12           1            1
+#> 475     7         2         1     2    14           1            1
+#> 476     7         7         1     2    16           0            0
+#> 477     7         3         1     2    18           1            1
+#> 478     7         5         1     2    20           0            0
+#> 479     7         4         1     2    22           1            1
+#> 480     7         6         1     2    24           0            0
+#> 481     7         5         1     3    26           0            0
+#> 482     7         7         1     3    28           1            1
+#> 483     7         6         1     3    30           1            1
+#> 484     7         4         1     3    32           0            1
+#> 485     7         2         1     3    34           0            0
+#> 486     7         3         1     3    36           1            1
+#> 487     7         7         1     4    38           0            0
+#> 488     7         2         1     4    40           0            0
+#> 489     7         4         1     4    42           1            1
+#> 490     7         5         1     4    44           0            0
+#> 491     7         6         1     4    46           0            0
+#> 492     7         3         1     4    48           0            0
+#> 493     7         5         1     5    50           1            1
+#> 494     7         4         1     5    52           0            0
+#> 495     7         3         1     5    54           0            0
+#> 496     7         2         1     5    56           1            1
+#> 497     7         6         1     5    58           1            1
+#> 498     7         7         1     5    60           1            1
+#> 499     7         5         1     6    62           1            1
+#> 500     7         4         1     6    64           1            1
+#> 501     7         6         1     6    66           1            1
+#> 502     7         3         1     6    68           0            0
+#> 503     7         7         1     6    70           0            0
+#> 504     7         2         1     6    72           0            0
+#>     pulled_left
+#> 1             0
+#> 2             1
+#> 3             0
+#> 4             0
+#> 5             1
+#> 6             1
+#> 7             0
+#> 8             0
+#> 9             0
+#> 10            0
+#> 11            1
+#> 12            0
+#> 13            1
+#> 14            1
+#> 15            0
+#> 16            1
+#> 17            0
+#> 18            0
+#> 19            1
+#> 20            1
+#> 21            1
+#> 22            0
+#> 23            1
+#> 24            0
+#> 25            0
+#> 26            1
+#> 27            0
+#> 28            0
+#> 29            0
+#> 30            0
+#> 31            0
+#> 32            1
+#> 33            1
+#> 34            1
+#> 35            0
+#> 36            0
+#> 37            1
+#> 38            0
+#> 39            0
+#> 40            0
+#> 41            1
+#> 42            0
+#> 43            0
+#> 44            0
+#> 45            0
+#> 46            1
+#> 47            1
+#> 48            1
+#> 49            0
+#> 50            0
+#> 51            1
+#> 52            1
+#> 53            1
+#> 54            1
+#> 55            0
+#> 56            1
+#> 57            0
+#> 58            0
+#> 59            0
+#> 60            0
+#> 61            1
+#> 62            0
+#> 63            1
+#> 64            0
+#> 65            0
+#> 66            1
+#> 67            1
+#> 68            0
+#> 69            0
+#> 70            0
+#> 71            1
+#> 72            0
+#> 73            1
+#> 74            1
+#> 75            1
+#> 76            1
+#> 77            1
+#> 78            1
+#> 79            1
+#> 80            1
+#> 81            1
+#> 82            1
+#> 83            1
+#> 84            1
+#> 85            1
+#> 86            1
+#> 87            1
+#> 88            1
+#> 89            1
+#> 90            1
+#> 91            1
+#> 92            1
+#> 93            1
+#> 94            1
+#> 95            1
+#> 96            1
+#> 97            1
+#> 98            1
+#> 99            1
+#> 100           1
+#> 101           1
+#> 102           1
+#> 103           1
+#> 104           1
+#> 105           1
+#> 106           1
+#> 107           1
+#> 108           1
+#> 109           1
+#> 110           1
+#> 111           1
+#> 112           1
+#> 113           1
+#> 114           1
+#> 115           1
+#> 116           1
+#> 117           1
+#> 118           1
+#> 119           1
+#> 120           1
+#> 121           1
+#> 122           1
+#> 123           1
+#> 124           1
+#> 125           1
+#> 126           1
+#> 127           1
+#> 128           1
+#> 129           1
+#> 130           1
+#> 131           1
+#> 132           1
+#> 133           1
+#> 134           1
+#> 135           1
+#> 136           1
+#> 137           1
+#> 138           1
+#> 139           1
+#> 140           1
+#> 141           1
+#> 142           1
+#> 143           1
+#> 144           1
+#> 145           0
+#> 146           0
+#> 147           0
+#> 148           0
+#> 149           0
+#> 150           1
+#> 151           1
+#> 152           0
+#> 153           1
+#> 154           1
+#> 155           0
+#> 156           0
+#> 157           0
+#> 158           1
+#> 159           0
+#> 160           0
+#> 161           0
+#> 162           1
+#> 163           1
+#> 164           0
+#> 165           1
+#> 166           0
+#> 167           0
+#> 168           1
+#> 169           0
+#> 170           0
+#> 171           1
+#> 172           0
+#> 173           0
+#> 174           1
+#> 175           0
+#> 176           1
+#> 177           1
+#> 178           1
+#> 179           1
+#> 180           1
+#> 181           0
+#> 182           0
+#> 183           0
+#> 184           0
+#> 185           0
+#> 186           1
+#> 187           0
+#> 188           1
+#> 189           0
+#> 190           0
+#> 191           1
+#> 192           1
+#> 193           0
+#> 194           0
+#> 195           0
+#> 196           0
+#> 197           0
+#> 198           0
+#> 199           0
+#> 200           0
+#> 201           0
+#> 202           1
+#> 203           0
+#> 204           0
+#> 205           0
+#> 206           0
+#> 207           1
+#> 208           0
+#> 209           1
+#> 210           0
+#> 211           0
+#> 212           0
+#> 213           0
+#> 214           1
+#> 215           1
+#> 216           0
+#> 217           0
+#> 218           1
+#> 219           1
+#> 220           0
+#> 221           0
+#> 222           0
+#> 223           0
+#> 224           0
+#> 225           1
+#> 226           1
+#> 227           0
+#> 228           1
+#> 229           0
+#> 230           1
+#> 231           1
+#> 232           0
+#> 233           0
+#> 234           1
+#> 235           0
+#> 236           0
+#> 237           0
+#> 238           1
+#> 239           1
+#> 240           0
+#> 241           1
+#> 242           0
+#> 243           1
+#> 244           0
+#> 245           1
+#> 246           0
+#> 247           0
+#> 248           0
+#> 249           0
+#> 250           1
+#> 251           0
+#> 252           1
+#> 253           0
+#> 254           0
+#> 255           0
+#> 256           0
+#> 257           0
+#> 258           0
+#> 259           0
+#> 260           1
+#> 261           0
+#> 262           0
+#> 263           1
+#> 264           1
+#> 265           0
+#> 266           0
+#> 267           0
+#> 268           1
+#> 269           1
+#> 270           1
+#> 271           0
+#> 272           0
+#> 273           1
+#> 274           0
+#> 275           0
+#> 276           0
+#> 277           0
+#> 278           0
+#> 279           1
+#> 280           0
+#> 281           0
+#> 282           1
+#> 283           1
+#> 284           0
+#> 285           0
+#> 286           0
+#> 287           0
+#> 288           0
+#> 289           1
+#> 290           0
+#> 291           1
+#> 292           0
+#> 293           1
+#> 294           1
+#> 295           1
+#> 296           0
+#> 297           1
+#> 298           0
+#> 299           1
+#> 300           0
+#> 301           0
+#> 302           0
+#> 303           1
+#> 304           1
+#> 305           0
+#> 306           1
+#> 307           1
+#> 308           0
+#> 309           1
+#> 310           0
+#> 311           0
+#> 312           0
+#> 313           0
+#> 314           1
+#> 315           1
+#> 316           0
+#> 317           0
+#> 318           0
+#> 319           0
+#> 320           0
+#> 321           0
+#> 322           1
+#> 323           1
+#> 324           0
+#> 325           0
+#> 326           1
+#> 327           0
+#> 328           0
+#> 329           0
+#> 330           0
+#> 331           0
+#> 332           0
+#> 333           0
+#> 334           0
+#> 335           0
+#> 336           1
+#> 337           0
+#> 338           1
+#> 339           1
+#> 340           0
+#> 341           1
+#> 342           0
+#> 343           0
+#> 344           1
+#> 345           0
+#> 346           0
+#> 347           0
+#> 348           0
+#> 349           0
+#> 350           1
+#> 351           1
+#> 352           1
+#> 353           1
+#> 354           1
+#> 355           0
+#> 356           1
+#> 357           0
+#> 358           0
+#> 359           1
+#> 360           1
+#> 361           1
+#> 362           0
+#> 363           0
+#> 364           1
+#> 365           1
+#> 366           0
+#> 367           0
+#> 368           0
+#> 369           0
+#> 370           1
+#> 371           1
+#> 372           1
+#> 373           1
+#> 374           1
+#> 375           1
+#> 376           0
+#> 377           1
+#> 378           1
+#> 379           1
+#> 380           0
+#> 381           1
+#> 382           1
+#> 383           1
+#> 384           1
+#> 385           1
+#> 386           0
+#> 387           1
+#> 388           1
+#> 389           1
+#> 390           0
+#> 391           1
+#> 392           0
+#> 393           1
+#> 394           1
+#> 395           1
+#> 396           1
+#> 397           1
+#> 398           0
+#> 399           1
+#> 400           0
+#> 401           0
+#> 402           0
+#> 403           1
+#> 404           1
+#> 405           1
+#> 406           1
+#> 407           1
+#> 408           0
+#> 409           1
+#> 410           1
+#> 411           0
+#> 412           0
+#> 413           1
+#> 414           1
+#> 415           1
+#> 416           1
+#> 417           0
+#> 418           1
+#> 419           0
+#> 420           1
+#> 421           0
+#> 422           0
+#> 423           0
+#> 424           0
+#> 425           1
+#> 426           0
+#> 427           1
+#> 428           1
+#> 429           1
+#> 430           1
+#> 431           1
+#> 432           0
+#> 433           1
+#> 434           1
+#> 435           0
+#> 436           1
+#> 437           0
+#> 438           1
+#> 439           1
+#> 440           1
+#> 441           1
+#> 442           0
+#> 443           1
+#> 444           1
+#> 445           0
+#> 446           1
+#> 447           1
+#> 448           1
+#> 449           1
+#> 450           0
+#> 451           1
+#> 452           1
+#> 453           1
+#> 454           1
+#> 455           1
+#> 456           1
+#> 457           1
+#> 458           1
+#> 459           1
+#> 460           0
+#> 461           1
+#> 462           1
+#> 463           1
+#> 464           1
+#> 465           0
+#> 466           1
+#> 467           1
+#> 468           1
+#> 469           1
+#> 470           1
+#> 471           1
+#> 472           1
+#> 473           1
+#> 474           1
+#> 475           1
+#> 476           1
+#> 477           1
+#> 478           1
+#> 479           1
+#> 480           1
+#> 481           1
+#> 482           1
+#> 483           1
+#> 484           0
+#> 485           1
+#> 486           1
+#> 487           1
+#> 488           1
+#> 489           1
+#> 490           1
+#> 491           1
+#> 492           1
+#> 493           1
+#> 494           1
+#> 495           1
+#> 496           1
+#> 497           1
+#> 498           1
+#> 499           1
+#> 500           1
+#> 501           1
+#> 502           1
+#> 503           1
+#> 504           1
 ```
 
 
@@ -1729,7 +2623,7 @@ Proportsionaalne odds = 1.76 kujutab endast suhet kahest tõenäosusest - et sü
 Kui prediktori prosoc_left väärtus muutumine 0-st 1-ks tõstab y=1 sündmuse *log-odds*-i 0.57 võrra, siis kasvab proportsionaalselt exp(0.57) = 1.76 ja *odds*, et toimub sündmus pull left ehk y=1 kasvab 76%.
 
 
-Tegelik tõenäosuse muutus sõltub ka interceptist (α) ja teistest prediktoritest. Logistiline regressioon erineb tavalisest lineaarsest regressioonist selle poolest, et see mudeldab igal juhul muutujate vahelisi interakstsioone. Näiteks kui α on piisavalt suur, et garanteerida sündmuse y = 1 toimumine, siis ei tähenda *odds*-ide tõus 73% võrra suurt midagi. Oletame, et α = 4.  Siis on sündmuse tõenäosus, ignoreerides kõike muud  `inv_logit_scaled(4)` = 0.98. Lisades sinna beta hinnagu 0.57 saame: `inv_logit_scaled(4 + 0.57)` = 0.99. 
+Tegelik tõenäosuse muutus sõltub ka interceptist ($\alpha$) ja teistest prediktoritest. Logistiline regressioon erineb tavalisest lineaarsest regressioonist selle poolest, et see mudeldab igal juhul muutujate vahelisi interakstsioone. Näiteks kui $\alpha$ on piisavalt suur, et garanteerida sündmuse y = 1 toimumine, siis ei tähenda *odds*-ide tõus 73% võrra suurt midagi. Oletame, et $\alpha$ = 4.  Siis on sündmuse tõenäosus, ignoreerides kõike muud  `inv_logit_scaled(4)` = 0.98. Lisades sinna beta hinnagu 0.57 saame: `inv_logit_scaled(4 + 0.57)` = 0.99. 
 See vastab 1% erinevusele, ehkki on samas 73% kasv suhtelise *odds*-i ühikutes. 
  
 
@@ -1790,9 +2684,7 @@ roccurve <- roc(chimpanzees$pulled_left ~ glm.probs)
 plot(roccurve, cex.axis = 0.7, cex.lab = 0.8)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-132-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-132-1.pdf)<!-- --> 
 
 Nagu näha, kui spetsiifilisus on kõrge, siis sensitiivsus on madal ja vastupidi. See on alati nii. Fakt, et kurv ei kaugene kuigi palju keskjoonest, mis tähistab loll-mudeli ennustuse 50%-st tabavust, näitab et meie ennustuste kvaliteet on tagasihoidlik. *Area under the curve* ehk *auc* ütleb, et ennustuse tabavus on 59%.
 
@@ -1944,9 +2836,7 @@ predict(m_ucadmit2) %>%
        title = "Posterior validation check") 
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-147-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-147-1.pdf)<!-- --> 
 
 Ohhoo, kui vaadata deparmente eraldi, pole mingit kinnitust, et meestel oleks paremad võimalused ülikooli sisse saada.
 
@@ -1955,9 +2845,7 @@ Ohhoo, kui vaadata deparmente eraldi, pole mingit kinnitust, et meestel oleks pa
 marginal_effects(m_ucadmit2, effects ="dept", conditions = data.frame(male = c(0, 1)))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-148-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-148-1.pdf)<!-- --> 
 
 ### Y-muutujal 3+ kategoorilist väärtust
 
@@ -2014,9 +2902,7 @@ ggplot(pred1_l, aes(income, value)) + geom_point() + facet_wrap(~variable)+
   ylab("Pr of career choice at a given income") 
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-152-1} \end{center}
+![](17_brms_files/figure-latex/unnamed-chunk-152-1.pdf)<!-- --> 
  
  
 #### Y-muutujal on 3+ kategoorilist väärtust, mis on ordinaalselt järjestatud {-}
@@ -2266,7 +3152,7 @@ gr() lisatakse muidu automaatselt, aga seda spetsifitseerides saab kirjutada
 
 Mittelineaarne mudel:
 
-y = b1(1 − exp(−(x/b2)**b3 )
+y = b1(1 - exp(-(x/b2)**b3 )
 
 y ja x seos parameetritega b1..b3
 Oletame, et tahame kõik parameetrid fittida grupeeriva muutuja g tasemete järgi ja et grupi tasmel efektid oleks omavahel korreleeritud. Lisaks ennustame me b1-e kovariaat z järgi. See kõik läheb järgmisesse võrrandisüsteemi kus, lisaks mitte-lineaarsele võrrandile, igale parameetrile b1...b3 vastab oma lineaarne võrrand:
@@ -2542,5 +3428,3 @@ Family student needs the parameter nu representing the degrees of freedom of stu
 Families gamma, weibull, inverse.gaussian, and negbinomial need a shape parameter that has a "gamma(0.01, 0.01)" prior by default. 
 
 Every family specific parameter has its own prior class, so that set_prior("<prior>", class = "<parameter>") is the right way to go. All of these priors are chosen to be weakly informative, having only minimal influence on the estimations, while improving convergence and sampling efficiency. Often, it may not be immediately clear, which parameters are present in the model. To get a full list of parameters and parameter classes for which priors can be specified use function get_prior.
-
-

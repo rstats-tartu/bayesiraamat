@@ -436,69 +436,69 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>intercept surutud nulli, Sepal.Width-i tõus ei sõltu enam Petal.Lenthgist.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m7 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Length<span class="op">~</span><span class="st"> </span><span class="dv">0</span><span class="op">+</span><span class="st"> </span>Petal.Length<span class="op">+</span><span class="st"> </span>Petal.Length<span class="op">:</span>Sepal.Width, <span class="dt">data =</span> iris)
 <span class="kw">plot</span>(<span class="kw">ggeffect</span>(m7, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Petal.Length&quot;</span>, <span class="st">&quot;Sepal.Width&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">ggeffect</span>(m7, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Sepal.Width&quot;</span>, <span class="st">&quot;Petal.Length&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-4-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>intercept surutud nulli. Me eeldame, et ei sepal width-l ega petal lengthil pole iseseisvat mõju y-le.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m8 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Length<span class="op">~</span><span class="st"> </span><span class="dv">0</span><span class="op">+</span><span class="st"> </span>Petal.Length<span class="op">:</span>Sepal.Width, <span class="dt">data =</span> iris)
 <span class="kw">plot</span>(<span class="kw">ggeffect</span>(m8, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Petal.Length&quot;</span>, <span class="st">&quot;Sepal.Width&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-5-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m8.<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Length<span class="op">~</span><span class="st"> </span><span class="dv">0</span><span class="op">+</span><span class="st"> </span>Petal.Length, <span class="dt">data =</span> iris)
 <span class="kw">plot</span>(<span class="kw">ggeffect</span>(m8.<span class="dv">1</span>, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Petal.Length&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-6-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">ggeffect</span>(m8, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Sepal.Width&quot;</span>, <span class="st">&quot;Petal.Length&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-7-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>intercept fititakse, aga kummagil X-muutujal pole iseseisvat mõju y-le</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m9 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Length<span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">+</span><span class="st"> </span>Petal.Length<span class="op">:</span>Sepal.Width, <span class="dt">data =</span> iris)
 <span class="kw">plot</span>(<span class="kw">ggeffect</span>(m9, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Petal.Length&quot;</span>, <span class="st">&quot;Sepal.Width&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-8-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">ggeffect</span>(m9, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Sepal.Width&quot;</span>, <span class="st">&quot;Petal.Length&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-9-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>sepal width-il pole iseseisvat mõju y-le. kogu tema mõju on petal lengthi kaudu.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m10 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Length<span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">+</span><span class="st"> </span>Petal.Length<span class="op">+</span><span class="st"> </span>Petal.Length<span class="op">:</span>Sepal.Width, <span class="dt">data =</span> iris)
 <span class="kw">plot</span>(<span class="kw">ggeffect</span>(m10, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Petal.Length&quot;</span>, <span class="st">&quot;Sepal.Width&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">ggeffect</span>(m10, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Sepal.Width&quot;</span>, <span class="st">&quot;Petal.Length&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-11-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <p>täismudel.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m11 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Length<span class="op">~</span><span class="st"> </span>Petal.Length<span class="op">*</span>Sepal.Width, <span class="dt">data =</span> iris)
 <span class="kw">plot</span>(<span class="kw">ggeffect</span>(m11, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Petal.Length&quot;</span>, <span class="st">&quot;Sepal.Width&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">ggeffect</span>(m11, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Sepal.Width&quot;</span>, <span class="st">&quot;Petal.Length&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>täismudel</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m1 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Length<span class="op">~</span><span class="st"> </span>Petal.Length<span class="op">*</span>Species, <span class="dt">data =</span> iris)
 <span class="kw">plot</span>(<span class="kw">ggeffect</span>(m1, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Petal.Length&quot;</span>, <span class="st">&quot;Species&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">ggeffect</span>(m1, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Species&quot;</span>, <span class="st">&quot;Petal.Length&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>petal length is not allowed to have direct influence on y??? mudel paistab identne täismudeliga.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m2 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Length<span class="op">~</span><span class="st"> </span>Species <span class="op">+</span><span class="st"> </span>Petal.Length<span class="op">:</span>Species, <span class="dt">data =</span> iris)
 <span class="kw">plot</span>(<span class="kw">ggeffect</span>(m2, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Petal.Length&quot;</span>, <span class="st">&quot;Species&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">ggeffect</span>(m2, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Species&quot;</span>, <span class="st">&quot;Petal.Length&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>species ei ole lubatud omama otsest mõju y-le.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m3 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Length<span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>Petal.Length<span class="op">:</span>Species, <span class="dt">data =</span> iris)
 <span class="kw">plot</span>(<span class="kw">ggeffect</span>(m3, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Petal.Length&quot;</span>, <span class="st">&quot;Species&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">ggeffect</span>(m3, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Species&quot;</span>, <span class="st">&quot;Petal.Length&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m4 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Length<span class="op">~</span><span class="st"> </span>Petal.Length<span class="op">:</span>Species, <span class="dt">data =</span> iris)
 <span class="kw">plot</span>(<span class="kw">ggeffect</span>(m4, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Petal.Length&quot;</span>, <span class="st">&quot;Species&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">ggeffect</span>(m4, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Species&quot;</span>, <span class="st">&quot;Petal.Length&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m5 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Length<span class="op">~</span><span class="st"> </span><span class="dv">0</span><span class="op">+</span><span class="st"> </span>Petal.Length<span class="op">:</span>Species, <span class="dt">data =</span> iris)
 <span class="kw">plot</span>(<span class="kw">ggeffect</span>(m5, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Petal.Length&quot;</span>, <span class="st">&quot;Species&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">ggeffect</span>(m5, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Species&quot;</span>, <span class="st">&quot;Petal.Length&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-23-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m6 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Length<span class="op">~</span><span class="st"> </span><span class="dv">0</span><span class="op">+</span><span class="st"> </span>Petal.Length<span class="op">+</span><span class="st"> </span>Petal.Length<span class="op">:</span>Species, <span class="dt">data =</span> iris)
 <span class="kw">plot</span>(<span class="kw">ggeffect</span>(m6, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Petal.Length&quot;</span>, <span class="st">&quot;Species&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-24-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">ggeffect</span>(m6, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&quot;Species&quot;</span>, <span class="st">&quot;Petal.Length&quot;</span>)))</code></pre></div>
-<p><img src="interationiris_files/figure-html/unnamed-chunk-25-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="interationiris_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 
 <div id="kaks-statistikat-ajaloost-ja-toenaosusest-1" class="section level2 unnumbered">
 <h2>Kaks statistikat: ajaloost ja tõenäosusest</h2>
@@ -536,15 +536,15 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <h3>Bayesiaan</h3>
 <p>Statistiline küsimus on Bayesiaanil ja sageduslikul statistikul sama: kas ja kui palju erinevad kahe grupi keskväärtused? Bayesiaan alustab sellest, et ehitab kaks mudelit: andmete tõepäramudel ja taustateadmiste mudel ehk prior.</p>
 <p>Kui andmed on normaaljaotusega, siis on ka tõepäramudel normaaljaotus. Alustame sellest, et fitime oma valimiandmed (üksikud efekti suurused) normaaljaotuse mudelisse.</p>
-<div class="figure" style="text-align: center"><span id="fig:vrdlssd"></span>
-<img src="stat_vrdl_tufte_files/figure-html/vrdlssd-1.png" alt="Paariviisiline katse - kontroll disain. Katset on korratud 30 korda. X-teljel on efektisuurused (ES). 30 üksikut efektisuurust on näidatud punktidena. Must joon näitab keskmist efektisuurust. Andmed on mudeldatud normaaljaotusena." width="70%" />
+<div class="figure"><span id="fig:vrdlssd"></span>
+<img src="stat_vrdl_tufte_files/figure-html/vrdlssd-1.png" alt="Paariviisiline katse - kontroll disain. Katset on korratud 30 korda. X-teljel on efektisuurused (ES). 30 üksikut efektisuurust on näidatud punktidena. Must joon näitab keskmist efektisuurust. Andmed on mudeldatud normaaljaotusena." width="384" />
 <p class="caption">
 Joonis A.1: Paariviisiline katse - kontroll disain. Katset on korratud 30 korda. X-teljel on efektisuurused (ES). 30 üksikut efektisuurust on näidatud punktidena. Must joon näitab keskmist efektisuurust. Andmed on mudeldatud normaaljaotusena.
 </p>
 </div>
 <p>See ei ole veel tõepäramudel, sest me tahame hinnangut ES <strong>keskväärtuse</strong> kõige tõenäolisemale väärtusele, ja lisaks veel hinnangut ebakindlusele selle punkt-hinnangu ümber (usalduslpiire). Seega tuleb eelmine jaotus kitsamaks tõmmata, et ta kajastaks meie teadmisi ES-ide keskväärtuste, mitte individuaalsete ES-de, kohta. Uue jaotusmudeli sd = eelmise jaotuse sd/sqrt(30).</p>
-<div class="figure" style="text-align: center"><span id="fig:vrdlsse"></span>
-<img src="stat_vrdl_tufte_files/figure-html/vrdlsse-1.png" alt="See jaotus iseloomustab keskmise ES paiknemist puhtalt meie andmete põhjal." width="70%" />
+<div class="figure"><span id="fig:vrdlsse"></span>
+<img src="stat_vrdl_tufte_files/figure-html/vrdlsse-1.png" alt="See jaotus iseloomustab keskmise ES paiknemist puhtalt meie andmete põhjal." width="384" />
 <p class="caption">
 Joonis A.2: See jaotus iseloomustab keskmise ES paiknemist puhtalt meie andmete põhjal.
 </p>
@@ -552,8 +552,8 @@ Joonis A.2: See jaotus iseloomustab keskmise ES paiknemist puhtalt meie andmete 
 <p>Täpsemalt, selle joonise põhjal võib arvutada, milline on meie valimi keskväärtuse kohtamise tõenäosus igal võimalikul tõelisel ES-i väärtusel. Kõige tõenäolisemad on andmed siis, kui tegelik ES = andmete keskväärtusega (seda kohta näitab must joon). Kui me jagame musta joone pikkuse punase kurvi all läbi katkendjoone pikkusega sama kurvi all, saame teada, mitu korda on meie andmed tõenäolisemad siis, kui tegelik ES = mean(valimi ES), võrreldes olukorraga, kus tegelik ES = 0. Loomulikult võime sama näitaja arvutada ükskõik millise hüpoteeside paari kohta (näiteks, andmed on miljon korda tõenäolisemad hüpoteesi ES = 0.02 all kui hüpoteesi ES = -1 all; mis aga ei tähenda, et andmed oleksid väga tõenäolised kummagi võrreldud hüpoteesi all).</p>
 <p>Aga see ei ole veel Bayes. Lisame andmemudelile taustateadmiste mudeli. Sellega tühistame me väga olulise eelduse, mis ripub veskikivina sagedusliku statistika kaelas. Nimelt, et valimi andmed peavad olema esinduslikud populatsiooni suhtes. Me võime olla üsna kindlad, et väikeste valimite korral see eeldus ei kehti ja sellega seoses ei tööta ka sageduslik statistika viisil, milleks R.A. Fisher selle kunagi lõi. Taustateadmiste mudeli peamine, kuigi mitte ainus, roll on mõjutada meie hinnangut õiges suunas vähendades halbade andmete võimet meile kahju teha. Kui sul on väike valim, siis sinu andmed vajavad sellist kantseldamist.</p>
 <p>Olgu meie taustateadmise mudel normaaljaotus keskväärtusega 0 ja standardhälbega 1.</p>
-<div class="figure" style="text-align: center"><span id="fig:vrdlssdse"></span>
-<img src="stat_vrdl_tufte_files/figure-html/vrdlssdse-1.png" alt="Taustateadmiste mudel ehk prior on normaaljaotus (must joon), mille ülesanne on veidi vähendada ekstreemsete valimite kahjulikku mõju." width="70%" />
+<div class="figure"><span id="fig:vrdlssdse"></span>
+<img src="stat_vrdl_tufte_files/figure-html/vrdlssdse-1.png" alt="Taustateadmiste mudel ehk prior on normaaljaotus (must joon), mille ülesanne on veidi vähendada ekstreemsete valimite kahjulikku mõju." width="384" />
 <p class="caption">
 Joonis A.3: Taustateadmiste mudel ehk prior on normaaljaotus (must joon), mille ülesanne on veidi vähendada ekstreemsete valimite kahjulikku mõju.
 </p>
@@ -571,8 +571,8 @@ m99 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
     mu  <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(<span class="dv">0</span>, <span class="dv">1</span>), 
     sigma <span class="op">~</span><span class="st"> </span><span class="kw">dcauchy</span>(<span class="dv">0</span>, <span class="dv">1</span>)), 
   <span class="dt">data =</span> dfa)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:vrdlstriplot"></span>
-<img src="stat_vrdl_tufte_files/figure-html/vrdlstriplot-1.png" alt="Triplot. Bayesi väljund on posterioorne tõenäosusjaotus (roheline). Nagu näha, ei ole selle jaotuse tipp täpselt samas kohas kui andmejaotuse tipp ehk keskväärtus. Prior tõmbab seda veidi nulli suunas. Lisaks on posteerior veidi kitsam kui andmemudel, mis tähendab, et hinnang ES-le tuleb väiksema ebakindluse määraga." width="70%" />
+<div class="figure"><span id="fig:vrdlstriplot"></span>
+<img src="stat_vrdl_tufte_files/figure-html/vrdlstriplot-1.png" alt="Triplot. Bayesi väljund on posterioorne tõenäosusjaotus (roheline). Nagu näha, ei ole selle jaotuse tipp täpselt samas kohas kui andmejaotuse tipp ehk keskväärtus. Prior tõmbab seda veidi nulli suunas. Lisaks on posteerior veidi kitsam kui andmemudel, mis tähendab, et hinnang ES-le tuleb väiksema ebakindluse määraga." width="384" />
 <p class="caption">
 Joonis A.4: Triplot. Bayesi väljund on posterioorne tõenäosusjaotus (roheline). Nagu näha, ei ole selle jaotuse tipp täpselt samas kohas kui andmejaotuse tipp ehk keskväärtus. Prior tõmbab seda veidi nulli suunas. Lisaks on posteerior veidi kitsam kui andmemudel, mis tähendab, et hinnang ES-le tuleb väiksema ebakindluse määraga.
 </p>
@@ -590,8 +590,8 @@ Joonis A.4: Triplot. Bayesi väljund on posterioorne tõenäosusjaotus (roheline
 <div id="sageduslik-statistik-1" class="section level3 unnumbered">
 <h3>Sageduslik statistik</h3>
 <p>Sageduslik lähenemine sisaldab ainult ühte mudelit, mida võrreldakse valimi andmetega. Sageduslik statistik alustab selles lihtsas näites täpselt samamoodi nagu bayesiaan, tekitades eelmisega identse andmemudeli, mis on keskendatud valimi keskväärtusele <a href="bayesi-ja-sagedusliku-statistika-vordlus.html#fig:vrdlsse">A.2</a>. Seejärel nihutab ta oma andmemudelit niipalju, et normaaljaotuse tipp ei ole enam valimi keskväärtuse kohal vaid hoopis 0-efekti kohal. Jaotuse laius nihutamisel ei muutu.</p>
-<div class="figure" style="text-align: center"><span id="fig:vrdlsnull"></span>
-<img src="stat_vrdl_tufte_files/figure-html/vrdlsnull-1.png" alt="Nullhüpotees (must kõver) ja tõepärafunktsioon (punane kõver)." width="70%" />
+<div class="figure"><span id="fig:vrdlsnull"></span>
+<img src="stat_vrdl_tufte_files/figure-html/vrdlsnull-1.png" alt="Nullhüpotees (must kõver) ja tõepärafunktsioon (punane kõver)." width="672" />
 <p class="caption">
 Joonis A.5: Nullhüpotees (must kõver) ja tõepärafunktsioon (punane kõver).
 </p>
@@ -716,7 +716,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["_main.pdf"],
 "toc": {
 "collapse": "section"
 }

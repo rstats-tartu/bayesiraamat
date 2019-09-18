@@ -92,12 +92,7 @@ Kaasa arvatud sündimine, elukäik ja surm.
 Kõik, mis maapeal huvitavat, ehk kogu liikumine, on algselt põhjustatud esimese liikumise poolt, mille käivitab kõige välimises sfääris paiknev meie jaoks mõistetamatu intellektiga "olend".  
 
 \begin{figure}
-
-{\centering \includegraphics[width=0.5\linewidth]{img/arist} 
-
-}
-
-\caption{Keskaegne aristotellik maailm.}(\#fig:unnamed-chunk-2)
+\includegraphics[width=0.5\linewidth]{img/arist} \caption{Keskaegne aristotellik maailm.}(\#fig:unnamed-chunk-2)
 \end{figure}
 
 
@@ -110,12 +105,7 @@ Aristotelese suur teooria ühendab kogu maailmapildi alates meie mõistes keemia
 Ptolemaiosel ja tema järgijatel oli tegelikult mitu erinevat mudelit. Osad neist ei sisaldanud epitsükleid ja maakera ei asunud tema mudelites universumi keskel, vaid oli sellest punktist eemale nihutatud --- nii et päike ei teinud ringe ümber maakera vaid ümber tühja punkti. Kuna leidus epitsüklitega mudel ja ilma epitsükliteta mudel, mis andsid identseid ennustusi, on selge, et Aristotelese teooria ja fenomenide päästmise mudelid on põhimõtteliselt erinevad asjad. Samal ajal, kui Aritoteles **seletas** maailma põhiolemust põhjuslike seoste jadana (mitte matemaatiliselt), **kirjeldas/ennustas** Ptolemaios sellesama maailma käitumist matemaatiliste (mitte põhjuslike) struktuuride abil.
 
 \begin{figure}
-
-{\centering \includegraphics[width=0.5\linewidth]{img/pt2} 
-
-}
-
-\caption{Ilma epitsükliteta ptolemailine mudel.}(\#fig:unnamed-chunk-3)
+\includegraphics[width=0.5\linewidth]{img/pt2} \caption{Ilma epitsükliteta ptolemailine mudel.}(\#fig:unnamed-chunk-3)
 \end{figure}
 
 Nii tekkis olukord, kus maailma mõistmiseks kasutati Aristotelese ühendteooriat, aga selle kirjeldamiseks ja tuleviku ennustamiseks hoopis ptolemailisi mudeleid, mida keegi päriselt tõeks ei pidanud ja mida hinnati selle järgi, kui hästi need "päästsid fenomene". 
@@ -123,12 +113,7 @@ Nii tekkis olukord, kus maailma mõistmiseks kasutati Aristotelese ühendteooria
 See toob meid Kopernikuse (1473 – 1543) juurde, kes teadusajaloolaste arvates vallandas 17. sajandi teadusliku revolutsiooni, avaldades raamatu, kus ta asetab päikese universumi keskele ja paneb maa selle ümber ringtrajektooril tiirlema. Kas Kopernikus tõrjus sellega kõrvale Aristotelese, Ptolemaiose või mõlemad? Tundub, et ta soovis kolmandat, suutis esimest ning tolleaegsete lugejate arvates üritas teha teist --- ehk välja pakkuda alternatiivi ptolemailistele mudelitele, mis selleks ajaks olid muutunud väga keerukaks (aga ka samavõrra ennustustäpseks). Kuna Kopernikuse raamat läks trükki ajal, mil selle autor oli juba oma surivoodil, kirjutas sellele eessõna üks tema vaimulikust sõber, kes püüdis oodatavat kiriklikku pahameelt leevendada vihjates, et päikese keskele viimine on vaid mudeldamise trikk, millest ei tasu järeldada, et maakera ka tegelikult ümber päikese tiirleb (piibel räägib, kuidas jumal peatas taevavõlvil päikese, mitte maa). Ja kuna eessõna oli anonüümne, eeldasid lugejad, et selle kirjutas autor. Lisaks, kuigi Kopernikus tõstis päikese keskele, jäi ta planeetide ringikujuliste trajektooride juurde, mis tähendab, et selleks, et tema teooria fenomenide päästmisel hätta ei jääks, oli ta sunnitud maad ja planeete mõõda epitsükleid ümber päikese liigutama. Kokkuvõttes oli Kopernikuse mudel umbes sama keeruline kui ptolemailikud mudelid ja selle abil tehtud ennustused planeetide liikumise kohta olid väiksema täpsusega. Seega, ennustava mudelina ei olnud sel suuri eeliseid.
 
 \begin{figure}
-
-{\centering \includegraphics[width=0.5\linewidth]{img/kop} 
-
-}
-
-\caption{Ptolemaiose ja Kopernikuse mudelid on üllatavalt sarnased.}(\#fig:unnamed-chunk-4)
+\includegraphics[width=0.5\linewidth]{img/kop} \caption{Ptolemaiose ja Kopernikuse mudelid on üllatavalt sarnased.}(\#fig:unnamed-chunk-4)
 \end{figure}
 
 

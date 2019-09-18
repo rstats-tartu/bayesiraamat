@@ -448,7 +448,7 @@ m3 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Width <span cl
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(a_m3, <span class="kw">aes</span>(<span class="st">`</span><span class="dt">.fitted</span><span class="st">`</span>, <span class="st">`</span><span class="dt">.resid</span><span class="st">`</span>)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color=</span>Species), <span class="dt">alpha=</span><span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_smooth</span>()</code></pre></div>
-<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>
 <div id="mojukuse-plot" class="section level3 unnumbered">
 <h3>Mõjukuse plot</h3>
@@ -461,14 +461,14 @@ m3 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Width <span cl
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
 <span class="kw">influencePlot</span>(m3, <span class="dt">id.method=</span><span class="st">&quot;identify&quot;</span>, <span class="dt">main=</span><span class="st">&quot;Influence Plot&quot;</span>,
-              <span class="dt">sub=</span><span class="st">&quot;Circle size is proportional to Cook&#39;s distance&quot;</span>)
-<span class="co">#&gt;     StudRes    Hat   CookD</span>
-<span class="co">#&gt; 15   -0.243 0.1236 0.00139</span>
-<span class="co">#&gt; 42   -2.810 0.0621 0.08307</span>
-<span class="co">#&gt; 69   -2.477 0.0253 0.02567</span>
-<span class="co">#&gt; 107  -0.331 0.1638 0.00359</span>
-<span class="co">#&gt; 119  -2.464 0.0824 0.08782</span></code></pre></div>
-<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /></p>
+              <span class="dt">sub=</span><span class="st">&quot;Circle size is proportional to Cook&#39;s distance&quot;</span>)</code></pre></div>
+<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<pre><code>#&gt;     StudRes    Hat   CookD
+#&gt; 15   -0.243 0.1236 0.00139
+#&gt; 42   -2.810 0.0621 0.08307
+#&gt; 69   -2.477 0.0253 0.02567
+#&gt; 107  -0.331 0.1638 0.00359
+#&gt; 119  -2.464 0.0824 0.08782</code></pre>
 <p>Horisontaalsed referentsjooned näitavad 0, 2 ja -2 studentiseeritud residuaale. Vertikaalsed referentsjooned näitavad hat-väärtusi 2h ja 3h.</p>
 <blockquote>
 <p>Regressiooni <em>outlier</em> on vaatlus, mille y-muutja väärtus on ebatavaline X-muujutuja väärtuse kontekstis. Seega annab <em>outlier</em> mudeli fittimisel kõrge residuaaliga punkti. Lihtsalt (mitte-konditsionaalselt) ebatavalised Y-i või X-i väärtused ei pruugi olla <em>outlier</em>id. Kui peaks juhuma, et <em>outlier</em> langeb kokku ebatavalise X-i väärtusega, siis selle punkti eemaldamine muudab märkimisväärselt mudeli koefitsiente. Selline <em>outlier</em> on ühtlasi ka <em>high leverage</em> vaatlus. Siit jõuame mõjukate vaatluste (<em>Influential observations</em>) defineerimisele — Mõjukus mudeli koefitsientidele = <em>Leverage</em> x <em>“outlierness”</em>. <em>High leverage</em> andmepunktid on x-muutujate ekstreemsed punktid, mille lähedal ei ole n-mõõtmelises ruumis (kui teil on n x-muutujat) teisi punkte. Seetõttu läheb fititud mudel just nende punktide lähedalt mõõda. Mõjukad punktid on tüüpiliselt ka <em>high leverage</em> punktid, kuid vastupidine ei kehti!</p>
@@ -480,18 +480,19 @@ m3 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Width <span cl
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="ot">NULL</span>, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">150</span>, <span class="dt">y =</span> a_m3<span class="op">$</span><span class="st">`</span><span class="dt">.cooksd</span><span class="st">`</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">4</span><span class="op">/</span><span class="dv">150</span>)<span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">3</span><span class="op">*</span><span class="kw">mean</span>(a_m3<span class="op">$</span><span class="st">`</span><span class="dt">.cooksd</span><span class="st">`</span>), <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 </div>
 </div>
 <div id="residuaalide-normaalsus---qq-plot" class="section level3 unnumbered">
 <h3>Residuaalide normaalsus - qq plot</h3>
 <p>Kas residuaalid on normaaljaotusega? NB! studentiseeritud residuaalid on studenti t jaotusega ja üldiselt on targem vaadata neid, kui tavalisi residuaale. Studenti t jaotusele pean ette andma ka vabadusastmete arvu e df-i.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">car<span class="op">::</span><span class="kw">qqPlot</span>(a_m3<span class="op">$</span><span class="st">`</span><span class="dt">.std.resid</span><span class="st">`</span>, <span class="dt">distribution =</span> <span class="st">&quot;t&quot;</span>, <span class="dt">df=</span><span class="dv">149</span>)
-<span class="co">#&gt; [1] 42 69</span></code></pre></div>
-<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" /> QQ-plot näitab erinevust normaaljaotusest (t jaotusest) eelkõige residuaalide jaotuse sabades. Antud juhul on kõik hästi.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">car<span class="op">::</span><span class="kw">qqPlot</span>(a_m3<span class="op">$</span><span class="st">`</span><span class="dt">.std.resid</span><span class="st">`</span>, <span class="dt">distribution =</span> <span class="st">&quot;t&quot;</span>, <span class="dt">df=</span><span class="dv">149</span>)</code></pre></div>
+<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<pre><code>#&gt; [1] 42 69</code></pre>
+<p>QQ-plot näitab erinevust normaaljaotusest (t jaotusest) eelkõige residuaalide jaotuse sabades. Antud juhul on kõik hästi.</p>
 <p>Isegi oluisem on vaadata, et residuaalide jaotus ei oleks mitmetipuline. Kui on, siis võib see olla märgiks, et mudelist on puudu mõni faktormuutuja, mis andmetes olevad diskreetsed loomulikud alampopulatsioonid lahku ajaks.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(a_m3, <span class="kw">aes</span>(<span class="st">`</span><span class="dt">.std.resid</span><span class="st">`</span>))<span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>()</code></pre></div>
-<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 </div>
 <div id="homoskedastilisus---scale-location-plot" class="section level3 unnumbered">
 <h3>Homoskedastilisus - Scale-location plot</h3>
@@ -500,7 +501,7 @@ m3 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Width <span cl
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color=</span>Species), <span class="dt">alpha=</span><span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;square root of absolute residual&quot;</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 </div>
 </div>
 <div id="residuaalid-y-ja-x-muutujate-vastu" class="section level2 unnumbered">
@@ -508,7 +509,7 @@ m3 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Width <span cl
 <p>Kõigepealt residuaalid y-muutja vastu</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(a_m3, <span class="kw">aes</span>(Sepal.Width, <span class="st">`</span><span class="dt">.std.resid</span><span class="st">`</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color=</span>Species)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">lty =</span><span class="dv">2</span>, <span class="dt">color =</span><span class="st">&quot;darkgrey&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_smooth</span>( <span class="dt">se=</span>F, <span class="dt">color=</span><span class="st">&quot;black&quot;</span>, <span class="dt">size=</span><span class="fl">0.5</span>)</code></pre></div>
-<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <p>Mudel paistab süstemaatiliselt alahindama Sepal Width-i seal kus Sepal Length on kõrge, ja vastupidi. Horisontaalne punktiirjoon näitab, kus mudel vastab täpselt andmetele.</p>
 <p>Studentiseeritud residuaalid sd ühikutes</p>
 <p>Ja nüüd residuaalid x-muutuja vastu.</p>
@@ -516,7 +517,7 @@ m3 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Width <span cl
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">lty =</span><span class="dv">2</span>, <span class="dt">color =</span><span class="st">&quot;darkgrey&quot;</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">se=</span>F, <span class="dt">color=</span><span class="st">&quot;black&quot;</span>, <span class="dt">size=</span><span class="fl">0.5</span>)</code></pre></div>
-<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" /> Ideaalsed residuaalid!</p>
+<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-20-1.png" width="672" /> Ideaalsed residuaalid!</p>
 </div>
 <div id="teeme-mudeli-pohjal-ennustusi-marginal-plots" class="section level2 unnumbered">
 <h2>3. Teeme mudeli põhjal ennustusi (marginal plots)</h2>
@@ -540,7 +541,7 @@ mydf2 &lt;-<span class="st"> </span><span class="kw">ggpredict</span>(lm2, <span
 <span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Sepal Length&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;predicted sepal width&quot;</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
-<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <blockquote>
 <p>terms argument võtab kuni 3 muutujat, neist 2 peavad olema faktormuutujad ja 3 muutuja korral tekib tabelisse veerg nimega facet, mille abil saab tulemused facet_wrap()-ga välja plottida.</p>
 </blockquote>
@@ -550,7 +551,7 @@ mydf2 &lt;-<span class="st"> </span><span class="kw">ggpredict</span>(lm2, <span
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>iris, <span class="kw">aes</span>(Sepal.Length, Sepal.Width, <span class="dt">color=</span>Species)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Sepal Length&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;predicted sepal width&quot;</span>)</code></pre></div>
-<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <p>Nii saab sisestada üksikuid parameetriväärtusi ja neile ennustusi teha:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(mydf1 &lt;-<span class="st"> </span><span class="kw">ggpredict</span>(m3, <span class="dt">terms =</span> <span class="kw">c</span>(<span class="st">&quot;Sepal.Length [5, 22]&quot;</span>, <span class="st">&quot;Species [setosa, versicolor]&quot;</span>)))
 <span class="co">#&gt; </span>
@@ -635,7 +636,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["_main.pdf"],
 "toc": {
 "collapse": "section"
 }

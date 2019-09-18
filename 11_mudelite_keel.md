@@ -59,19 +59,15 @@ Nüüd tõmbame posteerioroorsest jaotusest valimi n=10 000. Selleks on funktsio
 samples <- extract.samples(m1)
 # hist(samples$p)
 dens(samples$p)
-HPDI(samples$p, prob = 0.95) # Highest density 95% at the center
-#> |0.95 0.95| 
-#> 0.360 0.968
 ```
 
-\begin{figure}
+![(\#fig:pullpost)(ref:pullpost)](11_mudelite_keel_files/figure-latex/pullpost-1.pdf) 
 
-{\centering \includegraphics[width=0.7\linewidth]{11_mudelite_keel_files/figure-latex/pullpost-1} 
-
-}
-
-\caption{(ref:pullpost)}(\#fig:pullpost)
-\end{figure}
+```r
+HPDI(samples$p, prob = 0.95) # Highest density 95% at the center
+#> |0.95 0.95| 
+#> 0.364 0.977
+```
 
 Kuus patsienti üheksast surid ja nüüd me usume, et tegelik suremus võib olla nii madal kui 37% ja nii kõrge kui 97%. Kui me tahame paremat hinnangut on meil vaja kas rohkem patsiente või informatiivsemat priorit (paremat taustainfot).
 
@@ -95,20 +91,16 @@ precis(m2)
 ```r
 samples <- extract.samples(m2)
 dens(samples$p)
+```
+
+![(\#fig:perse)(ref:perse)](11_mudelite_keel_files/figure-latex/perse-1.pdf) 
+
+```r
 #PI(samples$p, prob = 0.95) # Leaves out equal 2.5% at both sides
 HPDI(samples$p, prob = 0.95) # Highest density 95% at the center
 #> |0.95 0.95| 
-#> 0.569 0.762
+#> 0.572 0.767
 ```
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{11_mudelite_keel_files/figure-latex/perse-1} 
-
-}
-
-\caption{(ref:perse)}(\#fig:perse)
-\end{figure}
 
 10 korda rohkem andmeid: nüüd on suremus määratud kuskile 57% ja 77% vahele (suure tõenäosusega)
 
@@ -122,14 +114,7 @@ Siin mõned näited erinevatest beta parametriseeringutest.
 
 (ref:betaparm) Beta jaotuse parametriseeringuid.
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{11_mudelite_keel_files/figure-latex/betaparm-1} 
-
-}
-
-\caption{(ref:betaparm)}(\#fig:betaparm)
-\end{figure}
+![(\#fig:betaparm)(ref:betaparm)](11_mudelite_keel_files/figure-latex/betaparm-1.pdf) 
 
 $beta(\theta~\vert~a,b)$ jaotuse keskväärtus on 
  
@@ -183,18 +168,11 @@ precis(m3)
 ```r
 HPDI(samples$p, prob = 0.95) # Highest density 95% at the center
 #> |0.95 0.95| 
-#> 0.617 0.722
+#> 0.613 0.718
 dens(samples$p)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{11_mudelite_keel_files/figure-latex/unnamed-chunk-5-1} 
-
-}
-
-\caption{Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist.}(\#fig:unnamed-chunk-5)
-\end{figure}
+![(\#fig:unnamed-chunk-5)Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist.](11_mudelite_keel_files/figure-latex/unnamed-chunk-5-1.pdf) 
 
 Nagu näha on ka kitsa priori mõju üsna väika, isegi kui kui n = 9.
 

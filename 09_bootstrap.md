@@ -58,14 +58,7 @@ boot <- boot %>%
 ggplot(boot, aes(Mean)) + geom_density()
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{09_bootstrap_files/figure-latex/bootpost-1} 
-
-}
-
-\caption{(ref:bootpost)}(\#fig:bootpost)
-\end{figure}
+![(\#fig:bootpost)(ref:bootpost)](09_bootstrap_files/figure-latex/bootpost-1.pdf) 
 
 ehk sama asi ilma bootsrtap functsiooni kasutamata. 
 
@@ -155,19 +148,15 @@ Näited sellest, kuidas kasutada bayesbooti standardhälbe, korrelatsioonikoefit
 ```r
 heights_bb <- bayesboot(heights$value, mean)
 plot(heights_bb, compVal = 185)
+```
+
+![(\#fig:bayesboot)(ref:bayesboot)](09_bootstrap_files/figure-latex/bayesboot-1.pdf) 
+
+```r
 HPDI(heights_bb$V1, prob = 0.95)
 #> |0.95 0.95| 
 #>   183   187
 ```
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{09_bootstrap_files/figure-latex/bayesboot-1} 
-
-}
-
-\caption{(ref:bayesboot)}(\#fig:bayesboot)
-\end{figure}
 
 Vaikimisi pannakse `bayesboot()` funktsioonis statistiku arvutamisel kaalud (prior) valimi indeksile, mis annab erineva tulemuse kui näiteks kaalutud keskmise arvutamisel, kus kaalud (prior) pannakse valimi väärtustele.
  
@@ -183,7 +172,7 @@ Tõenäosus, et keskmine on suurem kui 182 cm
 
 ```r
 mean(heights_bb[, 1] > 182)
-#> [1] 0.989
+#> [1] 0.991
 ```
 
 Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):
@@ -202,14 +191,7 @@ dfr_bb <- bayesboot(dfr$c, weighted.mean, use.weights = TRUE )
 plot(dfr_bb, compVal = 0)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{09_bootstrap_files/figure-latex/bayeses-1} 
-
-}
-
-\caption{(ref:bayeses)}(\#fig:bayeses)
-\end{figure}
+![(\#fig:bayeses)(ref:bayeses)](09_bootstrap_files/figure-latex/bayeses-1.pdf) 
 
 BayesianFirstAid raamatukogu funktsioon bayes.t.test() annab kasutades t-jaotuse tõepäramudelit üsna täpselt sama vastuse. 
 See raamatukogu eeldab JAGS mcmc sämpleri installeerimist. 
@@ -236,31 +218,22 @@ sample_means_sum <- sample_means %>%
 
 ggplot(sample_means_sum, aes(x = Mean)) +
   geom_histogram(color = "white", bins = 20)
+```
+
+![(\#fig:paramboot)(ref:paramboot)](09_bootstrap_files/figure-latex/paramboot-1.pdf) 
+
+```r
 HPDI(sample_means_sum$Mean)
 #> |0.89 0.89| 
 #>   183   187
 ```
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{09_bootstrap_files/figure-latex/paramboot-1} 
-
-}
-
-\caption{(ref:paramboot)}(\#fig:paramboot)
-\end{figure}
 
 Üldiselt ei soovita me parameetrilist bootstrappi väga soojalt, sest täisbayesiaanlik alternatiiv, mida me kohe õppima asume, on sellest paindlikum.
 
 (ref:bootmeth) Bootstrappimise meetodid.
 
 \begin{figure}
-
-{\centering \includegraphics[width=0.5\linewidth]{img/boot1} 
-
-}
-
-\caption{(ref:bootmeth)}(\#fig:bootmeth)
+\includegraphics[width=0.5\linewidth]{img/boot1} \caption{(ref:bootmeth)}(\#fig:bootmeth)
 \end{figure}
 
 ## Bootstrappimine ei ole kogu tõde {-}

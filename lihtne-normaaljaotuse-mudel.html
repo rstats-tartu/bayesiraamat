@@ -404,8 +404,8 @@ sigma ~ dcauchy(0, 20) #half-cauchy prior for sd </code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">100</span>
 y &lt;-<span class="st"> </span><span class="kw">dcauchy</span>(x, <span class="dv">0</span>, <span class="dv">20</span>)
 <span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span> , <span class="dt">main =</span> <span class="st">&quot;Cauchy prior for sd&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:cauchy-prior"></span>
-<img src="12_pidev_files/figure-html/cauchy-prior-1.png" alt="Cauchy prior." width="70%" />
+<div class="figure"><span id="fig:cauchy-prior"></span>
+<img src="12_pidev_files/figure-html/cauchy-prior-1.png" alt="Cauchy prior." width="672" />
 <p class="caption">
 Joonis 15.1: Cauchy prior.
 </p>
@@ -413,14 +413,20 @@ Joonis 15.1: Cauchy prior.
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">150</span><span class="op">:</span><span class="dv">200</span>
 y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x, <span class="dv">0</span>, <span class="dv">200</span>)
-<span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Normal prior for mean = 0 and sd = 200&quot;</span>)
-x &lt;-<span class="st"> </span><span class="dv">150</span><span class="op">:</span><span class="dv">200</span>
-y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x, <span class="dv">178</span>, <span class="dv">10</span>)
-<span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Normal prior for mean = 178 and sd = 10&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:kaks-priorit"></span>
-<img src="12_pidev_files/figure-html/kaks-priorit-1.png" alt="Kaks normaaljaotuse priorit." width="48%" /><img src="12_pidev_files/figure-html/kaks-priorit-2.png" alt="Kaks normaaljaotuse priorit." width="48%" />
+<span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Normal prior for mean = 0 and sd = 200&quot;</span>)</code></pre></div>
+<div class="figure"><span id="fig:kaks-priorit1"></span>
+<img src="12_pidev_files/figure-html/kaks-priorit-1.png" alt="Kaks normaaljaotuse priorit." width="48%" />
 <p class="caption">
 Joonis 15.2: Kaks normaaljaotuse priorit.
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">150</span><span class="op">:</span><span class="dv">200</span>
+y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x, <span class="dv">178</span>, <span class="dv">10</span>)
+<span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Normal prior for mean = 178 and sd = 10&quot;</span>)</code></pre></div>
+<div class="figure"><span id="fig:kaks-priorit2"></span>
+<img src="12_pidev_files/figure-html/kaks-priorit-2.png" alt="Kaks normaaljaotuse priorit." width="48%" />
+<p class="caption">
+Joonis 15.3: Kaks normaaljaotuse priorit.
 </p>
 </div>
 <p>Siin on valida kahe priori vahel mu-le. Võib-olla eelistaksid sina mõnda kolmandat? Kui jah, siis pole muud kui tee valmis ja kasuta!</p>
@@ -504,20 +510,20 @@ m2<span class="op">@</span>stanfit
 <p>Üks esimesi asju mida koos parameetrite vaatamisega teha on lisaks vaadata, kas ka ahelad konvergeerusid. Selleks saab mugavalt kasutada <code>rethinking::tracerplot()</code> funktsiooni.</p>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tracerplot</span>(m2)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:traceplot"></span>
-<img src="12_pidev_files/figure-html/traceplot-1.png" alt="Traceplot markovi ahelate inspekteerimiseks." width="70%" />
+<div class="figure"><span id="fig:traceplot"></span>
+<img src="12_pidev_files/figure-html/traceplot-1.png" alt="Traceplot markovi ahelate inspekteerimiseks." width="672" />
 <p class="caption">
-Joonis 15.3: Traceplot markovi ahelate inspekteerimiseks.
+Joonis 15.4: Traceplot markovi ahelate inspekteerimiseks.
 </p>
 </div>
 <p>Pildilt on näha, et neli ahelat (4 värvi) on hästi konvergeerunud. Hall ala on nn warmup ala, mille tulemusi ei salvestata. Muidu astub iga ahel sammu kaupa ja iga edukas samm salvestatakse ühe posteeriori väärtusena. Ahel sämplib korraga mu, sigma ja nu väärtusi n-mõõtmelises ruumis (n = mudeli parameetrite arv), mis tähendab, et ahela iga samm salvestatakse n kõrvuti numbrina.</p>
 <p>Kui näit sigma kõrgema väärtusega kaasneb keskeltäbi kõrgem (või madalam) mu väärtus, on sigma ja mu omavahel korreleeritud. Et kontrollida parameetrite posterioorsete väärtuste korrelatsioone kasutame funktsiooni <code>rethinking::pairs()</code>:</p>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pairs</span>(m2)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:korrelatsiooniplot"></span>
-<img src="12_pidev_files/figure-html/korrelatsiooniplot-1.png" alt="Korrelatsiooniplot mudeli parameetritele." width="70%" />
+<div class="figure"><span id="fig:korrelatsiooniplot"></span>
+<img src="12_pidev_files/figure-html/korrelatsiooniplot-1.png" alt="Korrelatsiooniplot mudeli parameetritele." width="672" />
 <p class="caption">
-Joonis 15.4: Korrelatsiooniplot mudeli parameetritele.
+Joonis 15.5: Korrelatsiooniplot mudeli parameetritele.
 </p>
 </div>
 <p>Normaaljaotus on selle poolest eriline, et tema parameetrid mu ja sigma ei ole korreleeritud. Paljud teised mudelid ei ole nii lahked. Siin on meil mõõdukas korrelatsioon nu ja sigma vahel. See on igati loogiline ja ei häiri meid.</p>
@@ -539,18 +545,18 @@ pars &lt;-<span class="st"> </span><span class="kw">names</span>(fit2d)
                <span class="dt">pars =</span> pars[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], 
                <span class="dt">prob =</span> <span class="fl">0.5</span>, 
                <span class="dt">prob_outer =</span> <span class="fl">0.90</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:postciplot"></span>
-<img src="12_pidev_files/figure-html/postciplot-1.png" alt="Posteeriorite CI plot." width="70%" />
+<div class="figure"><span id="fig:postciplot"></span>
+<img src="12_pidev_files/figure-html/postciplot-1.png" alt="Posteeriorite CI plot." width="672" />
 <p class="caption">
-Joonis 15.5: Posteeriorite CI plot.
+Joonis 15.6: Posteeriorite CI plot.
 </p>
 </div>
 <p>Ja teiseks täis posteeriorid.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mcmc_areas</span>(fit2d, <span class="dt">pars =</span> pars[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="dt">prob =</span> <span class="fl">0.8</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
-<img src="12_pidev_files/figure-html/unnamed-chunk-12-1.png" alt="Posteeriorite tihedusplot." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-12"></span>
+<img src="12_pidev_files/figure-html/unnamed-chunk-12-1.png" alt="Posteeriorite tihedusplot." width="672" />
 <p class="caption">
-Joonis 15.6: Posteeriorite tihedusplot.
+Joonis 15.7: Posteeriorite tihedusplot.
 </p>
 </div>
 <p>Funktsiooniga <code>rethinking::extract.samples()</code> saame koos sämplitud parameetrite numbrid kõrvuti (rea kaupa) tabelisse.</p>
@@ -563,8 +569,8 @@ Joonis 15.6: Posteeriorite tihedusplot.
 <span class="st">  </span><span class="kw">xlim</span>(<span class="dv">0</span>, <span class="dv">10</span>)
 <span class="co">#&gt; Warning: Ignoring unknown parameters: breaks</span>
 <span class="co">#&gt; Warning: Removed 609 rows containing non-finite values (stat_density).</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-14"></span>
-<img src="12_pidev_files/figure-html/unnamed-chunk-14-1.png" alt="Posteerior uuele parameetrile" width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-14"></span>
+<img src="12_pidev_files/figure-html/unnamed-chunk-14-1.png" alt="Posteerior uuele parameetrile" width="672" />
 <p class="caption">
 Joonis 4.6: Posteerior uuele parameetrile
 </p>
@@ -582,10 +588,10 @@ intv
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coeftab_plot</span>(<span class="kw">coeftab</span>(m0, m1, m2, m3), 
              <span class="dt">pars =</span> <span class="kw">c</span>(<span class="st">&quot;mu&quot;</span>, <span class="st">&quot;sigma&quot;</span>), 
              <span class="dt">prob =</span> <span class="fl">0.5</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-17"></span>
-<img src="12_pidev_files/figure-html/unnamed-chunk-17-1.png" alt="Võrdlev plot mitme mudeli posteerioritele." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-17"></span>
+<img src="12_pidev_files/figure-html/unnamed-chunk-17-1.png" alt="Võrdlev plot mitme mudeli posteerioritele." width="672" />
 <p class="caption">
-Joonis 15.7: Võrdlev plot mitme mudeli posteerioritele.
+Joonis 15.8: Võrdlev plot mitme mudeli posteerioritele.
 </p>
 </div>
 <p>Me sättisime usalduspiirid 0.5 peale, mis tähendab, et need ennustavad, kuhu peaks mudeli järgi jääma parameetri tegelik väärtus 50%-se tõenäosusega. Nagu näha, on m2 ja m3 posteeriorid palju lähemal m0-le kui normaaljaotusega fititud m1 oma. Eriti drastilised on erinevused sigma hinnangule. Lisaks, m1 mudeli mu usaldusintervall on palju laiem kui m0, m2 ja m3 oma — mudel nagu saaks aru, et andmed lõhnavad kala järgi.</p>
@@ -596,10 +602,10 @@ Joonis 15.7: Võrdlev plot mitme mudeli posteerioritele.
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="op">-</span><span class="dv">500</span><span class="op">:</span><span class="dv">500</span>
 y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x, <span class="dv">0</span>, <span class="dv">200</span>)
 <span class="kw">plot</span>(x, y, <span class="dt">main =</span> <span class="st">&quot;Prior for mu&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-18"></span>
-<img src="12_pidev_files/figure-html/unnamed-chunk-18-1.png" alt="Prior keskmisele." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-18"></span>
+<img src="12_pidev_files/figure-html/unnamed-chunk-18-1.png" alt="Prior keskmisele." width="672" />
 <p class="caption">
-Joonis 15.8: Prior keskmisele.
+Joonis 15.9: Prior keskmisele.
 </p>
 </div>
 <p>Siin kasutame nõrgalt informatiivseid prioreid. Idee on selles, et normaaljaotus, mis on tsentreeritud 0 ümber, tõmbab meie posteeriorit nõrgalt nulli poole (nõrgalt, sest jaotus on hästi lai võrreldes tõepärafunktsiooniga). Pane tähele, et oma priori kohaselt usume me, et 50% tõenäususega on USA presidentide keskmine pikkus negatiivne. See prior on tehniline abivahend, mitte meie tegelike uskumuste peegeldus presidentide kohta. Aga tehniliselt kõik töötab selles mõttes, et andmed domineerivad posteeriori üle ja priori sisuliselt ainus ülesanne on veidi MCMC mootori tööd lihtsustada.</p>
@@ -607,10 +613,10 @@ Joonis 15.8: Prior keskmisele.
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">200</span>
 y &lt;-<span class="st"> </span><span class="kw">dcauchy</span>(x , <span class="dv">0</span>, <span class="dv">10</span>)
 <span class="kw">plot</span>(x, y, <span class="dt">main =</span> <span class="st">&quot;Prior for sigma&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-19"></span>
-<img src="12_pidev_files/figure-html/unnamed-chunk-19-1.png" alt="Prior SD-le" width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-19"></span>
+<img src="12_pidev_files/figure-html/unnamed-chunk-19-1.png" alt="Prior SD-le" width="672" />
 <p class="caption">
-Joonis 15.9: Prior SD-le
+Joonis 15.10: Prior SD-le
 </p>
 </div>
 <p>Tekitame andmeraami analüüsiks ja mudeli, mis põhineb normaalsel tõepärafunktsioonil.</p>
@@ -708,18 +714,18 @@ potusm2.<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"
                <span class="dt">sigma_1 =</span> startvalues<span class="op">$</span>sd)
 )</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tracerplot</span>(potusm2.<span class="dv">1</span>, <span class="dt">n_cols =</span> <span class="dv">2</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-30"></span>
-<img src="12_pidev_files/figure-html/unnamed-chunk-30-1.png" alt="Traceplot." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-30"></span>
+<img src="12_pidev_files/figure-html/unnamed-chunk-30-1.png" alt="Traceplot." width="672" />
 <p class="caption">
-Joonis 15.10: Traceplot.
+Joonis 15.11: Traceplot.
 </p>
 </div>
 <p>Tulemus ES-i osas tuleb üsna sarnane.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">coeftab</span>(potusm2, potusm2.<span class="dv">1</span>))</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-31"></span>
-<img src="12_pidev_files/figure-html/unnamed-chunk-31-1.png" alt="mudelite võrdlusplot." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-31"></span>
+<img src="12_pidev_files/figure-html/unnamed-chunk-31-1.png" alt="mudelite võrdlusplot." width="672" />
 <p class="caption">
-Joonis 15.11: mudelite võrdlusplot.
+Joonis 15.12: mudelite võrdlusplot.
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">precis</span>(potusm2, <span class="dt">depth =</span> <span class="dv">2</span>)
@@ -732,10 +738,10 @@ Joonis 15.11: mudelite võrdlusplot.
 <span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ES =</span> mu_<span class="fl">1.1</span> <span class="op">-</span><span class="st"> </span>mu_<span class="fl">1.2</span>)
 <span class="kw">dens</span>(samplespm2<span class="op">$</span>ES)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-33"></span>
-<img src="12_pidev_files/figure-html/unnamed-chunk-33-1.png" alt="Posteerior ES-le." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-33"></span>
+<img src="12_pidev_files/figure-html/unnamed-chunk-33-1.png" alt="Posteerior ES-le." width="672" />
 <p class="caption">
-Joonis 15.12: Posteerior ES-le.
+Joonis 15.13: Posteerior ES-le.
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">median</span>(samplespm2<span class="op">$</span>ES)
@@ -880,10 +886,10 @@ knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">he
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> .fitted), <span class="dt">data =</span> gapmod2)
 p</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-40"></span>
-<img src="12_pidev_files/figure-html/unnamed-chunk-40-1.png" alt="Nulli surutud interceptiga lineaarne regressioon eluea sõltuvusele SKP-st." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-40"></span>
+<img src="12_pidev_files/figure-html/unnamed-chunk-40-1.png" alt="Nulli surutud interceptiga lineaarne regressioon eluea sõltuvusele SKP-st." width="672" />
 <p class="caption">
-Joonis 15.13: Nulli surutud interceptiga lineaarne regressioon eluea sõltuvusele SKP-st.
+Joonis 15.14: Nulli surutud interceptiga lineaarne regressioon eluea sõltuvusele SKP-st.
 </p>
 </div>
 <p>Nüüd on intercept surutud väärtusele y = 0.</p>
@@ -909,10 +915,10 @@ Joonis 15.13: Nulli surutud interceptiga lineaarne regressioon eluea sõltuvusel
 <span class="co">#&gt; Multiple R-squared:  0.461,  Adjusted R-squared:  0.457 </span>
 <span class="co">#&gt; F-statistic:  120 on 1 and 140 DF,  p-value: &lt;2e-16</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> .fitted), <span class="dt">data =</span> gapmod3, <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-42"></span>
-<img src="12_pidev_files/figure-html/unnamed-chunk-42-1.png" alt="Täismudeliga regressioon." width="70%" />
+<div class="figure"><span id="fig:unnamed-chunk-42"></span>
+<img src="12_pidev_files/figure-html/unnamed-chunk-42-1.png" alt="Täismudeliga regressioon." width="672" />
 <p class="caption">
-Joonis 15.14: Täismudeliga regressioon.
+Joonis 15.15: Täismudeliga regressioon.
 </p>
 </div>
 <p>Kuidas me seda m3 mudelit tõlgendame? Esiteks, Intercept on 59.6, mis tähendab, et mudel ennustab, et kui riigi SKP = 0 USD, siis selle riigi elanike keskmine euliga on ligi 60 aastat. See on selgelt imelik, sest ühegi riigi SKP ei ole null, ja kui oleks, oleks seal ka eluiga 0 (selle järgi peaksime eelistama mudelit gapmod2, kus me oleme intercepti nulli surunud).</p>
@@ -994,7 +1000,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["_main.pdf"],
 "toc": {
 "collapse": "section"
 }

@@ -35,14 +35,7 @@ corrgram(iris,
          main = "Correlogram of Iris dataset")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{07_EDA_files/figure-latex/korrmaatriks-1} 
-
-}
-
-\caption{(ref:korrmaatriks)}(\#fig:korrmaatriks)
-\end{figure}
+![(\#fig:korrmaatriks)(ref:korrmaatriks)](07_EDA_files/figure-latex/korrmaatriks-1.pdf) 
 
 2. vaata andmeid numbrilise kokkuvõttena.
 
@@ -71,23 +64,18 @@ skimr::skim(iris)
 #>  n obs: 150 
 #>  n variables: 5 
 #> 
-#> -- Variable type:factor -------------------------------------------------
+#> -- Variable type:factor ---------------------------------------
 #>  variable missing complete   n n_unique                       top_counts
 #>   Species       0      150 150        3 set: 50, ver: 50, vir: 50, NA: 0
 #>  ordered
 #>    FALSE
 #> 
-#> -- Variable type:numeric ------------------------------------------------
+#> -- Variable type:numeric --------------------------------------
 #>      variable missing complete   n mean   sd  p0 p25  p50 p75 p100
 #>  Petal.Length       0      150 150 3.76 1.77 1   1.6 4.35 5.1  6.9
 #>   Petal.Width       0      150 150 1.2  0.76 0.1 0.3 1.3  1.8  2.5
 #>  Sepal.Length       0      150 150 5.84 0.83 4.3 5.1 5.8  6.4  7.9
 #>   Sepal.Width       0      150 150 3.06 0.44 2   2.8 3    3.3  4.4
-#>      hist
-#>  ▇▁▁▂▅▅▃▁
-#>  ▇▁▁▅▃▃▂▂
-#>  ▂▇▅▇▆▅▂▂
-#>  ▁▂▅▇▃▂▁▁
 ```
 
 Siin pööra kindlasti tähelepanu tulpadele min ja max, mis annavad kiire võimalusi outliereid ära tunda. Kontrolli, kas andmete keskmised (mediaan, mean ja trimmed mean) on üksteisele piisavalt lähedal --- kui ei ole, siis on andmete jaotus pika õlaga, ja kindlasti mitte normaalne. 
@@ -109,7 +97,6 @@ Seega on mad siin sd robustne analoog --- kui mad on palju väiksem sd-st, siis 
 8. Ära piirdu muutuja tasemel varieeruvuse plottimisega. Teaduslikult on sageli huvitavam mimte muutuja koosvarieerumine. Järgmistes peatükkides modelleerime seda formaalselt regresioonanalüüsis aga alati tasub alustada lihtsatest plottidest. Scatterplot on lihtne viis kovarieeruvuse vaatamiseks. 
 
 9. Kui erinevad muutujad on mõõdetud erinevates skaalades (ühikutes), siis võib nende koosvarieeruvust olla kergem võrrelda, kui nad eelnevalt normaliseerida (kõigi muutujate keskväärtus = 0, aga varieeruvus jääb algsesse skaalasse) või standardiseerida (kõik keskväärtused = 0-ga ja sd-d = 1-ga). 
-Standardiseerida tohib ainult normaaljaotusega muutujaid (seega võib olla vajalik muutuja kõigepealt logaritmida). 
 Normaliseerimine: arvuta igale valimi väärtusele: `mean(x) - x`; standardiseerimine: `(mean(x) - x) / sd(x)`.
 
 10. Visualiseeringu valik sõltub valimi suurusest. Väikse valimi korral (N<10) boxploti, histogrammi vms kasutamine on lihtsalt rumal. Ära mängi lolli ja ploti parem punkti kaupa.
@@ -131,14 +118,7 @@ Normaliseerimine: arvuta igale valimi väärtusele: `mean(x) - x`; standardiseer
 #> Warning: Ignoring unknown parameters: bins
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{07_EDA_files/figure-latex/multisd-1} 
-
-}
-
-\caption{(ref:multisd)}(\#fig:multisd)
-\end{figure}
+![(\#fig:multisd)(ref:multisd)](07_EDA_files/figure-latex/multisd-1.pdf) 
 
 
 
