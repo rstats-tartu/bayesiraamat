@@ -7,7 +7,7 @@ language:
   ui:
     chapter_name: ''
 before_chapter_script: '_common.R'
-download: null
+download: ["pdf"]
 edit:
   link: https://github.com/rstats-tartu/bayesiraamat/edit/master/%s
   text: 'Editeeri'

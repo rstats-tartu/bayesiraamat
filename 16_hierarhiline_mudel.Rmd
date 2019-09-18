@@ -129,7 +129,7 @@ data.temporalCor.brms = brm(y ~ x, data = d,
                             autocor = cor_ar( ~year, cov = TRUE))
 ```
 
-Lihtsuse mõttes eeldame, et iga ajapunkti oodatud väärtus = tavaline lin prediktor + autokorrelatsiooni parameeter ($ρ$) korrutatuna eelmise vaatluse residuaaliga + tavapärane sõltumatu müra ($σ^2$). 
+Lihtsuse mõttes eeldame, et iga ajapunkti oodatud väärtus = tavaline lin prediktor + autokorrelatsiooni parameeter ($\rho$) korrutatuna eelmise vaatluse residuaaliga + tavapärane sõltumatu müra ($\sigma^2$). 
 
 ## mitmetasemeline mudel R-i mudelikeeles
 

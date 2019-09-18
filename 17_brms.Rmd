@@ -973,7 +973,7 @@ tidy(iris_imp3) %>% head()
 
 ## Binoomjaotusega mudelid
 
-y ∼ Binomial(n,p)
+$$y \sim Binomial(n, p)$$
 
 Me teeme n katset ja kodeerime iga eduka katse 1-ga ja mitteeduka katse 0-ga. Kui n=1, siis y on ühtedest ja nullidest koosnev vektor (muutuja) ja p on tõenäosus, et suvaline katse annab tulemuseks 1-e. Eeldades logistilist transformatsiooni on siin tegu logistilise regressiooniga.
 Kui n > 1 (ja ikka eeldades logistilist transformatsiooni), siis on tegu aggregeeritud binoomse logistilise regressiooniga. Me lahendame allpool need mõlemad.
@@ -996,7 +996,7 @@ $$P(Y = 1 | X) =\frac{exp(a + bx)}{1 + exp(a + bx)}$$
     saab valemist (1 + 1/n)^n, kui n läheneb lõpmatusele.
 
 
- Logistiline transformatsioon viib lineaarse regressiooni tavapärasest y-muutuja skaalast [−∞,+∞] tõenäosuste skaalasse [0,1], andes sirge asemele S-kujulise kurvi, mis läheneb asümptootiliselt ühelt poolt 0-le ja teiselt poolt 1-le. Logistilise funktsiooni põõrdväärtus on logit funktsioon, mis annab "*odds*-i" ehk shansi ehk kihlveosuhte tõenäosusele p: $odds = \frac {p}{1 − p}$. Tõenäosuse p logit ehk logit(p) on sama, mis log(odds):
+ Logistiline transformatsioon viib lineaarse regressiooni tavapärasest y-muutuja skaalast [$-\infty$,$+\infty$] tõenäosuste skaalasse [0, 1], andes sirge asemele S-kujulise kurvi, mis läheneb asümptootiliselt ühelt poolt 0-le ja teiselt poolt 1-le. Logistilise funktsiooni põõrdväärtus on logit funktsioon, mis annab "*odds*-i" ehk shansi ehk kihlveosuhte tõenäosusele p: $odds = \frac {p}{1 - p}$. Tõenäosuse p logit ehk logit(p) on sama, mis log(odds):
 
 $$logit(p)=\log \left({\frac {p}{1-p}}\right)=\log(p)-\log(1-p)$$
 
@@ -1012,13 +1012,13 @@ Matemaatiliselt pole vahet, kas me transformeerime prediktorid logistilise funkt
 Kuidas suhtuvad *odds*-d tõenäosustesse?
 Näiteks tõenäosus 0.2 (20%) tähendab, et $odds = 0.2/(1 - 0.2) = 1/4$ ehk üks neljale ja tõenäosus 0.9 tähendab, et $odds = 0.9/(1 - 0.9) = 9$ ehk üheksa ühele. *Odds*-e kasutavad näiteks hipodroomid, sest nii on mänguril lihtne näha, et kui kihlveokontori poolt mingile hobusele omistatud odds on näiteks üks nelja vastu ja ta maksab kihlveo sõlmimisel 1 euro, siis ta saab võidu korral 4 eurot kasu (ehk 5 eurose kupüüri). Logaritm *odds*-idest ongi logit transformatsioon, mille pöördväärtus on omakorda logistiline transformatsioon!
 
-Suvalise arvu α logistiline funktsioon on logiti põõrdväärtus:
+Suvalise arvu $\alpha$ logistiline funktsioon on logiti põõrdväärtus:
 
 $$logit^{-1}\alpha=logistic (\alpha)={\frac {exp (\alpha) }{1+ exp (\alpha)}}$$
 
 ```{r}
 x <- -10:10
-y <- exp(x)/(1+exp(x))
+y <- exp(x) / (1+exp(x))
 plot(y~x)
 ```
 
@@ -1065,7 +1065,7 @@ library(rethinking)
 
 ```{r}
 data(chimpanzees)
-skim(chimpanzees)
+chimpanzees
 ```
 
 
@@ -1122,7 +1122,7 @@ Proportsionaalne odds = `r signif(exp(tidy(m_logreg_2)$estimate[2]), 3)` kujutab
 Kui prediktori prosoc_left väärtus muutumine 0-st 1-ks tõstab y=1 sündmuse *log-odds*-i `r round(tidy(m_logreg_2)$estimate[2], 2)` võrra, siis kasvab proportsionaalselt exp(`r round(tidy(m_logreg_2)$estimate[2], 2)`) = `r round(exp(tidy(m_logreg_2)$estimate[2]), 2)` ja *odds*, et toimub sündmus pull left ehk y=1 kasvab 76%.
 
 
-Tegelik tõenäosuse muutus sõltub ka interceptist (α) ja teistest prediktoritest. Logistiline regressioon erineb tavalisest lineaarsest regressioonist selle poolest, et see mudeldab igal juhul muutujate vahelisi interakstsioone. Näiteks kui α on piisavalt suur, et garanteerida sündmuse y = 1 toimumine, siis ei tähenda *odds*-ide tõus 73% võrra suurt midagi. Oletame, et α = 4.  Siis on sündmuse tõenäosus, ignoreerides kõike muud  `inv_logit_scaled(4)` = `r round(inv_logit_scaled(4), 2)`. Lisades sinna beta hinnagu `r round(tidy(m_logreg_2)$estimate[2], 2)` saame: ``r str_c("inv_logit_scaled(4 + ", round(tidy(m_logreg_2)$estimate[2], 2), ")")`` = `r round(inv_logit_scaled(4 + tidy(m_logreg_2)$estimate[2]), 2)`. 
+Tegelik tõenäosuse muutus sõltub ka interceptist ($\alpha$) ja teistest prediktoritest. Logistiline regressioon erineb tavalisest lineaarsest regressioonist selle poolest, et see mudeldab igal juhul muutujate vahelisi interakstsioone. Näiteks kui $\alpha$ on piisavalt suur, et garanteerida sündmuse y = 1 toimumine, siis ei tähenda *odds*-ide tõus 73% võrra suurt midagi. Oletame, et $\alpha$ = 4.  Siis on sündmuse tõenäosus, ignoreerides kõike muud  `inv_logit_scaled(4)` = `r round(inv_logit_scaled(4), 2)`. Lisades sinna beta hinnagu `r round(tidy(m_logreg_2)$estimate[2], 2)` saame: ``r str_c("inv_logit_scaled(4 + ", round(tidy(m_logreg_2)$estimate[2], 2), ")")`` = `r round(inv_logit_scaled(4 + tidy(m_logreg_2)$estimate[2]), 2)`. 
 See vastab 1% erinevusele, ehkki on samas 73% kasv suhtelise *odds*-i ühikutes. 
  
 
@@ -1551,7 +1551,7 @@ gr() lisatakse muidu automaatselt, aga seda spetsifitseerides saab kirjutada
 
 Mittelineaarne mudel:
 
-y = b1(1 − exp(−(x/b2)**b3 )
+y = b1(1 - exp(-(x/b2)**b3 )
 
 y ja x seos parameetritega b1..b3
 Oletame, et tahame kõik parameetrid fittida grupeeriva muutuja g tasemete järgi ja et grupi tasmel efektid oleks omavahel korreleeritud. Lisaks ennustame me b1-e kovariaat z järgi. See kõik läheb järgmisesse võrrandisüsteemi kus, lisaks mitte-lineaarsele võrrandile, igale parameetrile b1...b3 vastab oma lineaarne võrrand:
@@ -1827,5 +1827,3 @@ Family student needs the parameter nu representing the degrees of freedom of stu
 Families gamma, weibull, inverse.gaussian, and negbinomial need a shape parameter that has a "gamma(0.01, 0.01)" prior by default. 
 
 Every family specific parameter has its own prior class, so that set_prior("<prior>", class = "<parameter>") is the right way to go. All of these priors are chosen to be weakly informative, having only minimal influence on the estimations, while improving convergence and sampling efficiency. Often, it may not be immediately clear, which parameters are present in the model. To get a full list of parameters and parameter classes for which priors can be specified use function get_prior.
-
-
