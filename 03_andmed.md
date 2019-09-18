@@ -31,10 +31,14 @@ Järgnevad nõuanded on rangelt soovituslikud:
 
 (ref:lognorm) Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete "keskväärtusest"? Miks?
 
-<div class="figure" style="text-align: center">
-<img src="03_andmed_files/figure-html/lognorm-1.png" alt="(ref:lognorm)" width="70%" />
-<p class="caption">(\#fig:lognorm)(ref:lognorm)</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{03_andmed_files/figure-latex/lognorm-1} 
+
+}
+
+\caption{(ref:lognorm)}(\#fig:lognorm)
+\end{figure}
 
 
 ## Muutuja sisene varieeruvus {-}
@@ -100,25 +104,38 @@ multiplicative_sd(andmed) %>% knitr::kable()
 ```
 
 
-
-SD                      MEAN    lower   upper
---------------------  ------  -------  ------
-multiplicative_SD      0.983    0.357    2.71
-multiplicative_2_SD    0.983    0.129    7.46
-additive_SD            1.593   -0.157    3.34
-additive_2_SD          1.593   -1.907    5.09
+\begin{tabular}{l|r|r|r}
+\hline
+SD & MEAN & lower & upper\\
+\hline
+multiplicative\_SD & 1.09 & 0.374 & 3.17\\
+\hline
+multiplicative\_2\_SD & 1.09 & 0.128 & 9.25\\
+\hline
+additive\_SD & 1.87 & -0.467 & 4.21\\
+\hline
+additive\_2\_SD & 1.87 & -2.805 & 6.55\\
+\hline
+\end{tabular}
 
 Tavalise aritmeetitilise keskmise asemel on meil nüüd geomeetriline keskmine.  Võrdluseks on antud ka tavaline (aritmeetiline) keskmine ja (aditiivne) SD. Additiivne SD on selle jaotuse kirjeldamiseks selgelt ebaadekvaatne (vt jaotuse pilti ülalpool ja võrdle mulitplikatiivse SD-ga).
 
 
 Kuidas aga töötab multiplikatiivne standardhälve normaaljaotusest pärit andmetega (N=3, mean=100, sd=20)? Kui multiplikatiivse sd rakendamine normaalsete andmete peal viiks katastroofini, siis poleks sel statistikul suurt kasutusruumi.
 
-SD                     MEAN   lower   upper
---------------------  -----  ------  ------
-multiplicative_SD       108    92.8     126
-multiplicative_2_SD     108    79.7     147
-additive_SD             109    92.1     126
-additive_2_SD           109    75.2     143
+\begin{tabular}{l|r|r|r}
+\hline
+SD & MEAN & lower & upper\\
+\hline
+multiplicative\_SD & 108 & 92.8 & 126\\
+\hline
+multiplicative\_2\_SD & 108 & 79.7 & 147\\
+\hline
+additive\_SD & 109 & 92.1 & 126\\
+\hline
+additive\_2\_SD & 109 & 75.2 & 143\\
+\hline
+\end{tabular}
 
 Nagu näha, on multiplikatiivse sd kasutamine normaalsete andmetega pigem ohutu (kui andmed on positiivsed). Arvestades, et additiivne SD on lognormaalsete andmete korral kõike muud kui ohutu ning et lognormaaljaotus on bioloogias üsna tavaline, eriti ensüümreaktsioonide ja kasvuprotsesside juures, on mõistlik alati kasutada multiplicative_sd() funktsiooni. Kui mõlema SD väärtused on sarnased, siis võib loota, et andmed on normaalsed ning saab refereede rõõmuks avaldada tavapärase additiivse SD.
 
@@ -134,13 +151,17 @@ QQ-plot (kvantiil-kvantiil plot) võrdleb andmete jaotust ideaalse normaaljaotus
 
 ```r
 qqPlot(andmed)
-#> [1] 4 1
+#> [1] 29 17
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03_andmed_files/figure-html/qqnorm-1.png" alt="(ref:qqnorm)" width="70%" />
-<p class="caption">(\#fig:qqnorm)(ref:qqnorm)</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{03_andmed_files/figure-latex/qqnorm-1} 
+
+}
+
+\caption{(ref:qqnorm)}(\#fig:qqnorm)
+\end{figure}
 
 Nüüd joonistame qq-ploti logaritmitud andmetele. 
 
@@ -149,13 +170,17 @@ Nüüd joonistame qq-ploti logaritmitud andmetele.
 
 ```r
 qqPlot(log(andmed))
-#> [1]  83 100
+#> [1] 29 17
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03_andmed_files/figure-html/qqlognorm-1.png" alt="(ref:qqlognorm)" width="70%" />
-<p class="caption">(\#fig:qqlognorm)(ref:qqlognorm)</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{03_andmed_files/figure-latex/qqlognorm-1} 
+
+}
+
+\caption{(ref:qqlognorm)}(\#fig:qqlognorm)
+\end{figure}
 
 Pole kahtlust, andmed on logaritmitud kujul normaaljaotusega.
 
@@ -172,17 +197,17 @@ Lognormaalsete andmetega:
 
 ```r
 mad(andmed, constant = 1); sd(andmed); mad(andmed)
-#> [1] 0.681
-#> [1] 1.75
-#> [1] 1.01
+#> [1] 0.79
+#> [1] 2.34
+#> [1] 1.17
 ```
 
 
 ```r
 mad(log10(andmed), constant = 1); sd(log10(andmed)); mad(log10(andmed))
-#> [1] 0.241
-#> [1] 0.44
-#> [1] 0.357
+#> [1] 0.316
+#> [1] 0.465
+#> [1] 0.469
 ```
 
 mad = median(abs(median(x) - x)), mida on väga lihtne mõista. Samas R-i funktsioon mad() korrutab default-ina mad-i läbi konstandiga 1.4826, mis muudab mad()-i tulemuse võrreldavaks sd-ga, tehes sellest sd robustse analoogi. Robustse sellepärast, et mad-i arvutuskäik, mis sõltub mediaanist, mitte aritmeetilisest keskmisest, ei ole tundlik outlierite suhtes. Seega, kui tahate arvutada mad-i, siis fikseerige mad() funktsioonis argument *constant* ühele.
@@ -197,7 +222,7 @@ Funktsioon quantile võimaldab valida, milliseid kvantiile soovite näha. Järgn
 ```r
 quantile(andmed, c(0.025, 0.25, 0.5, 0.75, 0.95))
 #>  2.5%   25%   50%   75%   95% 
-#> 0.155 0.428 1.094 1.772 5.838
+#> 0.146 0.461 1.183 2.280 5.437
 ```
 
 
@@ -230,10 +255,14 @@ Lisaks, korrelatsioonikordaja mõõdab vaid andmete *lineaarset* koos-varieeruvu
 
 (ref:anscombe) Anscombe'i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: neli andmestikku annavad identse korrelatsioonikordaja (Pearsons'r), ehkki tegelikud seosed andmete vahel on täiesti erinevad.
 
-<div class="figure" style="text-align: center">
-<img src="03_andmed_files/figure-html/anscombe-1.png" alt="(ref:anscombe)" width="70%" />
-<p class="caption">(\#fig:anscombe)(ref:anscombe)</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{03_andmed_files/figure-latex/anscombe-1} 
+
+}
+
+\caption{(ref:anscombe)}(\#fig:anscombe)
+\end{figure}
 
 
 Moraal seisneb selles, et enne korrelatsioonikordaja arvutamist tasub alati plottida andmed, et veenduda võimaliku seose lineaarsuses. 
@@ -256,10 +285,18 @@ Korrelatsioonimaatriksi saab niimoodi:
 knitr::kable(cor(iris[,-5]))
 ```
 
-                Sepal.Length   Sepal.Width   Petal.Length   Petal.Width
--------------  -------------  ------------  -------------  ------------
-Sepal.Length           1.000        -0.118          0.872         0.818
-Sepal.Width           -0.118         1.000         -0.428        -0.366
-Petal.Length           0.872        -0.428          1.000         0.963
-Petal.Width            0.818        -0.366          0.963         1.000
+
+\begin{tabular}{l|r|r|r|r}
+\hline
+  & Sepal.Length & Sepal.Width & Petal.Length & Petal.Width\\
+\hline
+Sepal.Length & 1.000 & -0.118 & 0.872 & 0.818\\
+\hline
+Sepal.Width & -0.118 & 1.000 & -0.428 & -0.366\\
+\hline
+Petal.Length & 0.872 & -0.428 & 1.000 & 0.963\\
+\hline
+Petal.Width & 0.818 & -0.366 & 0.963 & 1.000\\
+\hline
+\end{tabular}
 

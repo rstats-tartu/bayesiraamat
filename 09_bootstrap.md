@@ -58,10 +58,14 @@ boot <- boot %>%
 ggplot(boot, aes(Mean)) + geom_density()
 ```
 
-<div class="figure" style="text-align: center">
-<img src="09_bootstrap_files/figure-html/bootpost-1.png" alt="(ref:bootpost)" width="70%" />
-<p class="caption">(\#fig:bootpost)(ref:bootpost)</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{09_bootstrap_files/figure-latex/bootpost-1} 
+
+}
+
+\caption{(ref:bootpost)}(\#fig:bootpost)
+\end{figure}
 
 ehk sama asi ilma bootsrtap functsiooni kasutamata. 
 
@@ -156,10 +160,14 @@ HPDI(heights_bb$V1, prob = 0.95)
 #>   183   187
 ```
 
-<div class="figure" style="text-align: center">
-<img src="09_bootstrap_files/figure-html/bayesboot-1.png" alt="(ref:bayesboot)" width="70%" />
-<p class="caption">(\#fig:bayesboot)(ref:bayesboot)</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{09_bootstrap_files/figure-latex/bayesboot-1} 
+
+}
+
+\caption{(ref:bayesboot)}(\#fig:bayesboot)
+\end{figure}
 
 Vaikimisi pannakse `bayesboot()` funktsioonis statistiku arvutamisel kaalud (prior) valimi indeksile, mis annab erineva tulemuse kui näiteks kaalutud keskmise arvutamisel, kus kaalud (prior) pannakse valimi väärtustele.
  
@@ -175,7 +183,7 @@ Tõenäosus, et keskmine on suurem kui 182 cm
 
 ```r
 mean(heights_bb[, 1] > 182)
-#> [1] 0.994
+#> [1] 0.989
 ```
 
 Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):
@@ -194,10 +202,14 @@ dfr_bb <- bayesboot(dfr$c, weighted.mean, use.weights = TRUE )
 plot(dfr_bb, compVal = 0)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="09_bootstrap_files/figure-html/bayeses-1.png" alt="(ref:bayeses)" width="70%" />
-<p class="caption">(\#fig:bayeses)(ref:bayeses)</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{09_bootstrap_files/figure-latex/bayeses-1} 
+
+}
+
+\caption{(ref:bayeses)}(\#fig:bayeses)
+\end{figure}
 
 BayesianFirstAid raamatukogu funktsioon bayes.t.test() annab kasutades t-jaotuse tõepäramudelit üsna täpselt sama vastuse. 
 See raamatukogu eeldab JAGS mcmc sämpleri installeerimist. 
@@ -229,19 +241,27 @@ HPDI(sample_means_sum$Mean)
 #>   183   187
 ```
 
-<div class="figure" style="text-align: center">
-<img src="09_bootstrap_files/figure-html/paramboot-1.png" alt="(ref:paramboot)" width="70%" />
-<p class="caption">(\#fig:paramboot)(ref:paramboot)</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{09_bootstrap_files/figure-latex/paramboot-1} 
+
+}
+
+\caption{(ref:paramboot)}(\#fig:paramboot)
+\end{figure}
 
 Üldiselt ei soovita me parameetrilist bootstrappi väga soojalt, sest täisbayesiaanlik alternatiiv, mida me kohe õppima asume, on sellest paindlikum.
 
 (ref:bootmeth) Bootstrappimise meetodid.
 
-<div class="figure" style="text-align: center">
-<img src="img/boot1.pdf" alt="(ref:bootmeth)" width="50%" />
-<p class="caption">(\#fig:bootmeth)(ref:bootmeth)</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{img/boot1} 
+
+}
+
+\caption{(ref:bootmeth)}(\#fig:bootmeth)
+\end{figure}
 
 ## Bootstrappimine ei ole kogu tõde {-}
 

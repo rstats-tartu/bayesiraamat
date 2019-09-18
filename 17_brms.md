@@ -32,13 +32,13 @@ skim(iris)
 #>  n obs: 150 
 #>  n variables: 5 
 #> 
-#> ── Variable type:factor ────────────────────────────────────────────
+#> -- Variable type:factor -------------------------------------------------
 #>  variable missing complete   n n_unique                       top_counts
 #>   Species       0      150 150        3 set: 50, ver: 50, vir: 50, NA: 0
 #>  ordered
 #>    FALSE
 #> 
-#> ── Variable type:numeric ───────────────────────────────────────────
+#> -- Variable type:numeric ------------------------------------------------
 #>      variable missing complete   n mean   sd  p0 p25  p50 p75 p100
 #>  Petal.Length       0      150 150 3.76 1.77 1   1.6 4.35 5.1  6.9
 #>   Petal.Width       0      150 150 1.2  0.76 0.1 0.3 1.3  1.8  2.5
@@ -59,7 +59,9 @@ ggplot(iris, aes(Petal.Length, Sepal.Length)) +
   geom_smooth(method = "lm")
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-4-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 Loess fit viitab, et 3 liiki ühe sirgega mudeldada pole võib-olla optimaalne lahendus.
 
@@ -71,7 +73,9 @@ ggplot(iris, aes(Petal.Length, Sepal.Length, color = Species)) +
   geom_smooth(method = "lm")
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-5-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-5-1} \end{center}
 
 Nüüd on loess ja lm heas kooskõlas - seos y~x vahel oleks nagu enam-vähem lineaarne. Siit tuleb ka välja, et kolme mudeli tõusud on sarnased, interceptid erinevad.
 
@@ -97,7 +101,9 @@ Posteeriorid ja mcmc ahelate konvergents
 plot(m_kiire)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-8-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
 Fiti kokkuvõte - koefitsiendid ja nende fittimise edukust hindavad statistikud (Eff.Sample, Rhat)
 
@@ -120,7 +126,9 @@ Ennustav plot ehk *marginal plot* -- mudeli fit 95% CI-ga.
 plot(marginal_effects(m_kiire), points = TRUE)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-10-1} \end{center}
 
 ### Põhjalikum töövoog
 
@@ -167,7 +175,9 @@ y <- dstudent_t(x, df = 6, mu = 0, sigma = 2, log = FALSE)
 plot(y ~ x)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-13-1} \end{center}
 Sigma prior, mida **brms** kasutab, on vaikimisi pool sümmeetrilisest jaotusest, mis lõigatakse nulli kohalt pooleks nii, et seal puuduvad < 0 väärtused (seega ei saa varieeruvuse posteerior minna alla nulli).
 
 Me võime ka prioreid ilma likelihoodideta (tõepärafunktsioonideta) läbi mudeli lasta, misjärel tõmbame fititud mudelist priorite valimid (neid võiks kutsuda ka "priorite posteerioriteks") ja plotime kõik priorid koos. Seda pilti saab siis võrrelda koos andmetega fititud mudeli posteerioritega. Selle võimaluse kasutamine on tõusuteel, sest keerulisemate mudelite puhul võib priorite ükshaaval plottimine osutuda eksitavaks.
@@ -199,7 +209,9 @@ prior_samples(m1) %>%
   facet_wrap(~ key, scales = "free_x")
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-16-1} \end{center}
 
 Kui kasutame `sample_prior = "only"` varianti, siis on esimene koodirida erinev: `samples1 = as.data.frame(m1$fit)`.
 
@@ -469,7 +481,9 @@ Divergentsed transitsioonid on halvad asjad - ahelad on läinud 17 korda metsa. 
 plot(m2)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-27-1} \end{center}
 
 Siit on näha, et ahelad on ilusti konvergeerunud. Ühtlasi on pildil posterioorsed jaotused fititud koefitsientidele.
 
@@ -479,7 +493,9 @@ Siit on näha, et ahelad on ilusti konvergeerunud. Ühtlasi on pildil posterioor
 plot(m2, pars = "r_")
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-28-1} \end{center}
 
 Vaatame korrelatsioone erinevate parameetrite posterioorsete valimite vahel. (Markovi ahelad jooksevad n-mõõtmelises ruumis, kus n on mudeli parameetrite arv, mille väärtusi hinnatakse.)
 Pairs(m3) teeb pildi ära, aga ilusama pildi saab `GGally::ggpairs()` abil.
@@ -489,7 +505,9 @@ Pairs(m3) teeb pildi ära, aga ilusama pildi saab `GGally::ggpairs()` abil.
 pairs(m2, pars = "b_")
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-29-1} \end{center}
 
 
 
@@ -500,7 +518,9 @@ posterior_samples(m2) %>%
   ggpairs()
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-30-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-30-1} \end{center}
 
 Siin on posteeriorite põhjal arvutatud 50% ja 95% CI ja see plotitud.
 
@@ -508,7 +528,9 @@ Siin on posteeriorite põhjal arvutatud 50% ja 95% CI ja see plotitud.
 stanplot(m2, pars = "r_", type = "intervals")
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-31-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-31-1} \end{center}
 
 type = argument sisestamine võimaldab plottida erinevaid diagnostilisi näitajaid. Lubatud sisendid on "hist", "dens", "hist_by_chain", "dens_overlay", "violin", "intervals", "areas", "acf", "acf_bar", "trace", "trace_highlight", "scatter", "rhat", "rhat_hist", "neff", "neff_hist" "nuts_acceptance", "nuts_divergence", "nuts_stepsize", "nuts_treedepth" ja "nuts_energy".
 
@@ -517,7 +539,9 @@ type = argument sisestamine võimaldab plottida erinevaid diagnostilisi näitaja
 stanplot(m2, type = "neff")
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-32-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-32-1} \end{center}
 
 Neff on efektiivne valimi suurus ja senikaua kuni Neff/N suhe ei ole < 0.1, pole põhjust selle pärast muretseda.
 
@@ -535,7 +559,9 @@ pars <- colnames(model)
 mcmc_intervals(model, regex_pars = "[^(lp__)]")
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-34-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-34-1} \end{center}
 
 Näeme, et sigma hinnang on väga usaldusväärne, samas kui gruppide vahelise sd hinnang ei ole seda mitte (pane tähele posterioorse jaotuse ebasümmeetrilisust).
 
@@ -547,7 +573,9 @@ mcmc_intervals(model2, regex_pars = "[^(lp__)]")
 mcmc_areas(model2,  pars = c("b_Petal.Length", "b_Sepal.Width"))
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-35-1.png" width="70%" style="display: block; margin: auto;" /><img src="17_brms_files/figure-html/unnamed-chunk-35-2.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-35-1} \includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-35-2} \end{center}
 
 
 ### Bayesi versioon R-ruudust 
@@ -582,7 +610,9 @@ purrr::map(list(m1, m2, m3), pp_check, nsamples = 10) %>%
   grid.arrange(grobs = ., nrow = 3)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-38-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-38-1} \end{center}
 
 - y - tihedusplot empiirilistest andmetest
 - y_rep -- plotid mudeli poolt ennustatud iseseisvatest valimitest (igaüks sama suur kui empiiriline valim y) 
@@ -597,7 +627,9 @@ Teeme ennustused. Kõigepealt ennustame ühe keskmise mudeliga, mis ei arvesta m
 plot(marginal_effects(m2, effects = "Petal.Length", method = "predict", probs = c(0.1, 0.9)), points = TRUE)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-39-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-39-1} \end{center}
 
 Ennustus on selles mõttes ok, et vaid väike osa punkte jääb sellest välja, aga laiavõitu teine!
 
@@ -607,7 +639,9 @@ Nüüd ennustame sama mudeli põhjal igale liigile eraldi. Seega kasutame mudeli
 plot(marginal_effects(m2, effects = "Petal.Length", method = "predict", conditions = make_conditions(iris, vars = "Species"), probs = c(0.1, 0.9), re_formula = NULL), points = TRUE)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-40-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-40-1} \end{center}
 
 
 `method = "predict"` ennustab, millisesse vahemikku peaks mudeli järgi jääma 90% andmepunkte (k.a. uued andmepunktid, mida pole veel valimisse korjatud).
@@ -621,7 +655,9 @@ Järgneval pildil on `method = "fitted"`. Nüüd on enamus punkte väljaspool us
 plot(marginal_effects(m2, effects = "Petal.Length", method = "fitted", conditions = make_conditions(iris, vars = "Species"), probs = c(0.1, 0.9), re_formula = NULL), points = TRUE)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-41-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-41-1} \end{center}
 `method = "fitted"` annab CI regressioonijoonele.
 
 Argumendid: 
@@ -655,7 +691,9 @@ Kõigepealt plotime mudeli ennustused, kuidas Sepal Length sõltub Petal Length-
 plot(marginal_effects(m5, effects = "Petal.Length:Sepal.Width"), points = TRUE)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-44-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-44-1} \end{center}
 
 Ja siis sümmeetriliselt vastupidi.
 
@@ -663,7 +701,9 @@ Ja siis sümmeetriliselt vastupidi.
 plot(marginal_effects(m5, effects = "Sepal.Width:Petal.Length"), points = TRUE)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-45-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-45-1} \end{center}
 
 
 Siin lisame enda soovitud Sepal Width väärtused (5 ja 1.2), mis on väljaspool seda, mida loodus pakub. Pane tähele ennustuse laiemaid CI-e.
@@ -673,7 +713,9 @@ conditions <- data.frame(Sepal.Width = c(5, 1.2))
 plot(marginal_effects(m5, effects = "Petal.Length", conditions = conditions, re_formula = NULL), points = TRUE)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-46-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-46-1} \end{center}
 
 
 ### Alternatiivne tee
@@ -696,12 +738,12 @@ predict_interval_brms2 <- predict(m2, newdata = newx, re_formula = NULL) %>%
   cbind(newx, .)
 head(predict_interval_brms2)
 #>   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5
-#> 1         1.00        3.06  setosa     4.50     0.314 3.86  5.11
-#> 2         1.04        3.06  setosa     4.53     0.318 3.91  5.14
-#> 3         1.08        3.06  setosa     4.55     0.319 3.94  5.17
-#> 4         1.12        3.06  setosa     4.59     0.316 3.97  5.20
-#> 5         1.16        3.06  setosa     4.61     0.318 4.00  5.22
-#> 6         1.20        3.06  setosa     4.65     0.316 4.02  5.24
+#> 1         1.00        3.06  setosa     4.48     0.319 3.83  5.11
+#> 2         1.04        3.06  setosa     4.53     0.318 3.92  5.14
+#> 3         1.08        3.06  setosa     4.55     0.321 3.93  5.19
+#> 4         1.12        3.06  setosa     4.58     0.322 3.94  5.20
+#> 5         1.16        3.06  setosa     4.61     0.320 3.99  5.23
+#> 6         1.20        3.06  setosa     4.64     0.311 4.05  5.27
 ```
 
 `predict()` ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele
@@ -716,7 +758,9 @@ ggplot(data = predict_interval_brms2, aes(x = Petal.Length, y = Estimate)) +
   geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = Species), alpha = 1/3)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-49-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-49-1} \end{center}
 
 Ennustav plot - kuidas lähevad kokku mudeli ennustused reaalsete y-i andmepunktidega
 
@@ -728,7 +772,9 @@ ggplot(pr, aes(Sepal.Length, Estimate, color = Species)) +
   coord_cartesian(xlim = c(4, 8), ylim = c(4, 8))
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-50-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-50-1} \end{center}
 
 Igale andmepunktile -- kui palju erineb selle residuaal 0-st kui hästi ennustab mudel just seda andmepunkti. Ruumi kokkuhoiuks plotime välja ainult irise valiku 50-st andmepunktist.
 
@@ -745,7 +791,9 @@ as_data_frame(residuals(m2)) %>%
 #> This warning is displayed once per session.
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-51-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-51-1} \end{center}
 
 Ok, isendid nr 15 ja 44 paistavad olema vastavalt palju suurema ja väiksema Sepal Lengthiga kui mudel ennustab. Võib küsida, miks?
 
@@ -775,7 +823,9 @@ ggplot(data = predict_interval_brms2f, aes(x = Petal.Length, y = Estimate, color
   scale_x_continuous(breaks = 0:10)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-53-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-53-1} \end{center}
 
 Mudeli genereeritud andmed ja valimiandmed mõõtmisobjekti (subjekti e taimeisendi) kaupa. See on sisuliselt posterior predictive plot (vt eespool). 
 
@@ -794,7 +844,9 @@ ggplot(data = predicted_subjects_brms, aes(x = Petal.Length, color = Species)) +
   geom_point(aes(y = Sepal.Length), shape = 3)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-55-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-55-1} \end{center}
 
 ### Alternatiiv -- ansambliennustus
 
@@ -818,7 +870,9 @@ loo_m2 <- loo(m2)
 plot(loo_m2)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-57-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-57-1} \end{center}
 
 Kui paljud andmepunktid on kahtlaselt mõjukad?
 
@@ -843,7 +897,9 @@ ggplot() +
   labs(x = "fitted", y = "residuals")
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-59-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-59-1} \end{center}
 `type = "pearson"` annab standardiseeritud residuaalid $R = (Y - Y_p) / SD(Y)$,  kus SD(Y) on hinnang Y-muutuja SD-le. alternatiiv on `type = "ordinary"`, mis annab tavalised residuaalid.
 
 Residuals vs fitted plot testib lineaarsuse eeldust - kui .resid punktid jaotuvad ühtlaselt nulli ümber, siis mudel püüab kinni kogu süstemaatilise varieeruvuse teie andmetest ja see mis üle jääb on juhuslik varieeruvus.
@@ -854,7 +910,9 @@ Vaatame diagnostilist plotti autokorrelatsioonist residuaalide vahel.
 acf(resid[,1])
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-60-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-60-1} \end{center}
 
 Residuaalide autokorrelatsioonid on madalad - seega kõik paistab OK ja andmepunktide sõltumatus on tagatud.
 
@@ -866,7 +924,9 @@ ggplot(data = NULL) +
   geom_vline(xintercept = median(resid), linetype = "dashed")
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-61-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-61-1} \end{center}
 
 Residuaalid on sümmeetrilise jaotusega ja meedian residuaal on peaaegu null. See on kõik hea.
 
@@ -880,7 +940,9 @@ ggplot(iris2, aes(Petal.Length, Estimate, color = Species)) +
   geom_hline(yintercept = 0, linetype = "dashed")
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-62-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-62-1} \end{center}
 
 Tsiteerides klassikuid: "Pole paha!". Mudel ennustab hästi, aga mõne punkti jaoks on ennustus 2 sd kaugusel.
 
@@ -890,7 +952,9 @@ ggplot(iris2, aes(Sepal.Width, Estimate, color = Species)) +
   geom_hline(yintercept = 0, linetype = "dashed")
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-63-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-63-1} \end{center}
 
 
 ```r
@@ -900,7 +964,9 @@ ggplot(iris2, aes(Species, Estimate)) +
   geom_jitter(width = 0.1)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-64-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-64-1} \end{center}
 
 # Brms mudelid
 
@@ -915,7 +981,9 @@ y = dgamma(x, shape = 4, scale = 1)
 plot(y ~ x)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-65-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-65-1} \end{center}
 
 
 ```r
@@ -976,7 +1044,9 @@ b2 <- filter(b_estimates, str_detect(term, "b_I")) %>%
 gridExtra::grid.arrange(b1, b2, nrow = 1)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-70-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-70-1} \end{center}
 
 Kolme mudeli lõikepunktid ja tõusunurgad on sisuliselt võrdsed ja sama täpsusega hinnatud. Seega ei tee robustne mudel vähemal halba, kui meil on enam-vähem normaalsed andmed.
 
@@ -1072,7 +1142,9 @@ mean_2.gr <- r_1_df$b_Intercept + r_1_df$b_Speciesvirginica
 ggplot(data = NULL) + geom_density(aes(mean_2.gr))
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-78-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-78-1} \end{center}
 
 Nii saab tekitada usaldusinetvalle, mis katavad 90% jaotuse alusest kõrgeimast tihedusest (mis ei ole päris sama, mis kvantiilide meetod) 
 
@@ -1107,7 +1179,9 @@ ggplot(data = NULL) +
   geom_density(aes(sd_2.gr))
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-82-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-82-1} \end{center}
 
 On tavaline, et sd-de posteeriorid ei ole normaaljaotusega (selle kohta vaata lähemalt Statistical Rethinking raamatust).
 
@@ -1139,7 +1213,9 @@ ggplot(df1, aes(value, fill = key)) +
   geom_histogram(alpha = 0.7, position = "identity", bins = 30)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-84-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-84-1} \end{center}
 
 
 ```r
@@ -1226,10 +1302,14 @@ g2007 <- gapminder %>%
   mutate(l_GDP = log10(gdpPercap))
 ```
 
-<div class="figure" style="text-align: center">
-<img src="17_brms_files/figure-html/unnamed-chunk-92-1.png" alt="SKP-de jaotus" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-92)SKP-de jaotus</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-92-1} 
+
+}
+
+\caption{SKP-de jaotus}(\#fig:unnamed-chunk-92)
+\end{figure}
 
 
 ```r
@@ -1272,14 +1352,18 @@ tidy(ln_m1)
 plot(marginal_effects(ln_m1), points = TRUE)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-98-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-98-1} \end{center}
 
 
 ```r
 plot(marginal_effects(ln_m1, method = "predict"), points = TRUE)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-99-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-99-1} \end{center}
 
 
 ```r
@@ -1297,7 +1381,9 @@ ln_m2 <- read_rds("data/ln_m2.rds")
 plot(marginal_effects(ln_m2, method="predict"), points=TRUE)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-102-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-102-1} \end{center}
 
 
 ```r
@@ -1318,7 +1404,9 @@ bayes_R2(ln_m2)
 plot(marginal_effects(ln_m2), points=TRUE)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-105-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-105-1} \end{center}
 
 
 
@@ -1500,7 +1588,9 @@ y <- exp(x)/(1+exp(x))
 plot(y~x)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-118-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-118-1} \end{center}
 
 Kui me logistilise regressiooniga fititud mudeli y = a + bx korral muudame x-i väärtust ühe ühiku võrra, siis muutub *log-odds* b võrra, mis on sama, mis õelda, et *odds* muutub exp(b) võrra. Samas b ei vasta P(Y = 1 | X) muutusele X-i muutumisel ühe ühiku võrra. See, kui kiiresti P(Y = 1 | X) muutub, sõltub X-i väärtusest. Siiski, senikaua kuni b > 0, kaasneb X-i kasvuga alati tõenäosuse P(Y = 1) kasv (ja vastupidi). 
  
@@ -1552,7 +1642,7 @@ skim(chimpanzees)
 #>  n obs: 504 
 #>  n variables: 8 
 #> 
-#> ── Variable type:integer ───────────────────────────────────────────
+#> -- Variable type:integer ------------------------------------------------
 #>      variable missing complete   n  mean    sd p0 p25  p50 p75 p100
 #>         actor       0      504 504  4     2     1   2  4     6    7
 #>         block       0      504 504  3.5   1.71  1   2  3.5   5    6
@@ -1700,7 +1790,9 @@ roccurve <- roc(chimpanzees$pulled_left ~ glm.probs)
 plot(roccurve, cex.axis = 0.7, cex.lab = 0.8)
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-132-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-132-1} \end{center}
 
 Nagu näha, kui spetsiifilisus on kõrge, siis sensitiivsus on madal ja vastupidi. See on alati nii. Fakt, et kurv ei kaugene kuigi palju keskjoonest, mis tähistab loll-mudeli ennustuse 50%-st tabavust, näitab et meie ennustuste kvaliteet on tagasihoidlik. *Area under the curve* ehk *auc* ütleb, et ennustuse tabavus on 59%.
 
@@ -1852,7 +1944,9 @@ predict(m_ucadmit2) %>%
        title = "Posterior validation check") 
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-147-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-147-1} \end{center}
 
 Ohhoo, kui vaadata deparmente eraldi, pole mingit kinnitust, et meestel oleks paremad võimalused ülikooli sisse saada.
 
@@ -1861,7 +1955,9 @@ Ohhoo, kui vaadata deparmente eraldi, pole mingit kinnitust, et meestel oleks pa
 marginal_effects(m_ucadmit2, effects ="dept", conditions = data.frame(male = c(0, 1)))
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-148-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-148-1} \end{center}
 
 ### Y-muutujal 3+ kategoorilist väärtust
 
@@ -1918,7 +2014,9 @@ ggplot(pred1_l, aes(income, value)) + geom_point() + facet_wrap(~variable)+
   ylab("Pr of career choice at a given income") 
 ```
 
-<img src="17_brms_files/figure-html/unnamed-chunk-152-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{17_brms_files/figure-latex/unnamed-chunk-152-1} \end{center}
  
  
 #### Y-muutujal on 3+ kategoorilist väärtust, mis on ordinaalselt järjestatud {-}
@@ -2109,19 +2207,33 @@ Priors on population-level parameters (i.e., ‘fixed effects’) are often mand
 # brms süntaks
 
 
-Symbol   Example             Meaning                                                                                                                                                                                   
--------  ------------------  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-+        + x                 include this variable                                                                                                                                                                     
--        -                   x	delete this variable                                                                                                                                                                    
-:        x : z               include the interaction between these variables                                                                                                                                           
-*        x * z               include these variables and the interactions between them                                                                                                                                 
-/        x / z               nesting: include z nested within x                                                                                                                                                        
-|        x | z               conditioning: include x given z                                                                                                                                                           
-^        (u + v + w + z)^3   include these variables and all interactions up to three way                                                                                                                              
-poly     poly(x,3)           polynomial regression: orthogonal polynomials                                                                                                                                             
-Error    Error(a/b)          specify an error term                                                                                                                                                                     
-I        I(x*z)              as is: include a new variable consisting of these variables multiplied. (x^2) means include this variable squared, etc. In other words I( ) isolates the mathematic operations inside it. 
-1        - 1                 intercept: delete the intercept (regress through the origin)                                                                                                                              
+\begin{tabular}{l|l|l}
+\hline
+Symbol & Example & Meaning\\
+\hline
++ & + x & include this variable\\
+\hline
+- & - & x	delete this variable\\
+\hline
+: & x : z & include the interaction between these variables\\
+\hline
+* & x * z & include these variables and the interactions between them\\
+\hline
+/ & x / z & nesting: include z nested within x\\
+\hline
+| & x | z & conditioning: include x given z\\
+\hline
+\textasciicircum{} & (u + v + w + z)\textasciicircum{}3 & include these variables and all interactions up to three way\\
+\hline
+poly & poly(x,3) & polynomial regression: orthogonal polynomials\\
+\hline
+Error & Error(a/b) & specify an error term\\
+\hline
+I & I(x*z) & as is: include a new variable consisting of these variables multiplied. (x\textasciicircum{}2) means include this variable squared, etc. In other words I( ) isolates the mathematic operations inside it.\\
+\hline
+1 & - 1 & intercept: delete the intercept (regress through the origin)\\
+\hline
+\end{tabular}
 
 üldine vorm:
 

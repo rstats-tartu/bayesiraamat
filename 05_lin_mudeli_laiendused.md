@@ -33,10 +33,14 @@ Kui meil on kolme prediktoriga mudel, siis me liigume juba neljamõõtmelisse ru
 
 (ref:regressioonitasand) Regressioonitasand 3D andmetele. Kahe prediktoriga mudel, kus Sepal.Length ja Petal.Length on prediktorid ja Sepal.Width ennustatav muutuja.
 
-<div class="figure" style="text-align: center">
-<img src="05_lin_mudeli_laiendused_files/figure-html/regressioonitasand-1.png" alt="(ref:regressioonitasand)" width="70%" />
-<p class="caption">(\#fig:regressioonitasand)(ref:regressioonitasand)</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{05_lin_mudeli_laiendused_files/figure-latex/regressioonitasand-1} 
+
+}
+
+\caption{(ref:regressioonitasand)}(\#fig:regressioonitasand)
+\end{figure}
 
 
 Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile.
@@ -59,10 +63,14 @@ devtools::source_gist("8b4d6ab6a333ef1cd14e8067c3badbae", filename = "grid_arran
 grid_arrange_shared_legend(p1, p2)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="05_lin_mudeli_laiendused_files/figure-html/lin2d-1.png" alt="(ref:lin2d)" width="70%" />
-<p class="caption">(\#fig:lin2d)(ref:lin2d)</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{05_lin_mudeli_laiendused_files/figure-latex/lin2d-1} 
+
+}
+
+\caption{(ref:lin2d)}(\#fig:lin2d)
+\end{figure}
 
 
 Võrreldes mudelite m1 (üks prediktor) ja m2 (kaks prediktorit) Sepal.Length ($b_1$) koefitsienti on näha, et need erinevad oluliselt.
@@ -115,10 +123,14 @@ plot(Sepal_width_predicted ~ Sepal_length, type = "b", ylim = c(0, 5), col = "re
 abline(m1, lty = "dashed")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="05_lin_mudeli_laiendused_files/figure-html/yksversuskaks-1.png" alt="(ref:yksversuskaks)" width="70%" />
-<p class="caption">(\#fig:yksversuskaks)(ref:yksversuskaks)</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{05_lin_mudeli_laiendused_files/figure-latex/yksversuskaks-1} 
+
+}
+
+\caption{(ref:yksversuskaks)}(\#fig:yksversuskaks)
+\end{figure}
 
 Nüüd joonistame 3D pildi olukorrast, kus nii x~1~ kui x~2~ omandavad rea väärtusi. Mudeli ennustus on ikkagi sirge kujul -- mis sest, et 3D ruumis.
 
@@ -130,10 +142,14 @@ Nüüd joonistame 3D pildi olukorrast, kus nii x~1~ kui x~2~ omandavad rea vää
 #> This warning is displayed once per session.
 ```
 
-<div class="figure" style="text-align: center">
-<img src="05_lin_mudeli_laiendused_files/figure-html/kaksprediktorit-1.png" alt="(ref:kaksprediktorit)" width="70%" />
-<p class="caption">(\#fig:kaksprediktorit)(ref:kaksprediktorit)</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{05_lin_mudeli_laiendused_files/figure-latex/kaksprediktorit-1} 
+
+}
+
+\caption{(ref:kaksprediktorit)}(\#fig:kaksprediktorit)
+\end{figure}
 
 ## Interaktsioonimudel 
 
@@ -237,10 +253,14 @@ plot(Sepal_width_predicted ~ Sepal_length, type = "l", ylim = c(2, 6))
 abline(coef(m2)[c("(Intercept)", "Sepal.Length")], lty = "dashed")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="05_lin_mudeli_laiendused_files/figure-html/ennustus-interaktsioonimudelist-1.png" alt="(ref:ennustus-interaktsioonimudelist)" width="70%" />
-<p class="caption">(\#fig:ennustus-interaktsioonimudelist)(ref:ennustus-interaktsioonimudelist)</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{05_lin_mudeli_laiendused_files/figure-latex/ennustus-interaktsioonimudelist-1} 
+
+}
+
+\caption{(ref:ennustus-interaktsioonimudelist)}(\#fig:ennustus-interaktsioonimudelist)
+\end{figure}
 
 Nagu näha viib korrutamistehe selleni, et interaktsioonimudeli tõus erineb ilma interaktsioonita mudeli tõusust. 
 
@@ -248,10 +268,14 @@ Kui aga interaktsioonimudel plottida välja 3D-s üle paljude x~1~ ja x~2~ vää
 
 (ref:ennustused3d-interaktsioonimudelist) Ennustused 3D interaktsioonimudelist üle paljude x~1~ (Sepal_Length) ja x~2~ (Petal_length) väärtuste.
 
-<div class="figure" style="text-align: center">
-<img src="05_lin_mudeli_laiendused_files/figure-html/ennustused3d-interaktsioonimudelist-1.png" alt="(ref:ennustused3d-interaktsioonimudelist)" width="70%" />
-<p class="caption">(\#fig:ennustused3d-interaktsioonimudelist)(ref:ennustused3d-interaktsioonimudelist)</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{05_lin_mudeli_laiendused_files/figure-latex/ennustused3d-interaktsioonimudelist-1} 
+
+}
+
+\caption{(ref:ennustused3d-interaktsioonimudelist)}(\#fig:ennustused3d-interaktsioonimudelist)
+\end{figure}
 
 Vau! See on alles ennustus!
 
@@ -336,7 +360,7 @@ Nii saab fititud väärtused (.fitted), residuaalid (.resid), fittitud väätrus
 #> 4         3.1          4.6 setosa     3.10  0.0591 -0.00380 0.0471  0.273
 #> 5         3.6          5   setosa     3.42  0.0385  0.177   0.0200  0.273
 #> 6         3.9          5.4 setosa     3.74  0.0581  0.157   0.0455  0.273
-#> # … with 144 more rows, and 2 more variables: .cooksd <dbl>,
+#> # ... with 144 more rows, and 2 more variables: .cooksd <dbl>,
 #> #   .std.resid <dbl>
 ```
 
@@ -354,7 +378,9 @@ ggplot(a_m3, aes(`.fitted`, `.resid`)) +
   geom_smooth()
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{05_lin_mudeli_laiendused_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 
 ### Mõjukuse plot {-}
@@ -379,7 +405,9 @@ influencePlot(m3, id.method="identify", main="Influence Plot",
 #> 119  -2.464 0.0824 0.08782
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{05_lin_mudeli_laiendused_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 Horisontaalsed referentsjooned näitavad 0, 2 ja -2 studentiseeritud residuaale.
 Vertikaalsed referentsjooned näitavad hat-väärtusi 2h ja 3h.
@@ -400,7 +428,9 @@ ggplot(data = NULL, aes(x = 1:150, y = a_m3$`.cooksd`)) + geom_col() +
   geom_hline(yintercept = 3*mean(a_m3$`.cooksd`), lty = 2)
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{05_lin_mudeli_laiendused_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
 
 ### Residuaalide normaalsus - qq plot {-}
@@ -412,7 +442,9 @@ car::qqPlot(a_m3$`.std.resid`, distribution = "t", df=149)
 #> [1] 42 69
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{05_lin_mudeli_laiendused_files/figure-latex/unnamed-chunk-16-1} \end{center}
 QQ-plot näitab erinevust normaaljaotusest (t jaotusest) eelkõige residuaalide jaotuse sabades. Antud juhul on kõik hästi.
 
 Isegi oluisem on vaadata, et residuaalide jaotus ei oleks mitmetipuline. Kui on, siis võib see olla märgiks, et mudelist on puudu mõni faktormuutuja, mis andmetes olevad diskreetsed loomulikud alampopulatsioonid lahku ajaks.
@@ -421,7 +453,9 @@ Isegi oluisem on vaadata, et residuaalide jaotus ei oleks mitmetipuline. Kui on,
 ggplot(a_m3, aes(`.std.resid`))+ geom_density()
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{05_lin_mudeli_laiendused_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 
 ### Homoskedastilisus - Scale-location plot {-}
@@ -435,7 +469,9 @@ ggplot(a_m3, aes(`.fitted`, `.resid` %>% abs %>% sqrt)) +
   geom_smooth(se = FALSE)
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{05_lin_mudeli_laiendused_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
 
 
@@ -448,7 +484,9 @@ ggplot(a_m3, aes(Sepal.Width, `.std.resid`)) + geom_point(aes(color=Species)) + 
   geom_smooth( se=F, color="black", size=0.5)
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{05_lin_mudeli_laiendused_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
 Mudel paistab süstemaatiliselt alahindama Sepal Width-i seal kus Sepal Length on kõrge, ja vastupidi. Horisontaalne punktiirjoon näitab, kus mudel vastab täpselt andmetele.
 
@@ -463,7 +501,9 @@ ggplot(a_m3, aes(Sepal.Length, `.std.resid`, color=Species)) +
   geom_smooth(se=F, color="black", size=0.5)
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{05_lin_mudeli_laiendused_files/figure-latex/unnamed-chunk-20-1} \end{center}
 Ideaalsed residuaalid! 
 
 ## 3. Teeme mudeli põhjal ennustusi (marginal plots) {-}
@@ -494,7 +534,9 @@ ggplot(mydf, aes(x, predicted)) +
   theme_classic()
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{05_lin_mudeli_laiendused_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 >terms argument võtab kuni 3 muutujat, neist 2 peavad olema faktormuutujad ja 3 muutuja korral tekib tabelisse veerg nimega facet, mille abil saab tulemused facet_wrap()-ga välja plottida.
 
@@ -509,7 +551,9 @@ ggplot(mydf, aes(x, predicted)) +
   ylab("predicted sepal width")
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{05_lin_mudeli_laiendused_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
 
 Nii saab sisestada üksikuid parameetriväärtusi ja neile ennustusi teha:
@@ -571,13 +615,13 @@ Lineaarsed transformatsioonid võivad hõlbustada mudeli koefitsientide tõlgend
 
 ## Logaritmimine
 
-Kui muutujal saavad olla ainult positiivsed väärtused, siis on logaritmimine vahest hea mõte. Enne logaritmima asumist paeb andmetest kaotama ka nullid, näiteks asendades need mingi väikese positiivse arvuga. Logaritmilises skaalas andmetele fititud mudelite β koefitsiendid peaaegu alati < 1. 
+Kui muutujal saavad olla ainult positiivsed väärtused, siis on logaritmimine vahest hea mõte. Enne logaritmima asumist paeb andmetest kaotama ka nullid, näiteks asendades need mingi väikese positiivse arvuga. Logaritmilises skaalas andmetele fititud mudelite $\beta$ koefitsiendid peaaegu alati < 1. 
 
 ### Miks ja millal muutujaid logaritmida {-}
 
 1. Muutuja(te) logaritmimine muudab muutujate vahelised suhted mitte-lineaarseks, samas säilitades mudeli lineaarsuse. Ja vastupidi, kui tavalises meetrilises skaalas juhtuvad additiivse mudeli muutujate vahelised seosed olema mitte-lineaarsed, siis x-muutuja(te) logaritmimine võib need muuta lineaarseks, ja sellega päästa ühe olulisema lineaarse regressiooni eelduse (vt ka ptk 4.2).
 
-2. Logarimimine on hea, kui soovite Y ja X muutuja omavahelist sõltuvust tõlgendada üle suhtelise muutuse ehk muutuse protsendi. Kui algses skaalas on β koefitsiendi loomulik tõlgendus additiivne: X-i kasv 1 ühiku võrra ennustab y-i kasvu β ühiku võrra, siis naturaallogaritmitud X-i korral on üks loomulikest multiplikatiivsetest tõlgendustest: X-i kasv 1 ühiku võrra ennustab Y-i muutust ... protsendi võrra. Additiivsel juhul me liidame ja lahutame, multiplikatiivsel juhul aga korrutame ja jagame.
+2. Logarimimine on hea, kui soovite Y ja X muutuja omavahelist sõltuvust tõlgendada üle suhtelise muutuse ehk muutuse protsendi. Kui algses skaalas on $\beta$ koefitsiendi loomulik tõlgendus additiivne: X-i kasv 1 ühiku võrra ennustab y-i kasvu $\beta$ ühiku võrra, siis naturaallogaritmitud X-i korral on üks loomulikest multiplikatiivsetest tõlgendustest: X-i kasv 1 ühiku võrra ennustab Y-i muutust ... protsendi võrra. Additiivsel juhul me liidame ja lahutame, multiplikatiivsel juhul aga korrutame ja jagame.
 
 3. Muutuja logaritmimine võib viia selle muutuja lähemale normaaljaotusele (lognormaaljaotuse logaritm on normaaljaotusega). Algselt paremale kaldu jaotuse äärmuspunktid võivad regressioonile liiga suurt kaalu omada, milline probleem sageli kaob logaritmimisel.
 
@@ -592,13 +636,13 @@ Kui muutujal saavad olla ainult positiivsed väärtused, siis on logaritmimine v
 8. Logaritmimine võib lihtsustada mudelit, vähendades interaktsiooniliikmete arvu.
 
 Mudeli fiti kvaliteedi koha pealt pole vahet, millist logaritmi te kasutate --  erinevused on "pelgalt" mudeli koefitsientide tõlgendustes.
- Naturaallogaritmitud log(x) andmete peal fititud mudeli korral on algses lineaarses skaalas tõlgendatav logaritmitud andmete peal fititud β, aga log-skaalas muutujate väärtused ei tähenda peale vaadates suurt midagi. Vastupidiselt on  kümnendlogaritmitud log10(x) või kahendlogaritmitud log2(x) andmed log skaalas tõlgendatavad, aga mitte neil fititud β lineaarses skaalas. Igal juhul eelistavad loodusteadlased kasutada log2 ja log10 skaalasid, mida on mugavam otse log-skaalas tõlgendada. log2 skaalas vastab üheühikuline muutus kahekordsele muutusele algses skaalas ja anti-logaritm on $2^{log2(x)}$. Log10 skaalas vastab üheühikuline muutus 10-kordsele muutusele algses skaalas ja anti-logaritm on $10^{log10(x)}$. 
+ Naturaallogaritmitud log(x) andmete peal fititud mudeli korral on algses lineaarses skaalas tõlgendatav logaritmitud andmete peal fititud $\beta$, aga log-skaalas muutujate väärtused ei tähenda peale vaadates suurt midagi. Vastupidiselt on  kümnendlogaritmitud log10(x) või kahendlogaritmitud log2(x) andmed log skaalas tõlgendatavad, aga mitte neil fititud $\beta$ lineaarses skaalas. Igal juhul eelistavad loodusteadlased kasutada log2 ja log10 skaalasid, mida on mugavam otse log-skaalas tõlgendada. log2 skaalas vastab üheühikuline muutus kahekordsele muutusele algses skaalas ja anti-logaritm on $2^{log2(x)}$. Log10 skaalas vastab üheühikuline muutus 10-kordsele muutusele algses skaalas ja anti-logaritm on $10^{log10(x)}$. 
 
 ### Naturaallogaritmitud andmetega töötamine {-}
 
-Järgnevalt õpetame naturaallogaritmitud andmetega fititud mudelite β koefitsiendite tõlgendamist algses, meetrilises skaalas ja suhtelises protsendiskaalas.  
+Järgnevalt õpetame naturaallogaritmitud andmetega fititud mudelite $\beta$ koefitsiendite tõlgendamist algses, meetrilises skaalas ja suhtelises protsendiskaalas.  
 
-Naturaallogaritmi alus on e ≈ 2.71828 ja sellel on järgmised matemaatilised omadused:
+Naturaallogaritmi alus on $e \approx 2.71828$ ja sellel on järgmised matemaatilised omadused:
 
 1. $log(e) = 1$
 
@@ -606,53 +650,53 @@ Naturaallogaritmi alus on e ≈ 2.71828 ja sellel on järgmised matemaatilised o
 
 3. $log(A^r) = r * log(A)$
 
-4. $e^{log(A)} = A$ ehk $exp(log(A)) = A$ ehk $2.72^{log(A)} ≈ A$
+4. $e^{log(A)} = A$ ehk $exp(log(A)) = A$ ehk $2.72^{log(A)} \approx A$
 
-5. $log(AB)=logA+logB$ 
+5. $log(AB)=logA + logB$ 
 
-6. $log(A/B)=logA−logB$ 
+6. $log(A/B)=logA - logB$
 
 7. $exp(AB) =  exp(A)^B$
 
 8. $exp(A+B) = exp(A)exp(B)$ 
 
-9. $exp(A−B) = exp(A)/exp(B)$
+9. $exp(A-B) = exp(A)/exp(B)$
 
 Lineaarsel regressioonil saab log-transformatsiooni kasutada kolmel erineval viisil:
 
-* Y = α + βX --- lineaarne mudel (transformeerimata)
+- Y = $\alpha$ + $\beta$X --- lineaarne mudel (transformeerimata)
 
-* Y = α + β * log(X) --- lineaar-log mudel (transformeeritud on prediktor(id))
+- Y = $\alpha$ + $\beta$ * log(X) --- lineaar-log mudel (transformeeritud on prediktor(id))
 
-* log(Y) = α + βX --- log-lineaar mudel (transformeeritud on y-muutuja)
+- log(Y) = $\alpha$ + $\beta$X -- log-lineaar mudel (transformeeritud on y-muutuja)
 
-* log(Y) = α + β * log(X) --- log-log mudel (transformeeritud on y ja x muutujad)
+- log(Y) = $\alpha$ + $\beta$ * log(X) -- log-log mudel (transformeeritud on y ja x muutujad)
 
-**Lineaarses** mudelis Y = α + βX, annab β selle, mitu ühikut muutub Y keskväärtus, kui X muutub ühe ühiku võrra.  
+**Lineaarses** mudelis Y = $\alpha$ + $\beta$X, annab $\beta$ selle, mitu ühikut muutub Y keskväärtus, kui X muutub ühe ühiku võrra.  
 
-**Lineaar-log** mudelis jääb kehtima sama β tõlgendus, mis ülalpool, ainult et log-ühikutes. Seega viib logX-i muutus ühe log ühiku võrra Y keskväärtuse muutusele β ühiku võrra (see kehtib muidugi ka log2 ja log10 skaalades). 
+**Lineaar-log** mudelis jääb kehtima sama $\beta$ tõlgendus, mis ülalpool, ainult et log-ühikutes. Seega viib logX-i muutus ühe log ühiku võrra Y keskväärtuse muutusele $\beta$ ühiku võrra (see kehtib muidugi ka log2 ja log10 skaalades). 
 
 Kui me juba kasutasime naturaallogaritmimist, siis tahame ilmselt tõlgendust pigem muutuse protsendina ja/või algsetes meetrilistes skaalas (log2 ja log10 ei võimalda selliseid mugavaid tõlgendusi):
 
-* β on oodatud Y muutus, kui X kasvab eX korda. 
+- $\beta$ on oodatud Y muutus, kui X kasvab eX korda. 
 
-* Kui β on väike, siis saab seda tõlgendada kui suhtelist erinevust. Näiteks, kui β = 0.06, siis 1 ühikuline X-i muutus viib u 6%-sele Y muutusele. Sedamõõda kuidas β kaugeneb nullist (näiteks β = 0.4), hakkab selline hinnang tõsiselt alahindama tegelikku x-i mõju y väärtusele. 
+- Kui $\beta$ on väike, siis saab seda tõlgendada kui suhtelist erinevust. Näiteks, kui $\beta$ = 0.06, siis 1 ühikuline X-i muutus viib u 6%-sele Y muutusele. Sedamõõda kuidas $\beta$ kaugeneb nullist (näiteks $\beta$ = 0.4), hakkab selline hinnang tõsiselt alahindama tegelikku x-i mõju y väärtusele. 
 
-* Oodatud Y muutus kui X kasvab p protsenti on β * log([100 + p]/100). Näit, kui X kasvab 10% võrra (ehk kui korrutame X-i 1.1-ga), siis log(110/100) = 0.095 ja 0.095β on oodatud Y muutus. 
+- Oodatud Y muutus kui X kasvab p protsenti on $\beta$ * log([100 + p]/100). Näit, kui X kasvab 10% võrra (ehk kui korrutame X-i 1.1-ga), siis log(110/100) = 0.095 ja 0.095$\beta$ on oodatud Y muutus. 
 
 **Log-lineaarse** mudeli korral, 
 
-* kui X kasvab 1 ühiku võrra, siis oodatud Y väärtus kasvab exp(β) korda. 
+- kui X kasvab 1 ühiku võrra, siis oodatud Y väärtus kasvab exp($\beta$) korda. 
 
-* Kui X kasvab c ühiku võrra, siis oodatud Y väärtus kasvab exp(cβ) korda. 
+- Kui X kasvab c ühiku võrra, siis oodatud Y väärtus kasvab exp(c$\beta$) korda. 
 
-* Kui β on väike, siis 100 * β vastab Y protsentuaalsele muutusele juhul kui X muutub 1 ühiku võrra (kui β = 0.06, siis X-i muutus 1 ühiku võrra viib Y-i 6% tõusule). 
+- Kui $\beta$ on väike, siis 100 * $\beta$ vastab Y protsentuaalsele muutusele juhul kui X muutub 1 ühiku võrra (kui $\beta$ = 0.06, siis X-i muutus 1 ühiku võrra viib Y-i 6% tõusule). 
 
-**Log-log** mudeli korral on tõlgendus oodatud Y-i muutus protsentides kui X muutub mingi protsendi võrra. Sellist suhet kotsutakse ökonomeetrias elastiliseks ja logX-i β koefitsient on "elastilisus." 
+**Log-log** mudeli korral on tõlgendus oodatud Y-i muutus protsentides kui X muutub mingi protsendi võrra. Sellist suhet kotsutakse ökonomeetrias elastiliseks ja logX-i $\beta$ koefitsient on "elastilisus." 
 
-* Kui me korrutame X-i e-ga, siis korrutame oodatud Y-i väärtuse exp(β)-ga. 
+- Kui me korrutame X-i e-ga, siis korrutame oodatud Y-i väärtuse exp($\beta$)-ga. 
 
-* Et saada Y suhtelist muutust, kui X kasvab p protsenti, arvuta a = log([100 + p]/100) ja siis võta exp(aβ). 
+- Et saada Y suhtelist muutust, kui X kasvab p protsenti, arvuta a = log([100 + p]/100) ja siis võta exp(a$\beta$). 
 
 
 ## Standardiseerimine
@@ -675,8 +719,8 @@ Prediktorite standardiseerimine, eesmärgiga võrrelda võrreldamatut, on paraku
 
 Kui standardiseerime nii y kui x-i
 
-`x <- (x-mean(x))/sd(x)`
-`y <- (y-mean(y))/sd(y)`
+`x <- (x - mean(x)) / sd(x)`
+`y <- (y  -mean(y)) / sd(y)`
 
 siis y~x regressiooni intercept = 0 ja tõus on sama, mis x ja y vaheline korrelatsioonikoefitsient r.
 Seega jääb tõus alati -1 ja 1 vahele. 
@@ -691,7 +735,7 @@ Teine võimalus on tsentreerida mõnele teaduslikult mõistlikule väärtusele. 
 
 ## Mudeli koefitsientide transformeerimine
 
-Ilma interaktsioonideta mudeli korral saab sama tulemuse, mis prediktoreid tsentreerides, kui me reskaleerime tavalises skaalas fititud mudeli koefitsiendid, korrutades iga β oma prediktori kahekordse sd-ga ($β.x = β * 2* sd(x)$). Nende β.x-de pealt näeb iga muutuja suhtelist tähtsust mudelis. 
+Ilma interaktsioonideta mudeli korral saab sama tulemuse, mis prediktoreid tsentreerides, kui me reskaleerime tavalises skaalas fititud mudeli koefitsiendid, korrutades iga $\beta$ oma prediktori kahekordse sd-ga ($\beta_x = \beta \times 2 \times sd(x)$). Nende $\beta_x$-de pealt näeb iga muutuja suhtelist tähtsust mudelis. 
 
 Teine võimalus beta koefitsientide transformeerimiseks, mis ei eelda prediktorite normaalsust, on korrutada betad läbi vastavate muutujate interkvartiilsete range-dega (IQR).
 
@@ -717,12 +761,3 @@ Additiivne mudel eeldab, et emaste ja isaste tõusud on võrdsed, mistõttu need
 5. muutujad, mida sa reaalselt mõõtsid, ei pruugi olla need muutujad, mis mudelisse lähevad -- näiteks arvuta kehamassiindeks mõõdetud muutujate põhjal.
 
 6. kui pidevad prediktorid transformeerida log skaalasse, siis on lineaarsesse mudelisse pandud efektid multiplikatiivsed, mitte aditiivsed.
-
-
-
-
-
-
-
-
-

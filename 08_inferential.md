@@ -139,7 +139,7 @@ Ja võrdluseks A xor B tõetabel
 #> 4 F     F     F
 ```
 
-Kuna nende tabelite läbiarvutamisel saadud tõeväärtused on identsed, on laused $(A \lor B) \land \neg (A \land B) \Leftrightarrow A ~xor ~B$ *loogiliselt ekvivalentsed*. Ekvivalentsed võivad olla ka laused, mis ei koosne samadest atomaarlausetest, senikaua kui nende tõetabeli kõik read on sama tõeväärtusega (näiteks A ja A∧(B∨¬B)).
+Kuna nende tabelite läbiarvutamisel saadud tõeväärtused on identsed, on laused $(A \lor B) \land \neg (A \land B) \Leftrightarrow A ~ xor ~B$ *loogiliselt ekvivalentsed*. Ekvivalentsed võivad olla ka laused, mis ei koosne samadest atomaarlausetest, senikaua kui nende tõetabeli kõik read on sama tõeväärtusega (näiteks A ja $A\land(B\lor\neg B$)).
 
 Disjunktsiooni ja konjunktsiooni on võimalik avaldada teineteise kaudu:
 
@@ -365,7 +365,7 @@ Seega oli Popperi retsept teadlastele (loe: füüsikutele)
 
 1. postuleeri üldine teooria vormis: kõik X-d on Y.
 
-2. Dedutseeri sellest mõni teaduslikult testitav alamteooria vormis x_i on Y.
+2. Dedutseeri sellest mõni teaduslikult testitav alamteooria vormis $x_i$ on Y.
 
 3. Juhul kui me suudame empiiriliselt näidata, et see alamteooria on väär, oleme sellega deduktiivselt ümber lükanud ka üldise teooria kehtimise.
 
@@ -396,8 +396,6 @@ Tõenäosusteooria on matemaatika haruna deduktiivne aksiomaatiline süsteem, ag
 
 # Järeldav statistika
 
-
- 
 Kui EDA määrab graafiliste meetoditega andmete kvaliteeti ja püstitab uusi hüpoteese, siis järeldav statistika püüab formaalsete arvutuste abil vastata kahele lihtsale küsimusele: 1. mis võiks olla kõige usutavam parameetriväärtus? ja 2. kui suur ebakindlus seda hinnangut ümbritseb? Kuna andmed tulevad meile lõpliku suurusega valimina koos mõõtmisveaga ja bioloogilise varieeruvusega, on ebakindlus hinnagusse sisse ehitatud. Hea protseduur kvantifitseerib selle ebakindluse ausalt ja täpselt -- siin ei ole eesmärk niivõrd mitte ebakindlust vähendada (seda teeme eelkõige katse planeerimise tasemel), vaid seda kirjeldada. 
 Järeldav statistika püüab, kasutades algoritme ja mudeleid, teha andmete põhjal järeldusi looduse kohta. 
 
@@ -425,7 +423,7 @@ See õpik õpetab Bayesi statistikat, mis põhineb tõenäosusteoorial. Tänu se
 
 Tõenäosusteooria on aksiomaatiline süsteem, mille abil saame omistada numbriline väärtuse meie usu määrale mingisse hüpoteesi. Näiteks, kui me planeerime katset, kus me viskame kulli ja kirja ja teeme seda kaks korda, siis saame arvutada, millise tõenäosusega võime oodata katse tulemuseks kaht kirja. Aga seda tingimusel, et me võtame omaks mõned eeldused -- näiteks et münt on aus ja et need kaks viset on üksteisest sõltumatud. 
 
-Sellel katsel on 4 võimalikku tulemust: H-H, H-T, T-H, T-T (H -kull, T - kiri). Tõenäosus saada 2-l mündiviskel 2 kirja, P(2 kirja) = 1/4, P(0 kirja) = 1/4 ja P(1 kiri) = 2/4 = 1/2. Sellega oleme andnud oma katseplaanile täieliku tõenäosusliku kirjelduse (pane tähele, et 1/4 + 1/4 + 1/2 = 1). Ükskõik kui keeruline on teie katseplaan, põhimõtteliselt käib selle tõenäosusteoreetiline analüüs samamoodi.
+Sellel katsel on 4 võimalikku tulemust: H-H, H-T, T-H, T-T (H - kull, T - kiri). Tõenäosus saada 2-l mündiviskel 2 kirja, P(2 kirja) = 1/4, P(0 kirja) = 1/4 ja P(1 kiri) = 2/4 = 1/2. Sellega oleme andnud oma katseplaanile täieliku tõenäosusliku kirjelduse (pane tähele, et 1/4 + 1/4 + 1/2 = 1). Ükskõik kui keeruline on teie katseplaan, põhimõtteliselt käib selle tõenäosusteoreetiline analüüs samamoodi.
 Tõenäosusteooria loomus seisneb kõikide võimalike sündmuste üleslugemises ja erinevat tüüpi sündmuste suhteliste sageduste arvutamises -- ning senikaua, kui me seda nüri järjekindlusega teeme, on vastus, mille me saame, tõsikindel.
 
 Ehkki Bayesi statistika põhineb tõenäosusteoorial ja on sellega kooskõlas, ei ole see sama asi, mis tõenäosusteooria.
@@ -524,7 +522,7 @@ Järgnevatel näidetel on ühist kaks asja: need on matemaatiliselt triviaalselt
 
 **7. Punkt** Linda on 31 aastane, vallaline, sõnakas ja väga nutikas. Ta õppis ülikoolis filosoofiat ja muretses sel ajal sügavalt diskrimineerimise ja sotsiaalse õigluse pärast ning osales tuumarelva vastastel meeleavaldustel. Kumb on tõenäolisem? Linda on pangateller. Või Linda on pangateller, kes osaleb feministlikus liikumises. Kuigi enamus vastajatest eelistab 2. varianti, on see sõna otses mõttes loogikavastane.
 
-**13. Punkt** Kui me viskame täringut 3 korda, kui suure tõenäosusega saame vähemalt ühe kuue? Naiivselt võiks arvata, et see tõenäosus on 50%. Kuid rakendades tõenäosusteooriat saame teistsuguse vastuse. Lihtsuse huvides defineerime küsimuse ümber: kui suure tõenäosusega ei saa me 3-l viskel ühtegi kuute? Vastus: kui igal viskel on 0 kuue tõenäosus 5/6, siis $(5/6)*(5/6)*(5/6) = 0.58$ ja $1 - 0.58 = 0.42$, mis tähendab, et vähemalt 1 kuue (või ükskõik mis numbri ühest kuueni) saame 42% tõenäosusega. Teine näide (NYT 03-12-2017): te ostate maja Texases Hustonis, millele müüja annab garantii, et üleujutuse tõenäosus on 1% aastas. Seadus nimetab seda näidikut "100 aasta suurvee-tasemeks". 1% näidu puhul ei pea te seaduse järgi ostma üleujutusekindlustust. Kui suure tõenäosusega tabab teie maja üleujutus pangalaenu perioodi vältel (30 aastat)? Vastus: $1 - (99/100)^{30} = 0.26$.
+**13. Punkt** Kui me viskame täringut 3 korda, kui suure tõenäosusega saame vähemalt ühe kuue? Naiivselt võiks arvata, et see tõenäosus on 50%. Kuid rakendades tõenäosusteooriat saame teistsuguse vastuse. Lihtsuse huvides defineerime küsimuse ümber: kui suure tõenäosusega ei saa me 3-l viskel ühtegi kuute? Vastus: kui igal viskel on 0 kuue tõenäosus 5/6, siis $(5/6)(5/6)(5/6) = 0.58$ ja $1 - 0.58 = 0.42$, mis tähendab, et vähemalt 1 kuue (või ükskõik mis numbri ühest kuueni) saame 42% tõenäosusega. Teine näide (NYT 03-12-2017): te ostate maja Texases Hustonis, millele müüja annab garantii, et üleujutuse tõenäosus on 1% aastas. Seadus nimetab seda näidikut "100 aasta suurvee-tasemeks". 1% näidu puhul ei pea te seaduse järgi ostma üleujutusekindlustust. Kui suure tõenäosusega tabab teie maja üleujutus pangalaenu perioodi vältel (30 aastat)? Vastus: $1 - (99/100)^{30} = 0.26$.
 
 **14. Punkt** Kui tõenäosus, et homme sajab pussnuge on 0.1 ja et ülehomme sajab pussnuge on 0.1, siis millise tõenäosusega sajab vähemalt ühel neist päevadest? Eeldades sündmuste sõltumatust: $$\begin{array}{lcl} P(homme~ sajab \lor ülehomme~ sajab) = \\0.1 + 0.1 - 0.1 \times 0.1 = 0.19\end{array}$$ Kui me aga teame, et sadu erinevatel päevadel on korreleeritud näiteks nii: $$P(ülehomme~ sajab~ \vert~homme~sajab)= 0.2$$ $$P(ülehomme~ sajab~ \vert~ \lnot homme~sajab)= 0.15$$ siis $$\begin{array}{lcl} P(homme~ sajab \lor ülehomme~ sajab) = \\P(homme~ sajab) + P(ülehomme~ sajab) - \\P(homme~ sajab~ \And~ ülehomme~ sajab) \end{array}$$ Nüüd peame arvutama $P(ülehomme~sajab)$, kasutades 15. punkti (marginaliseerimist), misjärel saame valemi $$P(A \lor B)= P(A)+P(B)-P(A)P(B ~\vert~A)$$ Kui vihm on korreleeritud, siis väheneb tõenäosus, et sajab vähemalt ühel päeval.   
 
@@ -616,15 +614,15 @@ Kui mõõdame pidevat suurust, näiteks inimeste pikkusi, siis saame arvutuse ta
 
 ### Tõenäosusteooriast tulenevad statistika põhiprintsiibid {-}
 
- 1. statistilise analüüsi kvaliteet sõltub mudeli eeldustest & struktuurist. Kuna maailm ei koosne matemaatikast, teevad matemaatilised mudelid alati eeldusi maailma kohta, mis ei ole päris tõesed ja mida ei saa tingimata empiiriliselt kontrollida. Mündiviske näites eeldasime, et mündivisked olid üksteisest sõltumatud. Kui me sellest eeldusest loobume, läheb meie mudel keerulisemaks, sest me peame mudelisse lisama teavet visetevahelise korrelatsiooni kohta. Aga see keerulisem mudel toob sisse uued eeldused. Üldiselt peaks mudeli struktuur kajastama katse struktuuri, mis kaasaegses statistikas tähendab sageli hierarhilisi mudeleid.
+1. statistilise analüüsi kvaliteet sõltub mudeli eeldustest & struktuurist. Kuna maailm ei koosne matemaatikast, teevad matemaatilised mudelid alati eeldusi maailma kohta, mis ei ole päris tõesed ja mida ei saa tingimata empiiriliselt kontrollida. Mündiviske näites eeldasime, et mündivisked olid üksteisest sõltumatud. Kui me sellest eeldusest loobume, läheb meie mudel keerulisemaks, sest me peame mudelisse lisama teavet visetevahelise korrelatsiooni kohta. Aga see keerulisem mudel toob sisse uued eeldused. Üldiselt peaks mudeli struktuur kajastama katse struktuuri, mis kaasaegses statistikas tähendab sageli hierarhilisi mudeleid.
  
- 2. statistilise analüüsi täpsus sõltub andmete hulgast. Kui kahe mündiviske asemel teeksime kakskümmend, siis saaksime samade eelduste põhjal teha oluliselt väiksema ebakindluse määraga järeldusi mündi aususe kohta. 
+2. statistilise analüüsi täpsus sõltub andmete hulgast. Kui kahe mündiviske asemel teeksime kakskümmend, siis saaksime samade eelduste põhjal teha oluliselt väiksema ebakindluse määraga järeldusi mündi aususe kohta. 
 
- 3. statistilise analüüsi kvaliteet sõltub andmete  kvaliteedist. Kui münt on aus, aga me viskame seda ebaausalt, siis, mida rohkem arv kordi me seda teeme, seda tugevamalt usub teadusüldsus selle tagajärjel millessegi, mis pole tõsi.
+3. statistilise analüüsi kvaliteet sõltub andmete  kvaliteedist. Kui münt on aus, aga me viskame seda ebaausalt, siis, mida rohkem arv kordi me seda teeme, seda tugevamalt usub teadusüldsus selle tagajärjel millessegi, mis pole tõsi.
 
- 4. statistilise analüüsi kvaliteet sõltub taustateadmiste kvaliteedist. Napid taustateadmised ei võimalda parandada andmete põhjal tehtud järeldusi juhul, kui andmed mingil põhjusel ei vasta tegelikkusele. Adekvaatsete taustateadmiste lisamine mudelisse aitab vältida mudelite üle-fittimist.
+4. statistilise analüüsi kvaliteet sõltub taustateadmiste kvaliteedist. Napid taustateadmised ei võimalda parandada andmete põhjal tehtud järeldusi juhul, kui andmed mingil põhjusel ei vasta tegelikkusele. Adekvaatsete taustateadmiste lisamine mudelisse aitab vältida mudelite üle-fittimist.
 
- 5. Järeldused ühe hüpoteesi kohta mõjutavad järeldusi ka kõikide alternatiivsete hüpoteeside kohta. Relevantsete hüpoteeside eiramine viib ekslikele järeldustele kõigi teiste hüpoteeside kohta. Me ei saa põhimõtteliselt rääkida tõendusmaterjali tugevusest ühe hüpoteesi kontekstis -- tõendusmaterjal on suhteline ja selle tugevust mõõdab tõepärade suhe $P(andmed ~\vert~ H_1)/P(andmed ~\vert~ H_2)$. 
+5. Järeldused ühe hüpoteesi kohta mõjutavad järeldusi ka kõikide alternatiivsete hüpoteeside kohta. Relevantsete hüpoteeside eiramine viib ekslikele järeldustele kõigi teiste hüpoteeside kohta. Me ei saa põhimõtteliselt rääkida tõendusmaterjali tugevusest ühe hüpoteesi kontekstis -- tõendusmaterjal on suhteline ja selle tugevust mõõdab tõepärade suhe $P(andmed~\vert~ H_1)/P(andmed ~ \vert ~H_2)$. 
 
 ## Andmed ei ole sama, mis tegelikkus {-}
 
@@ -669,10 +667,14 @@ Summary %>%
   geom_histogram(bins = 40)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="08_inferential_files/figure-html/jaotus-1.png" alt="(ref:jaotus)" width="70%" />
-<p class="caption">(\#fig:jaotus)(ref:jaotus)</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{08_inferential_files/figure-latex/jaotus-1} 
+
+}
+
+\caption{(ref:jaotus)}(\#fig:jaotus)
+\end{figure}
 
 
 ```r
@@ -695,10 +697,14 @@ Summary %>%
   geom_histogram(bins = 40)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="08_inferential_files/figure-html/sdjaotus-1.png" alt="(ref:sdjaotus)" width="70%" />
-<p class="caption">(\#fig:sdjaotus)(ref:sdjaotus)</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{08_inferential_files/figure-latex/sdjaotus-1} 
+
+}
+
+\caption{(ref:sdjaotus)}(\#fig:sdjaotus)
+\end{figure}
 
 
 ```r
@@ -744,8 +750,12 @@ Statistika tõmbas oma saapaid pidi mülkast välja Brad Efron 1979. aastal.
 
 (ref:parun) Nii nagu parun Münchausen tõmbas ennast patsi pidi mülkast välja, genereeritakse bootstrappimisega algse valimi põhjal teststatistiku jaotus.
 
-<div class="figure" style="text-align: center">
-<img src="img/munchausen.jpg" alt="(ref:parun)" width="50%" />
-<p class="caption">(\#fig:parun)(ref:parun)</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{img/munchausen} 
+
+}
+
+\caption{(ref:parun)}(\#fig:parun)
+\end{figure}
 

@@ -10,6 +10,7 @@ biblio-style: apalike
 site: bookdown::bookdown_site
 documentclass: book
 cover-image: img/cyclo.png
+mainfont: DejaVu Sans
 ---
 
 # Saateks {-}
@@ -31,12 +32,7 @@ Pingutus R õppimiseks tasub teile mitmel erineval viisil. R võimaldab palju ki
 - Matemaatikaoskused, mis hõlmavad liitmist, lahutamist, korrutamist, jagamist, logaritmimist ja astendamist. 
 - Kõrgemat matemaatikat me ei vaja. 
 
-Õpiku struktuur:
 
-
-xxx
-
-<img src="img/cyclo.png" width="50%" style="display: block; margin: auto;" />
 
 
 

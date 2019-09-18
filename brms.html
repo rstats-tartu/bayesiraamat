@@ -406,13 +406,13 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <span class="co">#&gt;  n obs: 150 </span>
 <span class="co">#&gt;  n variables: 5 </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; ── Variable type:factor ────────────────────────────────────────────</span>
+<span class="co">#&gt; ── Variable type:factor ──────────────────────────────</span>
 <span class="co">#&gt;  variable missing complete   n n_unique                       top_counts</span>
 <span class="co">#&gt;   Species       0      150 150        3 set: 50, ver: 50, vir: 50, NA: 0</span>
 <span class="co">#&gt;  ordered</span>
 <span class="co">#&gt;    FALSE</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; ── Variable type:numeric ───────────────────────────────────────────</span>
+<span class="co">#&gt; ── Variable type:numeric ─────────────────────────────</span>
 <span class="co">#&gt;      variable missing complete   n mean   sd  p0 p25  p50 p75 p100</span>
 <span class="co">#&gt;  Petal.Length       0      150 150 3.76 1.77 1   1.6 4.35 5.1  6.9</span>
 <span class="co">#&gt;   Petal.Width       0      150 150 1.2  0.76 0.1 0.3 1.3  1.8  2.5</span>
@@ -824,12 +824,12 @@ pars &lt;-<span class="st"> </span><span class="kw">colnames</span>(model2)
 <span class="st">  </span><span class="kw">cbind</span>(newx, .)
 <span class="kw">head</span>(predict_interval_brms2)
 <span class="co">#&gt;   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5</span>
-<span class="co">#&gt; 1         1.00        3.06  setosa     4.50     0.314 3.86  5.11</span>
-<span class="co">#&gt; 2         1.04        3.06  setosa     4.53     0.318 3.91  5.14</span>
-<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.319 3.94  5.17</span>
-<span class="co">#&gt; 4         1.12        3.06  setosa     4.59     0.316 3.97  5.20</span>
-<span class="co">#&gt; 5         1.16        3.06  setosa     4.61     0.318 4.00  5.22</span>
-<span class="co">#&gt; 6         1.20        3.06  setosa     4.65     0.316 4.02  5.24</span></code></pre></div>
+<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.322 3.85  5.13</span>
+<span class="co">#&gt; 2         1.04        3.06  setosa     4.52     0.317 3.90  5.14</span>
+<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.319 3.92  5.19</span>
+<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.320 3.93  5.20</span>
+<span class="co">#&gt; 5         1.16        3.06  setosa     4.60     0.320 3.97  5.23</span>
+<span class="co">#&gt; 6         1.20        3.06  setosa     4.64     0.315 4.05  5.26</span></code></pre></div>
 <p><code>predict()</code> ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele</p>
 <p>Siin siis eraldi ennustused kahele liigile kolmest, kaasa arvatud petal length väärtusvahemikule, kus selle liigi isendeid valimis ei ole (ja võib-olla ei saagi olla)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">no_versicolor &lt;-<span class="st"> </span><span class="kw">filter</span>(iris, Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>)
@@ -988,7 +988,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf"],
+"download": ["_main.pdf", "_main.epub"],
 "toc": {
 "collapse": "section"
 }
