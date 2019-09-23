@@ -118,13 +118,13 @@ $$y = a + b_1x_1 + b_2x_2 + b_3x_1x_2$$
 Ekvivalntne viis interaktsiooni spetsifitseerida on läbi võrrandisüsteemi:
 $$y = a + \gamma x_1 + b_2x_2$$
 $$\gamma = b_1 + b_3x_2$$
-Siit on hästi näha, et me teeme kaks lineaarset regressiooni, millest teine modelleerib $X_1$ muutuja koefitsiendi sõltuvust $X_2$ muutuja väärtusest.
+Siit on hästi näha, et me teeme kaks lineaarset regressiooni, millest teine modelleerib $x_1$ muutuja koefitsiendi sõltuvust $x_2$ muutuja väärtusest.
 
 Samamoodi kehtib ka ümberkirjutus 
 $$y = a + \gamma x_2 + b_1x_1$$
 $$\gamma = b_2 + b_3x_1$$
 
-mis tähendab, et ühtlasi modelleerime me ka $X_2$ koefitsiendi sõltuvust $X_1$-st. Mudeli koefitsientide tõlgendamise teeb keeruliseks, et gamma tõlgendamisel tuleb arvesse võtta kolm asja -- b~2~, b~3~ ja X~1~.
+mis tähendab, et ühtlasi modelleerime me ka $x_2$ koefitsiendi sõltuvust $x_1$-st. Mudeli koefitsientide tõlgendamise teeb keeruliseks, et gamma tõlgendamisel tuleb arvesse võtta kolm asja -- b~2~, b~3~ ja x~1~.
 
 Kaks muutujat võivad inteakteeruda sõltumata sellest, kas nad on korreleeritud või mitte -- interaktsioon ei impitseeri korrelatsiooni, ega vastupidi.
 
@@ -133,11 +133,11 @@ Interaktsioonimudelis on b~1~ koefitsient otse tõlgendatav ainult siis, kui x~2
 
  Kui interaktsioonimudel fititakse tsentreeritud x-muutujate peal, mille keskväärtus = 0 (või standardiseeritud muutujatel), siis muutub koefitsientide tõlgendamine lihtsamaks: 
 
-* b~1~ annab y tõusu, kui X~1~ tõuseb 1 ühiku võrra ja X~2~ on fikseeritud oma keskväärtusel 
+* b~1~ annab y tõusu, kui x~1~ tõuseb 1 ühiku võrra ja x~2~ on fikseeritud oma keskväärtusel 
 
-* b~2~ annab y tõusu, kui X~2~ tõuseb 1 ühiku võrra ja X~1~ on fikseeritud oma keskväärtusel). 
+* b~2~ annab y tõusu, kui x~2~ tõuseb 1 ühiku võrra ja x~1~ on fikseeritud oma keskväärtusel). 
 
-* b~3~ ütleb, kui palju muutub X~1~ mõju Y-le, kui X~2~ muutub ühe ühiku võrra. Samamoodi, b~3~ ütleb, kui palju muutub X~2~ mõju Y-le, kui X~1~ muutub ühe ühiku võrra.
+* b~3~ ütleb, kui palju muutub x~1~ mõju y-le, kui x~2~ muutub ühe ühiku võrra. Samamoodi, b~3~ ütleb, kui palju muutub x~2~ mõju y-le, kui x~1~ muutub ühe ühiku võrra.
 
 NB! Ärge standardiseerige faktormuutujaid ehk *dummy*-regressoreid kujul 1, 0  -- neid on lihtsam tõlgendada algsel kujul 0/1 skaalas.
 
@@ -145,7 +145,7 @@ Edaspidi õpime selliseid mudeleid graafiliselt tõlgendama, kuna koefitsientide
 
 > Interaktsioonimudelis sõltub x~1~ mõju tugevus y-le x~2~ väärtusest. Selle sõltuvuse määra kirjeldab b~3~ (x~1~ ja x~2~ interaktsiooni tugevus). Samamoodi ja sümmeetriliselt erineb ka x~2~ mõju erinevatel x~1~ väärtustel. Ainult siis, kui x~2~ = 0, ennustab x~1~ tõus 1 ühiku võrra y muutust b~1~ ühiku võrra.
 
-Kui meil on mudelis interaktsiooniliige $X_1X_2$, siis on enamasti mõistlik ka lisada eraldi liikmetena ka $X_1$ ja $X_2$. 
+Kui meil on mudelis interaktsiooniliige $x_1x_2$, siis on enamasti mõistlik ka lisada eraldi liikmetena ka $x_1$ ja $x_2$. 
 
 Näiteks mudel, milles on pidev y-muutuja, pidev prediktor "education" ja binaarne prediktor "sex_male" (1 ja 0): 
 
@@ -171,11 +171,11 @@ On meil meeste ja naiste intercept surutud nulli, aga meeste ja naiste tõusud v
 
 Kui meil on kaks faktor-prediktorit, siis mudel kujul
 
-$$y= 0 + b_3X_1X_2$$
+$$y= 0 + b_3x_1x_2$$
 
 Mudeldab eraldi nende faktorite tasemete kõikvõimalud kombinatsioonid.
 
-> Oletame, et meil on lisaks pidevale prediktorile X~1~ ka faktor-prediktor X~2~. Diskreetsed  e faktor-prediktorid rekodeeritakse automaatselt nn *dummy*-muutujateks. Kahevalentse e binaarse muutuja, näit sex = c("male", "female"), korral läheb  regressioonivõrrandisse uus dummy-muutuja, sex_female, kus kõik emased on 1-d ja isased 0-d. Üldine intercept vastab siis isaste mõjule ja sex_female intercept annab emaste erinevuse isastest. Kui meil on n-tasemega diskreetne muutuja, rekodeerime selle n-1 *dummy*-muutujana, millest igaüks on 0/1 kodeeringus ja millest igaühe interceptid annavad erinevuse null-taseme (selle taseme, mis ei ole rekodeeritud *dummy*-muutujana) interceptist. Mudeli seisukohast pole oluline, millise faktortunnuse taseme me nulltasemeks võtame. Terminoloogiliselt on meie n-tasemega faktortunnus *seletav muutuja* (*explanatory variable*), millest tehakse n-1 *regressorit*. Seega tehniliselt on mudeli liikmed regressorid, mitte seletavad muutujad. Üks seletav muutuja võib anda välja mitu regressorit (nagu eelmises näites) ja üks regressor võib põhineda mitmel muutujal (näit X~1X~2 interaktsiooniterm). 
+> Oletame, et meil on lisaks pidevale prediktorile x~1~ ka faktor-prediktor x~2~. Diskreetsed  e faktor-prediktorid rekodeeritakse automaatselt nn *dummy*-muutujateks. Kahevalentse e binaarse muutuja, näit sex = c("male", "female"), korral läheb  regressioonivõrrandisse uus dummy-muutuja, sex_female, kus kõik emased on 1-d ja isased 0-d. Üldine intercept vastab siis isaste mõjule ja sex_female intercept annab emaste erinevuse isastest. Kui meil on n-tasemega diskreetne muutuja, rekodeerime selle n-1 *dummy*-muutujana, millest igaüks on 0/1 kodeeringus ja millest igaühe interceptid annavad erinevuse null-taseme (selle taseme, mis ei ole rekodeeritud *dummy*-muutujana) interceptist. Mudeli seisukohast pole oluline, millise faktortunnuse taseme me nulltasemeks võtame. Terminoloogiliselt on meie n-tasemega faktortunnus *seletav muutuja* (*explanatory variable*), millest tehakse n-1 *regressorit*. Seega tehniliselt on mudeli liikmed regressorid, mitte seletavad muutujad. Üks seletav muutuja võib anda välja mitu regressorit (nagu eelmises näites) ja üks regressor võib põhineda mitmel muutujal (näit x~1x~2 interaktsiooniterm). 
 
 
 Interaktsioonimudeli 2D avaldus on kurvatuuriga tasapind, kusjuures kurvatuuri määrab b~3~. 
@@ -265,7 +265,7 @@ summary(m3)$adj.r.squared
 
 ## 2. Testime mudeli eeldusi {-}
 
-Nii saab fititud väärtused (.fitted), residuaalid (.resid), fittitud väätruste standardvead (.se.fit). Residuaal = Y data value - fitted value. Seega positiivne residuaal näitab, et mudeli ennustus keskmisele y väärtusele mingil x-muutujate väärtusel on madalam kui juhutb olema tegelik y-i andmepunkti väärtus. See võib olla tingitud y-muutuja normaalsest bioloogilisest varieeruvusest, aga ka sellest, et mudel ei kirjelda täiuslikult x-ide ja y tegelikku seost.
+Nii saab fititud väärtused (.fitted), residuaalid (.resid), fittitud väätruste standardvead (.se.fit). Residuaal = y data value - fitted value. Seega positiivne residuaal näitab, et mudeli ennustus keskmisele y väärtusele mingil x-muutujate väärtusel on madalam kui juhutb olema tegelik y-i andmepunkti väärtus. See võib olla tingitud y-muutuja normaalsest bioloogilisest varieeruvusest, aga ka sellest, et mudel ei kirjelda täiuslikult x-ide ja y tegelikku seost.
 
 ```{r}
 (a_m3 <- augment(m3))
@@ -368,7 +368,7 @@ Ideaalsed residuaalid!
 
 ## 3. Teeme mudeli põhjal ennustusi (marginal plots) {-}
 
-Me ennustame Y-i keskmisi väärtuseid etteantud X-i väärtustel.
+Me ennustame y-i keskmisi väärtuseid etteantud x-i väärtustel.
 
 ggpredict() ennustab y-muutuja väärtusi ühe x-muutuja väärtuste järgi, hoides kõiki teisi x-muutujaid konstantsena.
 
@@ -444,7 +444,7 @@ Kui muutujal saavad olla ainult positiivsed väärtused, siis on logaritmimine v
 
 1. Muutuja(te) logaritmimine muudab muutujate vahelised suhted mitte-lineaarseks, samas säilitades mudeli lineaarsuse. Ja vastupidi, kui tavalises meetrilises skaalas juhtuvad additiivse mudeli muutujate vahelised seosed olema mitte-lineaarsed, siis x-muutuja(te) logaritmimine võib need muuta lineaarseks, ja sellega päästa ühe olulisema lineaarse regressiooni eelduse (vt ka ptk 4.2).
 
-2. Logarimimine on hea, kui soovite Y ja X muutuja omavahelist sõltuvust tõlgendada üle suhtelise muutuse ehk muutuse protsendi. Kui algses skaalas on $\beta$ koefitsiendi loomulik tõlgendus additiivne: X-i kasv 1 ühiku võrra ennustab y-i kasvu $\beta$ ühiku võrra, siis naturaallogaritmitud X-i korral on üks loomulikest multiplikatiivsetest tõlgendustest: X-i kasv 1 ühiku võrra ennustab Y-i muutust ... protsendi võrra. Additiivsel juhul me liidame ja lahutame, multiplikatiivsel juhul aga korrutame ja jagame.
+2. Logarimimine on hea, kui soovite y ja x muutuja omavahelist sõltuvust tõlgendada üle suhtelise muutuse ehk muutuse protsendi. Kui algses skaalas on $\beta$ koefitsiendi loomulik tõlgendus additiivne: x-i kasv 1 ühiku võrra ennustab y-i kasvu $\beta$ ühiku võrra, siis naturaallogaritmitud x-i korral on üks loomulikest multiplikatiivsetest tõlgendustest: x-i kasv 1 ühiku võrra ennustab y-i muutust ... protsendi võrra. Additiivsel juhul me liidame ja lahutame, multiplikatiivsel juhul aga korrutame ja jagame.
 
 3. Muutuja logaritmimine võib viia selle muutuja lähemale normaaljaotusele (lognormaaljaotuse logaritm on normaaljaotusega). Algselt paremale kaldu jaotuse äärmuspunktid võivad regressioonile liiga suurt kaalu omada, milline probleem sageli kaob logaritmimisel.
 
@@ -487,44 +487,44 @@ Naturaallogaritmi alus on $e \approx 2.71828$ ja sellel on järgmised matemaatil
 
 Lineaarsel regressioonil saab log-transformatsiooni kasutada kolmel erineval viisil:
 
-- Y = $\alpha$ + $\beta$X --- lineaarne mudel (transformeerimata)
+- y = $\alpha$ + $\beta$x --- lineaarne mudel (transformeerimata)
 
-- Y = $\alpha$ + $\beta$ * log(X) --- lineaar-log mudel (transformeeritud on prediktor(id))
+- y = $\alpha$ + $\beta$ * log(x) --- lineaar-log mudel (transformeeritud on prediktor(id))
 
-- log(Y) = $\alpha$ + $\beta$X -- log-lineaar mudel (transformeeritud on y-muutuja)
+- log(y) = $\alpha$ + $\beta$x -- log-lineaar mudel (transformeeritud on y-muutuja)
 
-- log(Y) = $\alpha$ + $\beta$ * log(X) -- log-log mudel (transformeeritud on y ja x muutujad)
+- log(y) = $\alpha$ + $\beta$ * log(x) -- log-log mudel (transformeeritud on y ja x muutujad)
 
-**Lineaarses** mudelis Y = $\alpha$ + $\beta$X, annab $\beta$ selle, mitu ühikut muutub Y keskväärtus, kui X muutub ühe ühiku võrra.  
+**Lineaarses** mudelis y = $\alpha$ + $\beta$x, annab $\beta$ selle, mitu ühikut muutub Y keskväärtus, kui X muutub ühe ühiku võrra.  
 
-**Lineaar-log** mudelis jääb kehtima sama $\beta$ tõlgendus, mis ülalpool, ainult et log-ühikutes. Seega viib logX-i muutus ühe log ühiku võrra Y keskväärtuse muutusele $\beta$ ühiku võrra (see kehtib muidugi ka log2 ja log10 skaalades). 
+**Lineaar-log** mudelis jääb kehtima sama $\beta$ tõlgendus, mis ülalpool, ainult et log-ühikutes. Seega viib logx-i muutus ühe log ühiku võrra y keskväärtuse muutusele $\beta$ ühiku võrra (see kehtib muidugi ka log2 ja log10 skaalades). 
 
 Kui me juba kasutasime naturaallogaritmimist, siis tahame ilmselt tõlgendust pigem muutuse protsendina ja/või algsetes meetrilistes skaalas (log2 ja log10 ei võimalda selliseid mugavaid tõlgendusi):
 
-- $\beta$ on oodatud Y muutus, kui X kasvab eX korda. 
+- $\beta$ on oodatud y muutus, kui x kasvab $ex$ korda. 
 
-- Kui $\beta$ on väike, siis saab seda tõlgendada kui suhtelist erinevust. Näiteks, kui $\beta$ = 0.06, siis 1 ühikuline X-i muutus viib u 6%-sele Y muutusele. Sedamõõda kuidas $\beta$ kaugeneb nullist (näiteks $\beta$ = 0.4), hakkab selline hinnang tõsiselt alahindama tegelikku x-i mõju y väärtusele. 
+- Kui $\beta$ on väike, siis saab seda tõlgendada kui suhtelist erinevust. Näiteks, kui $\beta$ = 0.06, siis 1 ühikuline x-i muutus viib u 6%-sele y muutusele. Sedamõõda kuidas $\beta$ kaugeneb nullist (näiteks $\beta$ = 0.4), hakkab selline hinnang tõsiselt alahindama tegelikku x-i mõju y väärtusele. 
 
-- Oodatud Y muutus kui X kasvab p protsenti on $\beta$ * log([100 + p]/100). Näit, kui X kasvab 10% võrra (ehk kui korrutame X-i 1.1-ga), siis log(110/100) = 0.095 ja 0.095$\beta$ on oodatud Y muutus. 
+- Oodatud y muutus kui x kasvab p protsenti on $\beta$ * log([100 + p]/100). Näit, kui x kasvab 10% võrra (ehk kui korrutame x-i 1.1-ga), siis log(110/100) = 0.095 ja 0.095$\beta$ on oodatud y muutus. 
 
 **Log-lineaarse** mudeli korral, 
 
-- kui X kasvab 1 ühiku võrra, siis oodatud Y väärtus kasvab exp($\beta$) korda. 
+- kui x kasvab 1 ühiku võrra, siis oodatud y väärtus kasvab exp($\beta$) korda. 
 
-- Kui X kasvab c ühiku võrra, siis oodatud Y väärtus kasvab exp(c$\beta$) korda. 
+- Kui x kasvab c ühiku võrra, siis oodatud y väärtus kasvab exp(c$\beta$) korda. 
 
-- Kui $\beta$ on väike, siis 100 * $\beta$ vastab Y protsentuaalsele muutusele juhul kui X muutub 1 ühiku võrra (kui $\beta$ = 0.06, siis X-i muutus 1 ühiku võrra viib Y-i 6% tõusule). 
+- Kui $\beta$ on väike, siis 100 * $\beta$ vastab y protsentuaalsele muutusele juhul kui x muutub 1 ühiku võrra (kui $\beta$ = 0.06, siis x-i muutus 1 ühiku võrra viib y-i 6% tõusule). 
 
-**Log-log** mudeli korral on tõlgendus oodatud Y-i muutus protsentides kui X muutub mingi protsendi võrra. Sellist suhet kotsutakse ökonomeetrias elastiliseks ja logX-i $\beta$ koefitsient on "elastilisus." 
+**Log-log** mudeli korral on tõlgendus oodatud y-i muutus protsentides kui x muutub mingi protsendi võrra. Sellist suhet kotsutakse ökonomeetrias elastiliseks ja log x-i $\beta$ koefitsient on "elastilisus." 
 
-- Kui me korrutame X-i e-ga, siis korrutame oodatud Y-i väärtuse exp($\beta$)-ga. 
+- Kui me korrutame x-i e-ga, siis korrutame oodatud y-i väärtuse exp($\beta$)-ga. 
 
-- Et saada Y suhtelist muutust, kui X kasvab p protsenti, arvuta a = log([100 + p]/100) ja siis võta exp(a$\beta$). 
+- Et saada y suhtelist muutust, kui x kasvab p protsenti, arvuta a = log([100 + p]/100) ja siis võta exp(a$\beta$). 
 
 
 ## Standardiseerimine
 
-Kui prediktor $X_1$ on mõõdetud näiteks eurodes ja prediktor $X_2$ aastates, siis on meil fititud koefitsientidele $b_1$ ja $b_2$ peale vaadates raske öelda, kumb mõjutab Y-muutuja väärtust rohkem. Kuna euro ühik on palju granuleeritum kui aasta, siis võib ka väga väike nullist erinev $b_1$ omada mudeli seisukohast suuremat tähtsust kui suhteliselt suur $b_2$. 
+Kui prediktor $x_1$ on mõõdetud näiteks eurodes ja prediktor $x_2$ aastates, siis on meil fititud koefitsientidele $b_1$ ja $b_2$ peale vaadates raske öelda, kumb mõjutab y-muutuja väärtust rohkem. Kuna euro ühik on palju granuleeritum kui aasta, siis võib ka väga väike nullist erinev $b_1$ omada mudeli seisukohast suuremat tähtsust kui suhteliselt suur $b_2$. 
 
 $x.z = (x - mean(x))/sd(x)$
 
@@ -568,7 +568,7 @@ Hoitatus: standardiseeritud koefitsiente ei tohi kasutada, et võrrelda samade p
 
 Tavaliselt on mõistlik fittida mudel pidevale y muutujale ka siis, kui tahame lõpuks tõlgenada tulemusi diskreetsel skaalal. Pidev muutuja sisaldab rohkem informatsiooni ja seetõttu on meil lootust saada parem fit. Erandiks on sellised pidevad x muutujad, mille mõju y-le on mittelineaarne (näiteks vanuse mõju suremusele). Siin on vahest mõistlik konverteerida pidev muutuja faktormuutujaks ja saada hinnang näiteks igale vanuseklassile eraldi. 
 
-Additiivne mudel eeldab, et emaste ja isaste tõusud on võrdsed, mistõttu need fititakse sama beta koefitsiendiga, mis tähendab, et X2 mõju pidelvale prediktorile X1 on, et me saame mudeli ennustusena faktori n tasemele vastavad n paralleelset sirget, millest igaüks näitab pideva X1 seost pideva Y-ga erinevatel X2 tasemetel. 0/1 kodeeringus regressorite interceptid annavad nende paralleelsete sirgete vahelised kaugused üldise-intercepti poolt antud faktori taseme ennustusest.
+Additiivne mudel eeldab, et emaste ja isaste tõusud on võrdsed, mistõttu need fititakse sama beta koefitsiendiga, mis tähendab, et x~2~ mõju pidelvale prediktorile x~1~ on, et me saame mudeli ennustusena faktori n tasemele vastavad n paralleelset sirget, millest igaüks näitab pideva x~1~ seost pideva Y-ga erinevatel x~2~ tasemetel. 0/1 kodeeringus regressorite interceptid annavad nende paralleelsete sirgete vahelised kaugused üldise-intercepti poolt antud faktori taseme ennustusest.
 
 ## mitmese regressiooni üldised printsiibid
 
