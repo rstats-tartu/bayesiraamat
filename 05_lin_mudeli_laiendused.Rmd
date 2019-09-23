@@ -126,7 +126,7 @@ $$\gamma = b_2 + b_3x_1$$
 
 mis tähendab, et ühtlasi modelleerime me ka $X_2$ koefitsiendi sõltuvust $X_1$-st. Mudeli koefitsientide tõlgendamise teeb keeruliseks, et gamma tõlgendamisel tuleb arvesse võtta kolm asja -- b~2~, b~3~ ja X~1~.
 
-Kaks muutujat võivad inteakteeruda sõltumata sellest, kas nad on korreleeritud või mitte -- interaktsioon ei impitseeri korrelatsiooni, ega korraletsioon implikatsiooni.
+Kaks muutujat võivad inteakteeruda sõltumata sellest, kas nad on korreleeritud või mitte -- interaktsioon ei impitseeri korrelatsiooni, ega vastupidi.
 
 Sageli on nii, et prediktoreid, mille mõju y-le on suur, tasub mudeldada ka interaktsioonimudelis (näiteks suitsetamise mõju vähimudelites kipub olema interaktsiooniga). 
 Interaktsioonimudelis on b~1~ koefitsient otse tõlgendatav ainult siis, kui x~2~ = 0 (ja b~2~ ainult siis, kui x~1~ = 0).
@@ -536,7 +536,6 @@ $x.z2 = (x - mean(x))/(2 * sd(x))$
 
 Nüüd tähendab 1 ühikuline muutus efekti -1 SD-st kuni 1 SD-ni üle keskväärtuse.
 
-Prediktorite standardiseerimine, eesmärgiga võrrelda võrreldamatut, on paraku samavõrd kahtlane kui levinud meetod. Esiteks, varieeruvuse mõõtmine sd ühikutes on mõtekas siis, kui prediktorid on enam-vähem normaaljaotusega, mida nad sageli ei ole, ega puhtalt regressiooni seisukohalt ei peagi olema. Ja teiseks, kujutlege, et teil on kaks võrreldavat prediktorit, mõlemad näiteks mõõdetud aastates, aga need prediktorid on erineva diapasooniga (ja seega ka erineva varieeruvusega). Kui teile tundub, et nende muutujate standardiseerimine oleks võrreldav oma analüüsi kummist joonlaua sisse toomisega, kuidas te siis põhjendate sama protseduuri, kui muutujad ei ole mõõdetud samades ühikutes?   
 
 ### Korrelatsioon üle regressiooni ja regressioon keskmisele {-}
 
