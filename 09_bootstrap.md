@@ -58,7 +58,10 @@ boot <- boot %>%
 ggplot(boot, aes(Mean)) + geom_density()
 ```
 
-![(\#fig:bootpost)(ref:bootpost)](09_bootstrap_files/figure-latex/bootpost-1.pdf) 
+<div class="figure">
+<img src="09_bootstrap_files/figure-html/bootpost-1.png" alt="(ref:bootpost)" width="672" />
+<p class="caption">(\#fig:bootpost)(ref:bootpost)</p>
+</div>
 
 ehk sama asi ilma bootsrtap functsiooni kasutamata. 
 
@@ -150,7 +153,10 @@ heights_bb <- bayesboot(heights$value, mean)
 plot(heights_bb, compVal = 185)
 ```
 
-![(\#fig:bayesboot)(ref:bayesboot)](09_bootstrap_files/figure-latex/bayesboot-1.pdf) 
+<div class="figure">
+<img src="09_bootstrap_files/figure-html/bayesboot-1.png" alt="(ref:bayesboot)" width="672" />
+<p class="caption">(\#fig:bayesboot)(ref:bayesboot)</p>
+</div>
 
 ```r
 HPDI(heights_bb$V1, prob = 0.95)
@@ -172,7 +178,7 @@ Tõenäosus, et keskmine on suurem kui 182 cm
 
 ```r
 mean(heights_bb[, 1] > 182)
-#> [1] 0.991
+#> [1] 0.992
 ```
 
 Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):
@@ -191,7 +197,10 @@ dfr_bb <- bayesboot(dfr$c, weighted.mean, use.weights = TRUE )
 plot(dfr_bb, compVal = 0)
 ```
 
-![(\#fig:bayeses)(ref:bayeses)](09_bootstrap_files/figure-latex/bayeses-1.pdf) 
+<div class="figure">
+<img src="09_bootstrap_files/figure-html/bayeses-1.png" alt="(ref:bayeses)" width="672" />
+<p class="caption">(\#fig:bayeses)(ref:bayeses)</p>
+</div>
 
 BayesianFirstAid raamatukogu funktsioon bayes.t.test() annab kasutades t-jaotuse tõepäramudelit üsna täpselt sama vastuse. 
 See raamatukogu eeldab JAGS mcmc sämpleri installeerimist. 
@@ -220,7 +229,10 @@ ggplot(sample_means_sum, aes(x = Mean)) +
   geom_histogram(color = "white", bins = 20)
 ```
 
-![(\#fig:paramboot)(ref:paramboot)](09_bootstrap_files/figure-latex/paramboot-1.pdf) 
+<div class="figure">
+<img src="09_bootstrap_files/figure-html/paramboot-1.png" alt="(ref:paramboot)" width="672" />
+<p class="caption">(\#fig:paramboot)(ref:paramboot)</p>
+</div>
 
 ```r
 HPDI(sample_means_sum$Mean)
@@ -232,9 +244,10 @@ HPDI(sample_means_sum$Mean)
 
 (ref:bootmeth) Bootstrappimise meetodid.
 
-\begin{figure}
-\includegraphics[width=0.5\linewidth]{img/boot1} \caption{(ref:bootmeth)}(\#fig:bootmeth)
-\end{figure}
+<div class="figure">
+<img src="img/boot1.pdf" alt="(ref:bootmeth)" width="50%" />
+<p class="caption">(\#fig:bootmeth)(ref:bootmeth)</p>
+</div>
 
 ## Bootstrappimine ei ole kogu tõde {-}
 

@@ -190,37 +190,21 @@ Selle nimel peame tegema 7 valikut selles järjekorras:
 2. **Milline imputatsioonimudel (nii mudeli struktuurne osa kui eeldatud vigade jaotus)?** *Fully conditional specification* (FCS) imputeerib multivariiatseid NA-sid muutuja haaval. Seega peab mudeli kuju spetsifitseerima igale NA-dega muutujale eraldi, arvestades ka muutujate vahelisi seoseid. 
 
 
-\begin{tabular}{l|l|l}
-\hline
-Method & Description & Scale Type\\
-\hline
-pmm & Predictive mean matching & Any*\\
-\hline
-midastouch & Weighted predictive mean matching & Any\\
-\hline
-sample & Random sample from observed values & Any\\
-\hline
-cart & Classification and regression trees & Any\\
-\hline
-rf & Random forest imputation & Any\\
-\hline
-norm & Bayesian linear regression & numeric\\
-\hline
-norm.boot & Normal imputation with bootstrap & Numeric\\
-\hline
-quadratic & Imputation of quadratic terms & Numeric\\
-\hline
-ri & Random indicator for nonignorable data & Numeric\\
-\hline
-logreg & Logistic regression & Binary*\\
-\hline
-logreg.boot & Logistic regression with bootstrap & Binary\\
-\hline
-polr & Proportional odds model & ordinal*\\
-\hline
-polyreg & Polytomous logistic regression & Nominal*\\
-\hline
-\end{tabular}
+Method        Description                              Scale Type 
+------------  ---------------------------------------  -----------
+pmm           Predictive mean matching                 Any*       
+midastouch    Weighted predictive mean matching        Any        
+sample        Random sample from observed values       Any        
+cart          Classification and regression trees      Any        
+rf            Random forest imputation                 Any        
+norm          Bayesian linear regression               numeric    
+norm.boot     Normal imputation with bootstrap         Numeric    
+quadratic     Imputation of quadratic terms            Numeric    
+ri            Random indicator for nonignorable data   Numeric    
+logreg        Logistic regression                      Binary*    
+logreg.boot   Logistic regression with bootstrap       Binary     
+polr          Proportional odds model                  ordinal*   
+polyreg       Polytomous logistic regression           Nominal*   
 
 \\* - vaikemudel antud andmetüübile
 
@@ -376,7 +360,7 @@ Nii saab mc agelate konvergeerumist graafiliselt kontrollida.
 plot(imp)
 ```
 
-![](22_puuduvad_andmed_files/figure-latex/unnamed-chunk-21-1.pdf)<!-- --> 
+<img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-21-1.png" width="672" />
 
 ```r
 mice.mids(imp, maxit=35, print=F) 
@@ -461,7 +445,7 @@ konditsionaalne plot muutujale "age" erinevatel muutuja "gen" väärtustel
 histogram(~age|gen, data=boys)
 ```
 
-![](22_puuduvad_andmed_files/figure-latex/unnamed-chunk-23-1.pdf)<!-- --> 
+<img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-23-1.png" width="672" />
 
 Vanuste jaotus on erinev sõltuvalt sellest, kas gen muutuja on NA v mitte.
 
@@ -470,7 +454,7 @@ R <- is.na(boys$gen)
 histogram(~age|R, data=boys)
 ```
 
-![](22_puuduvad_andmed_files/figure-latex/unnamed-chunk-24-1.pdf)<!-- --> 
+<img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-24-1.png" width="672" />
 
 
 
@@ -482,7 +466,7 @@ näitab algseid ja imputeeritud andmeid üksteise peal muutujale "chl"
 stripplot(imp, chl~.imp, pch=20, cex=2)
 ```
 
-![](22_puuduvad_andmed_files/figure-latex/unnamed-chunk-25-1.pdf)<!-- --> 
+<img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-25-1.png" width="672" />
 Imputeeritud andmed on punased.
 
 suru imputeeritud andmed 1 ja 25 vahele
@@ -505,7 +489,7 @@ xyplot(imp, bmi ~ I (wgt / (hgt / 100)^2),
        ylab = "BMI (kg/m2) Imputed", xlab = "BMI (kg/m2) Calculated")
 ```
 
-![](22_puuduvad_andmed_files/figure-latex/unnamed-chunk-27-1.pdf)<!-- --> 
+<img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-27-1.png" width="672" />
 
 
 
@@ -525,7 +509,7 @@ imp <- mice(boys, maxit=1)
 xyplot(imp, hgt~age|.imp, pch=c(1,20),cex=c(1,1.5))
 ```
 
-![](22_puuduvad_andmed_files/figure-latex/unnamed-chunk-28-1.pdf)<!-- --> 
+<img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-28-1.png" width="672" />
 
 
 ```r
@@ -533,14 +517,14 @@ xyplot(imp, hgt~age|.imp, pch=c(1,20),cex=c(1,1.5))
 xyplot(imp, hgt~age|.imp, na.group=wgt, pch=c(1,20),cex=c(1,1.5))
 ```
 
-![](22_puuduvad_andmed_files/figure-latex/unnamed-chunk-29-1.pdf)<!-- --> 
+<img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-29-1.png" width="672" />
 
 
 ```r
 xyplot(imp, hgt~age, pch=c(1,20),cex=c(1,1.5))
 ```
 
-![](22_puuduvad_andmed_files/figure-latex/unnamed-chunk-30-1.pdf)<!-- --> 
+<img src="22_puuduvad_andmed_files/figure-html/unnamed-chunk-30-1.png" width="672" />
 
 ## Tulemuste avaldamine
 

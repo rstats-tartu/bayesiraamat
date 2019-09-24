@@ -53,7 +53,7 @@ andmed <- tibble(a= rnorm(4))
 plot(andmed)
 ```
 
-![](06_veamudel_files/figure-latex/unnamed-chunk-3-1.pdf)<!-- --> 
+<img src="06_veamudel_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
 ```r
 mean(andmed$a); sd(andmed$a)
@@ -157,7 +157,10 @@ p <- ggplot(tibble(kasv), aes(kasv)) + geom_density()
 p
 ```
 
-![(\#fig:normaaljaotus-tekib)(ref:normaaljaotus-tekib)](06_veamudel_files/figure-latex/normaaljaotus-tekib-1.pdf) 
+<div class="figure">
+<img src="06_veamudel_files/figure-html/normaaljaotus-tekib-1.png" alt="(ref:normaaljaotus-tekib)" width="672" />
+<p class="caption">(\#fig:normaaljaotus-tekib)(ref:normaaljaotus-tekib)</p>
+</div>
 
 Selles näites võrdub iga andmepunkt 10 000st ühe bakteritüve kasvukiiruse mõõtmisega. Seega, antud eelduste korral on bakteritüvede kasvukiirused normaaljaotusega.
 
@@ -175,7 +178,10 @@ kasv <- replicate(10000, prod(runif(12, 1, 1.1)))
 p %+% tibble(kasv)
 ```
 
-![(\#fig:soltuvatest-efektidest)(ref:soltuvatest-efektidest)](06_veamudel_files/figure-latex/soltuvatest-efektidest-1.pdf) 
+<div class="figure">
+<img src="06_veamudel_files/figure-html/soltuvatest-efektidest-1.png" alt="(ref:soltuvatest-efektidest)" width="672" />
+<p class="caption">(\#fig:soltuvatest-efektidest)(ref:soltuvatest-efektidest)</p>
+</div>
 
 Tulemuseks on jällegi normaaljaotus.
 Selles näites olid üksikud interakteeruvad geenid ükshaaval väikeste mõjudega ja ühegi geeni mõju ei domineerinud teiste üle. 
@@ -189,7 +195,10 @@ kasv <- replicate(10000, prod(runif(12, 1, 2)))
 p %+% tibble(kasv)
 ```
 
-![(\#fig:lognormaal)(ref:lognormaal)](06_veamudel_files/figure-latex/lognormaal-1.pdf) 
+<div class="figure">
+<img src="06_veamudel_files/figure-html/lognormaal-1.png" alt="(ref:lognormaal)" width="672" />
+<p class="caption">(\#fig:lognormaal)(ref:lognormaal)</p>
+</div>
 
 Nüüd on tulemuseks log-normaaljaotus. Mis teie arvate, kas teie poolt uuritavat tunnust mõjutavad faktorid, mis omavahel ei interakteeru või kui interakteeruvad, on kõik ühtlaselt väikeste efektidega? 
 Või on tegu vastasmõjudes olevate faktoritega, millest osad on palju suuremate mõjudega, kui teised? 
@@ -206,7 +215,10 @@ kasv <- replicate(10000, log10(prod(runif(12, 1, 2))))
 p %+% tibble(kasv) + labs(x = "kasv, log10")
 ```
 
-![(\#fig:logskaalas)(ref:logskaalas)](06_veamudel_files/figure-latex/logskaalas-1.pdf) 
+<div class="figure">
+<img src="06_veamudel_files/figure-html/logskaalas-1.png" alt="(ref:logskaalas)" width="672" />
+<p class="caption">(\#fig:logskaalas)(ref:logskaalas)</p>
+</div>
 
 >Normaaljatuse avastas Gauss (1809), aga nime andis sellele Francis Galton (1860ndatel), kuna antropoloogilised mõõtmised "normaalselt" järgisid "vigade seadust", mille ta nimetas "Normaalseks jaotuste kurviks".
 
@@ -222,7 +234,10 @@ Me fitime oma valimiandmetega 2 erinevat mudelit: normaaljaotuse ja Studenti t j
 
 (ref:juhuvalim-normaaljaotusest) Juhuvalim normaaljaotusest, mille keskmine = 0 ja sd = 1 (n=3; andmepunktid on näidatud mustade munadena). Sinine joon - populatsioon, millest tõmmati valim; punane joon - normaaljaotuse mudel, mis on fititud valimi andmetel; must joon - Studenti t jaotuse mudel, mis on fititud samade andmetega. Mustad punktid, valim. Katkendjoon, populatsiooni keskmine, millest valim tõmmati.
 
-![(\#fig:juhuvalim-normaaljaotusest)(ref:juhuvalim-normaaljaotusest)](06_veamudel_files/figure-latex/juhuvalim-normaaljaotusest-1.pdf) 
+<div class="figure">
+<img src="06_veamudel_files/figure-html/juhuvalim-normaaljaotusest-1.png" alt="(ref:juhuvalim-normaaljaotusest)" width="672" />
+<p class="caption">(\#fig:juhuvalim-normaaljaotusest)(ref:juhuvalim-normaaljaotusest)</p>
+</div>
 
 Siin saame hinnata mudelite fitte jumala positsioonilt, võrreldes fititud mudelite jaotusi "tõese" sinise jaotusega.
 Mõlemad mudelid on süstemaatiliselt nihutatud väiksemate väärtuste poole ja alahindavad varieeruvust. t jaotuse mudel on oodatult paksemate sabadega ja ennustab 0-st kaugele palju rohkem väärtusi kui normaaljaotuse mudel. Kuna me teame, et populatsioon on normaaljaotusega, pole väga üllatav, et t jaotus modeleerib seda halvemini kui normaaljaotus. 
@@ -250,7 +265,10 @@ ggplot(tibble(simulated_data), aes(simulated_data)) +
   geom_histogram(bins = 15)
 ```
 
-![(\#fig:kasutame-fititud)(ref:kasutame-fititud)](06_veamudel_files/figure-latex/kasutame-fititud-1.pdf) 
+<div class="figure">
+<img src="06_veamudel_files/figure-html/kasutame-fititud-1.png" alt="(ref:kasutame-fititud)" width="672" />
+<p class="caption">(\#fig:kasutame-fititud)(ref:kasutame-fititud)</p>
+</div>
 
 Nagu näha, igati ootuspäraselt on uute (simuleeritud) andmete keskväärtus ja SD väga sarnased algsete andmete omale, mida kasutasime mudeli fittimisel. 
 Kahjuks ei ole need aga kaugeltki nii sarnased algsele jaotusele, mille kuju me püüame oma andmete ja mudeli pealt ennustada. 
@@ -344,7 +362,7 @@ y <- dlnorm(x)
 plot(x, y, typ = "l")
 ```
 
-![](06_veamudel_files/figure-latex/unnamed-chunk-10-1.pdf)<!-- --> 
+<img src="06_veamudel_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
 
 Seda jaotust, mis ei ulatu kunagi teisele poole nulli, iseloomustab, et x-i logaritmimine annab tulemuseks normaaljaotuse. 
@@ -354,7 +372,7 @@ Seda jaotust, mis ei ulatu kunagi teisele poole nulli, iseloomustab, et x-i loga
 plot(log(x), y, type = "l")
 ```
 
-![](06_veamudel_files/figure-latex/unnamed-chunk-11-1.pdf)<!-- --> 
+<img src="06_veamudel_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
 Lognormaaljaotuse keskväärtus, standardhälve, mood ja mediaan:
 
@@ -384,7 +402,7 @@ y <- dbinom(x, n, p)
 plot(x, y)
 ```
 
-![](06_veamudel_files/figure-latex/unnamed-chunk-12-1.pdf)<!-- --> 
+<img src="06_veamudel_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 
 $$keskv\ddot{a}\ddot{a}rtus = N \times p$$
 

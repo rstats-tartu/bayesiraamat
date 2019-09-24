@@ -72,7 +72,10 @@ ggplot( g2007, aes( lGDP_s, m.resid ) ) +
 #> Warning: Ignoring unknown parameters: type
 ```
 
-![(\#fig:unnamed-chunk-7)Mudeli residuaalide plot (m.resid ~ X1).](15_keerulisemad-mudelid_files/figure-latex/unnamed-chunk-7-1.pdf) 
+<div class="figure">
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-7-1.png" alt="Mudeli residuaalide plot (m.resid ~ X1)." width="672" />
+<p class="caption">(\#fig:unnamed-chunk-7)Mudeli residuaalide plot (m.resid ~ X1).</p>
+</div>
 
 
 Me näeme, et seal kus SKP on väiksem kipuvad residuaalid olema negatiivsed, mis tähendab, et mudel ülehindab keskmist eluiga. Ja vastupidi, seal kus SKP on üle keskmise, mudel kipub alahindma keskmist eluiga.
@@ -87,7 +90,10 @@ ggplot(g2007, aes(lifeExp, m.resid)) +
   geom_hline(yintercept = 0, color = "grey", linetype = 2)
 ```
 
-![(\#fig:unnamed-chunk-8)m.resid ~ Y plot](15_keerulisemad-mudelid_files/figure-latex/unnamed-chunk-8-1.pdf) 
+<div class="figure">
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-8-1.png" alt="m.resid ~ Y plot" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-8)m.resid ~ Y plot</p>
+</div>
 
 Horisontaalne punktiirjoon näitab, kus mudel vastab täpselt andmetele. 
 
@@ -126,7 +132,10 @@ ggplot(pred.data, aes(lGDP_s, mu.mean)) +
   geom_ribbon(aes(ymin = lower1, ymax = upper1), fill = "grey10", alpha = 0.3)
 ```
 
-![(\#fig:unnamed-chunk-9)Ennustav plot](15_keerulisemad-mudelid_files/figure-latex/unnamed-chunk-9-1.pdf) 
+<div class="figure">
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-9-1.png" alt="Ennustav plot" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-9)Ennustav plot</p>
+</div>
 
 Näeme, kuidas ennustus sobib/ei sobi andmetega. Võrdle eelneva ennustuspildiga, kus mudel ei sisalda rahvaarvu. Ennustuse intervallid on originaalandmete skaalas (aastates), mis on hea.
 
@@ -144,7 +153,10 @@ yrep <- sim(m5)
 ppc_dens(g2007$lifeExp, yrep[1:5, ])
 ```
 
-![(\#fig:unnamed-chunk-10)Valimi andmed vs. mudeli poolt ennustatud andmed.](15_keerulisemad-mudelid_files/figure-latex/unnamed-chunk-10-1.pdf) 
+<div class="figure">
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-10-1.png" alt="Valimi andmed vs. mudeli poolt ennustatud andmed." width="672" />
+<p class="caption">(\#fig:unnamed-chunk-10)Valimi andmed vs. mudeli poolt ennustatud andmed.</p>
+</div>
 
  
 2) Millisel viisil täpselt meie mudel ebaõnnestub? See plot annab mõtteid, kuidas mudelit parandada.
@@ -171,7 +183,10 @@ ggplot(g2007, aes(lifeExp, mu.mean)) +
   coord_cartesian( xlim=c( 40, 85 ), ylim=c( 40, 85 ))
 ```
 
-![(\#fig:unnamed-chunk-11)Ennustus vs. valimi väärtus](15_keerulisemad-mudelid_files/figure-latex/unnamed-chunk-11-1.pdf) 
+<div class="figure">
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-11-1.png" alt="Ennustus vs. valimi väärtus" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-11)Ennustus vs. valimi väärtus</p>
+</div>
 
 Siin on ennustus ja seda ümbritsev ebakindlus iga riigi keskmisele elueale.
 
@@ -196,7 +211,10 @@ ggplot(g2007, aes(x = life.resid, y = reorder(country, life.resid))) +
         axis.title.y = element_blank())
 ```
 
-![(\#fig:unnamed-chunk-12)Ennustused riigi kaupa.](15_keerulisemad-mudelid_files/figure-latex/unnamed-chunk-12-1.pdf) 
+<div class="figure">
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-12-1.png" alt="Ennustused riigi kaupa." width="672" />
+<p class="caption">(\#fig:unnamed-chunk-12)Ennustused riigi kaupa.</p>
+</div>
 
 punased jooned näitavad 89% ennustuspiire igale residuaalile riigi tasemel (89% kõikvõimalike riikide keskmiste eluigade residuaalidest sellel SKPl jääb punasesse vahemikku).
 
@@ -252,7 +270,10 @@ m1 <- map2stan(f1$f, f1$d)
 plot(precis(m1))
 ```
 
-![(\#fig:unnamed-chunk-16)Mudeli koefitsientide plot.](15_keerulisemad-mudelid_files/figure-latex/unnamed-chunk-16-1.pdf) 
+<div class="figure">
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-16-1.png" alt="Mudeli koefitsientide plot." width="672" />
+<p class="caption">(\#fig:unnamed-chunk-16)Mudeli koefitsientide plot.</p>
+</div>
 
 
 Aafrika on siin võrdluseks.
@@ -294,7 +315,10 @@ ggplot(dd1, aes(lGDP_s, lifeExp)) +
   geom_line(aes(y = mu.Africa.mean))
 ```
 
-![(\#fig:unnamed-chunk-18)Ennustusplot Aafrikale.](15_keerulisemad-mudelid_files/figure-latex/unnamed-chunk-18-1.pdf) 
+<div class="figure">
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-18-1.png" alt="Ennustusplot Aafrikale." width="672" />
+<p class="caption">(\#fig:unnamed-chunk-18)Ennustusplot Aafrikale.</p>
+</div>
 
 
 ```r
@@ -310,7 +334,10 @@ ggplot(data=dd1, aes(lGDP_s, lifeExp)) +
   geom_line( aes( y=mu.Europe.mean))
 ```
 
-![(\#fig:unnamed-chunk-19)Ennustusplot Euroopale.](15_keerulisemad-mudelid_files/figure-latex/unnamed-chunk-19-1.pdf) 
+<div class="figure">
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-19-1.png" alt="Ennustusplot Euroopale." width="672" />
+<p class="caption">(\#fig:unnamed-chunk-19)Ennustusplot Euroopale.</p>
+</div>
 
 Nagu näha, on meil nüüd üsna erinevad sirge tõusunurgad.
 
@@ -349,7 +376,10 @@ m2 <- map2stan(
 plot(precis(m2))
 ```
 
-![(\#fig:unnamed-chunk-23)mudeli koefitsientide plot](15_keerulisemad-mudelid_files/figure-latex/unnamed-chunk-23-1.pdf) 
+<div class="figure">
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-23-1.png" alt="mudeli koefitsientide plot" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-23)mudeli koefitsientide plot</p>
+</div>
 
 
 **NB!** Järgmised interpretatsioonid kehtivad ainult siis, kui mudeldame nullile tsentreeritud andmeid.
@@ -437,7 +467,10 @@ grid.arrange(p_1, p0, p1, ncol = 3)
 #> Warning: Removed 2 rows containing missing values (geom_path).
 ```
 
-![(\#fig:unnamed-chunk-29)Ennustusplot üle kahe mudeli.](15_keerulisemad-mudelid_files/figure-latex/unnamed-chunk-29-1.pdf) 
+<div class="figure">
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-29-1.png" alt="Ennustusplot üle kahe mudeli." width="672" />
+<p class="caption">(\#fig:unnamed-chunk-29)Ennustusplot üle kahe mudeli.</p>
+</div>
 
 Ja sama ainult ühe mudeliga -- m2. 
 
@@ -448,7 +481,10 @@ w1 <- waist_fun(1, m2)
 grid.arrange(w0, w_1, w1, ncol = 3)
 ```
 
-![(\#fig:unnamed-chunk-30)Ennustusplot m2-le.](15_keerulisemad-mudelid_files/figure-latex/unnamed-chunk-30-1.pdf) 
+<div class="figure">
+<img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-30-1.png" alt="Ennustusplot m2-le." width="672" />
+<p class="caption">(\#fig:unnamed-chunk-30)Ennustusplot m2-le.</p>
+</div>
 
 
 Nüüd on hästi näha, et interaktsioonimudel laseb sirge tõusunurgad vabaks!

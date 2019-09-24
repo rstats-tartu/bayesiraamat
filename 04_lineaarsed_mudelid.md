@@ -40,14 +40,10 @@ plot(y ~ x,
      main = bquote(y == x))
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/lihtnemudel-1} 
-
-}
-
-\caption{(ref:lihtnemudel)}(\#fig:lihtnemudel)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04_lineaarsed_mudelid_files/figure-html/lihtnemudel-1.png" alt="(ref:lihtnemudel)" width="70%" />
+<p class="caption">(\#fig:lihtnemudel)(ref:lihtnemudel)</p>
+</div>
 
 > Üldistatult, mudeli keeles tähistame me seda muutujat, mille väärtusi me ennustame, Y-ga ja seda muutujat, mille väärtuse põhjal me ennustame, X-ga. 
 
@@ -78,14 +74,10 @@ plot(y ~ x, xlim = c(0, 100), ylim = c(0, 150), type = "l",
 abline(c(0, 1), lty = 2)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/intercept-1} 
-
-}
-
-\caption{(ref:intercept)}(\#fig:intercept)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04_lineaarsed_mudelid_files/figure-html/intercept-1.png" alt="(ref:intercept)" width="70%" />
+<p class="caption">(\#fig:intercept)(ref:intercept)</p>
+</div>
 
 
 Meie konstant a määrab $y$ väärtuse, kui $x = 0$, ehk sirge lõikepunkti $y$ teljel.
@@ -111,14 +103,10 @@ plot(y ~ x, xlim = c(0, 100), ylim = c(0, 100), type = "l", main = bquote(y == b
 abline(c(0, 1), lty = 2)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-7-1} 
-
-}
-
-\caption{Lineaarne mudel, mille lõikepunkt = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3.}(\#fig:unnamed-chunk-7)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-7-1.png" alt="Lineaarne mudel, mille lõikepunkt = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-7)Lineaarne mudel, mille lõikepunkt = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3.</p>
+</div>
 
 
 Nüüd muutub sirge tõusunurk, ehk kui palju me ootame *y*-t muutumas, kui *x* muutub näiteks ühe ühiku võrra. 
@@ -156,14 +144,10 @@ y <-  a + b * x
 plot(y ~ x, xlab = "Weight in kg", ylab = "Heigth in cm", ylim = c(50, 200), type = "l", main = bquote(y == 102 + 0.8 %*% x))
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-9-1} 
-
-}
-
-\caption{Lineaarne mudel, millel on tuunitud nii lõikepunkt kui tõus.}(\#fig:unnamed-chunk-9)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-9-1.png" alt="Lineaarne mudel, millel on tuunitud nii lõikepunkt kui tõus." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-9)Lineaarne mudel, millel on tuunitud nii lõikepunkt kui tõus.</p>
+</div>
 
 
 
@@ -200,14 +184,10 @@ augment(m, iris) %>%
   scale_color_viridis(discrete = TRUE)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-11-1} 
-
-}
-
-\caption{Fititud mudel, kus muutuja Petal.Length järgi ennustatakse muutuja Sepal.Length väärtusi.}(\#fig:unnamed-chunk-11)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-11-1.png" alt="Fititud mudel, kus muutuja Petal.Length järgi ennustatakse muutuja Sepal.Length väärtusi." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-11)Fititud mudel, kus muutuja Petal.Length järgi ennustatakse muutuja Sepal.Length väärtusi.</p>
+</div>
 
 Mudeli fittimine tähendab siin lihtsalt, et sirge on 2D ruumi asetatud nii, et see oleks võimalikult lähedal kõikidele punktidele.
 
@@ -253,14 +233,10 @@ Sepal_length <-  a + b * Petal_length
 plot(Sepal_length ~ Petal_length, type = "b")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-14-1} 
-
-}
-
-\caption{Siin ennustasime kümme y väärtust x väärtuste põhjal..}(\#fig:unnamed-chunk-14)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-14-1.png" alt="Siin ennustasime kümme y väärtust x väärtuste põhjal.." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-14)Siin ennustasime kümme y väärtust x väärtuste põhjal..</p>
+</div>
 
 
 
@@ -342,30 +318,22 @@ Selline mudel on täpselt sama informatiivne kui andmed, mille põhjal see fitit
 #> Please use `cols = c(preds)`
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-16-1} 
-
-}
-
-\caption{Kasvava paindlikusega polünoomsed mudelid.}(\#fig:unnamed-chunk-16)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-16-1.png" alt="Kasvava paindlikusega polünoomsed mudelid." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-16)Kasvava paindlikusega polünoomsed mudelid.</p>
+</div>
 
 
 Vähimruutude meetodil fititud mudeleid saame võrrelda AIC-i näitaja järgi. AIC  - Akaike Informatsiooni Kriteerium - vaatab mudeli sobivust andmetega ja mudeli parameetrite arvu. 
 Väikseim AIC tähitab parimat fitti väikseima parameetrite arvu juures (kompromissi) ja väikseima AIC-ga mudel on eelistatuim mudel. Aga seda ainult võrreldud mudelite hulgas. AIC-i absoluutväärtus ei loe - see on suhteline näitaja.
 
-\begin{tabular}{lr}
-\toprule
-model\_formula & aic\\
-\midrule
-y \textasciitilde{} x & 35.0\\
-y \textasciitilde{} poly(x, 2) & 37.0\\
-y \textasciitilde{} poly(x, 3) & 36.1\\
-y \textasciitilde{} poly(x, 4) & 32.5\\
-y \textasciitilde{} poly(x, 5) & -Inf\\
-\bottomrule
-\end{tabular}
+model_formula      aic
+---------------  -----
+y ~ x             35.0
+y ~ poly(x, 2)    37.0
+y ~ poly(x, 3)    36.1
+y ~ poly(x, 4)    32.5
+y ~ poly(x, 5)    -Inf
 
 AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel? Mis siis, kui 3-s andmepunkt on andmesisestaja näpuviga?
 

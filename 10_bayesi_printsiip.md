@@ -67,7 +67,7 @@ ggplot(data=NULL, aes(x, y)) +
   ylab("plausibility")
 ```
 
-![](10_bayesi_printsiip_files/figure-latex/unnamed-chunk-2-1.pdf)<!-- --> 
+<img src="10_bayesi_printsiip_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
 Siit näeme, et üks surm ja kaks surma on sama tõenäolised ja üks surm on kolm korda tõenäolisem kui null surma (või kolm surma). 
 Tõepära annab meile tõenäosuse Pr(mortality=0.5 & N=3) igale loogiliselt võimalikule surmade arvule (0 kuni 3). 
@@ -85,7 +85,7 @@ ggplot(data=NULL, aes(x, y)) +
   ylab("probability")
 ```
 
-![](10_bayesi_printsiip_files/figure-latex/unnamed-chunk-3-1.pdf)<!-- --> 
+<img src="10_bayesi_printsiip_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
 Proovime seda koodi olukorras, kus meil on 9 patsienti ja suremus on 0.67:
 
@@ -101,7 +101,7 @@ ggplot(data=NULL, aes(x, y)) +
   ylab("probability")
 ```
 
-![](10_bayesi_printsiip_files/figure-latex/unnamed-chunk-4-1.pdf)<!-- --> 
+<img src="10_bayesi_printsiip_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 
 Lisame sellele tõepärafunktsioonile tasase priori (lihtsuse huvides) ja arvutame posterioorse jaotuse kasutades Bayesi teoreemi. Igale parameetri väärtusele on tõepära * prior proportsionaalne posterioorse tõenäosusega, et just see parameetri väärtus on see ainus tõene väärtus. Posterioorsed tõenäosused normaliseeritakse nii, et nad summeeruksid 1-le.
@@ -132,7 +132,7 @@ ggplot(data = NULL, aes(x, posterior)) +
   ylab("posterior probability")
 ```
 
-![](10_bayesi_printsiip_files/figure-latex/unnamed-chunk-5-1.pdf)<!-- --> 
+<img src="10_bayesi_printsiip_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
 See on parim võimalik teadmine, mitu kirstu tasuks tellida, arvestades meie priori ja likelihoodi mudelitega. Näiteks, sedapalju, kui surmad ei ole üksteisest sõltumatud, on meie tõepäramudel (binoomjaotus) vale. 
 
@@ -178,7 +178,7 @@ a <- tibble(x=rep(x=x, 3),
 ggplot(data=a) + geom_line(aes(x, y, color=legend))
 ```
 
-![](10_bayesi_printsiip_files/figure-latex/unnamed-chunk-6-1.pdf)<!-- --> 
+<img src="10_bayesi_printsiip_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 Nüüd on meil posterioorne tõenäosusfunktsioon, mis summeerub 1-le ja mis sisaldab kogu meie teadmist suremuse kohta.
 
@@ -211,7 +211,10 @@ ggplot(data=NULL)+
   geom_line(aes(x, posterior), color= "blue")
 ```
 
-![(\#fig:esimene-patsient)(ref:esimene-patsient)](10_bayesi_printsiip_files/figure-latex/esimene-patsient-1.pdf) 
+<div class="figure">
+<img src="10_bayesi_printsiip_files/figure-html/esimene-patsient-1.png" alt="(ref:esimene-patsient)" width="672" />
+<p class="caption">(\#fig:esimene-patsient)(ref:esimene-patsient)</p>
+</div>
 
 Esimene patsient suri - 0 mortaalsus ei ole enam loogiliselt võimalik (välja arvatud siis kui prior selle koha peal = 0) ja mortaalsus 100% on andmetega (tegelikult andmega) parimini kooskõlas. Posteerior on nulli ja 100% vahel sirge sest vähene sissepandud informatsioon lihtsalt ei võimalda enamat.
 
@@ -232,7 +235,10 @@ ggplot(data=NULL)+
   geom_line(aes(x, posterior1), color="blue")
 ```
 
-![(\#fig:teine-patsient)(ref:teine-patsient)](10_bayesi_printsiip_files/figure-latex/teine-patsient-1.pdf) 
+<div class="figure">
+<img src="10_bayesi_printsiip_files/figure-html/teine-patsient-1.png" alt="(ref:teine-patsient)" width="672" />
+<p class="caption">(\#fig:teine-patsient)(ref:teine-patsient)</p>
+</div>
 
 Teine patsient suri. 
 Nüüd ei ole 0 ja 1 vahel enam sirge posteerior. 
@@ -257,7 +263,10 @@ ggplot(data=NULL)+
   geom_line(aes(x, posterior2), color="blue")
 ```
 
-![(\#fig:kolmas-patsient)(ref:kolmas-patsient)](10_bayesi_printsiip_files/figure-latex/kolmas-patsient-1.pdf) 
+<div class="figure">
+<img src="10_bayesi_printsiip_files/figure-html/kolmas-patsient-1.png" alt="(ref:kolmas-patsient)" width="672" />
+<p class="caption">(\#fig:kolmas-patsient)(ref:kolmas-patsient)</p>
+</div>
 
 Kolmas patsient jäi ellu - 0 ja 100% mortaalsus on seega võimaluste nimekirjast maas ning suremus on ikka kaldu valimi keskmise poole (75%).
 
@@ -281,7 +290,7 @@ ggplot(data=NULL)+
   geom_line(aes(x, posterior), color="blue")
 ```
 
-![](10_bayesi_printsiip_files/figure-latex/unnamed-chunk-7-1.pdf)<!-- --> 
+<img src="10_bayesi_printsiip_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 1. patsient suri
 
 (ref:fuck) N=2 informatiivse prioriga.
@@ -303,7 +312,10 @@ ggplot(data=NULL)+
   geom_line(aes(x, posterior1), color="blue")
 ```
 
-![(\#fig:fuck)(ref:fuck)](10_bayesi_printsiip_files/figure-latex/fuck-1.pdf) 
+<div class="figure">
+<img src="10_bayesi_printsiip_files/figure-html/fuck-1.png" alt="(ref:fuck)" width="672" />
+<p class="caption">(\#fig:fuck)(ref:fuck)</p>
+</div>
 
 Teine patsient suri.
 
@@ -326,5 +338,8 @@ ggplot(data=NULL)+
   geom_line(aes(x, posterior2), color="blue")
 ```
 
-![(\#fig:omg)(ref:omg)](10_bayesi_printsiip_files/figure-latex/omg-1.pdf) 
+<div class="figure">
+<img src="10_bayesi_printsiip_files/figure-html/omg-1.png" alt="(ref:omg)" width="672" />
+<p class="caption">(\#fig:omg)(ref:omg)</p>
+</div>
 Kolmas patsient jäi ellu. Nüüd on posteeriori tipp mitte 75% juures nagu ennist, vaid kuskil 50% juures --- tänu priorile.

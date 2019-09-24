@@ -13,6 +13,7 @@
     \usepackage{fontspec}
   \fi
   \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+    \setmainfont[]{Arial}
 \fi
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -845,13 +846,13 @@ kujutasime eelmisel joonisel:
 \hline
 SD & MEAN & lower & upper\\
 \hline
-multiplicative\_SD & 0.938 & 0.319 & 2.76\\
+multiplicative\_SD & 0.971 & 0.363 & 2.60\\
 \hline
-multiplicative\_2\_SD & 0.938 & 0.108 & 8.13\\
+multiplicative\_2\_SD & 0.971 & 0.135 & 6.97\\
 \hline
-additive\_SD & 1.630 & -0.477 & 3.74\\
+additive\_SD & 1.609 & -0.415 & 3.63\\
 \hline
-additive\_2\_SD & 1.630 & -2.585 & 5.85\\
+additive\_2\_SD & 1.609 & -2.439 & 5.66\\
 \hline
 \end{tabular}
 
@@ -930,7 +931,7 @@ kui andmepunktid pärineksid normaaljaotusest.}
 \end{figure}
 
 \begin{verbatim}
-#> [1] 44 61
+#> [1] 63  1
 \end{verbatim}
 
 Nüüd joonistame qq-ploti logaritmitud andmetele.
@@ -952,7 +953,7 @@ lognormaalsed andmed).}
 \end{figure}
 
 \begin{verbatim}
-#> [1] 36 24
+#> [1] 63  1
 \end{verbatim}
 
 Pole kahtlust, andmed on logaritmitud kujul normaaljaotusega.
@@ -986,18 +987,18 @@ Lognormaalsete andmetega:
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{mad}\NormalTok{(andmed, }\DataTypeTok{constant =} \DecValTok{1}\NormalTok{); }\KeywordTok{sd}\NormalTok{(andmed); }\KeywordTok{mad}\NormalTok{(andmed)}
-\CommentTok{#> [1] 0.614}
-\CommentTok{#> [1] 2.11}
-\CommentTok{#> [1] 0.91}
+\CommentTok{#> [1] 0.593}
+\CommentTok{#> [1] 2.02}
+\CommentTok{#> [1] 0.88}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{mad}\NormalTok{(}\KeywordTok{log10}\NormalTok{(andmed), }\DataTypeTok{constant =} \DecValTok{1}\NormalTok{); }\KeywordTok{sd}\NormalTok{(}\KeywordTok{log10}\NormalTok{(andmed)); }\KeywordTok{mad}\NormalTok{(}\KeywordTok{log10}\NormalTok{(andmed))}
-\CommentTok{#> [1] 0.333}
-\CommentTok{#> [1] 0.469}
-\CommentTok{#> [1] 0.494}
+\CommentTok{#> [1] 0.317}
+\CommentTok{#> [1] 0.428}
+\CommentTok{#> [1] 0.47}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1025,7 +1026,7 @@ jääb 2.5\%, 25\%, 50\%, 75\% ja 95\% väärtusi.
 \begin{Highlighting}[]
 \KeywordTok{quantile}\NormalTok{(andmed, }\KeywordTok{c}\NormalTok{(}\FloatTok{0.025}\NormalTok{, }\FloatTok{0.25}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\FloatTok{0.75}\NormalTok{, }\FloatTok{0.95}\NormalTok{))}
 \CommentTok{#>  2.5%   25%   50%   75%   95% }
-\CommentTok{#> 0.114 0.421 1.012 1.845 5.642}
+\CommentTok{#> 0.196 0.461 0.974 1.781 4.377}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1991,20 +1992,20 @@ väärtusest:
 Ekvivalntne viis interaktsiooni spetsifitseerida on läbi
 võrrandisüsteemi: \[y = a + \gamma x_1 + b_2x_2\]
 \[\gamma = b_1 + b_3x_2\] Siit on hästi näha, et me teeme kaks
-lineaarset regressiooni, millest teine modelleerib \(X_1\) muutuja
-koefitsiendi sõltuvust \(X_2\) muutuja väärtusest.
+lineaarset regressiooni, millest teine modelleerib \(x_1\) muutuja
+koefitsiendi sõltuvust \(x_2\) muutuja väärtusest.
 
 Samamoodi kehtib ka ümberkirjutus \[y = a + \gamma x_2 + b_1x_1\]
 \[\gamma = b_2 + b_3x_1\]
 
-mis tähendab, et ühtlasi modelleerime me ka \(X_2\) koefitsiendi
-sõltuvust \(X_1\)-st. Mudeli koefitsientide tõlgendamise teeb
+mis tähendab, et ühtlasi modelleerime me ka \(x_2\) koefitsiendi
+sõltuvust \(x_1\)-st. Mudeli koefitsientide tõlgendamise teeb
 keeruliseks, et gamma tõlgendamisel tuleb arvesse võtta kolm asja --
-b\textsubscript{2}, b\textsubscript{3} ja X\textsubscript{1}.
+b\textsubscript{2}, b\textsubscript{3} ja x\textsubscript{1}.
 
 Kaks muutujat võivad inteakteeruda sõltumata sellest, kas nad on
 korreleeritud või mitte -- interaktsioon ei impitseeri korrelatsiooni,
-ega korraletsioon implikatsiooni.
+ega vastupidi.
 
 Sageli on nii, et prediktoreid, mille mõju y-le on suur, tasub mudeldada
 ka interaktsioonimudelis (näiteks suitsetamise mõju vähimudelites kipub
@@ -2018,16 +2019,16 @@ koefitsientide tõlgendamine lihtsamaks:
 
 \begin{itemize}
 \item
-  b\textsubscript{1} annab y tõusu, kui X\textsubscript{1} tõuseb 1
-  ühiku võrra ja X\textsubscript{2} on fikseeritud oma keskväärtusel
+  b\textsubscript{1} annab y tõusu, kui x\textsubscript{1} tõuseb 1
+  ühiku võrra ja x\textsubscript{2} on fikseeritud oma keskväärtusel
 \item
-  b\textsubscript{2} annab y tõusu, kui X\textsubscript{2} tõuseb 1
-  ühiku võrra ja X\textsubscript{1} on fikseeritud oma keskväärtusel).
+  b\textsubscript{2} annab y tõusu, kui x\textsubscript{2} tõuseb 1
+  ühiku võrra ja x\textsubscript{1} on fikseeritud oma keskväärtusel).
 \item
-  b\textsubscript{3} ütleb, kui palju muutub X\textsubscript{1} mõju
-  Y-le, kui X\textsubscript{2} muutub ühe ühiku võrra. Samamoodi,
-  b\textsubscript{3} ütleb, kui palju muutub X\textsubscript{2} mõju
-  Y-le, kui X\textsubscript{1} muutub ühe ühiku võrra.
+  b\textsubscript{3} ütleb, kui palju muutub x\textsubscript{1} mõju
+  y-le, kui x\textsubscript{2} muutub ühe ühiku võrra. Samamoodi,
+  b\textsubscript{3} ütleb, kui palju muutub x\textsubscript{2} mõju
+  y-le, kui x\textsubscript{1} muutub ühe ühiku võrra.
 \end{itemize}
 
 NB! Ärge standardiseerige faktormuutujaid ehk \emph{dummy}-regressoreid
@@ -2046,8 +2047,8 @@ siis, kui x\textsubscript{2} = 0, ennustab x\textsubscript{1} tõus 1
 ühiku võrra y muutust b\textsubscript{1} ühiku võrra.
 \end{quote}
 
-Kui meil on mudelis interaktsiooniliige \(X_1X_2\), siis on enamasti
-mõistlik ka lisada eraldi liikmetena ka \(X_1\) ja \(X_2\).
+Kui meil on mudelis interaktsiooniliige \(x_1x_2\), siis on enamasti
+mõistlik ka lisada eraldi liikmetena ka \(x_1\) ja \(x_2\).
 
 Näiteks mudel, milles on pidev y-muutuja, pidev prediktor ``education''
 ja binaarne prediktor ``sex\_male'' (1 ja 0):
@@ -2079,13 +2080,13 @@ tõusud võivad erineda.
 
 Kui meil on kaks faktor-prediktorit, siis mudel kujul
 
-\[y= 0 + b_3X_1X_2\]
+\[y= 0 + b_3x_1x_2\]
 
 Mudeldab eraldi nende faktorite tasemete kõikvõimalud kombinatsioonid.
 
 \begin{quote}
-Oletame, et meil on lisaks pidevale prediktorile X\textsubscript{1} ka
-faktor-prediktor X\textsubscript{2}. Diskreetsed e faktor-prediktorid
+Oletame, et meil on lisaks pidevale prediktorile x\textsubscript{1} ka
+faktor-prediktor x\textsubscript{2}. Diskreetsed e faktor-prediktorid
 rekodeeritakse automaatselt nn \emph{dummy}-muutujateks. Kahevalentse e
 binaarse muutuja, näit sex = c(``male'', ``female''), korral läheb
 regressioonivõrrandisse uus dummy-muutuja, sex\_female, kus kõik emased
@@ -2101,7 +2102,7 @@ muutuja} (\emph{explanatory variable}), millest tehakse n-1
 \emph{regressorit}. Seega tehniliselt on mudeli liikmed regressorid,
 mitte seletavad muutujad. Üks seletav muutuja võib anda välja mitu
 regressorit (nagu eelmises näites) ja üks regressor võib põhineda mitmel
-muutujal (näit X\textsubscript{1X}2 interaktsiooniterm).
+muutujal (näit x\textsubscript{1x}2 interaktsiooniterm).
 \end{quote}
 
 Interaktsioonimudeli 2D avaldus on kurvatuuriga tasapind, kusjuures
@@ -2264,7 +2265,7 @@ Adjusteeritud r2 tasub eraldi üle vaadata.
 \addcontentsline{toc}{section}{2. Testime mudeli eeldusi}
 
 Nii saab fititud väärtused (.fitted), residuaalid (.resid), fittitud
-väätruste standardvead (.se.fit). Residuaal = Y data value - fitted
+väätruste standardvead (.se.fit). Residuaal = y data value - fitted
 value. Seega positiivne residuaal näitab, et mudeli ennustus keskmisele
 y väärtusele mingil x-muutujate väärtusel on madalam kui juhutb olema
 tegelik y-i andmepunkti väärtus. See võib olla tingitud y-muutuja
@@ -2511,7 +2512,7 @@ plots)}\label{teeme-mudeli-pohjal-ennustusi-marginal-plots}
 \addcontentsline{toc}{section}{3. Teeme mudeli põhjal ennustusi
 (marginal plots)}
 
-Me ennustame Y-i keskmisi väärtuseid etteantud X-i väärtustel.
+Me ennustame y-i keskmisi väärtuseid etteantud x-i väärtustel.
 
 ggpredict() ennustab y-muutuja väärtusi ühe x-muutuja väärtuste järgi,
 hoides kõiki teisi x-muutujaid konstantsena.
@@ -2672,13 +2673,13 @@ logaritmida}\label{miks-ja-millal-muutujaid-logaritmida}
   logaritmimine võib need muuta lineaarseks, ja sellega päästa ühe
   olulisema lineaarse regressiooni eelduse (vt ka ptk 4.2).
 \item
-  Logarimimine on hea, kui soovite Y ja X muutuja omavahelist sõltuvust
+  Logarimimine on hea, kui soovite y ja x muutuja omavahelist sõltuvust
   tõlgendada üle suhtelise muutuse ehk muutuse protsendi. Kui algses
-  skaalas on \(\beta\) koefitsiendi loomulik tõlgendus additiivne: X-i
+  skaalas on \(\beta\) koefitsiendi loomulik tõlgendus additiivne: x-i
   kasv 1 ühiku võrra ennustab y-i kasvu \(\beta\) ühiku võrra, siis
-  naturaallogaritmitud X-i korral on üks loomulikest
-  multiplikatiivsetest tõlgendustest: X-i kasv 1 ühiku võrra ennustab
-  Y-i muutust \ldots{} protsendi võrra. Additiivsel juhul me liidame ja
+  naturaallogaritmitud x-i korral on üks loomulikest
+  multiplikatiivsetest tõlgendustest: x-i kasv 1 ühiku võrra ennustab
+  y-i muutust \ldots{} protsendi võrra. Additiivsel juhul me liidame ja
   lahutame, multiplikatiivsel juhul aga korrutame ja jagame.
 \item
   Muutuja logaritmimine võib viia selle muutuja lähemale
@@ -2757,24 +2758,24 @@ erineval viisil:
 
 \begin{itemize}
 \item
-  Y = \(\alpha\) + \(\beta\)X --- lineaarne mudel (transformeerimata)
+  y = \(\alpha\) + \(\beta\)x --- lineaarne mudel (transformeerimata)
 \item
-  Y = \(\alpha\) + \(\beta\) * log(X) --- lineaar-log mudel
+  y = \(\alpha\) + \(\beta\) * log(x) --- lineaar-log mudel
   (transformeeritud on prediktor(id))
 \item
-  log(Y) = \(\alpha\) + \(\beta\)X -- log-lineaar mudel
+  log(y) = \(\alpha\) + \(\beta\)x -- log-lineaar mudel
   (transformeeritud on y-muutuja)
 \item
-  log(Y) = \(\alpha\) + \(\beta\) * log(X) -- log-log mudel
+  log(y) = \(\alpha\) + \(\beta\) * log(x) -- log-log mudel
   (transformeeritud on y ja x muutujad)
 \end{itemize}
 
-\textbf{Lineaarses} mudelis Y = \(\alpha\) + \(\beta\)X, annab \(\beta\)
+\textbf{Lineaarses} mudelis y = \(\alpha\) + \(\beta\)x, annab \(\beta\)
 selle, mitu ühikut muutub Y keskväärtus, kui X muutub ühe ühiku võrra.
 
 \textbf{Lineaar-log} mudelis jääb kehtima sama \(\beta\) tõlgendus, mis
-ülalpool, ainult et log-ühikutes. Seega viib logX-i muutus ühe log ühiku
-võrra Y keskväärtuse muutusele \(\beta\) ühiku võrra (see kehtib muidugi
+ülalpool, ainult et log-ühikutes. Seega viib logx-i muutus ühe log ühiku
+võrra y keskväärtuse muutusele \(\beta\) ühiku võrra (see kehtib muidugi
 ka log2 ja log10 skaalades).
 
 Kui me juba kasutasime naturaallogaritmimist, siis tahame ilmselt
@@ -2783,17 +2784,17 @@ skaalas (log2 ja log10 ei võimalda selliseid mugavaid tõlgendusi):
 
 \begin{itemize}
 \item
-  \(\beta\) on oodatud Y muutus, kui X kasvab eX korda.
+  \(\beta\) on oodatud y muutus, kui x kasvab \(ex\) korda.
 \item
   Kui \(\beta\) on väike, siis saab seda tõlgendada kui suhtelist
-  erinevust. Näiteks, kui \(\beta\) = 0.06, siis 1 ühikuline X-i muutus
-  viib u 6\%-sele Y muutusele. Sedamõõda kuidas \(\beta\) kaugeneb
+  erinevust. Näiteks, kui \(\beta\) = 0.06, siis 1 ühikuline x-i muutus
+  viib u 6\%-sele y muutusele. Sedamõõda kuidas \(\beta\) kaugeneb
   nullist (näiteks \(\beta\) = 0.4), hakkab selline hinnang tõsiselt
   alahindama tegelikku x-i mõju y väärtusele.
 \item
-  Oodatud Y muutus kui X kasvab p protsenti on \(\beta\) * log({[}100 +
-  p{]}/100). Näit, kui X kasvab 10\% võrra (ehk kui korrutame X-i
-  1.1-ga), siis log(110/100) = 0.095 ja 0.095\(\beta\) on oodatud Y
+  Oodatud y muutus kui x kasvab p protsenti on \(\beta\) * log({[}100 +
+  p{]}/100). Näit, kui x kasvab 10\% võrra (ehk kui korrutame x-i
+  1.1-ga), siis log(110/100) = 0.095 ja 0.095\(\beta\) on oodatud y
   muutus.
 \end{itemize}
 
@@ -2801,36 +2802,36 @@ skaalas (log2 ja log10 ei võimalda selliseid mugavaid tõlgendusi):
 
 \begin{itemize}
 \item
-  kui X kasvab 1 ühiku võrra, siis oodatud Y väärtus kasvab
+  kui x kasvab 1 ühiku võrra, siis oodatud y väärtus kasvab
   exp(\(\beta\)) korda.
 \item
-  Kui X kasvab c ühiku võrra, siis oodatud Y väärtus kasvab
+  Kui x kasvab c ühiku võrra, siis oodatud y väärtus kasvab
   exp(c\(\beta\)) korda.
 \item
-  Kui \(\beta\) on väike, siis 100 * \(\beta\) vastab Y protsentuaalsele
-  muutusele juhul kui X muutub 1 ühiku võrra (kui \(\beta\) = 0.06, siis
-  X-i muutus 1 ühiku võrra viib Y-i 6\% tõusule).
+  Kui \(\beta\) on väike, siis 100 * \(\beta\) vastab y protsentuaalsele
+  muutusele juhul kui x muutub 1 ühiku võrra (kui \(\beta\) = 0.06, siis
+  x-i muutus 1 ühiku võrra viib y-i 6\% tõusule).
 \end{itemize}
 
-\textbf{Log-log} mudeli korral on tõlgendus oodatud Y-i muutus
-protsentides kui X muutub mingi protsendi võrra. Sellist suhet
-kotsutakse ökonomeetrias elastiliseks ja logX-i \(\beta\) koefitsient on
-``elastilisus.''
+\textbf{Log-log} mudeli korral on tõlgendus oodatud y-i muutus
+protsentides kui x muutub mingi protsendi võrra. Sellist suhet
+kotsutakse ökonomeetrias elastiliseks ja log x-i \(\beta\) koefitsient
+on ``elastilisus.''
 
 \begin{itemize}
 \item
-  Kui me korrutame X-i e-ga, siis korrutame oodatud Y-i väärtuse
+  Kui me korrutame x-i e-ga, siis korrutame oodatud y-i väärtuse
   exp(\(\beta\))-ga.
 \item
-  Et saada Y suhtelist muutust, kui X kasvab p protsenti, arvuta a =
+  Et saada y suhtelist muutust, kui x kasvab p protsenti, arvuta a =
   log({[}100 + p{]}/100) ja siis võta exp(a\(\beta\)).
 \end{itemize}
 
 \section{Standardiseerimine}\label{standardiseerimine}
 
-Kui prediktor \(X_1\) on mõõdetud näiteks eurodes ja prediktor \(X_2\)
+Kui prediktor \(x_1\) on mõõdetud näiteks eurodes ja prediktor \(x_2\)
 aastates, siis on meil fititud koefitsientidele \(b_1\) ja \(b_2\) peale
-vaadates raske öelda, kumb mõjutab Y-muutuja väärtust rohkem. Kuna euro
+vaadates raske öelda, kumb mõjutab y-muutuja väärtust rohkem. Kuna euro
 ühik on palju granuleeritum kui aasta, siis võib ka väga väike nullist
 erinev \(b_1\) omada mudeli seisukohast suuremat tähtsust kui
 suhteliselt suur \(b_2\).
@@ -2851,18 +2852,6 @@ binaarsed muutujad muutmata.
 
 Nüüd tähendab 1 ühikuline muutus efekti -1 SD-st kuni 1 SD-ni üle
 keskväärtuse.
-
-Prediktorite standardiseerimine, eesmärgiga võrrelda võrreldamatut, on
-paraku samavõrd kahtlane kui levinud meetod. Esiteks, varieeruvuse
-mõõtmine sd ühikutes on mõtekas siis, kui prediktorid on enam-vähem
-normaaljaotusega, mida nad sageli ei ole, ega puhtalt regressiooni
-seisukohalt ei peagi olema. Ja teiseks, kujutlege, et teil on kaks
-võrreldavat prediktorit, mõlemad näiteks mõõdetud aastates, aga need
-prediktorid on erineva diapasooniga (ja seega ka erineva
-varieeruvusega). Kui teile tundub, et nende muutujate standardiseerimine
-oleks võrreldav oma analüüsi kummist joonlaua sisse toomisega, kuidas te
-siis põhjendate sama protseduuri, kui muutujad ei ole mõõdetud samades
-ühikutes?
 
 \subsection*{Korrelatsioon üle regressiooni ja regressioon
 keskmisele}\label{korrelatsioon-ule-regressiooni-ja-regressioon-keskmisele}
@@ -2924,12 +2913,13 @@ konverteerida pidev muutuja faktormuutujaks ja saada hinnang näiteks
 igale vanuseklassile eraldi.
 
 Additiivne mudel eeldab, et emaste ja isaste tõusud on võrdsed, mistõttu
-need fititakse sama beta koefitsiendiga, mis tähendab, et X2 mõju
-pidelvale prediktorile X1 on, et me saame mudeli ennustusena faktori n
-tasemele vastavad n paralleelset sirget, millest igaüks näitab pideva X1
-seost pideva Y-ga erinevatel X2 tasemetel. 0/1 kodeeringus regressorite
-interceptid annavad nende paralleelsete sirgete vahelised kaugused
-üldise-intercepti poolt antud faktori taseme ennustusest.
+need fititakse sama beta koefitsiendiga, mis tähendab, et
+x\textsubscript{2} mõju pidelvale prediktorile x\textsubscript{1} on, et
+me saame mudeli ennustusena faktori n tasemele vastavad n paralleelset
+sirget, millest igaüks näitab pideva x\textsubscript{1} seost pideva
+y-ga erinevatel x\textsubscript{2} tasemetel. 0/1 kodeeringus
+regressorite interceptid annavad nende paralleelsete sirgete vahelised
+kaugused üldise-intercepti poolt antud faktori taseme ennustusest.
 
 \section{mitmese regressiooni üldised
 printsiibid}\label{mitmese-regressiooni-uldised-printsiibid}
@@ -5643,7 +5633,7 @@ Tõenäosus, et keskmine on suurem kui 182 cm
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{mean}\NormalTok{(heights_bb[, }\DecValTok{1}\NormalTok{] }\OperatorTok{>}\StringTok{ }\DecValTok{182}\NormalTok{)}
-\CommentTok{#> [1] 0.991}
+\CommentTok{#> [1] 0.993}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6364,7 +6354,7 @@ funktsioon extract.samples()
 \begin{Highlighting}[]
 \KeywordTok{HPDI}\NormalTok{(samples}\OperatorTok{$}\NormalTok{p, }\DataTypeTok{prob =} \FloatTok{0.95}\NormalTok{) }\CommentTok{# Highest density 95% at the center}
 \CommentTok{#> |0.95 0.95| }
-\CommentTok{#> 0.364 0.977}
+\CommentTok{#> 0.354 0.968}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6407,7 +6397,7 @@ hinnangut on meil vaja kas rohkem patsiente või informatiivsemat priorit
 \CommentTok{#PI(samples$p, prob = 0.95) # Leaves out equal 2.5% at both sides}
 \KeywordTok{HPDI}\NormalTok{(samples}\OperatorTok{$}\NormalTok{p, }\DataTypeTok{prob =} \FloatTok{0.95}\NormalTok{) }\CommentTok{# Highest density 95% at the center}
 \CommentTok{#> |0.95 0.95| }
-\CommentTok{#> 0.572 0.767}
+\CommentTok{#> 0.568 0.766}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6489,7 +6479,7 @@ mille mood \(\omega = 0.8\) ja \(\kappa = 12\)? Siis saame valemist, et
 \begin{Highlighting}[]
 \KeywordTok{HPDI}\NormalTok{(samples}\OperatorTok{$}\NormalTok{p, }\DataTypeTok{prob =} \FloatTok{0.95}\NormalTok{) }\CommentTok{# Highest density 95% at the center}
 \CommentTok{#> |0.95 0.95| }
-\CommentTok{#> 0.613 0.718}
+\CommentTok{#> 0.614 0.721}
 \KeywordTok{dens}\NormalTok{(samples}\OperatorTok{$}\NormalTok{p)}
 \end{Highlighting}
 \end{Shaded}
@@ -6527,13 +6517,98 @@ mudelisse formaliseerimiseks.
 
 Nõrgalt regulariseerivad priorid on väheinformatiivsete priorite
 alamliik, mis on tsentreeritud nullile ja tõmbavad posteeriorit õrnalt
-nulli suunas.
+nulli suunas. Regulariseerimine tähendab seda, et kui regressiooni
+beta-koefotsiendi prior surub seda koefitsienti õrnalt nulli poole
+(nulltõus tähendab efekti puudumist), siis reageerib mudel selle võrra
+vähem andmetele, mis kallutavad seda betat nullist eemale, ja tulemuseks
+on loodetavasti mudeli ülefittimise vältimine. Selline lähenemine töötab
+päriselt, aga samas pole alati lihtne öelda, kui palju me peaksime
+konkreetsel juhul prioritega regulariseerima - üleregulariseeritud mudel
+ei arvesta piisavalt andmetega, mis on selgelt raiskamine.
 
 Vähemalt suured farmaatsiafirmad seda hoiakut ei jaga ja kulutavad oma
 miljoneid informatiivsete priorite tootmiseks. Selles protsessis saavad
 kokku statistikud, teaduseksperdid ja psühholoogid, et inimkonna
 teadmisi võimalikult adekvaatselt vormida tõenäosusjaotustesse. Meie
 töötame siiski enamasti väheinformatiivsete prioritega.
+
+\chapter{MCMC põhimõte}\label{mcmc-pohimote}
+
+MCMC tähendab Markovi ahelate Monte Carlo meetodit. Sellel meetodil on
+siis kaks poolt: Markovi ahelad ja Monte Carlo. \textbf{Monte Carlo} on
+simulatsioonimeetod, mis kasutab juhuslike arvude genereerimist
+parameetriväärtuse umbkaudseks hindamiseks. Näiteks, et hinnata
+ebaregulaarse kujundi pindala, (i) joonista selle ümber ruut, mille
+pindala sa oskad mõõta, (ii) viska sellele ühendkujundile juhuslikult n
+palli, millest osad langevad algsele kujundile aga kõik langevad ruutu;
+(iii) nende pallide proportsioon korrutatuna ruudu pindalaga annab teile
+algse kujundi pindala.
+
+\textbf{Markovi ahel} kujutab endast üksteisega tõenäosuslikult seotud
+sündmuste järjestust. Markovi ahel liigub sammhaaval mõõda fikseeritud
+hulka võimalikke sündmusi (parameetriruumi), kusjuures iga juba toimunud
+samm määrab järgmiste võimalike sammude tõenäosused. Igal sammul peatub
+ahel ühel sündmusel (parameetriväärtusel) ja seejärel viib järgmine samm
+uuele parameetriväärtusele, või mitte (ahel jääb paigale). See süsteem
+töötab ilma mäluta: järgmine samm sõltub sellest, millisel
+parameetriväärtusel on ahel praegu, mitte süsteemi ajaloost.
+
+Lihtsaim ja ajalooliselt esimene Markovi ahela tüüp on Metropolise
+algoritm. Kujutage endale ette 1-mõõtmelist parameetriruumi, mis vastab
+ühe parameetriga mudelile, kus iga punkt kujutab endast ühte
+parameetriväärtust. Ahel maandub sellel 1-D sirgel juhuslikus punktis,
+misjärel on tal võrdne võimalus vaadata vasakule või paremale. Ta valib
+juhuslikult ühe parameetriväärtuse ehk prospekti, aga selle asemel, et
+sinna hüpata, hoopis kaalutleb meie andmetele ja priorile toetudes,
+milline on selle prospekti tõenäolisus võrreldes ahela praeguse
+positsiooniga. Ehk, kui palju kordi on prospekt andmete \& priori poolt
+rohkem toetatud kui käesolev parameetriväärtus. Kui prospekt on näiteks
+2 korda paremini toetatud, siis liigub ahel tõenäosusega 2/3 uuele
+positsioonile ja tõenäosusega 1/3 jääb paigale.
+
+Sellisel viisil edasi-tagasi sammudes veedab ahel rohkem aega
+parameetriruumi piirkonnas, mis on andmetega paremas kooskõlas, ja pikas
+perspektiivis annavad ahela sammud juhuvalimi posteeriorist. Ahela
+esimesed tuhat sammu loetakse nn sissepõletamise perioodiks, mil ahel
+otsib katse-eksituse meetodil posteeriori tihedamat (tõenäolisemat) ala,
+ja neid ei salvestata posterioorse valimi hulka. Salvestatud ahela osa
+hõlmab tavaliselt mõned tuhanded sammud. Sageli jooksutame paraleelselt
+3 või 4 iseseisvat ahelat ja vaatame, kas need konvergeeruvad samas
+parameetriväärtuste piirkonnas. See on tähtis kvaliteedinäitaja - kui
+mõni ahel liigub teistest eemal, siis ei saa me oma arvutust usaldada.
+
+Seega võtab ahel posteeriorist juhuslikke arve, millega me saame hiljem
+otse töötada - näiteks plottida posteeriori histogrammi ja leida sealt
+suurima tihedusega piirkonna, kuhu jääb 95\% ahela sammudest (ehk 95\%
+CI ehk 95\% HDI {[}highest density interval{]}). Kui meie mudelis on n
+parameetrit, siis jookseb ahel n-dimensionaalses matemaatilises ruumis,
+kus osad parameetriväärtused on andmetega paremas kooskõlas kui teised.
+Tänapäeval jooksutatakse ka paarikümne tuhande parameetriga mudeleid,
+mille jaoks arvutil kulub tavaliselt kuni paar päeva.
+
+Metropolise algoritm leiab peale paljude sammude astumist garanteeritult
+õige posteeriori ja võtab sellest juhuvalimi. Probleem on siin selles,
+kui palju samme selleks tegelikkuses kulub. Kuna algoritmil on võimalus
+ka paigale jääda, siis olukorras, kus posteerior asub ahela praegusest
+asukohast kaugel, või on väga kitsas (hõlmab vaid tühist osa
+parameetriruumist) võib ahelal kuluda liiga palju aega, et temast
+tegelikku kasu võiks tõusta. Selle pärast otsitakse, ja leitakse,
+sellele matemaatiliselt efektiivsemaid alternatiive, millest meie (st
+Stan) kasutame nn Hamiltonian Monte Carlo-t.
+
+Hamiltonian Monte Carlo lahendab probleemi jooksutades füüsikalise
+simulatsiooni käigus kuulikest n-dimnesionaalsel pinnal. See kuulike
+liigub posteeriori otsinguil kiiremini. Kuulike veedab kauem aega
+parameetriruumi piirkondades, mis on andmete poolt paremini kinnitatud.
+Igas punktis randomiseeritakse tema momentum. Pind on miinus log
+posteerior. See töötab hästi, aga vajab lisaks gradienti e
+log-posteeriori kurvatuuri, kuulikese massi, ühel trajektooril asuvate
+sammude hulka ja individuaalsete sammude pikkust. Need lahendatakse
+automaatselt, aga igaühega neist võivad seonduda veateated ja
+kvaliteediprobleemid.
+
+n\_eff - effective sample size - sammude arv, arvestades, et puudub
+autokorrelatsioon ahela järjestikuste sammude vahel.
 
 \chapter{Lihtne normaaljaotuse mudel}\label{lihtne-normaaljaotuse-mudel}
 
@@ -7905,7 +7980,7 @@ väärtusele.}
 \begin{Highlighting}[]
 \KeywordTok{HPDI}\NormalTok{(sim.length}\OperatorTok{$}\NormalTok{V10, }\DataTypeTok{prob =} \FloatTok{0.95}\NormalTok{)}
 \CommentTok{#> |0.95 0.95| }
-\CommentTok{#>  39.7  68.4}
+\CommentTok{#>  37.6  66.1}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8444,9 +8519,9 @@ v mitmetasemeliste mudeliteta).
 \KeywordTok{library}\NormalTok{(car)}
 \KeywordTok{vif}\NormalTok{(}\KeywordTok{lm}\NormalTok{(hdl }\OperatorTok{~}\StringTok{ }\NormalTok{chol }\OperatorTok{+}\StringTok{ }\NormalTok{stab.glu }\OperatorTok{+}\StringTok{ }\NormalTok{ratio }\OperatorTok{+}\StringTok{ }\NormalTok{glyhb }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{height }\OperatorTok{+}\StringTok{ }\NormalTok{weight }\OperatorTok{+}\StringTok{  }\NormalTok{bp.1s }\OperatorTok{+}\StringTok{ }\NormalTok{bp.1d }\OperatorTok{+}\StringTok{ }\NormalTok{waist, }\DataTypeTok{data =}\NormalTok{ diab))}
 \CommentTok{#>     chol stab.glu    ratio    glyhb      age   height   weight    bp.1s }
-\CommentTok{#>     1.41     2.33     1.50     2.46     1.64     1.21     4.93     2.12 }
+\CommentTok{#>     1.42     2.32     1.52     2.46     1.63     1.20     4.92     2.13 }
 \CommentTok{#>    bp.1d    waist }
-\CommentTok{#>     1.76     4.73}
+\CommentTok{#>     1.77     4.74}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8461,20 +8536,20 @@ v mitmetasemeliste mudeliteta).
 \CommentTok{#> Inclusion Probabilities:}
 \CommentTok{#>             Incl.prob. HPM MPM}
 \CommentTok{#> chol                 1   *   *}
-\CommentTok{#> stab.glu        0.0244        }
+\CommentTok{#> stab.glu        0.0259        }
 \CommentTok{#> ratio                1   *   *}
-\CommentTok{#> glyhb            0.021        }
-\CommentTok{#> age             0.0392        }
-\CommentTok{#> gendermale      0.0173        }
-\CommentTok{#> height          0.0427        }
-\CommentTok{#> weight          0.0807        }
-\CommentTok{#> framelarge      0.0368        }
-\CommentTok{#> framemedium     0.0139        }
-\CommentTok{#> framesmall       0.023        }
-\CommentTok{#> bp.1s           0.0151        }
-\CommentTok{#> bp.1d           0.0136        }
-\CommentTok{#> waist           0.0501        }
-\CommentTok{#> hip             0.5064   *   *}
+\CommentTok{#> glyhb           0.0212        }
+\CommentTok{#> age             0.0446        }
+\CommentTok{#> gendermale      0.0178        }
+\CommentTok{#> height           0.044        }
+\CommentTok{#> weight          0.0927        }
+\CommentTok{#> framelarge      0.0363        }
+\CommentTok{#> framemedium     0.0147        }
+\CommentTok{#> framesmall      0.0251        }
+\CommentTok{#> bp.1s           0.0163        }
+\CommentTok{#> bp.1d           0.0155        }
+\CommentTok{#> waist           0.0569        }
+\CommentTok{#> hip             0.6124   *   *}
 \CommentTok{#> ---}
 \CommentTok{#> Code: HPM stands for Highest posterior Probability Model and}
 \CommentTok{#>  MPM for Median Probability Model.}
@@ -8502,20 +8577,20 @@ Aga mis juhtub, kui me eemaldame muutuja chol?
 \CommentTok{#> }
 \CommentTok{#> Inclusion Probabilities:}
 \CommentTok{#>             Incl.prob. HPM MPM}
-\CommentTok{#> stab.glu        0.0586        }
+\CommentTok{#> stab.glu        0.0689        }
 \CommentTok{#> ratio                1   *   *}
-\CommentTok{#> glyhb           0.1128        }
-\CommentTok{#> age             0.9773   *   *}
-\CommentTok{#> gendermale      0.1157        }
-\CommentTok{#> height          0.0593        }
-\CommentTok{#> weight          0.1393        }
-\CommentTok{#> framelarge       0.707   *   *}
-\CommentTok{#> framemedium     0.1195        }
-\CommentTok{#> framesmall      0.0797        }
-\CommentTok{#> bp.1s           0.0947        }
-\CommentTok{#> bp.1d            0.482        }
-\CommentTok{#> waist           0.1153        }
-\CommentTok{#> hip             0.1477        }
+\CommentTok{#> glyhb           0.1355        }
+\CommentTok{#> age             0.9789   *   *}
+\CommentTok{#> gendermale      0.1377        }
+\CommentTok{#> height          0.0693        }
+\CommentTok{#> weight          0.2081        }
+\CommentTok{#> framelarge      0.6906   *   *}
+\CommentTok{#> framemedium     0.1229        }
+\CommentTok{#> framesmall      0.0891        }
+\CommentTok{#> bp.1s           0.0919        }
+\CommentTok{#> bp.1d           0.6929   *   *}
+\CommentTok{#> waist           0.1576        }
+\CommentTok{#> hip             0.1979        }
 \CommentTok{#> ---}
 \CommentTok{#> Code: HPM stands for Highest posterior Probability Model and}
 \CommentTok{#>  MPM for Median Probability Model.}
@@ -8561,7 +8636,7 @@ H0 on ilma prediktoriteta mudel, mis annab tulemuseks keskmise hdl-i.
 \CommentTok{#> ---------}
 \CommentTok{#> Bayes factors (expressed in relation to H0)}
 \CommentTok{#>  H0.to.H0  H1.to.H0  H2.to.H0  H3.to.H0 }
-\CommentTok{#>  1.00e+00 2.10e+131 2.47e+142  5.89e+54 }
+\CommentTok{#>  1.00e+00 7.41e+130 5.58e+141  3.57e+55 }
 \CommentTok{#> ---------}
 \CommentTok{#> Posterior probabilities:}
 \CommentTok{#> H0 H1 H2 H3 }
@@ -8593,8 +8668,8 @@ piisab kahest muutujast.
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{reg.summary}\OperatorTok{$}\NormalTok{adjr2}
-\CommentTok{#>  [1] 0.467 0.486 0.499 0.505 0.507 0.509 0.510 0.509 0.509 0.508 0.507}
-\CommentTok{#> [12] 0.506 0.504 0.503}
+\CommentTok{#>  [1] 0.471 0.490 0.503 0.511 0.514 0.516 0.517 0.517 0.516 0.515 0.514}
+\CommentTok{#> [12] 0.513 0.511 0.510}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8634,7 +8709,7 @@ piisab kahest muutujast.
 \CommentTok{#> 8  ( 1 )  "*"      "*"   "*"   "*" "*"        " "    " "    "*"       }
 \CommentTok{#> 9  ( 1 )  "*"      "*"   "*"   "*" "*"        "*"    " "    "*"       }
 \CommentTok{#> 10  ( 1 ) "*"      "*"   "*"   "*" "*"        "*"    " "    "*"       }
-\CommentTok{#> 11  ( 1 ) "*"      "*"   "*"   "*" "*"        "*"    "*"    "*"       }
+\CommentTok{#> 11  ( 1 ) "*"      "*"   "*"   "*" "*"        "*"    " "    "*"       }
 \CommentTok{#> 12  ( 1 ) "*"      "*"   "*"   "*" "*"        "*"    "*"    "*"       }
 \CommentTok{#> 13  ( 1 ) "*"      "*"   "*"   "*" "*"        "*"    "*"    "*"       }
 \CommentTok{#> 14  ( 1 ) "*"      "*"   "*"   "*" "*"        "*"    "*"    "*"       }
@@ -8649,9 +8724,9 @@ piisab kahest muutujast.
 \CommentTok{#> 8  ( 1 )  " "         " "        " "   "*"   " "   "*"}
 \CommentTok{#> 9  ( 1 )  " "         " "        " "   "*"   " "   "*"}
 \CommentTok{#> 10  ( 1 ) "*"         " "        " "   "*"   " "   "*"}
-\CommentTok{#> 11  ( 1 ) "*"         " "        " "   "*"   " "   "*"}
+\CommentTok{#> 11  ( 1 ) "*"         " "        "*"   "*"   " "   "*"}
 \CommentTok{#> 12  ( 1 ) "*"         " "        "*"   "*"   " "   "*"}
-\CommentTok{#> 13  ( 1 ) "*"         "*"        "*"   "*"   " "   "*"}
+\CommentTok{#> 13  ( 1 ) "*"         " "        "*"   "*"   "*"   "*"}
 \CommentTok{#> 14  ( 1 ) "*"         "*"        "*"   "*"   "*"   "*"}
 \end{Highlighting}
 \end{Shaded}
@@ -11614,12 +11689,12 @@ taseme (liikide sees) koefitsiente kasutades
 \StringTok{  }\KeywordTok{cbind}\NormalTok{(newx, .)}
 \KeywordTok{head}\NormalTok{(predict_interval_brms2)}
 \CommentTok{#>   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5}
-\CommentTok{#> 1         1.00        3.06  setosa     4.49     0.318 3.88  5.12}
-\CommentTok{#> 2         1.04        3.06  setosa     4.53     0.319 3.90  5.14}
-\CommentTok{#> 3         1.08        3.06  setosa     4.55     0.317 3.93  5.18}
-\CommentTok{#> 4         1.12        3.06  setosa     4.58     0.314 3.97  5.19}
-\CommentTok{#> 5         1.16        3.06  setosa     4.62     0.318 3.97  5.26}
-\CommentTok{#> 6         1.20        3.06  setosa     4.65     0.318 4.00  5.28}
+\CommentTok{#> 1         1.00        3.06  setosa     4.49     0.315 3.87  5.11}
+\CommentTok{#> 2         1.04        3.06  setosa     4.53     0.316 3.89  5.14}
+\CommentTok{#> 3         1.08        3.06  setosa     4.55     0.327 3.89  5.18}
+\CommentTok{#> 4         1.12        3.06  setosa     4.58     0.321 3.96  5.22}
+\CommentTok{#> 5         1.16        3.06  setosa     4.62     0.309 4.02  5.22}
+\CommentTok{#> 6         1.20        3.06  setosa     4.64     0.318 4.02  5.29}
 \end{Highlighting}
 \end{Shaded}
 
@@ -12693,1017 +12768,21 @@ brms-s}\label{logistiline-regressioon-brms-s}
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{data}\NormalTok{(chimpanzees)}
-\NormalTok{chimpanzees}
-\CommentTok{#>     actor recipient condition block trial prosoc_left chose_prosoc}
-\CommentTok{#> 1       1        NA         0     1     2           0            1}
-\CommentTok{#> 2       1        NA         0     1     4           0            0}
-\CommentTok{#> 3       1        NA         0     1     6           1            0}
-\CommentTok{#> 4       1        NA         0     1     8           0            1}
-\CommentTok{#> 5       1        NA         0     1    10           1            1}
-\CommentTok{#> 6       1        NA         0     1    12           1            1}
-\CommentTok{#> 7       1        NA         0     2    14           1            0}
-\CommentTok{#> 8       1        NA         0     2    16           1            0}
-\CommentTok{#> 9       1        NA         0     2    18           0            1}
-\CommentTok{#> 10      1        NA         0     2    20           0            1}
-\CommentTok{#> 11      1        NA         0     2    22           0            0}
-\CommentTok{#> 12      1        NA         0     2    24           1            0}
-\CommentTok{#> 13      1        NA         0     3    26           0            0}
-\CommentTok{#> 14      1        NA         0     3    28           1            1}
-\CommentTok{#> 15      1        NA         0     3    30           0            1}
-\CommentTok{#> 16      1        NA         0     3    32           1            1}
-\CommentTok{#> 17      1        NA         0     3    34           1            0}
-\CommentTok{#> 18      1        NA         0     3    36           0            1}
-\CommentTok{#> 19      1        NA         0     4    38           1            1}
-\CommentTok{#> 20      1        NA         0     4    40           0            0}
-\CommentTok{#> 21      1        NA         0     4    42           0            0}
-\CommentTok{#> 22      1        NA         0     4    44           0            1}
-\CommentTok{#> 23      1        NA         0     4    46           1            1}
-\CommentTok{#> 24      1        NA         0     4    48           1            0}
-\CommentTok{#> 25      1        NA         0     5    50           0            1}
-\CommentTok{#> 26      1        NA         0     5    52           0            0}
-\CommentTok{#> 27      1        NA         0     5    54           1            0}
-\CommentTok{#> 28      1        NA         0     5    56           1            0}
-\CommentTok{#> 29      1        NA         0     5    58           0            1}
-\CommentTok{#> 30      1        NA         0     5    60           1            0}
-\CommentTok{#> 31      1        NA         0     6    62           0            1}
-\CommentTok{#> 32      1        NA         0     6    64           1            1}
-\CommentTok{#> 33      1        NA         0     6    66           1            1}
-\CommentTok{#> 34      1        NA         0     6    68           1            1}
-\CommentTok{#> 35      1        NA         0     6    70           0            1}
-\CommentTok{#> 36      1        NA         0     6    72           0            1}
-\CommentTok{#> 37      1         8         1     1     1           0            0}
-\CommentTok{#> 38      1         4         1     1     3           0            1}
-\CommentTok{#> 39      1         5         1     1     5           1            0}
-\CommentTok{#> 40      1         7         1     1     7           0            1}
-\CommentTok{#> 41      1         3         1     1     9           0            0}
-\CommentTok{#> 42      1         6         1     1    11           0            1}
-\CommentTok{#> 43      1         4         1     2    13           1            0}
-\CommentTok{#> 44      1         3         1     2    15           0            1}
-\CommentTok{#> 45      1         5         1     2    17           1            0}
-\CommentTok{#> 46      1         7         1     2    19           0            0}
-\CommentTok{#> 47      1         8         1     2    21           1            1}
-\CommentTok{#> 48      1         6         1     2    23           0            0}
-\CommentTok{#> 49      1         3         1     3    25           1            0}
-\CommentTok{#> 50      1         6         1     3    27           0            1}
-\CommentTok{#> 51      1         4         1     3    29           1            1}
-\CommentTok{#> 52      1         8         1     3    31           1            1}
-\CommentTok{#> 53      1         7         1     3    33           1            1}
-\CommentTok{#> 54      1         5         1     3    35           0            0}
-\CommentTok{#> 55      1         8         1     4    37           0            1}
-\CommentTok{#> 56      1         6         1     4    39           1            1}
-\CommentTok{#> 57      1         5         1     4    41           1            0}
-\CommentTok{#> 58      1         7         1     4    43           0            1}
-\CommentTok{#> 59      1         3         1     4    45           0            1}
-\CommentTok{#> 60      1         4         1     4    47           0            1}
-\CommentTok{#> 61      1         6         1     5    49           1            1}
-\CommentTok{#> 62      1         7         1     5    51           1            0}
-\CommentTok{#> 63      1         4         1     5    53           1            1}
-\CommentTok{#> 64      1         5         1     5    55           0            1}
-\CommentTok{#> 65      1         8         1     5    57           0            1}
-\CommentTok{#> 66      1         3         1     5    59           1            1}
-\CommentTok{#> 67      1         3         1     6    61           1            1}
-\CommentTok{#> 68      1         7         1     6    63           1            0}
-\CommentTok{#> 69      1         5         1     6    65           0            1}
-\CommentTok{#> 70      1         6         1     6    67           1            0}
-\CommentTok{#> 71      1         8         1     6    69           1            1}
-\CommentTok{#> 72      1         4         1     6    71           0            1}
-\CommentTok{#> 73      2        NA         0     1     1           1            1}
-\CommentTok{#> 74      2        NA         0     1     3           0            0}
-\CommentTok{#> 75      2        NA         0     1     5           0            0}
-\CommentTok{#> 76      2        NA         0     1     7           0            0}
-\CommentTok{#> 77      2        NA         0     1     9           1            1}
-\CommentTok{#> 78      2        NA         0     1    11           1            1}
-\CommentTok{#> 79      2        NA         0     2    13           1            1}
-\CommentTok{#> 80      2        NA         0     2    15           1            1}
-\CommentTok{#> 81      2        NA         0     2    17           1            1}
-\CommentTok{#> 82      2        NA         0     2    19           0            0}
-\CommentTok{#> 83      2        NA         0     2    21           0            0}
-\CommentTok{#> 84      2        NA         0     2    23           0            0}
-\CommentTok{#> 85      2        NA         0     3    25           0            0}
-\CommentTok{#> 86      2        NA         0     3    27           0            0}
-\CommentTok{#> 87      2        NA         0     3    29           1            1}
-\CommentTok{#> 88      2        NA         0     3    31           1            1}
-\CommentTok{#> 89      2        NA         0     3    33           0            0}
-\CommentTok{#> 90      2        NA         0     3    35           1            1}
-\CommentTok{#> 91      2        NA         0     4    37           0            0}
-\CommentTok{#> 92      2        NA         0     4    39           0            0}
-\CommentTok{#> 93      2        NA         0     4    41           1            1}
-\CommentTok{#> 94      2        NA         0     4    43           0            0}
-\CommentTok{#> 95      2        NA         0     4    45           1            1}
-\CommentTok{#> 96      2        NA         0     4    47           1            1}
-\CommentTok{#> 97      2        NA         0     5    49           0            0}
-\CommentTok{#> 98      2        NA         0     5    51           1            1}
-\CommentTok{#> 99      2        NA         0     5    53           0            0}
-\CommentTok{#> 100     2        NA         0     5    55           1            1}
-\CommentTok{#> 101     2        NA         0     5    57           0            0}
-\CommentTok{#> 102     2        NA         0     5    59           1            1}
-\CommentTok{#> 103     2        NA         0     6    61           1            1}
-\CommentTok{#> 104     2        NA         0     6    63           0            0}
-\CommentTok{#> 105     2        NA         0     6    65           1            1}
-\CommentTok{#> 106     2        NA         0     6    67           1            1}
-\CommentTok{#> 107     2        NA         0     6    69           0            0}
-\CommentTok{#> 108     2        NA         0     6    71           0            0}
-\CommentTok{#> 109     2         7         1     1     2           0            0}
-\CommentTok{#> 110     2         8         1     1     4           0            0}
-\CommentTok{#> 111     2         2         1     1     6           0            0}
-\CommentTok{#> 112     2         7         1     6     7           0            0}
-\CommentTok{#> 113     2         5         1     1     8           0            0}
-\CommentTok{#> 114     2         6         1     1    10           0            0}
-\CommentTok{#> 115     2         4         1     1    12           0            0}
-\CommentTok{#> 116     2         4         1     2    14           0            0}
-\CommentTok{#> 117     2         5         1     2    16           1            1}
-\CommentTok{#> 118     2         8         1     2    18           0            0}
-\CommentTok{#> 119     2         7         1     2    20           1            1}
-\CommentTok{#> 120     2         6         1     2    22           1            1}
-\CommentTok{#> 121     2         2         1     2    24           1            1}
-\CommentTok{#> 122     2         8         1     3    26           1            1}
-\CommentTok{#> 123     2         7         1     3    28           1            1}
-\CommentTok{#> 124     2         6         1     3    30           0            0}
-\CommentTok{#> 125     2         2         1     3    32           0            0}
-\CommentTok{#> 126     2         5         1     3    34           1            1}
-\CommentTok{#> 127     2         4         1     3    36           1            1}
-\CommentTok{#> 128     2         7         1     4    38           0            0}
-\CommentTok{#> 129     2         6         1     4    40           1            1}
-\CommentTok{#> 130     2         2         1     4    42           0            0}
-\CommentTok{#> 131     2         5         1     4    44           0            0}
-\CommentTok{#> 132     2         4         1     4    46           1            1}
-\CommentTok{#> 133     2         8         1     4    48           0            0}
-\CommentTok{#> 134     2         8         1     5    50           1            1}
-\CommentTok{#> 135     2         5         1     5    52           1            1}
-\CommentTok{#> 136     2         7         1     5    54           1            1}
-\CommentTok{#> 137     2         4         1     5    56           1            1}
-\CommentTok{#> 138     2         6         1     5    58           0            0}
-\CommentTok{#> 139     2         2         1     5    60           1            1}
-\CommentTok{#> 140     2         2         1     6    62           1            1}
-\CommentTok{#> 141     2         5         1     6    64           0            0}
-\CommentTok{#> 142     2         6         1     6    66           1            1}
-\CommentTok{#> 143     2         4         1     6    68           0            0}
-\CommentTok{#> 144     2         8         1     6    72           1            1}
-\CommentTok{#> 145     3        NA         0     1     1           0            1}
-\CommentTok{#> 146     3        NA         0     1     3           1            0}
-\CommentTok{#> 147     3        NA         0     1     5           1            0}
-\CommentTok{#> 148     3        NA         0     1     7           1            0}
-\CommentTok{#> 149     3        NA         0     1     9           0            1}
-\CommentTok{#> 150     3        NA         0     1    11           0            0}
-\CommentTok{#> 151     3        NA         0     2    13           1            1}
-\CommentTok{#> 152     3        NA         0     2    15           0            1}
-\CommentTok{#> 153     3        NA         0     2    17           1            1}
-\CommentTok{#> 154     3        NA         0     2    19           1            1}
-\CommentTok{#> 155     3        NA         0     2    21           0            1}
-\CommentTok{#> 156     3        NA         0     2    23           0            1}
-\CommentTok{#> 157     3        NA         0     3    25           1            0}
-\CommentTok{#> 158     3        NA         0     3    27           0            0}
-\CommentTok{#> 159     3        NA         0     3    29           0            1}
-\CommentTok{#> 160     3        NA         0     3    31           0            1}
-\CommentTok{#> 161     3        NA         0     3    33           1            0}
-\CommentTok{#> 162     3        NA         0     3    35           1            1}
-\CommentTok{#> 163     3        NA         0     4    37           1            1}
-\CommentTok{#> 164     3        NA         0     4    39           0            1}
-\CommentTok{#> 165     3        NA         0     4    41           0            0}
-\CommentTok{#> 166     3        NA         0     4    43           0            1}
-\CommentTok{#> 167     3        NA         0     4    45           1            0}
-\CommentTok{#> 168     3        NA         0     4    47           1            1}
-\CommentTok{#> 169     3        NA         0     5    49           0            1}
-\CommentTok{#> 170     3        NA         0     5    51           1            0}
-\CommentTok{#> 171     3        NA         0     5    53           1            1}
-\CommentTok{#> 172     3        NA         0     5    55           0            1}
-\CommentTok{#> 173     3        NA         0     5    57           0            1}
-\CommentTok{#> 174     3        NA         0     5    59           1            1}
-\CommentTok{#> 175     3        NA         0     6    61           0            1}
-\CommentTok{#> 176     3        NA         0     6    63           0            0}
-\CommentTok{#> 177     3        NA         0     6    65           1            1}
-\CommentTok{#> 178     3        NA         0     6    67           1            1}
-\CommentTok{#> 179     3        NA         0     6    69           0            0}
-\CommentTok{#> 180     3        NA         0     6    71           1            1}
-\CommentTok{#> 181     3         5         1     1     2           1            0}
-\CommentTok{#> 182     3         3         1     1     4           0            1}
-\CommentTok{#> 183     3         6         1     1     6           1            0}
-\CommentTok{#> 184     3         2         1     1     8           0            1}
-\CommentTok{#> 185     3         8         1     1    10           1            0}
-\CommentTok{#> 186     3         7         1     1    12           0            0}
-\CommentTok{#> 187     3         5         1     2    14           1            0}
-\CommentTok{#> 188     3         6         1     2    16           1            1}
-\CommentTok{#> 189     3         8         1     2    18           0            1}
-\CommentTok{#> 190     3         2         1     2    20           1            0}
-\CommentTok{#> 191     3         3         1     2    22           1            1}
-\CommentTok{#> 192     3         7         1     2    24           1            1}
-\CommentTok{#> 193     3         2         1     3    26           0            1}
-\CommentTok{#> 194     3         7         1     3    28           1            0}
-\CommentTok{#> 195     3         6         1     3    30           0            1}
-\CommentTok{#> 196     3         8         1     3    32           1            0}
-\CommentTok{#> 197     3         3         1     3    34           1            0}
-\CommentTok{#> 198     3         5         1     3    36           0            1}
-\CommentTok{#> 199     3         6         1     4    38           0            1}
-\CommentTok{#> 200     3         7         1     4    40           0            1}
-\CommentTok{#> 201     3         3         1     4    42           0            1}
-\CommentTok{#> 202     3         2         1     4    44           1            1}
-\CommentTok{#> 203     3         5         1     4    46           0            1}
-\CommentTok{#> 204     3         8         1     4    48           0            1}
-\CommentTok{#> 205     3         5         1     5    50           1            0}
-\CommentTok{#> 206     3         3         1     5    52           1            0}
-\CommentTok{#> 207     3         8         1     5    54           0            0}
-\CommentTok{#> 208     3         7         1     5    56           1            0}
-\CommentTok{#> 209     3         2         1     5    58           1            1}
-\CommentTok{#> 210     3         6         1     5    60           1            0}
-\CommentTok{#> 211     3         5         1     6    62           0            1}
-\CommentTok{#> 212     3         3         1     6    64           0            1}
-\CommentTok{#> 213     3         2         1     6    66           0            1}
-\CommentTok{#> 214     3         8         1     6    68           1            1}
-\CommentTok{#> 215     3         6         1     6    70           0            0}
-\CommentTok{#> 216     3         7         1     6    72           0            1}
-\CommentTok{#> 217     4        NA         0     1     1           0            1}
-\CommentTok{#> 218     4        NA         0     1     3           1            1}
-\CommentTok{#> 219     4        NA         0     1     5           0            0}
-\CommentTok{#> 220     4        NA         0     1     7           0            1}
-\CommentTok{#> 221     4        NA         0     1     9           1            0}
-\CommentTok{#> 222     4        NA         0     1    11           1            0}
-\CommentTok{#> 223     4        NA         0     2    13           0            1}
-\CommentTok{#> 224     4        NA         0     2    15           1            0}
-\CommentTok{#> 225     4        NA         0     2    17           0            0}
-\CommentTok{#> 226     4        NA         0     2    19           1            1}
-\CommentTok{#> 227     4        NA         0     2    21           0            1}
-\CommentTok{#> 228     4        NA         0     2    23           1            1}
-\CommentTok{#> 229     4        NA         0     3    25           1            0}
-\CommentTok{#> 230     4        NA         0     3    27           0            0}
-\CommentTok{#> 231     4        NA         0     3    29           1            1}
-\CommentTok{#> 232     4        NA         0     3    31           1            0}
-\CommentTok{#> 233     4        NA         0     3    33           0            1}
-\CommentTok{#> 234     4        NA         0     3    35           0            0}
-\CommentTok{#> 235     4        NA         0     4    37           0            1}
-\CommentTok{#> 236     4        NA         0     4    39           1            0}
-\CommentTok{#> 237     4        NA         0     4    41           0            1}
-\CommentTok{#> 238     4        NA         0     4    43           1            1}
-\CommentTok{#> 239     4        NA         0     4    45           0            0}
-\CommentTok{#> 240     4        NA         0     4    47           1            0}
-\CommentTok{#> 241     4        NA         0     5    49           1            1}
-\CommentTok{#> 242     4        NA         0     5    51           1            0}
-\CommentTok{#> 243     4        NA         0     5    53           0            0}
-\CommentTok{#> 244     4        NA         0     5    55           0            1}
-\CommentTok{#> 245     4        NA         0     5    57           1            1}
-\CommentTok{#> 246     4        NA         0     5    59           0            1}
-\CommentTok{#> 247     4        NA         0     6    61           0            1}
-\CommentTok{#> 248     4        NA         0     6    63           0            1}
-\CommentTok{#> 249     4        NA         0     6    65           1            0}
-\CommentTok{#> 250     4        NA         0     6    67           1            1}
-\CommentTok{#> 251     4        NA         0     6    69           0            1}
-\CommentTok{#> 252     4        NA         0     6    71           1            1}
-\CommentTok{#> 253     4         7         1     1     2           1            0}
-\CommentTok{#> 254     4         3         1     1     4           0            1}
-\CommentTok{#> 255     4         4         1     1     6           1            0}
-\CommentTok{#> 256     4         2         1     1     8           0            1}
-\CommentTok{#> 257     4         8         1     1    10           0            1}
-\CommentTok{#> 258     4         6         1     1    12           0            1}
-\CommentTok{#> 259     4         2         1     2    14           1            0}
-\CommentTok{#> 260     4         6         1     2    16           1            1}
-\CommentTok{#> 261     4         7         1     2    18           0            1}
-\CommentTok{#> 262     4         8         1     2    20           1            0}
-\CommentTok{#> 263     4         4         1     2    22           1            1}
-\CommentTok{#> 264     4         3         1     2    24           1            1}
-\CommentTok{#> 265     4         2         1     3    26           0            1}
-\CommentTok{#> 266     4         4         1     3    28           0            1}
-\CommentTok{#> 267     4         6         1     3    30           1            0}
-\CommentTok{#> 268     4         7         1     3    32           0            0}
-\CommentTok{#> 269     4         8         1     3    34           1            1}
-\CommentTok{#> 270     4         3         1     3    36           1            1}
-\CommentTok{#> 271     4         8         1     4    38           0            1}
-\CommentTok{#> 272     4         2         1     4    40           0            1}
-\CommentTok{#> 273     4         4         1     4    42           0            0}
-\CommentTok{#> 274     4         3         1     4    44           0            1}
-\CommentTok{#> 275     4         7         1     4    46           1            0}
-\CommentTok{#> 276     4         6         1     4    48           0            1}
-\CommentTok{#> 277     4         6         1     5    50           1            0}
-\CommentTok{#> 278     4         7         1     5    52           0            1}
-\CommentTok{#> 279     4         3         1     5    54           1            1}
-\CommentTok{#> 280     4         2         1     5    56           1            0}
-\CommentTok{#> 281     4         4         1     5    58           1            0}
-\CommentTok{#> 282     4         8         1     5    60           1            1}
-\CommentTok{#> 283     4         7         1     6    62           1            1}
-\CommentTok{#> 284     4         8         1     6    64           0            1}
-\CommentTok{#> 285     4         4         1     6    66           0            1}
-\CommentTok{#> 286     4         2         1     6    68           1            0}
-\CommentTok{#> 287     4         6         1     6    70           0            1}
-\CommentTok{#> 288     4         3         1     6    72           0            1}
-\CommentTok{#> 289     5        NA         0     1     2           1            1}
-\CommentTok{#> 290     5        NA         0     1     4           0            1}
-\CommentTok{#> 291     5        NA         0     1     6           0            0}
-\CommentTok{#> 292     5        NA         0     1     8           0            1}
-\CommentTok{#> 293     5        NA         0     1    10           1            1}
-\CommentTok{#> 294     5        NA         0     1    12           1            1}
-\CommentTok{#> 295     5        NA         0     2    14           0            0}
-\CommentTok{#> 296     5        NA         0     2    16           0            1}
-\CommentTok{#> 297     5        NA         0     2    18           1            1}
-\CommentTok{#> 298     5        NA         0     2    20           1            0}
-\CommentTok{#> 299     5        NA         0     2    22           0            0}
-\CommentTok{#> 300     5        NA         0     2    24           1            0}
-\CommentTok{#> 301     5        NA         0     3    26           1            0}
-\CommentTok{#> 302     5        NA         0     3    28           1            0}
-\CommentTok{#> 303     5        NA         0     3    30           0            0}
-\CommentTok{#> 304     5        NA         0     3    32           1            1}
-\CommentTok{#> 305     5        NA         0     3    34           0            1}
-\CommentTok{#> 306     5        NA         0     3    36           0            0}
-\CommentTok{#> 307     5        NA         0     4    38           1            1}
-\CommentTok{#> 308     5        NA         0     4    40           0            1}
-\CommentTok{#> 309     5        NA         0     4    42           1            1}
-\CommentTok{#> 310     5        NA         0     4    44           1            0}
-\CommentTok{#> 311     5        NA         0     4    46           0            1}
-\CommentTok{#> 312     5        NA         0     4    48           0            1}
-\CommentTok{#> 313     5        NA         0     5    50           1            0}
-\CommentTok{#> 314     5        NA         0     5    52           1            1}
-\CommentTok{#> 315     5        NA         0     5    54           1            1}
-\CommentTok{#> 316     5        NA         0     5    56           0            1}
-\CommentTok{#> 317     5        NA         0     5    58           0            1}
-\CommentTok{#> 318     5        NA         0     5    60           0            1}
-\CommentTok{#> 319     5        NA         0     6    62           1            0}
-\CommentTok{#> 320     5        NA         0     6    64           1            0}
-\CommentTok{#> 321     5        NA         0     6    66           0            1}
-\CommentTok{#> 322     5        NA         0     6    68           1            1}
-\CommentTok{#> 323     5        NA         0     6    70           0            0}
-\CommentTok{#> 324     5        NA         0     6    72           0            1}
-\CommentTok{#> 325     5         8         1     1     1           1            0}
-\CommentTok{#> 326     5         3         1     1     3           0            0}
-\CommentTok{#> 327     5         7         1     1     5           1            0}
-\CommentTok{#> 328     5         5         1     1     7           0            1}
-\CommentTok{#> 329     5         2         1     1     9           0            1}
-\CommentTok{#> 330     5         4         1     1    11           1            0}
-\CommentTok{#> 331     5         7         1     2    13           0            1}
-\CommentTok{#> 332     5         8         1     2    15           1            0}
-\CommentTok{#> 333     5         5         1     2    17           0            1}
-\CommentTok{#> 334     5         2         1     2    19           1            0}
-\CommentTok{#> 335     5         3         1     2    21           0            1}
-\CommentTok{#> 336     5         4         1     2    23           1            1}
-\CommentTok{#> 337     5         7         1     3    25           0            1}
-\CommentTok{#> 338     5         3         1     3    27           1            1}
-\CommentTok{#> 339     5         2         1     3    29           1            1}
-\CommentTok{#> 340     5         8         1     3    31           0            1}
-\CommentTok{#> 341     5         4         1     3    33           0            0}
-\CommentTok{#> 342     5         5         1     3    35           1            0}
-\CommentTok{#> 343     5         4         1     4    37           1            0}
-\CommentTok{#> 344     5         5         1     4    39           1            1}
-\CommentTok{#> 345     5         2         1     4    41           0            1}
-\CommentTok{#> 346     5         3         1     4    43           0            1}
-\CommentTok{#> 347     5         8         1     4    45           0            1}
-\CommentTok{#> 348     5         7         1     4    47           1            0}
-\CommentTok{#> 349     5         7         1     5    49           0            1}
-\CommentTok{#> 350     5         3         1     5    51           1            1}
-\CommentTok{#> 351     5         8         1     5    53           1            1}
-\CommentTok{#> 352     5         5         1     5    55           0            0}
-\CommentTok{#> 353     5         2         1     5    57           0            0}
-\CommentTok{#> 354     5         4         1     5    59           0            0}
-\CommentTok{#> 355     5         3         1     6    61           1            0}
-\CommentTok{#> 356     5         5         1     6    63           1            1}
-\CommentTok{#> 357     5         4         1     6    65           0            1}
-\CommentTok{#> 358     5         8         1     6    67           0            1}
-\CommentTok{#> 359     5         2         1     6    69           1            1}
-\CommentTok{#> 360     5         7         1     6    71           1            1}
-\CommentTok{#> 361     6        NA         0     1     2           1            1}
-\CommentTok{#> 362     6        NA         0     1     4           0            1}
-\CommentTok{#> 363     6        NA         0     1     6           0            1}
-\CommentTok{#> 364     6        NA         0     1     8           1            1}
-\CommentTok{#> 365     6        NA         0     1    10           0            0}
-\CommentTok{#> 366     6        NA         0     1    12           1            0}
-\CommentTok{#> 367     6        NA         0     2    14           1            0}
-\CommentTok{#> 368     6        NA         0     2    16           1            0}
-\CommentTok{#> 369     6        NA         0     2    18           1            0}
-\CommentTok{#> 370     6        NA         0     2    20           0            0}
-\CommentTok{#> 371     6        NA         0     2    22           0            0}
-\CommentTok{#> 372     6        NA         0     2    24           0            0}
-\CommentTok{#> 373     6        NA         0     3    26           0            0}
-\CommentTok{#> 374     6        NA         0     3    28           0            0}
-\CommentTok{#> 375     6        NA         0     3    30           0            0}
-\CommentTok{#> 376     6        NA         0     3    32           1            0}
-\CommentTok{#> 377     6        NA         0     3    34           1            1}
-\CommentTok{#> 378     6        NA         0     3    36           1            1}
-\CommentTok{#> 379     6        NA         0     4    38           0            0}
-\CommentTok{#> 380     6        NA         0     4    40           1            0}
-\CommentTok{#> 381     6        NA         0     4    42           0            0}
-\CommentTok{#> 382     6        NA         0     4    44           1            1}
-\CommentTok{#> 383     6        NA         0     4    46           0            0}
-\CommentTok{#> 384     6        NA         0     4    48           1            1}
-\CommentTok{#> 385     6        NA         0     5    50           1            1}
-\CommentTok{#> 386     6        NA         0     5    52           0            1}
-\CommentTok{#> 387     6        NA         0     5    54           0            0}
-\CommentTok{#> 388     6        NA         0     5    56           1            1}
-\CommentTok{#> 389     6        NA         0     5    58           0            0}
-\CommentTok{#> 390     6        NA         0     5    60           1            0}
-\CommentTok{#> 391     6        NA         0     6    62           0            0}
-\CommentTok{#> 392     6        NA         0     6    64           0            1}
-\CommentTok{#> 393     6        NA         0     6    66           1            1}
-\CommentTok{#> 394     6        NA         0     6    68           1            1}
-\CommentTok{#> 395     6        NA         0     6    70           1            1}
-\CommentTok{#> 396     6        NA         0     6    72           0            0}
-\CommentTok{#> 397     6         3         1     1     1           1            1}
-\CommentTok{#> 398     6         8         1     1     3           0            1}
-\CommentTok{#> 399     6         6         1     1     5           1            1}
-\CommentTok{#> 400     6         2         1     1     7           1            0}
-\CommentTok{#> 401     6         5         1     1     9           0            1}
-\CommentTok{#> 402     6         4         1     1    11           0            1}
-\CommentTok{#> 403     6         8         1     2    13           0            0}
-\CommentTok{#> 404     6         5         1     2    15           0            0}
-\CommentTok{#> 405     6         3         1     2    17           1            1}
-\CommentTok{#> 406     6         2         1     2    19           1            1}
-\CommentTok{#> 407     6         4         1     2    21           1            1}
-\CommentTok{#> 408     6         6         1     2    23           1            0}
-\CommentTok{#> 409     6         6         1     3    25           1            1}
-\CommentTok{#> 410     6         4         1     3    27           1            1}
-\CommentTok{#> 411     6         3         1     3    29           0            1}
-\CommentTok{#> 412     6         8         1     3    31           1            0}
-\CommentTok{#> 413     6         5         1     3    33           0            0}
-\CommentTok{#> 414     6         2         1     3    35           0            0}
-\CommentTok{#> 415     6         4         1     4    37           0            0}
-\CommentTok{#> 416     6         6         1     4    39           0            0}
-\CommentTok{#> 417     6         2         1     4    41           1            0}
-\CommentTok{#> 418     6         5         1     4    43           1            1}
-\CommentTok{#> 419     6         3         1     4    45           0            1}
-\CommentTok{#> 420     6         8         1     4    47           1            1}
-\CommentTok{#> 421     6         5         1     5    49           1            0}
-\CommentTok{#> 422     6         4         1     5    51           1            0}
-\CommentTok{#> 423     6         2         1     5    53           0            1}
-\CommentTok{#> 424     6         6         1     5    55           0            1}
-\CommentTok{#> 425     6         3         1     5    57           0            0}
-\CommentTok{#> 426     6         8         1     5    59           1            0}
-\CommentTok{#> 427     6         4         1     6    61           0            0}
-\CommentTok{#> 428     6         6         1     6    63           0            0}
-\CommentTok{#> 429     6         5         1     6    65           1            1}
-\CommentTok{#> 430     6         8         1     6    67           0            0}
-\CommentTok{#> 431     6         3         1     6    69           1            1}
-\CommentTok{#> 432     6         2         1     6    71           0            1}
-\CommentTok{#> 433     7        NA         0     1     1           1            1}
-\CommentTok{#> 434     7        NA         0     1     3           0            0}
-\CommentTok{#> 435     7        NA         0     1     5           0            1}
-\CommentTok{#> 436     7        NA         0     1     7           1            1}
-\CommentTok{#> 437     7        NA         0     1     9           1            0}
-\CommentTok{#> 438     7        NA         0     1    11           0            0}
-\CommentTok{#> 439     7        NA         0     2    13           0            0}
-\CommentTok{#> 440     7        NA         0     2    15           0            0}
-\CommentTok{#> 441     7        NA         0     2    17           1            1}
-\CommentTok{#> 442     7        NA         0     2    19           0            1}
-\CommentTok{#> 443     7        NA         0     2    21           1            1}
-\CommentTok{#> 444     7        NA         0     2    23           1            1}
-\CommentTok{#> 445     7        NA         0     3    25           1            0}
-\CommentTok{#> 446     7        NA         0     3    27           1            1}
-\CommentTok{#> 447     7        NA         0     3    29           0            0}
-\CommentTok{#> 448     7        NA         0     3    31           0            0}
-\CommentTok{#> 449     7        NA         0     3    33           0            0}
-\CommentTok{#> 450     7        NA         0     3    35           1            0}
-\CommentTok{#> 451     7        NA         0     4    37           0            0}
-\CommentTok{#> 452     7        NA         0     4    39           1            1}
-\CommentTok{#> 453     7        NA         0     4    41           0            0}
-\CommentTok{#> 454     7        NA         0     4    43           0            0}
-\CommentTok{#> 455     7        NA         0     4    45           1            1}
-\CommentTok{#> 456     7        NA         0     4    47           1            1}
-\CommentTok{#> 457     7        NA         0     5    49           1            1}
-\CommentTok{#> 458     7        NA         0     5    51           0            0}
-\CommentTok{#> 459     7        NA         0     5    53           0            0}
-\CommentTok{#> 460     7        NA         0     5    55           0            1}
-\CommentTok{#> 461     7        NA         0     5    57           1            1}
-\CommentTok{#> 462     7        NA         0     5    59           1            1}
-\CommentTok{#> 463     7        NA         0     6    61           1            1}
-\CommentTok{#> 464     7        NA         0     6    63           0            0}
-\CommentTok{#> 465     7        NA         0     6    65           0            1}
-\CommentTok{#> 466     7        NA         0     6    67           0            0}
-\CommentTok{#> 467     7        NA         0     6    69           1            1}
-\CommentTok{#> 468     7        NA         0     6    71           1            1}
-\CommentTok{#> 469     7         7         1     1     2           1            1}
-\CommentTok{#> 470     7         4         1     1     4           0            0}
-\CommentTok{#> 471     7         3         1     1     6           1            1}
-\CommentTok{#> 472     7         6         1     1     8           0            0}
-\CommentTok{#> 473     7         5         1     1    10           1            1}
-\CommentTok{#> 474     7         2         1     1    12           1            1}
-\CommentTok{#> 475     7         2         1     2    14           1            1}
-\CommentTok{#> 476     7         7         1     2    16           0            0}
-\CommentTok{#> 477     7         3         1     2    18           1            1}
-\CommentTok{#> 478     7         5         1     2    20           0            0}
-\CommentTok{#> 479     7         4         1     2    22           1            1}
-\CommentTok{#> 480     7         6         1     2    24           0            0}
-\CommentTok{#> 481     7         5         1     3    26           0            0}
-\CommentTok{#> 482     7         7         1     3    28           1            1}
-\CommentTok{#> 483     7         6         1     3    30           1            1}
-\CommentTok{#> 484     7         4         1     3    32           0            1}
-\CommentTok{#> 485     7         2         1     3    34           0            0}
-\CommentTok{#> 486     7         3         1     3    36           1            1}
-\CommentTok{#> 487     7         7         1     4    38           0            0}
-\CommentTok{#> 488     7         2         1     4    40           0            0}
-\CommentTok{#> 489     7         4         1     4    42           1            1}
-\CommentTok{#> 490     7         5         1     4    44           0            0}
-\CommentTok{#> 491     7         6         1     4    46           0            0}
-\CommentTok{#> 492     7         3         1     4    48           0            0}
-\CommentTok{#> 493     7         5         1     5    50           1            1}
-\CommentTok{#> 494     7         4         1     5    52           0            0}
-\CommentTok{#> 495     7         3         1     5    54           0            0}
-\CommentTok{#> 496     7         2         1     5    56           1            1}
-\CommentTok{#> 497     7         6         1     5    58           1            1}
-\CommentTok{#> 498     7         7         1     5    60           1            1}
-\CommentTok{#> 499     7         5         1     6    62           1            1}
-\CommentTok{#> 500     7         4         1     6    64           1            1}
-\CommentTok{#> 501     7         6         1     6    66           1            1}
-\CommentTok{#> 502     7         3         1     6    68           0            0}
-\CommentTok{#> 503     7         7         1     6    70           0            0}
-\CommentTok{#> 504     7         2         1     6    72           0            0}
-\CommentTok{#>     pulled_left}
-\CommentTok{#> 1             0}
-\CommentTok{#> 2             1}
-\CommentTok{#> 3             0}
-\CommentTok{#> 4             0}
-\CommentTok{#> 5             1}
-\CommentTok{#> 6             1}
-\CommentTok{#> 7             0}
-\CommentTok{#> 8             0}
-\CommentTok{#> 9             0}
-\CommentTok{#> 10            0}
-\CommentTok{#> 11            1}
-\CommentTok{#> 12            0}
-\CommentTok{#> 13            1}
-\CommentTok{#> 14            1}
-\CommentTok{#> 15            0}
-\CommentTok{#> 16            1}
-\CommentTok{#> 17            0}
-\CommentTok{#> 18            0}
-\CommentTok{#> 19            1}
-\CommentTok{#> 20            1}
-\CommentTok{#> 21            1}
-\CommentTok{#> 22            0}
-\CommentTok{#> 23            1}
-\CommentTok{#> 24            0}
-\CommentTok{#> 25            0}
-\CommentTok{#> 26            1}
-\CommentTok{#> 27            0}
-\CommentTok{#> 28            0}
-\CommentTok{#> 29            0}
-\CommentTok{#> 30            0}
-\CommentTok{#> 31            0}
-\CommentTok{#> 32            1}
-\CommentTok{#> 33            1}
-\CommentTok{#> 34            1}
-\CommentTok{#> 35            0}
-\CommentTok{#> 36            0}
-\CommentTok{#> 37            1}
-\CommentTok{#> 38            0}
-\CommentTok{#> 39            0}
-\CommentTok{#> 40            0}
-\CommentTok{#> 41            1}
-\CommentTok{#> 42            0}
-\CommentTok{#> 43            0}
-\CommentTok{#> 44            0}
-\CommentTok{#> 45            0}
-\CommentTok{#> 46            1}
-\CommentTok{#> 47            1}
-\CommentTok{#> 48            1}
-\CommentTok{#> 49            0}
-\CommentTok{#> 50            0}
-\CommentTok{#> 51            1}
-\CommentTok{#> 52            1}
-\CommentTok{#> 53            1}
-\CommentTok{#> 54            1}
-\CommentTok{#> 55            0}
-\CommentTok{#> 56            1}
-\CommentTok{#> 57            0}
-\CommentTok{#> 58            0}
-\CommentTok{#> 59            0}
-\CommentTok{#> 60            0}
-\CommentTok{#> 61            1}
-\CommentTok{#> 62            0}
-\CommentTok{#> 63            1}
-\CommentTok{#> 64            0}
-\CommentTok{#> 65            0}
-\CommentTok{#> 66            1}
-\CommentTok{#> 67            1}
-\CommentTok{#> 68            0}
-\CommentTok{#> 69            0}
-\CommentTok{#> 70            0}
-\CommentTok{#> 71            1}
-\CommentTok{#> 72            0}
-\CommentTok{#> 73            1}
-\CommentTok{#> 74            1}
-\CommentTok{#> 75            1}
-\CommentTok{#> 76            1}
-\CommentTok{#> 77            1}
-\CommentTok{#> 78            1}
-\CommentTok{#> 79            1}
-\CommentTok{#> 80            1}
-\CommentTok{#> 81            1}
-\CommentTok{#> 82            1}
-\CommentTok{#> 83            1}
-\CommentTok{#> 84            1}
-\CommentTok{#> 85            1}
-\CommentTok{#> 86            1}
-\CommentTok{#> 87            1}
-\CommentTok{#> 88            1}
-\CommentTok{#> 89            1}
-\CommentTok{#> 90            1}
-\CommentTok{#> 91            1}
-\CommentTok{#> 92            1}
-\CommentTok{#> 93            1}
-\CommentTok{#> 94            1}
-\CommentTok{#> 95            1}
-\CommentTok{#> 96            1}
-\CommentTok{#> 97            1}
-\CommentTok{#> 98            1}
-\CommentTok{#> 99            1}
-\CommentTok{#> 100           1}
-\CommentTok{#> 101           1}
-\CommentTok{#> 102           1}
-\CommentTok{#> 103           1}
-\CommentTok{#> 104           1}
-\CommentTok{#> 105           1}
-\CommentTok{#> 106           1}
-\CommentTok{#> 107           1}
-\CommentTok{#> 108           1}
-\CommentTok{#> 109           1}
-\CommentTok{#> 110           1}
-\CommentTok{#> 111           1}
-\CommentTok{#> 112           1}
-\CommentTok{#> 113           1}
-\CommentTok{#> 114           1}
-\CommentTok{#> 115           1}
-\CommentTok{#> 116           1}
-\CommentTok{#> 117           1}
-\CommentTok{#> 118           1}
-\CommentTok{#> 119           1}
-\CommentTok{#> 120           1}
-\CommentTok{#> 121           1}
-\CommentTok{#> 122           1}
-\CommentTok{#> 123           1}
-\CommentTok{#> 124           1}
-\CommentTok{#> 125           1}
-\CommentTok{#> 126           1}
-\CommentTok{#> 127           1}
-\CommentTok{#> 128           1}
-\CommentTok{#> 129           1}
-\CommentTok{#> 130           1}
-\CommentTok{#> 131           1}
-\CommentTok{#> 132           1}
-\CommentTok{#> 133           1}
-\CommentTok{#> 134           1}
-\CommentTok{#> 135           1}
-\CommentTok{#> 136           1}
-\CommentTok{#> 137           1}
-\CommentTok{#> 138           1}
-\CommentTok{#> 139           1}
-\CommentTok{#> 140           1}
-\CommentTok{#> 141           1}
-\CommentTok{#> 142           1}
-\CommentTok{#> 143           1}
-\CommentTok{#> 144           1}
-\CommentTok{#> 145           0}
-\CommentTok{#> 146           0}
-\CommentTok{#> 147           0}
-\CommentTok{#> 148           0}
-\CommentTok{#> 149           0}
-\CommentTok{#> 150           1}
-\CommentTok{#> 151           1}
-\CommentTok{#> 152           0}
-\CommentTok{#> 153           1}
-\CommentTok{#> 154           1}
-\CommentTok{#> 155           0}
-\CommentTok{#> 156           0}
-\CommentTok{#> 157           0}
-\CommentTok{#> 158           1}
-\CommentTok{#> 159           0}
-\CommentTok{#> 160           0}
-\CommentTok{#> 161           0}
-\CommentTok{#> 162           1}
-\CommentTok{#> 163           1}
-\CommentTok{#> 164           0}
-\CommentTok{#> 165           1}
-\CommentTok{#> 166           0}
-\CommentTok{#> 167           0}
-\CommentTok{#> 168           1}
-\CommentTok{#> 169           0}
-\CommentTok{#> 170           0}
-\CommentTok{#> 171           1}
-\CommentTok{#> 172           0}
-\CommentTok{#> 173           0}
-\CommentTok{#> 174           1}
-\CommentTok{#> 175           0}
-\CommentTok{#> 176           1}
-\CommentTok{#> 177           1}
-\CommentTok{#> 178           1}
-\CommentTok{#> 179           1}
-\CommentTok{#> 180           1}
-\CommentTok{#> 181           0}
-\CommentTok{#> 182           0}
-\CommentTok{#> 183           0}
-\CommentTok{#> 184           0}
-\CommentTok{#> 185           0}
-\CommentTok{#> 186           1}
-\CommentTok{#> 187           0}
-\CommentTok{#> 188           1}
-\CommentTok{#> 189           0}
-\CommentTok{#> 190           0}
-\CommentTok{#> 191           1}
-\CommentTok{#> 192           1}
-\CommentTok{#> 193           0}
-\CommentTok{#> 194           0}
-\CommentTok{#> 195           0}
-\CommentTok{#> 196           0}
-\CommentTok{#> 197           0}
-\CommentTok{#> 198           0}
-\CommentTok{#> 199           0}
-\CommentTok{#> 200           0}
-\CommentTok{#> 201           0}
-\CommentTok{#> 202           1}
-\CommentTok{#> 203           0}
-\CommentTok{#> 204           0}
-\CommentTok{#> 205           0}
-\CommentTok{#> 206           0}
-\CommentTok{#> 207           1}
-\CommentTok{#> 208           0}
-\CommentTok{#> 209           1}
-\CommentTok{#> 210           0}
-\CommentTok{#> 211           0}
-\CommentTok{#> 212           0}
-\CommentTok{#> 213           0}
-\CommentTok{#> 214           1}
-\CommentTok{#> 215           1}
-\CommentTok{#> 216           0}
-\CommentTok{#> 217           0}
-\CommentTok{#> 218           1}
-\CommentTok{#> 219           1}
-\CommentTok{#> 220           0}
-\CommentTok{#> 221           0}
-\CommentTok{#> 222           0}
-\CommentTok{#> 223           0}
-\CommentTok{#> 224           0}
-\CommentTok{#> 225           1}
-\CommentTok{#> 226           1}
-\CommentTok{#> 227           0}
-\CommentTok{#> 228           1}
-\CommentTok{#> 229           0}
-\CommentTok{#> 230           1}
-\CommentTok{#> 231           1}
-\CommentTok{#> 232           0}
-\CommentTok{#> 233           0}
-\CommentTok{#> 234           1}
-\CommentTok{#> 235           0}
-\CommentTok{#> 236           0}
-\CommentTok{#> 237           0}
-\CommentTok{#> 238           1}
-\CommentTok{#> 239           1}
-\CommentTok{#> 240           0}
-\CommentTok{#> 241           1}
-\CommentTok{#> 242           0}
-\CommentTok{#> 243           1}
-\CommentTok{#> 244           0}
-\CommentTok{#> 245           1}
-\CommentTok{#> 246           0}
-\CommentTok{#> 247           0}
-\CommentTok{#> 248           0}
-\CommentTok{#> 249           0}
-\CommentTok{#> 250           1}
-\CommentTok{#> 251           0}
-\CommentTok{#> 252           1}
-\CommentTok{#> 253           0}
-\CommentTok{#> 254           0}
-\CommentTok{#> 255           0}
-\CommentTok{#> 256           0}
-\CommentTok{#> 257           0}
-\CommentTok{#> 258           0}
-\CommentTok{#> 259           0}
-\CommentTok{#> 260           1}
-\CommentTok{#> 261           0}
-\CommentTok{#> 262           0}
-\CommentTok{#> 263           1}
-\CommentTok{#> 264           1}
-\CommentTok{#> 265           0}
-\CommentTok{#> 266           0}
-\CommentTok{#> 267           0}
-\CommentTok{#> 268           1}
-\CommentTok{#> 269           1}
-\CommentTok{#> 270           1}
-\CommentTok{#> 271           0}
-\CommentTok{#> 272           0}
-\CommentTok{#> 273           1}
-\CommentTok{#> 274           0}
-\CommentTok{#> 275           0}
-\CommentTok{#> 276           0}
-\CommentTok{#> 277           0}
-\CommentTok{#> 278           0}
-\CommentTok{#> 279           1}
-\CommentTok{#> 280           0}
-\CommentTok{#> 281           0}
-\CommentTok{#> 282           1}
-\CommentTok{#> 283           1}
-\CommentTok{#> 284           0}
-\CommentTok{#> 285           0}
-\CommentTok{#> 286           0}
-\CommentTok{#> 287           0}
-\CommentTok{#> 288           0}
-\CommentTok{#> 289           1}
-\CommentTok{#> 290           0}
-\CommentTok{#> 291           1}
-\CommentTok{#> 292           0}
-\CommentTok{#> 293           1}
-\CommentTok{#> 294           1}
-\CommentTok{#> 295           1}
-\CommentTok{#> 296           0}
-\CommentTok{#> 297           1}
-\CommentTok{#> 298           0}
-\CommentTok{#> 299           1}
-\CommentTok{#> 300           0}
-\CommentTok{#> 301           0}
-\CommentTok{#> 302           0}
-\CommentTok{#> 303           1}
-\CommentTok{#> 304           1}
-\CommentTok{#> 305           0}
-\CommentTok{#> 306           1}
-\CommentTok{#> 307           1}
-\CommentTok{#> 308           0}
-\CommentTok{#> 309           1}
-\CommentTok{#> 310           0}
-\CommentTok{#> 311           0}
-\CommentTok{#> 312           0}
-\CommentTok{#> 313           0}
-\CommentTok{#> 314           1}
-\CommentTok{#> 315           1}
-\CommentTok{#> 316           0}
-\CommentTok{#> 317           0}
-\CommentTok{#> 318           0}
-\CommentTok{#> 319           0}
-\CommentTok{#> 320           0}
-\CommentTok{#> 321           0}
-\CommentTok{#> 322           1}
-\CommentTok{#> 323           1}
-\CommentTok{#> 324           0}
-\CommentTok{#> 325           0}
-\CommentTok{#> 326           1}
-\CommentTok{#> 327           0}
-\CommentTok{#> 328           0}
-\CommentTok{#> 329           0}
-\CommentTok{#> 330           0}
-\CommentTok{#> 331           0}
-\CommentTok{#> 332           0}
-\CommentTok{#> 333           0}
-\CommentTok{#> 334           0}
-\CommentTok{#> 335           0}
-\CommentTok{#> 336           1}
-\CommentTok{#> 337           0}
-\CommentTok{#> 338           1}
-\CommentTok{#> 339           1}
-\CommentTok{#> 340           0}
-\CommentTok{#> 341           1}
-\CommentTok{#> 342           0}
-\CommentTok{#> 343           0}
-\CommentTok{#> 344           1}
-\CommentTok{#> 345           0}
-\CommentTok{#> 346           0}
-\CommentTok{#> 347           0}
-\CommentTok{#> 348           0}
-\CommentTok{#> 349           0}
-\CommentTok{#> 350           1}
-\CommentTok{#> 351           1}
-\CommentTok{#> 352           1}
-\CommentTok{#> 353           1}
-\CommentTok{#> 354           1}
-\CommentTok{#> 355           0}
-\CommentTok{#> 356           1}
-\CommentTok{#> 357           0}
-\CommentTok{#> 358           0}
-\CommentTok{#> 359           1}
-\CommentTok{#> 360           1}
-\CommentTok{#> 361           1}
-\CommentTok{#> 362           0}
-\CommentTok{#> 363           0}
-\CommentTok{#> 364           1}
-\CommentTok{#> 365           1}
-\CommentTok{#> 366           0}
-\CommentTok{#> 367           0}
-\CommentTok{#> 368           0}
-\CommentTok{#> 369           0}
-\CommentTok{#> 370           1}
-\CommentTok{#> 371           1}
-\CommentTok{#> 372           1}
-\CommentTok{#> 373           1}
-\CommentTok{#> 374           1}
-\CommentTok{#> 375           1}
-\CommentTok{#> 376           0}
-\CommentTok{#> 377           1}
-\CommentTok{#> 378           1}
-\CommentTok{#> 379           1}
-\CommentTok{#> 380           0}
-\CommentTok{#> 381           1}
-\CommentTok{#> 382           1}
-\CommentTok{#> 383           1}
-\CommentTok{#> 384           1}
-\CommentTok{#> 385           1}
-\CommentTok{#> 386           0}
-\CommentTok{#> 387           1}
-\CommentTok{#> 388           1}
-\CommentTok{#> 389           1}
-\CommentTok{#> 390           0}
-\CommentTok{#> 391           1}
-\CommentTok{#> 392           0}
-\CommentTok{#> 393           1}
-\CommentTok{#> 394           1}
-\CommentTok{#> 395           1}
-\CommentTok{#> 396           1}
-\CommentTok{#> 397           1}
-\CommentTok{#> 398           0}
-\CommentTok{#> 399           1}
-\CommentTok{#> 400           0}
-\CommentTok{#> 401           0}
-\CommentTok{#> 402           0}
-\CommentTok{#> 403           1}
-\CommentTok{#> 404           1}
-\CommentTok{#> 405           1}
-\CommentTok{#> 406           1}
-\CommentTok{#> 407           1}
-\CommentTok{#> 408           0}
-\CommentTok{#> 409           1}
-\CommentTok{#> 410           1}
-\CommentTok{#> 411           0}
-\CommentTok{#> 412           0}
-\CommentTok{#> 413           1}
-\CommentTok{#> 414           1}
-\CommentTok{#> 415           1}
-\CommentTok{#> 416           1}
-\CommentTok{#> 417           0}
-\CommentTok{#> 418           1}
-\CommentTok{#> 419           0}
-\CommentTok{#> 420           1}
-\CommentTok{#> 421           0}
-\CommentTok{#> 422           0}
-\CommentTok{#> 423           0}
-\CommentTok{#> 424           0}
-\CommentTok{#> 425           1}
-\CommentTok{#> 426           0}
-\CommentTok{#> 427           1}
-\CommentTok{#> 428           1}
-\CommentTok{#> 429           1}
-\CommentTok{#> 430           1}
-\CommentTok{#> 431           1}
-\CommentTok{#> 432           0}
-\CommentTok{#> 433           1}
-\CommentTok{#> 434           1}
-\CommentTok{#> 435           0}
-\CommentTok{#> 436           1}
-\CommentTok{#> 437           0}
-\CommentTok{#> 438           1}
-\CommentTok{#> 439           1}
-\CommentTok{#> 440           1}
-\CommentTok{#> 441           1}
-\CommentTok{#> 442           0}
-\CommentTok{#> 443           1}
-\CommentTok{#> 444           1}
-\CommentTok{#> 445           0}
-\CommentTok{#> 446           1}
-\CommentTok{#> 447           1}
-\CommentTok{#> 448           1}
-\CommentTok{#> 449           1}
-\CommentTok{#> 450           0}
-\CommentTok{#> 451           1}
-\CommentTok{#> 452           1}
-\CommentTok{#> 453           1}
-\CommentTok{#> 454           1}
-\CommentTok{#> 455           1}
-\CommentTok{#> 456           1}
-\CommentTok{#> 457           1}
-\CommentTok{#> 458           1}
-\CommentTok{#> 459           1}
-\CommentTok{#> 460           0}
-\CommentTok{#> 461           1}
-\CommentTok{#> 462           1}
-\CommentTok{#> 463           1}
-\CommentTok{#> 464           1}
-\CommentTok{#> 465           0}
-\CommentTok{#> 466           1}
-\CommentTok{#> 467           1}
-\CommentTok{#> 468           1}
-\CommentTok{#> 469           1}
-\CommentTok{#> 470           1}
-\CommentTok{#> 471           1}
-\CommentTok{#> 472           1}
-\CommentTok{#> 473           1}
-\CommentTok{#> 474           1}
-\CommentTok{#> 475           1}
-\CommentTok{#> 476           1}
-\CommentTok{#> 477           1}
-\CommentTok{#> 478           1}
-\CommentTok{#> 479           1}
-\CommentTok{#> 480           1}
-\CommentTok{#> 481           1}
-\CommentTok{#> 482           1}
-\CommentTok{#> 483           1}
-\CommentTok{#> 484           0}
-\CommentTok{#> 485           1}
-\CommentTok{#> 486           1}
-\CommentTok{#> 487           1}
-\CommentTok{#> 488           1}
-\CommentTok{#> 489           1}
-\CommentTok{#> 490           1}
-\CommentTok{#> 491           1}
-\CommentTok{#> 492           1}
-\CommentTok{#> 493           1}
-\CommentTok{#> 494           1}
-\CommentTok{#> 495           1}
-\CommentTok{#> 496           1}
-\CommentTok{#> 497           1}
-\CommentTok{#> 498           1}
-\CommentTok{#> 499           1}
-\CommentTok{#> 500           1}
-\CommentTok{#> 501           1}
-\CommentTok{#> 502           1}
-\CommentTok{#> 503           1}
-\CommentTok{#> 504           1}
+\KeywordTok{head}\NormalTok{(chimpanzees)}
+\CommentTok{#>   actor recipient condition block trial prosoc_left chose_prosoc}
+\CommentTok{#> 1     1        NA         0     1     2           0            1}
+\CommentTok{#> 2     1        NA         0     1     4           0            0}
+\CommentTok{#> 3     1        NA         0     1     6           1            0}
+\CommentTok{#> 4     1        NA         0     1     8           0            1}
+\CommentTok{#> 5     1        NA         0     1    10           1            1}
+\CommentTok{#> 6     1        NA         0     1    12           1            1}
+\CommentTok{#>   pulled_left}
+\CommentTok{#> 1           0}
+\CommentTok{#> 2           1}
+\CommentTok{#> 3           0}
+\CommentTok{#> 4           0}
+\CommentTok{#> 5           1}
+\CommentTok{#> 6           1}
 \end{Highlighting}
 \end{Shaded}
 
