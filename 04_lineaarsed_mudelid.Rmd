@@ -373,9 +373,11 @@ Aga muutujaid on maailmas palju ja meil peab olema mingi reegel, mille järgi ot
 
 3. laupkokkupõrge: x --> z <-- y
 
+4. järglane: see on toru, kus z-i juurest hargneb veel üks nool A-le. Siin saame me mudelisse A lisades ligikaudu sama tulemuse, mis z-i lisades. Seega, kui z-i väärtused pole meile teada, võime hädaga ka A-d kasutada.
+
 Kui me tahame teada, kas x mõjutab y-t, siis toru puhul mudel $y ~ x + z$ vähendab x-i mõju (sest see mõju käib läbi z-i). Samas, mudel $y ~ x$ näitab x-i mõju. Seega, kumba mudelit kasutada sõltub sellest, kas me tahame näidata x-i otsest või kaudset mõju y-ile.
 
-Kahvli puhul regressioonimudel $y ~ x$ näitab x-i mõju y-le (ehkki puudub x ja y vaheline põhjuslik seos), aga mudel $y ~ x + z$ välistab selle mõju. Seega peaksime sellise põhjusliku hüpoteesi korral mudelisse z-i sisse panema, sest see aitab kontrollida z konfounding mõju vastu.
+Kahvli puhul regressioonimudel $y ~ x$ näitab x-i mõju y-le (ehkki meie põhjuslikkuse mudelis puudub x ja y vaheline põhjuslik seos), aga mudel $y ~ x + z$ välistab selle mõju. Seega peaksime sellise põhjusliku hüpoteesi korral mudelisse z-i sisse panema, sest see aitab kontrollida z konfounding mõju vastu.
 
 Laupkokkupõrke korral on olukord eelnevaga vastupidine. Nüüd avab mudel $y ~ x + z$ tagaukse ja laseb z-i segava mõju mudelisse sisse, mis tekitab meile võlts-põhjusliku suhte x ja y vahel.
 
