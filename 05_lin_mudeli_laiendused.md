@@ -33,10 +33,7 @@ Kui meil on kolme prediktoriga mudel, siis me liigume juba neljamõõtmelisse ru
 
 (ref:regressioonitasand) Regressioonitasand 3D andmetele. Kahe prediktoriga mudel, kus Sepal.Length ja Petal.Length on prediktorid ja Sepal.Width ennustatav muutuja.
 
-<div class="figure">
-<img src="05_lin_mudeli_laiendused_files/figure-html/regressioonitasand-1.png" alt="(ref:regressioonitasand)" width="672" />
-<p class="caption">(\#fig:regressioonitasand)(ref:regressioonitasand)</p>
-</div>
+![(\#fig:regressioonitasand)(ref:regressioonitasand)](05_lin_mudeli_laiendused_files/figure-latex/regressioonitasand-1.pdf) 
 
 
 Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile.
@@ -59,10 +56,7 @@ devtools::source_gist("8b4d6ab6a333ef1cd14e8067c3badbae", filename = "grid_arran
 grid_arrange_shared_legend(p1, p2)
 ```
 
-<div class="figure">
-<img src="05_lin_mudeli_laiendused_files/figure-html/lin2d-1.png" alt="(ref:lin2d)" width="672" />
-<p class="caption">(\#fig:lin2d)(ref:lin2d)</p>
-</div>
+![(\#fig:lin2d)(ref:lin2d)](05_lin_mudeli_laiendused_files/figure-latex/lin2d-1.pdf) 
 
 
 Võrreldes mudelite m1 (üks prediktor) ja m2 (kaks prediktorit) Sepal.Length ($b_1$) koefitsienti on näha, et need erinevad oluliselt.
@@ -115,10 +109,7 @@ plot(Sepal_width_predicted ~ Sepal_length, type = "b", ylim = c(0, 5), col = "re
 abline(m1, lty = "dashed")
 ```
 
-<div class="figure">
-<img src="05_lin_mudeli_laiendused_files/figure-html/yksversuskaks-1.png" alt="(ref:yksversuskaks)" width="672" />
-<p class="caption">(\#fig:yksversuskaks)(ref:yksversuskaks)</p>
-</div>
+![(\#fig:yksversuskaks)(ref:yksversuskaks)](05_lin_mudeli_laiendused_files/figure-latex/yksversuskaks-1.pdf) 
 
 Nüüd joonistame 3D pildi olukorrast, kus nii x~1~ kui x~2~ omandavad rea väärtusi. Mudeli ennustus on ikkagi sirge kujul -- mis sest, et 3D ruumis.
 
@@ -130,10 +121,7 @@ Nüüd joonistame 3D pildi olukorrast, kus nii x~1~ kui x~2~ omandavad rea vää
 #> This warning is displayed once per session.
 ```
 
-<div class="figure">
-<img src="05_lin_mudeli_laiendused_files/figure-html/kaksprediktorit-1.png" alt="(ref:kaksprediktorit)" width="672" />
-<p class="caption">(\#fig:kaksprediktorit)(ref:kaksprediktorit)</p>
-</div>
+![(\#fig:kaksprediktorit)(ref:kaksprediktorit)](05_lin_mudeli_laiendused_files/figure-latex/kaksprediktorit-1.pdf) 
 
 ## Interaktsioonimudel 
 
@@ -237,10 +225,7 @@ plot(Sepal_width_predicted ~ Sepal_length, type = "l", ylim = c(2, 6))
 abline(coef(m2)[c("(Intercept)", "Sepal.Length")], lty = "dashed")
 ```
 
-<div class="figure">
-<img src="05_lin_mudeli_laiendused_files/figure-html/ennustus-interaktsioonimudelist-1.png" alt="(ref:ennustus-interaktsioonimudelist)" width="672" />
-<p class="caption">(\#fig:ennustus-interaktsioonimudelist)(ref:ennustus-interaktsioonimudelist)</p>
-</div>
+![(\#fig:ennustus-interaktsioonimudelist)(ref:ennustus-interaktsioonimudelist)](05_lin_mudeli_laiendused_files/figure-latex/ennustus-interaktsioonimudelist-1.pdf) 
 
 Nagu näha viib korrutamistehe selleni, et interaktsioonimudeli tõus erineb ilma interaktsioonita mudeli tõusust. 
 
@@ -248,10 +233,7 @@ Kui aga interaktsioonimudel plottida välja 3D-s üle paljude x~1~ ja x~2~ vää
 
 (ref:ennustused3d-interaktsioonimudelist) Ennustused 3D interaktsioonimudelist üle paljude x~1~ (Sepal_Length) ja x~2~ (Petal_length) väärtuste.
 
-<div class="figure">
-<img src="05_lin_mudeli_laiendused_files/figure-html/ennustused3d-interaktsioonimudelist-1.png" alt="(ref:ennustused3d-interaktsioonimudelist)" width="672" />
-<p class="caption">(\#fig:ennustused3d-interaktsioonimudelist)(ref:ennustused3d-interaktsioonimudelist)</p>
-</div>
+![(\#fig:ennustused3d-interaktsioonimudelist)(ref:ennustused3d-interaktsioonimudelist)](05_lin_mudeli_laiendused_files/figure-latex/ennustused3d-interaktsioonimudelist-1.pdf) 
 
 Vau! See on alles ennustus!
 
@@ -336,7 +318,7 @@ Nii saab fititud väärtused (.fitted), residuaalid (.resid), fittitud väätrus
 #> 4         3.1          4.6 setosa     3.10  0.0591 -0.00380 0.0471  0.273
 #> 5         3.6          5   setosa     3.42  0.0385  0.177   0.0200  0.273
 #> 6         3.9          5.4 setosa     3.74  0.0581  0.157   0.0455  0.273
-#> # … with 144 more rows, and 2 more variables: .cooksd <dbl>,
+#> # ... with 144 more rows, and 2 more variables: .cooksd <dbl>,
 #> #   .std.resid <dbl>
 ```
 
@@ -354,7 +336,7 @@ ggplot(a_m3, aes(`.fitted`, `.resid`)) +
   geom_smooth()
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+![](05_lin_mudeli_laiendused_files/figure-latex/unnamed-chunk-13-1.pdf)<!-- --> 
 
 
 ### Mõjukuse plot {-}
@@ -373,7 +355,7 @@ influencePlot(m3, id.method="identify", main="Influence Plot",
               sub="Circle size is proportional to Cook's distance")
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+![](05_lin_mudeli_laiendused_files/figure-latex/unnamed-chunk-14-1.pdf)<!-- --> 
 
 ```
 #>     StudRes    Hat   CookD
@@ -403,7 +385,7 @@ ggplot(data = NULL, aes(x = 1:150, y = a_m3$`.cooksd`)) + geom_col() +
   geom_hline(yintercept = 3*mean(a_m3$`.cooksd`), lty = 2)
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+![](05_lin_mudeli_laiendused_files/figure-latex/unnamed-chunk-15-1.pdf)<!-- --> 
 
 
 ### Residuaalide normaalsus - qq plot {-}
@@ -414,7 +396,7 @@ Kas residuaalid on normaaljaotusega? NB! studentiseeritud residuaalid on student
 car::qqPlot(a_m3$`.std.resid`, distribution = "t", df=149)
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+![](05_lin_mudeli_laiendused_files/figure-latex/unnamed-chunk-16-1.pdf)<!-- --> 
 
 ```
 #> [1] 42 69
@@ -427,7 +409,7 @@ Isegi oluisem on vaadata, et residuaalide jaotus ei oleks mitmetipuline. Kui on,
 ggplot(a_m3, aes(`.std.resid`))+ geom_density()
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+![](05_lin_mudeli_laiendused_files/figure-latex/unnamed-chunk-17-1.pdf)<!-- --> 
 
 
 ### Homoskedastilisus - Scale-location plot {-}
@@ -441,7 +423,7 @@ ggplot(a_m3, aes(`.fitted`, `.resid` %>% abs %>% sqrt)) +
   geom_smooth(se = FALSE)
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-18-1.png" width="672" />
+![](05_lin_mudeli_laiendused_files/figure-latex/unnamed-chunk-18-1.pdf)<!-- --> 
 
 
 
@@ -454,7 +436,7 @@ ggplot(a_m3, aes(Sepal.Width, `.std.resid`)) + geom_point(aes(color=Species)) + 
   geom_smooth( se=F, color="black", size=0.5)
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+![](05_lin_mudeli_laiendused_files/figure-latex/unnamed-chunk-19-1.pdf)<!-- --> 
 
 Mudel paistab süstemaatiliselt alahindama Sepal Width-i seal kus Sepal Length on kõrge, ja vastupidi. Horisontaalne punktiirjoon näitab, kus mudel vastab täpselt andmetele.
 
@@ -469,7 +451,7 @@ ggplot(a_m3, aes(Sepal.Length, `.std.resid`, color=Species)) +
   geom_smooth(se=F, color="black", size=0.5)
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+![](05_lin_mudeli_laiendused_files/figure-latex/unnamed-chunk-20-1.pdf)<!-- --> 
 Ideaalsed residuaalid! 
 
 ## 3. Teeme mudeli põhjal ennustusi (marginal plots) {-}
@@ -500,7 +482,7 @@ ggplot(mydf, aes(x, predicted)) +
   theme_classic()
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+![](05_lin_mudeli_laiendused_files/figure-latex/unnamed-chunk-21-1.pdf)<!-- --> 
 
 >terms argument võtab kuni 3 muutujat, neist 2 peavad olema faktormuutujad ja 3 muutuja korral tekib tabelisse veerg nimega facet, mille abil saab tulemused facet_wrap()-ga välja plottida.
 
@@ -515,7 +497,7 @@ ggplot(mydf, aes(x, predicted)) +
   ylab("predicted sepal width")
 ```
 
-<img src="05_lin_mudeli_laiendused_files/figure-html/unnamed-chunk-22-1.png" width="672" />
+![](05_lin_mudeli_laiendused_files/figure-latex/unnamed-chunk-22-1.pdf)<!-- --> 
 
 
 Nii saab sisestada üksikuid parameetriväärtusi ja neile ennustusi teha:

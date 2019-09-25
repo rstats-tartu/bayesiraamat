@@ -31,10 +31,7 @@ Järgnevad nõuanded on rangelt soovituslikud:
 
 (ref:lognorm) Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete "keskväärtusest"? Miks?
 
-<div class="figure">
-<img src="03_andmed_files/figure-html/lognorm-1.png" alt="(ref:lognorm)" width="672" />
-<p class="caption">(\#fig:lognorm)(ref:lognorm)</p>
-</div>
+![(\#fig:lognorm)(ref:lognorm)](03_andmed_files/figure-latex/lognorm-1.pdf) 
 
 
 ## Muutuja sisene varieeruvus {-}
@@ -100,25 +97,38 @@ multiplicative_sd(andmed) %>% knitr::kable()
 ```
 
 
-
-SD                      MEAN    lower   upper
---------------------  ------  -------  ------
-multiplicative_SD      0.977    0.344    2.77
-multiplicative_2_SD    0.977    0.121    7.88
-additive_SD            1.591   -0.043    3.23
-additive_2_SD          1.591   -1.678    4.86
+\begin{tabular}{l|r|r|r}
+\hline
+SD & MEAN & lower & upper\\
+\hline
+multiplicative\_SD & 0.939 & 0.375 & 2.36\\
+\hline
+multiplicative\_2\_SD & 0.939 & 0.149 & 5.91\\
+\hline
+additive\_SD & 1.448 & -0.146 & 3.04\\
+\hline
+additive\_2\_SD & 1.448 & -1.740 & 4.64\\
+\hline
+\end{tabular}
 
 Tavalise aritmeetitilise keskmise asemel on meil nüüd geomeetriline keskmine.  Võrdluseks on antud ka tavaline (aritmeetiline) keskmine ja (aditiivne) SD. Additiivne SD on selle jaotuse kirjeldamiseks selgelt ebaadekvaatne (vt jaotuse pilti ülalpool ja võrdle mulitplikatiivse SD-ga).
 
 
 Kuidas aga töötab multiplikatiivne standardhälve normaaljaotusest pärit andmetega (N=3, mean=100, sd=20)? Kui multiplikatiivse sd rakendamine normaalsete andmete peal viiks katastroofini, siis poleks sel statistikul suurt kasutusruumi.
 
-SD                     MEAN   lower   upper
---------------------  -----  ------  ------
-multiplicative_SD       108    92.8     126
-multiplicative_2_SD     108    79.7     147
-additive_SD             109    92.1     126
-additive_2_SD           109    75.2     143
+\begin{tabular}{l|r|r|r}
+\hline
+SD & MEAN & lower & upper\\
+\hline
+multiplicative\_SD & 108 & 92.8 & 126\\
+\hline
+multiplicative\_2\_SD & 108 & 79.7 & 147\\
+\hline
+additive\_SD & 109 & 92.1 & 126\\
+\hline
+additive\_2\_SD & 109 & 75.2 & 143\\
+\hline
+\end{tabular}
 
 Nagu näha, on multiplikatiivse sd kasutamine normaalsete andmetega pigem ohutu (kui andmed on positiivsed). Arvestades, et additiivne SD on lognormaalsete andmete korral kõike muud kui ohutu ning et lognormaaljaotus on bioloogias üsna tavaline, eriti ensüümreaktsioonide ja kasvuprotsesside juures, on mõistlik alati kasutada multiplicative_sd() funktsiooni. Kui mõlema SD väärtused on sarnased, siis võib loota, et andmed on normaalsed ning saab refereede rõõmuks avaldada tavapärase additiivse SD.
 
@@ -136,13 +146,10 @@ QQ-plot (kvantiil-kvantiil plot) võrdleb andmete jaotust ideaalse normaaljaotus
 qqPlot(andmed)
 ```
 
-<div class="figure">
-<img src="03_andmed_files/figure-html/qqnorm-1.png" alt="(ref:qqnorm)" width="672" />
-<p class="caption">(\#fig:qqnorm)(ref:qqnorm)</p>
-</div>
+![(\#fig:qqnorm)(ref:qqnorm)](03_andmed_files/figure-latex/qqnorm-1.pdf) 
 
 ```
-#> [1] 57 62
+#> [1] 66 65
 ```
 
 Nüüd joonistame qq-ploti logaritmitud andmetele. 
@@ -154,13 +161,10 @@ Nüüd joonistame qq-ploti logaritmitud andmetele.
 qqPlot(log(andmed))
 ```
 
-<div class="figure">
-<img src="03_andmed_files/figure-html/qqlognorm-1.png" alt="(ref:qqlognorm)" width="672" />
-<p class="caption">(\#fig:qqlognorm)(ref:qqlognorm)</p>
-</div>
+![(\#fig:qqlognorm)(ref:qqlognorm)](03_andmed_files/figure-latex/qqlognorm-1.pdf) 
 
 ```
-#> [1]  29 100
+#> [1] 66 65
 ```
 
 Pole kahtlust, andmed on logaritmitud kujul normaaljaotusega.
@@ -178,17 +182,17 @@ Lognormaalsete andmetega:
 
 ```r
 mad(andmed, constant = 1); sd(andmed); mad(andmed)
-#> [1] 0.576
-#> [1] 1.63
-#> [1] 0.854
+#> [1] 0.522
+#> [1] 1.59
+#> [1] 0.774
 ```
 
 
 ```r
 mad(log10(andmed), constant = 1); sd(log10(andmed)); mad(log10(andmed))
-#> [1] 0.326
-#> [1] 0.453
-#> [1] 0.483
+#> [1] 0.275
+#> [1] 0.399
+#> [1] 0.408
 ```
 
 mad = median(abs(median(x) - x)), mida on väga lihtne mõista. Samas R-i funktsioon mad() korrutab default-ina mad-i läbi konstandiga 1.4826, mis muudab mad()-i tulemuse võrreldavaks sd-ga, tehes sellest sd robustse analoogi. Robustse sellepärast, et mad-i arvutuskäik, mis sõltub mediaanist, mitte aritmeetilisest keskmisest, ei ole tundlik outlierite suhtes. Seega, kui tahate arvutada mad-i, siis fikseerige mad() funktsioonis argument *constant* ühele.
@@ -203,7 +207,7 @@ Funktsioon quantile võimaldab valida, milliseid kvantiile soovite näha. Järgn
 ```r
 quantile(andmed, c(0.025, 0.25, 0.5, 0.75, 0.95))
 #>  2.5%   25%   50%   75%   95% 
-#> 0.122 0.497 0.983 2.177 4.702
+#> 0.194 0.471 0.935 1.634 4.488
 ```
 
 
@@ -236,10 +240,7 @@ Lisaks, korrelatsioonikordaja mõõdab vaid andmete *lineaarset* koos-varieeruvu
 
 (ref:anscombe) Anscombe'i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: neli andmestikku annavad identse korrelatsioonikordaja (Pearsons'r), ehkki tegelikud seosed andmete vahel on täiesti erinevad.
 
-<div class="figure">
-<img src="03_andmed_files/figure-html/anscombe-1.png" alt="(ref:anscombe)" width="672" />
-<p class="caption">(\#fig:anscombe)(ref:anscombe)</p>
-</div>
+![(\#fig:anscombe)(ref:anscombe)](03_andmed_files/figure-latex/anscombe-1.pdf) 
 
 
 Moraal seisneb selles, et enne korrelatsioonikordaja arvutamist tasub alati plottida andmed, et veenduda võimaliku seose lineaarsuses. 
@@ -262,10 +263,18 @@ Korrelatsioonimaatriksi saab niimoodi:
 knitr::kable(cor(iris[,-5]))
 ```
 
-                Sepal.Length   Sepal.Width   Petal.Length   Petal.Width
--------------  -------------  ------------  -------------  ------------
-Sepal.Length           1.000        -0.118          0.872         0.818
-Sepal.Width           -0.118         1.000         -0.428        -0.366
-Petal.Length           0.872        -0.428          1.000         0.963
-Petal.Width            0.818        -0.366          0.963         1.000
+
+\begin{tabular}{l|r|r|r|r}
+\hline
+  & Sepal.Length & Sepal.Width & Petal.Length & Petal.Width\\
+\hline
+Sepal.Length & 1.000 & -0.118 & 0.872 & 0.818\\
+\hline
+Sepal.Width & -0.118 & 1.000 & -0.428 & -0.366\\
+\hline
+Petal.Length & 0.872 & -0.428 & 1.000 & 0.963\\
+\hline
+Petal.Width & 0.818 & -0.366 & 0.963 & 1.000\\
+\hline
+\end{tabular}
 

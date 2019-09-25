@@ -667,10 +667,7 @@ Summary %>%
   geom_histogram(bins = 40)
 ```
 
-<div class="figure">
-<img src="08_inferential_files/figure-html/jaotus-1.png" alt="(ref:jaotus)" width="672" />
-<p class="caption">(\#fig:jaotus)(ref:jaotus)</p>
-</div>
+![(\#fig:jaotus)(ref:jaotus)](08_inferential_files/figure-latex/jaotus-1.pdf) 
 
 
 ```r
@@ -693,10 +690,7 @@ Summary %>%
   geom_histogram(bins = 40)
 ```
 
-<div class="figure">
-<img src="08_inferential_files/figure-html/sdjaotus-1.png" alt="(ref:sdjaotus)" width="672" />
-<p class="caption">(\#fig:sdjaotus)(ref:sdjaotus)</p>
-</div>
+![(\#fig:sdjaotus)(ref:sdjaotus)](08_inferential_files/figure-latex/sdjaotus-1.pdf) 
 
 
 ```r
@@ -742,8 +736,7 @@ Statistika tõmbas oma saapaid pidi mülkast välja Brad Efron 1979. aastal.
 
 (ref:parun) Nii nagu parun Münchausen tõmbas ennast patsi pidi mülkast välja, genereeritakse bootstrappimisega algse valimi põhjal teststatistiku jaotus.
 
-<div class="figure">
-<img src="img/munchausen.jpg" alt="(ref:parun)" width="50%" />
-<p class="caption">(\#fig:parun)(ref:parun)</p>
-</div>
+\begin{figure}
+\includegraphics[width=0.5\linewidth]{img/munchausen} \caption{(ref:parun)}(\#fig:parun)
+\end{figure}
 

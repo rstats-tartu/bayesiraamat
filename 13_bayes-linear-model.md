@@ -122,10 +122,7 @@ Antud juhul on 100% kaalust gapmo6-l ja ülejäänud mudelitele ei jää midagi.
 plot(coeftab(gapmod4, gapmod5, gapmod6))
 ```
 
-<div class="figure">
-<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-15-1.png" alt="Mudelite võrdlusplot." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-15)Mudelite võrdlusplot.</p>
-</div>
+![(\#fig:unnamed-chunk-15)Mudelite võrdlusplot.](13_bayes-linear-model_files/figure-latex/unnamed-chunk-15-1.pdf) 
 
 
 Viime SKP andmed log-skaalasse ja proovime uuesti. See tähendab, et me arvame, et iga SKP kümnekordne tõus võiks kaasa tuua eluea tõusu x aasta võrra.
@@ -164,10 +161,7 @@ compare(gapmod4, gapmod5, gapmod6, gapmod7, gapmod8)
 ```
 
 
-<div class="figure">
-<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-19-1.png" alt="Log skaalas töötab nulli surutud interceptiga mudel sama hästi kui täismudel. See ei ole paraku mudeldamise üldine omadus." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-19)Log skaalas töötab nulli surutud interceptiga mudel sama hästi kui täismudel. See ei ole paraku mudeldamise üldine omadus.</p>
-</div>
+![(\#fig:unnamed-chunk-19)Log skaalas töötab nulli surutud interceptiga mudel sama hästi kui täismudel. See ei ole paraku mudeldamise üldine omadus.](13_bayes-linear-model_files/figure-latex/unnamed-chunk-19-1.pdf) 
 
 Kuna Bayesi mudelite fittimine on keerulisem kui `lm()` abil, on eriti tähtis fititud mudel välja plottida. 
 See on esimene kaitseliin lollide vigade ja halvasti jooksvate Markovi ahelate vastu. 
@@ -188,10 +182,7 @@ Plotime nende koefitsiendid koos usalduspiiridega.
 plot(coeftab(gapmod7, gapmod8))
 ```
 
-<div class="figure">
-<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-20-1.png" alt="Mudelite võrdlusplot." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-20)Mudelite võrdlusplot.</p>
-</div>
+![(\#fig:unnamed-chunk-20)Mudelite võrdlusplot.](13_bayes-linear-model_files/figure-latex/unnamed-chunk-20-1.pdf) 
 
 Pane tähele, et gapmod8 "b_gdp" koefitsiendi posteerior on palju laiem kui gapmod7 "b_gdp" oma.
 See on üldine nähtus, mis tuleneb sellest, et gapmod7-s on vähem parameetreid. 
@@ -266,10 +257,7 @@ ggplot(g2007) +
 #> This warning is displayed once per session.
 ```
 
-<div class="figure">
-<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-24-1.png" alt="Ennustused mudelist." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-24)Ennustused mudelist.</p>
-</div>
+![(\#fig:unnamed-chunk-24)Ennustused mudelist.](13_bayes-linear-model_files/figure-latex/unnamed-chunk-24-1.pdf) 
 
 Nüüd ütleb laiem hall ala, et me oleme üsna kindlad, et nende riikide puhul, mille puhul mudel töötab, kohtame individaalsete riikide keskmiseid eluigasid halli ala sees ja mitte sealt väljas. 
 Nagu näha, on meil ka riike, mis jäävad hallist alast kaugele ja mille keskmine eluiga on kõvasti madalam, kui mudel ennustab. 
@@ -284,15 +272,12 @@ Kuidas saada ennustusi kindlale l_GDP väärtusele? Näiteks tulp V10 vastab l_G
 dens(sim.length$V10)
 ```
 
-<div class="figure">
-<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-25-1.png" alt="Ennustus mudelist kindlale log GDP väärtusele." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-25)Ennustus mudelist kindlale log GDP väärtusele.</p>
-</div>
+![(\#fig:unnamed-chunk-25)Ennustus mudelist kindlale log GDP väärtusele.](13_bayes-linear-model_files/figure-latex/unnamed-chunk-25-1.pdf) 
 
 ```r
 HPDI(sim.length$V10, prob = 0.95)
 #> |0.95 0.95| 
-#>  37.7  65.2
+#>  39.7  68.2
 ```
 
 Nagu näha, võib mudeli kohaselt sellise riigi keskmine eluiga tulla nii madal, kui 40 aastat ja nii kõrge kui 67 aastat.
@@ -332,10 +317,7 @@ $$e^{\sigma^2}(e^{\sigma^2} - 1)e^{2\sigma} =\sigma$$
 
 Seekord ennustame GDP-d keskmise eluea põhjal (mis, nagu näha jooniselt, ei ole küll päris lognormaalne).
 
-<div class="figure">
-<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-26-1.png" alt="SKP-de jaotus" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-26)SKP-de jaotus</p>
-</div>
+![(\#fig:unnamed-chunk-26)SKP-de jaotus](13_bayes-linear-model_files/figure-latex/unnamed-chunk-26-1.pdf) 
 
 Mustaga on näidatud empiiriline SKP jaotus, rohelisega fititud lognormaalne mudel sellest samast jaotusest. Järgnevalt ennustame SKP-d keskmise eluea põhjal, milleks fitime lognormaalse tõepäramudeli, kus mu on ümber defineeritud regressioonivõrrandiga:
 
@@ -382,10 +364,7 @@ plot( a, y, type = "l", xlab = "a value", ylab = "slope" )
 lines( a, y1, col = "red" )
 ```
 
-<div class="figure">
-<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-30-1.png" alt="Mudeli tõus sõltub interceptist." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-30)Mudeli tõus sõltub interceptist.</p>
-</div>
+![(\#fig:unnamed-chunk-30)Mudeli tõus sõltub interceptist.](13_bayes-linear-model_files/figure-latex/unnamed-chunk-30-1.pdf) 
 
 Must joon näitab mudeli tõusu sõltuvust parameetri a väärtusest, kui parameeter b = 2. Punane joon teeb sedasama, kui b = 3.
 
@@ -402,10 +381,7 @@ beta <- exp(s_ln1$a + s_ln1$b) - exp(s_ln1$a)
 dens(beta)
 ```
 
-<div class="figure">
-<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-32-1.png" alt="Mudeli tõusude (beta) posteerior." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-32)Mudeli tõusude (beta) posteerior.</p>
-</div>
+![(\#fig:unnamed-chunk-32)Mudeli tõusude (beta) posteerior.](13_bayes-linear-model_files/figure-latex/unnamed-chunk-32-1.pdf) 
 
 Lognormaaljaotusega mudelis täidab normaaljaotusega mudeli intercepti rolli eelkõige mediaan, mis on defineeritud kui exp(a), aga arvutada saab ka keskmise:
 
@@ -437,10 +413,7 @@ ggplot(g2007, aes(lifeExp, gdpPercap)) +
   scale_color_viridis(discrete = TRUE)
 ```
 
-<div class="figure">
-<img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-35-1.png" alt="Ennustus mudelist." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-35)Ennustus mudelist.</p>
-</div>
+![(\#fig:unnamed-chunk-35)Ennustus mudelist.](13_bayes-linear-model_files/figure-latex/unnamed-chunk-35-1.pdf) 
 
 
 Ka see mudel jääb hätta Aafrika outlieritega, mille eluiga ei suuda ennustada rikkust.

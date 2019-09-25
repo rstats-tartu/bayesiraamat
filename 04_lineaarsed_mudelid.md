@@ -40,10 +40,14 @@ plot(y ~ x,
      main = bquote(y == x))
 ```
 
-<div class="figure" style="text-align: center">
-<img src="04_lineaarsed_mudelid_files/figure-html/lihtnemudel-1.png" alt="(ref:lihtnemudel)" width="70%" />
-<p class="caption">(\#fig:lihtnemudel)(ref:lihtnemudel)</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/lihtnemudel-1} 
+
+}
+
+\caption{(ref:lihtnemudel)}(\#fig:lihtnemudel)
+\end{figure}
 
 > Üldistatult, mudeli keeles tähistame me seda muutujat, mille väärtusi me ennustame, Y-ga ja seda muutujat, mille väärtuse põhjal me ennustame, X-ga. 
 
@@ -74,10 +78,14 @@ plot(y ~ x, xlim = c(0, 100), ylim = c(0, 150), type = "l",
 abline(c(0, 1), lty = 2)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="04_lineaarsed_mudelid_files/figure-html/intercept-1.png" alt="(ref:intercept)" width="70%" />
-<p class="caption">(\#fig:intercept)(ref:intercept)</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/intercept-1} 
+
+}
+
+\caption{(ref:intercept)}(\#fig:intercept)
+\end{figure}
 
 
 Meie konstant a määrab $y$ väärtuse, kui $x = 0$, ehk sirge lõikepunkti $y$ teljel.
@@ -103,10 +111,14 @@ plot(y ~ x, xlim = c(0, 100), ylim = c(0, 100), type = "l", main = bquote(y == b
 abline(c(0, 1), lty = 2)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-7-1.png" alt="Lineaarne mudel, mille lõikepunkt = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-7)Lineaarne mudel, mille lõikepunkt = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3.</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-7-1} 
+
+}
+
+\caption{Lineaarne mudel, mille lõikepunkt = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3.}(\#fig:unnamed-chunk-7)
+\end{figure}
 
 
 Nüüd muutub sirge tõusunurk, ehk kui palju me ootame *y*-t muutumas, kui *x* muutub näiteks ühe ühiku võrra. 
@@ -144,10 +156,14 @@ y <-  a + b * x
 plot(y ~ x, xlab = "Weight in kg", ylab = "Heigth in cm", ylim = c(50, 200), type = "l", main = bquote(y == 102 + 0.8 %*% x))
 ```
 
-<div class="figure" style="text-align: center">
-<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-9-1.png" alt="Lineaarne mudel, millel on tuunitud nii lõikepunkt kui tõus." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-9)Lineaarne mudel, millel on tuunitud nii lõikepunkt kui tõus.</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-9-1} 
+
+}
+
+\caption{Lineaarne mudel, millel on tuunitud nii lõikepunkt kui tõus.}(\#fig:unnamed-chunk-9)
+\end{figure}
 
 
 
@@ -184,10 +200,14 @@ augment(m, iris) %>%
   scale_color_viridis(discrete = TRUE)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-11-1.png" alt="Fititud mudel, kus muutuja Petal.Length järgi ennustatakse muutuja Sepal.Length väärtusi." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-11)Fititud mudel, kus muutuja Petal.Length järgi ennustatakse muutuja Sepal.Length väärtusi.</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-11-1} 
+
+}
+
+\caption{Fititud mudel, kus muutuja Petal.Length järgi ennustatakse muutuja Sepal.Length väärtusi.}(\#fig:unnamed-chunk-11)
+\end{figure}
 
 Mudeli fittimine tähendab siin lihtsalt, et sirge on 2D ruumi asetatud nii, et see oleks võimalikult lähedal kõikidele punktidele.
 
@@ -233,10 +253,14 @@ Sepal_length <-  a + b * Petal_length
 plot(Sepal_length ~ Petal_length, type = "b")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-14-1.png" alt="Siin ennustasime kümme y väärtust x väärtuste põhjal.." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-14)Siin ennustasime kümme y väärtust x väärtuste põhjal..</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-14-1} 
+
+}
+
+\caption{Siin ennustasime kümme y väärtust x väärtuste põhjal..}(\#fig:unnamed-chunk-14)
+\end{figure}
 
 
 
@@ -318,22 +342,30 @@ Selline mudel on täpselt sama informatiivne kui andmed, mille põhjal see fitit
 #> Please use `cols = c(preds)`
 ```
 
-<div class="figure" style="text-align: center">
-<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-16-1.png" alt="Kasvava paindlikusega polünoomsed mudelid." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-16)Kasvava paindlikusega polünoomsed mudelid.</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-16-1} 
+
+}
+
+\caption{Kasvava paindlikusega polünoomsed mudelid.}(\#fig:unnamed-chunk-16)
+\end{figure}
 
 
 Vähimruutude meetodil fititud mudeleid saame võrrelda AIC-i näitaja järgi. AIC  - Akaike Informatsiooni Kriteerium - vaatab mudeli sobivust andmetega ja mudeli parameetrite arvu. 
 Väikseim AIC tähitab parimat fitti väikseima parameetrite arvu juures (kompromissi) ja väikseima AIC-ga mudel on eelistatuim mudel. Aga seda ainult võrreldud mudelite hulgas. AIC-i absoluutväärtus ei loe - see on suhteline näitaja.
 
-model_formula      aic
----------------  -----
-y ~ x             35.0
-y ~ poly(x, 2)    37.0
-y ~ poly(x, 3)    36.1
-y ~ poly(x, 4)    32.5
-y ~ poly(x, 5)    -Inf
+\begin{tabular}{lr}
+\toprule
+model\_formula & aic\\
+\midrule
+y \textasciitilde{} x & 35.0\\
+y \textasciitilde{} poly(x, 2) & 37.0\\
+y \textasciitilde{} poly(x, 3) & 36.1\\
+y \textasciitilde{} poly(x, 4) & 32.5\\
+y \textasciitilde{} poly(x, 5) & -Inf\\
+\bottomrule
+\end{tabular}
 
 AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel? Mis siis, kui 3-s andmepunkt on andmesisestaja näpuviga?
 
@@ -374,11 +406,35 @@ AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel?
 
 ### Regressioon kui kirjeldus ja kui põhjuslik hüpotees {-}
 
-Regressioonanalüüsi võib vaadelda 1) empiirilise kirjeldusena y ja x-i koos-varieerumisest või 2) muutujate vaheliste põhjuslike suhete analüüsina. Esimesel juhul ei tõlgenda me x ja y suhet x-i mõjuna y-le. Seega, senikaua kui mudeli fit on piisavalt hea, ei ole võimalik, et me fitime vale struktuuriga mudeli. 
+Regressioonanalüüsi võib vaadelda 1) empiirilise kirjeldusena y ja x-i koos-varieerumisest või 2) muutujate vaheliste põhjuslike suhete analüüsina. Esimesel juhul ei tõlgenda me x ja y suhet x-i mõjuna y-le. Seega, senikaua kui mudeli fit väljaspool andmeid, mida kasutati selle mudeli fittimiseks, on piisavalt hea, ei ole võimalik, et me fitime vale struktuuriga mudeli. 
 Kui me fitime 2 mudelit (i) $Y = \alpha + \beta_1X_1$ ja (ii) $Y = \alpha + \beta_1X_1 + \beta_2X_2$, siis eeldame, et kahe mudeli $\beta_1$ koefitsiendid tulevad erinevad. Aga sellest pole midagi, sest need kirjeldavad mõlemal juhul vaid empiirilisi seoseid. 
 
 Teisel, põhjuslikul juhul on kõik teisiti. Eeldades et $X_2$ on üks Y-i põhjustest, on nüüd esimese mudeli veakomponendis peidus ka $\beta_2X_2$. Kui $X_1$ ja $X_2$ on omavahel korreleeritud, siis tekib meil seetõttu ka korrelatsioon $X_1$ ja veakomponendi vahel -- ja see rikub mudeli eeldusi, kallutades mudeli fittimisel meie hinnangut $\beta_1$-le, misläbi osa $X_2$ mõjust Y-le omistatakse ekslikult $X_1$-le. See kõik juhtub siis, kui teise mudeli $\beta_2$ ei ole null ja esineb $X_1$ ja $X_2$ vaheline korrelatsioon. 
 
-Selle kallutatuse tõlgendamine sõltub omakorda $X_1$ ja $X_2$ vahelise põhjusliku seose struktuurist. Kui meil on põhjuslik rida $X_1$ --> $X_2$ --> $Y$ ($X_2$ vahendab $X_1$ mõju Y-le), siis kallutatus on vaid $X_1$-e kaudne mõju Y-le, mida vahendab $X_2$. Kui aga $X_2$ on ühine põhjus nii $X_1$-le kui Y-le, siis on $X_2$ mudelisse lisamine väga tähtis, et saada mõistlik hinnang $X_1$ mõjule Y-le. Samas, kui me esimesel juhul ($X_1$ --> $X_2$ --> $Y$) tahame hinnata $X_1$ mõju Y-le, ei peaks me üldse $X_2$-e mudelisse panema.
+Selle kallutatuse tõlgendamine sõltub omakorda $X_1$ ja $X_2$ vahelise põhjusliku seose struktuurist. Oluline on mõista, et mudeli enda struktuuris pole vähimatki põhjuslikku infot - mudel ei tea isegi sellise asja nagu põhjuslikkus olemasolust. Seega on meil lisaks regressioonimudelile vaja sellest iseseisvat põhjuslikku mudelit, mille formuleerime puhtalt teaduslikest asjaoludest lähtuvalt.
+
+Kõige lihtsam selline mudel vastab randomiseeritud ja kontrollitud eksperimendile, kus me võrdleme katse ja kontrolltingimusi. Siin me usume, et kui katsetingimuse rakendamine (näiteks ravimi manustamine) mõjutab mingis kindlas suunas katse väljundit (näiteks suremust), ja seda võrreldes kontrolltingimusega (näiteks platseeboga), siis me oleme näidanud, et vastav ravim vähendab suremust. Seega on meie põhjuslik skeem ravim --> suremus ja regressioonimudel suremus~ravim, mis sisuliselt taandub kahe grupi keskmiste suremuste võrdlusele.
+
+Kuidas on aga asjalood siis, kui meil ei lubata katset teha? Näiteks, kuidas määrata suitsetamise mõju kopsuvähile? Siin ei ole meil tegemist randomiseeritud katsega (me ei tohi jagada populatsiooni juhuslikult kahte gruppi ja sundida neist ühte suitsetama). Seega peame kasutama statistilisi meetodeid, et kontrollida oma tulemust nn confounderite vastu. Siin on lihtsaim võimalus regressioonimudel vähk ~ suitsetamine + muutuja_1 + ...
+
+Aga muutujaid on maailmas palju ja meil peab olema mingi reegel, mille järgi otsustada, millised muutujad additiivsesse mudelisse sisse panna ja millised välja jätta. Mudeli ennustusjõu maksimeerimine siin ei aita. Selle asemel peame mõistma võimalike põhjuslike skeemide suhet mitmese regressioonimudelitega. Põhjuslikud skeemid on nagu legod, mis koosnevad järgmistest põhiosistest e ehitusplokkidest.
+
+1. toru: x --> z --> y
+
+2. kahvel: x <-- z --> y
+
+3. laupkokkupõrge: x --> z <-- y
+
+4. järglane: see on toru, kus z-i juurest hargneb veel üks nool A-le. Siin saame me mudelisse A lisades ligikaudu sama tulemuse, mis z-i lisades. Seega, kui z-i väärtused pole meile teada, võime hädaga ka A-d kasutada.
+
+Kui me tahame teada, kas x mõjutab y-t, siis toru puhul mudel $y ~ x + z$ vähendab x-i mõju (sest see mõju käib läbi z-i). Samas, mudel $y ~ x$ näitab x-i mõju. Seega, kumba mudelit kasutada sõltub sellest, kas me tahame näidata x-i otsest või kaudset mõju y-ile.
+
+Kahvli puhul regressioonimudel $y ~ x$ näitab x-i mõju y-le (ehkki meie põhjuslikkuse mudelis puudub x ja y vaheline põhjuslik seos), aga mudel $y ~ x + z$ välistab selle mõju. Seega peaksime sellise põhjusliku hüpoteesi korral mudelisse z-i sisse panema, sest see aitab kontrollida z konfounding mõju vastu.
+
+Laupkokkupõrke korral on olukord eelnevaga vastupidine. Nüüd avab mudel $y ~ x + z$ tagaukse ja laseb z-i segava mõju mudelisse sisse, mis tekitab meile võlts-põhjusliku suhte x ja y vahel.
+
+Näiteks võib meil tekkid olukord, kus testime suitsetamise mõju vähile, aga me usume, et inimeste vanus mõjutab iseseisvalt nii vähki kui suitsetamist (vanemad inimesed surevad rohkem, aga nad ka suitsetavad rohkem). Selles põhjuslikus skeemis töötab vanus kahvlina, millega arvestamiseks tuleb see regressioonimudelisse muutujana sisse panna: vähk ~ suitsetamine + vanus.
+
+
 
 

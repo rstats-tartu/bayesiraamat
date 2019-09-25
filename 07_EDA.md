@@ -35,10 +35,7 @@ corrgram(iris,
          main = "Correlogram of Iris dataset")
 ```
 
-<div class="figure">
-<img src="07_EDA_files/figure-html/korrmaatriks-1.png" alt="(ref:korrmaatriks)" width="672" />
-<p class="caption">(\#fig:korrmaatriks)(ref:korrmaatriks)</p>
-</div>
+![(\#fig:korrmaatriks)(ref:korrmaatriks)](07_EDA_files/figure-latex/korrmaatriks-1.pdf) 
 
 2. vaata andmeid numbrilise kokkuvõttena.
 
@@ -67,13 +64,13 @@ skimr::skim(iris)
 #>  n obs: 150 
 #>  n variables: 5 
 #> 
-#> ── Variable type:factor ───────────────────────────────────────
+#> -- Variable type:factor ---------------------------------------
 #>  variable missing complete   n n_unique                       top_counts
 #>   Species       0      150 150        3 set: 50, ver: 50, vir: 50, NA: 0
 #>  ordered
 #>    FALSE
 #> 
-#> ── Variable type:numeric ──────────────────────────────────────
+#> -- Variable type:numeric --------------------------------------
 #>      variable missing complete   n mean   sd  p0 p25  p50 p75 p100
 #>  Petal.Length       0      150 150 3.76 1.77 1   1.6 4.35 5.1  6.9
 #>   Petal.Width       0      150 150 1.2  0.76 0.1 0.3 1.3  1.8  2.5
@@ -121,10 +118,7 @@ Normaliseerimine: arvuta igale valimi väärtusele: `mean(x) - x`; standardiseer
 #> Warning: Ignoring unknown parameters: bins
 ```
 
-<div class="figure">
-<img src="07_EDA_files/figure-html/multisd-1.png" alt="(ref:multisd)" width="672" />
-<p class="caption">(\#fig:multisd)(ref:multisd)</p>
-</div>
+![(\#fig:multisd)(ref:multisd)](07_EDA_files/figure-latex/multisd-1.pdf) 
 
 
 

@@ -42,10 +42,7 @@ y <- dcauchy(x, 0, 20)
 plot(y ~ x, type = "l" , main = "Cauchy prior for sd")
 ```
 
-<div class="figure">
-<img src="12_pidev_files/figure-html/cauchy-prior-1.png" alt="(ref:cauchy-prior)" width="672" />
-<p class="caption">(\#fig:cauchy-prior)(ref:cauchy-prior)</p>
-</div>
+![(\#fig:cauchy-prior)(ref:cauchy-prior)](12_pidev_files/figure-latex/cauchy-prior-1.pdf) 
 
 (ref:kaks-priorit) Kaks normaaljaotuse priorit.
 
@@ -56,10 +53,9 @@ y <- dnorm(x, 0, 200)
 plot(y ~ x, type = "l", main = "Normal prior for mean = 0 and sd = 200")
 ```
 
-<div class="figure">
-<img src="12_pidev_files/figure-html/kaks-priorit-1.png" alt="(ref:kaks-priorit)" width="48%" />
-<p class="caption">(\#fig:kaks-priorit1)(ref:kaks-priorit)</p>
-</div>
+\begin{figure}
+\includegraphics[width=0.48\linewidth]{12_pidev_files/figure-latex/kaks-priorit-1} \caption{(ref:kaks-priorit)}(\#fig:kaks-priorit1)
+\end{figure}
 
 ```r
 x <- 150:200
@@ -67,10 +63,9 @@ y <- dnorm(x, 178, 10)
 plot(y ~ x, type = "l", main = "Normal prior for mean = 178 and sd = 10")
 ```
 
-<div class="figure">
-<img src="12_pidev_files/figure-html/kaks-priorit-2.png" alt="(ref:kaks-priorit)" width="48%" />
-<p class="caption">(\#fig:kaks-priorit2)(ref:kaks-priorit)</p>
-</div>
+\begin{figure}
+\includegraphics[width=0.48\linewidth]{12_pidev_files/figure-latex/kaks-priorit-2} \caption{(ref:kaks-priorit)}(\#fig:kaks-priorit2)
+\end{figure}
 
 Siin on valida kahe priori vahel mu-le. 
 Võib-olla eelistaksid sina mõnda kolmandat? 
@@ -238,10 +233,7 @@ Selleks saab mugavalt kasutada `rethinking::tracerplot()` funktsiooni.
 tracerplot(m2)
 ```
 
-<div class="figure">
-<img src="12_pidev_files/figure-html/traceplot-1.png" alt="(ref:traceplot)" width="672" />
-<p class="caption">(\#fig:traceplot)(ref:traceplot)</p>
-</div>
+![(\#fig:traceplot)(ref:traceplot)](12_pidev_files/figure-latex/traceplot-1.pdf) 
 
 Pildilt on näha, et neli ahelat (4 värvi) on hästi konvergeerunud. Hall ala on nn warmup ala, mille tulemusi ei salvestata. Muidu astub iga ahel sammu kaupa ja iga edukas samm salvestatakse ühe posteeriori väärtusena. Ahel sämplib korraga mu, sigma ja nu väärtusi n-mõõtmelises ruumis (n = mudeli parameetrite arv), mis tähendab, et ahela iga samm salvestatakse n kõrvuti numbrina. 
 
@@ -255,10 +247,7 @@ Et kontrollida parameetrite posterioorsete väärtuste korrelatsioone kasutame f
 pairs(m2)
 ```
 
-<div class="figure">
-<img src="12_pidev_files/figure-html/korrelatsiooniplot-1.png" alt="(ref:korrelatsiooniplot)" width="672" />
-<p class="caption">(\#fig:korrelatsiooniplot)(ref:korrelatsiooniplot)</p>
-</div>
+![(\#fig:korrelatsiooniplot)(ref:korrelatsiooniplot)](12_pidev_files/figure-latex/korrelatsiooniplot-1.pdf) 
 
 Normaaljaotus on selle poolest eriline, et tema parameetrid mu ja sigma ei ole korreleeritud. 
 Paljud teised mudelid ei ole nii lahked. 
@@ -305,10 +294,7 @@ mcmc_intervals(fit2d,
                prob_outer = 0.90)
 ```
 
-<div class="figure">
-<img src="12_pidev_files/figure-html/postciplot-1.png" alt="(ref:postciplot)" width="672" />
-<p class="caption">(\#fig:postciplot)(ref:postciplot)</p>
-</div>
+![(\#fig:postciplot)(ref:postciplot)](12_pidev_files/figure-latex/postciplot-1.pdf) 
 
 Ja teiseks täis posteeriorid.
 
@@ -316,10 +302,7 @@ Ja teiseks täis posteeriorid.
 mcmc_areas(fit2d, pars = pars[1:2], prob = 0.8)
 ```
 
-<div class="figure">
-<img src="12_pidev_files/figure-html/unnamed-chunk-12-1.png" alt="Posteeriorite tihedusplot." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-12)Posteeriorite tihedusplot.</p>
-</div>
+![(\#fig:unnamed-chunk-12)Posteeriorite tihedusplot.](12_pidev_files/figure-latex/unnamed-chunk-12-1.pdf) 
 
 
 Funktsiooniga `rethinking::extract.samples()` saame koos sämplitud parameetrite numbrid kõrvuti (rea kaupa) tabelisse. 
@@ -343,10 +326,7 @@ ggplot(m2sampl, aes(CV)) +
 #> Warning: Removed 609 rows containing non-finite values (stat_density).
 ```
 
-<div class="figure">
-<img src="12_pidev_files/figure-html/unnamed-chunk-14-1.png" alt="Posteerior uuele parameetrile" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-14)Posteerior uuele parameetrile</p>
-</div>
+![(\#fig:unnamed-chunk-14)Posteerior uuele parameetrile](12_pidev_files/figure-latex/unnamed-chunk-14-1.pdf) 
 
 Kuna posteerior iseloomustab meie teadmiste piire, siis võime selle abil küsida, kui suure tõenäosusega jääb tõeline CV näiteks parameetrivahemikku 2 kuni 5?
 
@@ -378,10 +358,7 @@ coeftab_plot(coeftab(m0, m1, m2, m3),
              prob = 0.5)
 ```
 
-<div class="figure">
-<img src="12_pidev_files/figure-html/unnamed-chunk-17-1.png" alt="Võrdlev plot mitme mudeli posteerioritele." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-17)Võrdlev plot mitme mudeli posteerioritele.</p>
-</div>
+![(\#fig:unnamed-chunk-17)Võrdlev plot mitme mudeli posteerioritele.](12_pidev_files/figure-latex/unnamed-chunk-17-1.pdf) 
 
 Me sättisime usalduspiirid 0.5 peale, mis tähendab, et need ennustavad, kuhu peaks mudeli järgi jääma parameetri tegelik väärtus 50%-se tõenäosusega. 
 Nagu näha, on m2 ja m3 posteeriorid palju lähemal m0-le kui normaaljaotusega fititud m1 oma.
@@ -404,10 +381,7 @@ y <- dnorm(x, 0, 200)
 plot(x, y, main = "Prior for mu", type = "l")
 ```
 
-<div class="figure">
-<img src="12_pidev_files/figure-html/unnamed-chunk-18-1.png" alt="Prior keskmisele." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-18)Prior keskmisele.</p>
-</div>
+![(\#fig:unnamed-chunk-18)Prior keskmisele.](12_pidev_files/figure-latex/unnamed-chunk-18-1.pdf) 
 
 Siin kasutame nõrgalt informatiivseid prioreid. 
 Idee on selles, et normaaljaotus, mis on tsentreeritud 0 ümber, tõmbab meie posteeriorit nõrgalt nulli poole (nõrgalt, sest jaotus on hästi lai võrreldes tõepärafunktsiooniga). 
@@ -425,10 +399,7 @@ y <- dcauchy(x , 0, 10)
 plot(x, y, main = "Prior for sigma", type = "l")
 ```
 
-<div class="figure">
-<img src="12_pidev_files/figure-html/unnamed-chunk-19-1.png" alt="Prior SD-le" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-19)Prior SD-le</p>
-</div>
+![(\#fig:unnamed-chunk-19)Prior SD-le](12_pidev_files/figure-latex/unnamed-chunk-19-1.pdf) 
 
 Tekitame andmeraami analüüsiks ja mudeli, mis põhineb normaalsel tõepärafunktsioonil.
 
@@ -469,15 +440,23 @@ knitr::kable(head(presidents))
 ```
 
 
-
-Country    Height
---------  -------
-Canada        188
-Cuba          190
-France        170
-France        165
-France        189
-France        172
+\begin{tabular}{l|r}
+\hline
+Country & Height\\
+\hline
+Canada & 188\\
+\hline
+Cuba & 190\\
+\hline
+France & 170\\
+\hline
+France & 165\\
+\hline
+France & 189\\
+\hline
+France & 172\\
+\hline
+\end{tabular}
 
 Ja siin on mudel. 
 Nüüd on mu ümber defineeritud kui mu1[indeks], mis tähendab, et mu1 saab kaks hulka väärtusi, üks kummagil indeks muutuja tasemel. 
@@ -551,10 +530,7 @@ potusm2.1 <- map2stan(
 tracerplot(potusm2.1, n_cols = 2)
 ```
 
-<div class="figure">
-<img src="12_pidev_files/figure-html/unnamed-chunk-30-1.png" alt="Traceplot." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-30)Traceplot.</p>
-</div>
+![(\#fig:unnamed-chunk-30)Traceplot.](12_pidev_files/figure-latex/unnamed-chunk-30-1.pdf) 
 
 
 Tulemus ES-i osas tuleb üsna sarnane.
@@ -563,10 +539,7 @@ Tulemus ES-i osas tuleb üsna sarnane.
 plot(coeftab(potusm2, potusm2.1))
 ```
 
-<div class="figure">
-<img src="12_pidev_files/figure-html/unnamed-chunk-31-1.png" alt="mudelite võrdlusplot." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-31)mudelite võrdlusplot.</p>
-</div>
+![(\#fig:unnamed-chunk-31)mudelite võrdlusplot.](12_pidev_files/figure-latex/unnamed-chunk-31-1.pdf) 
 
 
 
@@ -589,10 +562,7 @@ samplespm2 <- extract.samples(potusm2) %>%
 dens(samplespm2$ES)
 ```
 
-<div class="figure">
-<img src="12_pidev_files/figure-html/unnamed-chunk-33-1.png" alt="Posteerior ES-le." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-33)Posteerior ES-le.</p>
-</div>
+![(\#fig:unnamed-chunk-33)Posteerior ES-le.](12_pidev_files/figure-latex/unnamed-chunk-33-1.pdf) 
 
 
 ```r
@@ -643,15 +613,23 @@ knitr::kable(head(g2007))
 ```
 
 
-
-country       continent    year   lifeExp        pop   gdpPercap
-------------  ----------  -----  --------  ---------  ----------
-Afghanistan   Asia         2007      43.8   31889923         975
-Albania       Europe       2007      76.4    3600523        5937
-Algeria       Africa       2007      72.3   33333216        6223
-Angola        Africa       2007      42.7   12420476        4797
-Argentina     Americas     2007      75.3   40301927       12779
-Australia     Oceania      2007      81.2   20434176       34435
+\begin{tabular}{l|l|r|r|r|r}
+\hline
+country & continent & year & lifeExp & pop & gdpPercap\\
+\hline
+Afghanistan & Asia & 2007 & 43.8 & 31889923 & 975\\
+\hline
+Albania & Europe & 2007 & 76.4 & 3600523 & 5937\\
+\hline
+Algeria & Africa & 2007 & 72.3 & 33333216 & 6223\\
+\hline
+Angola & Africa & 2007 & 42.7 & 12420476 & 4797\\
+\hline
+Argentina & Americas & 2007 & 75.3 & 40301927 & 12779\\
+\hline
+Australia & Oceania & 2007 & 81.2 & 20434176 & 34435\\
+\hline
+\end{tabular}
 
 Enne kui SKP ja eluea seoseid otsima hakkame, vaatame, mis juhtub, kui me arvutame ainult interceptiga mudeli, kus puudub SKP (kasutades lihtsuse mõttes mudeli fittimiseks nn vähimruutude meetodit `lm()` funktsiooni abil).
 
@@ -718,10 +696,7 @@ p <- ggplot(g2007, aes(gdpPercap, lifeExp)) +
 p
 ```
 
-<div class="figure">
-<img src="12_pidev_files/figure-html/unnamed-chunk-40-1.png" alt="Nulli surutud interceptiga lineaarne regressioon eluea sõltuvusele SKP-st." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-40)Nulli surutud interceptiga lineaarne regressioon eluea sõltuvusele SKP-st.</p>
-</div>
+![(\#fig:unnamed-chunk-40)Nulli surutud interceptiga lineaarne regressioon eluea sõltuvusele SKP-st.](12_pidev_files/figure-latex/unnamed-chunk-40-1.pdf) 
 
 
 Nüüd on intercept surutud väärtusele y = 0.
@@ -756,10 +731,7 @@ summary(gapmod3)
 p + geom_line(aes(y = .fitted), data = gapmod3, color = "blue")
 ```
 
-<div class="figure">
-<img src="12_pidev_files/figure-html/unnamed-chunk-42-1.png" alt="Täismudeliga regressioon." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-42)Täismudeliga regressioon.</p>
-</div>
+![(\#fig:unnamed-chunk-42)Täismudeliga regressioon.](12_pidev_files/figure-latex/unnamed-chunk-42-1.pdf) 
 
 
 Kuidas me seda m3 mudelit tõlgendame?
@@ -780,11 +752,18 @@ Hea küll, aga milline mudel on siis parim?
 knitr::kable(AIC(gapmod1, gapmod2, gapmod3))
 ```
 
-           df    AIC
---------  ---  -----
-gapmod1     2   1113
-gapmod2     2   1487
-gapmod3     3   1028
+
+\begin{tabular}{l|r|r}
+\hline
+  & df & AIC\\
+\hline
+gapmod1 & 2 & 1113\\
+\hline
+gapmod2 & 2 & 1487\\
+\hline
+gapmod3 & 3 & 1028\\
+\hline
+\end{tabular}
 
 AIC on *Aikake informatsiooni kriteerium*, mis võtab arvesse nii mudeli fiti headuse kui mudeli parameetrite arvu. 
 Kuna R saab parameetreid lisades ainult kasvada ja me teame, et mingist hetkest oleme niikuinii oma mudeli üle fittinud, siis otsime AIC-i abil kompromissi: võimalult hea fit võimalikult väikese parameetrite arvuga. 

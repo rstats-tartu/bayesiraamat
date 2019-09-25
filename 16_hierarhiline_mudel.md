@@ -239,10 +239,9 @@ Selline mudel usub, et erinevate koolide keskmine tase erineb (seda näitab iga 
 4. "The law is even-handed; it levies the same heavy succession-tax on the transmission of badness as well as of goodness. If it discourages the extravagant expectations of gifted parents that their children will inherit all their powers, it no less discountenances extravagant fears that they will inherit all their weaknesses and diseases." Ehk shrinkage töötab võrdselt mõlemas suunas (ülevalt alla ja alt üles, aga ka vanematelt lastele ja lastelt vanematele). Seega ei ole shrinkage  ajas toimuv, põhjuslik, ega isegi mitte füüsikaline protsess, vaid tõenäosusteooriast tulenev loogiline paratamatus.
 Samamoodi nagu shrinkage esineb vanemate-laste vahel esineb see ka valimi-kordusvalimi vahel kõigi valimite keskmise suunas (valimiefektid taanduvad välja sedamõõda, kuidas valimeid juurde tuleb). Ja samamoodi, kui me võtame valimi testitulemusi mitmest koolist, siis eeldusel, et õpilased on kõikides koolides sarnased (aga mitte identsed), toimub shrinkage kõikide koolide keskmise suunas. Seega, nihutades mingi kooli keskmist testitulemust koolide keskmise suunas, saame parema hinnangu selle kooli õpilaste teadmisetele kui pelgalt selles koolis õpilaste teadmisi mõõtes! 
 
-<div class="figure">
-<img src="img/galton.jpg" alt="(ref:Galton (1886), The Journal of the Anthropological Institute of Great Britain and Ireland, Vol. 15, pp. 246-263)" width="150%" />
-<p class="caption">(\#fig:parun)(ref:Galton (1886), The Journal of the Anthropological Institute of Great Britain and Ireland, Vol. 15, pp. 246-263)</p>
-</div>
+\begin{figure}
+\includegraphics[width=1.5\linewidth]{img/galton} \caption{(ref:Galton (1886), The Journal of the Anthropological Institute of Great Britain and Ireland, Vol. 15, pp. 246-263)}(\#fig:parun)
+\end{figure}
 
 
 ## ANOVA-laadne mudel 
@@ -363,10 +362,7 @@ Siit nähtub, et m3 on parim mudel, aga ka m2 omab mingit kaalu.
 coeftab_plot(coeftab(schoolm2, schoolm3), cex = 0.5)
 ```
 
-<div class="figure">
-<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-14-1.png" alt="Mudelite koefitsiendid." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-14)Mudelite koefitsiendid.</p>
-</div>
+![(\#fig:unnamed-chunk-14)Mudelite koefitsiendid.](16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-14-1.pdf) 
 
 Siin on hästi näha shrinkage m3 puhul võrreldes m2-ga, mis ei tee multiple testingu korrektsiooni. 
 Nende koolide puhul, kus usaldusintervall on laiem, on ka suurem shrinkage (mudel võtab nende kohta suhteliselt rohkem infot teistest koolidest sest need koolid ise on mingil põhjusel suhteliselt infovaesed).
@@ -443,10 +439,7 @@ Alternatiivne viis seda mudelit kirjutada oleks `mu <- Intercept[school] + b_sex
 plot(precis(schools_m1, depth = 2), cex = 0.5)
 ```
 
-<div class="figure">
-<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-20-1.png" alt="Mudeli koefitsiendid" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-20)Mudeli koefitsiendid</p>
-</div>
+![(\#fig:unnamed-chunk-20)Mudeli koefitsiendid](16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-20-1.pdf) 
 
 
 ```r
@@ -485,10 +478,7 @@ school_2_girls <- schools_m1_samples$Intercept +
 dens(school_2_girls)
 ```
 
-<div class="figure">
-<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-22-1.png" alt="Tüdrukute skoori posteerior" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-22)Tüdrukute skoori posteerior</p>
-</div>
+![(\#fig:unnamed-chunk-22)Tüdrukute skoori posteerior](16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-22-1.pdf) 
 
 
 Ja Poiste oma
@@ -500,10 +490,7 @@ school_2_boys <- schools_m1_samples$Intercept +
 dens(school_2_boys)
 ```
 
-<div class="figure">
-<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-23-1.png" alt="Poiste skoori posteerior." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-23)Poiste skoori posteerior.</p>
-</div>
+![(\#fig:unnamed-chunk-23)Poiste skoori posteerior.](16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-23-1.pdf) 
 
 
 Siin on eeldus, et kõikides koolides on sama poiste ja tüdrukute vaheline erinevus (b_sex1), kuid erinevad matemaatikateadmiste baastasemed (mudeli intercept on koolide vahel vabaks lastud, kuid tõus mitte). 
@@ -542,10 +529,7 @@ R <- rlkjcorr(1e4, K = 2, eta = 2)
 dens(R[, 1, 2] , xlab = "correlation")
 ```
 
-<div class="figure">
-<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-25-1.png" alt="Korrelatsiooni prior on nõrgalt informatiivne -- suunab posteeriori eemale ekstreemsetest korrelatsioonidest." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-25)Korrelatsiooni prior on nõrgalt informatiivne -- suunab posteeriori eemale ekstreemsetest korrelatsioonidest.</p>
-</div>
+![(\#fig:unnamed-chunk-25)Korrelatsiooni prior on nõrgalt informatiivne -- suunab posteeriori eemale ekstreemsetest korrelatsioonidest.](16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-25-1.pdf) 
 
 
 
@@ -573,10 +557,7 @@ schools_m2 <- map2stan(alist(
 plot(precis(schools_m2, depth = 2), cex = 0.5)
 ```
 
-<div class="figure">
-<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-28-1.png" alt="Mudeli m2 koefitsiendid." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-28)Mudeli m2 koefitsiendid.</p>
-</div>
+![(\#fig:unnamed-chunk-28)Mudeli m2 koefitsiendid.](16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-28-1.pdf) 
 
 
 Posteerior korrelatsioonile intercepti ja tõusu vahel:
@@ -589,10 +570,7 @@ df1 <- schools_m2_samples$Rho_school %>% as.data.frame()
 dens(df1$V2)
 ```
 
-<div class="figure">
-<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-29-1.png" alt="Posteerior korrelatsioonile intercepti ja tõusu vahel." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-29)Posteerior korrelatsioonile intercepti ja tõusu vahel.</p>
-</div>
+![(\#fig:unnamed-chunk-29)Posteerior korrelatsioonile intercepti ja tõusu vahel.](16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-29-1.pdf) 
 
 
 Meil on negatiivne korrelatsioon intercepti ja tõusu vahel. Seega, mida väiksem on poiste keskmine skoor koolis (=intercept), seda suurem om erinevus poiste ja tüdrukute skooride vahel (= tõus).
@@ -668,10 +646,7 @@ Aga miks peaks erinevates Inglismaa koolides olema erinev vahe poiste ja tüdruk
 Kas olukorras kus meil on hea kool, läheb see vahe väiksemaks või suuremaks? 
 Tehke kindlaks!!! võrrelge graafiku slope vs. intercept.
 
-<div class="figure">
-<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-33-1.png" alt="mida suurem on koolis poiste skoor, seda väiksem on poiste ja tüdrukute erinevus" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-33)mida suurem on koolis poiste skoor, seda väiksem on poiste ja tüdrukute erinevus</p>
-</div>
+![(\#fig:unnamed-chunk-33)mida suurem on koolis poiste skoor, seda väiksem on poiste ja tüdrukute erinevus](16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-33-1.pdf) 
 
 Tõepoolest: mida suurem on koolis poiste skoor (parem kool), seda väiksem on poiste ja tüdrukute erinevus. Aga seos on kaunis nõrk! 
 
@@ -690,10 +665,7 @@ plot(schools$score2, schools$score1)
 abline(lm(score1 ~ score2, data = schools))
 ```
 
-<div class="figure">
-<img src="16_hierarhiline_mudel_files/figure-html/unnamed-chunk-34-1.png" alt="score1 vs. score2" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-34)score1 vs. score2</p>
-</div>
+![(\#fig:unnamed-chunk-34)score1 vs. score2](16_hierarhiline_mudel_files/figure-latex/unnamed-chunk-34-1.pdf) 
 
 Kõigepealt lihtne regressioon `lm()` funktsiooniga (see ei ole hierarhiline mudel).
 

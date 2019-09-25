@@ -420,7 +420,7 @@ Joonis 14.1: Tõmbame valimi posteeriorist.
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt; 0.364 0.973</span></code></pre></div>
+<span class="co">#&gt; 0.359 0.970</span></code></pre></div>
 <p>Kuus patsienti üheksast surid ja nüüd me usume, et tegelik suremus võib olla nii madal kui 37% ja nii kõrge kui 97%. Kui me tahame paremat hinnangut on meil vaja kas rohkem patsiente või informatiivsemat priorit (paremat taustainfot).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m2 &lt;-<span class="st"> </span><span class="kw">map</span>(
     <span class="kw">alist</span>(
@@ -443,7 +443,7 @@ Joonis 14.2: Veel üks valim posteeriorist (60 surma 90st).
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#PI(samples$p, prob = 0.95) # Leaves out equal 2.5% at both sides</span>
 <span class="kw">HPDI</span>(samples<span class="op">$</span>p, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="co"># Highest density 95% at the center</span>
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt; 0.567 0.767</span></code></pre></div>
+<span class="co">#&gt; 0.565 0.758</span></code></pre></div>
 <p>10 korda rohkem andmeid: nüüd on suremus määratud kuskile 57% ja 77% vahele (suure tõenäosusega)</p>
 <div id="beta-prior" class="section level2 unnumbered">
 <h2>Beta prior</h2>

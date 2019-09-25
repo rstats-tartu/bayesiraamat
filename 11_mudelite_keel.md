@@ -61,15 +61,12 @@ samples <- extract.samples(m1)
 dens(samples$p)
 ```
 
-<div class="figure">
-<img src="11_mudelite_keel_files/figure-html/pullpost-1.png" alt="(ref:pullpost)" width="672" />
-<p class="caption">(\#fig:pullpost)(ref:pullpost)</p>
-</div>
+![(\#fig:pullpost)(ref:pullpost)](11_mudelite_keel_files/figure-latex/pullpost-1.pdf) 
 
 ```r
 HPDI(samples$p, prob = 0.95) # Highest density 95% at the center
 #> |0.95 0.95| 
-#> 0.364 0.973
+#> 0.357 0.972
 ```
 
 Kuus patsienti üheksast surid ja nüüd me usume, et tegelik suremus võib olla nii madal kui 37% ja nii kõrge kui 97%. Kui me tahame paremat hinnangut on meil vaja kas rohkem patsiente või informatiivsemat priorit (paremat taustainfot).
@@ -96,16 +93,13 @@ samples <- extract.samples(m2)
 dens(samples$p)
 ```
 
-<div class="figure">
-<img src="11_mudelite_keel_files/figure-html/perse-1.png" alt="(ref:perse)" width="672" />
-<p class="caption">(\#fig:perse)(ref:perse)</p>
-</div>
+![(\#fig:perse)(ref:perse)](11_mudelite_keel_files/figure-latex/perse-1.pdf) 
 
 ```r
 #PI(samples$p, prob = 0.95) # Leaves out equal 2.5% at both sides
 HPDI(samples$p, prob = 0.95) # Highest density 95% at the center
 #> |0.95 0.95| 
-#> 0.567 0.767
+#>  0.57  0.76
 ```
 
 10 korda rohkem andmeid: nüüd on suremus määratud kuskile 57% ja 77% vahele (suure tõenäosusega)
@@ -120,10 +114,7 @@ Siin mõned näited erinevatest beta parametriseeringutest.
 
 (ref:betaparm) Beta jaotuse parametriseeringuid.
 
-<div class="figure">
-<img src="11_mudelite_keel_files/figure-html/betaparm-1.png" alt="(ref:betaparm)" width="672" />
-<p class="caption">(\#fig:betaparm)(ref:betaparm)</p>
-</div>
+![(\#fig:betaparm)(ref:betaparm)](11_mudelite_keel_files/figure-latex/betaparm-1.pdf) 
 
 $beta(\theta~\vert~a,b)$ jaotuse keskväärtus on 
  
@@ -177,14 +168,11 @@ precis(m3)
 ```r
 HPDI(samples$p, prob = 0.95) # Highest density 95% at the center
 #> |0.95 0.95| 
-#> 0.615 0.720
+#> 0.616 0.720
 dens(samples$p)
 ```
 
-<div class="figure">
-<img src="11_mudelite_keel_files/figure-html/unnamed-chunk-5-1.png" alt="Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-5)Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist.</p>
-</div>
+![(\#fig:unnamed-chunk-5)Posteerior, mis on arvutatud beta prioriga binoomsest tõepäramudelist.](11_mudelite_keel_files/figure-latex/unnamed-chunk-5-1.pdf) 
 
 Nagu näha on ka kitsa priori mõju üsna väika, isegi kui kui n = 9.
 
