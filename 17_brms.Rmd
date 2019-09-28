@@ -449,7 +449,10 @@ ggplot(data = predict_interval_brms2, aes(x = Petal.Length, y = Estimate)) +
   geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = Species), alpha = 1/3)
 ```
 
-Ennustav plot - kuidas lähevad kokku mudeli ennustused reaalsete y-i andmepunktidega
+Ennustav plot - kuidas lähevad kokku mudeli ennustused reaalsete y-i andmepunktidega? 
+
+> NB! Tähtis on alati plottida mudeli ennustus y teljele. Vastupidi plottides ei jää ka ideaalsed ennustused intercept = 0, slope = 1 joonele. 
+
 ```{r}
 pr <- predict(m2) %>% cbind(iris)
 ggplot(pr, aes(Sepal.Length, Estimate, color = Species)) +
