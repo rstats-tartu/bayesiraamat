@@ -34,7 +34,8 @@ Imports:
     parallel,
     BayesVarSel,
     leaps,
-    GGally
+    GGally,
+    tint
 Remotes: 
     rstudio/bookdown,
     rmcelreath/rethinking
