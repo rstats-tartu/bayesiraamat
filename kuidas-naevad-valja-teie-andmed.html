@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3 Kuidas näevad välja teie andmed | Bayesi statistika kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3 Kuidas näevad välja teie andmed | Bayesi statistika kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="kusimused-mida-statistika-kusib.html"/>
-<link rel="next" href="lineaarsed-mudelid.html"/>
+<link rel="prev" href="kusimused-mida-statistika-kusib.html">
+<link rel="next" href="lineaarsed-mudelid.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -47,46 +47,75 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
 
 <script src="https://use.fontawesome.com/e4ba4259a1.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-pre, code { background-color: #f8f8f8; }
-code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code > span.dt { color: #204a87; } /* DataType */
-code > span.dv { color: #0000cf; } /* DecVal */
-code > span.bn { color: #0000cf; } /* BaseN */
-code > span.fl { color: #0000cf; } /* Float */
-code > span.ch { color: #4e9a06; } /* Char */
-code > span.st { color: #4e9a06; } /* String */
-code > span.co { color: #8f5902; font-style: italic; } /* Comment */
-code > span.ot { color: #8f5902; } /* Other */
-code > span.al { color: #ef2929; } /* Alert */
-code > span.fu { color: #000000; } /* Function */
-code > span.er { color: #a40000; font-weight: bold; } /* Error */
-code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #000000; } /* Constant */
-code > span.sc { color: #000000; } /* SpecialChar */
-code > span.vs { color: #4e9a06; } /* VerbatimString */
-code > span.ss { color: #4e9a06; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #000000; } /* Variable */
-code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code > span.ex { } /* Extension */
-code > span.at { color: #c4a000; } /* Attribute */
-code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -301,13 +330,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="23" data-path="brms-suntaks.html"><a href="brms-suntaks.html"><i class="fa fa-check"></i><b>23</b> brms süntaks</a><ul>
 <li class="chapter" data-level="23.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#general-formula-structure"><i class="fa fa-check"></i><b>23.1</b> General formula structure</a><ul>
-<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#group-level-terms-xg-1idg-grx-by-mmg1-g2"><i class="fa fa-check"></i><b>23.1.1</b> Group-level terms: x||g, 1|ID|g, gr(x, by = ), mm(g1, g2)</a></li>
-<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.2</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
-<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.3</b> Additional response information</a></li>
-<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for non-linear models</a></li>
-<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for predicting distributional parameters</a></li>
-<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for mixture models</a></li>
-<li class="chapter" data-level="23.1.7" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.7</b> Formula syntax for multivariate models</a></li>
+<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.1</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
+<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.2</b> Additional response information</a></li>
+<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.3</b> Formula syntax for non-linear models</a></li>
+<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for predicting distributional parameters</a></li>
+<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for mixture models</a></li>
+<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for multivariate models</a></li>
 </ul></li>
 <li class="chapter" data-level="23.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#brms-likelihoods"><i class="fa fa-check"></i><b>23.2</b> brms likelihoods</a></li>
 <li class="chapter" data-level="23.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#priors"><i class="fa fa-check"></i><b>23.3</b> priors</a><ul>
@@ -400,7 +428,8 @@ Milliseid summaarseid statistikuid arvutada ja milliseid vältida, sõltub stati
 </div>
 <div id="keskvaartused" class="section level2 unnumbered">
 <h2>Keskväärtused</h2>
-<p>Keskväärtust saab mõõta paaril tosinal erineval viisil, millest järgnevalt vaatleme kolme või nelja. Enne kui arvutama kukute, mõelge järele, miks te soovite keskväärtust teada. Kas teid huvitab valimi tüüpiline liige? Kuidas te sooviksite seda tüüpilisust defineerida? Kas valimi keskmise liikmena või valimi kõige arvukama liikmena? või veel kuidagi? See, millist keskväärtust kasutada, sõltub sageli andmejaotuse kujust. Sümmeetrilisi jaotusi on lihtsam iseloomustada ja mitmetipulised jaotused on selles osas kõige kehvemad.</p>
+<p>Keskväärtust saab mõõta paaril tosinal erineval viisil, millest järgnevalt vaatleme kolme või nelja. Enne kui arvutama kukute, mõelge järele, miks te soovite keskväärtust teada. Kas teid huvitab valimi tüüpiline liige? Kuidas te sooviksite seda tüüpilisust defineerida? Kas valimi keskmise liikmena või valimi kõige arvukama liikmena? või veel kuidagi?
+See, millist keskväärtust kasutada, sõltub sageli andmejaotuse kujust. Sümmeetrilisi jaotusi on lihtsam iseloomustada ja mitmetipulised jaotused on selles osas kõige kehvemad.</p>
 <p>Järgnevad nõuanded on rangelt soovituslikud:</p>
 <ol style="list-style-type: decimal">
 <li><p>Kui valim on normaaljaotusega (histogramm on sümmeetriline), hinda tüüpilist liiget läbi aritmeetilise keskmise (mean).</p></li>
@@ -417,10 +446,14 @@ Joonis 3.1: Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine 
 </div>
 <div id="muutuja-sisene-varieeruvus" class="section level2 unnumbered">
 <h2>Muutuja sisene varieeruvus</h2>
-<p>Aritmeetilise keskmisega (<em>mean</em>) käib kokku standardhälve (SD). SD on sama ühikuga, mis andmed (ja andmete keskväärtus). Suhtelist standardhälvet kutsutakse variatsiooni koefitsiendiks (<em>Coefficient of Variation</em>) ja arvutatakse nii: <code>CV = sd(x)/mean(x)</code>. CV x 100% annab varieeruvuse protsendina keskväärtusest.</p>
-<p>Statistikute hulgas eelistatud andmete avaldamise formaat on mean (SD), mitte mean (+/- SD). 1 SD katab 68% normaaljaotusest, 2 SD – 96% ja 3 SD – 99%. Normaaljaotus langeb servades kiiresti, mis tähendab, et tal on peenikesed sabad ja näiteks 5 SD kaugusel keskmisest paikneb vaid üks punkt miljonist. Näiteks: inimeste IQ on normaaljaotusega, mean = 100, sd = 15. See tähendab, et kui sinu IQ = 115 (mis on enam-vähem ülikooli astujate keskmine IQ), siis on tõenäosus, et juhuslikult kohatud inimene on sinust nutikam, 18% ((100% - 68%) / 2 = 18%).</p>
+<p>Aritmeetilise keskmisega (<em>mean</em>) käib kokku standardhälve (SD).
+SD on sama ühikuga, mis andmed (ja andmete keskväärtus). Suhtelist standardhälvet kutsutakse variatsiooni koefitsiendiks (<em>Coefficient of Variation</em>) ja arvutatakse nii: <code>CV = sd(x)/mean(x)</code>. CV x 100% annab varieeruvuse protsendina keskväärtusest.</p>
+<p>Statistikute hulgas eelistatud andmete avaldamise formaat on mean (SD), mitte mean (+/- SD). 1 SD katab 68% normaaljaotusest, 2 SD – 96% ja 3 SD – 99%. Normaaljaotus langeb servades kiiresti, mis tähendab, et tal on peenikesed sabad ja näiteks 5 SD kaugusel keskmisest paikneb vaid üks punkt miljonist.
+Näiteks: inimeste IQ on normaaljaotusega, mean = 100, sd = 15. See tähendab, et kui sinu IQ = 115 (mis on enam-vähem ülikooli astujate keskmine IQ), siis on tõenäosus, et juhuslikult kohatud inimene on sinust nutikam, 18% ((100% - 68%) / 2 = 18%).</p>
 <p>Kui aga “tegelikul” andmejaotusel on “paks saba” (nagu eelmisel joonisel kujutatud andmetel) või esinevad outlierid, siis normaaljaotust eeldav mudel tagab ülehinnatud SD ja seega ülehinnatud varieeruvuse. Kui andmed saavad olla ainult positiivsed, siis SD &gt; mean/2 viitab, et andmed ei sobi normaaljaotuse mudeliga (sest mudel ennustab negatiivsete andmete esinemist küllalt suure sagedusega).</p>
-<p>Standardhälve on defineeritud ka mõnede teiste jaotuste jaoks peale normaaljaotuse (Poissioni jaotus, binoomjaotus). Funktsioon sd() ja selle taga olev võrrand sd = sqrt((mean(x) - x)^2/(n - 1)) on loodud normaaljaotuse tarbeks ja neid alternatiivseid standardhälbeid ei arvuta. Veelgi enam, igale jaotusele, mida me oskame integreerida, saab ka integraali abil õige katvusega standardhälbe arvutada. Seega tasub meeles pidada, et tavapärane viis standardhälbe arvutamiseks sd() abil kehtib normaaljaotuse mudeli piirides ja ei kusagil mujal! Siiski, kui arvutada standardhälbe sd()-ga, võib olla kindel, et jaotusest sõltumata hõlvavad 2 SD-d vähemalt 75% andmejaotusest. Kui andmed ei sobi normaaljaotusesse ja te ei ole rahul tulemusega, mille tõlgendus on niivõrd ebakindel kui 75 protsenti kuni 96+ protsenti, võib pakkuda kahte alternatiivset lahendust:</p>
+<p>Standardhälve on defineeritud ka mõnede teiste jaotuste jaoks peale normaaljaotuse (Poissioni jaotus, binoomjaotus). Funktsioon sd() ja selle taga olev võrrand sd = sqrt((mean(x) - x)^2/(n - 1)) on loodud normaaljaotuse tarbeks ja neid alternatiivseid standardhälbeid ei arvuta. Veelgi enam, igale jaotusele, mida me oskame integreerida, saab ka integraali abil õige katvusega standardhälbe arvutada. Seega tasub meeles pidada, et tavapärane viis standardhälbe arvutamiseks sd() abil kehtib normaaljaotuse mudeli piirides ja ei kusagil mujal!
+Siiski, kui arvutada standardhälbe sd()-ga, võib olla kindel, et jaotusest sõltumata hõlvavad 2 SD-d vähemalt 75% andmejaotusest.
+Kui andmed ei sobi normaaljaotusesse ja te ei ole rahul tulemusega, mille tõlgendus on niivõrd ebakindel kui 75 protsenti kuni 96+ protsenti, võib pakkuda kahte alternatiivset lahendust:</p>
 </div>
 <div id="logaritmi-andmed" class="section level2 unnumbered">
 <h2>Logaritmi andmed</h2>
@@ -428,7 +461,7 @@ Joonis 3.1: Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine 
 <p>Kui lognormaalsetele andmetele arvutada tavaline SD lineaarses skaalas kasutades sd() funktsiooni, siis tuleb SD sageli palju laiem kui peaks ja hõlmab ka negatiivseid väärtusi (pea meeles, et SD definitsiooni järgi jääb 96% populatsioonist 2 SD vahemikku).<br />
 Sageli on aga negatiivsed muutuja väärtused võimatud (näiteks nädalas suitsetatud sigarettide arv).</p>
 <p>Logaritmimise kaudu avaldatud multiplikatsiivse SD arvutamiseks kasutame enda kirjutatud funktsiooni mulitplicative_sd(). Esiteks arvutame multiplikatiivse ja aditiivse sd lognormaalsetele andmetele, mida kujutasime eelmisel joonisel:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multiplicative_sd &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
+<pre class="sourceCode r"><code class="sourceCode r">multiplicative_sd &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
   x &lt;-<span class="st"> </span><span class="kw">na.omit</span>(x) <span class="co">#viskan välja NA-d (kui neid on)</span>
   log_data &lt;-<span class="st"> </span><span class="kw">log10</span>(x) <span class="co">#logaritmin andmed</span>
   log_mean &lt;-<span class="st"> </span><span class="kw">mean</span>(log_data) <span class="co">#keskmine logaritmitud andmetest</span>
@@ -462,7 +495,7 @@ Sageli on aga negatiivsed muutuja väärtused võimatud (näiteks nädalas suits
                    upper4))
 }
 andmed &lt;-<span class="st"> </span><span class="kw">rlnorm</span>(<span class="dv">100</span>) <span class="co">#100 juhuslikku arvu lognormaaljaotusest</span>
-<span class="kw">multiplicative_sd</span>(andmed) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<span class="kw">multiplicative_sd</span>(andmed) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -475,27 +508,27 @@ andmed &lt;-<span class="st"> </span><span class="kw">rlnorm</span>(<span class=
 <tbody>
 <tr class="odd">
 <td align="left">multiplicative_SD</td>
-<td align="right">0.906</td>
-<td align="right">0.321</td>
-<td align="right">2.56</td>
+<td align="right">1.02</td>
+<td align="right">0.338</td>
+<td align="right">3.06</td>
 </tr>
 <tr class="even">
 <td align="left">multiplicative_2_SD</td>
-<td align="right">0.906</td>
-<td align="right">0.114</td>
-<td align="right">7.23</td>
+<td align="right">1.02</td>
+<td align="right">0.113</td>
+<td align="right">9.21</td>
 </tr>
 <tr class="odd">
 <td align="left">additive_SD</td>
-<td align="right">1.475</td>
-<td align="right">-0.205</td>
-<td align="right">3.15</td>
+<td align="right">1.77</td>
+<td align="right">-0.345</td>
+<td align="right">3.88</td>
 </tr>
 <tr class="even">
 <td align="left">additive_2_SD</td>
-<td align="right">1.475</td>
-<td align="right">-1.884</td>
-<td align="right">4.83</td>
+<td align="right">1.77</td>
+<td align="right">-2.458</td>
+<td align="right">5.99</td>
 </tr>
 </tbody>
 </table>
@@ -541,26 +574,29 @@ andmed &lt;-<span class="st"> </span><span class="kw">rlnorm</span>(<span class=
 <blockquote>
 <p>kui n &lt; 10, siis mõlemad SD-d alahindavad süstemaatiliselt tegelikku sd-d. Ettevaatust väikeste valimitega!</p>
 </blockquote>
-<p>Vahest tekkib teil vajadus empiiriliselt määrata, kas teie andmed on normaaljaotusega. Enne kui seda tegema asute, peaksite mõistma, et see, et teie valim ei ole normaalne, ei tähenda automaatselt, et populatsioon, millest see valim tõmmati, ei oleks normaaljaotusega. Igal juhul, valimiandmete normaalsuse määramiseks on kõige mõistlikum kasutada qq-plotti. QQ-plot (kvantiil-kvantiil plot) võrdleb andmete jaotust ideaalse normaaljaotusega andmepunkti haaval. Kui empiiriline jaotus kattub referentsjaotusega, siis on tulemuseks sirgel paiknevad punktid. Järgneval qq plotil on näha, mis juhtub, kui plottida lognormaalseid andmeid normaaljaotuse vastu:</p>
+<p>Vahest tekkib teil vajadus empiiriliselt määrata, kas teie andmed on normaaljaotusega.
+Enne kui seda tegema asute, peaksite mõistma, et see, et teie valim ei ole normaalne, ei tähenda automaatselt, et populatsioon, millest see valim tõmmati, ei oleks normaaljaotusega.
+Igal juhul, valimiandmete normaalsuse määramiseks on kõige mõistlikum kasutada qq-plotti.
+QQ-plot (kvantiil-kvantiil plot) võrdleb andmete jaotust ideaalse normaaljaotusega andmepunkti haaval. Kui empiiriline jaotus kattub referentsjaotusega, siis on tulemuseks sirgel paiknevad punktid. Järgneval qq plotil on näha, mis juhtub, kui plottida lognormaalseid andmeid normaaljaotuse vastu:</p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqPlot</span>(andmed)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqPlot</span>(andmed)</code></pre>
 <div class="figure"><span id="fig:qqnorm"></span>
 <img src="03_andmed_files/figure-html/qqnorm-1.png" alt="QQ-plot lognormaalsetele andmetele. Plotil võrreldakse lognormaalsete andmete jaotust referentsjaotusega, milleks on antud juhul normaaljaotus. Punased katkendjooned annavad standardveapõhise usaldusvahemiku (arvutatud simuleeritud juhuvalimist normaaljaotusega referentspopulatsioonist), millesse peaks jääma enamus andmepunkte juhul kui andmepunktid pärineksid normaaljaotusest." width="672" />
 <p class="caption">
 Joonis 3.2: QQ-plot lognormaalsetele andmetele. Plotil võrreldakse lognormaalsete andmete jaotust referentsjaotusega, milleks on antud juhul normaaljaotus. Punased katkendjooned annavad standardveapõhise usaldusvahemiku (arvutatud simuleeritud juhuvalimist normaaljaotusega referentspopulatsioonist), millesse peaks jääma enamus andmepunkte juhul kui andmepunktid pärineksid normaaljaotusest.
 </p>
 </div>
-<pre><code>#&gt; [1] 64 96</code></pre>
+<pre><code>#&gt; [1] 62 23</code></pre>
 <p>Nüüd joonistame qq-ploti logaritmitud andmetele.</p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqPlot</span>(<span class="kw">log</span>(andmed))</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqPlot</span>(<span class="kw">log</span>(andmed))</code></pre>
 <div class="figure"><span id="fig:qqlognorm"></span>
 <img src="03_andmed_files/figure-html/qqlognorm-1.png" alt="QQ-plot normaalsetele andmetele (logaritmitud lognormaalsed andmed)." width="672" />
 <p class="caption">
 Joonis 3.3: QQ-plot normaalsetele andmetele (logaritmitud lognormaalsed andmed).
 </p>
 </div>
-<pre><code>#&gt; [1] 90 64</code></pre>
+<pre><code>#&gt; [1] 62 13</code></pre>
 <p>Pole kahtlust, andmed on logaritmitud kujul normaaljaotusega.</p>
 <blockquote>
 <p>qqPlot() võimaldab võrrelda teie andmeid ükskõik millise R-is defineeritud jaotusega (?car::qqPlot).</p>
@@ -571,22 +607,24 @@ Joonis 3.3: QQ-plot normaalsetele andmetele (logaritmitud lognormaalsed andmed).
 <h2>Iseloomusta andmeid algses skaalas: mediaan (MAD)</h2>
 <p>MAD –– median absolute deviation — on vähem tundlik outlierite suhtes ja ei eelda normaaljaotust. Puuduseks on, et MAD ei oma tõlgendust, mille kohaselt ta hõlmaks kindlat protsenti populatsiooni või valimi andmejaotusest. Seevastu sd puhul võime olla kindlad, et isegi kõige hullema jaotuse korral jäävad vähemalt 75% andmetest 2 SD piiridesse.</p>
 <p>Lognormaalsete andmetega:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mad</span>(andmed, <span class="dt">constant =</span> <span class="dv">1</span>); <span class="kw">sd</span>(andmed); <span class="kw">mad</span>(andmed)
-<span class="co">#&gt; [1] 0.598</span>
-<span class="co">#&gt; [1] 1.68</span>
-<span class="co">#&gt; [1] 0.887</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mad</span>(<span class="kw">log10</span>(andmed), <span class="dt">constant =</span> <span class="dv">1</span>); <span class="kw">sd</span>(<span class="kw">log10</span>(andmed)); <span class="kw">mad</span>(<span class="kw">log10</span>(andmed))
-<span class="co">#&gt; [1] 0.296</span>
-<span class="co">#&gt; [1] 0.451</span>
-<span class="co">#&gt; [1] 0.439</span></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mad</span>(andmed, <span class="dt">constant =</span> <span class="dv">1</span>); <span class="kw">sd</span>(andmed); <span class="kw">mad</span>(andmed)
+<span class="co">#&gt; [1] 0.779</span>
+<span class="co">#&gt; [1] 2.11</span>
+<span class="co">#&gt; [1] 1.16</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mad</span>(<span class="kw">log10</span>(andmed), <span class="dt">constant =</span> <span class="dv">1</span>); <span class="kw">sd</span>(<span class="kw">log10</span>(andmed)); <span class="kw">mad</span>(<span class="kw">log10</span>(andmed))
+<span class="co">#&gt; [1] 0.336</span>
+<span class="co">#&gt; [1] 0.478</span>
+<span class="co">#&gt; [1] 0.498</span></code></pre>
 <p>mad = median(abs(median(x) - x)), mida on väga lihtne mõista. Samas R-i funktsioon mad() korrutab default-ina mad-i läbi konstandiga 1.4826, mis muudab mad()-i tulemuse võrreldavaks sd-ga, tehes sellest sd robustse analoogi. Robustse sellepärast, et mad-i arvutuskäik, mis sõltub mediaanist, mitte aritmeetilisest keskmisest, ei ole tundlik outlierite suhtes. Seega, kui tahate arvutada mad-i, siis fikseerige mad() funktsioonis argument <em>constant</em> ühele.</p>
 <blockquote>
-<p>Ära kunagi avalda andmeid vormis: mean (MAD) või median (SD). Korrektne vorm on mean (SD) või median (MAD).</p>
+<p>Ära kunagi avalda andmeid vormis: mean (MAD) või median (SD).
+Korrektne vorm on mean (SD) või median (MAD).</p>
 </blockquote>
-<p>Veel üks viis andmejaotuse summeerimiseks on kasutada kvantiile. Siin saame me tüüpiliselt rohkem kui ühe numbri, aga sageli on selline viis informatiivsem, kui ühenumbrilised summaarsed statistikud. Funktsioon quantile võimaldab valida, milliseid kvantiile soovite näha. Järgnevas koodist saame teada, millisest vektori “andmed” väärtusest allapoole jääb 2.5%, 25%, 50%, 75% ja 95% väärtusi.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">quantile</span>(andmed, <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.95</span>))
-<span class="co">#&gt;   2.5%    25%    50%    75%    95% </span>
-<span class="co">#&gt; 0.0968 0.4761 0.9924 1.8511 4.4501</span></code></pre></div>
+<p>Veel üks viis andmejaotuse summeerimiseks on kasutada kvantiile. Siin saame me tüüpiliselt rohkem kui ühe numbri, aga sageli on selline viis informatiivsem, kui ühenumbrilised summaarsed statistikud.
+Funktsioon quantile võimaldab valida, milliseid kvantiile soovite näha. Järgnevas koodist saame teada, millisest vektori “andmed” väärtusest allapoole jääb 2.5%, 25%, 50%, 75% ja 95% väärtusi.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">quantile</span>(andmed, <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.95</span>))
+<span class="co">#&gt;  2.5%   25%   50%   75%   95% </span>
+<span class="co">#&gt; 0.141 0.489 1.042 2.252 5.297</span></code></pre>
 </div>
 <div id="muutujate-koosvarieeruvus" class="section level2 unnumbered">
 <h2>Muutujate koosvarieeruvus</h2>
@@ -599,9 +637,11 @@ Joonis 3.3: QQ-plot normaalsetele andmetele (logaritmitud lognormaalsed andmed).
 <p>Kui r on -1 või 1, saame me x väärtust teades täpselt ennustada y väärtuse (ja vastupidi, teades y väärrust saame täpselt ennustada x väärtuse).<br />
 Kuidas tõlgendame aga tulemust <span class="math inline">\(r = 0.9\)</span>? Mitte kuidagi. Selle asemel tõlgendame <span class="math inline">\(r^2 = 0.9^2 = 0.81\)</span> – mis tähendab, et x-i varieeruvus suudab seletada mitte rohkem kui 81% y varieeruvusest ja vastupidi, et Y-i varieeruvus suudab seletada 81% X-i varieeruvusest.</p>
 <p>Korrelatsiooni saab mõõta mitmel viisil (<code>?cor.test, method=</code>). Kõige levinum on Pearsoni korrelatsioonikoefitsient, mis eeldab, <em>(i)</em> et me mõõdame pidevaid muutujaid, <em>(ii)</em> juhuvalimit, <em>(iii)</em> et populatsiooniandmed on normaaljaotusega ja <em>(iv)</em> et igal mõõteobjektil on mõõdetud 2 omadust (pikkus ja kaal, näiteks). Tuntuim alternatiiv on mitteparameetriline Spearmani korrelatsioon, mis ei eelda andmete normaaljaotust ega seda, et mõõdetakse pidevaid suurusi. Kui Pearsoni korrelatsiooni eeldused on täidetud ja te kasutate siiski Spearmani korrelatsiooni, siis langeb teie arvutuse efektiivsus ca. 10% võrra.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Sepal.Width, <span class="dt">use =</span> <span class="st">&quot;complete.obs&quot;</span>)
-<span class="co">#&gt; [1] -0.118</span></code></pre></div>
-<p>Korrelatsioonikordaja väärtus sõltub mitte ainult andmete koosvarieeruvusest vaid ka andmete ulatusest. Suurema ulatusega andmed X ja/või Y teljel annavad keskeltläbi 0-st kaugemal oleva korrelatsioonikordaja. Selle pärast sobib korrelatsioon halvasti näiteks korduskatsete kooskõla mõõtmiseks.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Sepal.Width, <span class="dt">use =</span> <span class="st">&quot;complete.obs&quot;</span>)
+<span class="co">#&gt; [1] -0.118</span></code></pre>
+<p>Korrelatsioonikordaja väärtus sõltub mitte ainult andmete koosvarieeruvusest vaid ka andmete ulatusest.
+Suurema ulatusega andmed X ja/või Y teljel annavad keskeltläbi 0-st kaugemal oleva korrelatsioonikordaja.
+Selle pärast sobib korrelatsioon halvasti näiteks korduskatsete kooskõla mõõtmiseks.</p>
 <p>Lisaks, korrelatsioonikordaja mõõdab vaid andmete <em>lineaarset</em> koos-varieeruvust: kui andmed koos-varieeruvad mitte-lineaarselt, siis võivad ka väga tugevad koos-varieeruvused jääda märkamatuks.</p>
 
 <div class="figure"><span id="fig:anscombe"></span>
@@ -610,18 +650,21 @@ Kuidas tõlgendame aga tulemust <span class="math inline">\(r = 0.9\)</span>? Mi
 Joonis 3.4: Anscombe’i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: neli andmestikku annavad identse korrelatsioonikordaja (Pearsons’r), ehkki tegelikud seosed andmete vahel on täiesti erinevad.
 </p>
 </div>
-<p>Moraal seisneb selles, et enne korrelatsioonikordaja arvutamist tasub alati plottida andmed, et veenduda võimaliku seose lineaarsuses. Lineaarsuse puudumine andmete koosvarieeruvuse mustris tähendab, et korrelatsioonikordaja tuleb eksitav.</p>
-<p>Korrelatsioonikordaja mõõdab pelgalt määra, mil üks muutuja muutub siis, kui teine muutuja muutub. Seega ei ole suurt mõtet arvutada korrelatsioonikordajat juhul kui me teame ette seose olemasolust kahe muutuja vahel. Näiteks, kui sama entiteeti mõõdetakse kahel erineval viisil, või kahes korduses, või kui esimene muutuja arvutatakse teise muutuja kaudu.</p>
+<p>Moraal seisneb selles, et enne korrelatsioonikordaja arvutamist tasub alati plottida andmed, et veenduda võimaliku seose lineaarsuses.
+Lineaarsuse puudumine andmete koosvarieeruvuse mustris tähendab, et korrelatsioonikordaja tuleb eksitav.</p>
+<p>Korrelatsioonikordaja mõõdab pelgalt määra, mil üks muutuja muutub siis, kui teine muutuja muutub.
+Seega ei ole suurt mõtet arvutada korrelatsioonikordajat juhul kui me teame ette seose olemasolust kahe muutuja vahel.
+Näiteks, kui sama entiteeti mõõdetakse kahel erineval viisil, või kahes korduses, või kui esimene muutuja arvutatakse teise muutuja kaudu.</p>
 <blockquote>
 <p>Kõik summaarsed statistikud kaotavad suure osa teie andmetes leiduvast infost – see kaotus on õigustatud ainult siis, kui teie poolt valitud statistik iseloomustab hästi andmete sügavamat olemust (näiteks tüüpilist mõõtmistulemust või andmete varieeruvust).</p>
 </blockquote>
 <p>Korrelatsioonimaatriksi saab niimoodi:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># numeric columns only!</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># numeric columns only!</span>
 <span class="co"># the following gives cor matrix with </span>
 <span class="co"># frequentist correction for mutliple testing:</span>
 <span class="co"># print(psych::corr.test(iris[-5]))</span>
 <span class="co"># only numeric cols allowed! Hence -Species</span>
-knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">cor</span>(iris[,<span class="op">-</span><span class="dv">5</span>]))</code></pre></div>
+knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">cor</span>(iris[,<span class="op">-</span><span class="dv">5</span>]))</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -722,11 +765,10 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

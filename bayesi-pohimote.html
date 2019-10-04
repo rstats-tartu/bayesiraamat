@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>13 Bayesi põhimõte | Bayesi statistika kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
   <meta property="og:title" content="13 Bayesi põhimõte | Bayesi statistika kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="bootstrap.html"/>
-<link rel="next" href="mudelite-keel.html"/>
+<link rel="prev" href="bootstrap.html">
+<link rel="next" href="mudelite-keel.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -47,46 +47,75 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
 
 <script src="https://use.fontawesome.com/e4ba4259a1.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-pre, code { background-color: #f8f8f8; }
-code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code > span.dt { color: #204a87; } /* DataType */
-code > span.dv { color: #0000cf; } /* DecVal */
-code > span.bn { color: #0000cf; } /* BaseN */
-code > span.fl { color: #0000cf; } /* Float */
-code > span.ch { color: #4e9a06; } /* Char */
-code > span.st { color: #4e9a06; } /* String */
-code > span.co { color: #8f5902; font-style: italic; } /* Comment */
-code > span.ot { color: #8f5902; } /* Other */
-code > span.al { color: #ef2929; } /* Alert */
-code > span.fu { color: #000000; } /* Function */
-code > span.er { color: #a40000; font-weight: bold; } /* Error */
-code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #000000; } /* Constant */
-code > span.sc { color: #000000; } /* SpecialChar */
-code > span.vs { color: #4e9a06; } /* VerbatimString */
-code > span.ss { color: #4e9a06; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #000000; } /* Variable */
-code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code > span.ex { } /* Extension */
-code > span.at { color: #c4a000; } /* Attribute */
-code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -301,13 +330,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="23" data-path="brms-suntaks.html"><a href="brms-suntaks.html"><i class="fa fa-check"></i><b>23</b> brms süntaks</a><ul>
 <li class="chapter" data-level="23.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#general-formula-structure"><i class="fa fa-check"></i><b>23.1</b> General formula structure</a><ul>
-<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#group-level-terms-xg-1idg-grx-by-mmg1-g2"><i class="fa fa-check"></i><b>23.1.1</b> Group-level terms: x||g, 1|ID|g, gr(x, by = ), mm(g1, g2)</a></li>
-<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.2</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
-<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.3</b> Additional response information</a></li>
-<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for non-linear models</a></li>
-<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for predicting distributional parameters</a></li>
-<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for mixture models</a></li>
-<li class="chapter" data-level="23.1.7" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.7</b> Formula syntax for multivariate models</a></li>
+<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.1</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
+<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.2</b> Additional response information</a></li>
+<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.3</b> Formula syntax for non-linear models</a></li>
+<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for predicting distributional parameters</a></li>
+<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for mixture models</a></li>
+<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for multivariate models</a></li>
 </ul></li>
 <li class="chapter" data-level="23.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#brms-likelihoods"><i class="fa fa-check"></i><b>23.2</b> brms likelihoods</a></li>
 <li class="chapter" data-level="23.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#priors"><i class="fa fa-check"></i><b>23.3</b> priors</a><ul>
@@ -400,10 +428,21 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>Alustame siiski lihtsa näitega, mida saab käsitsi läbi arvutada.</p>
 <div id="esimene-naide" class="section level2 unnumbered">
 <h2>Esimene näide</h2>
-<p>Me teame, et suremus haigusesse on 50% ja meil on palatis 3 patsienti, kes seda haigust põevad. Seega on meil kaks andmetükki (50% ja n=3). Küsimus: mitu meie patsienti oodatavalt hinge heidavad? Eeldusel, et meie patsiendid on iseseisvad (näiteks ei ole sugulased), on meil tüüpiline mündiviske olukord.</p>
-<p>Parameetriruum on neljaliikmeline: 0 surnud, 1 surnud, 2 surnud ja 3 surnud. Edasi loeme üles kõik võimalikud sündmusteahelad, mis loogiliselt saavad juhtuda, et saada tõepärafunktsioon.</p>
+<p>Me teame, et suremus haigusesse on 50% ja meil on palatis 3 patsienti, kes seda haigust põevad.
+Seega on meil kaks andmetükki (50% ja n=3).
+Küsimus: mitu meie patsienti oodatavalt hinge heidavad? Eeldusel, et meie patsiendid on iseseisvad (näiteks ei ole sugulased), on meil tüüpiline mündiviske olukord.</p>
+<p>Parameetriruum on neljaliikmeline: 0 surnud, 1 surnud, 2 surnud ja 3 surnud.
+Edasi loeme üles kõik võimalikud sündmusteahelad, mis loogiliselt saavad juhtuda, et saada tõepärafunktsioon.</p>
 <p>Me viskame kulli-kirja 3 korda: kiri = elus, kull = surnud</p>
-<p>Võimalikud sündmused on: | kull kull kull | kull kiri kull | kiri kull kull | kull kull kiri | kull kiri kiri | kiri kiri kull | kiri kull kiri | kiri kiri kiri</p>
+<p>Võimalikud sündmused on:
+| kull kull kull
+| kull kiri kull
+| kiri kull kull
+| kull kull kiri
+| kull kiri kiri
+| kiri kiri kull
+| kiri kull kiri
+| kiri kiri kiri</p>
 <p>Kui P(kull) = 0.5, siis lugedes kokku kõik võimalikud sündmused:</p>
 <ul>
 <li>0 kulli ehk surnud - 1,</li>
@@ -411,8 +450,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li>2 kulli ehk surnud - 3,</li>
 <li>3 kulli ehk surnud - 1</li>
 </ul>
-<p>Nüüd teame parameetriruumi iga liikme kohta, kui suure tõenäosusega me ootame selle realiseerumist. Näiteks, P(0 surnud) = 1/8, P(1 surnud) = 3/8, P(1 või 2 surnud) = 6/8 jne Selle teadmise konverteerime tõepärafunktsiooniks.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<p>Nüüd teame parameetriruumi iga liikme kohta, kui suure tõenäosusega me ootame selle realiseerumist. Näiteks, P(0 surnud) = 1/8, P(1 surnud) = 3/8, P(1 või 2 surnud) = 6/8 jne
+Selle teadmise konverteerime tõepärafunktsiooniks.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 <span class="co"># Parameter space: all possible futures</span>
 x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">3</span>)
 
@@ -423,32 +463,33 @@ y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</sp
 <span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_line</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;hypothetical nr of deaths&quot;</span>)<span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;plausibility&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;plausibility&quot;</span>)</code></pre>
 <p><img src="10_bayesi_printsiip_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>Siit näeme, et üks surm ja kaks surma on sama tõenäolised ja üks surm on kolm korda tõenäolisem kui null surma (või kolm surma). Tõepära annab meile tõenäosuse Pr(mortality=0.5 &amp; N=3) igale loogiliselt võimalikule surmade arvule (0 kuni 3).</p>
+<p>Siit näeme, et üks surm ja kaks surma on sama tõenäolised ja üks surm on kolm korda tõenäolisem kui null surma (või kolm surma).
+Tõepära annab meile tõenäosuse Pr(mortality=0.5 &amp; N=3) igale loogiliselt võimalikule surmade arvule (0 kuni 3).</p>
 <p>Me saame sama tulemuse kasutades formaalsel viisil binoomjaotuse mudelit. Ainus erinevus on, et nüüd on meil y teljel surmade tõenäosus.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">dbinom</span>(x, <span class="dv">3</span>, <span class="fl">0.5</span>)
+<pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">dbinom</span>(x, <span class="dv">3</span>, <span class="fl">0.5</span>)
 
 <span class="kw">ggplot</span>(<span class="dt">data=</span><span class="ot">NULL</span>, <span class="kw">aes</span>(x, y)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;hypothetical nr of deaths&quot;</span>)<span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;probability&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;probability&quot;</span>)</code></pre>
 <p><img src="10_bayesi_printsiip_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>Proovime seda koodi olukorras, kus meil on 9 patsienti ja suremus on 0.67:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">9</span>)
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">9</span>)
 y &lt;-<span class="st"> </span><span class="kw">dbinom</span>(x, <span class="dv">9</span>, <span class="fl">0.67</span>)
 
 <span class="kw">ggplot</span>(<span class="dt">data=</span><span class="ot">NULL</span>, <span class="kw">aes</span>(x, y)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;hypothetical nr of deaths&quot;</span>)<span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;probability&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;probability&quot;</span>)</code></pre>
 <p><img src="10_bayesi_printsiip_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>Lisame sellele tõepärafunktsioonile tasase priori (lihtsuse huvides) ja arvutame posterioorse jaotuse kasutades Bayesi teoreemi. Igale parameetri väärtusele on tõepära * prior proportsionaalne posterioorse tõenäosusega, et just see parameetri väärtus on see ainus tõene väärtus. Posterioorsed tõenäosused normaliseeritakse nii, et nad summeeruksid 1-le.</p>
 <p>Me defineerime X telje kui rea 10-st arvust (0 kuni 9 surma) ja arvutame tõepära igale neist 10-st arvust. Sellega ammendame me kõik loogiliselt võimalikud parameetri väärtused.</p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span> , <span class="dt">to =</span> <span class="dv">9</span>)
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span> , <span class="dt">to =</span> <span class="dv">9</span>)
 <span class="co"># flat prior</span>
 prior &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span> , <span class="dv">10</span>)
 
@@ -465,13 +506,15 @@ posterior &lt;-<span class="st"> </span>unstd.posterior <span class="op">/</span
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;hypothetical nr of deaths&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;posterior probability&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;posterior probability&quot;</span>)</code></pre>
 <p><img src="10_bayesi_printsiip_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>See on parim võimalik teadmine, mitu kirstu tasuks tellida, arvestades meie priori ja likelihoodi mudelitega. Näiteks, sedapalju, kui surmad ei ole üksteisest sõltumatud, on meie tõepäramudel (binoomjaotus) vale.</p>
 </div>
 <div id="teine-naide-sonastame-oma-probleemi-umber" class="section level2 unnumbered">
 <h2>Teine näide: sõnastame oma probleemi ümber</h2>
-<p>Mis siis, kui me ei tea suremust ja tahaksime seda välja arvutada? Kõik, mida me teame on, et 6 patsienti 9st surid. Nüüd koosnevad andmed 9 patsiendi mortaalsusinfost (parameeter, mille väärtust me eelmises näites arvutasime) ja parameeter, mille väärtust me ei tea, on surmade üldine sagedus (see parameeter oli eelmises näites fikseeritud, ja seega kuulus andmete hulka).</p>
+<p>Mis siis, kui me ei tea suremust ja tahaksime seda välja arvutada?
+Kõik, mida me teame on, et 6 patsienti 9st surid.
+Nüüd koosnevad andmed 9 patsiendi mortaalsusinfost (parameeter, mille väärtust me eelmises näites arvutasime) ja parameeter, mille väärtust me ei tea, on surmade üldine sagedus (see parameeter oli eelmises näites fikseeritud, ja seega kuulus andmete hulka).</p>
 <p>Seega on meil:</p>
 <ol style="list-style-type: decimal">
 <li><p>Parameetriruum 0% kuni 100% suremus (0st 1-ni), mis sisaldab lõpmata palju numbreid.</p></li>
@@ -483,7 +526,7 @@ posterior &lt;-<span class="st"> </span>unstd.posterior <span class="op">/</span
 <p>Tehniliselt on sinu andmete tõepärafunktsioon agregeeritud iga üksiku andmepunkti tõepärafunktsioonist. Seega vaatab Bayes igat andmepunkti eraldi (andmete sisestamise järjekord ei loe).</p>
 </blockquote>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># mortality at 20 evenly spaced probabilities from 0 to 1</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># mortality at 20 evenly spaced probabilities from 0 to 1</span>
 x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span> , <span class="dt">to =</span> <span class="dv">1</span>, <span class="dt">length.out =</span> <span class="dv">20</span>)
 
 <span class="co"># Define prior</span>
@@ -500,7 +543,7 @@ a &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">
             <span class="dt">y=</span> <span class="kw">c</span>(prior, likelihood, posterior),
             <span class="dt">legend=</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;prior&quot;</span>,<span class="st">&quot;likelihood&quot;</span>, <span class="st">&quot;posterior&quot;</span>), <span class="dt">each=</span><span class="dv">20</span>))
 
-<span class="kw">ggplot</span>(<span class="dt">data=</span>a) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, y, <span class="dt">color=</span>legend))</code></pre></div>
+<span class="kw">ggplot</span>(<span class="dt">data=</span>a) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, y, <span class="dt">color=</span>legend))</code></pre>
 <p><img src="10_bayesi_printsiip_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>Nüüd on meil posterioorne tõenäosusfunktsioon, mis summeerub 1-le ja mis sisaldab kogu meie teadmist suremuse kohta.</p>
 <blockquote>
@@ -513,7 +556,7 @@ a &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">
 <p>Hea küll, me arvutame jälle suremust.</p>
 <p>Bayes töötab andmepunkti kaupa (see et me talle ennist kõik andmed korraga ette andsime, on puhtalt mugavuse pärast).</p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define grid</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define grid</span>
 x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">1</span>, <span class="dt">length.out =</span> <span class="dv">20</span>)
 
 <span class="co"># Define prior</span>
@@ -524,7 +567,7 @@ likelihood &lt;-<span class="st"> </span><span class="kw">dbinom</span>(<span cl
 posterior &lt;-<span class="st"> </span>likelihood <span class="op">*</span><span class="st"> </span>prior <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(likelihood <span class="op">*</span><span class="st"> </span>prior)
 
 <span class="kw">ggplot</span>(<span class="dt">data=</span><span class="ot">NULL</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, posterior), <span class="dt">color=</span> <span class="st">&quot;blue&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, posterior), <span class="dt">color=</span> <span class="st">&quot;blue&quot;</span>)</code></pre>
 <div class="figure"><span id="fig:esimene-patsient"></span>
 <img src="10_bayesi_printsiip_files/figure-html/esimene-patsient-1.png" alt="N=1, esimene patsient suri." width="672" />
 <p class="caption">
@@ -533,7 +576,7 @@ Joonis 13.1: N=1, esimene patsient suri.
 </div>
 <p>Esimene patsient suri - 0 mortaalsus ei ole enam loogiliselt võimalik (välja arvatud siis kui prior selle koha peal = 0) ja mortaalsus 100% on andmetega (tegelikult andmega) parimini kooskõlas. Posteerior on nulli ja 100% vahel sirge sest vähene sissepandud informatsioon lihtsalt ei võimalda enamat.</p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">1</span>, <span class="dt">length.out =</span> <span class="dv">20</span>)
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">1</span>, <span class="dt">length.out =</span> <span class="dv">20</span>)
 <span class="co"># Define prior</span>
 prior &lt;-<span class="st"> </span>posterior
 
@@ -543,16 +586,18 @@ posterior1 &lt;-<span class="st"> </span>likelihood <span class="op">*</span><sp
 
 <span class="kw">ggplot</span>(<span class="dt">data=</span><span class="ot">NULL</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, prior))<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, posterior1), <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, posterior1), <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>)</code></pre>
 <div class="figure"><span id="fig:teine-patsient"></span>
 <img src="10_bayesi_printsiip_files/figure-html/teine-patsient-1.png" alt="N=2, teine patsient suri." width="672" />
 <p class="caption">
 Joonis 13.2: N=2, teine patsient suri.
 </p>
 </div>
-<p>Teine patsient suri. Nüüd ei ole 0 ja 1 vahel enam sirge posteerior. Posteerior on kaldu 100 protsendi poole, mis on ikka kõige tõenäolisem väärtus.</p>
+<p>Teine patsient suri.
+Nüüd ei ole 0 ja 1 vahel enam sirge posteerior.
+Posteerior on kaldu 100 protsendi poole, mis on ikka kõige tõenäolisem väärtus.</p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">1</span>, <span class="dt">length.out =</span> <span class="dv">20</span>)
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">1</span>, <span class="dt">length.out =</span> <span class="dv">20</span>)
 <span class="co"># Define prior</span>
 prior &lt;-<span class="st"> </span>posterior1
 
@@ -564,7 +609,7 @@ posterior2 &lt;-<span class="st"> </span>likelihood <span class="op">*</span><sp
 
 <span class="kw">ggplot</span>(<span class="dt">data=</span><span class="ot">NULL</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, prior))<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, posterior2), <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, posterior2), <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>)</code></pre>
 <div class="figure"><span id="fig:kolmas-patsient"></span>
 <img src="10_bayesi_printsiip_files/figure-html/kolmas-patsient-1.png" alt="N=3, kolmas patsient jäi ellu." width="672" />
 <p class="caption">
@@ -574,7 +619,7 @@ Joonis 13.3: N=3, kolmas patsient jäi ellu.
 <p>Kolmas patsient jäi ellu - 0 ja 100% mortaalsus on seega võimaluste nimekirjast maas ning suremus on ikka kaldu valimi keskmise poole (75%).</p>
 <p>Teeme sedasama prioriga, mis ei ole tasane. See illustreerib tõsiasja, et kui N on väike siis domineerib prior posteerior jaotust. (Suure N korral on vastupidi, priori kuju on sageli vähetähtis.)</p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">1</span>, <span class="dt">length.out =</span> <span class="dv">20</span>)
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">1</span>, <span class="dt">length.out =</span> <span class="dv">20</span>)
 <span class="co"># Define prior</span>
 prior &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">seq</span>(<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dt">length.out =</span> <span class="dv">10</span>), <span class="kw">seq</span>(<span class="fl">0.1</span>, <span class="fl">0.01</span>, <span class="dt">length.out =</span> <span class="dv">10</span>))
 
@@ -585,10 +630,11 @@ posterior &lt;-<span class="st"> </span>likelihood <span class="op">*</span><spa
 <span class="kw">ggplot</span>(<span class="dt">data=</span><span class="ot">NULL</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, prior))<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, likelihood), <span class="dt">color=</span><span class="st">&quot;red&quot;</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, posterior), <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>)</code></pre></div>
-<p><img src="10_bayesi_printsiip_files/figure-html/unnamed-chunk-7-1.png" width="672" /> 1. patsient suri</p>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, posterior), <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>)</code></pre>
+<p><img src="10_bayesi_printsiip_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+1. patsient suri</p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define prior</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define prior</span>
 prior &lt;-<span class="st"> </span>posterior
 
 <span class="co"># Compute likelihood at each value in grid</span>
@@ -600,7 +646,7 @@ posterior1 &lt;-<span class="st"> </span>likelihood <span class="op">*</span><sp
 <span class="kw">ggplot</span>(<span class="dt">data=</span><span class="ot">NULL</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, prior))<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, likelihood), <span class="dt">color=</span><span class="st">&quot;red&quot;</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, posterior1), <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, posterior1), <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>)</code></pre>
 <div class="figure"><span id="fig:fuck"></span>
 <img src="10_bayesi_printsiip_files/figure-html/fuck-1.png" alt="N=2 informatiivse prioriga." width="672" />
 <p class="caption">
@@ -609,7 +655,7 @@ Joonis 13.4: N=2 informatiivse prioriga.
 </div>
 <p>Teine patsient suri.</p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define prior</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define prior</span>
 prior2 &lt;-<span class="st"> </span>posterior1
 
 <span class="co"># Compute likelihood at each value in grid</span>
@@ -621,7 +667,7 @@ posterior2 &lt;-<span class="st"> </span>likelihood <span class="op">*</span><sp
 <span class="kw">ggplot</span>(<span class="dt">data=</span><span class="ot">NULL</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, prior2))<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, likelihood), <span class="dt">color=</span><span class="st">&quot;red&quot;</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, posterior2), <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x, posterior2), <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>)</code></pre>
 <div class="figure"><span id="fig:omg"></span>
 <img src="10_bayesi_printsiip_files/figure-html/omg-1.png" alt="N=3 informatiivse prioriga." width="672" />
 <p class="caption">
@@ -688,11 +734,10 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

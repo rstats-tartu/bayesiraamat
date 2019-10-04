@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>A Bayesi ja sagedusliku statistika võrdlus | Bayesi statistika kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
   <meta property="og:title" content="A Bayesi ja sagedusliku statistika võrdlus | Bayesi statistika kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="puuduvad-andmed.html"/>
-<link rel="next" href="sonastik.html"/>
+<link rel="prev" href="puuduvad-andmed.html">
+<link rel="next" href="sonastik.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -47,46 +47,75 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
 
 <script src="https://use.fontawesome.com/e4ba4259a1.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-pre, code { background-color: #f8f8f8; }
-code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code > span.dt { color: #204a87; } /* DataType */
-code > span.dv { color: #0000cf; } /* DecVal */
-code > span.bn { color: #0000cf; } /* BaseN */
-code > span.fl { color: #0000cf; } /* Float */
-code > span.ch { color: #4e9a06; } /* Char */
-code > span.st { color: #4e9a06; } /* String */
-code > span.co { color: #8f5902; font-style: italic; } /* Comment */
-code > span.ot { color: #8f5902; } /* Other */
-code > span.al { color: #ef2929; } /* Alert */
-code > span.fu { color: #000000; } /* Function */
-code > span.er { color: #a40000; font-weight: bold; } /* Error */
-code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #000000; } /* Constant */
-code > span.sc { color: #000000; } /* SpecialChar */
-code > span.vs { color: #4e9a06; } /* VerbatimString */
-code > span.ss { color: #4e9a06; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #000000; } /* Variable */
-code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code > span.ex { } /* Extension */
-code > span.at { color: #c4a000; } /* Attribute */
-code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -301,13 +330,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="23" data-path="brms-suntaks.html"><a href="brms-suntaks.html"><i class="fa fa-check"></i><b>23</b> brms süntaks</a><ul>
 <li class="chapter" data-level="23.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#general-formula-structure"><i class="fa fa-check"></i><b>23.1</b> General formula structure</a><ul>
-<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#group-level-terms-xg-1idg-grx-by-mmg1-g2"><i class="fa fa-check"></i><b>23.1.1</b> Group-level terms: x||g, 1|ID|g, gr(x, by = ), mm(g1, g2)</a></li>
-<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.2</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
-<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.3</b> Additional response information</a></li>
-<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for non-linear models</a></li>
-<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for predicting distributional parameters</a></li>
-<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for mixture models</a></li>
-<li class="chapter" data-level="23.1.7" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.7</b> Formula syntax for multivariate models</a></li>
+<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.1</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
+<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.2</b> Additional response information</a></li>
+<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.3</b> Formula syntax for non-linear models</a></li>
+<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for predicting distributional parameters</a></li>
+<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for mixture models</a></li>
+<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for multivariate models</a></li>
 </ul></li>
 <li class="chapter" data-level="23.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#brms-likelihoods"><i class="fa fa-check"></i><b>23.2</b> brms likelihoods</a></li>
 <li class="chapter" data-level="23.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#priors"><i class="fa fa-check"></i><b>23.3</b> priors</a><ul>
@@ -387,29 +415,58 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="bayesi-ja-sagedusliku-statistika-vordlus" class="section level1">
 <h1><span class="header-section-number">A</span> Bayesi ja sagedusliku statistika võrdlus</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 <span class="kw">library</span>(rethinking)
 <span class="kw">library</span>(ggthemes)
-<span class="kw">library</span>(brms)</code></pre></div>
+<span class="kw">library</span>(brms)</code></pre>
 <div id="kaks-statistikat-ajaloost-ja-toenaosusest" class="section level2 unnumbered">
 <h2>Kaks statistikat: ajaloost ja tõenäosusest</h2>
-<p>Bayesiaanlik ja sageduslik statistika leiutati üksteise järel Pierre-Simon Laplace poolt, kes arendas välja kõigepealt bayesiaanliku statistika alused ning seejärel sagedusliku statistika omad (ca. 1774 - 1814). Sagedusliku statistika õitsengu põhjusteks 20. sajandil olid arvutuslik lihtsus ning tõenäosuse sagedusliku tõlgenduse sobivus 20 saj esimeses pooles käibinud teadusfilosoofiatega - eeskätt loogilise postivismiga. 1930-1980-ndatel valitses akadeemiliste statistikute seas seisukoht, et Bayesiaanlik statistika on surnud ja maha maetud, ning selle arendamisega tegelesid vaid üksikud inimesed, kes sageli olid füüsikaliste teaduste taustaga (Jeffreys, Jaynes).</p>
-<p>Alates 1960-e keskpaigast arendati bayesiaanlust USA sõjaväe egiidi all, kuna seal oli piisav juurdepääs arvutivõimsusele, kuid seda tehti paljuski salastatult. Bayesi meetoditega ei olnud võimalik korralikult tsiviilteadust teha enne 1990-ndaid aastaid, mil personaalarvutite levik algatas buumi nende meetodite arendamises. Praegu on maailmas bayesiaanlikku ja sageduslikku statistikat umbes pooleks (vähemalt uute meetodite arendustöö poole pealt). Eestis bayesiaanlik statistika 2017 aasta seisuga peaaegu, et puudub.</p>
-<p>1930ndatel kodifitseeris Andrei Kolmogorov tõenäosusteooria aksioomid (3 aksioomi), mis ütlevad lühidalt, et tõenäosused jäävad 0 ja 1 vahele ning, et üksteist välistavate ja hüpoteesiruumi ammendavate hüpoteeside tõenäosused summeeruvad ühele. Selgus, et Bayesi teoreem on lihtsa aritmeetika abil tuletatav Kolmogorovi aksioomidest. Tagantjärele saame öelda, et bayesiaanlik statistika on mitte ainult tõenäosusteooriaga kooskõlas vaid ka, et Bayesi teoreem on parim võimalik viis sellist kooskõla saavutada (see on 1950ndate tarkus - Coxi teoreem). On ka teada, et kui tõenäosused on fikseeritud nulli ja ühega, siis taandub Bayesi teoreem klassikalisele lausearvutuslikule loogikale. See tähendab, et klassikaline loogika on bayesiaanluse erijuht. Seevastu sageduslik statistika püüab saavutada mõistlikke lahendusi arvutuslikult lihtsamate meetoditega, mille hinnaks on formaalse kooskõla puudumine tõenäosusteooriaga. Seega kujutab sageduslik statistika endast kogumit <em>ad hoc</em> meetodeid, mis ei tähenda muidugi, et sellest kasu ei võiks olla. Küll aga tähendab see, et kuigi sageduslike mudeleid on lihtsam arvutada, on neid raskem ehitada ja mõista ning, et sageduslike testide, milliseid on viimase saja aasta jooksul loodud 10 000 ringis, tulemusi on raskem tõlgendada.</p>
+<p>Bayesiaanlik ja sageduslik statistika leiutati üksteise järel Pierre-Simon Laplace poolt, kes arendas välja kõigepealt bayesiaanliku statistika alused ning seejärel sagedusliku statistika omad (ca. 1774 - 1814).
+Sagedusliku statistika õitsengu põhjusteks 20. sajandil olid arvutuslik lihtsus ning tõenäosuse sagedusliku tõlgenduse sobivus 20 saj esimeses pooles käibinud teadusfilosoofiatega - eeskätt loogilise postivismiga.
+1930-1980-ndatel valitses akadeemiliste statistikute seas seisukoht, et Bayesiaanlik statistika on surnud ja maha maetud, ning selle arendamisega tegelesid vaid üksikud inimesed, kes sageli olid füüsikaliste teaduste taustaga (Jeffreys, Jaynes).</p>
+<p>Alates 1960-e keskpaigast arendati bayesiaanlust USA sõjaväe egiidi all, kuna seal oli piisav juurdepääs arvutivõimsusele, kuid seda tehti paljuski salastatult.
+Bayesi meetoditega ei olnud võimalik korralikult tsiviilteadust teha enne 1990-ndaid aastaid, mil personaalarvutite levik algatas buumi nende meetodite arendamises.
+Praegu on maailmas bayesiaanlikku ja sageduslikku statistikat umbes pooleks (vähemalt uute meetodite arendustöö poole pealt).
+Eestis bayesiaanlik statistika 2017 aasta seisuga peaaegu, et puudub.</p>
+<p>1930ndatel kodifitseeris Andrei Kolmogorov tõenäosusteooria aksioomid (3 aksioomi), mis ütlevad lühidalt, et tõenäosused jäävad 0 ja 1 vahele ning, et üksteist välistavate ja hüpoteesiruumi ammendavate hüpoteeside tõenäosused summeeruvad ühele.
+Selgus, et Bayesi teoreem on lihtsa aritmeetika abil tuletatav Kolmogorovi aksioomidest.
+Tagantjärele saame öelda, et bayesiaanlik statistika on mitte ainult tõenäosusteooriaga kooskõlas vaid ka, et Bayesi teoreem on parim võimalik viis sellist kooskõla saavutada (see on 1950ndate tarkus - Coxi teoreem).
+On ka teada, et kui tõenäosused on fikseeritud nulli ja ühega, siis taandub Bayesi teoreem klassikalisele lausearvutuslikule loogikale.
+See tähendab, et klassikaline loogika on bayesiaanluse erijuht.
+Seevastu sageduslik statistika püüab saavutada mõistlikke lahendusi arvutuslikult lihtsamate meetoditega, mille hinnaks on formaalse kooskõla puudumine tõenäosusteooriaga.
+Seega kujutab sageduslik statistika endast kogumit <em>ad hoc</em> meetodeid, mis ei tähenda muidugi, et sellest kasu ei võiks olla.
+Küll aga tähendab see, et kuigi sageduslike mudeleid on lihtsam arvutada, on neid raskem ehitada ja mõista ning, et sageduslike testide, milliseid on viimase saja aasta jooksul loodud 10 000 ringis, tulemusi on raskem tõlgendada.</p>
 <blockquote>
 <p>Kahe statistika põhiline erinevus ei tulene tõenäosusteooria matemaatikast, vaid erinevatest tõenäosuse tõlgendusest.</p>
 </blockquote>
-<p>Bayesi tõlgenduses on tõenäosus teadlase usu määr mingi hüpoteesi kehtimisse. Hüpotees võib näiteks olla, et järgmise juulikuu sademete hulk Vilsandil jääb vahemikku 22 kuni 34 mm. Kui Bayesi arvutus annab selle hüpoteesi tõenäosuseks 0.57, siis oleme me selle teadmise najal nõus maksma mitte rohkem kui 57 senti kihlveo eest, mille alusel makstakse juhul, kui see hüpotees tõeseks osutub, välja 1 EUR (ja me saame vähemalt 43 senti kasumit).</p>
-<p>Sageduslikud teoreetikud usuvad, et selline tõenäosuse tõlgendus on ebateaduslik, kuna see on “subjektiivne”. Nimelt on võimalik, et n teadlast arvutavad samade andmete, kuid erinevate taustateadmiste põhjal n erinevat korrektset tõenäosust. Veelgi hullem, kui nad lähtuvad väga erinevatest taustauskumustest, ei pruugi toimuda teadmiste konvergeerumist ka siis, kui nende arvutustesse andmeid järjest juurde tuua.</p>
+<p>Bayesi tõlgenduses on tõenäosus teadlase usu määr mingi hüpoteesi kehtimisse.
+Hüpotees võib näiteks olla, et järgmise juulikuu sademete hulk Vilsandil jääb vahemikku 22 kuni 34 mm.
+Kui Bayesi arvutus annab selle hüpoteesi tõenäosuseks 0.57, siis oleme me selle teadmise najal nõus maksma mitte rohkem kui 57 senti kihlveo eest, mille alusel makstakse juhul, kui see hüpotees tõeseks osutub, välja 1 EUR (ja me saame vähemalt 43 senti kasumit).</p>
+<p>Sageduslikud teoreetikud usuvad, et selline tõenäosuse tõlgendus on ebateaduslik, kuna see on “subjektiivne”.
+Nimelt on võimalik, et n teadlast arvutavad samade andmete, kuid erinevate taustateadmiste põhjal n erinevat korrektset tõenäosust. Veelgi hullem, kui nad lähtuvad väga erinevatest taustauskumustest, ei pruugi toimuda teadmiste konvergeerumist ka siis, kui nende arvutustesse andmeid järjest juurde tuua.</p>
 <blockquote>
 <p>Sellise olukorra osaline analoogia poliitikas on elanikkond, kus pooled kannavad konservatiivseid väärtusi (perekond, rahvusühtsus) ja teine pool liberaalseid (multikultuursus, üldinimlikud väärtused). Seega priorid on erinevad. Senikaua kui mõlemad pooled saavad oma uudised samast allikast (sama tõepära), ei ole demokraatia siiski ohus. Aga kui pooled hakkavad erinevatest allikatest hankima erinevaid fakte, mis kummagi ideoloogiat kinnitavad, toimub arvamuste polariseerumine ning demokraatia sattub ohtu.</p>
 </blockquote>
-<p>Seega, kui te usute, et teie taustateadmised ei tohi mõjutada järeldusi, mis te oma andmete põhjal teete, siis te ei ole bayesiaan. Siinkohal pakub alternatiivi tõenäosuse sageduslik tõlgendus. Sageduslik tõenäosus on defineeritud kui teatud tüüpi andmete esinemise pikaajaline suhteline sagedus. Näiteks, kui me viskame münti palju kordi, siis peaks kullide (või kirjade) suhteline sagedus andma selle mündi tõenäosuse langeda kiri üleval. Selline tõenäosus on omistatav ainult sellistele sündmustele, mille esinemisel on sagedus. Kuna teaduslikul hüpoteesil ei ole esinemise sagedust, ei ole sageduslikus statistikas võimalik rääkida ka hüpoteesi kehtimise tõenäosusest. See on tõsine probleem, kuna tüüpiline statistiline hüpotees ütleb: meie mõõtmiste keskväärtus jääb vahemikku a kuni b – ja me tahaksime sellele anda usaldusintervallid, mis ütleksid, millise tõenäosusega see hüpotees kehtib. Sageduslik lahendus on selle asemel, et rääkida meie hüpoteesi tõenäosusest meie andmete korral, rääkida andmete, mis sarnanevad meie andmetega, esinemise tõenäosusest null-hüpoteesi (mis ei ole meie hüpotees) kehtimise korral. Seega omistatakse sagedus ehk tõenäosus andmetele, mitte hüpoteesile. Samas bayesiaan, kelle tõenäosused kehtivad hüpoteesidele, räägib otse tõenäosuse, millega parameetri väärtus jääb a ja b vahele, või ükskõik millisesse muusse teid huvitavasse vahemikku.</p>
+<p>Seega, kui te usute, et teie taustateadmised ei tohi mõjutada järeldusi, mis te oma andmete põhjal teete, siis te ei ole bayesiaan.
+Siinkohal pakub alternatiivi tõenäosuse sageduslik tõlgendus.
+Sageduslik tõenäosus on defineeritud kui teatud tüüpi andmete esinemise pikaajaline suhteline sagedus.
+Näiteks, kui me viskame münti palju kordi, siis peaks kullide (või kirjade) suhteline sagedus andma selle mündi tõenäosuse langeda kiri üleval.
+Selline tõenäosus on omistatav ainult sellistele sündmustele, mille esinemisel on sagedus.
+Kuna teaduslikul hüpoteesil ei ole esinemise sagedust, ei ole sageduslikus statistikas võimalik rääkida ka hüpoteesi kehtimise tõenäosusest. See on tõsine probleem, kuna tüüpiline statistiline hüpotees ütleb: meie mõõtmiste keskväärtus jääb vahemikku a kuni b – ja me tahaksime sellele anda usaldusintervallid, mis ütleksid, millise tõenäosusega see hüpotees kehtib.
+Sageduslik lahendus on selle asemel, et rääkida meie hüpoteesi tõenäosusest meie andmete korral, rääkida andmete, mis sarnanevad meie andmetega, esinemise tõenäosusest null-hüpoteesi (mis ei ole meie hüpotees) kehtimise korral.
+Seega omistatakse sagedus ehk tõenäosus andmetele, mitte hüpoteesile.
+Samas bayesiaan, kelle tõenäosused kehtivad hüpoteesidele, räägib otse tõenäosuse, millega parameetri väärtus jääb a ja b vahele, või ükskõik millisesse muusse teid huvitavasse vahemikku.</p>
 </div>
 <div id="poleemika-kumbki-toenaosus-pole-paris-see-mida-uldiselt-arvatakse" class="section level2 unnumbered">
 <h2>Poleemika: kumbki tõenäosus pole päris see, mida üldiselt arvatakse</h2>
-<p>Bayesi tõenäosus ei anna tegelikult seda tõenäosusnumbrit, mida me reaalselt peaksime kihlveokontoris kasutama. Ta annab numbri, millest me lähtuksime juhul, kui me usuksime, et selle numbri arvutamisel kasutatud statistilised mudelid kirjeldavad täpselt maailma. Paraku, kuna mudeldamine on oma olemuselt kompromiss mudeli lihtsuse ja ennustusvõime vahel, ei ole meil põhjust sellist asja uskuda. Seega ei peaks me bayesi tõenäosusi otse maailma üle kandma, vähemasti mitte automaatselt. Bayes ei ütle meile, mida me reaalselt usume. Ta ei ütle, mida me peaksime uskuma. Ta ütleb, mida me peaksime uskuma tingimuslikult.</p>
-<p>Sageduslik tõenäosus on hoopis teine asi. Seda on võimalik vaadelda kahel viisil:</p>
+<p>Bayesi tõenäosus ei anna tegelikult seda tõenäosusnumbrit, mida me reaalselt peaksime kihlveokontoris kasutama.
+Ta annab numbri, millest me lähtuksime juhul, kui me usuksime, et selle numbri arvutamisel kasutatud statistilised mudelid kirjeldavad täpselt maailma.
+Paraku, kuna mudeldamine on oma olemuselt kompromiss mudeli lihtsuse ja ennustusvõime vahel, ei ole meil põhjust sellist asja uskuda.
+Seega ei peaks me bayesi tõenäosusi otse maailma üle kandma, vähemasti mitte automaatselt.
+Bayes ei ütle meile, mida me reaalselt usume.
+Ta ei ütle, mida me peaksime uskuma. Ta ütleb, mida me peaksime uskuma tingimuslikult.</p>
+<p>Sageduslik tõenäosus on hoopis teine asi.
+Seda on võimalik vaadelda kahel viisil:</p>
 <ol style="list-style-type: decimal">
 <li><p>imaginaarsete andmete esinemissagedus nullhüpoteesi all;</p></li>
 <li><p>reaalsete sündmuste esinemise sagedus.</p></li>
@@ -418,30 +475,50 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <blockquote>
 <p>Kui kaks politseinikku mõõdavad sama auto kiirust ja 1. saab tulemuseks 81 km/h ning 2. saab 83 km/h, siis meie parim ennustus auto kiiruse kohta on 82 km/h. Kui aga 1. mõõtmistulemus on 80 km/h ja teine 120 km/h, siis meie parim hinnang ei ole 100 km/h. Enne sellise hinnangu andmist peame tegema lisatööd ja otsustama, kumb miilits oma mõõtmise kihva keeras. Ja me ei otsusta seda mitte oodatavast trahvist lähtuvalt, vaid neutraalseid objektiivseid asjaolusid vaagides. Seda sellepärast, et autol on päriselt kiirus olemas ja meil on hea põhjus, miks me tahame seda piisava täpsusega teada. Sagedusliku statistiku mõõteriist on statistiline mudel ja mõõtmistulemus on tõenäosus, mis jääb 0 ja 1 vahele.</p>
 </blockquote>
-<p>Õpikunäidetes on sündmusteks, mille esinemise sagedust tõenäosuse abil mõõdetakse, enamasti täringuvisked, ehk katsesüsteemi reaalne füüsikaline funktsioneerimine. Pane tähele, et need on inimtekkelised sündmused (loodus – ega jumal – ei viska täringuid). Teaduses on sündmused, millele tõenäosusi omistatakse, samuti inimtekkelised: selleks sündmuseks on teadlase otsus H<sub>0</sub> ümber lükkamise kohta, mille tegemisel ta lähtub p (või q) väärtusest ja usaldusnivoost. Siin vastab auto kiirusele 1. tüüpi vigade tegemise sagedus. See sagedus on inimtekkeline, aga sellest hoolimata päriselt olemas ja objektiivselt mõõdetav. Kui 2 teadlast mõõdavad seda paraleelselt ja saavad piisavalt erineva tulemuse (näiteks väga erineva FDR-i), võib olla kindel, et vähemalt üks neist eksib, ning peaks olema võimalik ausalt otsustada, kumb.</p>
+<p>Õpikunäidetes on sündmusteks, mille esinemise sagedust tõenäosuse abil mõõdetakse, enamasti täringuvisked, ehk katsesüsteemi reaalne füüsikaline funktsioneerimine.
+Pane tähele, et need on inimtekkelised sündmused (loodus – ega jumal – ei viska täringuid).
+Teaduses on sündmused, millele tõenäosusi omistatakse, samuti inimtekkelised: selleks sündmuseks on teadlase otsus H<sub>0</sub> ümber lükkamise kohta, mille tegemisel ta lähtub p (või q) väärtusest ja usaldusnivoost.
+Siin vastab auto kiirusele 1. tüüpi vigade tegemise sagedus.
+See sagedus on inimtekkeline, aga sellest hoolimata päriselt olemas ja objektiivselt mõõdetav.
+Kui 2 teadlast mõõdavad seda paraleelselt ja saavad piisavalt erineva tulemuse (näiteks väga erineva FDR-i), võib olla kindel, et vähemalt üks neist eksib, ning peaks olema võimalik ausalt otsustada, kumb.</p>
 </div>
 <div id="vordlev-naide-kahe-grupi-vordlus" class="section level2 unnumbered">
 <h2>Võrdlev näide: kahe grupi võrdlus</h2>
-<p>Järgnevalt toome näite, kuidas bayesiaan ja sageduslik statistik lahendavad sama ülesande. Meil on 2 gruppi, katse ja kontroll, millest kummagis 30 mõõtmist ja me soovime teada, kui palju katsetingimus mõjutab mõõtmistulemust. Meie andmed on normaaljaotusega ja andmepunktid, mida me analüüsime, on efektisuurused (katse1 - kontroll1 = ES1 jne).</p>
+<p>Järgnevalt toome näite, kuidas bayesiaan ja sageduslik statistik lahendavad sama ülesande.
+Meil on 2 gruppi, katse ja kontroll, millest kummagis 30 mõõtmist ja me soovime teada, kui palju katsetingimus mõjutab mõõtmistulemust.
+Meie andmed on normaaljaotusega ja andmepunktid, mida me analüüsime, on efektisuurused (katse1 - kontroll1 = ES1 jne).</p>
 <div id="bayesiaan" class="section level3 unnumbered">
 <h3>Bayesiaan</h3>
-<p>Statistiline küsimus on Bayesiaanil ja sageduslikul statistikul sama: kas ja kui palju erinevad kahe grupi keskväärtused? Bayesiaan alustab sellest, et ehitab kaks mudelit: andmete tõepäramudel ja taustateadmiste mudel ehk prior.</p>
-<p>Kui andmed on normaaljaotusega, siis on ka tõepäramudel normaaljaotus. Alustame sellest, et fitime oma valimiandmed (üksikud efekti suurused) normaaljaotuse mudelisse.</p>
+<p>Statistiline küsimus on Bayesiaanil ja sageduslikul statistikul sama: kas ja kui palju erinevad kahe grupi keskväärtused?
+Bayesiaan alustab sellest, et ehitab kaks mudelit: andmete tõepäramudel ja taustateadmiste mudel ehk prior.</p>
+<p>Kui andmed on normaaljaotusega, siis on ka tõepäramudel normaaljaotus.
+Alustame sellest, et fitime oma valimiandmed (üksikud efekti suurused) normaaljaotuse mudelisse.</p>
 <div class="figure"><span id="fig:vrdlssd"></span>
 <img src="98_vrdls_bayes_freq_files/figure-html/vrdlssd-1.png" alt="Paariviisiline katse - kontroll disain. Katset on korratud 30 korda. X-teljel on efektisuurused (ES). 30 üksikut efektisuurust on näidatud punktidena. Must joon näitab keskmist efektisuurust. Andmed on mudeldatud normaaljaotusena." width="384" />
 <p class="caption">
 Joonis A.1: Paariviisiline katse - kontroll disain. Katset on korratud 30 korda. X-teljel on efektisuurused (ES). 30 üksikut efektisuurust on näidatud punktidena. Must joon näitab keskmist efektisuurust. Andmed on mudeldatud normaaljaotusena.
 </p>
 </div>
-<p>See ei ole veel tõepäramudel, sest me tahame hinnangut ES <strong>keskväärtuse</strong> kõige tõenäolisemale väärtusele, ja lisaks veel hinnangut ebakindlusele selle punkt-hinnangu ümber (usalduslpiire). Seega tuleb eelmine jaotus kitsamaks tõmmata, et ta kajastaks meie teadmisi ES-ide keskväärtuste, mitte individuaalsete ES-de, kohta. Uue jaotusmudeli sd = eelmise jaotuse sd/sqrt(30).</p>
+<p>See ei ole veel tõepäramudel, sest me tahame hinnangut ES <strong>keskväärtuse</strong> kõige tõenäolisemale väärtusele, ja lisaks veel hinnangut ebakindlusele selle punkt-hinnangu ümber (usalduslpiire).
+Seega tuleb eelmine jaotus kitsamaks tõmmata, et ta kajastaks meie teadmisi ES-ide keskväärtuste, mitte individuaalsete ES-de, kohta.
+Uue jaotusmudeli sd = eelmise jaotuse sd/sqrt(30).</p>
 <div class="figure"><span id="fig:vrdlsse"></span>
 <img src="98_vrdls_bayes_freq_files/figure-html/vrdlsse-1.png" alt="See jaotus iseloomustab keskmise ES paiknemist puhtalt meie andmete põhjal." width="384" />
 <p class="caption">
 Joonis A.2: See jaotus iseloomustab keskmise ES paiknemist puhtalt meie andmete põhjal.
 </p>
 </div>
-<p>Täpsemalt, selle joonise põhjal võib arvutada, milline on meie valimi keskväärtuse kohtamise tõenäosus igal võimalikul tõelisel ES-i väärtusel. Kõige tõenäolisemad on andmed siis, kui tegelik ES = andmete keskväärtusega (seda kohta näitab must joon). Kui me jagame musta joone pikkuse punase kurvi all läbi katkendjoone pikkusega sama kurvi all, saame teada, mitu korda on meie andmed tõenäolisemad siis, kui tegelik ES = mean(valimi ES), võrreldes olukorraga, kus tegelik ES = 0. Loomulikult võime sama näitaja arvutada ükskõik millise hüpoteeside paari kohta (näiteks, andmed on miljon korda tõenäolisemad hüpoteesi ES = 0.02 all kui hüpoteesi ES = -1 all; mis aga ei tähenda, et andmed oleksid väga tõenäolised kummagi võrreldud hüpoteesi all).</p>
-<p>Aga see ei ole veel Bayes. Lisame andmemudelile taustateadmiste mudeli. Sellega tühistame me väga olulise eelduse, mis ripub veskikivina sagedusliku statistika kaelas. Nimelt, et valimi andmed peavad olema esinduslikud populatsiooni suhtes. Me võime olla üsna kindlad, et väikeste valimite korral see eeldus ei kehti ja sellega seoses ei tööta ka sageduslik statistika viisil, milleks R.A. Fisher selle kunagi lõi. Taustateadmiste mudeli peamine, kuigi mitte ainus, roll on mõjutada meie hinnangut õiges suunas vähendades halbade andmete võimet meile kahju teha. Kui sul on väike valim, siis sinu andmed vajavad sellist kantseldamist.</p>
+<p>Täpsemalt, selle joonise põhjal võib arvutada, milline on meie valimi keskväärtuse kohtamise tõenäosus igal võimalikul tõelisel ES-i väärtusel.
+Kõige tõenäolisemad on andmed siis, kui tegelik ES = andmete keskväärtusega (seda kohta näitab must joon).
+Kui me jagame musta joone pikkuse punase kurvi all läbi katkendjoone pikkusega sama kurvi all, saame teada, mitu korda on meie andmed tõenäolisemad siis, kui tegelik ES = mean(valimi ES), võrreldes olukorraga, kus tegelik ES = 0.
+Loomulikult võime sama näitaja arvutada ükskõik millise hüpoteeside paari kohta (näiteks, andmed on miljon korda tõenäolisemad hüpoteesi ES = 0.02 all kui hüpoteesi ES = -1 all; mis aga ei tähenda, et andmed oleksid väga tõenäolised kummagi võrreldud hüpoteesi all).</p>
+<p>Aga see ei ole veel Bayes.
+Lisame andmemudelile taustateadmiste mudeli.
+Sellega tühistame me väga olulise eelduse, mis ripub veskikivina sagedusliku statistika kaelas.
+Nimelt, et valimi andmed peavad olema esinduslikud populatsiooni suhtes.
+Me võime olla üsna kindlad, et väikeste valimite korral see eeldus ei kehti ja sellega seoses ei tööta ka sageduslik statistika viisil, milleks R.A. Fisher selle kunagi lõi.
+Taustateadmiste mudeli peamine, kuigi mitte ainus, roll on mõjutada meie hinnangut õiges suunas vähendades halbade andmete võimet meile kahju teha.
+Kui sul on väike valim, siis sinu andmed vajavad sellist kantseldamist.</p>
 <p>Olgu meie taustateadmise mudel normaaljaotus keskväärtusega 0 ja standardhälbega 1.</p>
 <div class="figure"><span id="fig:vrdlssdse"></span>
 <img src="98_vrdls_bayes_freq_files/figure-html/vrdlssdse-1.png" alt="Taustateadmiste mudel ehk prior on normaaljaotus (must joon), mille ülesanne on veidi vähendada ekstreemsete valimite kahjulikku mõju." width="384" />
@@ -449,26 +526,29 @@ Joonis A.2: See jaotus iseloomustab keskmise ES paiknemist puhtalt meie andmete 
 Joonis A.3: Taustateadmiste mudel ehk prior on normaaljaotus (must joon), mille ülesanne on veidi vähendada ekstreemsete valimite kahjulikku mõju.
 </p>
 </div>
-<p>Taustateadmiste mudel on sageli normaaljaotus. Kui meil on palju taustateadmisi, siis on see jaotus kõrge ja kitsas, kui meil on vähe taustateadmisi, siis on see madal ja lai.</p>
+<p>Taustateadmiste mudel on sageli normaaljaotus.
+Kui meil on palju taustateadmisi, siis on see jaotus kõrge ja kitsas, kui meil on vähe taustateadmisi, siis on see madal ja lai.</p>
 <blockquote>
 <p>Mida teha, kui sa ei taha, et taustateadmiste mudel sinu posteeriori kuju mõjutab? Sellisel juhul kasutatakse nõrgalt informatiivseid prioreid, mis tähendab, et priori jaotus on palju laiem kui tõepäramudeli laius. Miks mitte kasutada mitte-informatiivseid tasaseid prioreid? Põhjused on arvutuslikud, seega tehnilist laadi.</p>
 </blockquote>
-<p>Igal juhul järgmise sammuna korrutab bayesiaan selle jaotuse andmejaotusega, saades tulemuseks kolmanda normaaljaotuse, mille ta seejärel normaliseerib nii, et jaotuse alune pindala = 1. See kolmas jaotus on posterioorne tõenäosusjaotus, mis sisaldab kogu infot, millest saab arvutada kõige tõenäolisema katseefekti suuruse koos ebakindluse määraga selle ümber (mida rohkem andmeid, seda väiksem ebakindlus) ja tõenäosused, et tegelik katseefekt jääb ükskõik milllisesse meid huvitavasse vahemikku.</p>
+<p>Igal juhul järgmise sammuna korrutab bayesiaan selle jaotuse andmejaotusega, saades tulemuseks kolmanda normaaljaotuse, mille ta seejärel normaliseerib nii, et jaotuse alune pindala = 1.
+See kolmas jaotus on posterioorne tõenäosusjaotus, mis sisaldab kogu infot, millest saab arvutada kõige tõenäolisema katseefekti suuruse koos ebakindluse määraga selle ümber (mida rohkem andmeid, seda väiksem ebakindlus) ja tõenäosused, et tegelik katseefekt jääb ükskõik milllisesse meid huvitavasse vahemikku.</p>
 <p>Nüüd ei ole siis muud kui bayesi mudel läbi arvutada.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfa &lt;-<span class="st"> </span><span class="kw">data.frame</span>(a)
+<pre class="sourceCode r"><code class="sourceCode r">dfa &lt;-<span class="st"> </span><span class="kw">data.frame</span>(a)
 m99 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
   <span class="kw">alist</span>(
     a <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(<span class="dt">mean =</span> mu, <span class="dt">sd =</span> sigma),
     mu  <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(<span class="dv">0</span>, <span class="dv">1</span>), 
     sigma <span class="op">~</span><span class="st"> </span><span class="kw">dcauchy</span>(<span class="dv">0</span>, <span class="dv">1</span>)), 
-  <span class="dt">data =</span> dfa)</code></pre></div>
+  <span class="dt">data =</span> dfa)</code></pre>
 <div class="figure"><span id="fig:vrdlstriplot"></span>
 <img src="98_vrdls_bayes_freq_files/figure-html/vrdlstriplot-1.png" alt="Triplot. Bayesi väljund on posterioorne tõenäosusjaotus (roheline). Nagu näha, ei ole selle jaotuse tipp täpselt samas kohas kui andmejaotuse tipp ehk keskväärtus. Prior tõmbab seda veidi nulli suunas. Lisaks on posteerior veidi kitsam kui andmemudel, mis tähendab, et hinnang ES-le tuleb väiksema ebakindluse määraga." width="384" />
 <p class="caption">
 Joonis A.4: Triplot. Bayesi väljund on posterioorne tõenäosusjaotus (roheline). Nagu näha, ei ole selle jaotuse tipp täpselt samas kohas kui andmejaotuse tipp ehk keskväärtus. Prior tõmbab seda veidi nulli suunas. Lisaks on posteerior veidi kitsam kui andmemudel, mis tähendab, et hinnang ES-le tuleb väiksema ebakindluse määraga.
 </p>
 </div>
-<p>Posteerior sisaldab endas kogu infot, mis meil ES-i tõelise väärtuse kohta on. Siit saame arvutada:</p>
+<p>Posteerior sisaldab endas kogu infot, mis meil ES-i tõelise väärtuse kohta on.
+Siit saame arvutada:</p>
 <ol style="list-style-type: decimal">
 <li><p>parima hinnangu ES-i punktväärtusele,</p></li>
 <li><p>usaldusintervalli, ehk millisest ES-ide vahemikust loodame leida tõelise ES-i näit 90% tõenäosusega,</p></li>
@@ -480,20 +560,35 @@ Joonis A.4: Triplot. Bayesi väljund on posterioorne tõenäosusjaotus (roheline
 </div>
 <div id="sageduslik-statistik" class="section level3 unnumbered">
 <h3>Sageduslik statistik</h3>
-<p>Sageduslik lähenemine sisaldab ainult ühte mudelit, mida võrreldakse valimi andmetega. Sageduslik statistik alustab selles lihtsas näites täpselt samamoodi nagu bayesiaan, tekitades eelmisega identse andmemudeli, mis on keskendatud valimi keskväärtusele <a href="bayesi-ja-sagedusliku-statistika-vordlus.html#fig:vrdlsse">A.2</a>. Seejärel nihutab ta oma andmemudelit niipalju, et normaaljaotuse tipp ei ole enam valimi keskväärtuse kohal vaid hoopis 0-efekti kohal. Jaotuse laius nihutamisel ei muutu.</p>
+<p>Sageduslik lähenemine sisaldab ainult ühte mudelit, mida võrreldakse valimi andmetega.
+Sageduslik statistik alustab selles lihtsas näites täpselt samamoodi nagu bayesiaan, tekitades eelmisega identse andmemudeli, mis on keskendatud valimi keskväärtusele <a href="bayesi-ja-sagedusliku-statistika-vordlus.html#fig:vrdlsse">A.2</a>.
+Seejärel nihutab ta oma andmemudelit niipalju, et normaaljaotuse tipp ei ole enam valimi keskväärtuse kohal vaid hoopis 0-efekti kohal. Jaotuse laius nihutamisel ei muutu.</p>
 <div class="figure"><span id="fig:vrdlsnull"></span>
 <img src="98_vrdls_bayes_freq_files/figure-html/vrdlsnull-1.png" alt="Nullhüpotees (must kõver) ja tõepärafunktsioon (punane kõver)." width="672" />
 <p class="caption">
 Joonis A.5: Nullhüpotees (must kõver) ja tõepärafunktsioon (punane kõver).
 </p>
 </div>
-<p>Seda nullile tsentreeritud mudelit kutsutakse null-hüpoteesiks (H<sub>0</sub>). Nüüd võrdleb ta oma valimi keskväärtust (must joon) H<sub>0</sub> jaotusega. Kui valimi keskväärtuse kohal on H<sub>0</sub> jaotus kõrge, siis on andmete tõenäosus H<sub>0</sub> kehtimise korral suur. Ja vastupidi, kui valimi keskväärtuse kohal on H<sub>0</sub> madal, siis on andmete esinemise tõenäosus H<sub>0</sub> all madal. Seda tõenäosust kutsutakse p väärtuseks. Mida väiksem on p, seda vähem tõenäolised on teie andmed juhul, kui H~0 on tõene ja katseefekt võrdub nulliga. P on defineeritud kui “teie andmete või 0-st veel kaugemal asuvate andmete esinemise pikaajaline suhteline sagedus tingimusel, et H<sub>0</sub> kehtib”.</p>
+<p>Seda nullile tsentreeritud mudelit kutsutakse null-hüpoteesiks (H<sub>0</sub>).
+Nüüd võrdleb ta oma valimi keskväärtust (must joon) H<sub>0</sub> jaotusega.
+Kui valimi keskväärtuse kohal on H<sub>0</sub> jaotus kõrge, siis on andmete tõenäosus H<sub>0</sub> kehtimise korral suur.
+Ja vastupidi, kui valimi keskväärtuse kohal on H<sub>0</sub> madal, siis on andmete esinemise tõenäosus H<sub>0</sub> all madal.
+Seda tõenäosust kutsutakse p väärtuseks.
+Mida väiksem on p, seda vähem tõenäolised on teie andmed juhul, kui H~0 on tõene ja katseefekt võrdub nulliga.
+P on defineeritud kui “teie andmete või 0-st veel kaugemal asuvate andmete esinemise pikaajaline suhteline sagedus tingimusel, et H<sub>0</sub> kehtib”.</p>
 </div>
 <div id="tulemuste-tolgendamine" class="section level3 unnumbered">
 <h3>Tulemuste tõlgendamine</h3>
-<p>Kui sageduslik statistik kirjutab, et tema “efekti suurus on statistiliselt oluline 0.05 olulisusnivool”, siis ta ütleb sellega, et tema poolt arvutatud p &lt; 0.05. Selle väite korrektne tõlgendus on, et juhul kui statistik pika aja jooksul võtab omaks “statistiliselt olulistena” kõik tulemused, millega kaasnev p &lt; 0.05 ja lükkab tagasi kõik tulemused, mille p &gt; 0.05, siis sooritab ta 5% sagedusega 1. tüüpi vigu. See tähendab, et igast sajast tõesest H~0-st, mida ta testib, võtab ta keskeltläbi 5 vastu, kui statistiliselt olulised. Sageduslik statistika on parim viis 1. tüüpi vigade sageduse fikseerimiseks.</p>
-<p>Paraku ei tea me ühegi üksiku testi kohta ette, kas see testib kehtivat või mittekehtivat H<sub>0</sub>-i, mis teeb raskeks katseseeriate ühekaupa tõlgendamise. Tuletame meelde, et sageduslikus statistikas ei saa rääkida H<sub>0</sub> kehtimise tõenäosusest vaid peab rääkima andmete tõenäosusest (ehk andmete esinemise sagedusest) tingimusel, et H<sub>0</sub> kehtib.</p>
-<p><strong>Kas ühte p väärtust saab tõlgendada kui hinnangut tõendusmaterjali hulgale, mida teie valim pakub H<sub>0</sub> vastu?</strong> Selle üle on vaieldud juba üle 80 aasta, kuid tundub, et ainus viis seda kas või umbkaudu teha on bayesiaanlik. Igal juhul, p väärtust, mis on defineeritud pikaajalise sagedusena, on raske rakendada üksiksündmusele. Bayesiaanliku p väärtuste tõlgendamiskalkulaatori leiate aadressilt <a href="http://www.graphpad.com/quickcalcs/interpretPValue1/" class="uri">http://www.graphpad.com/quickcalcs/interpretPValue1/</a>.</p>
+<p>Kui sageduslik statistik kirjutab, et tema “efekti suurus on statistiliselt oluline 0.05 olulisusnivool”, siis ta ütleb sellega, et tema poolt arvutatud p &lt; 0.05.
+Selle väite korrektne tõlgendus on, et juhul kui statistik pika aja jooksul võtab omaks “statistiliselt olulistena” kõik tulemused, millega kaasnev p &lt; 0.05 ja lükkab tagasi kõik tulemused, mille p &gt; 0.05, siis sooritab ta 5% sagedusega 1. tüüpi vigu.
+See tähendab, et igast sajast tõesest H~0-st, mida ta testib, võtab ta keskeltläbi 5 vastu, kui statistiliselt olulised.
+Sageduslik statistika on parim viis 1. tüüpi vigade sageduse fikseerimiseks.</p>
+<p>Paraku ei tea me ühegi üksiku testi kohta ette, kas see testib kehtivat või mittekehtivat H<sub>0</sub>-i, mis teeb raskeks katseseeriate ühekaupa tõlgendamise.
+Tuletame meelde, et sageduslikus statistikas ei saa rääkida H<sub>0</sub> kehtimise tõenäosusest vaid peab rääkima andmete tõenäosusest (ehk andmete esinemise sagedusest) tingimusel, et H<sub>0</sub> kehtib.</p>
+<p><strong>Kas ühte p väärtust saab tõlgendada kui hinnangut tõendusmaterjali hulgale, mida teie valim pakub H<sub>0</sub> vastu?</strong>
+Selle üle on vaieldud juba üle 80 aasta, kuid tundub, et ainus viis seda kas või umbkaudu teha on bayesiaanlik.
+Igal juhul, p väärtust, mis on defineeritud pikaajalise sagedusena, on raske rakendada üksiksündmusele.
+Bayesiaanliku p väärtuste tõlgendamiskalkulaatori leiate aadressilt <a href="http://www.graphpad.com/quickcalcs/interpretPValue1/" class="uri">http://www.graphpad.com/quickcalcs/interpretPValue1/</a>.</p>
 <blockquote>
 <p>Kujutle mass spektroskoopia katset, kus mõõdame 2000 valgu tasemeid katse-kontroll skeemis ja katset korratakse n korda. Sageduslik statistik kasutab adjusteeritud p väärtusi või q väärtusi, et tõmmata piir, millest ühele poole jäävad statistiliselt olulised ES-d ja teisele poole mitteolulised null-efektid. Edasi tõlgendab ta mitteolulisi efekte kui ebaolulisi ja diskuteerib vaid “olulisi” efekte. Paraku, p väärtuste arvutamine ja adjusteerimine saab toimuda mitmel erineval moel ja usalduspiiri panekule just 95-le protsendile, mitte näiteks 89% või 99.2%-le, pole ühtegi ratsionaalset põhjendust. Seega tõmbab ta sisuliselt juhuslikus kohas joone läbi efektide, misjärel ignoreerib kõiki sellest joonest valele poole jäänud efekte. Meetod, mis väga hästi töötab pikaajalises kvaliteedikontrollis, ei ole kahjuks kuigi mõistlik katse tulemuste ükshaaval tõlgendamises. Mis juhtub, kui oleme kavalad ja proovime mitmeid erinevaid p väärtustega töötamise meetodeid, et valida välja see usalduspiir, millest õigele poole jäävaid andmeid on teaduslikult kõige parem tõlgendada? Ehkki ükshaaval võisid kõik meie poolt läbi arvutatud meetodid olla lubatud (ja isegi võrdselt head), ei fikseeri p nüüd enam 1. tüüpi vigade sagedust. See tähendab, et p on kaotanud definitsioonijärgse tähenduse ja te oleksite võinud olulisuspiiri sama hästi tõmmata tunde järgi.</p>
 </blockquote>
@@ -527,18 +622,28 @@ Joonis A.5: Nullhüpotees (must kõver) ja tõepärafunktsioon (punane kõver).
 <h2>Statistiline ennustus kui mitmetasandiline protsess</h2>
 <p>Me võime vaadelda ennustavat statistikat mitmetasemelise protsessina, kus alumisel tasemel on punkthinnang parameetri väärtusele, selle peal oleval tasemel on hinnang ebakindlusele selle punkthinnangu ümber, ning 3. tasemel on omakorda hinnang ebakindlusele 2. taseme hinnangu ümber. Ja nii edasi lõpmatusse. Bayes erineb klassikalisest statistikast selle poolest, et kui Bayes ehitab 2. taseme hinnangu tõepära ja priori põhjal, siis klassikaline statistika kasutab selleks pelgalt tõepära (konverteerituna null hüpoteesiks). See on tähtis, kuna tõepära modelleerib ainult seda osa juhuslikust varieeruvusest punkthinnangu ümber, mida kutsutakse valimiveaks. Prior on võimeline arvesse võtma ka andmete kallutatust.</p>
 <p>Kuna klassikalises statistikas ei ole formaalset priori mudelit, ei hinda klassikalised usaldusintervallid (2. tase) tõelist ebakindlust punktväärtuse ümber. Seda teevad bayesiaanlikud kredibiilsusintervallid, aga ainult siis, kui priorite koostamisse on tõsiselt suhtutud.</p>
-<p><strong>I Punkthinnang</strong> – enamasti aritmeetiline keskmine –- modelleerib andmejaotuse tüüpilist elementi. Eeldus: me teame, milline on andmete jaotus.</p>
-<p><strong>II tõepärafunktsioon</strong> hindab ebakindlust punkthinnangu ümber. Modelleerib valimiviga, mis on seda suurem, mida vähem on teil andmeid. Eeldus 1: andmed on esinduslikud (andmejaotus = populatsiooni jaotus) Eeldus 2: mudel kirjeldab andmeid genereerivat mehhanismi (siit tulevad sageli lisaeeldused, nagu populatsiooni normaaljaotus, lineaarsus, sõltumatud sündmused valimi koostamisel, vigade sõltumatus, homoskedastilisus jms)</p>
-<p><strong>III prior</strong> kohendab tõepärafunktsiooni hinnangut Modelleerib (1) andmete esinduslikkust, mis on seda väiksem, mida väiksem on valim, ja (2) süstemaatilist viga. Eeldus: meil on oma andmetest sõltumatuid teadmisi populatsiooni jaotuse kohta</p>
+<p><strong>I Punkthinnang</strong> – enamasti aritmeetiline keskmine –- modelleerib andmejaotuse tüüpilist elementi.
+Eeldus: me teame, milline on andmete jaotus.</p>
+<p><strong>II tõepärafunktsioon</strong> hindab ebakindlust punkthinnangu ümber.
+Modelleerib valimiviga, mis on seda suurem, mida vähem on teil andmeid.
+Eeldus 1: andmed on esinduslikud (andmejaotus = populatsiooni jaotus)
+Eeldus 2: mudel kirjeldab andmeid genereerivat mehhanismi (siit tulevad sageli lisaeeldused, nagu populatsiooni normaaljaotus, lineaarsus, sõltumatud sündmused valimi koostamisel, vigade sõltumatus, homoskedastilisus jms)</p>
+<p><strong>III prior</strong> kohendab tõepärafunktsiooni hinnangut
+Modelleerib (1) andmete esinduslikkust, mis on seda väiksem, mida väiksem on valim, ja (2) süstemaatilist viga.
+Eeldus: meil on oma andmetest sõltumatuid teadmisi populatsiooni jaotuse kohta</p>
 <p>Kui valim on piisavalt suur, siis võime olla piisavalt kindlad, et andmed on esinduslikud ning klassikalise statistika hinnangud ebakindlusele punktväärtuse ümber muutuvad selle võrra usutavamaks.<br />
 Samas, sedamõõda kui valimi suurus kasvab, muutub tõepärafunktsioon üha kitsamaks, mis tõstab omakorda tõenäosust, et tegelik parameetri väärtus jääb tõepärafunktsiooni kõrgema osa alt välja, tingituna süstemaatilisest veast, mille suurus ei sõltu valimi suurusest. Seega töötab klassikaline statistika parimini keskmiselt suurte valimite (ja keskmiselt suure andmete varieeruvuse) korral.</p>
 <div id="ajaloolist-juttu-normaaljaotus-bayes-ja-sageduslik-statistika" class="section level3">
 <h3><span class="header-section-number">A.0.1</span> Ajaloolist juttu: normaaljaotus, Bayes ja sageduslik statistika</h3>
 <p>(Anders Hald; A History of Parametric Statistical Inference from Bernoulli to Fisher, 1713-1935, Springer 2000)</p>
 <p>Laplace sõnastas 1774. aastal statistiku tööpõllu järgmiselt: kirjeldamaks andmeid (vigade jaotust) tõenäosusfunktsioonina leia matemaatiline mudel, millel oleks lõplik arv parameetreid. Seejärel leia algoritm, mis minimeeriks vead meie hinnagutele nende parameetrite väärtuste kohta. Seega oli eesmärk konverteerida andmete (mõõtmisvigade) jaotus posterioorseks tõenäosusjaotuseks, mille pealt saaks omakorda arvutada usaldusintervallid meie hinnagu täpsusele.</p>
-<p>Laplace, kes tegeles palju astronoomilste mõõtmiste analüüsiga, lootis näidata, et mõõtmisandmete aritmeetiline keskmine on parim viis arvutada sellise posterioorse jaotuse kõige tõenäolisemat väärtust (lokatsiooniparameetrit). Parim viis selles mõttes, et teoreetiliselt parima lokalisatsiooniparameetri ümber on võimalik arvutada kitsaimad veapiirid. Aritmeetilise keskmise selle pärast, et selle kasutamine oli laialt levinud, tundus intuitiivselt mõistlik ning oli arvutuslikult lihtne. Laplace probleemi lahendas Gauss ca. 1809, võttes kasutusele nii uue tõenäosusjaotuse – normaaljaotuse – kui ka uue lokatsiooniparameetri arvutusmeetodi – vähimruutude meetodi. Tema küsitud küsimus oli: millist jaotust ja hindamismeetodit oleks vaja kasutada, et lokatsiooniparameeter tuleks just aritmeetiline keskmine? Rõhutades normaaljaotuse tähtsust, leidis Laplace 1812. aastal, et kõikidest sümmetrilistest andmejaotustest viib ainult normaaljaotus olukorrani, kus aritmeetiline keskmine kattub posterioorse jaotuse tipuga.</p>
+<p>Laplace, kes tegeles palju astronoomilste mõõtmiste analüüsiga, lootis näidata, et mõõtmisandmete aritmeetiline keskmine on parim viis arvutada sellise posterioorse jaotuse kõige tõenäolisemat väärtust (lokatsiooniparameetrit).
+Parim viis selles mõttes, et teoreetiliselt parima lokalisatsiooniparameetri ümber on võimalik arvutada kitsaimad veapiirid.
+Aritmeetilise keskmise selle pärast, et selle kasutamine oli laialt levinud, tundus intuitiivselt mõistlik ning oli arvutuslikult lihtne. Laplace probleemi lahendas Gauss ca. 1809, võttes kasutusele nii uue tõenäosusjaotuse – normaaljaotuse – kui ka uue lokatsiooniparameetri arvutusmeetodi – vähimruutude meetodi. Tema küsitud küsimus oli: millist jaotust ja hindamismeetodit oleks vaja kasutada, et lokatsiooniparameeter tuleks just aritmeetiline keskmine?
+Rõhutades normaaljaotuse tähtsust, leidis Laplace 1812. aastal, et kõikidest sümmetrilistest andmejaotustest viib ainult normaaljaotus olukorrani, kus aritmeetiline keskmine kattub posterioorse jaotuse tipuga.</p>
 <p>Kuna Laplace ei teadnud midagi tegelike veajaotuste kohta astronoomilistel mõõtmistel, oli tal raskusi andmejaotuse spetsifitseerimisega, mille pealt Bayesi teoreemiga posterioorne hinnanguvigade jaotus arvutada. Mõõtmisvigu tavatseti mudeldada nelinurksete, kolmnurksete või kvadraat-jaotustega ja polnud ühtki teaduslikku põhjust eelistada üht jaotust teistele. See oli üks põhjuseid, miks Laplace hakkas arendama sageduslikku statistikat ja kasutas alates 1811 üha vähem Bayesi teoreemi. (Alles 1818 näitas Bessel empiiriliselt, et astronoomilised mõõtmised on normaaljaotusega.) Teine põhjus hüljata Bayesi statistika oli seotud tehniliste raskustega priorite mudeldamisel, mistõttu Laplace oli sunnitud kasutama tasaseid prioreid, mis omistasid igale sündmusele/hüpoteesile võrdse eeltõenäosuse – ja oma ilmses absurdsuses tegid elu lihtsaks tema kriitikutele.</p>
-<p>Sageduslik statistika kasutab oma alusena keskset piirteoreemi (Laplace 1810, 1812), mille kohaselt on paljude andmevalimite <em>aritmeetilised keskmised</em> normaaljaotusega, ja seda hoolimata andmete tegelikust jaotusest (eeldusel, et valimid on piisavalt suured; vt 6. ptk). Seega, senikaua kuni me ei modelleeri mitte ühe valimi empiirilist andmete jaotust (mida vajab Bayesi teoreem), vaid hoopis paljude virtuaalsete valimite pealt arvutatud <em>keskväärtuste jaotust</em>, ei pea me teadma, milline on andmete tegelik jaotus. Sellelt pinnalt ongi välja töötatud nullhüpoteesi testimine, millel põhineb suur osa 20. sajandi statistikast. 1908 näitas Edgeworth, et suurte valimite ja mitteinformatiivsete priorite korral annavad mõlemad meetodid (Bayes ja sageduslik) sama hinnangu parameetriväärtusele ja numbriliselt sama usaldusintervalli.</p>
+<p>Sageduslik statistika kasutab oma alusena keskset piirteoreemi (Laplace 1810, 1812), mille kohaselt on paljude andmevalimite <em>aritmeetilised keskmised</em> normaaljaotusega, ja seda hoolimata andmete tegelikust jaotusest (eeldusel, et valimid on piisavalt suured; vt 6. ptk). Seega, senikaua kuni me ei modelleeri mitte ühe valimi empiirilist andmete jaotust (mida vajab Bayesi teoreem), vaid hoopis paljude virtuaalsete valimite pealt arvutatud <em>keskväärtuste jaotust</em>, ei pea me teadma, milline on andmete tegelik jaotus. Sellelt pinnalt ongi välja töötatud nullhüpoteesi testimine, millel põhineb suur osa 20. sajandi statistikast.
+1908 näitas Edgeworth, et suurte valimite ja mitteinformatiivsete priorite korral annavad mõlemad meetodid (Bayes ja sageduslik) sama hinnangu parameetriväärtusele ja numbriliselt sama usaldusintervalli.</p>
 <p><strong>Sagedusliku statistika põhiprintsiibid: Fisher 1922.</strong></p>
 <p>Statistilisete meetodite eesmärk on andmete redutseerimine. Selleks on vaja vaadelda andmeid juhuvalimina hüpoteetilisest lõpmata suurest populatsioonist, mille jaotust saab kirjeldada suhteliselt väheste parameetritega mudeli abil. (Valimit iseloomustab “statistik”, populatsiooni aga “parameeter”)</p>
 <p>Statistik puutub kokku kolme sorti probleemidega:</p>
@@ -615,11 +720,10 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

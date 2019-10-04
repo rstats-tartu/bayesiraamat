@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>19 Keerulisemate mudelitega töötamine | Bayesi statistika kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
   <meta property="og:title" content="19 Keerulisemate mudelitega töötamine | Bayesi statistika kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="mitme-prediktoriga-lineaarne-regressioon.html"/>
-<link rel="next" href="mitmetasemelised-mudelid.html"/>
+<link rel="prev" href="mitme-prediktoriga-lineaarne-regressioon.html">
+<link rel="next" href="mitmetasemelised-mudelid.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -47,46 +47,75 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
 
 <script src="https://use.fontawesome.com/e4ba4259a1.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-pre, code { background-color: #f8f8f8; }
-code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code > span.dt { color: #204a87; } /* DataType */
-code > span.dv { color: #0000cf; } /* DecVal */
-code > span.bn { color: #0000cf; } /* BaseN */
-code > span.fl { color: #0000cf; } /* Float */
-code > span.ch { color: #4e9a06; } /* Char */
-code > span.st { color: #4e9a06; } /* String */
-code > span.co { color: #8f5902; font-style: italic; } /* Comment */
-code > span.ot { color: #8f5902; } /* Other */
-code > span.al { color: #ef2929; } /* Alert */
-code > span.fu { color: #000000; } /* Function */
-code > span.er { color: #a40000; font-weight: bold; } /* Error */
-code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #000000; } /* Constant */
-code > span.sc { color: #000000; } /* SpecialChar */
-code > span.vs { color: #4e9a06; } /* VerbatimString */
-code > span.ss { color: #4e9a06; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #000000; } /* Variable */
-code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code > span.ex { } /* Extension */
-code > span.at { color: #c4a000; } /* Attribute */
-code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -301,13 +330,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="23" data-path="brms-suntaks.html"><a href="brms-suntaks.html"><i class="fa fa-check"></i><b>23</b> brms süntaks</a><ul>
 <li class="chapter" data-level="23.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#general-formula-structure"><i class="fa fa-check"></i><b>23.1</b> General formula structure</a><ul>
-<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#group-level-terms-xg-1idg-grx-by-mmg1-g2"><i class="fa fa-check"></i><b>23.1.1</b> Group-level terms: x||g, 1|ID|g, gr(x, by = ), mm(g1, g2)</a></li>
-<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.2</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
-<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.3</b> Additional response information</a></li>
-<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for non-linear models</a></li>
-<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for predicting distributional parameters</a></li>
-<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for mixture models</a></li>
-<li class="chapter" data-level="23.1.7" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.7</b> Formula syntax for multivariate models</a></li>
+<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.1</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
+<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.2</b> Additional response information</a></li>
+<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.3</b> Formula syntax for non-linear models</a></li>
+<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for predicting distributional parameters</a></li>
+<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for mixture models</a></li>
+<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for multivariate models</a></li>
 </ul></li>
 <li class="chapter" data-level="23.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#brms-likelihoods"><i class="fa fa-check"></i><b>23.2</b> brms likelihoods</a></li>
 <li class="chapter" data-level="23.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#priors"><i class="fa fa-check"></i><b>23.3</b> priors</a><ul>
@@ -387,35 +415,36 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="keerulisemate-mudelitega-tootamine" class="section level1">
 <h1><span class="header-section-number">19</span> Keerulisemate mudelitega töötamine</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 <span class="kw">library</span>(gapminder)
 <span class="kw">library</span>(rethinking)
 <span class="kw">library</span>(bayesplot)
-<span class="kw">library</span>(gridExtra)</code></pre></div>
-<p>Kasuta graafilisi meetodeid. Mudeli koefitsientide jõllitamine üksi ei päästa.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g2007 &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="kw">library</span>(gridExtra)</code></pre>
+<p>Kasuta graafilisi meetodeid.
+Mudeli koefitsientide jõllitamine üksi ei päästa.</p>
+<pre class="sourceCode r"><code class="sourceCode r">g2007 &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>)
 g2007 &lt;-<span class="st"> </span>g2007 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">l_GDP =</span> <span class="kw">log10</span>(gdpPercap),
          <span class="dt">l_pop =</span> <span class="kw">log10</span>(pop), 
          <span class="dt">lpop_s =</span> (l_pop <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(l_pop )) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(l_pop),
          <span class="dt">lGDP_s =</span> (l_GDP <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(l_GDP )) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(l_GDP)) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">as.data.frame</span>()</code></pre></div>
+<span class="st">  </span><span class="kw">as.data.frame</span>()</code></pre>
 <div id="predictor-residual-plots" class="section level2 unnumbered">
 <h2>Predictor residual plots</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m5 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
+<pre class="sourceCode r"><code class="sourceCode r">m5 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
     <span class="kw">alist</span>(
         lifeExp <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>( mu , sigma ) ,
         mu &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b_GDP <span class="op">*</span><span class="st"> </span>lGDP_s <span class="op">+</span><span class="st"> </span>b_pop <span class="op">*</span><span class="st"> </span>lpop_s ,
         a <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>( <span class="dv">0</span> , <span class="dv">10</span> ) ,
         <span class="kw">c</span>(b_GDP, b_pop) <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>( <span class="dv">0</span> , <span class="dv">1</span> ) ,
         sigma <span class="op">~</span><span class="st"> </span><span class="kw">dunif</span>( <span class="dv">0</span> , <span class="dv">10</span> )
-), <span class="dt">data =</span> g2007 )</code></pre></div>
+), <span class="dt">data =</span> g2007 )</code></pre>
 <p>Plotime varieeruvuse, mida mudel ei oota ega seleta.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(<span class="kw">coef</span>(m5))
-<span class="co">#&gt; [1] &quot;a&quot;     &quot;b_GDP&quot; &quot;b_pop&quot; &quot;sigma&quot;</span></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(<span class="kw">coef</span>(m5))
+<span class="co">#&gt; [1] &quot;a&quot;     &quot;b_GDP&quot; &quot;b_pop&quot; &quot;sigma&quot;</span></code></pre>
 <p>Kõigepealt lihtne residuaalide plot, kus meil on y-teljel residuaalid ja x-teljel X1 muutuja tegelikud valimiväärtused. Y = 0 tähistab horisontaalse joonena mudeli ennustatud Y (eluea) väärtusi kõigil prediktori X1 (lGDP_s) väärtustel ja residuaal on defineeritud kui tegelik Y miinus mudeli poolt ennustatud eluiga sellel X1 väärtusel. Mudeli ennustuse saamiseks anname mudelile ette fikseeritud parameetrite (koefitsientide) a, b_GDP ja b_pop väärtused ning arvutame oodatava keskmise eluea üle kõigi valimis leiduvate lGDP_s ja lpop_s väärtuste. Seega saame sama palju keskmise eluea ennustusi, kui palju on meie andmetabelis ridu.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Using the fitted model compute the expected value of y (mu) </span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Using the fitted model compute the expected value of y (mu) </span>
 <span class="co"># for each of the 142 data rows.</span>
 mu &lt;-<span class="st"> </span><span class="kw">coef</span>(m5)[<span class="st">&#39;a&#39;</span>] <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">coef</span>(m5)[<span class="st">&#39;b_GDP&#39;</span>] <span class="op">*</span><span class="st"> </span>g2007<span class="op">$</span>lGDP_s <span class="op">+</span><span class="st"> </span>
@@ -427,7 +456,7 @@ m.resid &lt;-<span class="st"> </span>g2007<span class="op">$</span>lifeExp <spa
 <span class="kw">ggplot</span>( g2007, <span class="kw">aes</span>( lGDP_s, m.resid ) ) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_segment</span>( <span class="kw">aes</span>( <span class="dt">xend =</span> lGDP_s, <span class="dt">yend =</span> <span class="dv">0</span> ), <span class="dt">size =</span> <span class="fl">0.2</span> ) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>( <span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">type =</span> <span class="dv">1</span> )
-<span class="co">#&gt; Warning: Ignoring unknown parameters: type</span></code></pre></div>
+<span class="co">#&gt; Warning: Ignoring unknown parameters: type</span></code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-7"></span>
 <img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-7-1.png" alt="Mudeli residuaalide plot (m.resid ~ X1)." width="672" />
 <p class="caption">
@@ -436,11 +465,11 @@ Joonis 4.3: Mudeli residuaalide plot (m.resid ~ X1).
 </div>
 <p>Me näeme, et seal kus SKP on väiksem kipuvad residuaalid olema negatiivsed, mis tähendab, et mudel ülehindab keskmist eluiga. Ja vastupidi, seal kus SKP on üle keskmise, mudel kipub alahindma keskmist eluiga.</p>
 <p>See seos tuleb eriti selgelt välja järgmisel pildil, kus plotime residuaalide sõltuvuse elueast (kui eelmine plot oli m.resid ~ X1, siis nüüd plotime m.resid ~ Y). Lisaks joonistame selguse mõttes regressioonisirge. Kui residuaalid oleks ühtlaselt jaotunud mõlemale poole mudeli ennustust, siis saaksime horisontaalse regressioonisirge. Tegeliku sirge tõus näitab, et suuremad eluead omavad eelistatult poitiivseid residuaale ja väiksemad eluead negatiivseid residuaale. See tähendab, et mudel alahindab eluiga seal, kus SKP on kõrge ja vastupidi, ülehindab eluiga seal, kus SKP on madal.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g2007<span class="op">$</span>m.resid &lt;-<span class="st"> </span>m.resid
+<pre class="sourceCode r"><code class="sourceCode r">g2007<span class="op">$</span>m.resid &lt;-<span class="st"> </span>m.resid
 <span class="kw">ggplot</span>(g2007, <span class="kw">aes</span>(lifeExp, m.resid)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">color =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">linetype =</span> <span class="dv">2</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">color =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">linetype =</span> <span class="dv">2</span>)</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-8"></span>
 <img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-8-1.png" alt="m.resid ~ Y plot" width="672" />
 <p class="caption">
@@ -452,7 +481,7 @@ Joonis 19.1: m.resid ~ Y plot
 <div id="ennustavad-plotid" class="section level2 unnumbered">
 <h2>Ennustavad plotid</h2>
 <p>Plot, kus me ennustame keskmise eluea sõltuvust SKP-st nii riikide kaupa eraldi (andmepunktide paupa) kui üldiselt kõikide riikide keskmisena, millel on mingi kindel SKP (mudeli parima ennustuse ehk sirge asendi ümber valitsevat ebakindlust). Et seda teha, hoiame rahvaarvu konstantsena oma keskväärtusel, mis standardiseeritud andmetl võrdub alati nulliga. link() funktsioon annab meile keskmiste eluigade ennustused meie poolt ette antud X1 ja X2 väärtustel, ning sim() annab meile eluigade ennustused fiktsionaalsete riikide kaupa samadel X1 ja X2 väärtustel. Nagu näha, on meie mudeli arvates riikide kaupa ennustamine palju laiema varieeruvusega kui üle kõikväimalike riikide kesmise kaupa ennustamine.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># prepare new counterfactual data</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># prepare new counterfactual data</span>
 pred.data &lt;-<span class="st"> </span><span class="kw">tibble</span>(
     <span class="dt">lGDP_s =</span> <span class="kw">seq</span>(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="dt">length.out =</span> <span class="dv">30</span>), <span class="co"># need meie poolt valitud lGDP_s väärtused, millele me ennustame vastavad eluead </span>
     <span class="dt">lpop_s =</span> <span class="dv">0</span> <span class="co"># rahvaarv fikseeritakse muutuja keskmisele tasemele, mis standardiseeritud andmete korral = 0</span>
@@ -496,7 +525,7 @@ pred.data<span class="op">$</span>upper1 &lt;-<span class="st"> </span>R.PI[<spa
 <span class="kw">ggplot</span>(pred.data, <span class="kw">aes</span>(lGDP_s, mu.mean)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> lower, <span class="dt">ymax =</span> upper), <span class="dt">fill =</span> <span class="st">&quot;grey60&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> lower1, <span class="dt">ymax =</span> upper1), <span class="dt">fill =</span> <span class="st">&quot;grey10&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.3</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> lower1, <span class="dt">ymax =</span> upper1), <span class="dt">fill =</span> <span class="st">&quot;grey10&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.3</span>)</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-9"></span>
 <img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-9-1.png" alt="Ennustav plot" width="672" />
 <p class="caption">
@@ -511,7 +540,7 @@ Joonis 4.4: Ennustav plot
 <ol style="list-style-type: decimal">
 <li>võrdle mudeli ennustusi andmetega. (Aga arvesta sellega, et mitte kõik mudelid ei püüagi täpselt andmetele vastata.)</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">yrep &lt;-<span class="st"> </span><span class="kw">sim</span>(m5)
+<pre class="sourceCode r"><code class="sourceCode r">yrep &lt;-<span class="st"> </span><span class="kw">sim</span>(m5)
 <span class="co">#&gt; [ 100 / 1000 ]</span>
 [ <span class="dv">200</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> ]
 [ <span class="dv">300</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> ]
@@ -522,7 +551,7 @@ Joonis 4.4: Ennustav plot
 [ <span class="dv">800</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> ]
 [ <span class="dv">900</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> ]
 [ <span class="dv">1000</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> ]
-<span class="kw">ppc_dens</span>(g2007<span class="op">$</span>lifeExp, yrep[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ])</code></pre></div>
+<span class="kw">ppc_dens</span>(g2007<span class="op">$</span>lifeExp, yrep[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ])</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-10"></span>
 <img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-10-1.png" alt="Valimi andmed vs. mudeli poolt ennustatud andmed." width="672" />
 <p class="caption">
@@ -534,7 +563,7 @@ Joonis 19.2: Valimi andmed vs. mudeli poolt ennustatud andmed.
 </ol>
 <p>Ploti ennustused andmepunktide vastu, pluss jooned, mis näitavad igale ennustusele omistatud usaldusintervalli. Lisaks veel sirge, mis näitab täiuslikku ennustust (slope = 1, intercept = 0).</p>
 <p>Ja nüüd plotime ennustused Y-le tegelike Y valimi väärtuste vastu:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mu &lt;-<span class="st"> </span><span class="kw">link</span>(m5)  
+<pre class="sourceCode r"><code class="sourceCode r">mu &lt;-<span class="st"> </span><span class="kw">link</span>(m5)  
 <span class="co">#&gt; [ 100 / 1000 ]</span>
 [ <span class="dv">200</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> ]
 [ <span class="dv">300</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> ]
@@ -557,7 +586,7 @@ g2007<span class="op">$</span>mu.mean &lt;-<span class="st"> </span>mu.mean
 <span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">2</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Predicted life expectancy&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Observed life expectancy&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">coord_cartesian</span>( <span class="dt">xlim=</span><span class="kw">c</span>( <span class="dv">40</span>, <span class="dv">85</span> ), <span class="dt">ylim=</span><span class="kw">c</span>( <span class="dv">40</span>, <span class="dv">85</span> ))</code></pre></div>
+<span class="st">  </span><span class="kw">coord_cartesian</span>( <span class="dt">xlim=</span><span class="kw">c</span>( <span class="dv">40</span>, <span class="dv">85</span> ), <span class="dt">ylim=</span><span class="kw">c</span>( <span class="dv">40</span>, <span class="dv">85</span> ))</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-11"></span>
 <img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-11-1.png" alt="Ennustus vs. valimi väärtus" width="672" />
 <p class="caption">
@@ -566,7 +595,7 @@ Joonis 4.5: Ennustus vs. valimi väärtus
 </div>
 <p>Siin on ennustus ja seda ümbritsev ebakindlus iga riigi keskmisele elueale.</p>
 <p>Järgnev plot annab ennustusvea igale riigile. Siin tähistab 89% CI näiteks Vietnamile eluigade vahemikku, millese jääb mudeli ennustuse kohaselt 89% kõikvõimalike fiktsionaalsete riikide keskmistest eluigadest, mille SKP ja rahvaarv võrdub Vietnami omaga. Kuna me tsentreerime CI Vietnami tegeliku keskmise eluea residuaalile (erinevusele mudeli ennustusest), näitab see, kui palju erineb Vietnami eluiga mudeli ennustusest riikidele, nagu Vietnam. See plot annab meile riigid, mille suhtes mudel jänni jääb. Enamasti leiame need riigid Aafrikast.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute residuals</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute residuals</span>
 life.resid &lt;-<span class="st"> </span>g2007<span class="op">$</span>lifeExp <span class="op">-</span><span class="st"> </span>mu.mean
 
 mu_sim &lt;-<span class="st"> </span><span class="kw">sim</span>( m5 )  
@@ -589,7 +618,7 @@ sim.PI &lt;-<span class="st"> </span><span class="kw">apply</span>( mu_sim , <sp
                   <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>),
-        <span class="dt">axis.title.y =</span> <span class="kw">element_blank</span>())</code></pre></div>
+        <span class="dt">axis.title.y =</span> <span class="kw">element_blank</span>())</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-12"></span>
 <img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-12-1.png" alt="Ennustused riigi kaupa." width="672" />
 <p class="caption">
@@ -603,8 +632,9 @@ Joonis 16.7: Ennustused riigi kaupa.
 <p>Eelnevad mudelid eeldavad, et prediktorite varieeruvused on üksteisest sõltumatud. Aga mis siis, kui see nii ei ole ja ühe prediktori mõju suurus sõltub teisest prediktorist, ehk prediktorite vahel on interaktsioon? Lihtsaim viis sellist interaktsiooni modelleerida on lisades interaktsiooni aditiivsele mudelile korrutamisetehtena:</p>
 <p><span class="math inline">\(y = a + b1x1 + b2x2 + b3x1x2\)</span></p>
 <p>Sellise mudeli järgi erineb sirge tõus b1 erinevatel b2 väärtustel, ja erinevuse määr sõltub b3-st (b3 annab interaktsiooni tugevuse). Samamoodi ja sümmeetriliselt erineb ka tõus b2 sõltuvalt b1 väärtusest. See on ühine paljude hierarhiliste mudelitega, mida võib omakorda vaadelda massivsete interaktsioonimudelitena. Seevastu y = a + b1x1 + b2x2 tüüpi mudel annab b1-le konstantse tõusunurga, kuid laseb intercepti muutuma sõltuvalt b2 väärtusest (ja vastupidi).</p>
-<p>Interaktsioonimudeli fittimises pole midagi erilist võrreldes sellega, mida me oleme juba õppinud. Aga fititud parameetrite tõlgendamine on keeruline. Alustame diskreetse muutujaga, continent, ja mudeldame selle interaktsiooni SKP-ga.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f1 &lt;-<span class="st"> </span><span class="kw">glimmer</span>(lifeExp <span class="op">~</span><span class="st"> </span>lGDP_s <span class="op">*</span><span class="st"> </span>continent, <span class="dt">data =</span> g2007)
+<p>Interaktsioonimudeli fittimises pole midagi erilist võrreldes sellega, mida me oleme juba õppinud. Aga fititud parameetrite tõlgendamine on keeruline.
+Alustame diskreetse muutujaga, continent, ja mudeldame selle interaktsiooni SKP-ga.</p>
+<pre class="sourceCode r"><code class="sourceCode r">f1 &lt;-<span class="st"> </span><span class="kw">glimmer</span>(lifeExp <span class="op">~</span><span class="st"> </span>lGDP_s <span class="op">*</span><span class="st"> </span>continent, <span class="dt">data =</span> g2007)
 <span class="co">#&gt; alist(</span>
 <span class="co">#&gt;     lifeExp ~ dnorm( mu , sigma ),</span>
 <span class="co">#&gt;     mu &lt;- Intercept +</span>
@@ -628,9 +658,9 @@ Joonis 16.7: Ennustused riigi kaupa.
 <span class="co">#&gt;     b_lGDP_s_X_continentEurope ~ dnorm(0,10),</span>
 <span class="co">#&gt;     b_lGDP_s_X_continentOceania ~ dnorm(0,10),</span>
 <span class="co">#&gt;     sigma ~ dcauchy(0,2)</span>
-<span class="co">#&gt; )</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m1 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(f1<span class="op">$</span>f, f1<span class="op">$</span>d)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">precis</span>(m1))</code></pre></div>
+<span class="co">#&gt; )</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">m1 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(f1<span class="op">$</span>f, f1<span class="op">$</span>d)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">precis</span>(m1))</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-16"></span>
 <img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-16-1.png" alt="Mudeli koefitsientide plot." width="672" />
 <p class="caption">
@@ -640,16 +670,16 @@ Joonis 4.7: Mudeli koefitsientide plot.
 <p>Aafrika on siin võrdluseks.</p>
 <p>Interaktsioon on sümmeetriline. Me võime sama hästi küsida, kui palju SKP mõju elueale sõltub kontinendist, kui seda, kui palju kontinendi mõju eluale sõltub SKP-st.</p>
 <p>Nüüd joonistame välja regressioonisirge Aafrika ja Euroopa jaoks eraldi m1 mudeli põhjal</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">c1 &lt;-<span class="st"> </span><span class="kw">coef</span>(m1)
+<pre class="sourceCode r"><code class="sourceCode r">c1 &lt;-<span class="st"> </span><span class="kw">coef</span>(m1)
 <span class="kw">names</span>(c1)
 <span class="co">#&gt;  [1] &quot;Intercept&quot;                    &quot;b_lGDP_s&quot;                    </span>
 <span class="co">#&gt;  [3] &quot;b_continentAmericas&quot;          &quot;b_continentAsia&quot;             </span>
 <span class="co">#&gt;  [5] &quot;b_continentEurope&quot;            &quot;b_continentOceania&quot;          </span>
 <span class="co">#&gt;  [7] &quot;b_lGDP_s_X_continentAmericas&quot; &quot;b_lGDP_s_X_continentAsia&quot;    </span>
 <span class="co">#&gt;  [9] &quot;b_lGDP_s_X_continentEurope&quot;   &quot;b_lGDP_s_X_continentOceania&quot; </span>
-<span class="co">#&gt; [11] &quot;sigma&quot;</span></code></pre></div>
+<span class="co">#&gt; [11] &quot;sigma&quot;</span></code></pre>
 <p>Kõigepealt defineerime X1 ja X2 väärtused, millele teeme ennustused link() funktsiooni abil. Link tabelist veergude keskmine annab keskmise eluea ennustuse vastavale mandrile ja SKP-le. PI() abil saame 89% CI igale ennustusele.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dd &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(f1<span class="op">$</span>d) <span class="co">#we use the dataframe made by glimmer()</span>
+<pre class="sourceCode r"><code class="sourceCode r">dd &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(f1<span class="op">$</span>d) <span class="co">#we use the dataframe made by glimmer()</span>
 <span class="co">#in dd all continents are in separate 2-level columns (except Africa)</span>
 dd1 &lt;-<span class="st"> </span>dd <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(continentAmericas <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, 
                      continentAsia <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, 
@@ -672,14 +702,14 @@ mu.Africa.PI &lt;-<span class="st"> </span><span class="kw">apply</span>(mu.Afri
 <span class="kw">ggplot</span>(dd1, <span class="kw">aes</span>(lGDP_s, lifeExp)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> mu.Africa.PI[<span class="dv">1</span>,], <span class="dt">ymax =</span> mu.Africa.PI[<span class="dv">2</span>,]), <span class="dt">alpha =</span> <span class="fl">0.15</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> mu.Africa.mean))</code></pre></div>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> mu.Africa.mean))</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-18"></span>
 <img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-18-1.png" alt="Ennustusplot Aafrikale." width="672" />
 <p class="caption">
 Joonis 16.9: Ennustusplot Aafrikale.
 </p>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dd1 &lt;-<span class="st"> </span>dd <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(continentEurope <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)
+<pre class="sourceCode r"><code class="sourceCode r">dd1 &lt;-<span class="st"> </span>dd <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(continentEurope <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)
 mu.Europe &lt;-<span class="st"> </span><span class="kw">link</span>(m1, dd1)
 <span class="co">#&gt; [ 100 / 1000 ]</span>
 [ <span class="dv">200</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> ]
@@ -697,7 +727,7 @@ mu.Europe.PI &lt;-<span class="st"> </span><span class="kw">apply</span>( mu.Eur
 <span class="kw">ggplot</span>(<span class="dt">data=</span>dd1, <span class="kw">aes</span>(lGDP_s, lifeExp)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_ribbon</span>( <span class="kw">aes</span>(<span class="dt">ymin=</span>mu.Europe.PI[<span class="dv">1</span>,], <span class="dt">ymax=</span>mu.Europe.PI[<span class="dv">2</span>,]), <span class="dt">alpha=</span><span class="fl">0.15</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>( <span class="kw">aes</span>( <span class="dt">y=</span>mu.Europe.mean))</code></pre></div>
+<span class="st">  </span><span class="kw">geom_line</span>( <span class="kw">aes</span>( <span class="dt">y=</span>mu.Europe.mean))</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-19"></span>
 <img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-19-1.png" alt="Ennustusplot Euroopale." width="672" />
 <p class="caption">
@@ -709,11 +739,11 @@ Joonis 16.10: Ennustusplot Euroopale.
 <div id="interaktsioonid-pidevatele-tunnustele" class="section level2 unnumbered">
 <h2>Interaktsioonid pidevatele tunnustele</h2>
 <p>Kasutame standardiseeritud prediktoreid, sest nende koefitsiente saab paremini tõlgendada (tegelikult piisab prediktorite tsentreerimisest). Meie andmed käsitlevad diabeedimarkereid Ameerika lõunaosariikide neegritel 1960-ndatel. Me ennustame siin sõltuvalt vanusest ja vööümbermõõdust hdl-i — high density cholesterol — mis on nn hea kolesterool.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diabetes &lt;-<span class="st"> </span><span class="kw">read.csv2</span>(<span class="st">&quot;data/diabetes.csv&quot;</span>)
+<pre class="sourceCode r"><code class="sourceCode r">diabetes &lt;-<span class="st"> </span><span class="kw">read.csv2</span>(<span class="st">&quot;data/diabetes.csv&quot;</span>)
 d1 &lt;-<span class="st"> </span>diabetes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(hdl, age, waist) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">na.omit</span>()
 d2 &lt;-<span class="st"> </span>d1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">age_st =</span> (age <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(age)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(age), 
-                    <span class="dt">waist_st =</span> (waist <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(waist)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(waist))</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m2 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
+                    <span class="dt">waist_st =</span> (waist <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(waist)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(waist))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">m2 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
     <span class="kw">alist</span>(
         hdl <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>( mu , sigma ) ,
         mu &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>bR<span class="op">*</span>age_st <span class="op">+</span><span class="st"> </span>bA<span class="op">*</span>waist_st <span class="op">+</span><span class="st"> </span>bAR<span class="op">*</span>age_st<span class="op">*</span>waist_st,
@@ -722,8 +752,8 @@ d2 &lt;-<span class="st"> </span>d1 <span class="op">%&gt;%</span><span class="s
         bA <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>( <span class="dv">0</span>, <span class="dv">2</span> ),
         bAR<span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>( <span class="dv">0</span>, <span class="dv">2</span>),
         sigma <span class="op">~</span><span class="st"> </span><span class="kw">dcauchy</span>( <span class="dv">0</span>, <span class="dv">1</span> )
-), <span class="dt">data =</span> d2)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">precis</span>(m2))</code></pre></div>
+), <span class="dt">data =</span> d2)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">precis</span>(m2))</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-23"></span>
 <img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-23-1.png" alt="mudeli koefitsientide plot" width="672" />
 <p class="caption">
@@ -731,34 +761,37 @@ Joonis 19.3: mudeli koefitsientide plot
 </p>
 </div>
 <p><strong>NB!</strong> Järgmised interpretatsioonid kehtivad ainult siis, kui mudeldame nullile tsentreeritud andmeid.</p>
-<p>a - hdl-i oodatav keskväärtus siis kui võõ-ümbermõõt ja vanus on fikseeritud oma keskmistel väärtustel. bR - oodatav hdl-i muutus, kui vanus kasvab 1 aasta võrra ja võõ-ümbermõõt on fikseeritud oma keskväärtusel bA - sama, kui võõ-ümbermõõt kasvab 1 ühiku (inch) võrra bAR - kaks ekvivalentset tõlgendust: 1) oodatav muutus vanuse mõju määrale hdl-le, kui vöö-ümbermõõt kasvab 1 ühiku võrra. 2) oodatav muutus vöö-ümbermõõdu mõju määrale hdl-le, kui vanus kasvab 1 ühiku võrra.</p>
+<p>a - hdl-i oodatav keskväärtus siis kui võõ-ümbermõõt ja vanus on fikseeritud oma keskmistel väärtustel.
+bR - oodatav hdl-i muutus, kui vanus kasvab 1 aasta võrra ja võõ-ümbermõõt on fikseeritud oma keskväärtusel
+bA - sama, kui võõ-ümbermõõt kasvab 1 ühiku (inch) võrra
+bAR - kaks ekvivalentset tõlgendust: 1) oodatav muutus vanuse mõju määrale hdl-le, kui vöö-ümbermõõt kasvab 1 ühiku võrra. 2) oodatav muutus vöö-ümbermõõdu mõju määrale hdl-le, kui vanus kasvab 1 ühiku võrra.</p>
 <p>Negatiivne bAR tähendab, et vanus ja vöö-ümbermõõt omavad vastandlikke mõjusid hdl-i tasemele, aga samas kumgki tõstab teise tähtsust hdl-le.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m3 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
+<pre class="sourceCode r"><code class="sourceCode r">m3 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
     <span class="kw">alist</span>(
         hdl <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(mu, sigma),
         mu &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>bR <span class="op">*</span><span class="st"> </span>age_st <span class="op">+</span><span class="st"> </span>bA <span class="op">*</span><span class="st"> </span>waist_st,
         a <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(<span class="dv">0</span>, <span class="dv">100</span>),
         <span class="kw">c</span>(bR, bA) <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(<span class="dv">0</span>, <span class="dv">2</span>),
         sigma <span class="op">~</span><span class="st"> </span><span class="kw">dcauchy</span>(<span class="dv">0</span>, <span class="dv">1</span>)
-), <span class="dt">data =</span> d2)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">compare</span>(m2, m3)
+), <span class="dt">data =</span> d2)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">compare</span>(m2, m3)
 <span class="co">#&gt;    WAIC pWAIC dWAIC weight   SE  dSE</span>
 <span class="co">#&gt; m3 3391   5.6   0.0   0.72 41.8   NA</span>
-<span class="co">#&gt; m2 3393   7.1   1.9   0.28 41.9 1.91</span></code></pre></div>
+<span class="co">#&gt; m2 3393   7.1   1.9   0.28 41.9 1.91</span></code></pre>
 <p>Siin on tegelikult eelistatud ilma interaktsioonita mudel. Aga kuna interaktsioonimudeli kaal on ikkagi 28%, tasub meil ennustuste tegemisel mõlemat mudelit koos arvestada vastavalt oma kaalule.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coeftab</span>(m2, m3)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coeftab</span>(m2, m3)
 <span class="co">#&gt;       m2      m3     </span>
 <span class="co">#&gt; a        50.4    50.4</span>
 <span class="co">#&gt; bR       1.12    1.09</span>
 <span class="co">#&gt; bA      -4.13   -4.10</span>
 <span class="co">#&gt; bAR     -0.54      NA</span>
 <span class="co">#&gt; sigma    16.6    16.6</span>
-<span class="co">#&gt; nobs      400     400</span></code></pre></div>
+<span class="co">#&gt; nobs      400     400</span></code></pre>
 <p>Tõesti, bA ja bR on mõlemas mudelis väga sarnased. m3 on kindlasti lihtsamini tõlgendatav.</p>
 <p>Ensemble teeb ära nii link()-i kui sim()-i, kasutades mõlemat mudelit vastavalt nende mudelite WAIC-i kaaludele ja toodab listi, mille elementideks on link() toodetud maatriks ja sim() toodetud maatriks.</p>
 <p>Teeme 3 plotti: waist = 0 (keskmine), waist = -1 (miinus üks sd) ja waist = 1</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">waist_fun &lt;-<span class="st"> </span><span class="cf">function</span>(waist, ...) {
-  d.pred &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">age_st =</span> <span class="kw">seq</span>( <span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dt">length.out =</span> <span class="dv">20</span> ),
+<pre class="sourceCode r"><code class="sourceCode r">waist_fun &lt;-<span class="st"> </span><span class="cf">function</span>(waist, ...) {
+  d.pred &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">age_st =</span> <span class="kw">seq</span>( <span class="dv">-2</span>, <span class="dv">2</span>, <span class="dt">length.out =</span> <span class="dv">20</span> ),
                        <span class="dt">waist_st =</span> waist)
   e &lt;-<span class="st"> </span><span class="kw">ensemble</span>(..., <span class="dt">data =</span> d.pred)
   hdl &lt;-<span class="st"> </span><span class="kw">apply</span>(e<span class="op">$</span>link, <span class="dv">2</span>, mean)
@@ -768,18 +801,18 @@ Joonis 19.3: mudeli koefitsientide plot
 <span class="st">    </span><span class="kw">geom_line</span>( <span class="kw">aes</span>(<span class="dt">y =</span> mu.PI[<span class="dv">1</span>,]), <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_line</span>( <span class="kw">aes</span>( <span class="dt">y =</span> mu.PI[<span class="dv">2</span>,] ), <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">ylim</span>(<span class="dv">40</span>, <span class="dv">70</span>)
-}</code></pre></div>
+}</code></pre>
 <p>Ensemble mudel:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Fit ensemble model
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">## Fit ensemble model</span>
 <span class="co"># p &lt;- lapply(-1:1, waist_fun, m2, m3)</span>
-## Plot three plots
+<span class="co">## Plot three plots</span>
 <span class="co"># do.call(grid.arrange, c(p, ncol = 3))</span>
-## 
+<span class="co">## </span>
 p_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">waist_fun</span>(<span class="op">-</span><span class="dv">1</span>, m2, m3)
 p0 &lt;-<span class="st"> </span><span class="kw">waist_fun</span>(<span class="dv">0</span>, m2, m3)
 p1 &lt;-<span class="st"> </span><span class="kw">waist_fun</span>(<span class="dv">1</span>, m2, m3)
 <span class="kw">grid.arrange</span>(p_<span class="dv">1</span>, p0, p1, <span class="dt">ncol =</span> <span class="dv">3</span>)
-<span class="co">#&gt; Warning: Removed 2 rows containing missing values (geom_path).</span></code></pre></div>
+<span class="co">#&gt; Warning: Removed 2 rows containing missing values (geom_path).</span></code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-29"></span>
 <img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-29-1.png" alt="Ennustusplot üle kahe mudeli." width="672" />
 <p class="caption">
@@ -787,10 +820,10 @@ Joonis 19.4: Ennustusplot üle kahe mudeli.
 </p>
 </div>
 <p>Ja sama ainult ühe mudeliga – m2.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">w0 &lt;-<span class="st"> </span><span class="kw">waist_fun</span>(<span class="op">-</span><span class="dv">1</span>, m2)
+<pre class="sourceCode r"><code class="sourceCode r">w0 &lt;-<span class="st"> </span><span class="kw">waist_fun</span>(<span class="op">-</span><span class="dv">1</span>, m2)
 w_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">waist_fun</span>(<span class="dv">0</span>, m2)
 w1 &lt;-<span class="st"> </span><span class="kw">waist_fun</span>(<span class="dv">1</span>, m2)
-<span class="kw">grid.arrange</span>(w0, w_<span class="dv">1</span>, w1, <span class="dt">ncol =</span> <span class="dv">3</span>)</code></pre></div>
+<span class="kw">grid.arrange</span>(w0, w_<span class="dv">1</span>, w1, <span class="dt">ncol =</span> <span class="dv">3</span>)</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-30"></span>
 <img src="15_keerulisemad-mudelid_files/figure-html/unnamed-chunk-30-1.png" alt="Ennustusplot m2-le." width="672" />
 <p class="caption">
@@ -798,9 +831,12 @@ Joonis 16.11: Ennustusplot m2-le.
 </p>
 </div>
 <p>Nüüd on hästi näha, et interaktsioonimudel laseb sirge tõusunurgad vabaks!</p>
-<p>Üldiselt tasub interaktsioon mudelisse sisse kirjutada siis, kui see interaktsioon on teoreetiliselt mõtekas (ühe prediktori mõju võiks sõltuda teise prediktori tasemest). Interaktsiooni koefitsiendi määramine võib suurendada ebakindlust teiste parameetrite määramisel, seda eriti siis kui interaktsiooni parameeter on korreleeritud oma komponentide parameetritega (vt pairs(model)).</p>
-<p>Isegi kui interaktsiooniparameetri posteerior hõlmab 0-i, tuleb interaktsiooni parameetrit mudelisse pannes arvestada, et individuaalsete prediktorite mõju ei saa summeerida pelgalt läbi nende koefitsientide. Selle asemel tuleb vaadata sirge tõusu erinevatel teiste prediktorite väärtustel (nagu eelneval joonisel)</p>
-<p>Kui tavaline interaktsioonimudel on <span class="math inline">\(y = a + b_1x_1 + b_2x_2 + b_3x_1x_2\)</span>, siis mis juhtub, kui meie mudel on <span class="math inline">\(y = b_1x_1 + b_3x_1x_2\)</span>? See tähendab, et me surume b2 väärtuse nulli, mis võib ära rikkuda mudeli teiste parameetrite posteeriorid! Kui teil on alust arvata, et b2-l puudub otsene mõju y väärtusele (kuid tal on mõju b1 väärtusele), siis võib muidugi ka sellist mudelit kasutada. Aga see on haruldane juhtum.</p>
+<p>Üldiselt tasub interaktsioon mudelisse sisse kirjutada siis, kui see interaktsioon on teoreetiliselt mõtekas (ühe prediktori mõju võiks sõltuda teise prediktori tasemest).
+Interaktsiooni koefitsiendi määramine võib suurendada ebakindlust teiste parameetrite määramisel, seda eriti siis kui interaktsiooni parameeter on korreleeritud oma komponentide parameetritega (vt pairs(model)).</p>
+<p>Isegi kui interaktsiooniparameetri posteerior hõlmab 0-i, tuleb interaktsiooni parameetrit mudelisse pannes arvestada, et individuaalsete prediktorite mõju ei saa summeerida pelgalt läbi nende koefitsientide.
+Selle asemel tuleb vaadata sirge tõusu erinevatel teiste prediktorite väärtustel (nagu eelneval joonisel)</p>
+<p>Kui tavaline interaktsioonimudel on <span class="math inline">\(y = a + b_1x_1 + b_2x_2 + b_3x_1x_2\)</span>, siis mis juhtub, kui meie mudel on <span class="math inline">\(y = b_1x_1 + b_3x_1x_2\)</span>? See tähendab, et me surume b2 väärtuse nulli, mis võib ära rikkuda mudeli teiste parameetrite posteeriorid! Kui teil on alust arvata, et b2-l puudub otsene mõju y väärtusele (kuid tal on mõju b1 väärtusele), siis võib muidugi ka sellist mudelit kasutada.
+Aga see on haruldane juhtum.</p>
 
 </div>
 </div>
@@ -860,11 +896,10 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

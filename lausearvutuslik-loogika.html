@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>10 Lausearvutuslik loogika | Bayesi statistika kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
   <meta property="og:title" content="10 Lausearvutuslik loogika | Bayesi statistika kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="eda-eksploratoorne-andmeanaluus.html"/>
-<link rel="next" href="jareldav-statistika.html"/>
+<link rel="prev" href="eda-eksploratoorne-andmeanaluus.html">
+<link rel="next" href="jareldav-statistika.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -47,46 +47,75 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
 
 <script src="https://use.fontawesome.com/e4ba4259a1.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-pre, code { background-color: #f8f8f8; }
-code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code > span.dt { color: #204a87; } /* DataType */
-code > span.dv { color: #0000cf; } /* DecVal */
-code > span.bn { color: #0000cf; } /* BaseN */
-code > span.fl { color: #0000cf; } /* Float */
-code > span.ch { color: #4e9a06; } /* Char */
-code > span.st { color: #4e9a06; } /* String */
-code > span.co { color: #8f5902; font-style: italic; } /* Comment */
-code > span.ot { color: #8f5902; } /* Other */
-code > span.al { color: #ef2929; } /* Alert */
-code > span.fu { color: #000000; } /* Function */
-code > span.er { color: #a40000; font-weight: bold; } /* Error */
-code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #000000; } /* Constant */
-code > span.sc { color: #000000; } /* SpecialChar */
-code > span.vs { color: #4e9a06; } /* VerbatimString */
-code > span.ss { color: #4e9a06; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #000000; } /* Variable */
-code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code > span.ex { } /* Extension */
-code > span.at { color: #c4a000; } /* Attribute */
-code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -301,13 +330,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="23" data-path="brms-suntaks.html"><a href="brms-suntaks.html"><i class="fa fa-check"></i><b>23</b> brms süntaks</a><ul>
 <li class="chapter" data-level="23.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#general-formula-structure"><i class="fa fa-check"></i><b>23.1</b> General formula structure</a><ul>
-<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#group-level-terms-xg-1idg-grx-by-mmg1-g2"><i class="fa fa-check"></i><b>23.1.1</b> Group-level terms: x||g, 1|ID|g, gr(x, by = ), mm(g1, g2)</a></li>
-<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.2</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
-<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.3</b> Additional response information</a></li>
-<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for non-linear models</a></li>
-<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for predicting distributional parameters</a></li>
-<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for mixture models</a></li>
-<li class="chapter" data-level="23.1.7" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.7</b> Formula syntax for multivariate models</a></li>
+<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.1</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
+<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.2</b> Additional response information</a></li>
+<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.3</b> Formula syntax for non-linear models</a></li>
+<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for predicting distributional parameters</a></li>
+<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for mixture models</a></li>
+<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for multivariate models</a></li>
 </ul></li>
 <li class="chapter" data-level="23.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#brms-likelihoods"><i class="fa fa-check"></i><b>23.2</b> brms likelihoods</a></li>
 <li class="chapter" data-level="23.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#priors"><i class="fa fa-check"></i><b>23.3</b> priors</a><ul>
@@ -387,7 +415,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="lausearvutuslik-loogika" class="section level1">
 <h1><span class="header-section-number">10</span> Lausearvutuslik loogika</h1>
-<p>Enne, kui siirdume järeldava statistika ja tõenäosusteooria juurde, teeme lühikese sissejuhatuse klassikalisse loogikasse, sest tõenäosusteooria ei ole lõppude-lõpuks midagi muud, kui loogika laiendus juhule, kus me ei ole kindlad selles, mida räägime. Niisiis, loogika ülesanne on modelleerida inimkeelseid lauseid (või nende sisu ehk propositsioone). Keele modelleerimise läbi modelleerime me ühtlasi mõtlemist, kaasa arvatud teaduslik mõtlemine. Nagu ikka, ei eelda me ka siin, et mudel vastaks täpselt reaalsusele.</p>
+<p>Enne, kui siirdume järeldava statistika ja tõenäosusteooria juurde, teeme lühikese sissejuhatuse klassikalisse loogikasse, sest tõenäosusteooria ei ole lõppude-lõpuks midagi muud, kui loogika laiendus juhule, kus me ei ole kindlad selles, mida räägime.
+Niisiis, loogika ülesanne on modelleerida inimkeelseid lauseid (või nende sisu ehk propositsioone). Keele modelleerimise läbi modelleerime me ühtlasi mõtlemist, kaasa arvatud teaduslik mõtlemine. Nagu ikka, ei eelda me ka siin, et mudel vastaks täpselt reaalsusele.</p>
 <p>Igal juhul koosneb meie keelemudeli baas-süntaks sõnadest nagu “ja”, “või”, “mitte”, “kui … siis”, mida kutsume <em>konnektiivideks</em>.</p>
 <p><strong>Konnektiivid koos neid tähistava sümboliga:</strong></p>
 <ul>
@@ -511,20 +540,20 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div id="tautoloogia-ja-kontradiktsioon" class="section level2">
 <h2><span class="header-section-number">10.5</span> Tautoloogia ja kontradiktsioon</h2>
 <p><span class="math inline">\(A \lor \neg A\)</span> on tautoloogia, sest selle tõetabelis on X alati tõene</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(<span class="dt">A =</span> <span class="kw">c</span>(<span class="st">&quot;F&quot;</span>, <span class="st">&quot;T&quot;</span>), <span class="st">`</span><span class="dt">A or notA</span><span class="st">`</span> =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;T&quot;</span>, <span class="st">&quot;T&quot;</span>))
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(<span class="dt">A =</span> <span class="kw">c</span>(<span class="st">&quot;F&quot;</span>, <span class="st">&quot;T&quot;</span>), <span class="st">`</span><span class="dt">A or notA</span><span class="st">`</span> =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;T&quot;</span>, <span class="st">&quot;T&quot;</span>))
 <span class="co">#&gt; # A tibble: 2 x 2</span>
 <span class="co">#&gt;   A     `A or notA`</span>
 <span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;      </span>
 <span class="co">#&gt; 1 F     T          </span>
-<span class="co">#&gt; 2 T     T</span></code></pre></div>
+<span class="co">#&gt; 2 T     T</span></code></pre>
 <p>Tautoloogiast tuleneb välistatud kolmanda seadus, mille kohaselt iga propositsioon on kas tõene või väär (ja mitte kunagi mõlemat korraga).</p>
 <p>Seevastu <span class="math inline">\(A \land \neg A\)</span> on kontradiktsioon ehk iseendaga vastuoluline ehk loogiliselt vastuoluline, sest selle tõetabelis on X alati väär.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(<span class="dt">A =</span> <span class="kw">c</span>(<span class="st">&quot;F&quot;</span>, <span class="st">&quot;T&quot;</span>), <span class="st">`</span><span class="dt">A and notA</span><span class="st">`</span> =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;F&quot;</span>, <span class="st">&quot;F&quot;</span>))
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(<span class="dt">A =</span> <span class="kw">c</span>(<span class="st">&quot;F&quot;</span>, <span class="st">&quot;T&quot;</span>), <span class="st">`</span><span class="dt">A and notA</span><span class="st">`</span> =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;F&quot;</span>, <span class="st">&quot;F&quot;</span>))
 <span class="co">#&gt; # A tibble: 2 x 2</span>
 <span class="co">#&gt;   A     `A and notA`</span>
 <span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;       </span>
 <span class="co">#&gt; 1 F     F           </span>
-<span class="co">#&gt; 2 T     F</span></code></pre></div>
+<span class="co">#&gt; 2 T     F</span></code></pre>
 <p>Nagu juba eespool mainitud, kui tõetabelis leidub rida, kus kõik atomaarsed laused on tõesed ja X on väär, siis ja ainult siis on tegu kontradiktsiooniga. Antud juhul on selline tabeli 2. rida</p>
 </div>
 <div id="loogiline-argument-ja-valiidne-jareldamine" class="section level2">
@@ -550,14 +579,14 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>P2: <span class="math inline">\(\neg A\)</span></p>
 <p>J: <span class="math inline">\(\neg B\)</span></p>
 <p>valiidsust tõetabeli abil:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(<span class="dt">A=</span><span class="kw">c</span>(<span class="st">&quot;T&quot;</span>, <span class="st">&quot;T&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;F&quot;</span>), <span class="dt">B=</span><span class="kw">c</span>(<span class="st">&quot;T&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;T&quot;</span>, <span class="st">&quot;F&quot;</span>), <span class="st">`</span><span class="dt">P1: if A then B</span><span class="st">`</span>=<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;T&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;T&quot;</span>, <span class="st">&quot;T&quot;</span>), <span class="st">`</span><span class="dt">P2: notA</span><span class="st">`</span>=<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;T&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;T&quot;</span>, <span class="st">&quot;T&quot;</span>), <span class="st">`</span><span class="dt">J: notB</span><span class="st">`</span>=<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;T&quot;</span>, <span class="st">&quot;T&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;T&quot;</span>)) <span class="co">#%&gt;% kableExtra::kable()</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(<span class="dt">A=</span><span class="kw">c</span>(<span class="st">&quot;T&quot;</span>, <span class="st">&quot;T&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;F&quot;</span>), <span class="dt">B=</span><span class="kw">c</span>(<span class="st">&quot;T&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;T&quot;</span>, <span class="st">&quot;F&quot;</span>), <span class="st">`</span><span class="dt">P1: if A then B</span><span class="st">`</span>=<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;T&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;T&quot;</span>, <span class="st">&quot;T&quot;</span>), <span class="st">`</span><span class="dt">P2: notA</span><span class="st">`</span>=<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;T&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;T&quot;</span>, <span class="st">&quot;T&quot;</span>), <span class="st">`</span><span class="dt">J: notB</span><span class="st">`</span>=<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;T&quot;</span>, <span class="st">&quot;T&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;T&quot;</span>)) <span class="co">#%&gt;% kableExtra::kable()</span>
 <span class="co">#&gt; # A tibble: 4 x 5</span>
 <span class="co">#&gt;   A     B     `P1: if A then B` `P2: notA` `J: notB`</span>
 <span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;             &lt;chr&gt;      &lt;chr&gt;    </span>
 <span class="co">#&gt; 1 T     T     T                 T          T        </span>
 <span class="co">#&gt; 2 T     F     F                 F          T        </span>
 <span class="co">#&gt; 3 F     T     T                 T          F        </span>
-<span class="co">#&gt; 4 F     F     T                 T          T</span></code></pre></div>
+<span class="co">#&gt; 4 F     F     T                 T          T</span></code></pre>
 <p>Tõetabelist on näha, et see argument ei ole valiidne, sest tabeli 3. reas on tõesed premissid ja väär järeldus. Nii lihtne see ongi. Pane tähele, et sellises tõetabelis on huvitavad ainult sellised read, kus ükski premiss pole väär ja järeldus on väär. Kõiki teisi ridu võib ignoreerida. Kuna tabeli ridade arv võrdub kaks astmes atomaarsete lausete arv, milline number kasvab atomaarsete lausete arvu kasvuga väga kiiresti, tasub seda meeles pidada.</p>
 </div>
 <div id="modus-ponens-ja-modus-tollens" class="section level2">
@@ -613,7 +642,10 @@ the hypothesis, you have made a discovery.</code></pre>
 </div>
 <div id="lausearvutusest-toenaosuste-loogikasse" class="section level2">
 <h2><span class="header-section-number">10.8</span> Lausearvutusest tõenäosuste loogikasse</h2>
-<p>Mis juhtub, kui meie premiss ei ole mitte “kuu on tehtud juustust” vaid “kuu on võib-olla tehtud juustust”, ehk “meil on andmeid, et kuu on tehtud juustust”, ehk “kuu on tõenäoliselt tehtud juustust”? Sellisel juhul ei ole loogiline järeldus “A” ehk “A = TRUE”, vaid hoopis “võib-olla A” ehk “tõenäoliselt A” ehk “P(A) = [reaalarv 0 ja 1 vahel]”. Lausearvutuse reeglid eeldavad, et premissid on kas tõesed või väärad, ehk premisside (ja järelduste) tõenäosused tohivad omada vaid kahte väärtust: 1 ja 0. Seega ei saa me siin lausearvutust rakendada ja vajame teistsugust loogikat, mis võimaldaks ebakindlate premisside põhjal teha ebakindlaid järeldusi. See tähendab, et me vajame tõenäosusteooriat.</p>
+<p>Mis juhtub, kui meie premiss ei ole mitte “kuu on tehtud juustust” vaid “kuu on võib-olla tehtud juustust”, ehk “meil on andmeid, et kuu on tehtud juustust”, ehk “kuu on tõenäoliselt tehtud juustust”?
+Sellisel juhul ei ole loogiline järeldus “A” ehk “A = TRUE”, vaid hoopis “võib-olla A” ehk “tõenäoliselt A” ehk “P(A) = [reaalarv 0 ja 1 vahel]”.
+Lausearvutuse reeglid eeldavad, et premissid on kas tõesed või väärad, ehk premisside (ja järelduste) tõenäosused tohivad omada vaid kahte väärtust: 1 ja 0.
+Seega ei saa me siin lausearvutust rakendada ja vajame teistsugust loogikat, mis võimaldaks ebakindlate premisside põhjal teha ebakindlaid järeldusi. See tähendab, et me vajame tõenäosusteooriat.</p>
 <p>Kui lausearvutus töötab must-valges tõene-väär maailmas, siis tõenäosusteooria opereerib halli varjunditega. Tõenäosusteoorialt kui loogika laienduselt ootame, et see annaks meile järeldused kujul “A tõenäosus” (P(A)) või “A tõenäosus, juhul kui kehtib B” (P(A I B)). Lisaks ootame, et alati, kui tõenäosused on fikseeritud ühe ja nulliga, annaks tõenäosusteooria välja samad järeldused kui lausearvutus. Üldiselt tahame me mõlema loogika puhul sama: konverteerida premissid parimateks võimalikeks järeldusteks, mida saaksime (küll mingil määral ja mööndustega) formaalse mudeli maailmast ka päris maailma üle kanda.</p>
 <p>Lausearvutus on deduktiivne süsteem, kus järelduse tõesus sisaldub juba premissides. Kui loogik on tõese järelduseni jõudnud, siis see järeldus on igavene – seda ei saa muuta uusi premisse või andmeid lisades. Seda omadust nimetatakse loogika monotoonilisuseks. Teisisõnu, lausearvutuslik loogika on mõtlemise mudel, mis ei sisalda kahtlusi ega isegi võimalust kahtlusteks. Selline mudel ei ole ilmselgelt see, mida otsib teadlane, kes peab oma järeldusi tegema mittetäieliku informatsiooni tingimustes.</p>
 <p>Tõenäosusteooria on matemaatika haruna deduktiivne aksiomaatiline süsteem, aga mõtlemise mudelina kasutatakse seda hoopiski induktiivsel moel. See tähendab, et me püüame piiratud andmete põhjal jõuda ebakindlatele järeldustele, aga seejuures seda ebakindlust tõenäosustega kvantifitseerides. Uusi andmeid lisades saame me oma episteemilise ebakindluse (“episteemiline ebakindlus” tähendab, et segadus asub meie peas, mitte maailma ülesehituses) määra muuta, aga ainus viis saavutada tõsikindlust (ja monotoonilisust), on tuues arvutusse sisse null- ja ühiktõenäosused. Seega on tõenäosusteooriat mõtlemise mudelina rakendades teaduslikus praktikas üsna võimatu jõuda tõsikindlatele järeldustele. Ja inimesed, kes teaduses opereerivad lausearvutusliku loogikaga (ja seega ei mõtle tõenäosuslikult), eeldavad vaikimisi, et nende jaoks on teadus matemaatikat meenutav tõsikindel süsteem, mis oma sisendites (katseskeemid, andmed, nende analüüs) ei sisalda ebakindlust. Samas, ka meie, kes me kasutame tõenäosusteooriat, peame eeldama, et see on vaid mõtlemise mudel, mitte teaduslik mõtlemine ise oma ehedal kujul. Kohe, kui keegi mõtleb välja parema mudeli, hakkame kõik kasutama seda. Aga senikaua peame õppima tõenäosusteooriat ja selle praktilist edasiarendust, mida kutsume Bayesi statistikaks.</p>
@@ -675,11 +707,10 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

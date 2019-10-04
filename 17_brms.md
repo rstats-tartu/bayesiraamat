@@ -32,13 +32,13 @@ skim(iris)
 #>  n obs: 150 
 #>  n variables: 5 
 #> 
-#> -- Variable type:factor ---------------------------------------
+#> -- Variable type:factor ------------------------------------------------------------------------
 #>  variable missing complete   n n_unique                       top_counts
 #>   Species       0      150 150        3 set: 50, ver: 50, vir: 50, NA: 0
 #>  ordered
 #>    FALSE
 #> 
-#> -- Variable type:numeric --------------------------------------
+#> -- Variable type:numeric -----------------------------------------------------------------------
 #>      variable missing complete   n mean   sd  p0 p25  p50 p75 p100
 #>  Petal.Length       0      150 150 3.76 1.77 1   1.6 4.35 5.1  6.9
 #>   Petal.Width       0      150 150 1.2  0.76 0.1 0.3 1.3  1.8  2.5
@@ -263,6 +263,8 @@ Siin me võrdleme neid nelja mudelit. Väikseim looic (leave-one-out information
 
 ```r
 loo(m1, m2, m3, m4)
+#> Warning: Passing multiple brmsfit objects to 'loo' and related methods is
+#> deprecated. Please see ?loo.brmsfit for the recommended workflow.
 #> Output of model 'm1':
 #> 
 #> Computed from 3000 by 150 log-likelihood matrix
@@ -334,6 +336,8 @@ Alternatiivina kasutame `brms::waic` kriteeriumit mudelite võrdlemiseks. See t�
 
 ```r
 waic(m1, m2, m3, m4)
+#> Warning: Passing multiple brmsfit objects to 'loo' and related methods is
+#> deprecated. Please see ?loo.brmsfit for the recommended workflow.
 #> Output of model 'm1':
 #> 
 #> Computed from 3000 by 150 log-likelihood matrix
@@ -434,18 +438,18 @@ m2
 #> 
 #> Group-Level Effects: 
 #> ~Species (Number of levels: 3) 
-#>               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-#> sd(Intercept)     1.72      1.53     0.36     5.98 1.00      591      813
+#>               Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+#> sd(Intercept)     1.72      1.53     0.36     5.98        515 1.00
 #> 
 #> Population-Level Effects: 
-#>              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-#> Intercept        1.71      1.03    -0.36     4.08 1.01      725      678
-#> Petal.Length     0.76      0.06     0.63     0.88 1.00     1524     1640
-#> Sepal.Width      0.44      0.08     0.27     0.60 1.00     1937     1686
+#>              Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+#> Intercept        1.71      1.03    -0.36     4.08        594 1.01
+#> Petal.Length     0.76      0.06     0.63     0.88       1478 1.00
+#> Sepal.Width      0.44      0.08     0.27     0.60       1893 1.00
 #> 
 #> Family Specific Parameters: 
-#>       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-#> sigma     0.31      0.02     0.28     0.35 1.00     1896     1525
+#>       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+#> sigma     0.31      0.02     0.28     0.35       1882 1.00
 #> 
 #> Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
 #> is a crude measure of effective sample size, and Rhat is the potential 
@@ -696,12 +700,12 @@ predict_interval_brms2 <- predict(m2, newdata = newx, re_formula = NULL) %>%
   cbind(newx, .)
 head(predict_interval_brms2)
 #>   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5
-#> 1         1.00        3.06  setosa     4.49     0.325 3.85  5.11
-#> 2         1.04        3.06  setosa     4.53     0.314 3.89  5.12
-#> 3         1.08        3.06  setosa     4.56     0.319 3.93  5.18
-#> 4         1.12        3.06  setosa     4.58     0.328 3.94  5.21
-#> 5         1.16        3.06  setosa     4.62     0.315 3.99  5.22
-#> 6         1.20        3.06  setosa     4.63     0.319 4.01  5.29
+#> 1         1.00        3.06  setosa     4.50     0.316 3.91  5.15
+#> 2         1.04        3.06  setosa     4.53     0.324 3.90  5.18
+#> 3         1.08        3.06  setosa     4.56     0.318 3.95  5.19
+#> 4         1.12        3.06  setosa     4.58     0.324 3.96  5.22
+#> 5         1.16        3.06  setosa     4.61     0.311 3.98  5.22
+#> 6         1.20        3.06  setosa     4.64     0.323 4.02  5.28
 ```
 
 `predict()` ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele
@@ -718,7 +722,10 @@ ggplot(data = predict_interval_brms2, aes(x = Petal.Length, y = Estimate)) +
 
 ![](17_brms_files/figure-latex/unnamed-chunk-49-1.pdf)<!-- --> 
 
-Ennustav plot - kuidas lähevad kokku mudeli ennustused reaalsete y-i andmepunktidega
+Ennustav plot - kuidas lähevad kokku mudeli ennustused reaalsete y-i andmepunktidega? 
+
+> NB! Tähtis on alati plottida mudeli ennustus y teljele. Vastupidi plottides ei jää ka ideaalsed ennustused intercept = 0, slope = 1 joonele. 
+
 
 ```r
 pr <- predict(m2) %>% cbind(iris)

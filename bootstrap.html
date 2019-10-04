@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>12 Bootstrap | Bayesi statistika kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
   <meta property="og:title" content="12 Bootstrap | Bayesi statistika kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="jareldav-statistika.html"/>
-<link rel="next" href="bayesi-pohimote.html"/>
+<link rel="prev" href="jareldav-statistika.html">
+<link rel="next" href="bayesi-pohimote.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -47,46 +47,75 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
 
 <script src="https://use.fontawesome.com/e4ba4259a1.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-pre, code { background-color: #f8f8f8; }
-code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code > span.dt { color: #204a87; } /* DataType */
-code > span.dv { color: #0000cf; } /* DecVal */
-code > span.bn { color: #0000cf; } /* BaseN */
-code > span.fl { color: #0000cf; } /* Float */
-code > span.ch { color: #4e9a06; } /* Char */
-code > span.st { color: #4e9a06; } /* String */
-code > span.co { color: #8f5902; font-style: italic; } /* Comment */
-code > span.ot { color: #8f5902; } /* Other */
-code > span.al { color: #ef2929; } /* Alert */
-code > span.fu { color: #000000; } /* Function */
-code > span.er { color: #a40000; font-weight: bold; } /* Error */
-code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #000000; } /* Constant */
-code > span.sc { color: #000000; } /* SpecialChar */
-code > span.vs { color: #4e9a06; } /* VerbatimString */
-code > span.ss { color: #4e9a06; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #000000; } /* Variable */
-code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code > span.ex { } /* Extension */
-code > span.at { color: #c4a000; } /* Attribute */
-code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -301,13 +330,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="23" data-path="brms-suntaks.html"><a href="brms-suntaks.html"><i class="fa fa-check"></i><b>23</b> brms süntaks</a><ul>
 <li class="chapter" data-level="23.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#general-formula-structure"><i class="fa fa-check"></i><b>23.1</b> General formula structure</a><ul>
-<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#group-level-terms-xg-1idg-grx-by-mmg1-g2"><i class="fa fa-check"></i><b>23.1.1</b> Group-level terms: x||g, 1|ID|g, gr(x, by = ), mm(g1, g2)</a></li>
-<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.2</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
-<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.3</b> Additional response information</a></li>
-<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for non-linear models</a></li>
-<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for predicting distributional parameters</a></li>
-<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for mixture models</a></li>
-<li class="chapter" data-level="23.1.7" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.7</b> Formula syntax for multivariate models</a></li>
+<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.1</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
+<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.2</b> Additional response information</a></li>
+<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.3</b> Formula syntax for non-linear models</a></li>
+<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for predicting distributional parameters</a></li>
+<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for mixture models</a></li>
+<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for multivariate models</a></li>
 </ul></li>
 <li class="chapter" data-level="23.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#brms-likelihoods"><i class="fa fa-check"></i><b>23.2</b> brms likelihoods</a></li>
 <li class="chapter" data-level="23.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#priors"><i class="fa fa-check"></i><b>23.3</b> priors</a><ul>
@@ -387,20 +415,29 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="bootstrap" class="section level1">
 <h1><span class="header-section-number">12</span> Bootstrap</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rethinking)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rethinking)
 <span class="kw">library</span>(bayesboot)
 <span class="kw">library</span>(dplyr)
 <span class="kw">library</span>(purrr)
 <span class="kw">library</span>(ggplot2)
-<span class="kw">library</span>(modelr)</code></pre></div>
+<span class="kw">library</span>(modelr)</code></pre>
 <blockquote>
 <p>Populatsioon on valimile sama, mis on valim bootstrappitud valimile.</p>
 </blockquote>
-<p>Nüüd alustame ühestainsast empiirilisest valimist ja genereerime sellest 2000 virtuaalset valimit. Selleks tõmbame me oma valimist virtuaalselt 2000 uut juhuvalimit (bootstrap valimit), millest igaüks on sama suur kui algne valim. Saladus seisneb selles, et bootstrap valimite tõmbamine käib asendusega, st iga empiirilise valimi element, mis bootstrap valimisse tõmmatakse, pannakse kohe algsesse valimisse tagasi. Seega saab seda elementi kohe uuesti samasse bootstrap valimisse tõmmata (kui juhus nii tahab). Seega sisaldab tüüpiline bootstrap valim osasid algse valimi numbreid mitmes korduses ja teisi üldse mitte. Iga bootstrap valimi põhjal arvutatakse meid huvitav statistik (näiteks keskväärtus) ja kõik need 2000 bootstrapitud statistikut plotitakse samamoodi, nagu me ennist tegime valimitega lõpmata suurest populatsioonist. Ainsad erinevused on, et bootstrapis võrdub andmekogu suurus, millest bootstrap valimeid tõmmatakse, algse valimi suurusega ning, et iga bootstrapi valim on sama suur kui algne valim (sest meie poolt arvutatud statistiku varieeruvus, me tahame oma bootstrap valimiga tabada, sõltub valimi suurusest). Tüüpiliselt kasutatakse bootstrapitud statistikuid selleks, et arvutada usaldusintervall statistiku väärtusele.</p>
+<p>Nüüd alustame ühestainsast empiirilisest valimist ja genereerime sellest 2000 virtuaalset valimit.
+Selleks tõmbame me oma valimist virtuaalselt 2000 uut juhuvalimit (bootstrap valimit), millest igaüks on sama suur kui algne valim.
+Saladus seisneb selles, et bootstrap valimite tõmbamine käib asendusega, st iga empiirilise valimi element, mis bootstrap valimisse tõmmatakse, pannakse kohe algsesse valimisse tagasi.
+Seega saab seda elementi kohe uuesti samasse bootstrap valimisse tõmmata (kui juhus nii tahab).
+Seega sisaldab tüüpiline bootstrap valim osasid algse valimi numbreid mitmes korduses ja teisi üldse mitte.
+Iga bootstrap valimi põhjal arvutatakse meid huvitav statistik (näiteks keskväärtus) ja kõik need 2000 bootstrapitud statistikut plotitakse samamoodi, nagu me ennist tegime valimitega lõpmata suurest populatsioonist.
+Ainsad erinevused on, et bootstrapis võrdub andmekogu suurus, millest bootstrap valimeid tõmmatakse, algse valimi suurusega ning, et iga bootstrapi valim on sama suur kui algne valim (sest meie poolt arvutatud statistiku varieeruvus, me tahame oma bootstrap valimiga tabada, sõltub valimi suurusest).
+Tüüpiliselt kasutatakse bootstrapitud statistikuid selleks, et arvutada usaldusintervall statistiku väärtusele.</p>
 <blockquote>
-<p>Bootstrap ei muuda meie hinnangut statistiku punktväärtusele. Ta annab hinnangu ebakindluse määrale, mida me oma valimi põhjal peaksime tundma selle punkthinnangu kohta.</p>
+<p>Bootstrap ei muuda meie hinnangut statistiku punktväärtusele. Ta annab hinnangu
+ebakindluse määrale, mida me oma valimi põhjal peaksime tundma selle punkthinnangu kohta.</p>
 </blockquote>
-<p>Bootstrappimine on üldiselt väga hea meetod, mis sõltub väiksemast arvust eeldustest kui statistikas tavaks. Bootstrap ei eelda, et andmed on normaaljaotusega või mõne muu matemaatiliselt lihtsa jaotusega. Tema põhiline eeldus on, et valim peegeldab populatsiooni – mis ei pruugi kehtida väikeste valimite korral ja kallutatud (mitte-juhuslike) valimite korral. Lisaks, tavaline bootstrap ei sobi hierarhiliste andmestruktuuride analüüsiks ega näiteks aegridade analüüsiks. Bootstrappida saab edukalt enamusi statistikuid, mida te võiksite elu jooksul arvutada, aga on siiski erandeid: näiteks valimi maksimum ja miinimumväärtused.</p>
+<p>Bootstrappimine on üldiselt väga hea meetod, mis sõltub väiksemast arvust eeldustest kui statistikas tavaks. Bootstrap ei eelda, et andmed on normaaljaotusega või mõne muu matemaatiliselt lihtsa jaotusega. Tema põhiline eeldus on, et valim peegeldab populatsiooni – mis ei pruugi kehtida väikeste valimite korral ja kallutatud (mitte-juhuslike) valimite korral. Lisaks, tavaline bootstrap ei sobi hierarhiliste andmestruktuuride analüüsiks ega näiteks aegridade analüüsiks.
+Bootstrappida saab edukalt enamusi statistikuid, mida te võiksite elu jooksul arvutada, aga on siiski erandeid: näiteks valimi maksimum ja miinimumväärtused.</p>
 <p>Bootstrap empiirilisele valimile suurusega n töötab nii:</p>
 <ol style="list-style-type: decimal">
 <li>tõmba (asendusega) empiirilisest valimist B uut virtuaalset valimit (B bootstrap valimit), igaüks suurusega n.</li>
@@ -410,7 +447,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>Nende andmete põhjal saab küsida palju toreidaid küsimusi — vt allpool.</p>
 <p>Mis on USA presidentide keskmine pikkus? Meil on viimase 11 presidendi pikkused.</p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">heights &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">value =</span> <span class="kw">c</span>(<span class="dv">183</span>, <span class="dv">192</span>, <span class="dv">182</span>, <span class="dv">183</span>, <span class="dv">177</span>, <span class="dv">185</span>, <span class="dv">188</span>, <span class="dv">188</span>, <span class="dv">182</span>, <span class="dv">185</span>, <span class="dv">188</span>))
+<pre class="sourceCode r"><code class="sourceCode r">heights &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">value =</span> <span class="kw">c</span>(<span class="dv">183</span>, <span class="dv">192</span>, <span class="dv">182</span>, <span class="dv">183</span>, <span class="dv">177</span>, <span class="dv">185</span>, <span class="dv">188</span>, <span class="dv">188</span>, <span class="dv">182</span>, <span class="dv">185</span>, <span class="dv">188</span>))
 B &lt;-<span class="st"> </span><span class="dv">1000</span> <span class="co"># the number of bootstrap samples</span>
 
 mean_value &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">mean</span>(<span class="kw">as.data.frame</span>(x)<span class="op">$</span>value, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="co"># helper function</span>
@@ -418,7 +455,7 @@ boot &lt;-<span class="st"> </span><span class="kw">bootstrap</span>(heights, B)
 boot &lt;-<span class="st"> </span>boot <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">            </span><span class="kw">mutate</span>(<span class="dt">Mean =</span> <span class="kw">map_dbl</span>(strap, mean_value))
 
-<span class="kw">ggplot</span>(boot, <span class="kw">aes</span>(Mean)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>()</code></pre></div>
+<span class="kw">ggplot</span>(boot, <span class="kw">aes</span>(Mean)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>()</code></pre>
 <div class="figure"><span id="fig:bootpost"></span>
 <img src="09_bootstrap_files/figure-html/bootpost-1.png" alt="Bootstrapitud posteerior USA presidentide keskmisele pikkusele. Järgnevas koodis ütleme me kõigepealt, et B = 2000 (et me võtame 2000 bootstrap valimit) kasutades selleks broom paketi käsku boot(), millele on lihtne lisada dplyri funktsioon summarise(). Siiski peame seda tegema dplyr::do() abil. Pane tähele, et “tänu” do() kasutamisele peame me summarise() funktsioonis näitama punktiga koha, kuhu lähevad %&gt;% torust tulnud bootstrap valimid. Aga muidu on kõik tavapärane tidyverse." width="672" />
 <p class="caption">
@@ -426,7 +463,7 @@ Joonis 12.1: Bootstrapitud posteerior USA presidentide keskmisele pikkusele. Jä
 </p>
 </div>
 <p>ehk sama asi ilma bootsrtap functsiooni kasutamata.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">heights &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">value =</span> <span class="kw">c</span>(<span class="dv">183</span>, <span class="dv">192</span>, <span class="dv">182</span>, <span class="dv">183</span>, <span class="dv">177</span>, <span class="dv">185</span>, <span class="dv">188</span>, <span class="dv">188</span>, <span class="dv">182</span>, <span class="dv">185</span>, <span class="dv">188</span>))
+<pre class="sourceCode r"><code class="sourceCode r">heights &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">value =</span> <span class="kw">c</span>(<span class="dv">183</span>, <span class="dv">192</span>, <span class="dv">182</span>, <span class="dv">183</span>, <span class="dv">177</span>, <span class="dv">185</span>, <span class="dv">188</span>, <span class="dv">188</span>, <span class="dv">182</span>, <span class="dv">185</span>, <span class="dv">188</span>))
 n &lt;-<span class="st"> </span><span class="kw">nrow</span>(heights) <span class="co">#empirical sample size</span>
 B &lt;-<span class="st"> </span><span class="dv">1000</span> <span class="co">#nr of bootstrap samples</span>
 boot1 &lt;-<span class="st">  </span><span class="kw">replicate</span>(B, <span class="kw">sample_n</span>(heights, n, <span class="dt">replace =</span> <span class="ot">TRUE</span>)) 
@@ -435,7 +472,7 @@ df22 &lt;-<span class="st"> </span>boot1 <span class="op">%&gt;%</span><span cla
 <span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#convert this list into a data frame </span>
 <span class="st">  </span><span class="kw">summarise_all</span>(mean) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">t</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>() 
 
-<span class="kw">ggplot</span>(df22, <span class="kw">aes</span>(V1)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>()</code></pre></div>
+<span class="kw">ggplot</span>(df22, <span class="kw">aes</span>(V1)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>()</code></pre>
 <p>Mida selline keskväärtuste jaotus tähendab? Me võime seda vaadelda posterioorse tõenäosusjaotusena. Selle tõlgenduse kohaselt iseloomustab see jaotus täpselt meie usku presidentide keskmise pikkuse kohta, niipalju kui see usk põhineb bootstrappimises kasutatud andmetel. Senikaua, kui meil pole muud relevantset teavet, on kõik, mida me usume teadvat USA presidentide keskmise pikkuse kohta, peidus selles jaotuses. Need pikkused, mille kohal jaotus on kõrgem, sisaldavad meie jaoks tõenäolisemalt tegelikku USA presidentide keskmist pikkust kui need pikkused, mille kohal posterioorne jaotus on madalam.</p>
 <p>Kuidas selle jaotusega edasi töötada? See on lihtne: meil on 2000 arvu (2000 bootstrapitud statistiku väärtust) ja me teeme nendega kõike seda, mida parasjagu tahame.</p>
 <p>Näiteks me võime arvutada, millisesse pikkuste vahemikku jääb 92% meie usust USA presidentide tõelise keskmise pikkuse kohta. See tähendab, et teades seda vahemikku peaksime olema valmis maksma mitte rohkem kui 92 senti pileti eest, mis juhul kui USA presidentide keskmine pikkus tõesti jääb sinna vahemikku, toob meile võidu suuruses 1 EUR (ja 8 senti kasumit). Selline kihlveokontor on täiesti respektaabel ja akadeemiline tõenäosuse tõlgendus; see on paljude arvates lausa parim tõlgendus, mis meil on.</p>
@@ -444,20 +481,20 @@ df22 &lt;-<span class="st"> </span>boot1 <span class="op">%&gt;%</span><span cla
 <ol style="list-style-type: decimal">
 <li>HPDI — Highest Density Probability Interval — alustab jaotuse tipust (tippudest) ja katab 92% jaotuse kõrgema(te) osa(de) pindalast</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">HPDI</span>(heights<span class="op">$</span>value, <span class="dt">prob =</span> <span class="fl">0.92</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">HPDI</span>(heights<span class="op">$</span>value, <span class="dt">prob =</span> <span class="fl">0.92</span>)
 <span class="co">#&gt; |0.92 0.92| </span>
-<span class="co">#&gt;   177   192</span></code></pre></div>
+<span class="co">#&gt;   177   192</span></code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>PI — Probability Interval — alustab jaotuse servadest ja katab kummagist servast 4% jaotuse pindalast. PI 90%-le on sama, mis arvutada 5% ja 95% kvantiilid (jne).</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">PI</span>(heights<span class="op">$</span>value, <span class="dt">prob =</span> <span class="fl">0.90</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">PI</span>(heights<span class="op">$</span>value, <span class="dt">prob =</span> <span class="fl">0.90</span>)
 <span class="co">#&gt;  5% 95% </span>
 <span class="co">#&gt; 180 190</span>
-<span class="co"># quantile(heights$value, probs = c(0.05, 0.95)) teeb sama asja</span></code></pre></div>
+<span class="co"># quantile(heights$value, probs = c(0.05, 0.95)) teeb sama asja</span></code></pre>
 <p>HPDI on üldiselt parem mõõdik kui PI, aga teatud juhtudel on seda raskem arvutada. Kui HPDI ja PI tugevalt erinevad, on hea mõte piirduda jaotuse enda avaldamisega — jaotus ise sisaldab kogu informatsiooni, mis meil on oma statistiku väärtuse kohta. Intervallid on lihtsalt summaarsed statistikud andmete kokkuvõtlikuks esitamiseks.</p>
 <p>Kui suure tõenäosusega on USA presidentide keskmine pikkus suurem kui USA populatsiooni meeste keskmine pikkus (178.3 cm mediaan)?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(heights<span class="op">$</span>value <span class="op">&gt;</span><span class="st"> </span><span class="fl">178.3</span>)
-<span class="co">#&gt; [1] 0.909</span></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(heights<span class="op">$</span>value <span class="op">&gt;</span><span class="st"> </span><span class="fl">178.3</span>)
+<span class="co">#&gt; [1] 0.909</span></code></pre>
 <p>Ligikaudu 100% tõenäosusega (valimis on 1 mees alla 182 cm, ja tema on 177 cm). Lühikesed jupatsid ei saa Ameerikamaal presidendiks!</p>
 <p><strong>Kuidas lahendada bootstrap, kui mei tahame usaldusintervalle kahe ebavõrdse grupi erinevusele?</strong> Näiteks kui meil on katsegrupis N = 25 ja kontrollgrupis N = 20, ja me tahame arvutada statistikut ES = katsegrupi keskmine - kontrollgrupi keskmine.</p>
 <ol style="list-style-type: decimal">
@@ -468,56 +505,62 @@ df22 &lt;-<span class="st"> </span>boot1 <span class="op">%&gt;%</span><span cla
 </ol>
 <div id="moned-tava-bootstrapi-paketid" class="section level2">
 <h2><span class="header-section-number">12.1</span> Mõned tava-bootstrapi paketid</h2>
-<p>Professionaalid kasutavad boot paketti, mis on suhteliselt ebameeldiva süntaksiga, aga väga laialt rakendatav. Boot paketi peale on ehitatud tavainimesele hästi kasutatav pakett bootES (Kirby and Gelranc, 2013, Behav Res 45:905–927), mis teeb lihtsaks usalduspiiride leidmise erinevat tüüpi efekti suurustele, kaasa arvatud lihtsad hierarhilised ja ühefaktorilise ANOVA tüüpi katseskeemid. Nendes pakettides tasub üldjuhul kasutada meetodit nimega BCa (bias-corrected-and-accelerated) usalduspiiride arvutamiseks. See meetod püüab parandada bootstrap-valimite võimalikku kallutatust (esineb sedavõrd, kui bootstrap-jaotuse tipp ei ole samas kohas kui oleks paljude päris-valimite pealt arvutatud statistikute jaotuse tipp) ja olukorda, kus statistiku väärtuse varieeruvuse määr sõltub statistiku väärtusest. BCa edukaks arvutamiseks peab bootstrap valimite arv tuntavalt ületama valimi suurust. Simulatsioonidega on näidatud, et BCa (ja teisi) usalduspiire saab mõistlikult arvutada valimitelt, mille suurus on &gt; 15. Sellest väiksemate valimite korral peate eeldama, et teie usaldusinetvallid valetavad. Aegridade, kus esineb järjestikuste ajapunktide vahelisi sõltuvusi, tuleks kasutada nn block bootstrappi, mida implementerrib näiteks boot::tsboot().</p>
+<p>Professionaalid kasutavad boot paketti, mis on suhteliselt ebameeldiva süntaksiga, aga väga laialt rakendatav. Boot paketi peale on ehitatud tavainimesele hästi kasutatav pakett bootES (Kirby and Gelranc, 2013, Behav Res 45:905–927), mis teeb lihtsaks usalduspiiride leidmise erinevat tüüpi efekti suurustele, kaasa arvatud lihtsad hierarhilised ja ühefaktorilise ANOVA tüüpi katseskeemid. Nendes pakettides tasub üldjuhul kasutada meetodit nimega BCa (bias-corrected-and-accelerated) usalduspiiride arvutamiseks. See meetod püüab parandada bootstrap-valimite võimalikku kallutatust (esineb sedavõrd, kui bootstrap-jaotuse tipp ei ole samas kohas kui oleks paljude päris-valimite pealt arvutatud statistikute jaotuse tipp) ja olukorda, kus statistiku väärtuse varieeruvuse määr sõltub statistiku väärtusest. BCa edukaks arvutamiseks peab bootstrap valimite arv tuntavalt ületama valimi suurust. Simulatsioonidega on näidatud, et BCa (ja teisi) usalduspiire saab mõistlikult arvutada valimitelt, mille suurus on &gt; 15. Sellest väiksemate valimite korral peate eeldama, et teie usaldusinetvallid valetavad.
+Aegridade, kus esineb järjestikuste ajapunktide vahelisi sõltuvusi, tuleks kasutada nn block bootstrappi, mida implementerrib näiteks boot::tsboot().</p>
 </div>
 <div id="bayesi-bootstrap" class="section level2 unnumbered">
 <h2>Bayesi bootstrap</h2>
-<p>Kui klassikalise bootstrap meetodi pakkus välja B. Efron aastal 1979, siis selle Bayesi versioon avaldati D.B. Rubini poolt 1981. a. Bayesi versioon bootstrapist on implementeeritud “bayesboot” paketis funktsioonis <code>bayesboot()</code>. Hea lihtsa seletuse Bayesi bootstrapi kohta saab siit <a href="https://www.youtube.com/watch?v=WMAgzr99PKE" class="uri">https://www.youtube.com/watch?v=WMAgzr99PKE</a> ja lihtsa r koodi selle meetodi rakendamiseks saab siit <a href="https://www.r-bloggers.com/simple-bayesian-bootstrap/" class="uri">https://www.r-bloggers.com/simple-bayesian-bootstrap/</a>.</p>
+<p>Kui klassikalise bootstrap meetodi pakkus välja B. Efron aastal 1979, siis selle Bayesi versioon avaldati D.B. Rubini poolt 1981. a.
+Bayesi versioon bootstrapist on implementeeritud “bayesboot” paketis funktsioonis <code>bayesboot()</code>.
+Hea lihtsa seletuse Bayesi bootstrapi kohta saab siit <a href="https://www.youtube.com/watch?v=WMAgzr99PKE" class="uri">https://www.youtube.com/watch?v=WMAgzr99PKE</a> ja lihtsa r koodi selle meetodi rakendamiseks saab siit <a href="https://www.r-bloggers.com/simple-bayesian-bootstrap/" class="uri">https://www.r-bloggers.com/simple-bayesian-bootstrap/</a>.</p>
 <p>Lühidalt, erinevalt eelkirjeldatud tava-bootstrapist simuleeritakse Bayesi bootstrapis posterioorjaotused, näiteks arvutatakse kaalutud keskmine, kus ühtlasest jaotusest pärit kaalud on prioriks.</p>
 <p>Näited sellest, kuidas kasutada bayesbooti standardhälbe, korrelatsioonikoefitsiendi ja lineaarse mudeli koefitsientide usalduspiiride arvutamiseks leiate <code>?bayesboot</code> käsuga.</p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">heights_bb &lt;-<span class="st"> </span><span class="kw">bayesboot</span>(heights<span class="op">$</span>value, mean)
-<span class="kw">plot</span>(heights_bb, <span class="dt">compVal =</span> <span class="dv">185</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">heights_bb &lt;-<span class="st"> </span><span class="kw">bayesboot</span>(heights<span class="op">$</span>value, mean)
+<span class="kw">plot</span>(heights_bb, <span class="dt">compVal =</span> <span class="dv">185</span>)</code></pre>
 <div class="figure"><span id="fig:bayesboot"></span>
 <img src="09_bootstrap_files/figure-html/bayesboot-1.png" alt="Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele." width="672" />
 <p class="caption">
 Joonis 12.2: Bayesi bootstrapi posteerior USA presidentide keskmisele pikkusele.
 </p>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">HPDI</span>(heights_bb<span class="op">$</span>V1, <span class="dt">prob =</span> <span class="fl">0.95</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">HPDI</span>(heights_bb<span class="op">$</span>V1, <span class="dt">prob =</span> <span class="fl">0.95</span>)
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt;   183   187</span></code></pre></div>
+<span class="co">#&gt;   183   187</span></code></pre>
 <p>Vaikimisi pannakse <code>bayesboot()</code> funktsioonis statistiku arvutamisel kaalud (prior) valimi indeksile, mis annab erineva tulemuse kui näiteks kaalutud keskmise arvutamisel, kus kaalud (prior) pannakse valimi väärtustele.</p>
 <p>Aritmeetilise keskmise Bayesi bootstrap väärtused kasutades kaalutud keskmise funktsiooni <code>weighted.mean</code> saab niimoodi:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">heights_bb_w &lt;-<span class="st"> </span><span class="kw">bayesboot</span>(heights<span class="op">$</span>value, 
+<pre class="sourceCode r"><code class="sourceCode r">heights_bb_w &lt;-<span class="st"> </span><span class="kw">bayesboot</span>(heights<span class="op">$</span>value, 
                          weighted.mean, 
-                         <span class="dt">use.weights =</span> <span class="ot">TRUE</span>)</code></pre></div>
+                         <span class="dt">use.weights =</span> <span class="ot">TRUE</span>)</code></pre>
 <p>Tõenäosus, et keskmine on suurem kui 182 cm</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(heights_bb[, <span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">182</span>)
-<span class="co">#&gt; [1] 0.991</span></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(heights_bb[, <span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">182</span>)
+<span class="co">#&gt; [1] 0.989</span></code></pre>
 <p>Kahe keskväärtuse erinevus (ES = keskmine1 - keskmine2):</p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
-## Simulate two random normal distributions with mean 0. 
-## True difference is 0.
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="co">## Simulate two random normal distributions with mean 0. </span>
+<span class="co">## True difference is 0.</span>
 dfr &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">a =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">1</span>), 
               <span class="dt">b =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">1</span>),
               <span class="dt">c =</span> a <span class="op">-</span><span class="st"> </span>b)
 dfr_bb &lt;-<span class="st"> </span><span class="kw">bayesboot</span>(dfr<span class="op">$</span>c, weighted.mean, <span class="dt">use.weights =</span> <span class="ot">TRUE</span> )
-<span class="kw">plot</span>(dfr_bb, <span class="dt">compVal =</span> <span class="dv">0</span>)</code></pre></div>
+<span class="kw">plot</span>(dfr_bb, <span class="dt">compVal =</span> <span class="dv">0</span>)</code></pre>
 <div class="figure"><span id="fig:bayeses"></span>
 <img src="09_bootstrap_files/figure-html/bayeses-1.png" alt="Bayesi bootstrap ES-le." width="672" />
 <p class="caption">
 Joonis 12.3: Bayesi bootstrap ES-le.
 </p>
 </div>
-<p>BayesianFirstAid raamatukogu funktsioon bayes.t.test() annab kasutades t-jaotuse tõepäramudelit üsna täpselt sama vastuse. See raamatukogu eeldab JAGS mcmc sämpleri installeerimist. Abi saab siit <a href="https://github.com/rasmusab/bayesian_first_aid" class="uri">https://github.com/rasmusab/bayesian_first_aid</a> ja siit <a href="https://faculty.washington.edu/jmiyamot/p548/installing.jags.pdf" class="uri">https://faculty.washington.edu/jmiyamot/p548/installing.jags.pdf</a>.</p>
+<p>BayesianFirstAid raamatukogu funktsioon bayes.t.test() annab kasutades t-jaotuse tõepäramudelit üsna täpselt sama vastuse.
+See raamatukogu eeldab JAGS mcmc sämpleri installeerimist.
+Abi saab siit <a href="https://github.com/rasmusab/bayesian_first_aid" class="uri">https://github.com/rasmusab/bayesian_first_aid</a> ja siit <a href="https://faculty.washington.edu/jmiyamot/p548/installing.jags.pdf" class="uri">https://faculty.washington.edu/jmiyamot/p548/installing.jags.pdf</a>.</p>
 </div>
 <div id="parameetriline-bootstrap" class="section level2 unnumbered">
 <h2>Parameetriline bootstrap</h2>
-<p>Kui me arvame, et me teame, mis jaotusega on meie andmed, ja meil on suhteliselt vähe andmepunkte, võib olla mõistlik lisada bootstrapile andmete jaotuse mudel. Näiteks, meie USA presidentide pikkused võiksid olla umbkaudu normaaljaotusega (sest me teame, et USA meeste pikkused on seda). Seega fitime kõigepealt presidentide pikkusandmetega normaaljaotuse ja seejärel tõmbame bootsrap valimid sellest normaaljaotuse mudelist. Normaaljaotuse mudelil on 2 parameetrit: keskmine (mu) ja standardhälve (sigma), mida saame fittida valimiandmete põhjal:</p>
+<p>Kui me arvame, et me teame, mis jaotusega on meie andmed, ja meil on suhteliselt vähe andmepunkte, võib olla mõistlik lisada bootstrapile andmete jaotuse mudel. Näiteks, meie USA presidentide pikkused võiksid olla umbkaudu normaaljaotusega (sest me teame, et USA meeste pikkused on seda). Seega fitime kõigepealt presidentide pikkusandmetega normaaljaotuse ja seejärel tõmbame bootsrap valimid sellest normaaljaotuse mudelist.
+Normaaljaotuse mudelil on 2 parameetrit: keskmine (mu) ja standardhälve (sigma), mida saame fittida valimiandmete põhjal:</p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mu &lt;-<span class="st"> </span><span class="kw">mean</span>(heights<span class="op">$</span>value)
+<pre class="sourceCode r"><code class="sourceCode r">mu &lt;-<span class="st"> </span><span class="kw">mean</span>(heights<span class="op">$</span>value)
 sigma &lt;-<span class="st"> </span><span class="kw">sd</span>(heights<span class="op">$</span>value)
 N &lt;-<span class="st"> </span><span class="kw">length</span>(heights<span class="op">$</span>value)
 sample_means &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">value =</span> <span class="kw">rnorm</span>(N <span class="op">*</span><span class="st"> </span><span class="dv">1000</span>, mu, sigma), 
@@ -528,16 +571,16 @@ sample_means_sum &lt;-<span class="st"> </span>sample_means <span class="op">%&g
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Mean =</span> <span class="kw">mean</span>(value))
 
 <span class="kw">ggplot</span>(sample_means_sum, <span class="kw">aes</span>(<span class="dt">x =</span> Mean)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">color =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">bins =</span> <span class="dv">20</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">color =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">bins =</span> <span class="dv">20</span>)</code></pre>
 <div class="figure"><span id="fig:paramboot"></span>
 <img src="09_bootstrap_files/figure-html/paramboot-1.png" alt="Parameetrilise bootstrapi posteerior USA presidentide keskmisele pikkusele." width="672" />
 <p class="caption">
 Joonis 12.4: Parameetrilise bootstrapi posteerior USA presidentide keskmisele pikkusele.
 </p>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">HPDI</span>(sample_means_sum<span class="op">$</span>Mean)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">HPDI</span>(sample_means_sum<span class="op">$</span>Mean)
 <span class="co">#&gt; |0.89 0.89| </span>
-<span class="co">#&gt;   183   187</span></code></pre></div>
+<span class="co">#&gt;   183   187</span></code></pre>
 <p>Üldiselt ei soovita me parameetrilist bootstrappi väga soojalt, sest täisbayesiaanlik alternatiiv, mida me kohe õppima asume, on sellest paindlikum.</p>
 
 <div class="figure"><span id="fig:bootmeth"></span>
@@ -551,9 +594,11 @@ Joonis 12.5: Bootstrappimise meetodid.
 <h2>Bootstrappimine ei ole kogu tõde</h2>
 <p>Bootstrappimine on võimas ja väga laia kasutusalaga meetodite kogum. Sellel on siiski üks oluline puudus. Nimelt arvestab bootstrap ainult andmetega ja ignoreerib taustateadmisi (parameetriline bootstrap küll eeldab taustateadmisetele tuginevalt jaotusmudelit, kuid ignoreerib kogu muud taustateadmist). Miks on see probleem?</p>
 <p>Mõtleme hetkeks sellele teadusliku meetodi osale, millel põhineb suuresti näiteks Darwini liikide tekkimise argument. See on nn <em>inference to the best explanation</em>, mille kohaselt on eelistatud see teooria, mis on parimas kooskõlas faktidega, ehk mille kehtimise korral on meie andmete esinemine kõige tõenäolisem. Kui mõni hüpotees omistab andmete esinemisele suure tõenäosuse, siis me ütleme tehnilises keeles, et see hüpotees on tõepärane (<em>has high likelihood</em>). Esmapilgul tundub see kõik igati mõistlik, kuid proovime lihtsat mõtteeksperimenti. Selles juhtub nii, et loteriil võidab peaauhinna meile tundmatu kodanik Franz K. Meil on selle fakti (ehk nende andmete) seletamiseks kaks teooriat: 1. Franz K. võit oli juhuslik (loterii oli aus ja keegi peab ju võitma) ja 2. Franz K. noorem õde võltsis loterii tulemusi oma venna kasuks. Teine teooria sobib andmetega palju paremini kui esimene (sest kuigi keegi peab võitma, Franz K. võiduvõimalus oli väga väike); aga ometi eelistab enamus mõistlikke inimesi esimest teooriat. Põhjus on selles, et meil pole iseenesest mingit alust arvata, et Franz K.-l üldse on noorem õde, või et see õde omaks ligipääsu loteriile. Kui me aga saame teada, et Franz K. noorem õde tõesti korraldab loteriid, siis leiame kohe, et asi on kahtlane.</p>
-<p>Siit näeme, et lisaks tõepärale on selleks, et me usuksime mõne teooria kehtimisse, vaja veel, et see teooria oleks piisavalt tõenäoline meie taustateadmiste valguses. Bayesi teoreem ei tee muud, kui arvutab teooria kehtimise posterioorse tõenäosuse (järeltõenäosuse), kasutades selleks meie eelteadmiste ja tõepära kvantitatiivseid mudeleid. Seega, Bayesi paradigmas ei arvesta me mitte ainult andmetega, vaid ka taustateadmistega, sünteesides need kokku üheks posterioorseks jaotuseks ehk järeljaotuseks. Selle jaotuse arvutamine erineb bootstrapist, kuid tema tõlgendus ja praktiline töö sellega on sarnane. Erinevalt tavapärasest bootstrapist on Bayes parameetriline meetod, mis sõltub andmete modelleerimisest modeleerija poolt ette antud jaotustesse (normaaljaotus, t jaotus jne). Tegelikult peame me Bayesi arvutuseks modelleerima vähemalt kaks erinevat jaotust: andmete jaotus, mida me kutsume likelihoodiks ehk tõepäraks, ning eelneva teadmise mudel ehk prior, mida samuti modeleeritakse tõenäosusjaotusena.</p>
+<p>Siit näeme, et lisaks tõepärale on selleks, et me usuksime mõne teooria kehtimisse, vaja veel, et see teooria oleks piisavalt tõenäoline meie taustateadmiste valguses. Bayesi teoreem ei tee muud, kui arvutab teooria kehtimise posterioorse tõenäosuse (järeltõenäosuse), kasutades selleks meie eelteadmiste ja tõepära kvantitatiivseid mudeleid.
+Seega, Bayesi paradigmas ei arvesta me mitte ainult andmetega, vaid ka taustateadmistega, sünteesides need kokku üheks posterioorseks jaotuseks ehk järeljaotuseks. Selle jaotuse arvutamine erineb bootstrapist, kuid tema tõlgendus ja praktiline töö sellega on sarnane. Erinevalt tavapärasest bootstrapist on Bayes parameetriline meetod, mis sõltub andmete modelleerimisest modeleerija poolt ette antud jaotustesse (normaaljaotus, t jaotus jne). Tegelikult peame me Bayesi arvutuseks modelleerima vähemalt kaks erinevat jaotust: andmete jaotus, mida me kutsume likelihoodiks ehk tõepäraks, ning eelneva teadmise mudel ehk prior, mida samuti modeleeritakse tõenäosusjaotusena.</p>
 <blockquote>
-<p>Bootstrapil on mõned imelikud formaalsed eeldused: 1. väärtused, mis ei esine valimiandmetes, on võimatud, 2. Väärtused, mis esinevad väljaspool valimi väärtuste vahemikku, on võimatud, 3. andmetes ei esine ajasõltuvusi ega hierarhilisi struktuure. Nendest puudustest hoolimata kasutatakse bootstrappimist laialt ja edukalt — eelkõige tema lihtsuse ja paindlikuse tõttu. Küll aga tähendab see, et bootstrap on harva parim võimalik meetod mingi ülesande lahendamiseks.</p>
+<p>Bootstrapil on mõned imelikud formaalsed eeldused:
+1. väärtused, mis ei esine valimiandmetes, on võimatud, 2. Väärtused, mis esinevad väljaspool valimi väärtuste vahemikku, on võimatud, 3. andmetes ei esine ajasõltuvusi ega hierarhilisi struktuure. Nendest puudustest hoolimata kasutatakse bootstrappimist laialt ja edukalt — eelkõige tema lihtsuse ja paindlikuse tõttu. Küll aga tähendab see, et bootstrap on harva parim võimalik meetod mingi ülesande lahendamiseks.</p>
 </blockquote>
 <p>Ehkki bootstrappimine ei arvesta taustateadmistega, ei tee seda olulisel määral ka paljud Bayesi mudelid (mudeldaja vaba valiku tõttu, mitte selle pärast, et mudel ei suudaks taustainfot inkorporeerida). Bayesi meetodite väljatöötajad ei tea sageli ette, milliste teaduslike probleemide lahendamiseks nende mudeleid hakatakse kasutama, ja seega ei kirjuta nad mudelisse ka väga ranget eelteadmist. Nende mudelite teadlastest kasutajad lepivad sageli selllega ja lasevad oma mudelite kaudu “andmetel kõneleda” enam-vähem sellistena, nagu need juhtuvad olema. Sellist lähenemist ei saa alati hukka mõista, sest vahest ei olegi meil palju eelteadmisi oma probleemi kohta, küll aga tuleb mainida, et sellistel juhtudel annab bootstrappimine sageli lihtsama vaevaga väga sarnase tulemuse kui Bayesi täismäng.</p>
 
@@ -615,11 +660,10 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

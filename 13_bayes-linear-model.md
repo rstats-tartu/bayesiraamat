@@ -277,7 +277,7 @@ dens(sim.length$V10)
 ```r
 HPDI(sim.length$V10, prob = 0.95)
 #> |0.95 0.95| 
-#>  39.7  68.2
+#>  38.8  66.6
 ```
 
 Nagu näha, võib mudeli kohaselt sellise riigi keskmine eluiga tulla nii madal, kui 40 aastat ja nii kõrge kui 67 aastat.

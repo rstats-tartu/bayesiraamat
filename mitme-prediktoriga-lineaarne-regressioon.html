@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>18 Mitme prediktoriga lineaarne regressioon | Bayesi statistika kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
   <meta property="og:title" content="18 Mitme prediktoriga lineaarne regressioon | Bayesi statistika kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="bayesi-meetodil-lineaarse-mudeli-fittimine.html"/>
-<link rel="next" href="keerulisemate-mudelitega-tootamine.html"/>
+<link rel="prev" href="bayesi-meetodil-lineaarse-mudeli-fittimine.html">
+<link rel="next" href="keerulisemate-mudelitega-tootamine.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -47,46 +47,75 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
 
 <script src="https://use.fontawesome.com/e4ba4259a1.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-pre, code { background-color: #f8f8f8; }
-code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code > span.dt { color: #204a87; } /* DataType */
-code > span.dv { color: #0000cf; } /* DecVal */
-code > span.bn { color: #0000cf; } /* BaseN */
-code > span.fl { color: #0000cf; } /* Float */
-code > span.ch { color: #4e9a06; } /* Char */
-code > span.st { color: #4e9a06; } /* String */
-code > span.co { color: #8f5902; font-style: italic; } /* Comment */
-code > span.ot { color: #8f5902; } /* Other */
-code > span.al { color: #ef2929; } /* Alert */
-code > span.fu { color: #000000; } /* Function */
-code > span.er { color: #a40000; font-weight: bold; } /* Error */
-code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #000000; } /* Constant */
-code > span.sc { color: #000000; } /* SpecialChar */
-code > span.vs { color: #4e9a06; } /* VerbatimString */
-code > span.ss { color: #4e9a06; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #000000; } /* Variable */
-code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code > span.ex { } /* Extension */
-code > span.at { color: #c4a000; } /* Attribute */
-code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -301,13 +330,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="23" data-path="brms-suntaks.html"><a href="brms-suntaks.html"><i class="fa fa-check"></i><b>23</b> brms süntaks</a><ul>
 <li class="chapter" data-level="23.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#general-formula-structure"><i class="fa fa-check"></i><b>23.1</b> General formula structure</a><ul>
-<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#group-level-terms-xg-1idg-grx-by-mmg1-g2"><i class="fa fa-check"></i><b>23.1.1</b> Group-level terms: x||g, 1|ID|g, gr(x, by = ), mm(g1, g2)</a></li>
-<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.2</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
-<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.3</b> Additional response information</a></li>
-<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for non-linear models</a></li>
-<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for predicting distributional parameters</a></li>
-<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for mixture models</a></li>
-<li class="chapter" data-level="23.1.7" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.7</b> Formula syntax for multivariate models</a></li>
+<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.1</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
+<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.2</b> Additional response information</a></li>
+<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.3</b> Formula syntax for non-linear models</a></li>
+<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for predicting distributional parameters</a></li>
+<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for mixture models</a></li>
+<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for multivariate models</a></li>
 </ul></li>
 <li class="chapter" data-level="23.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#brms-likelihoods"><i class="fa fa-check"></i><b>23.2</b> brms likelihoods</a></li>
 <li class="chapter" data-level="23.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#priors"><i class="fa fa-check"></i><b>23.3</b> priors</a><ul>
@@ -387,24 +415,30 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="mitme-prediktoriga-lineaarne-regressioon" class="section level1">
 <h1><span class="header-section-number">18</span> Mitme prediktoriga lineaarne regressioon</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 <span class="kw">library</span>(gapminder)
 <span class="kw">library</span>(rethinking)
 <span class="kw">library</span>(BayesVarSel)
 <span class="kw">library</span>(mice)
-<span class="kw">library</span>(leaps)</code></pre></div>
-<p>Vaatame jälle gapminderi andmeid aastast 2007. Meil on võimalik lisada regressioonivõrrandisse lisaprediktoreid. Nüüd ei küsi me enam, kuidas mõjutab l_GDP varieeruvus keskmise eluea varieeruvust vaid: kuidas mõjutavad muutujad l_GDP, continent ja logaritm pop-ist (rahvaarvust) keskmist eluiga. Me modelleerime selle lineaarselt nii, et eeldusena varieeruvad need x-i muutujad üksteisest sõltumatult: <span class="math inline">\(y = a + b_1x_1 + b_2x_2 + b_3x_3\)</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g2007 &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="kw">library</span>(leaps)</code></pre>
+<p>Vaatame jälle gapminderi andmeid aastast 2007.
+Meil on võimalik lisada regressioonivõrrandisse lisaprediktoreid.
+Nüüd ei küsi me enam, kuidas mõjutab l_GDP varieeruvus keskmise eluea varieeruvust vaid: kuidas mõjutavad muutujad l_GDP, continent ja logaritm pop-ist (rahvaarvust) keskmist eluiga.
+Me modelleerime selle lineaarselt nii, et eeldusena varieeruvad need x-i muutujad üksteisest sõltumatult: <span class="math inline">\(y = a + b_1x_1 + b_2x_2 + b_3x_3\)</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">g2007 &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>)
 g2007 &lt;-<span class="st"> </span>g2007 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">l_GDP =</span> <span class="kw">log10</span>(gdpPercap),
          <span class="dt">l_pop =</span> <span class="kw">log10</span>(pop), 
          <span class="dt">lpop_s =</span> (l_pop <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(l_pop )) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(l_pop),
          <span class="dt">lGDP_s =</span> (l_GDP <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(l_GDP )) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(l_GDP)) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">as.data.frame</span>()</code></pre></div>
+<span class="st">  </span><span class="kw">as.data.frame</span>()</code></pre>
 <p>Sellise mudeli tõlgendus on suhteliselt lihtne:</p>
 <blockquote>
-<p>koef b1 ütleb meile, kui mitme ühiku võrra tõuseb/langeb muutuja y (eluiga) kui muutuja x1 (l_GDP) tõuseb 1 ühiku võrra; tingimusel, et me hoiame kõigi teiste muutujate väärtused konstantsed.</p>
+<p>koef b1 ütleb meile,
+kui mitme ühiku võrra tõuseb/langeb muutuja y (eluiga)
+kui muutuja x1 (l_GDP) tõuseb 1 ühiku võrra;
+tingimusel, et me hoiame kõigi teiste muutujate väärtused konstantsed.</p>
 </blockquote>
 <p>Sarnane definitsioon kehtib ka kõigi teiste prediktorite (x-de) kohta.</p>
 <p>Kui meil on mudelis SKP ja pop (rahvaarv), siis saame küsida</p>
@@ -413,7 +447,7 @@ g2007 &lt;-<span class="st"> </span>g2007 <span class="op">%&gt;%</span><span cl
 <li><p>kui me juba teame populatsiooni suurust, millist lisaväärtust annab meile ka SKP teadmine?</p></li>
 </ol>
 <p>Järgenval mudelil on 4 parameetrit (intercept + 3 betat).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m1 &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span>l_GDP <span class="op">+</span><span class="st"> </span>continent <span class="op">+</span><span class="st"> </span>l_pop, <span class="dt">data =</span> g2007)
+<pre class="sourceCode r"><code class="sourceCode r">m1 &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span>l_GDP <span class="op">+</span><span class="st"> </span>continent <span class="op">+</span><span class="st"> </span>l_pop, <span class="dt">data =</span> g2007)
 <span class="kw">summary</span>(m1)
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
@@ -437,11 +471,11 @@ g2007 &lt;-<span class="st"> </span>g2007 <span class="op">%&gt;%</span><span cl
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Residual standard error: 5.95 on 135 degrees of freedom</span>
 <span class="co">#&gt; Multiple R-squared:  0.767,  Adjusted R-squared:  0.757 </span>
-<span class="co">#&gt; F-statistic: 74.2 on 6 and 135 DF,  p-value: &lt;2e-16</span></code></pre></div>
+<span class="co">#&gt; F-statistic: 74.2 on 6 and 135 DF,  p-value: &lt;2e-16</span></code></pre>
 <p>loeme mudelis “+” märki nagu “või”. Ehk, “eluiga võib olla funktsioon SKP-st <strong>või</strong> rahvaarvust”.</p>
 <p>Intercept 19 ei tähenda tõlgenduslikult midagi. l-GDP tõus ühiku võrra tõstab eluiga 10.7 aasta võrra.</p>
 <p>Võrdluseks lihtne mudel</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m2 &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span>l_GDP, <span class="dt">data =</span> g2007)
+<pre class="sourceCode r"><code class="sourceCode r">m2 &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span>l_GDP, <span class="dt">data =</span> g2007)
 <span class="kw">summary</span>(m2)
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
@@ -460,9 +494,9 @@ g2007 &lt;-<span class="st"> </span>g2007 <span class="op">%&gt;%</span><span cl
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Residual standard error: 7.12 on 140 degrees of freedom</span>
 <span class="co">#&gt; Multiple R-squared:  0.654,  Adjusted R-squared:  0.652 </span>
-<span class="co">#&gt; F-statistic:  265 on 1 and 140 DF,  p-value: &lt;2e-16</span></code></pre></div>
+<span class="co">#&gt; F-statistic:  265 on 1 and 140 DF,  p-value: &lt;2e-16</span></code></pre>
 <p>Siin on l_GDP mõju suurem, 16.6 aastat. Millisel mudelil on siis õigus? Proovime veel ülejäänud variandid</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m3 &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span>l_GDP <span class="op">+</span><span class="st"> </span>continent, <span class="dt">data =</span> g2007)
+<pre class="sourceCode r"><code class="sourceCode r">m3 &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span>l_GDP <span class="op">+</span><span class="st"> </span>continent, <span class="dt">data =</span> g2007)
 <span class="kw">summary</span>( m3 )
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
@@ -493,14 +527,16 @@ m4 &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class=
 <span class="co">#&gt; m1  8 918</span>
 <span class="co">#&gt; m2  3 965</span>
 <span class="co">#&gt; m3  7 916</span>
-<span class="co">#&gt; m4  4 962</span></code></pre></div>
+<span class="co">#&gt; m4  4 962</span></code></pre>
 <p>Võitja mudel on hoopis m3, mis võtab arvesse kontinendi. Siin on l_GDP mõju samuti 10.7 aastat. Lisaks näeme, et kui riik ei asu Aafrikas, siis on l_GDP mõju elueale u 11 aasta võrra suurem. Seega elu Aafrika kisub alla keskmise eluea riigi rikkusest sõltumata. Võib olla on põhjuseks sõjad, võib-olla AIDS ja malaaria, võib-olla midagi muud.</p>
 <p>Millise mudeli me peaksime siis avaldama? Vastus on, et need kõik on olulised, et vastata küsimusele, millised faktorid kontrollivad keskmist eluiga? Mudelite võrdlusest näeme, et rahvaarvu mõju elueale on väike või olematu ning et SKP mõju avaldub log skaalas (viitab teatud tüüpi eksponentsiaalsetele protsessidele, kus rikkus tekitab uut rikkust) ning, et Aafrikaga on midagi pahasti ja teistmoodi kui teiste kontinentidega. Aafrikast tasub otsida midagi, mida meie senised mudelid ei kajasta.</p>
 <p>Miks ei ole mudeli summary tabelis Aafrikat? Põhjus on tehniline. Kategoorilisi muutujaid, nagu kontinent, vaatab mudel paariviisilises võrdluses, mis tähendab et k erineva tasemega muutujast tekitatakse k - 1 uut muutujat, millest igaühel on kaks taset (0 ja 1). See algne muutuja, mis üle jääb (antud juhul Africa), jääb ilma oma uue muutujata. Me saame teisi uusi kontinendi põhjal tehtud muutujaid tõlgendada selle järgi, kui palju nad erinevad Africa-st.</p>
 <div id="miks-multivariaatsed-mudelid-head-on" class="section level2 unnumbered">
 <h2>Miks multivariaatsed mudelid head on?</h2>
 <ol style="list-style-type: decimal">
-<li><p>nad aitavad kontrollida nn kaasnevaid (<em>confounding</em>) muutujaid. Kaasnev muutuja võib olla korreleeritud mõne teise muutujaga, mis meile huvi pakub. See võib nii maskeerida signaali, kui tekitada võlts-signaali, kuni y ja x1 seose suuna muutmiseni välja.</p></li>
+<li><p>nad aitavad kontrollida nn kaasnevaid (<em>confounding</em>) muutujaid.
+Kaasnev muutuja võib olla korreleeritud mõne teise muutujaga, mis meile huvi pakub.
+See võib nii maskeerida signaali, kui tekitada võlts-signaali, kuni y ja x1 seose suuna muutmiseni välja.</p></li>
 <li><p>ühel tagajärjel võib olla mitu põhjust.</p></li>
 <li><p>Isegi kui muutujad ei ole omavahel üldse korreleeritud, võib ühe tähtsus sõltuda teise väärtusest. Näiteks taimed vajavad nii valgust kui vett. Aga kui ühte ei ole, siis pole ka teisel suurt tähtsust.</p></li>
 </ol>
@@ -510,22 +546,22 @@ m4 &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class=
 <p>Kui me lahutame igast andmepunktist selle muutuja keskväärtuse siis saame 0-le tsentreeritud andmed. Kui me sellisel viisil saadud väärtused omakorda läbi jagame muutuja standardhälbega, siis saame standardiseeritud andmed, mille keskväärtus on null ja SD = 1.</p>
 <p><span class="math inline">\(Standard.andmed = (x - mean(x))/sd(x)\)</span></p>
 <p>Nii on lihtsam erinevas skaalas muutujaid omavahel võrrelda (1 ühikuline muutus võrdub alati muutusega 1 standardhäve võrra) ja mudeli arvutamine üle mcmc ahelate on ka lihtsam.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m5 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
+<pre class="sourceCode r"><code class="sourceCode r">m5 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
     <span class="kw">alist</span>(
         lifeExp <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>( mu , sigma ) ,
         mu &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b_GDP <span class="op">*</span><span class="st"> </span>lGDP_s <span class="op">+</span><span class="st"> </span>b_pop <span class="op">*</span><span class="st"> </span>lpop_s ,
         a <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>( <span class="dv">0</span> , <span class="dv">10</span> ) ,
         <span class="kw">c</span>(b_GDP, b_pop) <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>( <span class="dv">0</span> , <span class="dv">1</span> ) ,
         sigma <span class="op">~</span><span class="st"> </span><span class="kw">dunif</span>( <span class="dv">0</span> , <span class="dv">10</span> )
-), <span class="dt">data =</span> g2007 )</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">precis</span>(m5)
+), <span class="dt">data =</span> g2007 )</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">precis</span>(m5)
 <span class="co">#&gt;        Mean StdDev lower 0.89 upper 0.89 n_eff Rhat</span>
 <span class="co">#&gt; a     66.74   0.64      65.77      67.79  1000    1</span>
 <span class="co">#&gt; b_GDP  6.95   0.58       6.06       7.84   775    1</span>
 <span class="co">#&gt; b_pop  0.80   0.55      -0.11       1.58   870    1</span>
-<span class="co">#&gt; sigma  7.64   0.50       6.82       8.40   876    1</span></code></pre></div>
+<span class="co">#&gt; sigma  7.64   0.50       6.82       8.40   876    1</span></code></pre>
 <p>kui l_GDP kasvab 1 sd võrra, siis eluiga kasvab 6.9 aasta võrra.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f1 &lt;-<span class="st"> </span><span class="kw">glimmer</span>(lifeExp <span class="op">~</span><span class="st"> </span>lGDP_s <span class="op">+</span><span class="st"> </span>lpop_s <span class="op">+</span><span class="st"> </span>continent, <span class="dt">data =</span> g2007)
+<pre class="sourceCode r"><code class="sourceCode r">f1 &lt;-<span class="st"> </span><span class="kw">glimmer</span>(lifeExp <span class="op">~</span><span class="st"> </span>lGDP_s <span class="op">+</span><span class="st"> </span>lpop_s <span class="op">+</span><span class="st"> </span>continent, <span class="dt">data =</span> g2007)
 <span class="co">#&gt; alist(</span>
 <span class="co">#&gt;     lifeExp ~ dnorm( mu , sigma ),</span>
 <span class="co">#&gt;     mu &lt;- Intercept +</span>
@@ -543,13 +579,13 @@ m4 &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class=
 <span class="co">#&gt;     b_continentEurope ~ dnorm(0,10),</span>
 <span class="co">#&gt;     b_continentOceania ~ dnorm(0,10),</span>
 <span class="co">#&gt;     sigma ~ dcauchy(0,2)</span>
-<span class="co">#&gt; )</span></code></pre></div>
+<span class="co">#&gt; )</span></code></pre>
 <p>See on mudeli struktuur, mis sisaldab uusi kategoorilisi muutujaid</p>
 <p>Siin on tähtis anda map2stan()-le ette glimmeri poolt eeltöödeldud andmed:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m6 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
+<pre class="sourceCode r"><code class="sourceCode r">m6 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
   f1<span class="op">$</span>f, 
-  <span class="dt">data =</span> f1<span class="op">$</span>d)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">precis</span>(m6)
+  <span class="dt">data =</span> f1<span class="op">$</span>d)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">precis</span>(m6)
 <span class="co">#&gt;                      Mean StdDev lower 0.89 upper 0.89 n_eff Rhat</span>
 <span class="co">#&gt; Intercept           59.92   0.97      58.31      61.42   344    1</span>
 <span class="co">#&gt; b_lGDP_s             6.29   0.68       5.20       7.31   450    1</span>
@@ -558,7 +594,7 @@ m4 &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class=
 <span class="co">#&gt; b_continentAsia     10.11   1.47       7.87      12.51   428    1</span>
 <span class="co">#&gt; b_continentEurope   11.26   1.83       8.50      14.26   434    1</span>
 <span class="co">#&gt; b_continentOceania  11.18   4.00       4.87      17.50   784    1</span>
-<span class="co">#&gt; sigma                5.95   0.36       5.38       6.49   931    1</span></code></pre></div>
+<span class="co">#&gt; sigma                5.95   0.36       5.38       6.49   931    1</span></code></pre>
 </div>
 <div id="prediktorite-valik-e-milline-on-parim-mudel" class="section level2">
 <h2><span class="header-section-number">18.1</span> Prediktorite valik e milline on parim mudel</h2>
@@ -567,26 +603,26 @@ m4 &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class=
 <p>Willems JP, Saunders JT, DE Hunt, JB Schorling: Prevalence of coronary heart disease risk factors among rural blacks: A community-based study. Southern Medical Journal 90:814-820; 1997</p>
 <p>Schorling JB, Roach J, Siegel M, Baturka N, Hunt DE, Guterbock TM, Stewart HL: A trial of church-based smoking cessation interventions for rural African Americans. Preventive Medicine 26:92-101; 1997.</p>
 <p>Kõigepealt bayesi meetodil. Eeldame tavalist mitme prediktoriga iseseisvat (aditiivset) lineaarset regressiooni (ilma interaktsioonideta v mitmetasemeliste mudeliteta).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(BayesVarSel)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(BayesVarSel)
 <span class="kw">library</span>(mice)
 diabetes &lt;-<span class="st"> </span><span class="kw">read.csv2</span>(<span class="st">&quot;data/diabetes.csv&quot;</span>)
 imp_d &lt;-<span class="st"> </span><span class="kw">mice</span>(diabetes, <span class="dt">m =</span> <span class="dv">1</span>, <span class="dt">print =</span> <span class="ot">FALSE</span>)
 diab &lt;-<span class="st"> </span><span class="kw">complete</span>(imp_d) 
-diab_Bvs &lt;-<span class="st"> </span><span class="kw">Bvs</span>(<span class="dt">formula =</span> hdl <span class="op">~</span><span class="st"> </span>chol <span class="op">+</span><span class="st"> </span>stab.glu <span class="op">+</span><span class="st"> </span>ratio <span class="op">+</span><span class="st"> </span>glyhb <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>height <span class="op">+</span><span class="st"> </span>weight <span class="op">+</span><span class="st"> </span>frame <span class="op">+</span><span class="st"> </span>bp.1s <span class="op">+</span><span class="st"> </span>bp.1d<span class="op">+</span><span class="st"> </span>waist <span class="op">+</span><span class="st"> </span>hip, <span class="dt">data =</span> diab)
+diab_Bvs &lt;-<span class="st"> </span><span class="kw">Bvs</span>(<span class="dt">formula =</span> hdl <span class="op">~</span><span class="st"> </span>chol <span class="op">+</span><span class="st"> </span>stab.glu <span class="op">+</span><span class="st"> </span>ratio <span class="op">+</span><span class="st"> </span>glyhb <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>height <span class="op">+</span><span class="st"> </span>weight <span class="op">+</span><span class="st"> </span>frame <span class="op">+</span><span class="st"> </span>bp<span class="fl">.1</span>s <span class="op">+</span><span class="st"> </span>bp<span class="fl">.1</span>d<span class="op">+</span><span class="st"> </span>waist <span class="op">+</span><span class="st"> </span>hip, <span class="dt">data =</span> diab)
 <span class="co">#&gt; Info. . . .</span>
 <span class="co">#&gt; Most complex model has 16 covariates</span>
 <span class="co">#&gt; From those 1 is fixed and we should select from the remaining 15 </span>
 <span class="co">#&gt; chol, stab.glu, ratio, glyhb, age, gendermale, height, weight, framelarge, framemedium, framesmall, bp.1s, bp.1d, waist, hip</span>
 <span class="co">#&gt; The problem has a total of 32768 competing models</span>
 <span class="co">#&gt; Of these, the  10 most probable (a posteriori) are kept</span>
-<span class="co">#&gt; Working on the problem...please wait.</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
-<span class="kw">vif</span>(<span class="kw">lm</span>(hdl <span class="op">~</span><span class="st"> </span>chol <span class="op">+</span><span class="st"> </span>stab.glu <span class="op">+</span><span class="st"> </span>ratio <span class="op">+</span><span class="st"> </span>glyhb <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>height <span class="op">+</span><span class="st"> </span>weight <span class="op">+</span><span class="st">  </span>bp.1s <span class="op">+</span><span class="st"> </span>bp.1d <span class="op">+</span><span class="st"> </span>waist, <span class="dt">data =</span> diab))
+<span class="co">#&gt; Working on the problem...please wait.</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
+<span class="kw">vif</span>(<span class="kw">lm</span>(hdl <span class="op">~</span><span class="st"> </span>chol <span class="op">+</span><span class="st"> </span>stab.glu <span class="op">+</span><span class="st"> </span>ratio <span class="op">+</span><span class="st"> </span>glyhb <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>height <span class="op">+</span><span class="st"> </span>weight <span class="op">+</span><span class="st">  </span>bp<span class="fl">.1</span>s <span class="op">+</span><span class="st"> </span>bp<span class="fl">.1</span>d <span class="op">+</span><span class="st"> </span>waist, <span class="dt">data =</span> diab))
 <span class="co">#&gt;     chol stab.glu    ratio    glyhb      age   height   weight    bp.1s </span>
-<span class="co">#&gt;     1.41     2.34     1.51     2.47     1.63     1.22     4.96     2.12 </span>
+<span class="co">#&gt;     1.42     2.34     1.51     2.47     1.63     1.21     4.90     2.10 </span>
 <span class="co">#&gt;    bp.1d    waist </span>
-<span class="co">#&gt;     1.77     4.76</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(diab_Bvs)
+<span class="co">#&gt;     1.75     4.72</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(diab_Bvs)
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; Bvs(formula = hdl ~ chol + stab.glu + ratio + glyhb + age + gender + </span>
@@ -597,24 +633,24 @@ diab_Bvs &lt;-<span class="st"> </span><span class="kw">Bvs</span>(<span class="
 <span class="co">#&gt; chol                 1   *   *</span>
 <span class="co">#&gt; stab.glu        0.0249        </span>
 <span class="co">#&gt; ratio                1   *   *</span>
-<span class="co">#&gt; glyhb           0.0216        </span>
-<span class="co">#&gt; age               0.04        </span>
-<span class="co">#&gt; gendermale      0.0176        </span>
-<span class="co">#&gt; height          0.0426        </span>
-<span class="co">#&gt; weight          0.0803        </span>
-<span class="co">#&gt; framelarge      0.0367        </span>
-<span class="co">#&gt; framemedium     0.0141        </span>
-<span class="co">#&gt; framesmall      0.0229        </span>
-<span class="co">#&gt; bp.1s           0.0156        </span>
-<span class="co">#&gt; bp.1d            0.014        </span>
-<span class="co">#&gt; waist           0.0525        </span>
-<span class="co">#&gt; hip             0.5266   *   *</span>
+<span class="co">#&gt; glyhb           0.0211        </span>
+<span class="co">#&gt; age             0.0393        </span>
+<span class="co">#&gt; gendermale      0.0177        </span>
+<span class="co">#&gt; height          0.0443        </span>
+<span class="co">#&gt; weight            0.08        </span>
+<span class="co">#&gt; framelarge      0.0364        </span>
+<span class="co">#&gt; framemedium      0.014        </span>
+<span class="co">#&gt; framesmall      0.0226        </span>
+<span class="co">#&gt; bp.1s           0.0157        </span>
+<span class="co">#&gt; bp.1d           0.0142        </span>
+<span class="co">#&gt; waist           0.0496        </span>
+<span class="co">#&gt; hip             0.5225   *   *</span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Code: HPM stands for Highest posterior Probability Model and</span>
 <span class="co">#&gt;  MPM for Median Probability Model.</span>
-<span class="co">#&gt; </span></code></pre></div>
+<span class="co">#&gt; </span></code></pre>
 <p>Aga mis juhtub, kui me eemaldame muutuja chol?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diab_Bvs2 &lt;-<span class="st"> </span><span class="kw">Bvs</span>(<span class="dt">formula =</span> hdl <span class="op">~</span><span class="st"> </span>stab.glu <span class="op">+</span><span class="st"> </span>ratio <span class="op">+</span><span class="st"> </span>glyhb <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>height <span class="op">+</span><span class="st"> </span>weight <span class="op">+</span><span class="st"> </span>frame <span class="op">+</span><span class="st"> </span>bp.1s <span class="op">+</span><span class="st"> </span>bp.1d<span class="op">+</span><span class="st"> </span>waist <span class="op">+</span><span class="st"> </span>hip, <span class="dt">data =</span> diab)
+<pre class="sourceCode r"><code class="sourceCode r">diab_Bvs2 &lt;-<span class="st"> </span><span class="kw">Bvs</span>(<span class="dt">formula =</span> hdl <span class="op">~</span><span class="st"> </span>stab.glu <span class="op">+</span><span class="st"> </span>ratio <span class="op">+</span><span class="st"> </span>glyhb <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>height <span class="op">+</span><span class="st"> </span>weight <span class="op">+</span><span class="st"> </span>frame <span class="op">+</span><span class="st"> </span>bp<span class="fl">.1</span>s <span class="op">+</span><span class="st"> </span>bp<span class="fl">.1</span>d<span class="op">+</span><span class="st"> </span>waist <span class="op">+</span><span class="st"> </span>hip, <span class="dt">data =</span> diab)
 <span class="co">#&gt; Info. . . .</span>
 <span class="co">#&gt; Most complex model has 15 covariates</span>
 <span class="co">#&gt; From those 1 is fixed and we should select from the remaining 14 </span>
@@ -630,28 +666,28 @@ diab_Bvs &lt;-<span class="st"> </span><span class="kw">Bvs</span>(<span class="
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Inclusion Probabilities:</span>
 <span class="co">#&gt;             Incl.prob. HPM MPM</span>
-<span class="co">#&gt; stab.glu        0.0616        </span>
+<span class="co">#&gt; stab.glu        0.0651        </span>
 <span class="co">#&gt; ratio                1   *   *</span>
-<span class="co">#&gt; glyhb           0.1102        </span>
-<span class="co">#&gt; age             0.9812   *   *</span>
-<span class="co">#&gt; gendermale      0.1218        </span>
-<span class="co">#&gt; height          0.0634        </span>
-<span class="co">#&gt; weight          0.1722        </span>
-<span class="co">#&gt; framelarge      0.7026   *   *</span>
-<span class="co">#&gt; framemedium     0.1234        </span>
-<span class="co">#&gt; framesmall      0.0845        </span>
-<span class="co">#&gt; bp.1s           0.0868        </span>
-<span class="co">#&gt; bp.1d           0.5872       *</span>
-<span class="co">#&gt; waist           0.1339        </span>
-<span class="co">#&gt; hip             0.1687        </span>
+<span class="co">#&gt; glyhb           0.1222        </span>
+<span class="co">#&gt; age             0.9768   *   *</span>
+<span class="co">#&gt; gendermale      0.1373        </span>
+<span class="co">#&gt; height           0.068        </span>
+<span class="co">#&gt; weight          0.1891        </span>
+<span class="co">#&gt; framelarge       0.686   *   *</span>
+<span class="co">#&gt; framemedium     0.1265        </span>
+<span class="co">#&gt; framesmall      0.0852        </span>
+<span class="co">#&gt; bp.1s           0.0919        </span>
+<span class="co">#&gt; bp.1d           0.6516   *   *</span>
+<span class="co">#&gt; waist           0.1333        </span>
+<span class="co">#&gt; hip             0.1779        </span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Code: HPM stands for Highest posterior Probability Model and</span>
 <span class="co">#&gt;  MPM for Median Probability Model.</span>
-<span class="co">#&gt; </span></code></pre></div>
+<span class="co">#&gt; </span></code></pre>
 <p>Nüüd ilmusid välja lisamuutujad, mis äkki on olulised ja selgu, et vanus on peaaegu sama oluline kui ratio!</p>
 <p>Järgneb <strong>Hüpoteeside testimine</strong>, mis annab Bayesi faktorid (B) nullhüpoteesi suhtes. B=1 tähendab, et kaks hüpoteesi on andmete poolt võrdselt toetatud. B = 100 tähendab, et see hüpotees, mis ei ole H0, on andmete poolt 100 korda rohkem toetatud, kui H0. B = 0.1 tähendab, et hüpotees on 10 korda vähem toetatud kui H0. Bayesi faktor mõõdab tõendusmaterjali (evidence), mis on suhteline mõõt, millega andmed toetavad ühte hüpoteesi rohkem või vähem kui teist hüpoteesi.</p>
 <p>H0 on ilma prediktoriteta mudel, mis annab tulemuseks keskmise hdl-i.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fullmodel &lt;-<span class="st"> </span>hdl <span class="op">~</span><span class="st"> </span>chol <span class="op">+</span><span class="st"> </span>stab.glu <span class="op">+</span><span class="st"> </span>ratio <span class="op">+</span><span class="st"> </span>glyhb <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>height <span class="op">+</span><span class="st"> </span>weight <span class="op">+</span><span class="st"> </span>frame <span class="op">+</span><span class="st"> </span>bp.1s <span class="op">+</span><span class="st"> </span>bp.1d<span class="op">+</span><span class="st"> </span>waist <span class="op">+</span><span class="st"> </span>hip
+<pre class="sourceCode r"><code class="sourceCode r">fullmodel &lt;-<span class="st"> </span>hdl <span class="op">~</span><span class="st"> </span>chol <span class="op">+</span><span class="st"> </span>stab.glu <span class="op">+</span><span class="st"> </span>ratio <span class="op">+</span><span class="st"> </span>glyhb <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>height <span class="op">+</span><span class="st"> </span>weight <span class="op">+</span><span class="st"> </span>frame <span class="op">+</span><span class="st"> </span>bp<span class="fl">.1</span>s <span class="op">+</span><span class="st"> </span>bp<span class="fl">.1</span>d<span class="op">+</span><span class="st"> </span>waist <span class="op">+</span><span class="st"> </span>hip
 reducedmodel &lt;-<span class="st"> </span>hdl <span class="op">~</span><span class="st"> </span>chol <span class="op">+</span><span class="st"> </span>ratio 
 reducedmodel2 &lt;-<span class="st"> </span>hdl <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>ratio <span class="op">+</span><span class="st"> </span>frame
 nullmodel &lt;-<span class="st"> </span>hdl <span class="op">~</span><span class="st"> </span><span class="dv">1</span>
@@ -674,24 +710,24 @@ nullmodel &lt;-<span class="st"> </span>hdl <span class="op">~</span><span class
 <span class="co">#&gt; ---------</span>
 <span class="co">#&gt; Bayes factors (expressed in relation to H0)</span>
 <span class="co">#&gt;  H0.to.H0  H1.to.H0  H2.to.H0  H3.to.H0 </span>
-<span class="co">#&gt;  1.00e+00 1.70e+131 1.83e+142  1.59e+55 </span>
+<span class="co">#&gt;  1.00e+00 2.32e+131 2.28e+142  7.25e+54 </span>
 <span class="co">#&gt; ---------</span>
 <span class="co">#&gt; Posterior probabilities:</span>
 <span class="co">#&gt; H0 H1 H2 H3 </span>
-<span class="co">#&gt;  0  0  1  0</span></code></pre></div>
+<span class="co">#&gt;  0  0  1  0</span></code></pre>
 <p>Väga huvitav, chol muutuja eemaldamine (millest ma kahtlustan, et see on osaliselt(?) redundantne ratio muutujaga) langetas Bayesi faktorit meeletult.</p>
 <p>sageduslik alternatiiv muutujate valimisele:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(leaps)
-regfit.full&lt;-<span class="st"> </span><span class="kw">regsubsets</span>(hdl <span class="op">~</span><span class="st"> </span>stab.glu <span class="op">+</span><span class="st"> </span>ratio <span class="op">+</span><span class="st"> </span>glyhb <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>height <span class="op">+</span><span class="st"> </span>weight <span class="op">+</span><span class="st"> </span>frame <span class="op">+</span><span class="st"> </span>bp.1s <span class="op">+</span><span class="st"> </span>bp.1d<span class="op">+</span><span class="st"> </span>waist <span class="op">+</span><span class="st"> </span>hip, <span class="dt">data =</span> diab, <span class="dt">nvmax=</span><span class="dv">19</span>, <span class="dt">method=</span><span class="st">&quot;backward&quot;</span>) 
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(leaps)
+regfit.full&lt;-<span class="st"> </span><span class="kw">regsubsets</span>(hdl <span class="op">~</span><span class="st"> </span>stab.glu <span class="op">+</span><span class="st"> </span>ratio <span class="op">+</span><span class="st"> </span>glyhb <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>height <span class="op">+</span><span class="st"> </span>weight <span class="op">+</span><span class="st"> </span>frame <span class="op">+</span><span class="st"> </span>bp<span class="fl">.1</span>s <span class="op">+</span><span class="st"> </span>bp<span class="fl">.1</span>d<span class="op">+</span><span class="st"> </span>waist <span class="op">+</span><span class="st"> </span>hip, <span class="dt">data =</span> diab, <span class="dt">nvmax=</span><span class="dv">19</span>, <span class="dt">method=</span><span class="st">&quot;backward&quot;</span>) 
 reg.summary&lt;-<span class="kw">summary</span>(regfit.full) 
 regs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">adj_RSq =</span> reg.summary<span class="op">$</span>adjr2)
-<span class="kw">ggplot</span>(regs) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(regs), <span class="dt">y =</span> adj_RSq)) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Number of Variables&quot;</span>)</code></pre></div>
+<span class="kw">ggplot</span>(regs) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(regs), <span class="dt">y =</span> adj_RSq)) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Number of Variables&quot;</span>)</code></pre>
 <p><img src="14_mitu-prediktorit_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <p>Peale 2. muutuja lisamist jääb adjusteeritud r-ruut stabiilseks. Seega piisab kahest muutujast.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">reg.summary<span class="op">$</span>adjr2
-<span class="co">#&gt;  [1] 0.470 0.488 0.501 0.508 0.510 0.513 0.513 0.513 0.512 0.511 0.510</span>
-<span class="co">#&gt; [12] 0.509 0.507 0.506</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(regfit.full)
+<pre class="sourceCode r"><code class="sourceCode r">reg.summary<span class="op">$</span>adjr2
+<span class="co">#&gt;  [1] 0.468 0.487 0.499 0.507 0.509 0.511 0.512 0.512 0.511 0.510 0.509</span>
+<span class="co">#&gt; [12] 0.508 0.506 0.505</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(regfit.full)
 <span class="co">#&gt; Subset selection object</span>
 <span class="co">#&gt; Call: regsubsets.formula(hdl ~ stab.glu + ratio + glyhb + age + gender + </span>
 <span class="co">#&gt;     height + weight + frame + bp.1s + bp.1d + waist + hip, data = diab, </span>
@@ -742,8 +778,8 @@ regs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span clas
 <span class="co">#&gt; 10  ( 1 ) &quot;*&quot;         &quot; &quot;        &quot; &quot;   &quot;*&quot;   &quot; &quot;   &quot;*&quot;</span>
 <span class="co">#&gt; 11  ( 1 ) &quot;*&quot;         &quot; &quot;        &quot;*&quot;   &quot;*&quot;   &quot; &quot;   &quot;*&quot;</span>
 <span class="co">#&gt; 12  ( 1 ) &quot;*&quot;         &quot; &quot;        &quot;*&quot;   &quot;*&quot;   &quot; &quot;   &quot;*&quot;</span>
-<span class="co">#&gt; 13  ( 1 ) &quot;*&quot;         &quot;*&quot;        &quot;*&quot;   &quot;*&quot;   &quot; &quot;   &quot;*&quot;</span>
-<span class="co">#&gt; 14  ( 1 ) &quot;*&quot;         &quot;*&quot;        &quot;*&quot;   &quot;*&quot;   &quot;*&quot;   &quot;*&quot;</span></code></pre></div>
+<span class="co">#&gt; 13  ( 1 ) &quot;*&quot;         &quot; &quot;        &quot;*&quot;   &quot;*&quot;   &quot;*&quot;   &quot;*&quot;</span>
+<span class="co">#&gt; 14  ( 1 ) &quot;*&quot;         &quot;*&quot;        &quot;*&quot;   &quot;*&quot;   &quot;*&quot;   &quot;*&quot;</span></code></pre>
 
 </div>
 </div>
@@ -803,11 +839,10 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

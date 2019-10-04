@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>23 brms süntaks | Bayesi statistika kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
   <meta property="og:title" content="23 brms süntaks | Bayesi statistika kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="brms-mudelid.html"/>
-<link rel="next" href="puuduvad-andmed.html"/>
+<link rel="prev" href="brms-mudelid.html">
+<link rel="next" href="puuduvad-andmed.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -47,46 +47,75 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
 
 <script src="https://use.fontawesome.com/e4ba4259a1.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-pre, code { background-color: #f8f8f8; }
-code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code > span.dt { color: #204a87; } /* DataType */
-code > span.dv { color: #0000cf; } /* DecVal */
-code > span.bn { color: #0000cf; } /* BaseN */
-code > span.fl { color: #0000cf; } /* Float */
-code > span.ch { color: #4e9a06; } /* Char */
-code > span.st { color: #4e9a06; } /* String */
-code > span.co { color: #8f5902; font-style: italic; } /* Comment */
-code > span.ot { color: #8f5902; } /* Other */
-code > span.al { color: #ef2929; } /* Alert */
-code > span.fu { color: #000000; } /* Function */
-code > span.er { color: #a40000; font-weight: bold; } /* Error */
-code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #000000; } /* Constant */
-code > span.sc { color: #000000; } /* SpecialChar */
-code > span.vs { color: #4e9a06; } /* VerbatimString */
-code > span.ss { color: #4e9a06; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #000000; } /* Variable */
-code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code > span.ex { } /* Extension */
-code > span.at { color: #c4a000; } /* Attribute */
-code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -301,13 +330,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="23" data-path="brms-suntaks.html"><a href="brms-suntaks.html"><i class="fa fa-check"></i><b>23</b> brms süntaks</a><ul>
 <li class="chapter" data-level="23.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#general-formula-structure"><i class="fa fa-check"></i><b>23.1</b> General formula structure</a><ul>
-<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#group-level-terms-xg-1idg-grx-by-mmg1-g2"><i class="fa fa-check"></i><b>23.1.1</b> Group-level terms: x||g, 1|ID|g, gr(x, by = ), mm(g1, g2)</a></li>
-<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.2</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
-<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.3</b> Additional response information</a></li>
-<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for non-linear models</a></li>
-<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for predicting distributional parameters</a></li>
-<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for mixture models</a></li>
-<li class="chapter" data-level="23.1.7" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.7</b> Formula syntax for multivariate models</a></li>
+<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.1</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
+<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.2</b> Additional response information</a></li>
+<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.3</b> Formula syntax for non-linear models</a></li>
+<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for predicting distributional parameters</a></li>
+<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for mixture models</a></li>
+<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for multivariate models</a></li>
 </ul></li>
 <li class="chapter" data-level="23.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#brms-likelihoods"><i class="fa fa-check"></i><b>23.2</b> brms likelihoods</a></li>
 <li class="chapter" data-level="23.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#priors"><i class="fa fa-check"></i><b>23.3</b> priors</a><ul>
@@ -464,39 +492,47 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>(1 | g1/g2), tähendab tegelikult (1 | g1) + (1 | g1:g2).</p>
 <p>(1 | g1 + g2) on sama, mis (1 | g1) + (1 | g2).</p>
 <p>|| kasutades (x || g1) ei modelleeri me grupi-taseme korrelatsioone. See on hea, kui mudeli fittimine muidu ei tööta.</p>
-<p>kuidas mudeldada sama grupeeriva faktori korrelatsioone üle mitme regressioonivõrrandi? Selleks laiendame | operaatori |<ID>|, kus <ID> on suvaline väärtus. Näiteks kui termid (x1|ID|g1) and (x2|ID|g1) esinevad kuskil samas või erinevates võrrandites, modelleeritakse need kui korreleeritud.</p>
+<p>kuidas mudeldada sama grupeeriva faktori korrelatsioone üle mitme regressioonivõrrandi? Selleks laiendame | operaatori |<ID>|, kus <ID> on suvaline väärtus.
+Näiteks kui termid (x1|ID|g1) and (x2|ID|g1) esinevad kuskil samas või erinevates võrrandites, modelleeritakse need kui korreleeritud.</p>
 <p>alternatiivseid grupeeivaid struktuure saab väljendada nii:</p>
 <p><code>(gterms | fun(group))</code>.</p>
-<p>Hetkel on meil 2 sellist fun-i: gr() annab default käitumise ja mm() annab multi-membership termid. Näiteks <code>brm(y ~ 1 + (1 | mm(s1, s2))</code> modelleerib seda, kuidas lapsed võivad õppida kahes koolis (s1 ja s2) eri aegadel</p>
+<p>Hetkel on meil 2 sellist fun-i: gr() annab default käitumise ja mm() annab multi-membership termid.
+Näiteks <code>brm(y ~ 1 + (1 | mm(s1, s2))</code> modelleerib seda, kuidas lapsed võivad õppida kahes koolis (s1 ja s2) eri aegadel</p>
 <p>gr() lisatakse muidu automaatselt, aga seda spetsifitseerides saab kirjutada</p>
 <p><code>y ~ x + (1|gr(g1, by = g2))</code>, mis tähendab, et grupeeriva muutja g1 sees lahutatakse veel gruppidesse g2 muutuja tasemete järgi - ja iga g2 grupp modelleeritakse iseseisvalt (ilma shrinkageta)</p>
 <p>Mittelineaarne mudel:</p>
 <p>y = b1(1 - exp(-(x/b2)**b3 )</p>
-<p>y ja x seos parameetritega b1..b3 Oletame, et tahame kõik parameetrid fittida grupeeriva muutuja g tasemete järgi ja et grupi tasmel efektid oleks omavahel korreleeritud. Lisaks ennustame me b1-e kovariaat z järgi. See kõik läheb järgmisesse võrrandisüsteemi kus, lisaks mitte-lineaarsele võrrandile, igale parameetrile b1…b3 vastab oma lineaarne võrrand:</p>
-<p><code>y ~ b1 * (1 - exp(-(x / b2) ^ b3)</code> <code>b1 ~ z + (1|ID|g)</code> <code>b2 ~ (1|ID|g)</code> <code>b3 ~ (1|ID|g)</code></p>
-<p>lisaks on mudeli keeles silumistermid s() ehk spline ja t2() ehk bivariate tensor spline, mis tulevad mgcv paketist. Näiteks <code>rentsqm ~ t2(area, yearc) + (1|district)</code></p>
+<p>y ja x seos parameetritega b1..b3
+Oletame, et tahame kõik parameetrid fittida grupeeriva muutuja g tasemete järgi ja et grupi tasmel efektid oleks omavahel korreleeritud. Lisaks ennustame me b1-e kovariaat z järgi. See kõik läheb järgmisesse võrrandisüsteemi kus, lisaks mitte-lineaarsele võrrandile, igale parameetrile b1…b3 vastab oma lineaarne võrrand:</p>
+<p><code>y ~ b1 * (1 - exp(-(x / b2) ^ b3)</code>
+<code>b1 ~ z + (1|ID|g)</code>
+<code>b2 ~ (1|ID|g)</code>
+<code>b3 ~ (1|ID|g)</code></p>
+<p>lisaks on mudeli keeles silumistermid s() ehk spline ja t2() ehk bivariate tensor spline, mis tulevad mgcv paketist.
+Näiteks <code>rentsqm ~ t2(area, yearc) + (1|district)</code></p>
 <p>category specific effects cs,</p>
 <p>monotonic effects mo,</p>
 <p>noise-free effects me, or</p>
 <p>Gaussian process terms gp.</p>
-<p>additional information on the response variable may be specified via <code>response | aterms ~ &lt;predictor terms&gt;</code>. The aterms part may contain multiple terms of the form fun(<variable>) separated by + each providing special information on the response variable. This allows among others to weight observations, provide known standard errors for meta-analysis, or model censored or truncated data.</p>
+<p>additional information on the response variable may be specified via
+<code>response | aterms ~ &lt;predictor terms&gt;</code>. The aterms part may contain multiple terms of the form fun(<variable>) separated by + each providing special information on the response variable. This allows among others to weight observations, provide known standard errors for meta-analysis, or model censored or truncated data.</p>
 <div id="general-formula-structure" class="section level2">
 <h2><span class="header-section-number">23.1</span> General formula structure</h2>
 <p>response | aterms ~ pterms + (gterms | group)</p>
 <p>The pterms - effects that are assumed to be the same across observations (‘population-level’ effects).</p>
 <p>gterms - effects that are assumed to vary across grouping variables specified in group (‘group-level’ effects).</p>
-<div id="group-level-terms-xg-1idg-grx-by-mmg1-g2" class="section level3">
-<h3><span class="header-section-number">23.1.1</span> Group-level terms: x||g, 1|ID|g, gr(x, by = ), mm(g1, g2)</h3>
+<p>###Group-level terms: x||g, 1|ID|g, gr(x, by = ), mm(g1, g2)</p>
 <p>Multiple grouping factors each with multiple group-level effects are possible.</p>
 <p>Use || in grouping terms to prevent correlations from being modeled.</p>
-<p>It is possible to model different group-level terms of the same grouping factor as correlated (even across different formulas, e.g., in non-linear models) by using |<ID>| instead of |. All group-level terms sharing the same ID will be modeled as correlated. for instance, the terms (1+x|2|g) and (1+z|2|g) mean that correlations between x and z will be estimated. correlated group-level effects across parameters: <code>bf(y ~ a1 - a2^x, a1 ~ 1 + (1|2|g), a2 ~ x + (x|2|g), nl = TRUE)</code></p>
+<p>It is possible to model different group-level terms of the same grouping factor as correlated (even across different formulas, e.g., in non-linear models) by using |<ID>| instead of |. All group-level terms sharing the same ID will be modeled as correlated. for instance, the terms (1+x|2|g) and (1+z|2|g) mean that correlations between x and z will be estimated.
+correlated group-level effects across parameters:
+<code>bf(y ~ a1 - a2^x, a1 ~ 1 + (1|2|g), a2 ~ x + (x|2|g), nl = TRUE)</code></p>
 <p>If levels of the grouping factor belong to different sub-populations, it may be reasonable to assume a different covariance matrix for each of the sub-populations. For instance, the variation within the treatment group and within the control group in a randomized control trial might differ. Suppose that y is the outcome, and x is the factor indicating the treatment and control group. Then, we could estimate different hyper-parameters of the varying effects (in this case a varying intercept) for treatment and control group via y ~ x + (1 | gr(subject, by = x)).</p>
 <p>A multi-membership term with two members: (1 | mm(g1, g2)), where g1 and g2 specify the first and second member, respectively. If x varies across the levels of g1 and g2, we can save the respective x values in the variables x1 and x2 and then model the varying effect as (1 + mmc(x1, x2) | mm(g1, g2)).</p>
 <p>multilevel w smoothing terms <code>brmsformula(y ~ x1*x2 + s(z) + (1+x1|1) + (1|g2))</code></p>
 <p>additionally predict ‘sigma’ <code>brmsformula(y ~ x1*x2 + s(z) + (1+x1|1) + (1|g2), sigma ~ x1 + (1|g2))</code></p>
-</div>
 <div id="special-predictor-terms-s-t2-gp-mo-me-mi-cs" class="section level3">
-<h3><span class="header-section-number">23.1.2</span> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</h3>
+<h3><span class="header-section-number">23.1.1</span> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</h3>
 <p>Smoothing terms are modeled using s() and t2() in the pterms part of the formula.</p>
 <p>Gaussian process terms can be fitted using gp() in the pterms. Similar to smooth terms, Gaussian processes can be used to model complex non-linear relationships, for instance temporal or spatial autocorrelation. However, they are computationally demanding and are thus not recommended for very large datasets.</p>
 <p>The pterms and gterms parts may contain non-standard effect types: monotonic mo(predictor), measurement error me(predictor, sd_predictor), missing value mi(predictor), and category specific effects cs(<predictors>).</p>
@@ -507,10 +543,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>bf(bmi ~ age * mi(chl)) + bf(chl | mi() ~ age) + set_rescor(FALSE).</p>
 </div>
 <div id="additional-response-information" class="section level3">
-<h3><span class="header-section-number">23.1.3</span> Additional response information</h3>
+<h3><span class="header-section-number">23.1.2</span> Additional response information</h3>
 <p>aterms part may contain multiple terms of the form fun(<variable>) separated by + each providing special information on the response variable. fun can be replaced with either se, weights, cens, trunc, trials, cat, or dec.</p>
 <p>For families gaussian, student and skew_normal, it is possible to specify standard errors of the observations, thus allowing to perform meta-analysis. Suppose that the variable y_i contains the effect sizes from the studies and se_i the corresponding standard errors. Then, fixed and random effects meta-analyses can be conducted using the formulas <code>y_i | se(se_i) ~ 1</code> and <code>y_i | se(se_i) ~ 1 + (1|study)</code>, respectively, where study is a variable uniquely identifying every study.</p>
-<p>Meta-regression can be performed via <code>y_i | se(se_i) ~ 1 + mod1 + mod2 + (1|study)</code> or <code>y_i | se(se_i) ~ 1 + mod1 + mod2 + (1 + mod1 + mod2|study)</code>, where mod1 and mod2 represent moderator variables. By default, the standard errors replace the parameter sigma. To model sigma in addition to the known standard errors, set argument sigma in function se to TRUE, for instance, <code>y_i | se(se_i, sigma = TRUE) ~ 1</code>.</p>
+<p>Meta-regression can be performed via <code>y_i | se(se_i) ~ 1 + mod1 + mod2 + (1|study)</code> or
+<code>y_i | se(se_i) ~ 1 + mod1 + mod2 + (1 + mod1 + mod2|study)</code>, where mod1 and mod2 represent moderator variables. By default, the standard errors replace the parameter sigma. To model sigma in addition to the known standard errors, set argument sigma in function se to TRUE, for instance, <code>y_i | se(se_i, sigma = TRUE) ~ 1</code>.</p>
 <p>For all families, weighted regression may be performed using weights in the aterms part. Internally, this is implemented by multiplying the log-posterior values of each observation by their corresponding weights. Suppose that variable we_i contains the weights and that yi is the response variable. Then, formula <code>y_i | weights(we_i) ~ predictors</code> implements a weighted regression.</p>
 <p>With the exception of categorical, ordinal, and mixture families, left, right, and interval censoring can be modeled through <code>y | cens(censored) ~ predictors</code>. The censoring variable (named censored in this example) should contain the values ‘left’, ‘none’, ‘right’, and ‘interval’ (or equivalently -1, 0, 1, and 2) to indicate that the corresponding observation is left censored, not censored, right censored, or interval censored. For interval censored data, a second variable (let’s call it y2) has to be passed to cens. In this case, the formula has the structure <code>y | cens(censored, y2) ~ predictors</code>. While the lower bounds are given in y, the upper bounds are given in y2 for interval censored data. Intervals are assumed to be open on the left and closed on the right: (y, y2].</p>
 <p>With the exception of categorical, ordinal, and mixture families, the response distribution can be truncated using the trunc function in the addition part. If the response variable is truncated between, say, 0 and 100, we can specify this via <code>yi | trunc(lb = 0, ub = 100) ~ predictors</code>. Instead of numbers, variables in the data set can also be passed allowing for varying truncation points across observations. Defining only one of the two arguments in trunc leads to one-sided truncation.</p>
@@ -520,28 +557,31 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>Multiple addition terms may be specified at the same time using the + operator, for instance <code>formula = y_i | se(se_i) + cens(censored) ~ 1</code> for a censored meta-analytic model.</p>
 </div>
 <div id="formula-syntax-for-non-linear-models" class="section level3">
-<h3><span class="header-section-number">23.1.4</span> Formula syntax for non-linear models</h3>
+<h3><span class="header-section-number">23.1.3</span> Formula syntax for non-linear models</h3>
 <p>The non-linear model can be specified within the formula argument. Suppose, that we want a non-linear model being defined via formula = y ~ alpha - beta * lambda^x. To tell brms that this is a non-linear model, argument nl = TRUE. Now we have to specify a model for each of the non-linear parameters. Let’s say we just want to estimate those three parameters with no further covariates or random effects. Then we can pass alpha + beta + lambda ~ 1 or equivalently (and more flexible) alpha ~ 1, beta ~ 1, lambda ~ 1 to the … argument. If we have another predictor z and observations nested within the grouping factor g, we may write for instance alpha ~ 1, beta ~ 1 + z + (1|g), lambda ~ 1. We are using z and g only for the prediction of beta, but we might also use them for the other non-linear parameters.</p>
 <p>Non-linear models may not be uniquely identified and / or show bad convergence. For this reason it is mandatory to specify priors on the non-linear parameters.</p>
 <p><code>bf(y ~ a1 - a2^x, a1 + a2 ~ 1, nl = TRUE)</code> simple nl model</p>
 </div>
 <div id="formula-syntax-for-predicting-distributional-parameters" class="section level3">
-<h3><span class="header-section-number">23.1.5</span> Formula syntax for predicting distributional parameters</h3>
+<h3><span class="header-section-number">23.1.4</span> Formula syntax for predicting distributional parameters</h3>
 <p>It is also possible to predict parameters of the response distribution such as the residual standard deviation sigma in gaussian models or the hurdle probability hu in hurdle models. The syntax closely resembles that of a non-linear parameter, for instance sigma ~ x + s(z) + (1+x|g).</p>
 <p>Alternatively, one may fix distributional parameters to certain values. This is useful when models become too complicated and otherwise have convergence issues. The quantile parameter of the asym_laplace distribution is a good example where it is useful. By fixing quantile, one can perform quantile regression for the specified quantile. For instance, quantile = 0.25 allows predicting the 25%-quantile. Furthermore, the bias parameter in drift-diffusion models, is assumed to be 0.5 (i.e. no bias) in many applications. To achieve this, simply write bias = 0.5. Other possible applications are the Cauchy distribution as a special case of the Student-t distribution with nu = 1, or the geometric distribution as a special case of the negative binomial distribution with shape = 1. Furthermore, the parameter disc (‘discrimination’) in ordinal models is fixed to 1 by default and not estimated, but may be modeled as any other distributional parameter if desired (‘disc’ can only be positive, which is achieved by applying the log-link).</p>
 <p>In categorical models, distributional parameters do not have fixed names. Instead, they are named after the response categories (excluding the first one, which serves as the reference category), with the prefix ‘mu’. If, for instance, categories are named cat1, cat2, and cat3, the distributional parameters will be named mucat2 and mucat3.</p>
 <p>Some distributional parameters currently supported by brmsformula have to be positive (a negative standard deviation or precision parameter does not make any sense) or are bounded between 0 and 1 (for zero-inflated / hurdle probabilities, quantiles, or the initial bias parameter of drift-diffusion models). However, linear predictors can be positive or negative, and thus the log link (for positive parameters) or logit link (for probability parameters) are used by default to ensure that distributional parameters are within their valid intervals. This implies that, by default, effects for such distributional parameters are estimated on the log / logit scale and one has to apply the inverse link function to get to the effects on the original scale. Alternatively, it is possible to use the identity link to predict parameters on their original scale, directly. However, this is much more likely to lead to problems in the model fitting, if the parameter actually has a restricted range.</p>
 </div>
 <div id="formula-syntax-for-mixture-models" class="section level3">
-<h3><span class="header-section-number">23.1.6</span> Formula syntax for mixture models</h3>
+<h3><span class="header-section-number">23.1.5</span> Formula syntax for mixture models</h3>
 <p>If not specified otherwise, all mean parameters of the mixture components are predicted using the right-hand side of formula.</p>
 <p>distributional parameters of mixture distributions have the same name as those of the corresponding ordinary distributions, but with a number at the end to indicate the mixture component. For instance, if you use family mixture(gaussian, gaussian), the distributional parameters are sigma1 and sigma2. distributional parameters of the same class can be fixed to the same value. For the above example, we could write sigma2 = “sigma1” to make sure that both components have the same residual standard deviation, which is in turn estimated from the data.</p>
-<p>specify different predictors for different mixture components mix &lt;- mixture(gaussian, gaussian) bf(y ~ 1, mu1 ~ x, mu2 ~ z, family = mix)</p>
-<p>fix both residual standard deviations to the same value bf(y ~ x, sigma2 = “sigma1”, family = mix)</p>
+<p>specify different predictors for different mixture components
+mix &lt;- mixture(gaussian, gaussian)
+bf(y ~ 1, mu1 ~ x, mu2 ~ z, family = mix)</p>
+<p>fix both residual standard deviations to the same value
+bf(y ~ x, sigma2 = “sigma1”, family = mix)</p>
 <p>In addition, there are two types of special distributional parameters. The first are named mu<ID>, that allow for modeling different predictors for the mean parameters of different mixture components. For instance, if you want to predict the mean of the first component using predictor x and the mean of the second component using predictor z, you can write mu1 ~ x as well as mu2 ~ z. The second are named theta<ID>, which constitute the mixing proportions. If the mixing proportions are fixed to certain values, they are internally normalized to form a probability vector. If one seeks to predict the mixing proportions, all but one of the them has to be predicted, while the remaining one is used as the reference category to identify the model. The softmax function is applied on the linear predictor terms to form a probability vector.</p>
 </div>
 <div id="formula-syntax-for-multivariate-models" class="section level3">
-<h3><span class="header-section-number">23.1.7</span> Formula syntax for multivariate models</h3>
+<h3><span class="header-section-number">23.1.6</span> Formula syntax for multivariate models</h3>
 <p>Multivariate models may be specified using cbind notation or with help of the mvbf function. Suppose that y1 and y2 are response variables and x is a predictor. Then cbind(y1, y2) ~ x specifies a multivariate model, The effects of all terms specified at the RHS of the formula are assumed to vary across response variables. For instance, two parameters will be estimated for x, one for the effect on y1 and another for the effect on y2. This is also true for group-level effects. When writing, for instance, cbind(y1, y2) ~ x + (1+x|g), group-level effects will be estimated separately for each response. To model these effects as correlated across responses, use the ID syntax (see above). For the present example, this would look as follows: cbind(y1, y2) ~ x + (1+x|2|g). Of course, you could also use any value other than 2 as ID.</p>
 <p>It is also possible to specify different formulas for different responses. If, for instance, y1 should be predicted by x and y2 should be predicted by z, we could write mvbf(y1 ~ x, y2 ~ z). Alternatively, multiple brmsformula objects can be added to specify a joint multivariate model (see ‘Examples’).</p>
 </div>
@@ -554,23 +594,31 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>negbinomial(link = “log”, link_shape = “log”)</p>
 <p>geometric(link = “log”)</p>
 <p>lognormal(link = “identity”, link_sigma = “log”)</p>
-<p>shifted_lognormal(link = “identity”, link_sigma = “log”, link_ndt = “log”)</p>
-<p>skew_normal(link = “identity”, link_sigma = “log”, link_alpha = “identity”)</p>
+<p>shifted_lognormal(link = “identity”, link_sigma = “log”,
+link_ndt = “log”)</p>
+<p>skew_normal(link = “identity”, link_sigma = “log”,
+link_alpha = “identity”)</p>
 <p>exponential(link = “log”)</p>
 <p>weibull(link = “log”, link_shape = “log”)</p>
 <p>exgaussian(link = “identity”, link_sigma = “log”, link_beta = “log”)</p>
 <p>Beta(link = “logit”, link_phi = “log”)</p>
 <p>hurdle_poisson(link = “log”)</p>
-<p>hurdle_negbinomial(link = “log”, link_shape = “log”, link_hu = “logit”)</p>
+<p>hurdle_negbinomial(link = “log”, link_shape = “log”,
+link_hu = “logit”)</p>
 <p>hurdle_gamma(link = “log”, link_shape = “log”, link_hu = “logit”)</p>
-<p>hurdle_lognormal(link = “identity”, link_sigma = “log”, link_hu = “logit”)</p>
-<p>zero_inflated_beta(link = “logit”, link_phi = “log”, link_zi = “logit”)</p>
-<p>zero_one_inflated_beta(link = “logit”, link_phi = “log”, link_zoi = “logit”, link_coi = “logit”)</p>
+<p>hurdle_lognormal(link = “identity”, link_sigma = “log”,
+link_hu = “logit”)</p>
+<p>zero_inflated_beta(link = “logit”, link_phi = “log”,
+link_zi = “logit”)</p>
+<p>zero_one_inflated_beta(link = “logit”, link_phi = “log”,
+link_zoi = “logit”, link_coi = “logit”)</p>
 <p>zero_inflated_poisson(link = “log”, link_zi = “logit”)</p>
-<p>zero_inflated_negbinomial(link = “log”, link_shape = “log”, link_zi = “logit”)</p>
+<p>zero_inflated_negbinomial(link = “log”, link_shape = “log”,
+link_zi = “logit”)</p>
 <p>zero_inflated_binomial(link = “logit”, link_zi = “logit”)</p>
 <p>categorical(link = “logit”)</p>
-<p>cumulative(link = “logit”, link_disc = “log”, threshold = c(“flexible”, “equidistant”))</p>
+<p>cumulative(link = “logit”, link_disc = “log”,
+threshold = c(“flexible”, “equidistant”))</p>
 <ul>
 <li><p>Family gaussian with identity link leads to linear regression.</p></li>
 <li><p>Family student with identity link leads to robust linear regression that is less influenced by outliers.</p></li>
@@ -600,7 +648,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">23.3</span> priors</h2>
 <div id="population-level-fixed-effects" class="section level3">
 <h3><span class="header-section-number">23.3.1</span> Population-level (‘fixed’) effects</h3>
-<p>If y is predicted by x1 and x2 then x1 and x2 have regression parameters b_x1 and b_x2. The default prior for population-level effects (including monotonic and category specific effects) is an improper flat prior. Other common options are normal priors or student-t priors. If we want to have a normal prior with mean 0 and standard deviation 5 for x1, and a unit student-t prior with 10 degrees of freedom for x2, we can specify this via set_prior(“normal(0,5)”, class = “b”, coef = “x1”) and set_prior(“student_t(10,0,1)”, class = “b”, coef = “x2”). To put the same prior on all population-level effects at once, set_prior(“<prior>”, class = “b”). This also leads to faster sampling, because priors can be vectorized in this case. Both ways of defining priors can be combined using for instance set_prior(“normal(0,2)”, class = “b”) and set_prior(“normal(0,10)”, class = “b”, coef = “x1”) at the same time. This will set a normal(0,10) prior on the effect of x1 and a normal(0,2) prior on all other population-level effects. However, this will break vectorization.</p>
+<p>If y is predicted by x1 and x2 then x1 and x2 have regression parameters b_x1 and b_x2. The default prior for population-level effects (including monotonic and category specific effects) is an improper flat prior. Other common options are normal priors or student-t priors. If we want to have a normal prior with mean 0 and standard deviation 5 for x1, and a unit student-t prior with 10 degrees of freedom for x2, we can specify this via set_prior(“normal(0,5)”, class = “b”, coef = “x1”) and set_prior(“student_t(10,0,1)”, class = “b”, coef = “x2”). To put the same prior on all population-level effects at once, set_prior(“<prior>”, class = “b”). This also leads to faster sampling, because priors can be vectorized in this case. Both ways of defining priors can be combined using for instance set_prior(“normal(0,2)”, class = “b”) and
+set_prior(“normal(0,10)”, class = “b”, coef = “x1”) at the same time. This will set a normal(0,10) prior on the effect of x1 and a normal(0,2) prior on all other population-level effects. However, this will break vectorization.</p>
 <p>The intercept has its own parameter class named “Intercept” and priors can thus be specified via set_prior(“<prior>”, class = “Intercept”). Setting a prior on the intercept will not break vectorization of the other population-level effects. Note that technically, this prior is set on an intercept that results when internally centering all population-level predictors around zero to improve sampling efficiency. On this centered intercept, specifying a prior is actually much easier and intuitive than on the original intercept, since the former represents the expected response value when all predictors are at their means. To treat the intercept as an ordinary population-level effect and avoid the centering parameterization, use 0 + intercept on the right-hand side of the model formula.</p>
 <p>A special shrinkage prior to be applied on population-level effects is the horseshoe prior. See horseshoe for details. Another shrinkage prior is the so-called lasso prior. See lasso for details.</p>
 <p>In non-linear models, population-level effects are defined separately for each non-linear parameter. Accordingly, it is necessary to specify the non-linear parameter in set_prior so that priors can be assigned correctly. If, for instance, alpha is the parameter and x the predictor for which we want to define the prior, we can write set_prior(“<prior>”, coef = “x”, nlpar = “alpha”). As a shortcut we can use set_prior(“<prior>”, nlpar = “alpha”) to set the same prior on all population-level effects of alpha at once.</p>
@@ -608,7 +657,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="standard-deviations-of-group-level-random-effects" class="section level3">
 <h3><span class="header-section-number">23.3.2</span> Standard deviations of group-level (‘random’) effects</h3>
-<p>Each group-level effect of each grouping factor has a standard deviation named sd_<group>_<coef>. Consider, for instance, the formula y ~ x1 + x2 + (1 + x1 | g). We see that the intercept as well as x1 are group-level effects nested in the grouping factor g. The corresponding standard deviation parameters are named as sd_g_Intercept and sd_g_x1 respectively. These parameters are restricted to be non-negative and, by default, have a half student-t prior with 3 degrees of freedom and a scale parameter that depends on the standard deviation of the response after applying the link function. Minimally, the scale parameter is 10. This prior is used (a) to be only very weakly informative in order to influence results as few as possible, while (b) providing at least some regularization to considerably improve convergence and sampling efficiency. To define a prior distribution only for standard deviations of a specific grouping factor, use set_prior(“<prior>”, class = “sd”, group = “<group>”). To define a prior distribution only for a specific standard deviation of a specific grouping factor, you may write set_prior(“<prior>”, class = “sd”, group = “<group>”, coef = “<coef>”). When defining priors on group-level parameters in non-linear models, please make sure to specify the corresponding non-linear parameter through the nlpar argument in the same way as for population-level effects.</p>
+<p>Each group-level effect of each grouping factor has a standard deviation named sd_<group>_<coef>. Consider, for instance, the formula y ~ x1 + x2 + (1 + x1 | g). We see that the intercept as well as x1 are group-level effects nested in the grouping factor g. The corresponding standard deviation parameters are named as sd_g_Intercept and sd_g_x1 respectively. These parameters are restricted to be non-negative and, by default, have a half student-t prior with 3 degrees of freedom and a scale parameter that depends on the standard deviation of the response after applying the link function. Minimally, the scale parameter is 10. This prior is used (a) to be only very weakly informative in order to influence results as few as possible, while (b) providing at least some regularization to considerably improve convergence and sampling efficiency. To define a prior distribution only for standard deviations of a specific grouping factor, use set_prior(“<prior>”, class = “sd”, group = “<group>”). To define a prior distribution only for a specific standard deviation of a specific grouping factor, you may write set_prior(“<prior>”, class = “sd”, group = “<group>”, coef = “<coef>”).
+When defining priors on group-level parameters in non-linear models, please make sure to specify the corresponding non-linear parameter through the nlpar argument in the same way as for population-level effects.</p>
 </div>
 <div id="correlations-of-group-level-random-effects" class="section level3">
 <h3><span class="header-section-number">23.3.3</span> Correlations of group-level (‘random’) effects</h3>
@@ -628,12 +678,13 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="parameters-for-specific-families" class="section level3">
 <h3><span class="header-section-number">23.3.7</span> Parameters for specific families</h3>
-<p>Families gaussian, student, skew_normal, lognormal, and gen_extreme_value need the parameter sigma to account for the residual standard deviation. By default, sigma has a half student-t prior that scales in the same way as the group-level standard deviations. Family student needs the parameter nu representing the degrees of freedom of students-t distribution. By default, nu has prior “gamma(2, 0.1)” and a fixed lower bound of 1.</p>
+<p>Families gaussian, student, skew_normal, lognormal, and gen_extreme_value need the parameter sigma to account for the residual standard deviation. By default, sigma has a half student-t prior that scales in the same way as the group-level standard deviations.
+Family student needs the parameter nu representing the degrees of freedom of students-t distribution. By default, nu has prior “gamma(2, 0.1)” and a fixed lower bound of 1.</p>
 <p>Families gamma, weibull, inverse.gaussian, and negbinomial need a shape parameter that has a “gamma(0.01, 0.01)” prior by default.</p>
 <p>Every family specific parameter has its own prior class, so that set_prior(“<prior>”, class = “<parameter>”) is the right way to go. All of these priors are chosen to be weakly informative, having only minimal influence on the estimations, while improving convergence and sampling efficiency. Often, it may not be immediately clear, which parameters are present in the model. To get a full list of parameters and parameter classes for which priors can be specified use function get_prior.</p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
-<span class="kw">library</span>(mice)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(mice)</code></pre>
 </div>
 </div>
 </div>
@@ -693,11 +744,10 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

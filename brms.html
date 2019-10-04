@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>21 brms | Bayesi statistika kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
   <meta property="og:title" content="21 brms | Bayesi statistika kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="mitmetasemelised-mudelid.html"/>
-<link rel="next" href="brms-mudelid.html"/>
+<link rel="prev" href="mitmetasemelised-mudelid.html">
+<link rel="next" href="brms-mudelid.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -47,46 +47,75 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
 
 <script src="https://use.fontawesome.com/e4ba4259a1.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-pre, code { background-color: #f8f8f8; }
-code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code > span.dt { color: #204a87; } /* DataType */
-code > span.dv { color: #0000cf; } /* DecVal */
-code > span.bn { color: #0000cf; } /* BaseN */
-code > span.fl { color: #0000cf; } /* Float */
-code > span.ch { color: #4e9a06; } /* Char */
-code > span.st { color: #4e9a06; } /* String */
-code > span.co { color: #8f5902; font-style: italic; } /* Comment */
-code > span.ot { color: #8f5902; } /* Other */
-code > span.al { color: #ef2929; } /* Alert */
-code > span.fu { color: #000000; } /* Function */
-code > span.er { color: #a40000; font-weight: bold; } /* Error */
-code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #000000; } /* Constant */
-code > span.sc { color: #000000; } /* SpecialChar */
-code > span.vs { color: #4e9a06; } /* VerbatimString */
-code > span.ss { color: #4e9a06; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #000000; } /* Variable */
-code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code > span.ex { } /* Extension */
-code > span.at { color: #c4a000; } /* Attribute */
-code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -301,13 +330,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="23" data-path="brms-suntaks.html"><a href="brms-suntaks.html"><i class="fa fa-check"></i><b>23</b> brms süntaks</a><ul>
 <li class="chapter" data-level="23.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#general-formula-structure"><i class="fa fa-check"></i><b>23.1</b> General formula structure</a><ul>
-<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#group-level-terms-xg-1idg-grx-by-mmg1-g2"><i class="fa fa-check"></i><b>23.1.1</b> Group-level terms: x||g, 1|ID|g, gr(x, by = ), mm(g1, g2)</a></li>
-<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.2</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
-<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.3</b> Additional response information</a></li>
-<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for non-linear models</a></li>
-<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for predicting distributional parameters</a></li>
-<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for mixture models</a></li>
-<li class="chapter" data-level="23.1.7" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.7</b> Formula syntax for multivariate models</a></li>
+<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.1</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
+<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.2</b> Additional response information</a></li>
+<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.3</b> Formula syntax for non-linear models</a></li>
+<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for predicting distributional parameters</a></li>
+<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for mixture models</a></li>
+<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for multivariate models</a></li>
 </ul></li>
 <li class="chapter" data-level="23.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#brms-likelihoods"><i class="fa fa-check"></i><b>23.2</b> brms likelihoods</a></li>
 <li class="chapter" data-level="23.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#priors"><i class="fa fa-check"></i><b>23.3</b> priors</a><ul>
@@ -389,7 +417,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">21</span> brms</h1>
 <p><strong>brms</strong> on pakett, mis võimaldab kirjutada lihtsat süntaksit kasutades ka üsna keerulisi mudeleid ja need Stan-is fittida. Brms on loodud Paul Bürkneri poolt (<a href="https://github.com/paul-buerkner/brms" class="uri">https://github.com/paul-buerkner/brms</a>), mis on oma kasutuslihtsuse tõttu jõudnud isegi ette Stani meeskonna arendatavast analoogsest paketist <strong>rstanarm</strong> (<a href="https://github.com/stan-dev/rstanarm/blob/master/README.md" class="uri">https://github.com/stan-dev/rstanarm/blob/master/README.md</a>). Paul Bürkner oli mõned aastad tagasi psühholoogia doktorant, kes kirjutas brms-i algselt naljaviluks oma doktoriprojekti kõrvalt, mille tulemusel on ta praegu teatud ringkonnis tuntum kui Lady Gaga.</p>
 <p><strong>rstanarm</strong>, mide me siin ei käsitle, püüab pakkuda tavalisete sageduslikele meetoditele (ANOVA, lineaarne regressioon jne) bayesi analooge, mille mudeli spetsifikatsioon ja väljund erineks võimalikult vähe tavalisest baas-R-i töövoost. <strong>brms</strong> on keskendunud mitmetasemelistele mudelitele ja kasutab põhimõtteliselt <strong>lme4</strong> (<a href="https://github.com/lme4/lme4/" class="uri">https://github.com/lme4/lme4/</a>) mudelite keelt. Loomulikult saab <strong>brms</strong>-is fittida ka lineaarseid ja mitte-lineaareid ühetasemelisi mudeleid, nagu ka imputeerida andmeid ja teha palju muud (nagu näiteks pitsat valmistada).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 <span class="kw">library</span>(skimr)
 <span class="kw">library</span>(brms)
 <span class="kw">library</span>(loo)
@@ -397,61 +425,61 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">library</span>(bayesplot)
 <span class="kw">library</span>(gridExtra)
 <span class="kw">library</span>(mice)
-<span class="kw">library</span>(pROC)</code></pre></div>
+<span class="kw">library</span>(pROC)</code></pre>
 <div id="brms-i-toovoog" class="section level2">
 <h2><span class="header-section-number">21.1</span> brms-i töövoog</h2>
 <p><strong>brms</strong>-iga modelleerimisel on mõned asjad, mida tuleks teha sõltumata sellest, millist mudelit te parajasti fitite. Kõigepealt peaksite kontrollima, et mcmc ahelad on korralikult jooksnud (divergent transitions, rhat ja ahelate visuaalne inspekteerimine). Lisaks peaksite tegema posterioorse prediktiivse ploti ja vaatama, kui palju mudeli poolt genereeritud uued valimid meenutavad teie valimit. Samuti peaksite joonisel plottima residuaalid. Kui te inspekteerite fititud parameetrite väärtusi, siis tehke seda posteeriorite tasemel, k.a. koos veapiiridega. Kindlasti tuleks ka plottida mudeli ennustused koos usalduspiiridega.</p>
 <p>Enne tõsist mudeldamist kiikame irise andmetabelisse</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">skim</span>(iris)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">skim</span>(iris)
 <span class="co">#&gt; Skim summary statistics</span>
 <span class="co">#&gt;  n obs: 150 </span>
 <span class="co">#&gt;  n variables: 5 </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; ── Variable type:factor ───────────────────────────────────────</span>
+<span class="co">#&gt; ── Variable type:factor ────────────────────────────────────────────────────────────────────────</span>
 <span class="co">#&gt;  variable missing complete   n n_unique                       top_counts</span>
 <span class="co">#&gt;   Species       0      150 150        3 set: 50, ver: 50, vir: 50, NA: 0</span>
 <span class="co">#&gt;  ordered</span>
 <span class="co">#&gt;    FALSE</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; ── Variable type:numeric ──────────────────────────────────────</span>
+<span class="co">#&gt; ── Variable type:numeric ───────────────────────────────────────────────────────────────────────</span>
 <span class="co">#&gt;      variable missing complete   n mean   sd  p0 p25  p50 p75 p100</span>
 <span class="co">#&gt;  Petal.Length       0      150 150 3.76 1.77 1   1.6 4.35 5.1  6.9</span>
 <span class="co">#&gt;   Petal.Width       0      150 150 1.2  0.76 0.1 0.3 1.3  1.8  2.5</span>
 <span class="co">#&gt;  Sepal.Length       0      150 150 5.84 0.83 4.3 5.1 5.8  6.4  7.9</span>
-<span class="co">#&gt;   Sepal.Width       0      150 150 3.06 0.44 2   2.8 3    3.3  4.4</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Petal.Length, Sepal.Length)) <span class="op">+</span><span class="st"> </span>
+<span class="co">#&gt;   Sepal.Width       0      150 150 3.06 0.44 2   2.8 3    3.3  4.4</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Petal.Length, Sepal.Length)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>Loess fit viitab, et 3 liiki ühe sirgega mudeldada pole võib-olla optimaalne lahendus.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Petal.Length, Sepal.Length, <span class="dt">color =</span> Species)) <span class="op">+</span><span class="st"> </span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Petal.Length, Sepal.Length, <span class="dt">color =</span> Species)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="kw">aes</span>(<span class="dt">group =</span> Species), <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Nüüd on loess ja lm heas kooskõlas - seos y~x vahel oleks nagu enam-vähem lineaarne. Siit tuleb ka välja, et kolme mudeli tõusud on sarnased, interceptid erinevad.</p>
 <div id="kiire-toovoog" class="section level3">
 <h3><span class="header-section-number">21.1.1</span> Kiire töövoog</h3>
 <p>Minimaalses töövoos anname ette võimalikult vähe parameetreid ja töötame mudeliga nii vähe kui võimalik. See on mõeldud ülevaatena Bayesi mudeli fittimise põhilistest etappidest</p>
 <p>Mudeli fittimine:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m_kiire &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length, <span class="dt">data =</span> iris)
-<span class="kw">write_rds</span>(m_kiire, <span class="dt">path =</span> <span class="st">&quot;data/m_kiire.fit&quot;</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">m_kiire &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length, <span class="dt">data =</span> iris)
+<span class="kw">write_rds</span>(m_kiire, <span class="dt">path =</span> <span class="st">&quot;data/m_kiire.fit&quot;</span>)</code></pre>
 <p>Priorid on brms-i poolt ette antud ja loomulikult ei sisalda mingit teaduslikku informatsiooni. Nad on siiski “nõrgalt informatiivsed” selles mõttes, et kasutavad parametriseeringuid, mis enamasti võimaldavad mcmc ahelatel normaalselt joosta. Järgmises ptk-s õpime ise prioreid määrama.</p>
 <p>Posteeriorid ja mcmc ahelate konvergents</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(m_kiire)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(m_kiire)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>Fiti kokkuvõte - koefitsiendid ja nende fittimise edukust hindavad statistikud (Eff.Sample, Rhat)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tidy</span>(m_kiire)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tidy</span>(m_kiire)
 <span class="co">#&gt;             term estimate std.error   lower   upper</span>
 <span class="co">#&gt; 1    b_Intercept    4.307    0.0780   4.179   4.434</span>
 <span class="co">#&gt; 2 b_Petal.Length    0.409    0.0187   0.379   0.439</span>
 <span class="co">#&gt; 3          sigma    0.411    0.0243   0.373   0.453</span>
-<span class="co">#&gt; 4           lp__  -85.338    1.2173 -87.757 -84.015</span></code></pre></div>
+<span class="co">#&gt; 4           lp__  -85.338    1.2173 -87.757 -84.015</span></code></pre>
 <p>Eff.Sample näitab efektiivset valimi suurust, mida ahelad on kasutanud. See on suht keeruline mõiste, aga piisab, kui aru saada, et see näitaja ei tohiks olla madalam kui paarkümmend.</p>
 <p>Rhat on statistik, mis vaatab ahelate konvergentsi. Kui Rhat &gt; 1.1, siis on kuri karjas. Rhat 1.0 ei tähenda paraku, et võiks rahulikult hingata – tegu on statistikuga, mida saab hästi tõlgendada häda kuulutajana, aga liiga sageli mitte vastupidi.</p>
 <p>Ennustav plot ehk <em>marginal plot</em> – mudeli fit 95% CI-ga.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m_kiire), <span class="dt">points =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m_kiire), <span class="dt">points =</span> <span class="ot">TRUE</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>
 <div id="pohjalikum-toovoog" class="section level3">
@@ -461,7 +489,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div id="spetsifitseerime-mudeli-vaatame-ja-muudame-vaikeprioreid" class="section level3">
 <h3><span class="header-section-number">21.1.3</span> Spetsifitseerime mudeli, vaatame ja muudame vaikeprioreid</h3>
 <p>brms-i default priorid on konstrueeritud olema üsna väheinformatiivsed ja need tuleks enamasti informatiivsematega asendada. Igasse priorisse tuleks panna nii palju informatsiooni, kui teil on vastava parameetri kohta. Kui te mõne parameetri kohta ei oska öelda, milllised oleks selle mõistlikud oodatavad väärtused, siis saab piirduda brms-i antud vaikeväärtustega. Samas, kui keerulisemad mudelid ei taha hästi joosta (mida tuleb ikka ette), siis aitab sageli priorite kitsamaks muutmine.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_prior</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), 
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_prior</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), 
           <span class="dt">data =</span> iris)
 <span class="co">#&gt;                 prior     class         coef   group resp dpar nlpar bound</span>
 <span class="co">#&gt; 1                             b                                           </span>
@@ -470,24 +498,25 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <span class="co">#&gt; 4 student_t(3, 0, 10)        sd                                           </span>
 <span class="co">#&gt; 5                            sd              Species                      </span>
 <span class="co">#&gt; 6                            sd    Intercept Species                      </span>
-<span class="co">#&gt; 7 student_t(3, 0, 10)     sigma</span></code></pre></div>
+<span class="co">#&gt; 7 student_t(3, 0, 10)     sigma</span></code></pre>
 <p>Me fitime pedagoogilistel kaalutlustel shrinkage mudeli, mis tõmbab 3 liigi lõikepunkte natuke keskmise lõikepunkti suunas. On vaieldav, kas see on irise andmestiku juures mõistlik strateegia, aga me teeme seda siin ikkagi.</p>
 <blockquote>
 <p>Mitmetasemeline shrinkage mudel on abinõu ülefittimise vastu. Mudelite võrdlemisel otsitakse kompromissi - ehk mudeli, mille ennustused oleks andmepunktidele võimalikult lähedal ilma,et see mudel oleks liiga keeruliseks aetud (keerulisus on proportsionaalne mudeli parameetrite arvuga).</p>
 </blockquote>
 <p>Prioreid muudame nii:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prior &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">6</span>, <span class="dv">3</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>),
+<pre class="sourceCode r"><code class="sourceCode r">prior &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">6</span>, <span class="dv">3</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>),
            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),
-           <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">6</span>, <span class="dv">0</span>, <span class="dv">2</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>))</code></pre></div>
+           <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">6</span>, <span class="dv">0</span>, <span class="dv">2</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>))</code></pre>
 <p>Me valime siin nn väheinformariivsed priorid, nii et regressiooni tulemus on suht hästi võrreldav lme4 sagedusliku mudeliga. “b” koefitsiendi priorile (aga mitte “sigma” ega “Intercept”-le) võib anda ka ülemise ja/või alumise piiri <code>prior(normal(0, 1), class = &quot;b&quot;, lb = -1, ub = 10)</code> ütleb, et “b” prior on nullist erinev ainult -1 ja 10 vahel. “sigma” priorid on automaatselt lb = 0-ga, sest varieeruvus ei tohi olla negatiivne.</p>
 <p>Alati tasub prioreid pildil vaadata, et veenduda nende mõistlikuses.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dt">length.out =</span> <span class="dv">100</span>)
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dt">length.out =</span> <span class="dv">100</span>)
 y &lt;-<span class="st"> </span><span class="kw">dstudent_t</span>(x, <span class="dt">df =</span> <span class="dv">6</span>, <span class="dt">mu =</span> <span class="dv">0</span>, <span class="dt">sigma =</span> <span class="dv">2</span>, <span class="dt">log =</span> <span class="ot">FALSE</span>)
-<span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x)</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-13-1.png" width="672" /> Sigma prior, mida <strong>brms</strong> kasutab, on vaikimisi pool sümmeetrilisest jaotusest, mis lõigatakse nulli kohalt pooleks nii, et seal puuduvad &lt; 0 väärtused (seega ei saa varieeruvuse posteerior minna alla nulli).</p>
+<span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x)</code></pre>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+Sigma prior, mida <strong>brms</strong> kasutab, on vaikimisi pool sümmeetrilisest jaotusest, mis lõigatakse nulli kohalt pooleks nii, et seal puuduvad &lt; 0 väärtused (seega ei saa varieeruvuse posteerior minna alla nulli).</p>
 <p>Me võime ka prioreid ilma likelihoodideta (tõepärafunktsioonideta) läbi mudeli lasta, misjärel tõmbame fititud mudelist priorite valimid (neid võiks kutsuda ka “priorite posteerioriteks”) ja plotime kõik priorid koos. Seda pilti saab siis võrrelda koos andmetega fititud mudeli posteerioritega. Selle võimaluse kasutamine on tõusuteel, sest keerulisemate mudelite puhul võib priorite ükshaaval plottimine osutuda eksitavaks.</p>
 <p>Tekitame priorite valimid, et näha oma priorite mõistlikust (brm() argument on sample_prior = TRUE). Ühtlasi fitime ka oma mudeli koos andmete ja prioritega.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m1 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), 
+<pre class="sourceCode r"><code class="sourceCode r">m1 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), 
           <span class="dt">data =</span> iris, 
           <span class="dt">prior =</span> prior, 
           <span class="dt">family =</span> gaussian,
@@ -496,13 +525,13 @@ y &lt;-<span class="st"> </span><span class="kw">dstudent_t</span>(x, <span clas
           <span class="dt">chains =</span> <span class="dv">3</span>,
           <span class="dt">cores =</span> <span class="dv">3</span>,
           <span class="dt">sample_prior =</span> <span class="ot">TRUE</span>)
-<span class="kw">write_rds</span>(m1, <span class="dt">path =</span> <span class="st">&quot;data/m1.fit&quot;</span>)</code></pre></div>
+<span class="kw">write_rds</span>(m1, <span class="dt">path =</span> <span class="st">&quot;data/m1.fit&quot;</span>)</code></pre>
 <p>Me fittisime mudeli m1 kaks korda: nii andmetega (selle juurde jõuame varsti), kui ka ilma andmeteta. Kui panna sisse <code>sample_prior = &quot;only&quot;</code>, siis jookseb mudel ilma andmeteta, ja selle võrra kiiremini. Vaikeväärtus on <code>sample_prior = &quot;no&quot;</code>, mis tähendab, et fititakse ainult üks mudel - koos andmetega. Ilma andmeteta (likelihoodita) fitist saame tõmmata priorite mcmc valimid, mille ka järgmiseks plotime.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prior_samples</span>(m1) <span class="op">%&gt;%</span><span class="st"> </span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prior_samples</span>(m1) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">gather</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(value)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>key, <span class="dt">scales =</span> <span class="st">&quot;free_x&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>key, <span class="dt">scales =</span> <span class="st">&quot;free_x&quot;</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <p>Kui kasutame <code>sample_prior = &quot;only&quot;</code> varianti, siis on esimene koodirida erinev: <code>samples1 = as.data.frame(m1$fit)</code>.</p>
 <blockquote>
@@ -521,28 +550,30 @@ y &lt;-<span class="st"> </span><span class="kw">dstudent_t</span>(x, <span clas
 <li><p>thin - kui ahel on autokorreleeritud, st ahela eelmine samm suudab ennustada järgevaid (see on paha), siis saab salvestada näit ahela iga 5. sammu (thin = 5). Aga siis tuleks ka sammude arvu 5 korda tõsta. Vaikeväärtus on thin = 1. Autokorrelatsiooni graafilist määramist näitame allpool</p></li>
 </ul>
 <p>Järgmine funktsioon trükib välja Stani koodi, mis spetsifitseerib mudeli, mida tegelikult Stanis fittima hakatakse. See on väga kasulik, aga ainult siis kui tahate õppida otse Stanis mudeleid kirjutama:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">make_stancode</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length, <span class="dt">data =</span> iris, <span class="dt">prior =</span> prior)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">make_stancode</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length, <span class="dt">data =</span> iris, <span class="dt">prior =</span> prior)</code></pre>
 </div>
 <div id="fitime-mudeleid-ja-vordleme-fitte." class="section level3">
 <h3><span class="header-section-number">21.1.5</span> Fitime mudeleid ja võrdleme fitte.</h3>
 <p>Eelmises mudelis (m1) ennustame muutuja Sepal.Length väärtusi Petal.Length väärtuste põhjal shrinkage mudelis, kus iga irise liik on oma grupis.</p>
 <p>Teine mudel, mis sisaldab veel üht ennustavat muutujat (Sepal.Width):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m2 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>Sepal.Width <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), 
+<pre class="sourceCode r"><code class="sourceCode r">m2 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>Sepal.Width <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), 
           <span class="dt">data =</span> iris, 
           <span class="dt">prior =</span> prior)
-<span class="kw">write_rds</span>(m2, <span class="dt">path =</span> <span class="st">&quot;data/m2.fit&quot;</span>)</code></pre></div>
+<span class="kw">write_rds</span>(m2, <span class="dt">path =</span> <span class="st">&quot;data/m2.fit&quot;</span>)</code></pre>
 <p>Kolmandaks ühetasemeline mudel, mis vaatab kolme irise liiki eraldi:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m3 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Width <span class="op">+</span><span class="st"> </span>Petal.Length <span class="op">*</span><span class="st"> </span>Species, 
+<pre class="sourceCode r"><code class="sourceCode r">m3 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Width <span class="op">+</span><span class="st"> </span>Petal.Length <span class="op">*</span><span class="st"> </span>Species, 
           <span class="dt">data =</span> iris, 
           <span class="dt">prior =</span> prior)
-<span class="kw">write_rds</span>(m3, <span class="dt">path =</span> <span class="st">&quot;data/m3.fit&quot;</span>)</code></pre></div>
+<span class="kw">write_rds</span>(m3, <span class="dt">path =</span> <span class="st">&quot;data/m3.fit&quot;</span>)</code></pre>
 <p>Ja lõpuks mudel, mis paneb kõik liigid ühte patta:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m4 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>Sepal.Width, 
+<pre class="sourceCode r"><code class="sourceCode r">m4 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>Sepal.Width, 
           <span class="dt">data =</span> iris, 
           <span class="dt">prior =</span> prior)
-<span class="kw">write_rds</span>(m4, <span class="dt">path =</span> <span class="st">&quot;data/m4.fit&quot;</span>)</code></pre></div>
+<span class="kw">write_rds</span>(m4, <span class="dt">path =</span> <span class="st">&quot;data/m4.fit&quot;</span>)</code></pre>
 <p>Siin me võrdleme neid nelja mudelit. Väikseim looic (leave-one-out information criterion) võidab. See on suhteline võrdlus – looic abs väärtus ei mängi mingit rolli.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">loo</span>(m1, m2, m3, m4)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">loo</span>(m1, m2, m3, m4)
+<span class="co">#&gt; Warning: Passing multiple brmsfit objects to &#39;loo&#39; and related methods is</span>
+<span class="co">#&gt; deprecated. Please see ?loo.brmsfit for the recommended workflow.</span>
 <span class="co">#&gt; Output of model &#39;m1&#39;:</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Computed from 3000 by 150 log-likelihood matrix</span>
@@ -604,10 +635,12 @@ y &lt;-<span class="st"> </span><span class="kw">dstudent_t</span>(x, <span clas
 <span class="co">#&gt; m3   0.0       0.0  </span>
 <span class="co">#&gt; m2  -0.8       1.7  </span>
 <span class="co">#&gt; m4 -10.3       5.0  </span>
-<span class="co">#&gt; m1 -13.2       5.3</span></code></pre></div>
+<span class="co">#&gt; m1 -13.2       5.3</span></code></pre>
 <p>Siin on m1 ja m2/m3 mudeli erinevus 25 ühikut ja selle erinevuse standardviga on 10 ühikut. 2 SE-d annab umbkaudu 95% usaldusintervalli, ja see ei kata antud juhul nulli. Seega järeldame, et m2 ja m3, mis kasutavad ennustamiseks lisamuutujat, on selgelt eelistatud. Samas ei saa me õelda, et hierarhiline mudel m2 oleks parem või halvem kui interaktsioonimudel m3. Ka puudub oluline erinevus m1 ja m4 fiti vahel. Tundub, et selle ennustusjõu, mille me võidame lisaparameetrit mudeldades, kaotame omakorda liike ühte patta pannes (neid mitte osaliselt iseseisvana modelleerides).</p>
 <p>Alternatiivina kasutame <code>brms::waic</code> kriteeriumit mudelite võrdlemiseks. See töötab kiiremini kui LOO ja tõlgendus on sarnane - väikseim waic võidab ja absolutväärtusi ei saa ükshaaval tõlgendada.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">waic</span>(m1, m2, m3, m4)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">waic</span>(m1, m2, m3, m4)
+<span class="co">#&gt; Warning: Passing multiple brmsfit objects to &#39;loo&#39; and related methods is</span>
+<span class="co">#&gt; deprecated. Please see ?loo.brmsfit for the recommended workflow.</span>
 <span class="co">#&gt; Output of model &#39;m1&#39;:</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Computed from 3000 by 150 log-likelihood matrix</span>
@@ -653,14 +686,14 @@ y &lt;-<span class="st"> </span><span class="kw">dstudent_t</span>(x, <span clas
 <span class="co">#&gt; m3   0.0       0.0  </span>
 <span class="co">#&gt; m2  -0.8       1.7  </span>
 <span class="co">#&gt; m4 -10.3       5.0  </span>
-<span class="co">#&gt; m1 -13.2       5.3</span></code></pre></div>
+<span class="co">#&gt; m1 -13.2       5.3</span></code></pre>
 <p>Nagu näha, annavad LOO ja waic sageli väga sarnaseid tulemusi.</p>
 <p>Me ei süvene LOOIC ega waic-i statistilisse mõttesse, sest bayesi mudelite võrdlemine on kiiresti arenev ala, kus ühte parimat lahendust pole veel leitud.</p>
 </div>
 <div id="vaatame-mudelite-kokkuvotet" class="section level3">
 <h3><span class="header-section-number">21.1.6</span> Vaatame mudelite kokkuvõtet</h3>
 <p>Lihtne tabel mudeli m2 fititud koefitsientidest koos 95% usalduspiiridega</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tidy</span>(m2)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tidy</span>(m2)
 <span class="co">#&gt;                              term estimate std.error   lower   upper</span>
 <span class="co">#&gt; 1                     b_Intercept    1.710    1.0270   0.095   3.345</span>
 <span class="co">#&gt; 2                  b_Petal.Length    0.759    0.0645   0.651   0.866</span>
@@ -670,15 +703,18 @@ y &lt;-<span class="st"> </span><span class="kw">dstudent_t</span>(x, <span clas
 <span class="co">#&gt; 6     r_Species[setosa,Intercept]    0.676    0.9925  -0.901   2.250</span>
 <span class="co">#&gt; 7 r_Species[versicolor,Intercept]   -0.226    0.9842  -1.853   1.253</span>
 <span class="co">#&gt; 8  r_Species[virginica,Intercept]   -0.642    0.9907  -2.277   0.809</span>
-<span class="co">#&gt; 9                            lp__  -50.433    2.3680 -54.788 -47.169</span></code></pre></div>
+<span class="co">#&gt; 9                            lp__  -50.433    2.3680 -54.788 -47.169</span></code></pre>
 <p>r_ prefiks tähendab, et antud koefitsient kuulub mudeli esimesele (madalamale) tasemele (Liigi tase) r - random - tähendab, et iga grupi (liigi) sees arvutatakse oma fit. b_ tähendab mudeli 2. taset (keskmistatud üle kõikide gruppide). 2. tasmel on meil intercept, b1 ja b2 tõusud ning standardhälve y muutuja ennustatud andempunktide tasemel. 1. tasemel on meil 3 liigi interceptide erinevus üldisest b_Intercepti väärtusest. Seega, selleks, et saada setosa liigi intercepti, peame tegema tehte 1.616 + 0.765.</p>
 <p><strong>tidy</strong> funktsiooni tööd saab kontrollida järgmiste parameetrite abil:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tidy</span>(x, <span class="dt">parameters =</span> <span class="ot">NA</span>, <span class="dt">par_type =</span> <span class="kw">c</span>(<span class="st">&quot;all&quot;</span>,
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tidy</span>(x, <span class="dt">parameters =</span> <span class="ot">NA</span>, <span class="dt">par_type =</span> <span class="kw">c</span>(<span class="st">&quot;all&quot;</span>,
   <span class="st">&quot;non-varying&quot;</span>, <span class="st">&quot;varying&quot;</span>, <span class="st">&quot;hierarchical&quot;</span>), <span class="dt">robust =</span> <span class="ot">FALSE</span>,
-  <span class="dt">intervals =</span> <span class="ot">TRUE</span>, <span class="dt">prob =</span> <span class="fl">0.9</span>, ...)</code></pre></div>
-<p>par_type = “hierarchical” kuvab grupi taseme parameetrite sd-d ja korrelatsioonid. “varying” kuvab grupi taseme interceptid ja tõusud (siis kui neid mudeldadakse). “non-varying” kuvab kõrgema taseme (grupi-ülesed) parameetrid. robust = TRUE annab estimate posteeriori mediaanina (vaikeväärtus FALSE annab selle aritmeetilise keskmisena posteeriorist).</p>
+  <span class="dt">intervals =</span> <span class="ot">TRUE</span>, <span class="dt">prob =</span> <span class="fl">0.9</span>, ...)</code></pre>
+<p>par_type = “hierarchical” kuvab grupi taseme parameetrite sd-d ja korrelatsioonid.
+“varying” kuvab grupi taseme interceptid ja tõusud (siis kui neid mudeldadakse).
+“non-varying” kuvab kõrgema taseme (grupi-ülesed) parameetrid.
+robust = TRUE annab estimate posteeriori mediaanina (vaikeväärtus FALSE annab selle aritmeetilise keskmisena posteeriorist).</p>
 <p>Nüüd põhjalikum mudeli kokkuvõte:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m2
+<pre class="sourceCode r"><code class="sourceCode r">m2
 <span class="co">#&gt; Warning: There were 17 divergent transitions after warmup. Increasing adapt_delta above 0.95 may help.</span>
 <span class="co">#&gt; See http://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup</span>
 <span class="co">#&gt;  Family: gaussian </span>
@@ -690,101 +726,105 @@ y &lt;-<span class="st"> </span><span class="kw">dstudent_t</span>(x, <span clas
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Group-Level Effects: </span>
 <span class="co">#&gt; ~Species (Number of levels: 3) </span>
-<span class="co">#&gt;               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS</span>
-<span class="co">#&gt; sd(Intercept)     1.72      1.53     0.36     5.98 1.00      591      813</span>
+<span class="co">#&gt;               Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat</span>
+<span class="co">#&gt; sd(Intercept)     1.72      1.53     0.36     5.98        515 1.00</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Population-Level Effects: </span>
-<span class="co">#&gt;              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS</span>
-<span class="co">#&gt; Intercept        1.71      1.03    -0.36     4.08 1.01      725      678</span>
-<span class="co">#&gt; Petal.Length     0.76      0.06     0.63     0.88 1.00     1524     1640</span>
-<span class="co">#&gt; Sepal.Width      0.44      0.08     0.27     0.60 1.00     1937     1686</span>
+<span class="co">#&gt;              Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat</span>
+<span class="co">#&gt; Intercept        1.71      1.03    -0.36     4.08        594 1.01</span>
+<span class="co">#&gt; Petal.Length     0.76      0.06     0.63     0.88       1478 1.00</span>
+<span class="co">#&gt; Sepal.Width      0.44      0.08     0.27     0.60       1893 1.00</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Family Specific Parameters: </span>
-<span class="co">#&gt;       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS</span>
-<span class="co">#&gt; sigma     0.31      0.02     0.28     0.35 1.00     1896     1525</span>
+<span class="co">#&gt;       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat</span>
+<span class="co">#&gt; sigma     0.31      0.02     0.28     0.35       1882 1.00</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample </span>
 <span class="co">#&gt; is a crude measure of effective sample size, and Rhat is the potential </span>
-<span class="co">#&gt; scale reduction factor on split chains (at convergence, Rhat = 1).</span></code></pre></div>
+<span class="co">#&gt; scale reduction factor on split chains (at convergence, Rhat = 1).</span></code></pre>
 <p>Siin on eraldi toodud grupi tasemel ja populatsiooni tasemel koefitsiendid ja gruppide vaheline sd (= 1.72). Pane tähele, et üldine varieeruvus sigma = 0.31 on palju väiksem kui gruppide vaheline varieeruvus sd(Intercept) = 1.72. Seega on grupid üksteisest tugevalt erinevad ja neid tuleks võib-olla tõesti eraldi modelleerida.</p>
 <p>Divergentsed transitsioonid on halvad asjad - ahelad on läinud 17 korda metsa. Viisakas oleks adapt deltat tõsta või kitsamad priorid panna, aga 17 halba andmepunkti paarist tuhandest, mille mcmc ahelad meile tekitasid, pole ka mingi maailmalõpp. Nii et las praegu jääb nagu on. Need divergentsed transitsioonid on kerged tekkima just mitmetasemelistes mudelites.</p>
 </div>
 <div id="plotime-posteeriorid-ja-ahelad" class="section level3">
 <h3><span class="header-section-number">21.1.7</span> Plotime posteeriorid ja ahelad</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(m2)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(m2)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 <p>Siit on näha, et ahelad on ilusti konvergeerunud. Ühtlasi on pildil posterioorsed jaotused fititud koefitsientidele.</p>
 <p><em>Regular expressioni</em> abil saab plottida mudeli madalama taseme ahelaid &amp; posteerioreid, mida plot() vaikimisi ei näita.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(m2, <span class="dt">pars =</span> <span class="st">&quot;r_&quot;</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(m2, <span class="dt">pars =</span> <span class="st">&quot;r_&quot;</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
-<p>Vaatame korrelatsioone erinevate parameetrite posterioorsete valimite vahel. (Markovi ahelad jooksevad n-mõõtmelises ruumis, kus n on mudeli parameetrite arv, mille väärtusi hinnatakse.) Pairs(m3) teeb pildi ära, aga ilusama pildi saab <code>GGally::ggpairs()</code> abil.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pairs</span>(m2, <span class="dt">pars =</span> <span class="st">&quot;b_&quot;</span>)</code></pre></div>
+<p>Vaatame korrelatsioone erinevate parameetrite posterioorsete valimite vahel. (Markovi ahelad jooksevad n-mõõtmelises ruumis, kus n on mudeli parameetrite arv, mille väärtusi hinnatakse.)
+Pairs(m3) teeb pildi ära, aga ilusama pildi saab <code>GGally::ggpairs()</code> abil.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pairs</span>(m2, <span class="dt">pars =</span> <span class="st">&quot;b_&quot;</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GGally)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GGally)
 <span class="kw">posterior_samples</span>(m2) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;b_&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggpairs</span>()</code></pre></div>
+<span class="st">  </span><span class="kw">ggpairs</span>()</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 <p>Siin on posteeriorite põhjal arvutatud 50% ja 95% CI ja see plotitud.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">stanplot</span>(m2, <span class="dt">pars =</span> <span class="st">&quot;r_&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;intervals&quot;</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">stanplot</span>(m2, <span class="dt">pars =</span> <span class="st">&quot;r_&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;intervals&quot;</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
 <p>type = argument sisestamine võimaldab plottida erinevaid diagnostilisi näitajaid. Lubatud sisendid on “hist”, “dens”, “hist_by_chain”, “dens_overlay”, “violin”, “intervals”, “areas”, “acf”, “acf_bar”, “trace”, “trace_highlight”, “scatter”, “rhat”, “rhat_hist”, “neff”, “neff_hist” “nuts_acceptance”, “nuts_divergence”, “nuts_stepsize”, “nuts_treedepth” ja “nuts_energy”.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">stanplot</span>(m2, <span class="dt">type =</span> <span class="st">&quot;neff&quot;</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">stanplot</span>(m2, <span class="dt">type =</span> <span class="st">&quot;neff&quot;</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
 <p>Neff on efektiivne valimi suurus ja senikaua kuni Neff/N suhe ei ole &lt; 0.1, pole põhjust selle pärast muretseda.</p>
 </div>
 <div id="korjame-ahelad-andmeraami-ja-plotime-fititud-koefitsiendid-ci-dega" class="section level3">
 <h3><span class="header-section-number">21.1.8</span> Korjame ahelad andmeraami ja plotime fititud koefitsiendid CI-dega</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">posterior_samples</span>(m1)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">posterior_samples</span>(m1)</code></pre>
 <p>mcmc_intervals() on bayesplot paketi funktsioon. me plotime 50% ja 95% CI-d.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pars &lt;-<span class="st"> </span><span class="kw">colnames</span>(model)
-<span class="kw">mcmc_intervals</span>(model, <span class="dt">regex_pars =</span> <span class="st">&quot;[^(lp__)]&quot;</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">pars &lt;-<span class="st"> </span><span class="kw">colnames</span>(model)
+<span class="kw">mcmc_intervals</span>(model, <span class="dt">regex_pars =</span> <span class="st">&quot;[^(lp__)]&quot;</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 <p>Näeme, et sigma hinnang on väga usaldusväärne, samas kui gruppide vahelise sd hinnang ei ole seda mitte (pane tähele posterioorse jaotuse ebasümmeetrilisust).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model2 &lt;-<span class="st"> </span><span class="kw">posterior_samples</span>(m2)
+<pre class="sourceCode r"><code class="sourceCode r">model2 &lt;-<span class="st"> </span><span class="kw">posterior_samples</span>(m2)
 pars &lt;-<span class="st"> </span><span class="kw">colnames</span>(model2)
-<span class="kw">mcmc_intervals</span>(model2, <span class="dt">regex_pars =</span> <span class="st">&quot;[^(lp__)]&quot;</span>)</code></pre></div>
+<span class="kw">mcmc_intervals</span>(model2, <span class="dt">regex_pars =</span> <span class="st">&quot;[^(lp__)]&quot;</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mcmc_areas</span>(model2,  <span class="dt">pars =</span> <span class="kw">c</span>(<span class="st">&quot;b_Petal.Length&quot;</span>, <span class="st">&quot;b_Sepal.Width&quot;</span>))</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mcmc_areas</span>(model2,  <span class="dt">pars =</span> <span class="kw">c</span>(<span class="st">&quot;b_Petal.Length&quot;</span>, <span class="st">&quot;b_Sepal.Width&quot;</span>))</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-35-2.png" width="672" /></p>
 </div>
 <div id="bayesi-versioon-r-ruudust" class="section level3">
 <h3><span class="header-section-number">21.1.9</span> Bayesi versioon R-ruudust</h3>
 <p>Kui suurt osa koguvarieeruvusest suudavad mudeli prediktorid seletada?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bayes_R2</span>(m2)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bayes_R2</span>(m2)
 <span class="co">#&gt;    Estimate Est.Error Q2.5 Q97.5</span>
-<span class="co">#&gt; R2     0.86   0.00831 0.84 0.873</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bayes_R2</span>(m1)
+<span class="co">#&gt; R2     0.86   0.00831 0.84 0.873</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bayes_R2</span>(m1)
 <span class="co">#&gt;    Estimate Est.Error  Q2.5 Q97.5</span>
-<span class="co">#&gt; R2    0.833    0.0109 0.807  0.85</span></code></pre></div>
-<p><a href="https://github.com/jgabry/bayes_R2/blob/master/bayes_R2.pdf" class="uri">https://github.com/jgabry/bayes_R2/blob/master/bayes_R2.pdf</a> Annab põhjenduse sellele statistikule (mille arvutamine erineb tavalisest vähimruutudega arvutatud mudeli <span class="math inline">\(R^2\)</span>-st).</p>
+<span class="co">#&gt; R2    0.833    0.0109 0.807  0.85</span></code></pre>
+<p><a href="https://github.com/jgabry/bayes_R2/blob/master/bayes_R2.pdf" class="uri">https://github.com/jgabry/bayes_R2/blob/master/bayes_R2.pdf</a>
+Annab põhjenduse sellele statistikule (mille arvutamine erineb tavalisest vähimruutudega arvutatud mudeli <span class="math inline">\(R^2\)</span>-st).</p>
 </div>
 <div id="plotime-mudeli-poolt-ennustatud-valimeid-posterior-predictive-check" class="section level3">
 <h3><span class="header-section-number">21.1.10</span> Plotime mudeli poolt ennustatud valimeid – posterior predictive check</h3>
 <p>Kui mudel suudab genereerida simuleeritud valimeid, mis ei erine väga palju empiirilisest valimist, mille põhjal see mudel fititi, siis võib-olla ei ole see täiesti ebaõnnestunud mudeldamine. See on loogika posterioorse ennustava ploti taga.</p>
 <p>Vaatame siin simultaanselt kõigi kolme eelnevalt fititud mudeli simuleeritud valimeid (y_rep) võrdluses algsete andmetega (y):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">purrr<span class="op">::</span><span class="kw">map</span>(<span class="kw">list</span>(m1, m2, m3), pp_check, <span class="dt">nsamples =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">grid.arrange</span>(<span class="dt">grobs =</span> ., <span class="dt">nrow =</span> <span class="dv">3</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">purrr<span class="op">::</span><span class="kw">map</span>(<span class="kw">list</span>(m1, m2, m3), pp_check, <span class="dt">nsamples =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">grid.arrange</span>(<span class="dt">grobs =</span> ., <span class="dt">nrow =</span> <span class="dv">3</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 <ul>
 <li>y - tihedusplot empiirilistest andmetest</li>
-<li>y_rep – plotid mudeli poolt ennustatud iseseisvatest valimitest (igaüks sama suur kui empiiriline valim y) Jooniselt on näha, et m3 ennustused on võrreldes m1 ja m2-ga kõige kaugemal tegelikust valimist.</li>
+<li>y_rep – plotid mudeli poolt ennustatud iseseisvatest valimitest (igaüks sama suur kui empiiriline valim y)
+Jooniselt on näha, et m3 ennustused on võrreldes m1 ja m2-ga kõige kaugemal tegelikust valimist.</li>
 </ul>
 </div>
 <div id="plotime-mudeli-ennustusi---marginal-effects-plots" class="section level3">
 <h3><span class="header-section-number">21.1.11</span> Plotime mudeli ennustusi - marginal effects plots</h3>
 <p>Teeme ennustused. Kõigepealt ennustame ühe keskmise mudeliga, mis ei arvesta mitmetasemelise mudeli madalamte tasemete koefitsientidega.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m2, <span class="dt">effects =</span> <span class="st">&quot;Petal.Length&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;predict&quot;</span>, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>)), <span class="dt">points =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m2, <span class="dt">effects =</span> <span class="st">&quot;Petal.Length&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;predict&quot;</span>, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>)), <span class="dt">points =</span> <span class="ot">TRUE</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
 <p>Ennustus on selles mõttes ok, et vaid väike osa punkte jääb sellest välja, aga laiavõitu teine!</p>
 <p>Nüüd ennustame sama mudeli põhjal igale liigile eraldi. Seega kasutame mudeli madalama taseme koefitsiente. Peame andma lisaparameetri <code>re_formula = NULL</code>, mis tagab, et ennustuse tegemisel kasutatakse ka mudeli madalama taseme koefitsiente.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m2, <span class="dt">effects =</span> <span class="st">&quot;Petal.Length&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;predict&quot;</span>, <span class="dt">conditions =</span> <span class="kw">make_conditions</span>(iris, <span class="dt">vars =</span> <span class="st">&quot;Species&quot;</span>), <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>), <span class="dt">re_formula =</span> <span class="ot">NULL</span>), <span class="dt">points =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m2, <span class="dt">effects =</span> <span class="st">&quot;Petal.Length&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;predict&quot;</span>, <span class="dt">conditions =</span> <span class="kw">make_conditions</span>(iris, <span class="dt">vars =</span> <span class="st">&quot;Species&quot;</span>), <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>), <span class="dt">re_formula =</span> <span class="ot">NULL</span>), <span class="dt">points =</span> <span class="ot">TRUE</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
 <p><code>method = &quot;predict&quot;</code> ennustab, millisesse vahemikku peaks mudeli järgi jääma 90% andmepunkte (k.a. uued andmepunktid, mida pole veel valimisse korjatud).</p>
 <p>Tõesti, valdav enamus valimi punkte on intervallis sees, mis viitab et mudel töötab hästi. Seal, kus on rohkem punkte, on intervall kitsam ja mudel usaldusväärsem.</p>
 <p>Järgneval pildil on <code>method = &quot;fitted&quot;</code>. Nüüd on enamus punkte väljaspool usaldusintervalle, mis sellel pildil mõõdavad meie usaldust regressioonijoone vastu.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m2, <span class="dt">effects =</span> <span class="st">&quot;Petal.Length&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;fitted&quot;</span>, <span class="dt">conditions =</span> <span class="kw">make_conditions</span>(iris, <span class="dt">vars =</span> <span class="st">&quot;Species&quot;</span>), <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>), <span class="dt">re_formula =</span> <span class="ot">NULL</span>), <span class="dt">points =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-41-1.png" width="672" /> <code>method = &quot;fitted&quot;</code> annab CI regressioonijoonele.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m2, <span class="dt">effects =</span> <span class="st">&quot;Petal.Length&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;fitted&quot;</span>, <span class="dt">conditions =</span> <span class="kw">make_conditions</span>(iris, <span class="dt">vars =</span> <span class="st">&quot;Species&quot;</span>), <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>), <span class="dt">re_formula =</span> <span class="ot">NULL</span>), <span class="dt">points =</span> <span class="ot">TRUE</span>)</code></pre>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-41-1.png" width="672" />
+<code>method = &quot;fitted&quot;</code> annab CI regressioonijoonele.</p>
 <p>Argumendid:</p>
 <ul>
 <li><p>method – predict annab veapiirid (95% CI) mudeli ennustustustele andmepunkti tasemel. fitted annab veapiirid mudeli fitile endale (joonele, mis tähistab keskmist või kõige tõenäolisemat y muutuja väärtust igal x-i väärtusel)</p></li>
@@ -793,70 +833,74 @@ pars &lt;-<span class="st"> </span><span class="kw">colnames</span>(model2)
 </ul>
 <p>Pane tähele, et argument <code>points</code> (ja muud lisaargumendid, nagu näiteks <code>theme</code>) kuuluvad <code>plot()</code>, mitte <code>marginal_effects()</code> funktsioonile.</p>
 <p>Tavaline interaktsioonimudel, aga pidevatele muutujatele.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m5 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>Sepal.Width <span class="op">+</span><span class="st"> </span>Petal.Length <span class="op">*</span><span class="st"> </span>Sepal.Width, 
+<pre class="sourceCode r"><code class="sourceCode r">m5 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>Sepal.Width <span class="op">+</span><span class="st"> </span>Petal.Length <span class="op">*</span><span class="st"> </span>Sepal.Width, 
           <span class="dt">data =</span> iris, 
           <span class="dt">prior =</span> prior, 
           <span class="dt">family =</span> gaussian)
-<span class="kw">write_rds</span>(m5, <span class="dt">path =</span> <span class="st">&quot;data/m5.fit&quot;</span>)</code></pre></div>
+<span class="kw">write_rds</span>(m5, <span class="dt">path =</span> <span class="st">&quot;data/m5.fit&quot;</span>)</code></pre>
 <p>Kõigepealt plotime mudeli ennustused, kuidas Sepal Length sõltub Petal Length-ist kolmel erineval Sepal width väärtusel.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m5, <span class="dt">effects =</span> <span class="st">&quot;Petal.Length:Sepal.Width&quot;</span>), <span class="dt">points =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m5, <span class="dt">effects =</span> <span class="st">&quot;Petal.Length:Sepal.Width&quot;</span>), <span class="dt">points =</span> <span class="ot">TRUE</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
 <p>Ja siis sümmeetriliselt vastupidi.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m5, <span class="dt">effects =</span> <span class="st">&quot;Sepal.Width:Petal.Length&quot;</span>), <span class="dt">points =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m5, <span class="dt">effects =</span> <span class="st">&quot;Sepal.Width:Petal.Length&quot;</span>), <span class="dt">points =</span> <span class="ot">TRUE</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
 <p>Siin lisame enda soovitud Sepal Width väärtused (5 ja 1.2), mis on väljaspool seda, mida loodus pakub. Pane tähele ennustuse laiemaid CI-e.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">conditions &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Sepal.Width =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="fl">1.2</span>))
-<span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m5, <span class="dt">effects =</span> <span class="st">&quot;Petal.Length&quot;</span>, <span class="dt">conditions =</span> conditions, <span class="dt">re_formula =</span> <span class="ot">NULL</span>), <span class="dt">points =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">conditions &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Sepal.Width =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="fl">1.2</span>))
+<span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m5, <span class="dt">effects =</span> <span class="st">&quot;Petal.Length&quot;</span>, <span class="dt">conditions =</span> conditions, <span class="dt">re_formula =</span> <span class="ot">NULL</span>), <span class="dt">points =</span> <span class="ot">TRUE</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
 </div>
 <div id="alternatiivne-tee" class="section level3">
 <h3><span class="header-section-number">21.1.12</span> Alternatiivne tee</h3>
-<p>Alternatiivne millele? Teeme tabeli nende väärtustega, millele tahame mudeli ennustusi. Tabelis newx on spetsifitseeritud mudeli kõikide X muutujate väärtused! Me ennustame Y väärtusi paljudel meie poolt võrdse vahemaaga ette antud petal length väärtustel, kusjuures me hoiame sepal width väärtuse alati konstantsena tema valimi keskmisel väärtusel ja vaatame ennustusi eraldi kahele liigile kolmest. Liigid on mudeli madala taseme osad, seega kasutame ennustuste tegemisel mudeli kõikide tasemete koefitsiente.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">newx &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">Petal.Length =</span> modelr<span class="op">::</span><span class="kw">seq_range</span>(iris<span class="op">$</span>Petal.Length, <span class="dt">n =</span> <span class="dv">150</span>),
+<p>Alternatiivne millele?
+Teeme tabeli nende väärtustega, millele tahame mudeli ennustusi. Tabelis newx on spetsifitseeritud mudeli kõikide X muutujate väärtused! Me ennustame Y väärtusi paljudel meie poolt võrdse vahemaaga ette antud petal length väärtustel, kusjuures me hoiame sepal width väärtuse alati konstantsena tema valimi keskmisel väärtusel ja vaatame ennustusi eraldi kahele liigile kolmest. Liigid on mudeli madala taseme osad, seega kasutame ennustuste tegemisel mudeli kõikide tasemete koefitsiente.</p>
+<pre class="sourceCode r"><code class="sourceCode r">newx &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">Petal.Length =</span> modelr<span class="op">::</span><span class="kw">seq_range</span>(iris<span class="op">$</span>Petal.Length, <span class="dt">n =</span> <span class="dv">150</span>),
                     <span class="dt">Sepal.Width =</span> <span class="kw">mean</span>(iris<span class="op">$</span>Sepal.Width),
-                    <span class="dt">Species =</span> <span class="kw">c</span>(<span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;virginica&quot;</span>))</code></pre></div>
+                    <span class="dt">Species =</span> <span class="kw">c</span>(<span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;virginica&quot;</span>))</code></pre>
 <p><code>expand.grid()</code> lõõb tabeli pikaks nii, et kõik võimalikud kombinatsioonid 3st muutujast on täidetud väärtustega.</p>
 <p><code>re_formula</code> NULL mudeldab eraldi liigid eraldi mudeli madalama taseme (liikide sees) koefitsiente kasutades</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">predict_interval_brms2 &lt;-<span class="st"> </span><span class="kw">predict</span>(m2, <span class="dt">newdata =</span> newx, <span class="dt">re_formula =</span> <span class="ot">NULL</span>) <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">predict_interval_brms2 &lt;-<span class="st"> </span><span class="kw">predict</span>(m2, <span class="dt">newdata =</span> newx, <span class="dt">re_formula =</span> <span class="ot">NULL</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">cbind</span>(newx, .)
 <span class="kw">head</span>(predict_interval_brms2)
 <span class="co">#&gt;   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5</span>
-<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.323 3.86  5.10</span>
-<span class="co">#&gt; 2         1.04        3.06  setosa     4.52     0.314 3.90  5.14</span>
-<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.320 3.93  5.17</span>
-<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.323 3.95  5.19</span>
-<span class="co">#&gt; 5         1.16        3.06  setosa     4.63     0.324 4.00  5.27</span>
-<span class="co">#&gt; 6         1.20        3.06  setosa     4.65     0.325 4.00  5.29</span></code></pre></div>
+<span class="co">#&gt; 1         1.00        3.06  setosa     4.49     0.321 3.85  5.11</span>
+<span class="co">#&gt; 2         1.04        3.06  setosa     4.52     0.322 3.91  5.13</span>
+<span class="co">#&gt; 3         1.08        3.06  setosa     4.55     0.318 3.93  5.15</span>
+<span class="co">#&gt; 4         1.12        3.06  setosa     4.58     0.314 3.96  5.20</span>
+<span class="co">#&gt; 5         1.16        3.06  setosa     4.62     0.317 4.00  5.23</span>
+<span class="co">#&gt; 6         1.20        3.06  setosa     4.65     0.316 4.04  5.27</span></code></pre>
 <p><code>predict()</code> ennustab uusi petal length väärtusi (Estimate veerg) koos usaldusinetrvalliga neile väärtustele</p>
 <p>Siin siis eraldi ennustused kahele liigile kolmest, kaasa arvatud petal length väärtusvahemikule, kus selle liigi isendeid valimis ei ole (ja võib-olla ei saagi olla)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">no_versicolor &lt;-<span class="st"> </span><span class="kw">filter</span>(iris, Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>)
+<pre class="sourceCode r"><code class="sourceCode r">no_versicolor &lt;-<span class="st"> </span><span class="kw">filter</span>(iris, Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> predict_interval_brms2, <span class="kw">aes</span>(<span class="dt">x =</span> Petal.Length, <span class="dt">y =</span> Estimate)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> no_versicolor, <span class="kw">aes</span>(Petal.Length, Sepal.Length, <span class="dt">color =</span> Species)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> Q2.<span class="dv">5</span>, <span class="dt">ymax =</span> Q97.<span class="dv">5</span>, <span class="dt">fill =</span> Species), <span class="dt">alpha =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> Q2<span class="fl">.5</span>, <span class="dt">ymax =</span> Q97<span class="fl">.5</span>, <span class="dt">fill =</span> Species), <span class="dt">alpha =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
-<p>Ennustav plot - kuidas lähevad kokku mudeli ennustused reaalsete y-i andmepunktidega</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pr &lt;-<span class="st"> </span><span class="kw">predict</span>(m2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">cbind</span>(iris)
+<p>Ennustav plot - kuidas lähevad kokku mudeli ennustused reaalsete y-i andmepunktidega?</p>
+<blockquote>
+<p>NB! Tähtis on alati plottida mudeli ennustus y teljele. Vastupidi plottides ei jää ka ideaalsed ennustused intercept = 0, slope = 1 joonele.</p>
+</blockquote>
+<pre class="sourceCode r"><code class="sourceCode r">pr &lt;-<span class="st"> </span><span class="kw">predict</span>(m2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">cbind</span>(iris)
 <span class="kw">ggplot</span>(pr, <span class="kw">aes</span>(Sepal.Length, Estimate, <span class="dt">color =</span> Species)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> Q2.<span class="dv">5</span>, <span class="dt">ymax =</span> Q97.<span class="dv">5</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> Q2<span class="fl">.5</span>, <span class="dt">ymax =</span> Q97<span class="fl">.5</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">lty =</span> <span class="dv">2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">8</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">8</span>))</code></pre></div>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">8</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">8</span>))</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
 <p>Igale andmepunktile – kui palju erineb selle residuaal 0-st kui hästi ennustab mudel just seda andmepunkti. Ruumi kokkuhoiuks plotime välja ainult irise valiku 50-st andmepunktist.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">69</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">69</span>)
 <span class="kw">as_data_frame</span>(<span class="kw">residuals</span>(m2)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">sample_n</span>(<span class="dv">50</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(<span class="kw">seq_along</span>(Estimate), Estimate), <span class="dt">y =</span> Estimate)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> Q2.<span class="dv">5</span>, <span class="dt">ymax =</span> Q97.<span class="dv">5</span>), <span class="dt">fatten =</span> <span class="fl">0.1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> Q2<span class="fl">.5</span>, <span class="dt">ymax =</span> Q97<span class="fl">.5</span>), <span class="dt">fatten =</span> <span class="fl">0.1</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">8</span>), <span class="dt">axis.title.y =</span> <span class="kw">element_blank</span>()) <span class="op">+</span>
 <span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Residuals (95 CI)&quot;</span>)
 <span class="co">#&gt; Warning: `as_data_frame()` is deprecated, use `as_tibble()` (but mind the new semantics).</span>
-<span class="co">#&gt; This warning is displayed once per session.</span></code></pre></div>
+<span class="co">#&gt; This warning is displayed once per session.</span></code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
 <p>Ok, isendid nr 15 ja 44 paistavad olema vastavalt palju suurema ja väiksema Sepal Lengthiga kui mudel ennustab. Võib küsida, miks?</p>
 <p>Nüüd plotime usaldusintervalli mudeli fitile (‘keskmisele’ Y väärtusele igal määratud X-i väärtusel), mitte Y-ennustusele andmepunkti kaupa. Selleks on hea fitted() funktsioon. Me ennustame m2 mudelist vastavalt newdata parameetriväärtustele. Kui me newdata argumendi tühjaks jätame, siis võtab fitted() selleks automaatselt algse iris tabeli (ehk valimi väärtused).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">predict_interval_brms2f &lt;-<span class="st"> </span><span class="kw">fitted</span>(m2, <span class="dt">newdata =</span> newx, <span class="dt">re_formula =</span> <span class="ot">NULL</span>) <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">predict_interval_brms2f &lt;-<span class="st"> </span><span class="kw">fitted</span>(m2, <span class="dt">newdata =</span> newx, <span class="dt">re_formula =</span> <span class="ot">NULL</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">cbind</span>(newx,.)
 <span class="kw">head</span>(predict_interval_brms2f)
 <span class="co">#&gt;   Petal.Length Sepal.Width Species Estimate Est.Error Q2.5 Q97.5</span>
@@ -865,79 +909,82 @@ pars &lt;-<span class="st"> </span><span class="kw">colnames</span>(model2)
 <span class="co">#&gt; 3         1.08        3.06  setosa     4.55    0.0529 4.45  4.65</span>
 <span class="co">#&gt; 4         1.12        3.06  setosa     4.58    0.0524 4.48  4.68</span>
 <span class="co">#&gt; 5         1.16        3.06  setosa     4.61    0.0520 4.51  4.71</span>
-<span class="co">#&gt; 6         1.20        3.06  setosa     4.64    0.0518 4.54  4.74</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> predict_interval_brms2f, <span class="kw">aes</span>(<span class="dt">x =</span> Petal.Length, <span class="dt">y =</span> Estimate, <span class="dt">color =</span> Species)) <span class="op">+</span>
+<span class="co">#&gt; 6         1.20        3.06  setosa     4.64    0.0518 4.54  4.74</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> predict_interval_brms2f, <span class="kw">aes</span>(<span class="dt">x =</span> Petal.Length, <span class="dt">y =</span> Estimate, <span class="dt">color =</span> Species)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> no_versicolor, <span class="kw">aes</span>(Petal.Length, Sepal.Length, <span class="dt">color =</span> Species)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> Q2.<span class="dv">5</span>, <span class="dt">ymax =</span> Q97.<span class="dv">5</span>, <span class="dt">fill =</span> Species), <span class="dt">alpha =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>, <span class="dt">colour =</span> <span class="ot">NA</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">10</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> Q2<span class="fl">.5</span>, <span class="dt">ymax =</span> Q97<span class="fl">.5</span>, <span class="dt">fill =</span> Species), <span class="dt">alpha =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>, <span class="dt">colour =</span> <span class="ot">NA</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">10</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
 <p>Mudeli genereeritud andmed ja valimiandmed mõõtmisobjekti (subjekti e taimeisendi) kaupa. See on sisuliselt posterior predictive plot (vt eespool).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">predicted_subjects_brms &lt;-<span class="st"> </span><span class="kw">predict</span>(m2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">cbind</span>(iris, .)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">predicted_subjects_brms &lt;-<span class="st"> </span><span class="kw">predict</span>(m2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">cbind</span>(iris, .)</code></pre>
 <p><code>predict()</code> arvutab mudeli põhjal uusi Y muutuja andmepunkte. Võib kasutada ka väljamõeldud andmete pealt Y väärtuste ennustamiseks (selleks tuleb anda ette andmeraam kõigi X-muutujate väärtustega, mille pealt tahetakse ennustusi).</p>
 <p>Punktid on ennustused ja ristikesed on valimiandmed</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> predicted_subjects_brms, <span class="kw">aes</span>(<span class="dt">x =</span> Petal.Length, <span class="dt">color =</span> Species)) <span class="op">+</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> predicted_subjects_brms, <span class="kw">aes</span>(<span class="dt">x =</span> Petal.Length, <span class="dt">color =</span> Species)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> Estimate)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> Sepal.Length), <span class="dt">shape =</span> <span class="dv">3</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> Sepal.Length), <span class="dt">shape =</span> <span class="dv">3</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
 </div>
 <div id="alternatiiv-ansambliennustus" class="section level3">
 <h3><span class="header-section-number">21.1.13</span> Alternatiiv – ansambliennustus</h3>
 <p>Kuna meil on 2 mudelit (m2 ja m3) mis on pea võrdselt eelistatud, siis genreerime ennustused mõlemast (mudelite ansamblist) proportsionaalselt nende waic skooridega. See ennustus kajastab meie mudeldamistööd tervikuna, mitte ühte “parimat” mudelit ja seega võib loota, et annab paremini edasi meie mudeldamises peituvat ebakindlust.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pp_a &lt;-<span class="st"> </span><span class="kw">pp_average</span>(m2, m3, <span class="dt">weights =</span> <span class="st">&quot;waic&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;predict&quot;</span>) <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">pp_a &lt;-<span class="st"> </span><span class="kw">pp_average</span>(m2, m3, <span class="dt">weights =</span> <span class="st">&quot;waic&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;predict&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">bind_cols</span>(iris)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> pp_a, <span class="kw">aes</span>(<span class="dt">x =</span> Petal.Length, <span class="dt">color =</span> Species)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> Estimate)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> Sepal.Length), <span class="dt">shape =</span> <span class="dv">3</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> Sepal.Length), <span class="dt">shape =</span> <span class="dv">3</span>)</code></pre>
 </div>
 </div>
 <div id="mudeli-eelduste-kontroll" class="section level2">
 <h2><span class="header-section-number">21.2</span> Mudeli eelduste kontroll</h2>
 <p>Pareto k otsib nn mõjukaid (influential) andmepunkte.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">loo_m2 &lt;-<span class="st"> </span><span class="kw">loo</span>(m2)
-<span class="kw">plot</span>(loo_m2)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">loo_m2 &lt;-<span class="st"> </span><span class="kw">loo</span>(m2)
+<span class="kw">plot</span>(loo_m2)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
 <p>Kui paljud andmepunktid on kahtlaselt mõjukad?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pareto_k_table</span>(loo_m2) 
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pareto_k_table</span>(loo_m2) 
 <span class="co">#&gt; </span>
-<span class="co">#&gt; All Pareto k estimates are good (k &lt; 0.5).</span></code></pre></div>
+<span class="co">#&gt; All Pareto k estimates are good (k &lt; 0.5).</span></code></pre>
 <div id="plotime-residuaalid" class="section level3">
 <h3><span class="header-section-number">21.2.1</span> Plotime residuaalid</h3>
-<p><code>resid()</code> annab residuaalid vektorina. Kõigepealt plotime residuaalid fititud (keskmiste) Y väärtuste vastu:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">resid &lt;-<span class="st"> </span><span class="kw">residuals</span>(m2, <span class="dt">type =</span> <span class="st">&quot;pearson&quot;</span>)
+<p><code>resid()</code> annab residuaalid vektorina.
+Kõigepealt plotime residuaalid fititud (keskmiste) Y väärtuste vastu:</p>
+<pre class="sourceCode r"><code class="sourceCode r">resid &lt;-<span class="st"> </span><span class="kw">residuals</span>(m2, <span class="dt">type =</span> <span class="st">&quot;pearson&quot;</span>)
 fit &lt;-<span class="st"> </span><span class="kw">fitted</span>(m2)
 <span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> fit[,<span class="st">&quot;Estimate&quot;</span>], <span class="dt">y =</span> resid[,<span class="st">&quot;Estimate&quot;</span>])) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="st">&quot;dashed&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;fitted&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;residuals&quot;</span>)</code></pre></div>
-<p><img src="17_brms_files/figure-html/unnamed-chunk-59-1.png" width="672" /> <code>type = &quot;pearson&quot;</code> annab standardiseeritud residuaalid <span class="math inline">\(R = (Y - Y_p) / SD(Y)\)</span>, kus SD(Y) on hinnang Y-muutuja SD-le. alternatiiv on <code>type = &quot;ordinary&quot;</code>, mis annab tavalised residuaalid.</p>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;fitted&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;residuals&quot;</span>)</code></pre>
+<p><img src="17_brms_files/figure-html/unnamed-chunk-59-1.png" width="672" />
+<code>type = &quot;pearson&quot;</code> annab standardiseeritud residuaalid <span class="math inline">\(R = (Y - Y_p) / SD(Y)\)</span>, kus SD(Y) on hinnang Y-muutuja SD-le. alternatiiv on <code>type = &quot;ordinary&quot;</code>, mis annab tavalised residuaalid.</p>
 <p>Residuals vs fitted plot testib lineaarsuse eeldust - kui .resid punktid jaotuvad ühtlaselt nulli ümber, siis mudel püüab kinni kogu süstemaatilise varieeruvuse teie andmetest ja see mis üle jääb on juhuslik varieeruvus.</p>
 <p>Vaatame diagnostilist plotti autokorrelatsioonist residuaalide vahel.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">acf</span>(resid[,<span class="dv">1</span>])</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">acf</span>(resid[,<span class="dv">1</span>])</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
 <p>Residuaalide autokorrelatsioonid on madalad - seega kõik paistab OK ja andmepunktide sõltumatus on tagatud.</p>
 <p>Siin on residuaalide histogramm:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="ot">NULL</span>) <span class="op">+</span><span class="st"> </span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="ot">NULL</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">x =</span> resid[,<span class="st">&quot;Estimate&quot;</span>]), <span class="dt">fill =</span> <span class="st">&quot;lightgrey&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">median</span>(resid), <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">median</span>(resid), <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
 <p>Residuaalid on sümmeetrilise jaotusega ja meedian residuaal on peaaegu null. See on kõik hea.</p>
-<p>Ja lõpuks plotime standardiseeritud residuaalid kõigi x-muutujate vastu. Kõigepealt ühendame resid vektori irise tabeliga, et oleks mugavam plottida. residuaalid standardhälbe ühikutes saab ja ka tuleks plottida kõigi x-muutujate suhtes.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris2 &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">cbind</span>(resid)  
+<p>Ja lõpuks plotime standardiseeritud residuaalid kõigi x-muutujate vastu. Kõigepealt ühendame resid vektori irise tabeliga, et oleks mugavam plottida.
+residuaalid standardhälbe ühikutes saab ja ka tuleks plottida kõigi x-muutujate suhtes.</p>
+<pre class="sourceCode r"><code class="sourceCode r">iris2 &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">cbind</span>(resid)  
 <span class="kw">ggplot</span>(iris2, <span class="kw">aes</span>(Petal.Length, Estimate, <span class="dt">color =</span> Species)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
 <p>Tsiteerides klassikuid: “Pole paha!”. Mudel ennustab hästi, aga mõne punkti jaoks on ennustus 2 sd kaugusel.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris2, <span class="kw">aes</span>(Sepal.Width, Estimate, <span class="dt">color =</span> Species)) <span class="op">+</span><span class="st"> </span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris2, <span class="kw">aes</span>(Sepal.Width, Estimate, <span class="dt">color =</span> Species)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris2, <span class="kw">aes</span>(Species, Estimate)) <span class="op">+</span><span class="st"> </span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris2, <span class="kw">aes</span>(Species, Estimate)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.1</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.1</span>)</code></pre>
 <p><img src="17_brms_files/figure-html/unnamed-chunk-64-1.png" width="672" /></p>
 </div>
 </div>
@@ -998,11 +1045,10 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>17 Bayesi meetodil lineaarse mudeli fittimine | Bayesi statistika kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
   <meta property="og:title" content="17 Bayesi meetodil lineaarse mudeli fittimine | Bayesi statistika kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="lihtne-normaaljaotuse-mudel.html"/>
-<link rel="next" href="mitme-prediktoriga-lineaarne-regressioon.html"/>
+<link rel="prev" href="lihtne-normaaljaotuse-mudel.html">
+<link rel="next" href="mitme-prediktoriga-lineaarne-regressioon.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -47,46 +47,75 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
 
 <script src="https://use.fontawesome.com/e4ba4259a1.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-pre, code { background-color: #f8f8f8; }
-code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code > span.dt { color: #204a87; } /* DataType */
-code > span.dv { color: #0000cf; } /* DecVal */
-code > span.bn { color: #0000cf; } /* BaseN */
-code > span.fl { color: #0000cf; } /* Float */
-code > span.ch { color: #4e9a06; } /* Char */
-code > span.st { color: #4e9a06; } /* String */
-code > span.co { color: #8f5902; font-style: italic; } /* Comment */
-code > span.ot { color: #8f5902; } /* Other */
-code > span.al { color: #ef2929; } /* Alert */
-code > span.fu { color: #000000; } /* Function */
-code > span.er { color: #a40000; font-weight: bold; } /* Error */
-code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #000000; } /* Constant */
-code > span.sc { color: #000000; } /* SpecialChar */
-code > span.vs { color: #4e9a06; } /* VerbatimString */
-code > span.ss { color: #4e9a06; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #000000; } /* Variable */
-code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code > span.ex { } /* Extension */
-code > span.at { color: #c4a000; } /* Attribute */
-code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -301,13 +330,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="23" data-path="brms-suntaks.html"><a href="brms-suntaks.html"><i class="fa fa-check"></i><b>23</b> brms süntaks</a><ul>
 <li class="chapter" data-level="23.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#general-formula-structure"><i class="fa fa-check"></i><b>23.1</b> General formula structure</a><ul>
-<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#group-level-terms-xg-1idg-grx-by-mmg1-g2"><i class="fa fa-check"></i><b>23.1.1</b> Group-level terms: x||g, 1|ID|g, gr(x, by = ), mm(g1, g2)</a></li>
-<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.2</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
-<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.3</b> Additional response information</a></li>
-<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for non-linear models</a></li>
-<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for predicting distributional parameters</a></li>
-<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for mixture models</a></li>
-<li class="chapter" data-level="23.1.7" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.7</b> Formula syntax for multivariate models</a></li>
+<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.1</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
+<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.2</b> Additional response information</a></li>
+<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.3</b> Formula syntax for non-linear models</a></li>
+<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for predicting distributional parameters</a></li>
+<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for mixture models</a></li>
+<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for multivariate models</a></li>
 </ul></li>
 <li class="chapter" data-level="23.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#brms-likelihoods"><i class="fa fa-check"></i><b>23.2</b> brms likelihoods</a></li>
 <li class="chapter" data-level="23.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#priors"><i class="fa fa-check"></i><b>23.3</b> priors</a><ul>
@@ -387,11 +415,13 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="bayesi-meetodil-lineaarse-mudeli-fittimine" class="section level1">
 <h1><span class="header-section-number">17</span> Bayesi meetodil lineaarse mudeli fittimine</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 <span class="kw">library</span>(gapminder)
-<span class="kw">library</span>(rethinking)</code></pre></div>
-<p>Nüüd Bayesi mudelid. “rethinking” paketi <code>glimmer()</code> on abivahend, mis konverteerib <code>lm()</code> mudeli kirjelduse Bayesi mudeli kirjelduseks kasutades normaaljaotusega tõepära mudelit. Intercept only model</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g2007 &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="kw">library</span>(rethinking)</code></pre>
+<p>Nüüd Bayesi mudelid.
+“rethinking” paketi <code>glimmer()</code> on abivahend, mis konverteerib <code>lm()</code> mudeli kirjelduse Bayesi mudeli kirjelduseks kasutades normaaljaotusega tõepära mudelit.
+Intercept only model</p>
+<pre class="sourceCode r"><code class="sourceCode r">g2007 &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>)
 intercept_only &lt;-<span class="st"> </span><span class="kw">glimmer</span>(lifeExp <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> g2007)
 <span class="co">#&gt; alist(</span>
@@ -399,32 +429,36 @@ intercept_only &lt;-<span class="st"> </span><span class="kw">glimmer</span>(lif
 <span class="co">#&gt;     mu &lt;- Intercept,</span>
 <span class="co">#&gt;     Intercept ~ dnorm(0,10),</span>
 <span class="co">#&gt;     sigma ~ dcauchy(0,2)</span>
-<span class="co">#&gt; )</span></code></pre></div>
-<p>Ainult interceptiga mudel. Keskväärtus ehk mu on ümber defineeritud kui intercept, aga see annab talle lihtsalt uue nime. Sama hästi oleksime võinud fittida mudelit, kus hindame otse mu keskväärtust (nagu me eelmises peatükis tegime). Pane tähele, et võrreldes <code>lm()</code> funktsiooniga on meil mudelis lisaparameeter — sigma. Kui Intercept annab meile keskmise eluea, siis sigma annab eluigade standardhälbe riikide vahel.</p>
+<span class="co">#&gt; )</span></code></pre>
+<p>Ainult interceptiga mudel.
+Keskväärtus ehk mu on ümber defineeritud kui intercept, aga see annab talle lihtsalt uue nime.
+Sama hästi oleksime võinud fittida mudelit, kus hindame otse mu keskväärtust (nagu me eelmises peatükis tegime).
+Pane tähele, et võrreldes <code>lm()</code> funktsiooniga on meil mudelis lisaparameeter — sigma.
+Kui Intercept annab meile keskmise eluea, siis sigma annab eluigade standardhälbe riikide vahel.</p>
 <blockquote>
 <p>Kui me tahame fittida lineaarset mudelit, siis peab tõepära funktsioon olema kas normaaljaotus või studenti t jaotus.</p>
 </blockquote>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapmod4 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(<span class="dt">flist =</span> intercept_only<span class="op">$</span>f, <span class="dt">data =</span> intercept_only<span class="op">$</span>d)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">precis</span>(gapmod4)
+<pre class="sourceCode r"><code class="sourceCode r">gapmod4 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(<span class="dt">flist =</span> intercept_only<span class="op">$</span>f, <span class="dt">data =</span> intercept_only<span class="op">$</span>d)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">precis</span>(gapmod4)
 <span class="co">#&gt;           Mean StdDev lower 0.89 upper 0.89 n_eff Rhat</span>
 <span class="co">#&gt; Intercept 66.3   0.99       64.6       67.8   694    1</span>
-<span class="co">#&gt; sigma     12.1   0.71       11.0       13.2   554    1</span></code></pre></div>
+<span class="co">#&gt; sigma     12.1   0.71       11.0       13.2   554    1</span></code></pre>
 <p>Nüüd ilma interceptita mudel</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">no_intercept &lt;-<span class="st"> </span><span class="kw">glimmer</span>(lifeExp <span class="op">~</span><span class="st"> </span><span class="op">-</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>gdpPercap, <span class="dt">data =</span> g2007)
+<pre class="sourceCode r"><code class="sourceCode r">no_intercept &lt;-<span class="st"> </span><span class="kw">glimmer</span>(lifeExp <span class="op">~</span><span class="st"> </span><span class="dv">-1</span> <span class="op">+</span><span class="st"> </span>gdpPercap, <span class="dt">data =</span> g2007)
 <span class="co">#&gt; alist(</span>
 <span class="co">#&gt;     lifeExp ~ dnorm( mu , sigma ),</span>
 <span class="co">#&gt;     mu &lt;- b_gdpPercap*gdpPercap,</span>
 <span class="co">#&gt;     b_gdpPercap ~ dnorm(0,10),</span>
 <span class="co">#&gt;     sigma ~ dcauchy(0,2)</span>
-<span class="co">#&gt; )</span></code></pre></div>
+<span class="co">#&gt; )</span></code></pre>
 <p>Selline Bayesi mudeli esitus on “ilusam” kui <code>lm()</code> sest ta toob mudeli eksplitsiitselt välja (samas kui lm notatsioon ütleb, et mudel on “miinus intercept”)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapmod5 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(<span class="dt">flist =</span> no_intercept<span class="op">$</span>f, <span class="dt">data =</span> no_intercept<span class="op">$</span>d)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">precis</span>(gapmod5)
+<pre class="sourceCode r"><code class="sourceCode r">gapmod5 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(<span class="dt">flist =</span> no_intercept<span class="op">$</span>f, <span class="dt">data =</span> no_intercept<span class="op">$</span>d)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">precis</span>(gapmod5)
 <span class="co">#&gt;             Mean StdDev lower 0.89 upper 0.89 n_eff Rhat</span>
 <span class="co">#&gt; b_gdpPercap  0.0   0.00        0.0        0.0   888    1</span>
-<span class="co">#&gt; sigma       45.2   2.75       40.8       49.4   187    1</span></code></pre></div>
+<span class="co">#&gt; sigma       45.2   2.75       40.8       49.4   187    1</span></code></pre>
 <p>Ja lõpuks täismudel:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">full_model &lt;-<span class="st"> </span><span class="kw">glimmer</span>(lifeExp <span class="op">~</span><span class="st"> </span>gdpPercap, <span class="dt">data =</span> g2007)
+<pre class="sourceCode r"><code class="sourceCode r">full_model &lt;-<span class="st"> </span><span class="kw">glimmer</span>(lifeExp <span class="op">~</span><span class="st"> </span>gdpPercap, <span class="dt">data =</span> g2007)
 <span class="co">#&gt; alist(</span>
 <span class="co">#&gt;     lifeExp ~ dnorm( mu , sigma ),</span>
 <span class="co">#&gt;     mu &lt;- Intercept +</span>
@@ -432,15 +466,19 @@ intercept_only &lt;-<span class="st"> </span><span class="kw">glimmer</span>(lif
 <span class="co">#&gt;     Intercept ~ dnorm(0,10),</span>
 <span class="co">#&gt;     b_gdpPercap ~ dnorm(0,10),</span>
 <span class="co">#&gt;     sigma ~ dcauchy(0,2)</span>
-<span class="co">#&gt; )</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapmod6 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(<span class="dt">flist =</span> full_model<span class="op">$</span>f, <span class="dt">data =</span> full_model<span class="op">$</span>d)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">compare</span>(gapmod4, gapmod5, gapmod6)
+<span class="co">#&gt; )</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">gapmod6 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(<span class="dt">flist =</span> full_model<span class="op">$</span>f, <span class="dt">data =</span> full_model<span class="op">$</span>d)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">compare</span>(gapmod4, gapmod5, gapmod6)
 <span class="co">#&gt;         WAIC pWAIC dWAIC weight    SE   dSE</span>
 <span class="co">#&gt; gapmod6 1028   2.6   0.0      1 14.07    NA</span>
 <span class="co">#&gt; gapmod4 1113   1.5  85.7      0 12.09  9.67</span>
-<span class="co">#&gt; gapmod5 1486   0.8 458.8      0  7.29 15.70</span></code></pre></div>
-<p>Jälle on täismudel võitja ja kui intercept nulli suruda, saame kehveima tulemuse. Siin me kasutame AIC-i Bayesi analoogi WAIC, mis nende mudelite peal peaks töötama veidi paremini kui AIC. Aga see on tehniline detail. WAIC abil mudeleid võrreldes saame muuhulgas mudeli kaalu. Antud juhul on 100% kaalust gapmo6-l ja ülejäänud mudelitele ei jää midagi.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">coeftab</span>(gapmod4, gapmod5, gapmod6))</code></pre></div>
+<span class="co">#&gt; gapmod5 1486   0.8 458.8      0  7.29 15.70</span></code></pre>
+<p>Jälle on täismudel võitja ja kui intercept nulli suruda, saame kehveima tulemuse.
+Siin me kasutame AIC-i Bayesi analoogi WAIC, mis nende mudelite peal peaks töötama veidi paremini kui AIC.
+Aga see on tehniline detail.
+WAIC abil mudeleid võrreldes saame muuhulgas mudeli kaalu.
+Antud juhul on 100% kaalust gapmo6-l ja ülejäänud mudelitele ei jää midagi.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">coeftab</span>(gapmod4, gapmod5, gapmod6))</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-15"></span>
 <img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-15-1.png" alt="Mudelite võrdlusplot." width="672" />
 <p class="caption">
@@ -448,7 +486,7 @@ Joonis 17.1: Mudelite võrdlusplot.
 </p>
 </div>
 <p>Viime SKP andmed log-skaalasse ja proovime uuesti. See tähendab, et me arvame, et iga SKP kümnekordne tõus võiks kaasa tuua eluea tõusu x aasta võrra.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g2007 &lt;-<span class="st"> </span>g2007 <span class="op">%&gt;%</span><span class="st"> </span>
+<pre class="sourceCode r"><code class="sourceCode r">g2007 &lt;-<span class="st"> </span>g2007 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">l_GDP =</span> <span class="kw">log10</span>(gdpPercap))
 <span class="co"># glimmer(lifeExp ~ -1 + l_GDP, data = g2007)</span>
 gapmod7 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(<span class="kw">alist</span>(
@@ -464,43 +502,51 @@ gapmod8 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(<span cla
     Intercept <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(<span class="dv">0</span>, <span class="dv">100</span>),
     b_gdp <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(<span class="dv">0</span>, <span class="dv">10</span>),
     sigma <span class="op">~</span><span class="st"> </span><span class="kw">dcauchy</span>(<span class="dv">0</span>, <span class="dv">2</span>)
-), <span class="dt">data =</span> g2007)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">compare</span>(gapmod4, gapmod5, gapmod6, gapmod7, gapmod8)
+), <span class="dt">data =</span> g2007)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">compare</span>(gapmod4, gapmod5, gapmod6, gapmod7, gapmod8)
 <span class="co">#&gt;         WAIC pWAIC dWAIC weight    SE   dSE</span>
 <span class="co">#&gt; gapmod7  965   3.0   0.0   0.53 25.11    NA</span>
 <span class="co">#&gt; gapmod8  966   3.8   0.2   0.47 25.37  2.56</span>
 <span class="co">#&gt; gapmod6 1028   2.6  62.4   0.00 14.07 18.21</span>
 <span class="co">#&gt; gapmod4 1113   1.5 148.1   0.00 12.09 23.18</span>
-<span class="co">#&gt; gapmod5 1486   0.8 521.1   0.00  7.29 26.82</span></code></pre></div>
+<span class="co">#&gt; gapmod5 1486   0.8 521.1   0.00  7.29 26.82</span></code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-19"></span>
 <img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-19-1.png" alt="Log skaalas töötab nulli surutud interceptiga mudel sama hästi kui täismudel. See ei ole paraku mudeldamise üldine omadus." width="672" />
 <p class="caption">
 Joonis 16.10: Log skaalas töötab nulli surutud interceptiga mudel sama hästi kui täismudel. See ei ole paraku mudeldamise üldine omadus.
 </p>
 </div>
-<p>Kuna Bayesi mudelite fittimine on keerulisem kui <code>lm()</code> abil, on eriti tähtis fititud mudel välja plottida. See on esimene kaitseliin lollide vigade ja halvasti jooksvate Markovi ahelate vastu.</p>
-<p>Kui Bayesi mudeleid on raskem fittida, siis milleks me peaksime neid eelistama tavalistele vähimruutude meetodil fititud mudelitele? Tegelikult alati ei peagi. Aga siiski, Bayesi mudelid sisaldavad eksplitsiitset veakomonenti (sigma), mis on kasulik mudelist uusi andmeid ennustades. Samuti annavad nad parima hinnangu ebakindlusele parmeetrite väärtuste hinnangute ümber, võimaldavad mudeli fittimisel siduda andmeid taustainfoga (prior) ning, mis kõige tähtsam, võimaldavad paindlikumalt fittida hierarhilisi mudeleid (nende juurde tuleme hiljem).</p>
+<p>Kuna Bayesi mudelite fittimine on keerulisem kui <code>lm()</code> abil, on eriti tähtis fititud mudel välja plottida.
+See on esimene kaitseliin lollide vigade ja halvasti jooksvate Markovi ahelate vastu.</p>
+<p>Kui Bayesi mudeleid on raskem fittida, siis milleks me peaksime neid eelistama tavalistele vähimruutude meetodil fititud mudelitele?
+Tegelikult alati ei peagi.
+Aga siiski, Bayesi mudelid sisaldavad eksplitsiitset veakomonenti (sigma), mis on kasulik mudelist uusi andmeid ennustades.
+Samuti annavad nad parima hinnangu ebakindlusele parmeetrite väärtuste hinnangute ümber, võimaldavad mudeli fittimisel siduda andmeid taustainfoga (prior) ning, mis kõige tähtsam, võimaldavad paindlikumalt fittida hierarhilisi mudeleid (nende juurde tuleme hiljem).</p>
 <p>Samas, kui prior on väheinformatiivne, siis Bayesi hinnangud mudeli koefitsientide kõige tõenäolisematele väärtustele on praktiliselt samad, kui vähimruutude meetodiga <code>lm()</code> abil saadud punkt-hinnangud.</p>
 <p>Siin me fitime pedagooglistel kaalutlustel kõike Bayesiga aga praktikas jätavad paljud mõistlikud inimesed Bayesi hierarhiliste mudelite jaoks ja kasutavad lihtsate mudelite jaoks <code>lm()</code>.</p>
-<p>Tagasi gapmod7 ja gapmod8 mudelite juurde. Plotime nende koefitsiendid koos usalduspiiridega.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">coeftab</span>(gapmod7, gapmod8))</code></pre></div>
+<p>Tagasi gapmod7 ja gapmod8 mudelite juurde.
+Plotime nende koefitsiendid koos usalduspiiridega.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">coeftab</span>(gapmod7, gapmod8))</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-20"></span>
 <img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-20-1.png" alt="Mudelite võrdlusplot." width="672" />
 <p class="caption">
 Joonis 17.2: Mudelite võrdlusplot.
 </p>
 </div>
-<p>Pane tähele, et gapmod8 “b_gdp” koefitsiendi posteerior on palju laiem kui gapmod7 “b_gdp” oma. See on üldine nähtus, mis tuleneb sellest, et gapmod7-s on vähem parameetreid. <strong>Iga lisatud parameeter kipub vähendama teiste parameetrite hindamise täpsust.</strong></p>
+<p>Pane tähele, et gapmod8 “b_gdp” koefitsiendi posteerior on palju laiem kui gapmod7 “b_gdp” oma.
+See on üldine nähtus, mis tuleneb sellest, et gapmod7-s on vähem parameetreid.
+<strong>Iga lisatud parameeter kipub vähendama teiste parameetrite hindamise täpsust.</strong></p>
 <div id="ennustused-mudelist" class="section level2 unnumbered">
 <h2>Ennustused mudelist</h2>
-<p>Kuidas plottida meie hinnangud ebakindlusele parameetri tegeliku väärtuse ümber? Siin tuleb appi <code>rethinking::link()</code>.</p>
+<p>Kuidas plottida meie hinnangud ebakindlusele parameetri tegeliku väärtuse ümber?
+Siin tuleb appi <code>rethinking::link()</code>.</p>
 <p>Nii tõmbame posteriorist igale meie andmetes esinevale log GDP väärtusele vastavad 1000 ennustust keskmise eluea kohta sellel l_GDP väärtusel:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">linked &lt;-<span class="st"> </span><span class="kw">link</span>(gapmod8)
+<pre class="sourceCode r"><code class="sourceCode r">linked &lt;-<span class="st"> </span><span class="kw">link</span>(gapmod8)
 linked &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(linked)
-linked_mean &lt;-<span class="st"> </span><span class="kw">apply</span>(linked, <span class="dv">2</span>, HPDI, <span class="dt">prob =</span> <span class="fl">0.95</span>)</code></pre></div>
+linked_mean &lt;-<span class="st"> </span><span class="kw">apply</span>(linked, <span class="dv">2</span>, HPDI, <span class="dt">prob =</span> <span class="fl">0.95</span>)</code></pre>
 <p>Sel viisil saab tabeli, kus igale 142-le andmepunktist vastab üks veerg, milles on 1000 posteeriorist arvutatud ennustust lifeExp väärtusele.</p>
 <p>Praktikas soovime aga enamasti meie poolt ette antud l_GDP väärtustel põhinevaid ennustusi keskmise eluea kohta. See käib nii:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># link() draws from the posterior 1000 mu values for each l_GDP value in the width object; out pops a table with 1000 rows and 41 columns. </span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># link() draws from the posterior 1000 mu values for each l_GDP value in the width object; out pops a table with 1000 rows and 41 columns. </span>
 mu1 &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(<span class="kw">link</span>(gapmod8, <span class="dt">data =</span> <span class="kw">list</span>(<span class="dt">l_GDP =</span> <span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">6</span>, <span class="fl">0.1</span>))))
 <span class="co">#&gt; [ 100 / 1000 ]</span>
 [ <span class="dv">200</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> ]
@@ -513,10 +559,12 @@ mu1 &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(<span class=
 [ <span class="dv">900</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> ]
 [ <span class="dv">1000</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> ]
 <span class="co">#&gt; Warning: `as_tibble.matrix()` requires a matrix with column names or a `.name_repair` argument. Using compatibility `.name_repair`.</span>
-<span class="co">#&gt; This warning is displayed once per session.</span></code></pre></div>
-<p>Nüüd on meil mu1 objektis 41 l_GDP väärtust, millest igale vastab 1000 ennustust keskmise eluea kohta sellel l_GDP-l. Järgmiseks arvutame igale neist 41-st tulbast keskmise ja 95% HPDI ning plotime need koos andmepunktidega kasutades base-R graafikasüsteemi.</p>
-<p>Pane tähele, et hall riba näitab ebakindlust ennustuse ümber keskmisele elueale üle kõikide riikide, mis võiksid sellist l_GDP-d omada (ehk ebakindlust regressioonijoonele). Kui me aga tahame ennustada ka keskmiste eluigade varieeruvust riigi tasemel (kasutades Bayesi hinnangut sigma parameetrile), siis on meil vaja <code>sim()</code> funktsiooni:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mu.mean &lt;-<span class="st"> </span><span class="kw">apply</span>(mu1, <span class="dv">2</span>, mean) <span class="co"># applies the FUN mean() to each column</span>
+<span class="co">#&gt; This warning is displayed once per session.</span></code></pre>
+<p>Nüüd on meil mu1 objektis 41 l_GDP väärtust, millest igale vastab 1000 ennustust keskmise eluea kohta sellel l_GDP-l.
+Järgmiseks arvutame igale neist 41-st tulbast keskmise ja 95% HPDI ning plotime need koos andmepunktidega kasutades base-R graafikasüsteemi.</p>
+<p>Pane tähele, et hall riba näitab ebakindlust ennustuse ümber keskmisele elueale üle kõikide riikide, mis võiksid sellist l_GDP-d omada (ehk ebakindlust regressioonijoonele).
+Kui me aga tahame ennustada ka keskmiste eluigade varieeruvust riigi tasemel (kasutades Bayesi hinnangut sigma parameetrile), siis on meil vaja <code>sim()</code> funktsiooni:</p>
+<pre class="sourceCode r"><code class="sourceCode r">mu.mean &lt;-<span class="st"> </span><span class="kw">apply</span>(mu1, <span class="dv">2</span>, mean) <span class="co"># applies the FUN mean() to each column</span>
 mu.HPDI &lt;-<span class="st"> </span><span class="kw">apply</span>(mu1, <span class="dv">2</span>, HPDI, <span class="dt">prob =</span> <span class="fl">0.95</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">t</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">as_data_frame</span>()
@@ -538,8 +586,8 @@ sim.length &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(<span
 height.PI &lt;-<span class="st"> </span><span class="kw">sapply</span>(sim.length, PI, <span class="dt">prob =</span> <span class="fl">0.95</span>, <span class="dt">simplify =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">do.call</span>(rbind,. )
 height.PI &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">width =</span> <span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">6</span>, <span class="fl">0.1</span>), height.PI) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()
-<span class="kw">colnames</span>(height.PI) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;width&quot;</span>, <span class="st">&quot;lower&quot;</span>, <span class="st">&quot;upper&quot;</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(viridis)
+<span class="kw">colnames</span>(height.PI) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;width&quot;</span>, <span class="st">&quot;lower&quot;</span>, <span class="st">&quot;upper&quot;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(viridis)
 <span class="kw">ggplot</span>(g2007) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(l_GDP, lifeExp, <span class="dt">color =</span> continent)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data =</span> <span class="kw">data_frame</span>(<span class="dt">width =</span> <span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">6</span>, <span class="fl">0.1</span>), mu.mean), <span class="kw">aes</span>(width, mu.mean)) <span class="op">+</span>
@@ -551,25 +599,29 @@ height.PI &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span clas
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>()) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> <span class="ot">TRUE</span>)
 <span class="co">#&gt; Warning: `data_frame()` is deprecated, use `tibble()`.</span>
-<span class="co">#&gt; This warning is displayed once per session.</span></code></pre></div>
+<span class="co">#&gt; This warning is displayed once per session.</span></code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-24"></span>
 <img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-24-1.png" alt="Ennustused mudelist." width="672" />
 <p class="caption">
 Joonis 17.3: Ennustused mudelist.
 </p>
 </div>
-<p>Nüüd ütleb laiem hall ala, et me oleme üsna kindlad, et nende riikide puhul, mille puhul mudel töötab, kohtame individaalsete riikide keskmiseid eluigasid halli ala sees ja mitte sealt väljas. Nagu näha, on meil ka riike, mis jäävad hallist alast kaugele ja mille keskmine eluiga on kõvasti madalam, kui mudel ennustab. Need on äkki riigid, kus parasjagu on sõda üle käinud ja mille eluiga ei ole näiteks seetõttu SKP-ga lihtsas põhjuslikus seoses. Igal juhul tasuks need ükshaaval üle vaadata sest punktid, mida mudel ei seleta, võivad varjata endas mõnd huvitavat saladust, mis pikisilmi ootab avastajat. Lisaks: pane tähele, et mudel eeldab, et riikide keskmise eluea SD on muutumatu igal GDP väärtusel.</p>
+<p>Nüüd ütleb laiem hall ala, et me oleme üsna kindlad, et nende riikide puhul, mille puhul mudel töötab, kohtame individaalsete riikide keskmiseid eluigasid halli ala sees ja mitte sealt väljas.
+Nagu näha, on meil ka riike, mis jäävad hallist alast kaugele ja mille keskmine eluiga on kõvasti madalam, kui mudel ennustab.
+Need on äkki riigid, kus parasjagu on sõda üle käinud ja mille eluiga ei ole näiteks seetõttu SKP-ga lihtsas põhjuslikus seoses.
+Igal juhul tasuks need ükshaaval üle vaadata sest punktid, mida mudel ei seleta, võivad varjata endas mõnd huvitavat saladust, mis pikisilmi ootab avastajat.
+Lisaks: pane tähele, et mudel eeldab, et riikide keskmise eluea SD on muutumatu igal GDP väärtusel.</p>
 <p>Kuidas saada ennustusi kindlale l_GDP väärtusele? Näiteks tulp V10 vastab l_GDP väärtusele 2.9. Järgnevalt arvutame oodatavad keskmised eluead sellele SKP väärtusele (fiksionaalsetele riikidele, millel võiks olla täpselt selline SKP):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dens</span>(sim.length<span class="op">$</span>V10)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dens</span>(sim.length<span class="op">$</span>V10)</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-25"></span>
 <img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-25-1.png" alt="Ennustus mudelist kindlale log GDP väärtusele." width="672" />
 <p class="caption">
-Joonis 17.4: Ennustus mudelist kindlale log GDP väärtusele.
+Joonis 4.8: Ennustus mudelist kindlale log GDP väärtusele.
 </p>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">HPDI</span>(sim.length<span class="op">$</span>V10, <span class="dt">prob =</span> <span class="fl">0.95</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">HPDI</span>(sim.length<span class="op">$</span>V10, <span class="dt">prob =</span> <span class="fl">0.95</span>)
 <span class="co">#&gt; |0.95 0.95| </span>
-<span class="co">#&gt;  39.4  66.8</span></code></pre></div>
+<span class="co">#&gt;  39.7  67.5</span></code></pre>
 <p>Nagu näha, võib mudeli kohaselt sellise riigi keskmine eluiga tulla nii madal, kui 40 aastat ja nii kõrge kui 67 aastat.</p>
 </div>
 <div id="lognormaalne-toeparamudel" class="section level2 unnumbered">
@@ -593,11 +645,11 @@ Joonis 17.4: Ennustus mudelist kindlale log GDP väärtusele.
 <div class="figure"><span id="fig:unnamed-chunk-26"></span>
 <img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-26-1.png" alt="SKP-de jaotus" width="672" />
 <p class="caption">
-Joonis 17.5: SKP-de jaotus
+Joonis 4.9: SKP-de jaotus
 </p>
 </div>
 <p>Mustaga on näidatud empiiriline SKP jaotus, rohelisega fititud lognormaalne mudel sellest samast jaotusest. Järgnevalt ennustame SKP-d keskmise eluea põhjal, milleks fitime lognormaalse tõepäramudeli, kus mu on ümber defineeritud regressioonivõrrandiga:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m_ln1 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
+<pre class="sourceCode r"><code class="sourceCode r">m_ln1 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
   <span class="kw">alist</span>(
    gdpPercap  <span class="op">~</span><span class="st"> </span><span class="kw">dlnorm</span>( mu , sigma ),
     mu &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b <span class="op">*</span><span class="st"> </span>lifeExp,
@@ -607,22 +659,22 @@ Joonis 17.5: SKP-de jaotus
    ), 
   <span class="dt">data =</span> g2007, 
   <span class="dt">start =</span> <span class="kw">list</span>( <span class="dt">a =</span> <span class="dv">3</span>, <span class="dt">b =</span> <span class="dv">0</span>, <span class="dt">sigma =</span> <span class="fl">0.5</span> ) 
-  )</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">precis</span>(m_ln1)
+  )</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">precis</span>(m_ln1)
 <span class="co">#&gt;       Mean StdDev lower 0.89 upper 0.89 n_eff Rhat</span>
 <span class="co">#&gt; a     2.48   0.38       1.87       3.08   283    1</span>
 <span class="co">#&gt; b     0.09   0.01       0.08       0.10   287    1</span>
-<span class="co">#&gt; sigma 0.81   0.05       0.74       0.88   294    1</span></code></pre></div>
+<span class="co">#&gt; sigma 0.81   0.05       0.74       0.88   294    1</span></code></pre>
 <p>Kuna meil on tegemist mitte-lineaarse mudeliga, sõltub tõusu (<span class="math inline">\(\beta\)</span>) väärtus ka mudeli interceptist: <span class="math inline">\(\beta = exp(\alpha + \beta)-exp(\alpha)\)</span>. See ei ole lineaarne seos: <span class="math inline">\(\beta\)</span> omab seda suuremat mõju efektile (tõusule), mida suurem on <span class="math inline">\(\alpha\)</span>.</p>
 <p>Kui meil on tegu binaarse prediktoriga, siis kodeerime selle 2 taset kui -1 ja 1. Sellises mudelis on tõus sama, mis efekti suurus ES, ja <span class="math inline">\(ES = exp(\alpha + \beta)-exp(\alpha-\beta)\)</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">seq</span>( <span class="dv">0</span>, <span class="dv">10</span>, <span class="dt">length.out =</span> <span class="dv">1000</span> )
+<pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">seq</span>( <span class="dv">0</span>, <span class="dv">10</span>, <span class="dt">length.out =</span> <span class="dv">1000</span> )
 b &lt;-<span class="st"> </span><span class="dv">2</span>
 b1 &lt;-<span class="st"> </span><span class="dv">3</span>
 y &lt;-<span class="st"> </span><span class="kw">exp</span>( a <span class="op">+</span><span class="st"> </span>b ) <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>( a )
 y1 &lt;-<span class="st"> </span><span class="kw">exp</span>( a <span class="op">+</span><span class="st"> </span>b1 ) <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>( a )
 
 <span class="kw">plot</span>( a, y, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;a value&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;slope&quot;</span> )
-<span class="kw">lines</span>( a, y1, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span> )</code></pre></div>
+<span class="kw">lines</span>( a, y1, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span> )</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-30"></span>
 <img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-30-1.png" alt="Mudeli tõus sõltub interceptist." width="672" />
 <p class="caption">
@@ -631,24 +683,24 @@ Joonis 16.11: Mudeli tõus sõltub interceptist.
 </div>
 <p>Must joon näitab mudeli tõusu sõltuvust parameetri a väärtusest, kui parameeter b = 2. Punane joon teeb sedasama, kui b = 3.</p>
 <p>Selline on siis mudeli tõusude (beta) posteerior:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s_ln1 &lt;-<span class="st"> </span><span class="kw">extract.samples</span>( m_ln1 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()
-beta &lt;-<span class="st"> </span><span class="kw">exp</span>(s_ln1<span class="op">$</span>a <span class="op">+</span><span class="st"> </span>s_ln1<span class="op">$</span>b) <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>(s_ln1<span class="op">$</span>a)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dens</span>(beta)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">s_ln1 &lt;-<span class="st"> </span><span class="kw">extract.samples</span>( m_ln1 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()
+beta &lt;-<span class="st"> </span><span class="kw">exp</span>(s_ln1<span class="op">$</span>a <span class="op">+</span><span class="st"> </span>s_ln1<span class="op">$</span>b) <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>(s_ln1<span class="op">$</span>a)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dens</span>(beta)</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-32"></span>
 <img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-32-1.png" alt="Mudeli tõusude (beta) posteerior." width="672" />
 <p class="caption">
-Joonis 17.6: Mudeli tõusude (beta) posteerior.
+Joonis 17.4: Mudeli tõusude (beta) posteerior.
 </p>
 </div>
 <p>Lognormaaljaotusega mudelis täidab normaaljaotusega mudeli intercepti rolli eelkõige mediaan, mis on defineeritud kui exp(a), aga arvutada saab ka keskmise:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">i_median &lt;-<span class="st"> </span><span class="kw">exp</span>(s_ln1<span class="op">$</span>a)
+<pre class="sourceCode r"><code class="sourceCode r">i_median &lt;-<span class="st"> </span><span class="kw">exp</span>(s_ln1<span class="op">$</span>a)
 <span class="kw">mean</span>(i_median)
 <span class="co">#&gt; [1] 12.8</span>
 i_mean &lt;-<span class="st"> </span><span class="kw">exp</span>(s_ln1<span class="op">$</span>a <span class="op">+</span><span class="st"> </span>(s_ln1<span class="op">$</span>sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>)
 <span class="kw">mean</span>(i_mean)
-<span class="co">#&gt; [1] 17.8</span></code></pre></div>
+<span class="co">#&gt; [1] 17.8</span></code></pre>
 <p>Siin ennustame fititud mudelist uusi andmeid (väljamõeldud riikide rikkust):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_ci &lt;-<span class="st"> </span><span class="kw">sim</span>(m_ln1) <span class="op">%&gt;%</span><span class="st"> </span>
+<pre class="sourceCode r"><code class="sourceCode r">sim_ci &lt;-<span class="st"> </span><span class="kw">sim</span>(m_ln1) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">apply</span>(<span class="dv">2</span>, HPDI, <span class="dt">prob =</span> <span class="fl">0.95</span>)
 <span class="co">#&gt; [ 100 / 1000 ]</span>
@@ -660,15 +712,15 @@ i_mean &lt;-<span class="st"> </span><span class="kw">exp</span>(s_ln1<span clas
 [ <span class="dv">700</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> ]
 [ <span class="dv">800</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> ]
 [ <span class="dv">900</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> ]
-[ <span class="dv">1000</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> ]</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(g2007, <span class="kw">aes</span>(lifeExp, gdpPercap)) <span class="op">+</span><span class="st"> </span>
+[ <span class="dv">1000</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> ]</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(g2007, <span class="kw">aes</span>(lifeExp, gdpPercap)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continent), <span class="dt">size =</span> <span class="fl">0.8</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>( <span class="dt">ymin =</span> sim_ci[<span class="dv">1</span>,], <span class="dt">ymax =</span> sim_ci[<span class="dv">2</span>,]), <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> <span class="ot">TRUE</span>)</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-35"></span>
 <img src="13_bayes-linear-model_files/figure-html/unnamed-chunk-35-1.png" alt="Ennustus mudelist." width="672" />
 <p class="caption">
-Joonis 17.7: Ennustus mudelist.
+Joonis 17.5: Ennustus mudelist.
 </p>
 </div>
 <p>Ka see mudel jääb hätta Aafrika outlieritega, mille eluiga ei suuda ennustada rikkust.</p>
@@ -731,11 +783,10 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

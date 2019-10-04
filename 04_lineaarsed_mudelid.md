@@ -336,12 +336,6 @@ Selline mudel on täpselt sama informatiivne kui andmed, mille põhjal see fitit
 
 
 
-
-```
-#> Warning: `cols` is now required.
-#> Please use `cols = c(preds)`
-```
-
 \begin{figure}
 
 {\centering \includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-16-1} 
@@ -406,35 +400,103 @@ AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel?
 
 ### Regressioon kui kirjeldus ja kui põhjuslik hüpotees {-}
 
-Regressioonanalüüsi võib vaadelda 1) empiirilise kirjeldusena y ja x-i koos-varieerumisest või 2) muutujate vaheliste põhjuslike suhete analüüsina. Esimesel juhul ei tõlgenda me x ja y suhet x-i mõjuna y-le. Seega, senikaua kui mudeli fit väljaspool andmeid, mida kasutati selle mudeli fittimiseks, on piisavalt hea, ei ole võimalik, et me fitime vale struktuuriga mudeli. 
+Regressioonanalüüsi võib vaadelda 1) empiirilise kirjeldusena y ja x-i koos-varieerumisest või 2) muutujate vaheliste põhjuslike suhete analüüsina. Esimesel juhul ei tõlgenda me x ja y suhet x-i mõjuna y-le ja senikaua kui mudeli fit väljaspool andmeid, mida kasutati selle mudeli fittimiseks, on piisavalt hea, ei ole võimalik, et me fitime vale struktuuriga mudeli. 
 Kui me fitime 2 mudelit (i) $Y = \alpha + \beta_1X_1$ ja (ii) $Y = \alpha + \beta_1X_1 + \beta_2X_2$, siis eeldame, et kahe mudeli $\beta_1$ koefitsiendid tulevad erinevad. Aga sellest pole midagi, sest need kirjeldavad mõlemal juhul vaid empiirilisi seoseid. 
 
-Teisel, põhjuslikul juhul on kõik teisiti. Eeldades et $X_2$ on üks Y-i põhjustest, on nüüd esimese mudeli veakomponendis peidus ka $\beta_2X_2$. Kui $X_1$ ja $X_2$ on omavahel korreleeritud, siis tekib meil seetõttu ka korrelatsioon $X_1$ ja veakomponendi vahel -- ja see rikub mudeli eeldusi, kallutades mudeli fittimisel meie hinnangut $\beta_1$-le, misläbi osa $X_2$ mõjust Y-le omistatakse ekslikult $X_1$-le. See kõik juhtub siis, kui teise mudeli $\beta_2$ ei ole null ja esineb $X_1$ ja $X_2$ vaheline korrelatsioon. 
+Teisel, põhjuslikul juhul on kõik teisiti. Eeldades et $X_2$ on üks Y-i põhjustest, on nüüd esimese mudeli veakomponendis peidus ka $\beta_2X_2$. Kui $X_1$ ja $X_2$ on omavahel korreleeritud, siis tekib meil seetõttu ka korrelatsioon $X_1$ ja veakomponendi vahel, mis rikub mudeli eeldusi, kallutades mudeli fittimisel meie hinnangut $\beta_1$-le, misläbi osa $X_2$ mõjust Y-le omistatakse ekslikult $X_1$-le. See kõik juhtub siis, kui teise mudeli $\beta_2$ ei ole null ja esineb $X_1$ ja $X_2$ vaheline põhjuslik seos. 
 
-Selle kallutatuse tõlgendamine sõltub omakorda $X_1$ ja $X_2$ vahelise põhjusliku seose struktuurist. Oluline on mõista, et mudeli enda struktuuris pole vähimatki põhjuslikku infot - mudel ei tea isegi sellise asja nagu põhjuslikkus olemasolust. Seega on meil lisaks regressioonimudelile vaja sellest iseseisvat põhjuslikku mudelit, mille formuleerime puhtalt teaduslikest asjaoludest lähtuvalt.
+Selle kallutatuse tõlgendamine sõltub omakorda $X_1$ ja $X_2$ vahelise põhjusliku seose struktuurist. Oluline on mõista, et regressioonimudeli enda struktuuris ei ole põhjuslikku infot - mudel ei tea isegi põhjuslikkuse olemasolust. Seega on meil lisaks regressioonimudelile vaja iseseisvat põhjuslike mõjude mudelit, mille formuleerime puhtalt teaduslikest asjaoludest lähtuvalt.
 
-Kõige lihtsam selline mudel vastab randomiseeritud ja kontrollitud eksperimendile, kus me võrdleme katse ja kontrolltingimusi. Siin me usume, et kui katsetingimuse rakendamine (näiteks ravimi manustamine) mõjutab mingis kindlas suunas katse väljundit (näiteks suremust), ja seda võrreldes kontrolltingimusega (näiteks platseeboga), siis me oleme näidanud, et vastav ravim vähendab suremust. Seega on meie põhjuslik skeem ravim --> suremus ja regressioonimudel suremus~ravim, mis sisuliselt taandub kahe grupi keskmiste suremuste võrdlusele.
+Kõige lihtsam selline mudel vastab randomiseeritud eksperimendile, kus me võrdleme katse- ja kontrolltingimust. Siin me usume, et kui katsetingimus (ravimi manustamine) mõjutab võrreldes kontrolltingimusega (platseeboga) katse väljundit (suremust), siis me oleme näidanud, et vastav ravim vähendab suremust. Seega on meie põhjuslik skeem ravim --> suremus ja regressioonimudel suremus~ravim, mis sisuliselt taandub kahe grupi keskmiste suremuste võrdlusele.
 
-Kuidas on aga asjalood siis, kui meil ei lubata katset teha? Näiteks, kuidas määrata suitsetamise mõju kopsuvähile? Siin ei ole meil tegemist randomiseeritud katsega (me ei tohi jagada populatsiooni juhuslikult kahte gruppi ja sundida neist ühte suitsetama). Seega peame kasutama statistilisi meetodeid, et kontrollida oma tulemust nn confounderite vastu. Siin on lihtsaim võimalus regressioonimudel vähk ~ suitsetamine + muutuja_1 + ...
+Kuidas on aga asjalood siis, kui meil ei lubata katset teha? Näiteks, kuidas määrata suitsetamise mõju kopsuvähile? Siin ei ole meil tegemist randomiseeritud katsega (me ei tohi jagada populatsiooni juhuslikult kahte gruppi ja sundida neist ühte suitsetama). Seega peame kasutama statistilisi meetodeid, et kontrollida oma tulemust nn confounderite vastu. Siin on lihtsaim regressioonimudel vähk ~ suitsetamine + muutuja_1 + ...
 
-Aga muutujaid on maailmas palju ja meil peab olema mingi reegel, mille järgi otsustada, millised muutujad additiivsesse mudelisse sisse panna ja millised välja jätta. Mudeli ennustusjõu maksimeerimine siin ei aita. Selle asemel peame mõistma võimalike põhjuslike skeemide suhet mitmese regressioonimudelitega. Põhjuslikud skeemid on nagu legod, mis koosnevad järgmistest põhiosistest e ehitusplokkidest.
+Aga muutujaid on maailmas palju ja meil peab olema mingi reegel, mille järgi otsustada, millised neist additiivsesse mudelisse sisse panna ja millised välja jätta. Mudeli ennustusjõu maksimeerimine siin ei aita. Selle asemel peame mõistma võimalike põhjuslike skeemide suhet mitmese regressioonimudelitega. Põhjuslikud skeemid on nagu legod, mis kombineerivad endis nelja loogiliselt võimalikku ehitusplokki. 
+
+
+
 
 1. toru: x --> z --> y
 
+
+```
+#> Warning: Prefixing `UQ()` with the rlang namespace is deprecated as of rlang 0.3.0.
+#> Please use the non-prefixed form or `!!` instead.
+#> 
+#>   # Bad:
+#>   rlang::expr(mean(rlang::UQ(var) * 100))
+#> 
+#>   # Ok:
+#>   rlang::expr(mean(UQ(var) * 100))
+#> 
+#>   # Good:
+#>   rlang::expr(mean(!!var * 100))
+#> 
+#> This warning is displayed once per session.
+```
+
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-19-1} 
+
+Kui me tahame teada, kas x (põhjus) mõjutab y-t (tagajärge), siis toru puhul mudel $tagajärg \sim põhjus + z$ vähendab x-i mõju (sest see mõju käib läbi z-i). Samas, mudel $tagajärg \sim põhjus$ näitab x-i mõju. Seega, kumba mudelit kasutada sõltub sellest, kas me tahame näidata x-i otsest või kaudset mõju y-ile.
+
+Järgnev skeem illustreerib olukorda, kus me tahame testida rohelist otseteed põhjuse ja tagajärje vahel ja selleks peame sulgema kõrvaltee, ehk tagaukse. Tagaukse sulgemiseks konditsioneerime oma regressioonimudeli z-l, ehk lisame z-i mudelisse $tagajärg \sim põhjus + z$.
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-20-1} 
+
 2. kahvel: x <-- z --> y
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-21-1} 
+
+Kahvli puhul regressioonimudel $y \sim x$ näitab x-i mõju y-le (ehkki meie põhjuslikkuse mudelis puudub x ja y vaheline põhjuslik seos), aga mudel $y \sim x + z$ välistab selle mõju. Seega peaksime sellise põhjusliku hüpoteesi korral mudelisse z-i sisse panema, sest see aitab kontrollida z konfounding mõju vastu.
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-22-1} 
+
+Jällegi, kahvlist tagaukse sulgemiseks lisame z-i oma mudelisse $tagajärg \sim põhjus + z$.
+
 
 3. laupkokkupõrge: x --> z <-- y
 
-4. järglane: see on toru, kus z-i juurest hargneb veel üks nool A-le. Siin saame me mudelisse A lisades ligikaudu sama tulemuse, mis z-i lisades. Seega, kui z-i väärtused pole meile teada, võime hädaga ka A-d kasutada.
 
-Kui me tahame teada, kas x mõjutab y-t, siis toru puhul mudel $y ~ x + z$ vähendab x-i mõju (sest see mõju käib läbi z-i). Samas, mudel $y ~ x$ näitab x-i mõju. Seega, kumba mudelit kasutada sõltub sellest, kas me tahame näidata x-i otsest või kaudset mõju y-ile.
-
-Kahvli puhul regressioonimudel $y ~ x$ näitab x-i mõju y-le (ehkki meie põhjuslikkuse mudelis puudub x ja y vaheline põhjuslik seos), aga mudel $y ~ x + z$ välistab selle mõju. Seega peaksime sellise põhjusliku hüpoteesi korral mudelisse z-i sisse panema, sest see aitab kontrollida z konfounding mõju vastu.
+\begin{center}\includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-23-1} 
 
 Laupkokkupõrke korral on olukord eelnevaga vastupidine. Nüüd avab mudel $y ~ x + z$ tagaukse ja laseb z-i segava mõju mudelisse sisse, mis tekitab meile võlts-põhjusliku suhte x ja y vahel.
 
-Näiteks võib meil tekkid olukord, kus testime suitsetamise mõju vähile, aga me usume, et inimeste vanus mõjutab iseseisvalt nii vähki kui suitsetamist (vanemad inimesed surevad rohkem, aga nad ka suitsetavad rohkem). Selles põhjuslikus skeemis töötab vanus kahvlina, millega arvestamiseks tuleb see regressioonimudelisse muutujana sisse panna: vähk ~ suitsetamine + vanus.
+
+\begin{center}\includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-24-1} 
+
+Laupkokkupõrke korral on tagauks suletud senikaua, kui me ei lisa z-i oma mudelisse.
+
+4. järglane: see on toru, kus z-i juurest hargneb veel üks nool D-le. Siin saame me mudelisse A lisades ligikaudu sama tulemuse, mis z-i lisades. Seega, kui z-i väärtused pole meile teada, võime hädaga ka A-d kasutada.
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-25-1} 
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-26-1} 
+
+Järglasest tagaukse võib sulgeda nii z-i (eelistatult) kui D (kui z on küll maailmas olemas, kuid puudub meie andmetest) mudelisse lisamise kaudu, aga ehk pole mõtet lisada mõlemat, sest z ja D võivad olla tugevalt kollineaarsed ehk omavahel korreleeritud.
+
+Näiteks võib meil tekkid olukord, kus testime suitsetamise mõju vähile, aga ühtlsi usume, et inimeste elukoht mõjutab iseseisvalt nii vähki kui suitsetamist (tööstuslinnades haigestuvad ka mittesuitsetajad enam vähki, aga neis elav töölisklass ka suitsetab rohkem). Selles põhjuslikus skeemis töötab vanus kahvlina, millega arvestamiseks tuleb see regressioonimudelisse muutujana sisse panna: $vähk \sim suits + vanus$.
 
 
 
+\begin{center}\includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-27-1} 
 
+Ja lõpuks tähtis tähelepanek, et meie põhjuslikes skeemides mängivad oma rolli ka need muutujad, mida me mõõtnud ei ole. Me usume, et isade (ja emade) haridustase on põhjuslikus seoses nende laste haridustasemega (isa --> laps).  Oletame, et tahame uurida põhjuslikku hüpoteesi, mille kohaselt ka vanaisa haridustase mõjutab otseselt nende lapselaste haridustaset (vanaisa --> laps). Aga loomulikult usume me ka, et vanaisa haridustase mõjutab tema laste haridustaset (vanaisa --> isa). Seega saame loogilise skeemi torukujulise tagauksega, mille sulgemiseks peame fittima mudeli $laps \sim vanaisa + isa$ 
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-28-1} 
+
+Aga mõtleme enne korra järele. Me ei oma küll andmeid oma andmestikus olevate inimeste elukohtade kohta, aga see on ikkagi tähtis. Nimelt elavad isad üldiselt koos oma lastega, aga lahus vanaisadest. Ja osad elukohad (näiteks ülikoolilinnad ja ooperiteatrite lähipiirkonnad) võivad mõjuda soodsalt hariduse omandamisele, samas kui teised piirkonnad võivad seda pärssida. Seega täiendame oma põhjuslikkusemudelit:
+
+\begin{center}\includegraphics[width=0.7\linewidth]{04_lineaarsed_mudelid_files/figure-latex/unnamed-chunk-29-1} 
+
+Siin on küsimärgiga tähistatud muutuja, mida ei ole (elukoht). Selles mudelis tekkib laupkokkupõrge vanaisa --> isa <-- ?, ja kui me isa mudelisse paneme, et sulgeda toru vanaisa --> isa --> laps, siis avame sellega uue tagaukse. Siin ei paistagi tagauste sulgemiseks muud lahendust kui mudel $laps \sim vanaisa + ?$, aga selle fittimiseks peame me küsimärgi asendama elukohaga, ehk kätte saama elukohaandmed ja need muutujana oma andmestikku panema. Seega lähevad ka meile kättesaamatud andmed põhjuslikku mudelisse sisse, ja ka neist sõltub, kas meil on üldse mõtet regressioonimudelit fittima hakata.

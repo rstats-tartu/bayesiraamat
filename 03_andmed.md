@@ -101,13 +101,13 @@ multiplicative_sd(andmed) %>% knitr::kable()
 \hline
 SD & MEAN & lower & upper\\
 \hline
-multiplicative\_SD & 0.939 & 0.375 & 2.36\\
+multiplicative\_SD & 1.10 & 0.351 & 3.47\\
 \hline
-multiplicative\_2\_SD & 0.939 & 0.149 & 5.91\\
+multiplicative\_2\_SD & 1.10 & 0.112 & 10.90\\
 \hline
-additive\_SD & 1.448 & -0.146 & 3.04\\
+additive\_SD & 2.07 & -0.714 & 4.85\\
 \hline
-additive\_2\_SD & 1.448 & -1.740 & 4.64\\
+additive\_2\_SD & 2.07 & -3.496 & 7.63\\
 \hline
 \end{tabular}
 
@@ -149,7 +149,7 @@ qqPlot(andmed)
 ![(\#fig:qqnorm)(ref:qqnorm)](03_andmed_files/figure-latex/qqnorm-1.pdf) 
 
 ```
-#> [1] 66 65
+#> [1] 47  2
 ```
 
 Nüüd joonistame qq-ploti logaritmitud andmetele. 
@@ -164,7 +164,7 @@ qqPlot(log(andmed))
 ![(\#fig:qqlognorm)(ref:qqlognorm)](03_andmed_files/figure-latex/qqlognorm-1.pdf) 
 
 ```
-#> [1] 66 65
+#> [1] 47 37
 ```
 
 Pole kahtlust, andmed on logaritmitud kujul normaaljaotusega.
@@ -182,17 +182,17 @@ Lognormaalsete andmetega:
 
 ```r
 mad(andmed, constant = 1); sd(andmed); mad(andmed)
-#> [1] 0.522
-#> [1] 1.59
-#> [1] 0.774
+#> [1] 0.741
+#> [1] 2.78
+#> [1] 1.1
 ```
 
 
 ```r
 mad(log10(andmed), constant = 1); sd(log10(andmed)); mad(log10(andmed))
-#> [1] 0.275
-#> [1] 0.399
-#> [1] 0.408
+#> [1] 0.322
+#> [1] 0.497
+#> [1] 0.477
 ```
 
 mad = median(abs(median(x) - x)), mida on väga lihtne mõista. Samas R-i funktsioon mad() korrutab default-ina mad-i läbi konstandiga 1.4826, mis muudab mad()-i tulemuse võrreldavaks sd-ga, tehes sellest sd robustse analoogi. Robustse sellepärast, et mad-i arvutuskäik, mis sõltub mediaanist, mitte aritmeetilisest keskmisest, ei ole tundlik outlierite suhtes. Seega, kui tahate arvutada mad-i, siis fikseerige mad() funktsioonis argument *constant* ühele.
@@ -207,7 +207,7 @@ Funktsioon quantile võimaldab valida, milliseid kvantiile soovite näha. Järgn
 ```r
 quantile(andmed, c(0.025, 0.25, 0.5, 0.75, 0.95))
 #>  2.5%   25%   50%   75%   95% 
-#> 0.194 0.471 0.935 1.634 4.488
+#> 0.123 0.546 1.116 2.341 8.016
 ```
 
 
