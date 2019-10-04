@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>16 Lihtne normaaljaotuse mudel | Bayesi statistika kasutades R keelt</title>
+  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="16 Lihtne normaaljaotuse mudel | Bayesi statistika kasutades R keelt" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="img/cyclo.png" />
+  <meta property="og:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
+  <meta name="github-repo" content="rstats-tartu/bayesiraamat" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="16 Lihtne normaaljaotuse mudel | Bayesi statistika kasutades R keelt" />
+  
+  <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
+  <meta name="twitter:image" content="img/cyclo.png" />
+
+<meta name="author" content="Taavi Päll" />
+<meta name="author" content="Ülo Maiväli" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="mcmc-pohimote.html">
+<link rel="next" href="bayesi-meetodil-lineaarse-mudeli-fittimine.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
+
+<script src="https://use.fontawesome.com/e4ba4259a1.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bayesi statistika kasutades R keelt</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Saateks</a></li>
+<li class="part"><span><b>I OSA</b></span></li>
+<li class="chapter" data-level="1" data-path="sissejuhatus-maailm-teooria-ja-mudel.html"><a href="sissejuhatus-maailm-teooria-ja-mudel.html"><i class="fa fa-check"></i><b>1</b> Sissejuhatus: maailm, teooria ja mudel</a><ul>
+<li class="chapter" data-level="" data-path="sissejuhatus-maailm-teooria-ja-mudel.html"><a href="sissejuhatus-maailm-teooria-ja-mudel.html#suur-ja-vaike-maailm"><i class="fa fa-check"></i>Suur ja väike maailm</a></li>
+<li class="chapter" data-level="" data-path="sissejuhatus-maailm-teooria-ja-mudel.html"><a href="sissejuhatus-maailm-teooria-ja-mudel.html#mudeli-vaike-maailm"><i class="fa fa-check"></i>Mudeli väike maailm</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="kusimused-mida-statistika-kusib.html"><a href="kusimused-mida-statistika-kusib.html"><i class="fa fa-check"></i><b>2</b> Küsimused, mida statistika küsib</a><ul>
+<li class="chapter" data-level="" data-path="kusimused-mida-statistika-kusib.html"><a href="kusimused-mida-statistika-kusib.html#jata-meelde"><i class="fa fa-check"></i>Jäta meelde</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="kuidas-naevad-valja-teie-andmed.html"><a href="kuidas-naevad-valja-teie-andmed.html"><i class="fa fa-check"></i><b>3</b> Kuidas näevad välja teie andmed</a><ul>
+<li class="chapter" data-level="" data-path="kuidas-naevad-valja-teie-andmed.html"><a href="kuidas-naevad-valja-teie-andmed.html#summaarsed-statistikud"><i class="fa fa-check"></i>Summaarsed statistikud</a></li>
+<li class="chapter" data-level="" data-path="kuidas-naevad-valja-teie-andmed.html"><a href="kuidas-naevad-valja-teie-andmed.html#keskvaartused"><i class="fa fa-check"></i>Keskväärtused</a></li>
+<li class="chapter" data-level="" data-path="kuidas-naevad-valja-teie-andmed.html"><a href="kuidas-naevad-valja-teie-andmed.html#muutuja-sisene-varieeruvus"><i class="fa fa-check"></i>Muutuja sisene varieeruvus</a></li>
+<li class="chapter" data-level="" data-path="kuidas-naevad-valja-teie-andmed.html"><a href="kuidas-naevad-valja-teie-andmed.html#logaritmi-andmed"><i class="fa fa-check"></i>Logaritmi andmed</a></li>
+<li class="chapter" data-level="" data-path="kuidas-naevad-valja-teie-andmed.html"><a href="kuidas-naevad-valja-teie-andmed.html#iseloomusta-andmeid-algses-skaalas-mediaan-mad"><i class="fa fa-check"></i>Iseloomusta andmeid algses skaalas: mediaan (MAD)</a></li>
+<li class="chapter" data-level="" data-path="kuidas-naevad-valja-teie-andmed.html"><a href="kuidas-naevad-valja-teie-andmed.html#muutujate-koosvarieeruvus"><i class="fa fa-check"></i>Muutujate koosvarieeruvus</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html"><i class="fa fa-check"></i><b>4</b> Lineaarsed mudelid</a><ul>
+<li class="chapter" data-level="4.1" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#sirge-vorrand"><i class="fa fa-check"></i><b>4.1</b> Sirge võrrand</a></li>
+<li class="chapter" data-level="4.2" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#ennustus-lineaarsest-mudelist"><i class="fa fa-check"></i><b>4.2</b> Ennustus lineaarsest mudelist</a></li>
+<li class="chapter" data-level="4.3" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#neli-moistet"><i class="fa fa-check"></i><b>4.3</b> Neli mõistet</a></li>
+<li class="chapter" data-level="4.4" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#mudeli-fittimine"><i class="fa fa-check"></i><b>4.4</b> Mudeli fittimine</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#ule--ja-alafittimine"><i class="fa fa-check"></i><b>4.4.1</b> Üle- ja alafittimine</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#lineaarse-regressiooni-eeldused"><i class="fa fa-check"></i><b>4.5</b> Lineaarse regressiooni eeldused</a><ul>
+<li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#matemaatilised-eeldused"><i class="fa fa-check"></i>Matemaatilised eeldused:</a></li>
+<li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#eeldused-praktilise-tahtsuse-jarjekorras"><i class="fa fa-check"></i>Eeldused praktilise tähtsuse järjekorras:</a></li>
+<li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#regressioon-kui-kirjeldus-ja-kui-pohjuslik-hupotees"><i class="fa fa-check"></i>Regressioon kui kirjeldus ja kui põhjuslik hüpotees</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="kaks-lineaarse-mudeli-laiendust.html"><a href="kaks-lineaarse-mudeli-laiendust.html"><i class="fa fa-check"></i><b>5</b> Kaks lineaarse mudeli laiendust</a><ul>
+<li class="chapter" data-level="5.1" data-path="kaks-lineaarse-mudeli-laiendust.html"><a href="kaks-lineaarse-mudeli-laiendust.html#mitme-soltumatu-prediktoriga-mudel"><i class="fa fa-check"></i><b>5.1</b> Mitme sõltumatu prediktoriga mudel</a><ul>
+<li class="chapter" data-level="" data-path="kaks-lineaarse-mudeli-laiendust.html"><a href="kaks-lineaarse-mudeli-laiendust.html#ennustused-soltumatute-prediktoritega-mudelist"><i class="fa fa-check"></i>Ennustused sõltumatute prediktoritega mudelist</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="kaks-lineaarse-mudeli-laiendust.html"><a href="kaks-lineaarse-mudeli-laiendust.html#interaktsioonimudel"><i class="fa fa-check"></i><b>5.2</b> Interaktsioonimudel</a><ul>
+<li class="chapter" data-level="" data-path="kaks-lineaarse-mudeli-laiendust.html"><a href="kaks-lineaarse-mudeli-laiendust.html#ennustused-interaktsioonimudelist"><i class="fa fa-check"></i>Ennustused interaktsioonimudelist</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><i class="fa fa-check"></i><b>6</b> Vähimruutude meetodiga fititud mudelite töövoog – lm()</a><ul>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#vaatame-mudeli-koefitsiente"><i class="fa fa-check"></i>1. vaatame mudeli koefitsiente</a></li>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#testime-mudeli-eeldusi"><i class="fa fa-check"></i>2. Testime mudeli eeldusi</a><ul>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#lineaarsus---residuaalidfitted-plot"><i class="fa fa-check"></i>Lineaarsus - residuaalid~fitted plot</a></li>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#mojukuse-plot"><i class="fa fa-check"></i>Mõjukuse plot</a></li>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#residuaalide-normaalsus---qq-plot"><i class="fa fa-check"></i>Residuaalide normaalsus - qq plot</a></li>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#homoskedastilisus---scale-location-plot"><i class="fa fa-check"></i>Homoskedastilisus - Scale-location plot</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#residuaalid-y-ja-x-muutujate-vastu"><i class="fa fa-check"></i>Residuaalid y ja x muutujate vastu</a></li>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#teeme-mudeli-pohjal-ennustusi-marginal-plots"><i class="fa fa-check"></i>3. Teeme mudeli põhjal ennustusi (marginal plots)</a></li>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#vordleme-mudeleid"><i class="fa fa-check"></i>4. Võrdleme mudeleid</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html"><i class="fa fa-check"></i><b>7</b> Andmete transformeerimine</a><ul>
+<li class="chapter" data-level="7.1" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#logaritmimine"><i class="fa fa-check"></i><b>7.1</b> Logaritmimine</a><ul>
+<li class="chapter" data-level="" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#miks-ja-millal-muutujaid-logaritmida"><i class="fa fa-check"></i>Miks ja millal muutujaid logaritmida</a></li>
+<li class="chapter" data-level="" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#naturaallogaritmitud-andmetega-tootamine"><i class="fa fa-check"></i>Naturaallogaritmitud andmetega töötamine</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#standardiseerimine"><i class="fa fa-check"></i><b>7.2</b> Standardiseerimine</a><ul>
+<li class="chapter" data-level="" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#korrelatsioon-ule-regressiooni-ja-regressioon-keskmisele"><i class="fa fa-check"></i>Korrelatsioon üle regressiooni ja regressioon keskmisele</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#tsentreerimine"><i class="fa fa-check"></i><b>7.3</b> Tsentreerimine</a></li>
+<li class="chapter" data-level="7.4" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#mudeli-koefitsientide-transformeerimine"><i class="fa fa-check"></i><b>7.4</b> Mudeli koefitsientide transformeerimine</a></li>
+<li class="chapter" data-level="7.5" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#pidev-voi-diskreetne-muutuja"><i class="fa fa-check"></i><b>7.5</b> Pidev või diskreetne muutuja?</a></li>
+<li class="chapter" data-level="7.6" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#mitmese-regressiooni-uldised-printsiibid"><i class="fa fa-check"></i><b>7.6</b> mitmese regressiooni üldised printsiibid</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="veamudel.html"><a href="veamudel.html"><i class="fa fa-check"></i><b>8</b> Veamudel</a><ul>
+<li class="chapter" data-level="8.1" data-path="veamudel.html"><a href="veamudel.html#lihtne-varieeruvuse-mudel"><i class="fa fa-check"></i><b>8.1</b> Lihtne varieeruvuse mudel</a></li>
+<li class="chapter" data-level="8.2" data-path="veamudel.html"><a href="veamudel.html#protsessimudel-ja-varieeruvuse-mudel-lineaarses-regressioonis"><i class="fa fa-check"></i><b>8.2</b> protsessimudel ja varieeruvuse mudel lineaarses regressioonis</a></li>
+<li class="chapter" data-level="" data-path="veamudel.html"><a href="veamudel.html#enimkasutatud-veamudel-on-normaaljaotus"><i class="fa fa-check"></i>Enimkasutatud veamudel on normaaljaotus</a><ul>
+<li class="chapter" data-level="" data-path="veamudel.html"><a href="veamudel.html#normaaljaotuse-mudel-vaikestel-valimitel"><i class="fa fa-check"></i>Normaaljaotuse mudel väikestel valimitel</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="veamudel.html"><a href="veamudel.html#normaaljaotuse-ja-lognormaaljaotuse-erilisus"><i class="fa fa-check"></i>Normaaljaotuse ja lognormaaljaotuse erilisus</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="veamudel.html"><a href="veamudel.html#normaaljaotuse-ja-lognormaaljaotuse-vordlus"><i class="fa fa-check"></i><b>8.2.1</b> Normaaljaotuse ja lognormaaljaotuse võrdlus</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="veamudel.html"><a href="veamudel.html#teised-veamudelid"><i class="fa fa-check"></i><b>8.3</b> Teised veamudelid</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="veamudel.html"><a href="veamudel.html#lognormaaljaotus"><i class="fa fa-check"></i><b>8.3.1</b> Lognormaaljaotus</a></li>
+<li class="chapter" data-level="8.3.2" data-path="veamudel.html"><a href="veamudel.html#binoomjaotus"><i class="fa fa-check"></i><b>8.3.2</b> Binoomjaotus</a></li>
+<li class="chapter" data-level="8.3.3" data-path="veamudel.html"><a href="veamudel.html#poissoni-jaotus"><i class="fa fa-check"></i><b>8.3.3</b> Poissoni jaotus</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="eda-eksploratoorne-andmeanaluus.html"><a href="eda-eksploratoorne-andmeanaluus.html"><i class="fa fa-check"></i><b>9</b> EDA — eksploratoorne andmeanalüüs</a><ul>
+<li class="chapter" data-level="9.1" data-path="eda-eksploratoorne-andmeanaluus.html"><a href="eda-eksploratoorne-andmeanaluus.html#eda-kokkuvote"><i class="fa fa-check"></i><b>9.1</b> EDA kokkuvõte</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="lausearvutuslik-loogika.html"><a href="lausearvutuslik-loogika.html"><i class="fa fa-check"></i><b>10</b> Lausearvutuslik loogika</a><ul>
+<li class="chapter" data-level="10.1" data-path="lausearvutuslik-loogika.html"><a href="lausearvutuslik-loogika.html#toetabel"><i class="fa fa-check"></i><b>10.1</b> Tõetabel</a></li>
+<li class="chapter" data-level="10.2" data-path="lausearvutuslik-loogika.html"><a href="lausearvutuslik-loogika.html#konjunktsioon"><i class="fa fa-check"></i><b>10.2</b> Konjunktsioon</a></li>
+<li class="chapter" data-level="10.3" data-path="lausearvutuslik-loogika.html"><a href="lausearvutuslik-loogika.html#disjunktsioon"><i class="fa fa-check"></i><b>10.3</b> Disjunktsioon</a></li>
+<li class="chapter" data-level="10.4" data-path="lausearvutuslik-loogika.html"><a href="lausearvutuslik-loogika.html#konditsionaal"><i class="fa fa-check"></i><b>10.4</b> Konditsionaal</a></li>
+<li class="chapter" data-level="10.5" data-path="lausearvutuslik-loogika.html"><a href="lausearvutuslik-loogika.html#tautoloogia-ja-kontradiktsioon"><i class="fa fa-check"></i><b>10.5</b> Tautoloogia ja kontradiktsioon</a></li>
+<li class="chapter" data-level="10.6" data-path="lausearvutuslik-loogika.html"><a href="lausearvutuslik-loogika.html#loogiline-argument-ja-valiidne-jareldamine"><i class="fa fa-check"></i><b>10.6</b> loogiline argument ja valiidne järeldamine</a></li>
+<li class="chapter" data-level="10.7" data-path="lausearvutuslik-loogika.html"><a href="lausearvutuslik-loogika.html#modus-ponens-ja-modus-tollens"><i class="fa fa-check"></i><b>10.7</b> Modus Ponens ja Modus Tollens</a></li>
+<li class="chapter" data-level="10.8" data-path="lausearvutuslik-loogika.html"><a href="lausearvutuslik-loogika.html#lausearvutusest-toenaosuste-loogikasse"><i class="fa fa-check"></i><b>10.8</b> Lausearvutusest tõenäosuste loogikasse</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html"><i class="fa fa-check"></i><b>11</b> Järeldav statistika</a><ul>
+<li class="chapter" data-level="" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#jareldav-statistika-on-toenaosusteooria-kaepikendus"><i class="fa fa-check"></i>Järeldav statistika on tõenäosusteooria käepikendus</a><ul>
+<li class="chapter" data-level="" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#formaalsed-tuletised-toenaosusteooria-aksioomidest"><i class="fa fa-check"></i>Formaalsed tuletised tõenäosusteooria aksioomidest</a></li>
+<li class="chapter" data-level="" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#naited-toenaosusteooria-tuletiste-rakendamisest"><i class="fa fa-check"></i>Näited tõenäosusteooria tuletiste rakendamisest</a></li>
+<li class="chapter" data-level="" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#toenaosuse-episteemiline-tolgendus"><i class="fa fa-check"></i>Tõenäosuse episteemiline tõlgendus</a></li>
+<li class="chapter" data-level="" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#toenaosusteooriast-tulenevad-statistika-pohiprintsiibid"><i class="fa fa-check"></i>Tõenäosusteooriast tulenevad statistika põhiprintsiibid</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#andmed-ei-ole-sama-mis-tegelikkus"><i class="fa fa-check"></i>Andmed ei ole sama, mis tegelikkus</a></li>
+</ul></li>
+<li class="part"><span><b>II OSA</b></span></li>
+<li class="chapter" data-level="12" data-path="bootstrap.html"><a href="bootstrap.html"><i class="fa fa-check"></i><b>12</b> Bootstrap</a><ul>
+<li class="chapter" data-level="12.1" data-path="bootstrap.html"><a href="bootstrap.html#moned-tava-bootstrapi-paketid"><i class="fa fa-check"></i><b>12.1</b> Mõned tava-bootstrapi paketid</a></li>
+<li class="chapter" data-level="" data-path="bootstrap.html"><a href="bootstrap.html#bayesi-bootstrap"><i class="fa fa-check"></i>Bayesi bootstrap</a></li>
+<li class="chapter" data-level="" data-path="bootstrap.html"><a href="bootstrap.html#parameetriline-bootstrap"><i class="fa fa-check"></i>Parameetriline bootstrap</a></li>
+<li class="chapter" data-level="" data-path="bootstrap.html"><a href="bootstrap.html#bootstrappimine-ei-ole-kogu-tode"><i class="fa fa-check"></i>Bootstrappimine ei ole kogu tõde</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="bayesi-pohimote.html"><a href="bayesi-pohimote.html"><i class="fa fa-check"></i><b>13</b> Bayesi põhimõte</a><ul>
+<li class="chapter" data-level="" data-path="bayesi-pohimote.html"><a href="bayesi-pohimote.html#esimene-naide"><i class="fa fa-check"></i>Esimene näide</a></li>
+<li class="chapter" data-level="" data-path="bayesi-pohimote.html"><a href="bayesi-pohimote.html#teine-naide-sonastame-oma-probleemi-umber"><i class="fa fa-check"></i>Teine näide: sõnastame oma probleemi ümber</a></li>
+<li class="chapter" data-level="" data-path="bayesi-pohimote.html"><a href="bayesi-pohimote.html#kui-n-1"><i class="fa fa-check"></i>Kui n = 1</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="mudelite-keel.html"><a href="mudelite-keel.html"><i class="fa fa-check"></i><b>14</b> Mudelite keel</a><ul>
+<li class="chapter" data-level="" data-path="mudelite-keel.html"><a href="mudelite-keel.html#beta-prior"><i class="fa fa-check"></i>Beta prior</a></li>
+<li class="chapter" data-level="" data-path="mudelite-keel.html"><a href="mudelite-keel.html#prioritest-uldiselt"><i class="fa fa-check"></i>Prioritest üldiselt</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="mcmc-pohimote.html"><a href="mcmc-pohimote.html"><i class="fa fa-check"></i><b>15</b> MCMC põhimõte</a></li>
+<li class="chapter" data-level="16" data-path="lihtne-normaaljaotuse-mudel.html"><a href="lihtne-normaaljaotuse-mudel.html"><i class="fa fa-check"></i><b>16</b> Lihtne normaaljaotuse mudel</a><ul>
+<li class="chapter" data-level="" data-path="lihtne-normaaljaotuse-mudel.html"><a href="lihtne-normaaljaotuse-mudel.html#kui-lai-on-meie-toeparafunktsioon"><i class="fa fa-check"></i>Kui lai on meie tõepärafunktsioon?</a></li>
+<li class="chapter" data-level="" data-path="lihtne-normaaljaotuse-mudel.html"><a href="lihtne-normaaljaotuse-mudel.html#lihtne-voi-robustne-normaalne-mudel"><i class="fa fa-check"></i>Lihtne või robustne normaalne mudel?</a></li>
+<li class="chapter" data-level="" data-path="lihtne-normaaljaotuse-mudel.html"><a href="lihtne-normaaljaotuse-mudel.html#mcmc-ahelate-kvaliteet"><i class="fa fa-check"></i>MCMC ahelate kvaliteet</a><ul>
+<li class="chapter" data-level="" data-path="lihtne-normaaljaotuse-mudel.html"><a href="lihtne-normaaljaotuse-mudel.html#naide-usa-presidentide-keskmine-pikkus"><i class="fa fa-check"></i>Näide: USA presidentide keskmine pikkus</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="lihtne-normaaljaotuse-mudel.html"><a href="lihtne-normaaljaotuse-mudel.html#lineaarne-regressioon"><i class="fa fa-check"></i>Lineaarne regressioon</a></li>
+<li><a href="lihtne-normaaljaotuse-mudel.html#lm---vahimruutude-meetodiga-fititud-lineaarsed-mudelid"><code>lm()</code> - vähimruutude meetodiga fititud lineaarsed mudelid</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="bayesi-meetodil-lineaarse-mudeli-fittimine.html"><a href="bayesi-meetodil-lineaarse-mudeli-fittimine.html"><i class="fa fa-check"></i><b>17</b> Bayesi meetodil lineaarse mudeli fittimine</a><ul>
+<li class="chapter" data-level="" data-path="bayesi-meetodil-lineaarse-mudeli-fittimine.html"><a href="bayesi-meetodil-lineaarse-mudeli-fittimine.html#ennustused-mudelist"><i class="fa fa-check"></i>Ennustused mudelist</a></li>
+<li class="chapter" data-level="" data-path="bayesi-meetodil-lineaarse-mudeli-fittimine.html"><a href="bayesi-meetodil-lineaarse-mudeli-fittimine.html#lognormaalne-toeparamudel"><i class="fa fa-check"></i>Lognormaalne tõepäramudel</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="mitme-prediktoriga-lineaarne-regressioon.html"><a href="mitme-prediktoriga-lineaarne-regressioon.html"><i class="fa fa-check"></i><b>18</b> Mitme prediktoriga lineaarne regressioon</a><ul>
+<li class="chapter" data-level="" data-path="mitme-prediktoriga-lineaarne-regressioon.html"><a href="mitme-prediktoriga-lineaarne-regressioon.html#miks-multivariaatsed-mudelid-head-on"><i class="fa fa-check"></i>Miks multivariaatsed mudelid head on?</a></li>
+<li class="chapter" data-level="" data-path="mitme-prediktoriga-lineaarne-regressioon.html"><a href="mitme-prediktoriga-lineaarne-regressioon.html#mudeldamine-standardiseeritud-andmetega"><i class="fa fa-check"></i>Mudeldamine standardiseeritud andmetega</a></li>
+<li class="chapter" data-level="18.1" data-path="mitme-prediktoriga-lineaarne-regressioon.html"><a href="mitme-prediktoriga-lineaarne-regressioon.html#prediktorite-valik-e-milline-on-parim-mudel"><i class="fa fa-check"></i><b>18.1</b> Prediktorite valik e milline on parim mudel</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html"><i class="fa fa-check"></i><b>19</b> Keerulisemate mudelitega töötamine</a><ul>
+<li class="chapter" data-level="" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html#predictor-residual-plots"><i class="fa fa-check"></i>Predictor residual plots</a></li>
+<li class="chapter" data-level="" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html#ennustavad-plotid"><i class="fa fa-check"></i>Ennustavad plotid</a></li>
+<li class="chapter" data-level="" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html#posterior-prediction-plots"><i class="fa fa-check"></i>Posterior prediction plots</a></li>
+<li class="chapter" data-level="" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html#interaktsioonid-prediktorite-vahel"><i class="fa fa-check"></i>Interaktsioonid prediktorite vahel</a></li>
+<li class="chapter" data-level="" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html#interaktsioonid-pidevatele-tunnustele"><i class="fa fa-check"></i>Interaktsioonid pidevatele tunnustele</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html"><i class="fa fa-check"></i><b>20</b> Mitmetasemelised mudelid</a><ul>
+<li class="chapter" data-level="20.1" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#kahetasemeline-mudel-algebra-keeles"><i class="fa fa-check"></i><b>20.1</b> kahetasemeline mudel algebra keeles</a><ul>
+<li class="chapter" data-level="20.1.1" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#aegread"><i class="fa fa-check"></i><b>20.1.1</b> Aegread</a></li>
+<li class="chapter" data-level="20.1.2" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#temporaalne-autokorrelatsioon"><i class="fa fa-check"></i><b>20.1.2</b> Temporaalne autokorrelatsioon</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeline-mudel-r-i-mudelikeeles"><i class="fa fa-check"></i><b>20.2</b> mitmetasemeline mudel R-i mudelikeeles</a></li>
+<li class="chapter" data-level="20.3" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeliste-mudelite-lisaeeldused"><i class="fa fa-check"></i><b>20.3</b> Mitmetasemeliste mudelite lisaeeldused</a></li>
+<li class="chapter" data-level="20.4" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeline-mudel-tootab-korraga-mitmel-tasmel"><i class="fa fa-check"></i><b>20.4</b> Mitmetasemeline mudel töötab korraga mitmel tasmel</a><ul>
+<li class="chapter" data-level="" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#shrinkage"><i class="fa fa-check"></i>Shrinkage</a></li>
+</ul></li>
+<li class="chapter" data-level="20.5" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#anova-laadne-mudel"><i class="fa fa-check"></i><b>20.5</b> ANOVA-laadne mudel</a></li>
+<li class="chapter" data-level="20.6" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#vabad-interceptid-klassikalises-regressioonimudelis"><i class="fa fa-check"></i><b>20.6</b> Vabad interceptid klassikalises regressioonimudelis</a></li>
+<li class="chapter" data-level="20.7" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#vabad-tousud-ja-interceptid"><i class="fa fa-check"></i><b>20.7</b> Vabad tõusud ja interceptid</a></li>
+<li class="chapter" data-level="20.8" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#hierarhiline-mudel-pidevate-prediktoritega"><i class="fa fa-check"></i><b>20.8</b> Hierarhiline mudel pidevate prediktoritega</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="brms.html"><a href="brms.html"><i class="fa fa-check"></i><b>21</b> brms</a><ul>
+<li class="chapter" data-level="21.1" data-path="brms.html"><a href="brms.html#brms-i-toovoog"><i class="fa fa-check"></i><b>21.1</b> brms-i töövoog</a><ul>
+<li class="chapter" data-level="21.1.1" data-path="brms.html"><a href="brms.html#kiire-toovoog"><i class="fa fa-check"></i><b>21.1.1</b> Kiire töövoog</a></li>
+<li class="chapter" data-level="21.1.2" data-path="brms.html"><a href="brms.html#pohjalikum-toovoog"><i class="fa fa-check"></i><b>21.1.2</b> Põhjalikum töövoog</a></li>
+<li class="chapter" data-level="21.1.3" data-path="brms.html"><a href="brms.html#spetsifitseerime-mudeli-vaatame-ja-muudame-vaikeprioreid"><i class="fa fa-check"></i><b>21.1.3</b> Spetsifitseerime mudeli, vaatame ja muudame vaikeprioreid</a></li>
+<li class="chapter" data-level="21.1.4" data-path="brms.html"><a href="brms.html#brm-funktsiooni-argumendid"><i class="fa fa-check"></i><b>21.1.4</b> <code>brm()</code> funktsiooni argumendid:</a></li>
+<li class="chapter" data-level="21.1.5" data-path="brms.html"><a href="brms.html#fitime-mudeleid-ja-vordleme-fitte."><i class="fa fa-check"></i><b>21.1.5</b> Fitime mudeleid ja võrdleme fitte.</a></li>
+<li class="chapter" data-level="21.1.6" data-path="brms.html"><a href="brms.html#vaatame-mudelite-kokkuvotet"><i class="fa fa-check"></i><b>21.1.6</b> Vaatame mudelite kokkuvõtet</a></li>
+<li class="chapter" data-level="21.1.7" data-path="brms.html"><a href="brms.html#plotime-posteeriorid-ja-ahelad"><i class="fa fa-check"></i><b>21.1.7</b> Plotime posteeriorid ja ahelad</a></li>
+<li class="chapter" data-level="21.1.8" data-path="brms.html"><a href="brms.html#korjame-ahelad-andmeraami-ja-plotime-fititud-koefitsiendid-ci-dega"><i class="fa fa-check"></i><b>21.1.8</b> Korjame ahelad andmeraami ja plotime fititud koefitsiendid CI-dega</a></li>
+<li class="chapter" data-level="21.1.9" data-path="brms.html"><a href="brms.html#bayesi-versioon-r-ruudust"><i class="fa fa-check"></i><b>21.1.9</b> Bayesi versioon R-ruudust</a></li>
+<li class="chapter" data-level="21.1.10" data-path="brms.html"><a href="brms.html#plotime-mudeli-poolt-ennustatud-valimeid-posterior-predictive-check"><i class="fa fa-check"></i><b>21.1.10</b> Plotime mudeli poolt ennustatud valimeid – posterior predictive check</a></li>
+<li class="chapter" data-level="21.1.11" data-path="brms.html"><a href="brms.html#plotime-mudeli-ennustusi---marginal-effects-plots"><i class="fa fa-check"></i><b>21.1.11</b> Plotime mudeli ennustusi - marginal effects plots</a></li>
+<li class="chapter" data-level="21.1.12" data-path="brms.html"><a href="brms.html#alternatiivne-tee"><i class="fa fa-check"></i><b>21.1.12</b> Alternatiivne tee</a></li>
+<li class="chapter" data-level="21.1.13" data-path="brms.html"><a href="brms.html#alternatiiv-ansambliennustus"><i class="fa fa-check"></i><b>21.1.13</b> Alternatiiv – ansambliennustus</a></li>
+</ul></li>
+<li class="chapter" data-level="21.2" data-path="brms.html"><a href="brms.html#mudeli-eelduste-kontroll"><i class="fa fa-check"></i><b>21.2</b> Mudeli eelduste kontroll</a><ul>
+<li class="chapter" data-level="21.2.1" data-path="brms.html"><a href="brms.html#plotime-residuaalid"><i class="fa fa-check"></i><b>21.2.1</b> Plotime residuaalid</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="brms-mudelid.html"><a href="brms-mudelid.html"><i class="fa fa-check"></i><b>22</b> Brms mudelid</a><ul>
+<li class="chapter" data-level="22.1" data-path="brms-mudelid.html"><a href="brms-mudelid.html#robustne-lineaarne-regressioon"><i class="fa fa-check"></i><b>22.1</b> Robustne lineaarne regressioon</a></li>
+<li class="chapter" data-level="22.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#lognormaalne-toeparafunktsioon"><i class="fa fa-check"></i><b>22.2</b> lognormaalne tõepärafunktsioon</a></li>
+<li class="chapter" data-level="22.3" data-path="brms-mudelid.html"><a href="brms-mudelid.html#puuduvate-andmete-imputatsioon"><i class="fa fa-check"></i><b>22.3</b> Puuduvate andmete imputatsioon</a><ul>
+<li class="chapter" data-level="" data-path="brms-mudelid.html"><a href="brms-mudelid.html#imputatsioon-otse-brms-is"><i class="fa fa-check"></i>Imputatsioon otse brms-is</a></li>
+</ul></li>
+<li class="chapter" data-level="22.4" data-path="brms-mudelid.html"><a href="brms-mudelid.html#binoomjaotusega-mudelid"><i class="fa fa-check"></i><b>22.4</b> Binoomjaotusega mudelid</a><ul>
+<li class="chapter" data-level="22.4.1" data-path="brms-mudelid.html"><a href="brms-mudelid.html#logistiline-regressioon"><i class="fa fa-check"></i><b>22.4.1</b> Logistiline regressioon</a></li>
+<li class="chapter" data-level="22.4.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#y-muutujal-3-kategoorilist-vaartust"><i class="fa fa-check"></i><b>22.4.2</b> Y-muutujal 3+ kategoorilist väärtust</a></li>
+<li class="chapter" data-level="22.4.3" data-path="brms-mudelid.html"><a href="brms-mudelid.html#zero-inflated-mudelid"><i class="fa fa-check"></i><b>22.4.3</b> zero inflated mudelid</a></li>
+<li class="chapter" data-level="22.4.4" data-path="brms-mudelid.html"><a href="brms-mudelid.html#additiivsed-distributsioonilised-mudelid"><i class="fa fa-check"></i><b>22.4.4</b> additiivsed distributsioonilised mudelid</a></li>
+</ul></li>
+<li class="chapter" data-level="22.5" data-path="brms-mudelid.html"><a href="brms-mudelid.html#monotoonilised-efektid"><i class="fa fa-check"></i><b>22.5</b> Monotoonilised efektid</a><ul>
+<li class="chapter" data-level="22.5.1" data-path="brms-mudelid.html"><a href="brms-mudelid.html#multivariaatsed-mudelid"><i class="fa fa-check"></i><b>22.5.1</b> Multivariaatsed mudelid</a></li>
+<li class="chapter" data-level="22.5.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#mittelineaarsed-mudelid"><i class="fa fa-check"></i><b>22.5.2</b> Mittelineaarsed mudelid</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="brms-suntaks.html"><a href="brms-suntaks.html"><i class="fa fa-check"></i><b>23</b> brms süntaks</a><ul>
+<li class="chapter" data-level="23.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#general-formula-structure"><i class="fa fa-check"></i><b>23.1</b> General formula structure</a><ul>
+<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.1</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
+<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.2</b> Additional response information</a></li>
+<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.3</b> Formula syntax for non-linear models</a></li>
+<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for predicting distributional parameters</a></li>
+<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for mixture models</a></li>
+<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for multivariate models</a></li>
+</ul></li>
+<li class="chapter" data-level="23.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#brms-likelihoods"><i class="fa fa-check"></i><b>23.2</b> brms likelihoods</a></li>
+<li class="chapter" data-level="23.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#priors"><i class="fa fa-check"></i><b>23.3</b> priors</a><ul>
+<li class="chapter" data-level="23.3.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#population-level-fixed-effects"><i class="fa fa-check"></i><b>23.3.1</b> Population-level (‘fixed’) effects</a></li>
+<li class="chapter" data-level="23.3.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#standard-deviations-of-group-level-random-effects"><i class="fa fa-check"></i><b>23.3.2</b> Standard deviations of group-level (‘random’) effects</a></li>
+<li class="chapter" data-level="23.3.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#correlations-of-group-level-random-effects"><i class="fa fa-check"></i><b>23.3.3</b> Correlations of group-level (‘random’) effects</a></li>
+<li class="chapter" data-level="23.3.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#splines"><i class="fa fa-check"></i><b>23.3.4</b> Splines</a></li>
+<li class="chapter" data-level="23.3.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#gaussian-processes"><i class="fa fa-check"></i><b>23.3.5</b> Gaussian processes</a></li>
+<li class="chapter" data-level="23.3.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#autocorrelation-parameters"><i class="fa fa-check"></i><b>23.3.6</b> Autocorrelation parameters</a></li>
+<li class="chapter" data-level="23.3.7" data-path="brms-suntaks.html"><a href="brms-suntaks.html#parameters-for-specific-families"><i class="fa fa-check"></i><b>23.3.7</b> Parameters for specific families</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html"><i class="fa fa-check"></i><b>24</b> Puuduvad andmed</a><ul>
+<li class="chapter" data-level="24.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#andmete-puudumise-mehhanismid"><i class="fa fa-check"></i><b>24.1</b> Andmete puudumise mehhanismid:</a></li>
+<li class="chapter" data-level="24.2" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#uhekaupa-imputatsiooni-meetodid"><i class="fa fa-check"></i><b>24.2</b> Ühekaupa imputatsiooni meetodid</a><ul>
+<li class="chapter" data-level="24.2.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#na-dega-ridade-eemaldamine"><i class="fa fa-check"></i><b>24.2.1</b> NA-dega ridade eemaldamine</a></li>
+<li class="chapter" data-level="24.2.2" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#paariviisiline-deleteerimine"><i class="fa fa-check"></i><b>24.2.2</b> Paariviisiline deleteerimine</a></li>
+<li class="chapter" data-level="24.2.3" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#keskmise-imputatsioon-ja-regressiooniga-imputatsioon"><i class="fa fa-check"></i><b>24.2.3</b> Keskmise imputatsioon ja regressiooniga imputatsioon</a></li>
+<li class="chapter" data-level="24.2.4" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#stohhastiline-regressiooniga-imputatsioon"><i class="fa fa-check"></i><b>24.2.4</b> Stohhastiline regressiooniga imputatsioon</a></li>
+<li class="chapter" data-level="24.2.5" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#eelmise-vaatluse-kopeerimine-locf."><i class="fa fa-check"></i><b>24.2.5</b> Eelmise vaatluse kopeerimine (LOCF).</a></li>
+</ul></li>
+<li class="chapter" data-level="24.3" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#mitmene-imputatsioon"><i class="fa fa-check"></i><b>24.3</b> Mitmene imputatsioon</a></li>
+<li class="chapter" data-level="24.4" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#predictive-mean-matching"><i class="fa fa-check"></i><b>24.4</b> Predictive mean matching</a></li>
+<li class="chapter" data-level="24.5" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#imputeerimine-mitte-normaalsete-jaotuste-korral"><i class="fa fa-check"></i><b>24.5</b> Imputeerimine mitte-normaalsete jaotuste korral</a></li>
+<li class="chapter" data-level="24.6" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#kategoorilised-muutujad"><i class="fa fa-check"></i><b>24.6</b> Kategoorilised muutujad</a></li>
+<li class="chapter" data-level="24.7" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#countid-sisaldavad-nulle"><i class="fa fa-check"></i><b>24.7</b> countid (sisaldavad nulle)</a></li>
+<li class="chapter" data-level="24.8" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#graafilised-meetodid"><i class="fa fa-check"></i><b>24.8</b> Graafilised meetodid</a></li>
+<li class="chapter" data-level="24.9" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#tulemuste-avaldamine"><i class="fa fa-check"></i><b>24.9</b> Tulemuste avaldamine</a></li>
+</ul></li>
+<li class="appendix"><span><b>Lisa</b></span></li>
+<li class="chapter" data-level="A" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html"><i class="fa fa-check"></i><b>A</b> Bayesi ja sagedusliku statistika võrdlus</a><ul>
+<li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#kaks-statistikat-ajaloost-ja-toenaosusest"><i class="fa fa-check"></i>Kaks statistikat: ajaloost ja tõenäosusest</a></li>
+<li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#poleemika-kumbki-toenaosus-pole-paris-see-mida-uldiselt-arvatakse"><i class="fa fa-check"></i>Poleemika: kumbki tõenäosus pole päris see, mida üldiselt arvatakse</a></li>
+<li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#vordlev-naide-kahe-grupi-vordlus"><i class="fa fa-check"></i>Võrdlev näide: kahe grupi võrdlus</a><ul>
+<li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#bayesiaan"><i class="fa fa-check"></i>Bayesiaan</a></li>
+<li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#sageduslik-statistik"><i class="fa fa-check"></i>Sageduslik statistik</a></li>
+<li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#tulemuste-tolgendamine"><i class="fa fa-check"></i>Tulemuste tõlgendamine</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#kahe-paradigma-erinevused"><i class="fa fa-check"></i>Kahe paradigma erinevused</a><ul>
+<li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#sageduslik-ja-teaduslik-hupoteesitestimine"><i class="fa fa-check"></i>Sageduslik ja teaduslik hüpoteesitestimine</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#statistiline-ennustus-kui-mitmetasandiline-protsess"><i class="fa fa-check"></i>Statistiline ennustus kui mitmetasandiline protsess</a><ul>
+<li class="chapter" data-level="A.0.1" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#ajaloolist-juttu-normaaljaotus-bayes-ja-sageduslik-statistika"><i class="fa fa-check"></i><b>A.0.1</b> Ajaloolist juttu: normaaljaotus, Bayes ja sageduslik statistika</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="sonastik.html"><a href="sonastik.html"><i class="fa fa-check"></i><b>B</b> Sõnastik</a><ul>
+<li class="chapter" data-level="" data-path="sonastik.html"><a href="sonastik.html#kaks-statistikat-ajaloost-ja-toenaosusest-1"><i class="fa fa-check"></i>Kaks statistikat: ajaloost ja tõenäosusest</a></li>
+<li class="chapter" data-level="" data-path="sonastik.html"><a href="sonastik.html#poleemika-kumbki-toenaosus-pole-paris-see-mida-uldiselt-arvatakse-1"><i class="fa fa-check"></i>Poleemika: kumbki tõenäosus pole päris see, mida üldiselt arvatakse</a></li>
+<li class="chapter" data-level="" data-path="sonastik.html"><a href="sonastik.html#vordlev-naide-kahe-grupi-vordlus-1"><i class="fa fa-check"></i>Võrdlev näide: kahe grupi võrdlus</a><ul>
+<li class="chapter" data-level="" data-path="sonastik.html"><a href="sonastik.html#bayesiaan-1"><i class="fa fa-check"></i>Bayesiaan</a></li>
+<li class="chapter" data-level="" data-path="sonastik.html"><a href="sonastik.html#sageduslik-statistik-1"><i class="fa fa-check"></i>Sageduslik statistik</a></li>
+<li class="chapter" data-level="" data-path="sonastik.html"><a href="sonastik.html#tulemuste-tolgendamine-1"><i class="fa fa-check"></i>Tulemuste tõlgendamine</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="sonastik.html"><a href="sonastik.html#kahe-paradigma-erinevused-1"><i class="fa fa-check"></i>Kahe paradigma erinevused</a><ul>
+<li class="chapter" data-level="" data-path="sonastik.html"><a href="sonastik.html#sageduslik-ja-teaduslik-hupoteesitestimine-1"><i class="fa fa-check"></i>Sageduslik ja teaduslik hüpoteesitestimine</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="sonastik.html"><a href="sonastik.html#statistiline-ennustus-kui-mitmetasandiline-protsess-1"><i class="fa fa-check"></i>Statistiline ennustus kui mitmetasandiline protsess</a><ul>
+<li class="chapter" data-level="B.0.1" data-path="sonastik.html"><a href="sonastik.html#ajaloolist-juttu-normaaljaotus-bayes-ja-sageduslik-statistika-1"><i class="fa fa-check"></i><b>B.0.1</b> Ajaloolist juttu: normaaljaotus, Bayes ja sageduslik statistika</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesi statistika kasutades R keelt</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="lihtne-normaaljaotuse-mudel" class="section level1">
+<h1><span class="header-section-number">16</span> Lihtne normaaljaotuse mudel</h1>
+<p>Kui me eelmises peatükis modelleerisime diskreetseid binaarseid sündmusi (elus või surnud) üle binoomjaotuse, siis edasi tegeleme pidevate suurustega ehk parameetritega, millele saab omistada iga väärtuse vahemikus -Inf kuni Inf.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(stringr)
+<span class="kw">library</span>(gapminder)
+<span class="kw">library</span>(rethinking)
+<span class="kw">library</span>(bayesplot)
+<span class="kw">library</span>(gridExtra)</code></pre>
+<p>Proovime veelkord USA presidentide keskmist pikkust ennustada (sama näide oli bootstrappimisel).
+Selleks on meil on vaja kahte asja: (1) tõepära mudelit ning (2) igale tõepära mudeli parameetrile oma priorit.</p>
+<p>Selline on täismudeli (tõepära ja priorid) struktuur:</p>
+<pre><code>heights ~ dnorm(mu, sigma)  # normal likelihood
+mu ~ dnorm(mean = 0, sd = 200) # normal prior for mean
+sigma ~ dcauchy(0, 20) #half-cauchy prior for sd </code></pre>
+<p>Tõepära on siin modeleeritud normaaljaotusena, milles on 2 tuunitavat parameetrit: mu (keskmine) ja sigma (standardhälve).
+Pelgalt nende kahe parameetri fikseerimine annab meile unikaalse normaaljaotuse.
+See, et keskmise pikkuse prior on tsentreeritud nullile viib õige pisukesele (nõnda laia priori juures küll pigem märkamatule) mu hinnangu nihkumisele nulli suunas.
+Selle nihke õigustus on püüd vältida mudeli üle-fittimist ehk teisisõnu ülespoole kallutatud hinnangut keskmisele pikkusele.
+Sama hästi võiksime kasutada ka priorit <code>mu ~ dnorm(mean = 178, sd = 10)</code>, kus 178 on ameerika meeste keskmine pikkus.</p>
+<p>Alati tasub mudeli priorid välja plottida, et veenduda, et nad tõesti kajastavad meile taustateadmisi ja on sobivas parameetrivahemikus (bayesi programmide default priorid on sageli kas liiga laiad või vastupidi eeldavad, et parameetriväärtused jäävad alla 10 ühiku).</p>
+
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">100</span>
+y &lt;-<span class="st"> </span><span class="kw">dcauchy</span>(x, <span class="dv">0</span>, <span class="dv">20</span>)
+<span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span> , <span class="dt">main =</span> <span class="st">&quot;Cauchy prior for sd&quot;</span>)</code></pre>
+<div class="figure"><span id="fig:cauchy-prior"></span>
+<img src="12_pidev_files/figure-html/cauchy-prior-1.png" alt="Cauchy prior." width="672" />
+<p class="caption">
+Joonis 16.1: Cauchy prior.
+</p>
+</div>
+
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">150</span><span class="op">:</span><span class="dv">200</span>
+y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x, <span class="dv">0</span>, <span class="dv">200</span>)
+<span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Normal prior for mean = 0 and sd = 200&quot;</span>)</code></pre>
+<div class="figure"><span id="fig:kaks-priorit1"></span>
+<img src="12_pidev_files/figure-html/kaks-priorit-1.png" alt="Kaks normaaljaotuse priorit." width="48%" />
+<p class="caption">
+Joonis 16.2: Kaks normaaljaotuse priorit.
+</p>
+</div>
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">150</span><span class="op">:</span><span class="dv">200</span>
+y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x, <span class="dv">178</span>, <span class="dv">10</span>)
+<span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Normal prior for mean = 178 and sd = 10&quot;</span>)</code></pre>
+<div class="figure"><span id="fig:kaks-priorit2"></span>
+<img src="12_pidev_files/figure-html/kaks-priorit-2.png" alt="Kaks normaaljaotuse priorit." width="48%" />
+<p class="caption">
+Joonis 16.3: Kaks normaaljaotuse priorit.
+</p>
+</div>
+<p>Siin on valida kahe priori vahel mu-le.
+Võib-olla eelistaksid sina mõnda kolmandat?
+Kui jah, siis pole muud kui tee valmis ja kasuta!</p>
+<p>Sama hästi võiksime tõepära modelleerida ka mõne muu jaotusega (Studenti t jaotus, eksponentsiaalne jaotus, lognormaaljaotus jne).
+Sel juhul oleksid meil erinevad parameetrid, mida tuunida, aga põhimõte on sama.
+Bayes on modulaarne — kui sa põhimõtet tead, pole tehniliselt suurt vahet, millist mudelit soovid kasutada.</p>
+<p>Näiteks:</p>
+<pre><code>heights ~ student_t(nu, mu, sigma) # t likelihood
+nu ~ dunif(1, 100) # uniform prior for the shape parameter
+mu ~ dnorm(mean = 0, sd = 200) # normal prior for mean
+sigma ~ dcauchy(0, 20) # half-cauchy prior for sd</code></pre>
+<p>Normaaljaotusel on kaks parameetrit, millele posteerior arvutada: mu (mean) ja sigma (sd).
+Seega on vaja ka kahte priorit, üks mu-le ja teine sigma-le.
+Studenti t jaotuse korral lisandub veel üks parameeter: nu ehk jaotuse kuju määrav parameeter.
+nu-d saab tuunida 1 ja lõpmatuse vahel.
+Mida väiksem on nu, seda paksemad tulevad jaotuse sabad.
+Kui nu on suur, siis on t jaotuse kuju sama, mis normaaljaotusel.
+Siin andsime nu-le tasase priori 1 ja 100 vahel, hiljem proovime ka teisi prioreid nu-le.</p>
+<p>Studenti t jaotus on põnev alternatiiv normaaljaotusele, sest see on vähem tundlik outlieritele.
+Kuna normaaljaotus langeb servades väga kiiresti siis, kui meil on mõni andmepunkt, mis jääb jaotuse tipust kaugele, on ainus võimalus selle punkti normaaljaotuse alla mahutamiseks omistada jaotusele väga suur standardhälve.
+See muudab outlierit sisaldava normaaljaotuse ülemäära laiaks, mis viib analüüsis asjatult kaotatud efektidele.
+Seevastu t jaotuse sabasid saab nu abil üles-alla liigutada vastavalt sellele, kas andmed sisaldavad outliereid (selleks tuleb lihtsalt fittida nu parameeter andmete põhjal).</p>
+<p>Outlierid toovad meile paksema sabaga jaotuse, mis tipu ümber ei lähe aga kaugeltki nii laiaks, kui samade andmetega fititud normaaljaotus.</p>
+<div id="kui-lai-on-meie-toeparafunktsioon" class="section level2 unnumbered">
+<h2>Kui lai on meie tõepärafunktsioon?</h2>
+<p>Normaaljaotusega modelleeritud tõepärafunktsioon on normaaljaotus, mille <code>keskväärtus = mean(valim)</code> ja mille <code>standardhälve = sd(valim) / sqrt(N)</code>, kus N on valimi suurus.
+See tõepärafunktsioon modelleerib meie valimi keskväärtuse kohtamise tõenäosust igal võimalikul parameetriväärtusel.
+Kui oleme huvitatud USA presidentide keskmisest pikkusest, siis tõepärafunktsioon ütleb iga võimaliku pikkuse kohta, millise tõenäosusega kohtaksime oma valimi keskväärtust juhul, kui just see oleks tegelik presidentide keskmine pikkus.
+Sigma, mille posteeriori me mudelist arvutame, on aga standardhälve algsete andmepunktide tasemel.
+See on väga oluline eristus, sest sigma kaudu saab simueerida uusi andmepunkte.</p>
+</div>
+<div id="lihtne-voi-robustne-normaalne-mudel" class="section level2 unnumbered">
+<h2>Lihtne või robustne normaalne mudel?</h2>
+<p>Proovime mudeldada simuleeritud andmete keskväärtust.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">890775</span>)
+a &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>) <span class="co"># expected mean = 0, sd = 1</span>
+b &lt;-<span class="st"> </span><span class="kw">c</span>(a, <span class="dv">5</span>, <span class="dv">9</span>) <span class="co"># plus 2 outliers</span></code></pre>
+<p>Siin kasutame andmeid, mille keskväärtus on 0.38 ja sd = 1 ja millele on lisatud kaks outlierit (5 ja 9). Proovime neid andmeid mudeldada normaaljaotusega tõepäramudeliga ja seejärel üle studenti t jaotuse.
+Me fitime 4 mudelit, neist 3 koos outlieritega.
+Mudeli fittimine käib nii, et mcmc ahelad sammuvad parameetriruumis ja iga samm annab meile ühe juhusliku väärtuse posteeriorist.
+Defaultina on meil üks ahel, mis teeb 1000 sammu (seda saab muuta: vt <code>?map2stan</code>).
+Kuna ahelad veedavad rohkem aega seal, kus posterioorne tõenäosuspilv on tihedam, siis saab nõnda sämplitud posteeriori juhuvalimi histogrammist posterioorse jaotuse kuju.
+Veelgi enam, selle asemel, et tegeleda posterioorsete jaotuste matemaatilise analüüsiga (integreerimisega) võime analüüsida oma mcmc sämpleid otse, mis tähendab, et kõrgema matemaatika asemel vajame 2. klassi aritmeetikat.</p>
+<p>Kõigepealt ilma outlieriteta mudel normaalse tõepärafuktsiooniga.
+Me kasutame sd priorina pool-Cauchy jaotust, mille tipp on 0 kohal ja millel on piisavalt paks saba suuremate numbrite poole.
+See on väheinformatiivne prior, mis on nähtud sd-de puhul mcmc algoritmides hästi töötavat.
+Andmed võime <code>map2stan()</code> funktsiooni sisestada nii listina kui data.frame-na (aga mitte tibble kujul).</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Ilma outlierita andmed</span>
+m0 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
+  <span class="kw">alist</span>(
+    y <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(mu, sigma),  <span class="co"># normal likelihood</span>
+    mu <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="co"># normal prior for mean</span>
+    sigma <span class="op">~</span><span class="st"> </span><span class="kw">dcauchy</span>(<span class="dv">0</span>, <span class="fl">2.5</span>) <span class="co"># half-cauchy prior from sd </span>
+  ),
+  <span class="dt">data =</span> <span class="kw">list</span>(<span class="dt">y =</span> a))</code></pre>
+<p>Sama mudel, aga outlieritega andmed. <code>map2stan()</code> tõlgib sisestatud mudeli Stan keelde ja see mudel kompileeritakse C++ keelde, milles on kodeeritud Stani mcmc mootor.
+Kuna kompileerimine on ajakulukas, kasutame m1 fittimiseks rstan raamatukogu (see loetakse sisse rethinkingu depency-na) ja juba komplieeritud m0 mudelit, millele lisame andmed kahe elemendina: N annab andmete arvu ja y tegelikud andmeväärtused.
+Selline andmete sisestamise viis on omane Stanile - <code>map2stan()</code> arvutab ise kapoti all N-i.</p>
+<pre class="sourceCode r"><code class="sourceCode r">m1 &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="dt">fit =</span> m0<span class="op">@</span>stanfit,
+           <span class="dt">data =</span> <span class="kw">list</span>(<span class="dt">N =</span> <span class="kw">length</span>(b), 
+                       <span class="dt">y =</span> b),
+           <span class="dt">chains =</span> <span class="dv">4</span>)</code></pre>
+<p>Nüüd studenti t jaotusega tõepäramudel.
+Argumendid cores = 4, chains = 4 tähendavad, et me jooksutame 4 mcmc ahelat kasutades selleks oma arvuti 4 tuuma.
+Mudeli m2 juures tähendab argument constraints(list(nu = “lower=1”)), et mcmc sämpleri ahelad ei lähe kunagi allapoole ühte.
+See on siin kuna definitsiooni kohaselt ei saa nu olla väiksem kui 1.
+Argument start annab listi, mis annab iga parameetri jaoks väärtuse, millest mcmc ahel posteeriori sämplimist alustab. See on vahest vajalik, sest kui mcmc ahelad hakkavad posteeriori tõenäosuspilve otsima kaugel selle tegelikust asukohast n-mõõtmelises ruumis (n = mudeli parameetrite arv), siis võib juhtuda, et mudeli fittimine ebaõnnestub ja te saate veateate.</p>
+<pre class="sourceCode r"><code class="sourceCode r">m2 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
+  <span class="kw">alist</span>(
+    y <span class="op">~</span><span class="st"> </span><span class="kw">student_t</span>(nu, mu, sigma),
+    nu <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(<span class="dv">5</span>, <span class="dv">10</span>), 
+    mu <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(<span class="dv">0</span>, <span class="dv">5</span>),
+    sigma <span class="op">~</span><span class="st"> </span><span class="kw">dcauchy</span>(<span class="dv">0</span>, <span class="fl">2.5</span>)
+    ),
+  <span class="dt">data =</span> <span class="kw">list</span>(<span class="dt">y =</span> b),
+  <span class="dt">constraints =</span> <span class="kw">list</span>(<span class="dt">nu =</span> <span class="st">&quot;lower=1&quot;</span>),
+  <span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">mu =</span> <span class="kw">mean</span>(b), <span class="dt">sigma =</span> <span class="kw">sd</span>(b), <span class="dt">nu =</span> <span class="dv">10</span>),
+  <span class="dt">cores =</span> <span class="dv">4</span>,
+  <span class="dt">chains =</span> <span class="dv">4</span>
+)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">m2 &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;data/stan_m2.rds&quot;</span>)
+m2<span class="op">@</span>stanfit
+<span class="co">#&gt; Inference for Stan model: y ~ student_t(nu, mu, sigma).</span>
+<span class="co">#&gt; 4 chains, each with iter=2000; warmup=1000; thin=1; </span>
+<span class="co">#&gt; post-warmup draws per chain=1000, total post-warmup draws=4000.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;         mean se_mean   sd   2.5%    25%    50%    75%  97.5% n_eff Rhat</span>
+<span class="co">#&gt; mu      0.28    0.00 0.22  -0.11   0.14   0.27   0.41   0.76  2066    1</span>
+<span class="co">#&gt; sigma   0.78    0.01 0.27   0.39   0.59   0.74   0.92   1.40  1254    1</span>
+<span class="co">#&gt; nu      2.21    0.04 1.48   1.04   1.39   1.84   2.53   5.57  1644    1</span>
+<span class="co">#&gt; dev    78.68    0.10 3.35  74.84  76.19  77.81  80.25  87.47  1057    1</span>
+<span class="co">#&gt; lp__  -27.23    0.04 1.45 -31.06 -27.86 -26.88 -26.16 -25.55  1323    1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Samples were drawn using NUTS(diag_e) at Mon Oct 23 15:51:33 2017.</span>
+<span class="co">#&gt; For each parameter, n_eff is a crude measure of effective sample size,</span>
+<span class="co">#&gt; and Rhat is the potential scale reduction factor on split chains (at </span>
+<span class="co">#&gt; convergence, Rhat=1).</span></code></pre>
+<p>Ja viimasena studenti t mudel, kus nu on fikseeritud konstandina. Kuna me ei fiti nu-d mudeli parameetrina, pole meil vaja ka priorit nu-le. Me teeme selle mudeli, sest nu täpsel väärtusel pole väga suurt mõju tulemustele. Me lihtsalt fikseerime nu suvalisele väärtusele, mis annab t jaotusele piisavalt paksud sabad.</p>
+<pre class="sourceCode r"><code class="sourceCode r">m3 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
+  <span class="kw">alist</span>(
+    y <span class="op">~</span><span class="st"> </span><span class="kw">student_t</span>(<span class="dv">4</span>, mu, sigma),
+    mu <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(<span class="dv">0</span>, <span class="dv">5</span>),
+    sigma <span class="op">~</span><span class="st"> </span><span class="kw">dcauchy</span>(<span class="dv">0</span>, <span class="fl">2.5</span>)
+  ),
+  <span class="dt">data =</span> <span class="kw">list</span>(<span class="dt">y =</span> b),
+  <span class="dt">constraints =</span> <span class="kw">list</span>(<span class="dt">nu =</span> <span class="st">&quot;lower=1&quot;</span>),
+  <span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">mu =</span> <span class="kw">mean</span>(b), <span class="dt">sigma =</span> <span class="kw">sd</span>(b)),
+  <span class="dt">cores =</span> <span class="dv">4</span>,
+  <span class="dt">chains =</span> <span class="dv">4</span>)</code></pre>
+<p>Üks esimesi asju mida koos parameetrite vaatamisega teha on lisaks vaadata, kas ka ahelad konvergeerusid.
+Selleks saab mugavalt kasutada <code>rethinking::tracerplot()</code> funktsiooni.</p>
+
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tracerplot</span>(m2)</code></pre>
+<div class="figure"><span id="fig:traceplot"></span>
+<img src="12_pidev_files/figure-html/traceplot-1.png" alt="Traceplot markovi ahelate inspekteerimiseks." width="672" />
+<p class="caption">
+Joonis 16.4: Traceplot markovi ahelate inspekteerimiseks.
+</p>
+</div>
+<p>Pildilt on näha, et neli ahelat (4 värvi) on hästi konvergeerunud. Hall ala on nn warmup ala, mille tulemusi ei salvestata. Muidu astub iga ahel sammu kaupa ja iga edukas samm salvestatakse ühe posteeriori väärtusena. Ahel sämplib korraga mu, sigma ja nu väärtusi n-mõõtmelises ruumis (n = mudeli parameetrite arv), mis tähendab, et ahela iga samm salvestatakse n kõrvuti numbrina.</p>
+<p>Kui näit sigma kõrgema väärtusega kaasneb keskeltäbi kõrgem (või madalam) mu väärtus, on sigma ja mu omavahel korreleeritud.
+Et kontrollida parameetrite posterioorsete väärtuste korrelatsioone kasutame funktsiooni <code>rethinking::pairs()</code>:</p>
+
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pairs</span>(m2)</code></pre>
+<div class="figure"><span id="fig:korrelatsiooniplot"></span>
+<img src="12_pidev_files/figure-html/korrelatsiooniplot-1.png" alt="Korrelatsiooniplot mudeli parameetritele." width="672" />
+<p class="caption">
+Joonis 16.5: Korrelatsiooniplot mudeli parameetritele.
+</p>
+</div>
+<p>Normaaljaotus on selle poolest eriline, et tema parameetrid mu ja sigma ei ole korreleeritud.
+Paljud teised mudelid ei ole nii lahked.
+Siin on meil mõõdukas korrelatsioon nu ja sigma vahel.
+See on igati loogiline ja ei häiri meid.</p>
+</div>
+<div id="mcmc-ahelate-kvaliteet" class="section level2 unnumbered">
+<h2>MCMC ahelate kvaliteet</h2>
+<p>Kui Rhat on 1, siis see tähendab, et MCMC ahelad on ilusti jooksnud ja posteeriori sämplinud.
+Kui Rhat &gt; 1.1, siis on probleem.
+Suur Rhat viitab, et ahel(ad) pole jõudnud konvergeeruda.
+Kui ahelad ei konvergeeru, siis võib karta, et nad ei sämpli ka sama posteeriori jaotust. Kontrolli, kas mudeli kood ei sisalda vigu.
+Kui ei, siis vahest aitab, kui pikendada warm-up perioodi (<code>map2stan(..., iter = 3000, warmup = 2000)</code> pikendab <em>default</em> warm-upi 2 korda).
+Vahest aitab mudeli re-parametriseerimine (siin on lihtne trikk tekitada priorid, mis ei erineks väga palju oma vahemiku poolest; sellega kaasneb sageli andmete tsentreerimine või standardiseerimine; vt allpool).</p>
+<p>n_eff on efektiivne valimi suurus, mis hindab iseseisvalt sämplitud andmete arvu ning see ei tohi olla väga väike.
+Kui n_eff on palju väiksem kui jooksutatud markovi ahela pikkus (iga ahel on defaultina 1000 iteratsiooni pikk), on ahel jooksnud ebaefektiivselt.
+See ei tähenda tingimata, et posteerior vale oleks.
+Reegilina peaks Neff/N &gt; 0.1</p>
+<p>Ahelad peavad plotitud kujul välja nägema nagu karvased tõugud, mis on ilma paljaste laikudeta.
+Kui ahelad omavad pikki sirgeid lõike (n_eff tuleb siis väga madal), kus ahel ei ole töötanud, siis see rikub korralikult posteeriori.
+Tüüpiliselt aitavad nõrgalt informatiivsed priorid — priorite õige valik on sama palju arvutuslik vajadus kui taustainfo lisamine.
+Igal juhul tuleb vältida aladefineeritud tasaseid prioreid, mis võimaldavad ahelatel sämplida lõpmatust ja sel viisil õige tee kaotada.
+Peale selle, tasased priorid, mis ütlevad, et kõik parameetri väärtused on võrdselt tõenäolised, kajastavad harva meie tegelikke taustateadmisi.</p>
+<p>Halvad WARNING-ud: divergent transitions (too many), BMFI too low — võivad tähendada, et ahelad ei tööta korralikult. WARNING-ute kohta saad abi siit <a href="http://mc-stan.org/misc/warnings.html" class="uri">http://mc-stan.org/misc/warnings.html</a>.</p>
+<p>Ilusamad parameetriplotid saab kasutades “bayesplot” raamatukogu funktsioone.</p>
+<p>Esiteks usalduspiirid:</p>
+
+<pre class="sourceCode r"><code class="sourceCode r">fit2d &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(m2<span class="op">@</span>stanfit)
+pars &lt;-<span class="st"> </span><span class="kw">names</span>(fit2d)
+
+<span class="co"># inner interval = 50% CI and outer interval = 95% CI.</span>
+<span class="kw">mcmc_intervals</span>(fit2d, 
+               <span class="dt">pars =</span> pars[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], 
+               <span class="dt">prob =</span> <span class="fl">0.5</span>, 
+               <span class="dt">prob_outer =</span> <span class="fl">0.90</span>)</code></pre>
+<div class="figure"><span id="fig:postciplot"></span>
+<img src="12_pidev_files/figure-html/postciplot-1.png" alt="Posteeriorite CI plot." width="672" />
+<p class="caption">
+Joonis 16.6: Posteeriorite CI plot.
+</p>
+</div>
+<p>Ja teiseks täis posteeriorid.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mcmc_areas</span>(fit2d, <span class="dt">pars =</span> pars[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="dt">prob =</span> <span class="fl">0.8</span>)</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-12"></span>
+<img src="12_pidev_files/figure-html/unnamed-chunk-12-1.png" alt="Posteeriorite tihedusplot." width="672" />
+<p class="caption">
+Joonis 16.7: Posteeriorite tihedusplot.
+</p>
+</div>
+<p>Funktsiooniga <code>rethinking::extract.samples()</code> saame koos sämplitud parameetrite numbrid kõrvuti (rea kaupa) tabelisse.</p>
+<pre class="sourceCode r"><code class="sourceCode r">m2sampl &lt;-<span class="st"> </span><span class="kw">extract.samples</span>(m2) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">CV =</span> sigma <span class="op">/</span><span class="st"> </span>mu)</code></pre>
+<p>Sellest tabelist võib arvutada posteerioreid ka uutele “väljamõeldud” parameetritele.
+Näiteks arvutame posteeriori CV-le:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(m2sampl, <span class="kw">aes</span>(CV)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlim</span>(<span class="dv">0</span>, <span class="dv">10</span>)
+<span class="co">#&gt; Warning: Ignoring unknown parameters: breaks</span>
+<span class="co">#&gt; Warning: Removed 609 rows containing non-finite values (stat_density).</span></code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-14"></span>
+<img src="12_pidev_files/figure-html/unnamed-chunk-14-1.png" alt="Posteerior uuele parameetrile" width="672" />
+<p class="caption">
+Joonis 4.6: Posteerior uuele parameetrile
+</p>
+</div>
+<p>Kuna posteerior iseloomustab meie teadmiste piire, siis võime selle abil küsida, kui suure tõenäosusega jääb tõeline CV näiteks parameetrivahemikku 2 kuni 5?</p>
+<pre class="sourceCode r"><code class="sourceCode r">intv &lt;-<span class="st"> </span><span class="kw">filter</span>(m2sampl, <span class="kw">between</span>(CV, <span class="dv">2</span>, <span class="dv">5</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nrow</span>(.) <span class="op">/</span><span class="st"> </span><span class="kw">nrow</span>(m2sampl)
+intv
+<span class="co">#&gt; [1] 0.415</span></code></pre>
+<p>Vastus on, et me arvame 42 kindlusega, et tõde jääb kuskile sellesse vahemikku.</p>
+<p>Võime ka küsida, millesesse vahemikku jääb näiteks 67% meie usust mu tõelise väärtuse kohta?</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">HPDI</span>(m2sampl<span class="op">$</span>CV, <span class="dt">prob =</span> <span class="fl">0.67</span>)
+<span class="co">#&gt; |0.67 0.67| </span>
+<span class="co">#&gt; 0.964 4.058</span></code></pre>
+<p>Nüüd võrdleme nelja fititud mudelit, et otsustada, milline mudel kirjeldab kõige paremini outlieritega andmeid.
+m0 on ilma outlierita mudel ja me tahame teada, milline mudel m1, m2 või m3 annab sellele kõige lähedasemad tulemused.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coeftab_plot</span>(<span class="kw">coeftab</span>(m0, m1, m2, m3), 
+             <span class="dt">pars =</span> <span class="kw">c</span>(<span class="st">&quot;mu&quot;</span>, <span class="st">&quot;sigma&quot;</span>), 
+             <span class="dt">prob =</span> <span class="fl">0.5</span>)</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-17"></span>
+<img src="12_pidev_files/figure-html/unnamed-chunk-17-1.png" alt="Võrdlev plot mitme mudeli posteerioritele." width="672" />
+<p class="caption">
+Joonis 16.8: Võrdlev plot mitme mudeli posteerioritele.
+</p>
+</div>
+<p>Me sättisime usalduspiirid 0.5 peale, mis tähendab, et need ennustavad, kuhu peaks mudeli järgi jääma parameetri tegelik väärtus 50%-se tõenäosusega.
+Nagu näha, on m2 ja m3 posteeriorid palju lähemal m0-le kui normaaljaotusega fititud m1 oma.
+Eriti drastilised on erinevused sigma hinnangule.
+Lisaks, m1 mudeli mu usaldusintervall on palju laiem kui m0, m2 ja m3 oma — mudel nagu saaks aru, et andmed lõhnavad kala järgi.</p>
+<div id="naide-usa-presidentide-keskmine-pikkus" class="section level3 unnumbered">
+<h3>Näide: USA presidentide keskmine pikkus</h3>
+<p>Läheme tagasi normaaljatuse ja USA presidentide juurde.
+Kõigepealt defineerime priorid.
+Alati on mõistlik priorid välja joonistada ja vaadata, kas nad vastavad meie ootustele.
+Pea meeles, et sigma ehk sd on samades ühikutes, mis mõõtmisandmed.</p>
+<p>Kui sulle need priorid ei meeldi, tuuni priorite parameetreid ja proovi uuesti plottida.</p>
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">-500</span><span class="op">:</span><span class="dv">500</span>
+y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x, <span class="dv">0</span>, <span class="dv">200</span>)
+<span class="kw">plot</span>(x, y, <span class="dt">main =</span> <span class="st">&quot;Prior for mu&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>)</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-18"></span>
+<img src="12_pidev_files/figure-html/unnamed-chunk-18-1.png" alt="Prior keskmisele." width="672" />
+<p class="caption">
+Joonis 16.9: Prior keskmisele.
+</p>
+</div>
+<p>Siin kasutame nõrgalt informatiivseid prioreid.
+Idee on selles, et normaaljaotus, mis on tsentreeritud 0 ümber, tõmbab meie posteeriorit nõrgalt nulli poole (nõrgalt, sest jaotus on hästi lai võrreldes tõepärafunktsiooniga).
+Pane tähele, et oma priori kohaselt usume me, et 50% tõenäususega on USA presidentide keskmine pikkus negatiivne.
+See prior on tehniline abivahend, mitte meie tegelike uskumuste peegeldus presidentide kohta.
+Aga tehniliselt kõik töötab selles mõttes, et andmed domineerivad posteeriori üle ja priori sisuliselt ainus ülesanne on veidi MCMC mootori tööd lihtsustada.</p>
+<p>Sigma priorina kasutame half-Cauchy jaotust, mis on samuti väheinformatiivne.
+Half-Cauchy ei saa olla &lt; 0 ja on meile soodsa kujuga sest annab suurema tõenäosuse nullile lähemal asuvatele sd-väärtustele — aga samas, kuna ta on paksu sabaga, ei välista see ka päris suuri sd väärtusi.</p>
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">200</span>
+y &lt;-<span class="st"> </span><span class="kw">dcauchy</span>(x , <span class="dv">0</span>, <span class="dv">10</span>)
+<span class="kw">plot</span>(x, y, <span class="dt">main =</span> <span class="st">&quot;Prior for sigma&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>)</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-19"></span>
+<img src="12_pidev_files/figure-html/unnamed-chunk-19-1.png" alt="Prior SD-le" width="672" />
+<p class="caption">
+Joonis 16.10: Prior SD-le
+</p>
+</div>
+<p>Tekitame andmeraami analüüsiks ja mudeli, mis põhineb normaalsel tõepärafunktsioonil.</p>
+<pre class="sourceCode r"><code class="sourceCode r">heights &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">183</span>, <span class="dv">192</span>, <span class="dv">182</span>, <span class="dv">183</span>, <span class="dv">177</span>, <span class="dv">185</span>, <span class="dv">188</span>, <span class="dv">188</span>, <span class="dv">182</span>, <span class="dv">185</span>)
+us_presidents &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">Height =</span> heights, <span class="dt">id =</span> <span class="st">&quot;usa&quot;</span>)
+potusm1 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
+  <span class="kw">alist</span>(
+    Height <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(mu, sigma), <span class="co"># normal likelihood</span>
+    mu <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(<span class="dv">0</span>, <span class="dv">200</span>), <span class="co"># normal prior for mean</span>
+    sigma <span class="op">~</span><span class="st"> </span><span class="kw">dcauchy</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="co"># half-cauchy prior from sd </span>
+  ), <span class="dt">data =</span> us_presidents
+)</code></pre>
+<p>Mudeli koefitsiendid:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">precis</span>(potusm1)
+<span class="co">#&gt;        Mean StdDev lower 0.89 upper 0.89 n_eff Rhat</span>
+<span class="co">#&gt; mu    184.5    1.5     181.90     186.71   482    1</span>
+<span class="co">#&gt; sigma   4.7    1.3       2.87       6.36   471    1</span></code></pre>
+<p>Nüüd teeme katse võrrelda USA presidentide ja Euroopa ning mujalt pärit riigijuhtide keskmisi pikkusi.
+Kõigepealt loome analüüsitava andmeraami.</p>
+<pre class="sourceCode r"><code class="sourceCode r">world_leaders &lt;-<span class="st"> </span><span class="kw">read_csv2</span>(<span class="st">&quot;data/world_leaders.csv&quot;</span>)
+presidents &lt;-<span class="st"> </span>world_leaders <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(Country, Height) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">bind_rows</span>(us_presidents)
+knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">head</span>(presidents))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Country</th>
+<th align="right">Height</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Canada</td>
+<td align="right">188</td>
+</tr>
+<tr class="even">
+<td align="left">Cuba</td>
+<td align="right">190</td>
+</tr>
+<tr class="odd">
+<td align="left">France</td>
+<td align="right">170</td>
+</tr>
+<tr class="even">
+<td align="left">France</td>
+<td align="right">165</td>
+</tr>
+<tr class="odd">
+<td align="left">France</td>
+<td align="right">189</td>
+</tr>
+<tr class="even">
+<td align="left">France</td>
+<td align="right">172</td>
+</tr>
+</tbody>
+</table>
+<p>Ja siin on mudel.
+Nüüd on mu ümber defineeritud kui mu1[indeks], mis tähendab, et mu1 saab kaks hulka väärtusi, üks kummagil indeks muutuja tasemel.
+Sellega jagame oma andmed kahte ossa (USA versus Euroopa ja muu maailm), mida analüüsime eraldi.
+Sigma on mõlemale kontinendile sama, mis tähendab, et mudel eeldab, et presidentide pikkuste jaotus on mõlemal kontinendil identne.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Split into 2 groups</span>
+presidents &lt;-<span class="st"> </span>presidents <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Groups =</span> <span class="kw">case_when</span>(
+    Country <span class="op">==</span><span class="st"> &quot;USA&quot;</span> <span class="op">~</span><span class="st"> &quot;USA&quot;</span>,
+    Country <span class="op">!=</span><span class="st"> &quot;USA&quot;</span> <span class="op">~</span><span class="st"> &quot;World&quot;</span>
+  ))</code></pre>
+<p>Adult human height varies country-by-country, we take 170 cm as relatively safe prior for male height.</p>
+<pre class="sourceCode r"><code class="sourceCode r">potusm2 &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
+  <span class="kw">alist</span>(
+    Height <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(mu, sigma),
+    mu &lt;-<span class="st"> </span>mu_<span class="dv">1</span>[Groups], <span class="co"># mu is redifined as mu_1, which takes values at each indeks level</span>
+    mu_<span class="dv">1</span>[Groups] <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(<span class="dv">170</span>, <span class="dv">10</span>), <span class="co"># normal prior for mean</span>
+    sigma <span class="op">~</span><span class="st"> </span><span class="kw">dcauchy</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="co"># half-cauchy prior from sd </span>
+  ),
+  <span class="dt">data =</span> presidents)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">precis</span>(potusm2, <span class="dt">depth =</span> <span class="dv">2</span>)
+<span class="co">#&gt;          Mean StdDev lower 0.89 upper 0.89 n_eff Rhat</span>
+<span class="co">#&gt; mu_1[1] 182.8   3.57     177.11      188.2   885    1</span>
+<span class="co">#&gt; mu_1[2] 176.3   1.85     173.33      179.2   836    1</span>
+<span class="co">#&gt; sigma    11.7   1.26       9.86       13.8   628    1</span></code></pre>
+<p>Me võime ka vaadata 2 grupi standardhälbeid lahus.
+Järgnevas mudelis on mõistlik ahelale stardipositsioon ette anda.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">## Calculate start values</span>
+startvalues &lt;-<span class="st"> </span>presidents <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(Groups) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise_at</span>(<span class="kw">vars</span>(Height), <span class="kw">funs</span>(mean, sd))
+<span class="co">## Fit model</span>
+potusm2<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">map2stan</span>(
+  <span class="kw">alist</span>(
+    Height <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(mu, sigma),
+    mu &lt;-<span class="st"> </span>mu_<span class="dv">1</span>[Groups],
+    sigma &lt;-<span class="st"> </span>sigma_<span class="dv">1</span>[Groups],
+    mu_<span class="dv">1</span>[Groups] <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(<span class="dv">170</span>, <span class="dv">10</span>), <span class="co"># normal prior for mean</span>
+    sigma_<span class="dv">1</span>[Groups] <span class="op">~</span><span class="st"> </span><span class="kw">dcauchy</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="co"># half-cauchy prior from sd </span>
+  ),
+  <span class="dt">data =</span> presidents, 
+  <span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">mu_1 =</span> startvalues<span class="op">$</span>mean,
+               <span class="dt">sigma_1 =</span> startvalues<span class="op">$</span>sd)
+)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tracerplot</span>(potusm2<span class="fl">.1</span>, <span class="dt">n_cols =</span> <span class="dv">2</span>)</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-30"></span>
+<img src="12_pidev_files/figure-html/unnamed-chunk-30-1.png" alt="Traceplot." width="672" />
+<p class="caption">
+Joonis 16.11: Traceplot.
+</p>
+</div>
+<p>Tulemus ES-i osas tuleb üsna sarnane.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">coeftab</span>(potusm2, potusm2<span class="fl">.1</span>))</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-31"></span>
+<img src="12_pidev_files/figure-html/unnamed-chunk-31-1.png" alt="mudelite võrdlusplot." width="672" />
+<p class="caption">
+Joonis 16.12: mudelite võrdlusplot.
+</p>
+</div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">precis</span>(potusm2, <span class="dt">depth =</span> <span class="dv">2</span>)
+<span class="co">#&gt;          Mean StdDev lower 0.89 upper 0.89 n_eff Rhat</span>
+<span class="co">#&gt; mu_1[1] 182.8   3.57     177.11      188.2   885    1</span>
+<span class="co">#&gt; mu_1[2] 176.3   1.85     173.33      179.2   836    1</span>
+<span class="co">#&gt; sigma    11.7   1.26       9.86       13.8   628    1</span></code></pre>
+<p>Siin tuleb kasulik trikk: me lahutame rea kaupa mu1[1] posteeriori sampli liikmed mu1[2] sampli liikmetest.
+Nii saame posteeriori efekti suurusele ehk hinnangu sellele, mitme cm võrra on USA presidendid keskmiselt pikemad kui Euroopa omad!</p>
+<pre class="sourceCode r"><code class="sourceCode r">samplespm2 &lt;-<span class="st"> </span><span class="kw">extract.samples</span>(potusm2) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ES =</span> mu_<span class="fl">1.1</span> <span class="op">-</span><span class="st"> </span>mu_<span class="fl">1.2</span>)
+<span class="kw">dens</span>(samplespm2<span class="op">$</span>ES)</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-33"></span>
+<img src="12_pidev_files/figure-html/unnamed-chunk-33-1.png" alt="Posteerior ES-le." width="672" />
+<p class="caption">
+Joonis 16.13: Posteerior ES-le.
+</p>
+</div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">median</span>(samplespm2<span class="op">$</span>ES)
+<span class="co">#&gt; [1] 6.56</span>
+rethinking<span class="op">::</span><span class="kw">HPDI</span>(samplespm2<span class="op">$</span>ES, <span class="dt">prob =</span> <span class="fl">0.9</span>)
+<span class="co">#&gt;  |0.9  0.9| </span>
+<span class="co">#&gt; -1.09 12.02</span>
+<span class="kw">mean</span>(samplespm2<span class="op">$</span>ES <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>)
+<span class="co">#&gt; [1] 0.065</span></code></pre>
+<p>Võrdse SD-ga mudeli järgi on USA presidendid keskeltläbi 6.6 cm pikemad, ebakindlus selle hinnangu ümber on suur – 90% HDI on -1.1 kuni 12 ja tõenäosus et pikkuste erinevus on väiksem kui 0 on 0.06.</p>
+<pre class="sourceCode r"><code class="sourceCode r">samplesm2<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">extract.samples</span>(potusm2<span class="fl">.1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ES =</span> mu_<span class="fl">1.1</span> <span class="op">-</span><span class="st"> </span>mu_<span class="fl">1.2</span>)
+<span class="kw">median</span>(samplesm2<span class="fl">.1</span><span class="op">$</span>ES)
+<span class="co">#&gt; [1] 7.54</span>
+<span class="kw">HPDI</span>(samplesm2<span class="fl">.1</span><span class="op">$</span>ES, <span class="dt">prob =</span> <span class="fl">0.9</span>)
+<span class="co">#&gt;  |0.9  0.9| </span>
+<span class="co">#&gt;  3.39 12.16</span>
+<span class="kw">mean</span>(samplesm2<span class="fl">.1</span><span class="op">$</span>ES <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>)
+<span class="co">#&gt; [1] 0.001</span></code></pre>
+<p>Erineva SD-ga mudeli järgi on riigijuhtide pikkuste vahe 7.5 cm, ebakindlus väiksem – 90% HDI on 3.4 kuni 12.2 ja tõenäosus et pikkuste erinevus on väiksem kui 0 on 0.</p>
+<p>See ei tähenda tingimata, et me peaksime eelistama teist mudelit. Oluline on, mida me teoreetiliselt usume, kas seda, et tegelik presidentide varieeruvus on USAs ja Euroopas võrdne, või mitte.</p>
+</div>
+</div>
+<div id="lineaarne-regressioon" class="section level2 unnumbered">
+<h2>Lineaarne regressioon</h2>
+<p>Eelmises peatükis hindasime ühe andmekogu (näiteks mõõdetud pikkuste) põhjal ehitatud mudelite parameetreid (näiteks keskmist ja statndardhälvet). Nüüd astume sammu edasi ja hindame kahe muutuja (näiteks pikkuse ja kaalu) koos-varieeruvust. Selleks ehitame mudeli, mis sisaldab mõlemaid muutujaid ja küsime: kui palju sõltub y varieeruvus x varieeruvusest. Lihtsaim viis sellele küsimusele läheneda on lineaarse regressiooni kaudu. Me ehitame lineaarse mudeli, mis vaatab kaalu-pikkuse paare (igal subjektil mõõdeti kaal ja pikkus ning mudel vaatab kaalu ja pikkuse koos-varieeruvust subjektide vahel). Enam ei tohiks tulla üllatusena, et meie arvutused ei anna numbrilist hinnangut mitte teaduslikule küsimusele selle kohta kuidas <em>y</em>-i väärtused sõltuvad <em>x</em>-i väärtustest, vaid mudeli parameetritele. Meie mudel on sirge võrrand <span class="math inline">\(y = a + b*x\)</span> ja tavapärases R-i notatsioonis kirjutatakse see <em>y~x</em>.</p>
+<p>Kuna pikkused ja kaalud on igavad, proovime vaadata kuidas riigi keskmine eluiga on seotud riigi rikkusega.</p>
+</div>
+<div id="lm---vahimruutude-meetodiga-fititud-lineaarsed-mudelid" class="section level2 unnumbered">
+<h2><code>lm()</code> - vähimruutude meetodiga fititud lineaarsed mudelid</h2>
+<p>Kautame gapminder andmeid aastast 2007.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gapminder)
+<span class="co"># Select only data from year 2007</span>
+g2007 &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>)
+knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">head</span>(g2007))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">country</th>
+<th align="left">continent</th>
+<th align="right">year</th>
+<th align="right">lifeExp</th>
+<th align="right">pop</th>
+<th align="right">gdpPercap</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Afghanistan</td>
+<td align="left">Asia</td>
+<td align="right">2007</td>
+<td align="right">43.8</td>
+<td align="right">31889923</td>
+<td align="right">975</td>
+</tr>
+<tr class="even">
+<td align="left">Albania</td>
+<td align="left">Europe</td>
+<td align="right">2007</td>
+<td align="right">76.4</td>
+<td align="right">3600523</td>
+<td align="right">5937</td>
+</tr>
+<tr class="odd">
+<td align="left">Algeria</td>
+<td align="left">Africa</td>
+<td align="right">2007</td>
+<td align="right">72.3</td>
+<td align="right">33333216</td>
+<td align="right">6223</td>
+</tr>
+<tr class="even">
+<td align="left">Angola</td>
+<td align="left">Africa</td>
+<td align="right">2007</td>
+<td align="right">42.7</td>
+<td align="right">12420476</td>
+<td align="right">4797</td>
+</tr>
+<tr class="odd">
+<td align="left">Argentina</td>
+<td align="left">Americas</td>
+<td align="right">2007</td>
+<td align="right">75.3</td>
+<td align="right">40301927</td>
+<td align="right">12779</td>
+</tr>
+<tr class="even">
+<td align="left">Australia</td>
+<td align="left">Oceania</td>
+<td align="right">2007</td>
+<td align="right">81.2</td>
+<td align="right">20434176</td>
+<td align="right">34435</td>
+</tr>
+</tbody>
+</table>
+<p>Enne kui SKP ja eluea seoseid otsima hakkame, vaatame, mis juhtub, kui me arvutame ainult interceptiga mudeli, kus puudub SKP (kasutades lihtsuse mõttes mudeli fittimiseks nn vähimruutude meetodit <code>lm()</code> funktsiooni abil).</p>
+<pre class="sourceCode r"><code class="sourceCode r">gapmod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> g2007)
+<span class="kw">summary</span>(gapmod1)
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Call:</span>
+<span class="co">#&gt; lm(formula = lifeExp ~ 1, data = g2007)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Residuals:</span>
+<span class="co">#&gt;    Min     1Q Median     3Q    Max </span>
+<span class="co">#&gt; -27.39  -9.85   4.93   9.41  15.60 </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Coefficients:</span>
+<span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span>
+<span class="co">#&gt; (Intercept)    67.01       1.01    66.1   &lt;2e-16 ***</span>
+<span class="co">#&gt; ---</span>
+<span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Residual standard error: 12.1 on 141 degrees of freedom</span></code></pre>
+<p>Ok, intercept = 67.
+Mida see tähendab?</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(g2007<span class="op">$</span>lifeExp)
+<span class="co">#&gt; [1] 67</span></code></pre>
+<p>See on lihtsalt parameetri, mida me ennustame, keskmine väärtus ehk keskmine eluiga üle kõikide riikide.</p>
+<p>Nüüd fitime mudeli, kus on olemas SKP ja eluea seos aga puudub lõikepunkt.</p>
+<pre class="sourceCode r"><code class="sourceCode r">gapmod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span><span class="dv">0</span> <span class="op">+</span><span class="st"> </span>gdpPercap, <span class="dt">data =</span> g2007)
+<span class="kw">summary</span>(gapmod2)
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Call:</span>
+<span class="co">#&gt; lm(formula = lifeExp ~ 0 + gdpPercap, data = g2007)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Residuals:</span>
+<span class="co">#&gt;    Min     1Q Median     3Q    Max </span>
+<span class="co">#&gt;  -65.5   17.6   44.9   54.7   67.0 </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Coefficients:</span>
+<span class="co">#&gt;           Estimate Std. Error t value Pr(&gt;|t|)    </span>
+<span class="co">#&gt; gdpPercap 0.002951   0.000218    13.5   &lt;2e-16 ***</span>
+<span class="co">#&gt; ---</span>
+<span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Residual standard error: 45.1 on 141 degrees of freedom</span>
+<span class="co">#&gt; Multiple R-squared:  0.565,  Adjusted R-squared:  0.562 </span>
+<span class="co">#&gt; F-statistic:  183 on 1 and 141 DF,  p-value: &lt;2e-16</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(g2007, <span class="kw">aes</span>(gdpPercap, lifeExp)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> .fitted), <span class="dt">data =</span> gapmod2)
+p</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-40"></span>
+<img src="12_pidev_files/figure-html/unnamed-chunk-40-1.png" alt="Nulli surutud interceptiga lineaarne regressioon eluea sõltuvusele SKP-st." width="672" />
+<p class="caption">
+Joonis 16.14: Nulli surutud interceptiga lineaarne regressioon eluea sõltuvusele SKP-st.
+</p>
+</div>
+<p>Nüüd on intercept surutud väärtusele y = 0.</p>
+<p>Ja lõpuks täismudel</p>
+<pre class="sourceCode r"><code class="sourceCode r">gapmod3 &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span>gdpPercap, <span class="dt">data =</span> g2007)
+<span class="kw">summary</span>(gapmod3)
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Call:</span>
+<span class="co">#&gt; lm(formula = lifeExp ~ gdpPercap, data = g2007)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Residuals:</span>
+<span class="co">#&gt;    Min     1Q Median     3Q    Max </span>
+<span class="co">#&gt; -22.83  -6.32   1.92   6.90  13.13 </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Coefficients:</span>
+<span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span>
+<span class="co">#&gt; (Intercept) 5.96e+01   1.01e+00    59.0   &lt;2e-16 ***</span>
+<span class="co">#&gt; gdpPercap   6.37e-04   5.83e-05    10.9   &lt;2e-16 ***</span>
+<span class="co">#&gt; ---</span>
+<span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Residual standard error: 8.9 on 140 degrees of freedom</span>
+<span class="co">#&gt; Multiple R-squared:  0.461,  Adjusted R-squared:  0.457 </span>
+<span class="co">#&gt; F-statistic:  120 on 1 and 140 DF,  p-value: &lt;2e-16</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> .fitted), <span class="dt">data =</span> gapmod3, <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>)</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-42"></span>
+<img src="12_pidev_files/figure-html/unnamed-chunk-42-1.png" alt="Täismudeliga regressioon." width="672" />
+<p class="caption">
+Joonis 16.15: Täismudeliga regressioon.
+</p>
+</div>
+<p>Kuidas me seda m3 mudelit tõlgendame?
+Esiteks, Intercept on 59.6, mis tähendab, et mudel ennustab, et kui riigi SKP = 0 USD, siis selle riigi elanike keskmine euliga on ligi 60 aastat.
+See on selgelt imelik, sest ühegi riigi SKP ei ole null, ja kui oleks, oleks seal ka eluiga 0 (selle järgi peaksime eelistama mudelit gapmod2, kus me oleme intercepti nulli surunud).</p>
+<p>Teiseks, koefitsient b = 0.00064, mis on üsna väike arv. See tähendab, et SKP tõus 1 USD võrra tõstab eluiga keskmiselt 0.00064 aasta võrra (ja SKP tõus 1000 USD võrra tõstab eluiga 0.64 aasta võrra).
+Muidugi ainult siis, kui uskuda mudelit.</p>
+<p>Kolmandaks, adjusted R squared on 0.46, mis tähendab et mudeli järgi seletab SKP varieerumine 46% eluea varieeruvusest riikide vahel.</p>
+<p>Hea küll, aga milline mudel on siis parim?</p>
+<pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">AIC</span>(gapmod1, gapmod2, gapmod3))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">df</th>
+<th align="right">AIC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>gapmod1</td>
+<td align="right">2</td>
+<td align="right">1113</td>
+</tr>
+<tr class="even">
+<td>gapmod2</td>
+<td align="right">2</td>
+<td align="right">1487</td>
+</tr>
+<tr class="odd">
+<td>gapmod3</td>
+<td align="right">3</td>
+<td align="right">1028</td>
+</tr>
+</tbody>
+</table>
+<p>AIC on <em>Aikake informatsiooni kriteerium</em>, mis võtab arvesse nii mudeli fiti headuse kui mudeli parameetrite arvu.
+Kuna R saab parameetreid lisades ainult kasvada ja me teame, et mingist hetkest oleme niikuinii oma mudeli üle fittinud, siis otsime AIC-i abil kompromissi: võimalult hea fit võimalikult väikese parameetrite arvuga.
+AIC on suhteline mõõt, selle absoluutnäit ei oma mingit tähendust.
+Me eelistame väiksema AIC-ga mudelit nende mudelite seast, mida me võrdleme.
+See ei tähenda, et võitnud mudel oleks hea mudel — alati on võimalik, et kõik head mudelid jäid võrdlusest välja.</p>
+<p>Seega parim mudel on gapmod3 ja kõige kehvem on gapmod2, mille lõikepunkt on realistlikult nulli fikseeritud!</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="mcmc-pohimote.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="bayesi-meetodil-lineaarse-mudeli-fittimine.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstats-tartu/bayesiraamat/edit/master/12_pidev.Rmd",
+"text": "Editeeri"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

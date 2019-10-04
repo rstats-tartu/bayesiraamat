@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Lineaarsed mudelid | Bayesi statistika kasutades R keelt</title>
+  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Lineaarsed mudelid | Bayesi statistika kasutades R keelt" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="img/cyclo.png" />
+  <meta property="og:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
+  <meta name="github-repo" content="rstats-tartu/bayesiraamat" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Lineaarsed mudelid | Bayesi statistika kasutades R keelt" />
+  
+  <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ Bayesi statistika materjalid." />
+  <meta name="twitter:image" content="img/cyclo.png" />
+
+<meta name="author" content="Taavi Päll" />
+<meta name="author" content="Ülo Maiväli" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="kuidas-naevad-valja-teie-andmed.html">
+<link rel="next" href="kaks-lineaarse-mudeli-laiendust.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
+
+<script src="https://use.fontawesome.com/e4ba4259a1.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bayesi statistika kasutades R keelt</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Saateks</a></li>
+<li class="part"><span><b>I OSA</b></span></li>
+<li class="chapter" data-level="1" data-path="sissejuhatus-maailm-teooria-ja-mudel.html"><a href="sissejuhatus-maailm-teooria-ja-mudel.html"><i class="fa fa-check"></i><b>1</b> Sissejuhatus: maailm, teooria ja mudel</a><ul>
+<li class="chapter" data-level="" data-path="sissejuhatus-maailm-teooria-ja-mudel.html"><a href="sissejuhatus-maailm-teooria-ja-mudel.html#suur-ja-vaike-maailm"><i class="fa fa-check"></i>Suur ja väike maailm</a></li>
+<li class="chapter" data-level="" data-path="sissejuhatus-maailm-teooria-ja-mudel.html"><a href="sissejuhatus-maailm-teooria-ja-mudel.html#mudeli-vaike-maailm"><i class="fa fa-check"></i>Mudeli väike maailm</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="kusimused-mida-statistika-kusib.html"><a href="kusimused-mida-statistika-kusib.html"><i class="fa fa-check"></i><b>2</b> Küsimused, mida statistika küsib</a><ul>
+<li class="chapter" data-level="" data-path="kusimused-mida-statistika-kusib.html"><a href="kusimused-mida-statistika-kusib.html#jata-meelde"><i class="fa fa-check"></i>Jäta meelde</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="kuidas-naevad-valja-teie-andmed.html"><a href="kuidas-naevad-valja-teie-andmed.html"><i class="fa fa-check"></i><b>3</b> Kuidas näevad välja teie andmed</a><ul>
+<li class="chapter" data-level="" data-path="kuidas-naevad-valja-teie-andmed.html"><a href="kuidas-naevad-valja-teie-andmed.html#summaarsed-statistikud"><i class="fa fa-check"></i>Summaarsed statistikud</a></li>
+<li class="chapter" data-level="" data-path="kuidas-naevad-valja-teie-andmed.html"><a href="kuidas-naevad-valja-teie-andmed.html#keskvaartused"><i class="fa fa-check"></i>Keskväärtused</a></li>
+<li class="chapter" data-level="" data-path="kuidas-naevad-valja-teie-andmed.html"><a href="kuidas-naevad-valja-teie-andmed.html#muutuja-sisene-varieeruvus"><i class="fa fa-check"></i>Muutuja sisene varieeruvus</a></li>
+<li class="chapter" data-level="" data-path="kuidas-naevad-valja-teie-andmed.html"><a href="kuidas-naevad-valja-teie-andmed.html#logaritmi-andmed"><i class="fa fa-check"></i>Logaritmi andmed</a></li>
+<li class="chapter" data-level="" data-path="kuidas-naevad-valja-teie-andmed.html"><a href="kuidas-naevad-valja-teie-andmed.html#iseloomusta-andmeid-algses-skaalas-mediaan-mad"><i class="fa fa-check"></i>Iseloomusta andmeid algses skaalas: mediaan (MAD)</a></li>
+<li class="chapter" data-level="" data-path="kuidas-naevad-valja-teie-andmed.html"><a href="kuidas-naevad-valja-teie-andmed.html#muutujate-koosvarieeruvus"><i class="fa fa-check"></i>Muutujate koosvarieeruvus</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html"><i class="fa fa-check"></i><b>4</b> Lineaarsed mudelid</a><ul>
+<li class="chapter" data-level="4.1" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#sirge-vorrand"><i class="fa fa-check"></i><b>4.1</b> Sirge võrrand</a></li>
+<li class="chapter" data-level="4.2" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#ennustus-lineaarsest-mudelist"><i class="fa fa-check"></i><b>4.2</b> Ennustus lineaarsest mudelist</a></li>
+<li class="chapter" data-level="4.3" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#neli-moistet"><i class="fa fa-check"></i><b>4.3</b> Neli mõistet</a></li>
+<li class="chapter" data-level="4.4" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#mudeli-fittimine"><i class="fa fa-check"></i><b>4.4</b> Mudeli fittimine</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#ule--ja-alafittimine"><i class="fa fa-check"></i><b>4.4.1</b> Üle- ja alafittimine</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#lineaarse-regressiooni-eeldused"><i class="fa fa-check"></i><b>4.5</b> Lineaarse regressiooni eeldused</a><ul>
+<li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#matemaatilised-eeldused"><i class="fa fa-check"></i>Matemaatilised eeldused:</a></li>
+<li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#eeldused-praktilise-tahtsuse-jarjekorras"><i class="fa fa-check"></i>Eeldused praktilise tähtsuse järjekorras:</a></li>
+<li class="chapter" data-level="" data-path="lineaarsed-mudelid.html"><a href="lineaarsed-mudelid.html#regressioon-kui-kirjeldus-ja-kui-pohjuslik-hupotees"><i class="fa fa-check"></i>Regressioon kui kirjeldus ja kui põhjuslik hüpotees</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="kaks-lineaarse-mudeli-laiendust.html"><a href="kaks-lineaarse-mudeli-laiendust.html"><i class="fa fa-check"></i><b>5</b> Kaks lineaarse mudeli laiendust</a><ul>
+<li class="chapter" data-level="5.1" data-path="kaks-lineaarse-mudeli-laiendust.html"><a href="kaks-lineaarse-mudeli-laiendust.html#mitme-soltumatu-prediktoriga-mudel"><i class="fa fa-check"></i><b>5.1</b> Mitme sõltumatu prediktoriga mudel</a><ul>
+<li class="chapter" data-level="" data-path="kaks-lineaarse-mudeli-laiendust.html"><a href="kaks-lineaarse-mudeli-laiendust.html#ennustused-soltumatute-prediktoritega-mudelist"><i class="fa fa-check"></i>Ennustused sõltumatute prediktoritega mudelist</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="kaks-lineaarse-mudeli-laiendust.html"><a href="kaks-lineaarse-mudeli-laiendust.html#interaktsioonimudel"><i class="fa fa-check"></i><b>5.2</b> Interaktsioonimudel</a><ul>
+<li class="chapter" data-level="" data-path="kaks-lineaarse-mudeli-laiendust.html"><a href="kaks-lineaarse-mudeli-laiendust.html#ennustused-interaktsioonimudelist"><i class="fa fa-check"></i>Ennustused interaktsioonimudelist</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><i class="fa fa-check"></i><b>6</b> Vähimruutude meetodiga fititud mudelite töövoog – lm()</a><ul>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#vaatame-mudeli-koefitsiente"><i class="fa fa-check"></i>1. vaatame mudeli koefitsiente</a></li>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#testime-mudeli-eeldusi"><i class="fa fa-check"></i>2. Testime mudeli eeldusi</a><ul>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#lineaarsus---residuaalidfitted-plot"><i class="fa fa-check"></i>Lineaarsus - residuaalid~fitted plot</a></li>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#mojukuse-plot"><i class="fa fa-check"></i>Mõjukuse plot</a></li>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#residuaalide-normaalsus---qq-plot"><i class="fa fa-check"></i>Residuaalide normaalsus - qq plot</a></li>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#homoskedastilisus---scale-location-plot"><i class="fa fa-check"></i>Homoskedastilisus - Scale-location plot</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#residuaalid-y-ja-x-muutujate-vastu"><i class="fa fa-check"></i>Residuaalid y ja x muutujate vastu</a></li>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#teeme-mudeli-pohjal-ennustusi-marginal-plots"><i class="fa fa-check"></i>3. Teeme mudeli põhjal ennustusi (marginal plots)</a></li>
+<li class="chapter" data-level="" data-path="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html"><a href="vahimruutude-meetodiga-fititud-mudelite-toovoog-lm.html#vordleme-mudeleid"><i class="fa fa-check"></i>4. Võrdleme mudeleid</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html"><i class="fa fa-check"></i><b>7</b> Andmete transformeerimine</a><ul>
+<li class="chapter" data-level="7.1" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#logaritmimine"><i class="fa fa-check"></i><b>7.1</b> Logaritmimine</a><ul>
+<li class="chapter" data-level="" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#miks-ja-millal-muutujaid-logaritmida"><i class="fa fa-check"></i>Miks ja millal muutujaid logaritmida</a></li>
+<li class="chapter" data-level="" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#naturaallogaritmitud-andmetega-tootamine"><i class="fa fa-check"></i>Naturaallogaritmitud andmetega töötamine</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#standardiseerimine"><i class="fa fa-check"></i><b>7.2</b> Standardiseerimine</a><ul>
+<li class="chapter" data-level="" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#korrelatsioon-ule-regressiooni-ja-regressioon-keskmisele"><i class="fa fa-check"></i>Korrelatsioon üle regressiooni ja regressioon keskmisele</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#tsentreerimine"><i class="fa fa-check"></i><b>7.3</b> Tsentreerimine</a></li>
+<li class="chapter" data-level="7.4" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#mudeli-koefitsientide-transformeerimine"><i class="fa fa-check"></i><b>7.4</b> Mudeli koefitsientide transformeerimine</a></li>
+<li class="chapter" data-level="7.5" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#pidev-voi-diskreetne-muutuja"><i class="fa fa-check"></i><b>7.5</b> Pidev või diskreetne muutuja?</a></li>
+<li class="chapter" data-level="7.6" data-path="andmete-transformeerimine.html"><a href="andmete-transformeerimine.html#mitmese-regressiooni-uldised-printsiibid"><i class="fa fa-check"></i><b>7.6</b> mitmese regressiooni üldised printsiibid</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="veamudel.html"><a href="veamudel.html"><i class="fa fa-check"></i><b>8</b> Veamudel</a><ul>
+<li class="chapter" data-level="8.1" data-path="veamudel.html"><a href="veamudel.html#lihtne-varieeruvuse-mudel"><i class="fa fa-check"></i><b>8.1</b> Lihtne varieeruvuse mudel</a></li>
+<li class="chapter" data-level="8.2" data-path="veamudel.html"><a href="veamudel.html#protsessimudel-ja-varieeruvuse-mudel-lineaarses-regressioonis"><i class="fa fa-check"></i><b>8.2</b> protsessimudel ja varieeruvuse mudel lineaarses regressioonis</a></li>
+<li class="chapter" data-level="" data-path="veamudel.html"><a href="veamudel.html#enimkasutatud-veamudel-on-normaaljaotus"><i class="fa fa-check"></i>Enimkasutatud veamudel on normaaljaotus</a><ul>
+<li class="chapter" data-level="" data-path="veamudel.html"><a href="veamudel.html#normaaljaotuse-mudel-vaikestel-valimitel"><i class="fa fa-check"></i>Normaaljaotuse mudel väikestel valimitel</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="veamudel.html"><a href="veamudel.html#normaaljaotuse-ja-lognormaaljaotuse-erilisus"><i class="fa fa-check"></i>Normaaljaotuse ja lognormaaljaotuse erilisus</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="veamudel.html"><a href="veamudel.html#normaaljaotuse-ja-lognormaaljaotuse-vordlus"><i class="fa fa-check"></i><b>8.2.1</b> Normaaljaotuse ja lognormaaljaotuse võrdlus</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="veamudel.html"><a href="veamudel.html#teised-veamudelid"><i class="fa fa-check"></i><b>8.3</b> Teised veamudelid</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="veamudel.html"><a href="veamudel.html#lognormaaljaotus"><i class="fa fa-check"></i><b>8.3.1</b> Lognormaaljaotus</a></li>
+<li class="chapter" data-level="8.3.2" data-path="veamudel.html"><a href="veamudel.html#binoomjaotus"><i class="fa fa-check"></i><b>8.3.2</b> Binoomjaotus</a></li>
+<li class="chapter" data-level="8.3.3" data-path="veamudel.html"><a href="veamudel.html#poissoni-jaotus"><i class="fa fa-check"></i><b>8.3.3</b> Poissoni jaotus</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="eda-eksploratoorne-andmeanaluus.html"><a href="eda-eksploratoorne-andmeanaluus.html"><i class="fa fa-check"></i><b>9</b> EDA — eksploratoorne andmeanalüüs</a><ul>
+<li class="chapter" data-level="9.1" data-path="eda-eksploratoorne-andmeanaluus.html"><a href="eda-eksploratoorne-andmeanaluus.html#eda-kokkuvote"><i class="fa fa-check"></i><b>9.1</b> EDA kokkuvõte</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="lausearvutuslik-loogika.html"><a href="lausearvutuslik-loogika.html"><i class="fa fa-check"></i><b>10</b> Lausearvutuslik loogika</a><ul>
+<li class="chapter" data-level="10.1" data-path="lausearvutuslik-loogika.html"><a href="lausearvutuslik-loogika.html#toetabel"><i class="fa fa-check"></i><b>10.1</b> Tõetabel</a></li>
+<li class="chapter" data-level="10.2" data-path="lausearvutuslik-loogika.html"><a href="lausearvutuslik-loogika.html#konjunktsioon"><i class="fa fa-check"></i><b>10.2</b> Konjunktsioon</a></li>
+<li class="chapter" data-level="10.3" data-path="lausearvutuslik-loogika.html"><a href="lausearvutuslik-loogika.html#disjunktsioon"><i class="fa fa-check"></i><b>10.3</b> Disjunktsioon</a></li>
+<li class="chapter" data-level="10.4" data-path="lausearvutuslik-loogika.html"><a href="lausearvutuslik-loogika.html#konditsionaal"><i class="fa fa-check"></i><b>10.4</b> Konditsionaal</a></li>
+<li class="chapter" data-level="10.5" data-path="lausearvutuslik-loogika.html"><a href="lausearvutuslik-loogika.html#tautoloogia-ja-kontradiktsioon"><i class="fa fa-check"></i><b>10.5</b> Tautoloogia ja kontradiktsioon</a></li>
+<li class="chapter" data-level="10.6" data-path="lausearvutuslik-loogika.html"><a href="lausearvutuslik-loogika.html#loogiline-argument-ja-valiidne-jareldamine"><i class="fa fa-check"></i><b>10.6</b> loogiline argument ja valiidne järeldamine</a></li>
+<li class="chapter" data-level="10.7" data-path="lausearvutuslik-loogika.html"><a href="lausearvutuslik-loogika.html#modus-ponens-ja-modus-tollens"><i class="fa fa-check"></i><b>10.7</b> Modus Ponens ja Modus Tollens</a></li>
+<li class="chapter" data-level="10.8" data-path="lausearvutuslik-loogika.html"><a href="lausearvutuslik-loogika.html#lausearvutusest-toenaosuste-loogikasse"><i class="fa fa-check"></i><b>10.8</b> Lausearvutusest tõenäosuste loogikasse</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html"><i class="fa fa-check"></i><b>11</b> Järeldav statistika</a><ul>
+<li class="chapter" data-level="" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#jareldav-statistika-on-toenaosusteooria-kaepikendus"><i class="fa fa-check"></i>Järeldav statistika on tõenäosusteooria käepikendus</a><ul>
+<li class="chapter" data-level="" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#formaalsed-tuletised-toenaosusteooria-aksioomidest"><i class="fa fa-check"></i>Formaalsed tuletised tõenäosusteooria aksioomidest</a></li>
+<li class="chapter" data-level="" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#naited-toenaosusteooria-tuletiste-rakendamisest"><i class="fa fa-check"></i>Näited tõenäosusteooria tuletiste rakendamisest</a></li>
+<li class="chapter" data-level="" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#toenaosuse-episteemiline-tolgendus"><i class="fa fa-check"></i>Tõenäosuse episteemiline tõlgendus</a></li>
+<li class="chapter" data-level="" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#toenaosusteooriast-tulenevad-statistika-pohiprintsiibid"><i class="fa fa-check"></i>Tõenäosusteooriast tulenevad statistika põhiprintsiibid</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#andmed-ei-ole-sama-mis-tegelikkus"><i class="fa fa-check"></i>Andmed ei ole sama, mis tegelikkus</a></li>
+</ul></li>
+<li class="part"><span><b>II OSA</b></span></li>
+<li class="chapter" data-level="12" data-path="bootstrap.html"><a href="bootstrap.html"><i class="fa fa-check"></i><b>12</b> Bootstrap</a><ul>
+<li class="chapter" data-level="12.1" data-path="bootstrap.html"><a href="bootstrap.html#moned-tava-bootstrapi-paketid"><i class="fa fa-check"></i><b>12.1</b> Mõned tava-bootstrapi paketid</a></li>
+<li class="chapter" data-level="" data-path="bootstrap.html"><a href="bootstrap.html#bayesi-bootstrap"><i class="fa fa-check"></i>Bayesi bootstrap</a></li>
+<li class="chapter" data-level="" data-path="bootstrap.html"><a href="bootstrap.html#parameetriline-bootstrap"><i class="fa fa-check"></i>Parameetriline bootstrap</a></li>
+<li class="chapter" data-level="" data-path="bootstrap.html"><a href="bootstrap.html#bootstrappimine-ei-ole-kogu-tode"><i class="fa fa-check"></i>Bootstrappimine ei ole kogu tõde</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="bayesi-pohimote.html"><a href="bayesi-pohimote.html"><i class="fa fa-check"></i><b>13</b> Bayesi põhimõte</a><ul>
+<li class="chapter" data-level="" data-path="bayesi-pohimote.html"><a href="bayesi-pohimote.html#esimene-naide"><i class="fa fa-check"></i>Esimene näide</a></li>
+<li class="chapter" data-level="" data-path="bayesi-pohimote.html"><a href="bayesi-pohimote.html#teine-naide-sonastame-oma-probleemi-umber"><i class="fa fa-check"></i>Teine näide: sõnastame oma probleemi ümber</a></li>
+<li class="chapter" data-level="" data-path="bayesi-pohimote.html"><a href="bayesi-pohimote.html#kui-n-1"><i class="fa fa-check"></i>Kui n = 1</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="mudelite-keel.html"><a href="mudelite-keel.html"><i class="fa fa-check"></i><b>14</b> Mudelite keel</a><ul>
+<li class="chapter" data-level="" data-path="mudelite-keel.html"><a href="mudelite-keel.html#beta-prior"><i class="fa fa-check"></i>Beta prior</a></li>
+<li class="chapter" data-level="" data-path="mudelite-keel.html"><a href="mudelite-keel.html#prioritest-uldiselt"><i class="fa fa-check"></i>Prioritest üldiselt</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="mcmc-pohimote.html"><a href="mcmc-pohimote.html"><i class="fa fa-check"></i><b>15</b> MCMC põhimõte</a></li>
+<li class="chapter" data-level="16" data-path="lihtne-normaaljaotuse-mudel.html"><a href="lihtne-normaaljaotuse-mudel.html"><i class="fa fa-check"></i><b>16</b> Lihtne normaaljaotuse mudel</a><ul>
+<li class="chapter" data-level="" data-path="lihtne-normaaljaotuse-mudel.html"><a href="lihtne-normaaljaotuse-mudel.html#kui-lai-on-meie-toeparafunktsioon"><i class="fa fa-check"></i>Kui lai on meie tõepärafunktsioon?</a></li>
+<li class="chapter" data-level="" data-path="lihtne-normaaljaotuse-mudel.html"><a href="lihtne-normaaljaotuse-mudel.html#lihtne-voi-robustne-normaalne-mudel"><i class="fa fa-check"></i>Lihtne või robustne normaalne mudel?</a></li>
+<li class="chapter" data-level="" data-path="lihtne-normaaljaotuse-mudel.html"><a href="lihtne-normaaljaotuse-mudel.html#mcmc-ahelate-kvaliteet"><i class="fa fa-check"></i>MCMC ahelate kvaliteet</a><ul>
+<li class="chapter" data-level="" data-path="lihtne-normaaljaotuse-mudel.html"><a href="lihtne-normaaljaotuse-mudel.html#naide-usa-presidentide-keskmine-pikkus"><i class="fa fa-check"></i>Näide: USA presidentide keskmine pikkus</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="lihtne-normaaljaotuse-mudel.html"><a href="lihtne-normaaljaotuse-mudel.html#lineaarne-regressioon"><i class="fa fa-check"></i>Lineaarne regressioon</a></li>
+<li><a href="lihtne-normaaljaotuse-mudel.html#lm---vahimruutude-meetodiga-fititud-lineaarsed-mudelid"><code>lm()</code> - vähimruutude meetodiga fititud lineaarsed mudelid</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="bayesi-meetodil-lineaarse-mudeli-fittimine.html"><a href="bayesi-meetodil-lineaarse-mudeli-fittimine.html"><i class="fa fa-check"></i><b>17</b> Bayesi meetodil lineaarse mudeli fittimine</a><ul>
+<li class="chapter" data-level="" data-path="bayesi-meetodil-lineaarse-mudeli-fittimine.html"><a href="bayesi-meetodil-lineaarse-mudeli-fittimine.html#ennustused-mudelist"><i class="fa fa-check"></i>Ennustused mudelist</a></li>
+<li class="chapter" data-level="" data-path="bayesi-meetodil-lineaarse-mudeli-fittimine.html"><a href="bayesi-meetodil-lineaarse-mudeli-fittimine.html#lognormaalne-toeparamudel"><i class="fa fa-check"></i>Lognormaalne tõepäramudel</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="mitme-prediktoriga-lineaarne-regressioon.html"><a href="mitme-prediktoriga-lineaarne-regressioon.html"><i class="fa fa-check"></i><b>18</b> Mitme prediktoriga lineaarne regressioon</a><ul>
+<li class="chapter" data-level="" data-path="mitme-prediktoriga-lineaarne-regressioon.html"><a href="mitme-prediktoriga-lineaarne-regressioon.html#miks-multivariaatsed-mudelid-head-on"><i class="fa fa-check"></i>Miks multivariaatsed mudelid head on?</a></li>
+<li class="chapter" data-level="" data-path="mitme-prediktoriga-lineaarne-regressioon.html"><a href="mitme-prediktoriga-lineaarne-regressioon.html#mudeldamine-standardiseeritud-andmetega"><i class="fa fa-check"></i>Mudeldamine standardiseeritud andmetega</a></li>
+<li class="chapter" data-level="18.1" data-path="mitme-prediktoriga-lineaarne-regressioon.html"><a href="mitme-prediktoriga-lineaarne-regressioon.html#prediktorite-valik-e-milline-on-parim-mudel"><i class="fa fa-check"></i><b>18.1</b> Prediktorite valik e milline on parim mudel</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html"><i class="fa fa-check"></i><b>19</b> Keerulisemate mudelitega töötamine</a><ul>
+<li class="chapter" data-level="" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html#predictor-residual-plots"><i class="fa fa-check"></i>Predictor residual plots</a></li>
+<li class="chapter" data-level="" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html#ennustavad-plotid"><i class="fa fa-check"></i>Ennustavad plotid</a></li>
+<li class="chapter" data-level="" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html#posterior-prediction-plots"><i class="fa fa-check"></i>Posterior prediction plots</a></li>
+<li class="chapter" data-level="" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html#interaktsioonid-prediktorite-vahel"><i class="fa fa-check"></i>Interaktsioonid prediktorite vahel</a></li>
+<li class="chapter" data-level="" data-path="keerulisemate-mudelitega-tootamine.html"><a href="keerulisemate-mudelitega-tootamine.html#interaktsioonid-pidevatele-tunnustele"><i class="fa fa-check"></i>Interaktsioonid pidevatele tunnustele</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html"><i class="fa fa-check"></i><b>20</b> Mitmetasemelised mudelid</a><ul>
+<li class="chapter" data-level="20.1" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#kahetasemeline-mudel-algebra-keeles"><i class="fa fa-check"></i><b>20.1</b> kahetasemeline mudel algebra keeles</a><ul>
+<li class="chapter" data-level="20.1.1" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#aegread"><i class="fa fa-check"></i><b>20.1.1</b> Aegread</a></li>
+<li class="chapter" data-level="20.1.2" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#temporaalne-autokorrelatsioon"><i class="fa fa-check"></i><b>20.1.2</b> Temporaalne autokorrelatsioon</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeline-mudel-r-i-mudelikeeles"><i class="fa fa-check"></i><b>20.2</b> mitmetasemeline mudel R-i mudelikeeles</a></li>
+<li class="chapter" data-level="20.3" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeliste-mudelite-lisaeeldused"><i class="fa fa-check"></i><b>20.3</b> Mitmetasemeliste mudelite lisaeeldused</a></li>
+<li class="chapter" data-level="20.4" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#mitmetasemeline-mudel-tootab-korraga-mitmel-tasmel"><i class="fa fa-check"></i><b>20.4</b> Mitmetasemeline mudel töötab korraga mitmel tasmel</a><ul>
+<li class="chapter" data-level="" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#shrinkage"><i class="fa fa-check"></i>Shrinkage</a></li>
+</ul></li>
+<li class="chapter" data-level="20.5" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#anova-laadne-mudel"><i class="fa fa-check"></i><b>20.5</b> ANOVA-laadne mudel</a></li>
+<li class="chapter" data-level="20.6" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#vabad-interceptid-klassikalises-regressioonimudelis"><i class="fa fa-check"></i><b>20.6</b> Vabad interceptid klassikalises regressioonimudelis</a></li>
+<li class="chapter" data-level="20.7" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#vabad-tousud-ja-interceptid"><i class="fa fa-check"></i><b>20.7</b> Vabad tõusud ja interceptid</a></li>
+<li class="chapter" data-level="20.8" data-path="mitmetasemelised-mudelid.html"><a href="mitmetasemelised-mudelid.html#hierarhiline-mudel-pidevate-prediktoritega"><i class="fa fa-check"></i><b>20.8</b> Hierarhiline mudel pidevate prediktoritega</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="brms.html"><a href="brms.html"><i class="fa fa-check"></i><b>21</b> brms</a><ul>
+<li class="chapter" data-level="21.1" data-path="brms.html"><a href="brms.html#brms-i-toovoog"><i class="fa fa-check"></i><b>21.1</b> brms-i töövoog</a><ul>
+<li class="chapter" data-level="21.1.1" data-path="brms.html"><a href="brms.html#kiire-toovoog"><i class="fa fa-check"></i><b>21.1.1</b> Kiire töövoog</a></li>
+<li class="chapter" data-level="21.1.2" data-path="brms.html"><a href="brms.html#pohjalikum-toovoog"><i class="fa fa-check"></i><b>21.1.2</b> Põhjalikum töövoog</a></li>
+<li class="chapter" data-level="21.1.3" data-path="brms.html"><a href="brms.html#spetsifitseerime-mudeli-vaatame-ja-muudame-vaikeprioreid"><i class="fa fa-check"></i><b>21.1.3</b> Spetsifitseerime mudeli, vaatame ja muudame vaikeprioreid</a></li>
+<li class="chapter" data-level="21.1.4" data-path="brms.html"><a href="brms.html#brm-funktsiooni-argumendid"><i class="fa fa-check"></i><b>21.1.4</b> <code>brm()</code> funktsiooni argumendid:</a></li>
+<li class="chapter" data-level="21.1.5" data-path="brms.html"><a href="brms.html#fitime-mudeleid-ja-vordleme-fitte."><i class="fa fa-check"></i><b>21.1.5</b> Fitime mudeleid ja võrdleme fitte.</a></li>
+<li class="chapter" data-level="21.1.6" data-path="brms.html"><a href="brms.html#vaatame-mudelite-kokkuvotet"><i class="fa fa-check"></i><b>21.1.6</b> Vaatame mudelite kokkuvõtet</a></li>
+<li class="chapter" data-level="21.1.7" data-path="brms.html"><a href="brms.html#plotime-posteeriorid-ja-ahelad"><i class="fa fa-check"></i><b>21.1.7</b> Plotime posteeriorid ja ahelad</a></li>
+<li class="chapter" data-level="21.1.8" data-path="brms.html"><a href="brms.html#korjame-ahelad-andmeraami-ja-plotime-fititud-koefitsiendid-ci-dega"><i class="fa fa-check"></i><b>21.1.8</b> Korjame ahelad andmeraami ja plotime fititud koefitsiendid CI-dega</a></li>
+<li class="chapter" data-level="21.1.9" data-path="brms.html"><a href="brms.html#bayesi-versioon-r-ruudust"><i class="fa fa-check"></i><b>21.1.9</b> Bayesi versioon R-ruudust</a></li>
+<li class="chapter" data-level="21.1.10" data-path="brms.html"><a href="brms.html#plotime-mudeli-poolt-ennustatud-valimeid-posterior-predictive-check"><i class="fa fa-check"></i><b>21.1.10</b> Plotime mudeli poolt ennustatud valimeid – posterior predictive check</a></li>
+<li class="chapter" data-level="21.1.11" data-path="brms.html"><a href="brms.html#plotime-mudeli-ennustusi---marginal-effects-plots"><i class="fa fa-check"></i><b>21.1.11</b> Plotime mudeli ennustusi - marginal effects plots</a></li>
+<li class="chapter" data-level="21.1.12" data-path="brms.html"><a href="brms.html#alternatiivne-tee"><i class="fa fa-check"></i><b>21.1.12</b> Alternatiivne tee</a></li>
+<li class="chapter" data-level="21.1.13" data-path="brms.html"><a href="brms.html#alternatiiv-ansambliennustus"><i class="fa fa-check"></i><b>21.1.13</b> Alternatiiv – ansambliennustus</a></li>
+</ul></li>
+<li class="chapter" data-level="21.2" data-path="brms.html"><a href="brms.html#mudeli-eelduste-kontroll"><i class="fa fa-check"></i><b>21.2</b> Mudeli eelduste kontroll</a><ul>
+<li class="chapter" data-level="21.2.1" data-path="brms.html"><a href="brms.html#plotime-residuaalid"><i class="fa fa-check"></i><b>21.2.1</b> Plotime residuaalid</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="brms-mudelid.html"><a href="brms-mudelid.html"><i class="fa fa-check"></i><b>22</b> Brms mudelid</a><ul>
+<li class="chapter" data-level="22.1" data-path="brms-mudelid.html"><a href="brms-mudelid.html#robustne-lineaarne-regressioon"><i class="fa fa-check"></i><b>22.1</b> Robustne lineaarne regressioon</a></li>
+<li class="chapter" data-level="22.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#lognormaalne-toeparafunktsioon"><i class="fa fa-check"></i><b>22.2</b> lognormaalne tõepärafunktsioon</a></li>
+<li class="chapter" data-level="22.3" data-path="brms-mudelid.html"><a href="brms-mudelid.html#puuduvate-andmete-imputatsioon"><i class="fa fa-check"></i><b>22.3</b> Puuduvate andmete imputatsioon</a><ul>
+<li class="chapter" data-level="" data-path="brms-mudelid.html"><a href="brms-mudelid.html#imputatsioon-otse-brms-is"><i class="fa fa-check"></i>Imputatsioon otse brms-is</a></li>
+</ul></li>
+<li class="chapter" data-level="22.4" data-path="brms-mudelid.html"><a href="brms-mudelid.html#binoomjaotusega-mudelid"><i class="fa fa-check"></i><b>22.4</b> Binoomjaotusega mudelid</a><ul>
+<li class="chapter" data-level="22.4.1" data-path="brms-mudelid.html"><a href="brms-mudelid.html#logistiline-regressioon"><i class="fa fa-check"></i><b>22.4.1</b> Logistiline regressioon</a></li>
+<li class="chapter" data-level="22.4.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#y-muutujal-3-kategoorilist-vaartust"><i class="fa fa-check"></i><b>22.4.2</b> Y-muutujal 3+ kategoorilist väärtust</a></li>
+<li class="chapter" data-level="22.4.3" data-path="brms-mudelid.html"><a href="brms-mudelid.html#zero-inflated-mudelid"><i class="fa fa-check"></i><b>22.4.3</b> zero inflated mudelid</a></li>
+<li class="chapter" data-level="22.4.4" data-path="brms-mudelid.html"><a href="brms-mudelid.html#additiivsed-distributsioonilised-mudelid"><i class="fa fa-check"></i><b>22.4.4</b> additiivsed distributsioonilised mudelid</a></li>
+</ul></li>
+<li class="chapter" data-level="22.5" data-path="brms-mudelid.html"><a href="brms-mudelid.html#monotoonilised-efektid"><i class="fa fa-check"></i><b>22.5</b> Monotoonilised efektid</a><ul>
+<li class="chapter" data-level="22.5.1" data-path="brms-mudelid.html"><a href="brms-mudelid.html#multivariaatsed-mudelid"><i class="fa fa-check"></i><b>22.5.1</b> Multivariaatsed mudelid</a></li>
+<li class="chapter" data-level="22.5.2" data-path="brms-mudelid.html"><a href="brms-mudelid.html#mittelineaarsed-mudelid"><i class="fa fa-check"></i><b>22.5.2</b> Mittelineaarsed mudelid</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="brms-suntaks.html"><a href="brms-suntaks.html"><i class="fa fa-check"></i><b>23</b> brms süntaks</a><ul>
+<li class="chapter" data-level="23.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#general-formula-structure"><i class="fa fa-check"></i><b>23.1</b> General formula structure</a><ul>
+<li class="chapter" data-level="23.1.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#special-predictor-terms-s-t2-gp-mo-me-mi-cs"><i class="fa fa-check"></i><b>23.1.1</b> Special predictor terms (s, t2, gp(), mo(), me(), mi(), cs())</a></li>
+<li class="chapter" data-level="23.1.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#additional-response-information"><i class="fa fa-check"></i><b>23.1.2</b> Additional response information</a></li>
+<li class="chapter" data-level="23.1.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-non-linear-models"><i class="fa fa-check"></i><b>23.1.3</b> Formula syntax for non-linear models</a></li>
+<li class="chapter" data-level="23.1.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-predicting-distributional-parameters"><i class="fa fa-check"></i><b>23.1.4</b> Formula syntax for predicting distributional parameters</a></li>
+<li class="chapter" data-level="23.1.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-mixture-models"><i class="fa fa-check"></i><b>23.1.5</b> Formula syntax for mixture models</a></li>
+<li class="chapter" data-level="23.1.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#formula-syntax-for-multivariate-models"><i class="fa fa-check"></i><b>23.1.6</b> Formula syntax for multivariate models</a></li>
+</ul></li>
+<li class="chapter" data-level="23.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#brms-likelihoods"><i class="fa fa-check"></i><b>23.2</b> brms likelihoods</a></li>
+<li class="chapter" data-level="23.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#priors"><i class="fa fa-check"></i><b>23.3</b> priors</a><ul>
+<li class="chapter" data-level="23.3.1" data-path="brms-suntaks.html"><a href="brms-suntaks.html#population-level-fixed-effects"><i class="fa fa-check"></i><b>23.3.1</b> Population-level (‘fixed’) effects</a></li>
+<li class="chapter" data-level="23.3.2" data-path="brms-suntaks.html"><a href="brms-suntaks.html#standard-deviations-of-group-level-random-effects"><i class="fa fa-check"></i><b>23.3.2</b> Standard deviations of group-level (‘random’) effects</a></li>
+<li class="chapter" data-level="23.3.3" data-path="brms-suntaks.html"><a href="brms-suntaks.html#correlations-of-group-level-random-effects"><i class="fa fa-check"></i><b>23.3.3</b> Correlations of group-level (‘random’) effects</a></li>
+<li class="chapter" data-level="23.3.4" data-path="brms-suntaks.html"><a href="brms-suntaks.html#splines"><i class="fa fa-check"></i><b>23.3.4</b> Splines</a></li>
+<li class="chapter" data-level="23.3.5" data-path="brms-suntaks.html"><a href="brms-suntaks.html#gaussian-processes"><i class="fa fa-check"></i><b>23.3.5</b> Gaussian processes</a></li>
+<li class="chapter" data-level="23.3.6" data-path="brms-suntaks.html"><a href="brms-suntaks.html#autocorrelation-parameters"><i class="fa fa-check"></i><b>23.3.6</b> Autocorrelation parameters</a></li>
+<li class="chapter" data-level="23.3.7" data-path="brms-suntaks.html"><a href="brms-suntaks.html#parameters-for-specific-families"><i class="fa fa-check"></i><b>23.3.7</b> Parameters for specific families</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html"><i class="fa fa-check"></i><b>24</b> Puuduvad andmed</a><ul>
+<li class="chapter" data-level="24.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#andmete-puudumise-mehhanismid"><i class="fa fa-check"></i><b>24.1</b> Andmete puudumise mehhanismid:</a></li>
+<li class="chapter" data-level="24.2" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#uhekaupa-imputatsiooni-meetodid"><i class="fa fa-check"></i><b>24.2</b> Ühekaupa imputatsiooni meetodid</a><ul>
+<li class="chapter" data-level="24.2.1" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#na-dega-ridade-eemaldamine"><i class="fa fa-check"></i><b>24.2.1</b> NA-dega ridade eemaldamine</a></li>
+<li class="chapter" data-level="24.2.2" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#paariviisiline-deleteerimine"><i class="fa fa-check"></i><b>24.2.2</b> Paariviisiline deleteerimine</a></li>
+<li class="chapter" data-level="24.2.3" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#keskmise-imputatsioon-ja-regressiooniga-imputatsioon"><i class="fa fa-check"></i><b>24.2.3</b> Keskmise imputatsioon ja regressiooniga imputatsioon</a></li>
+<li class="chapter" data-level="24.2.4" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#stohhastiline-regressiooniga-imputatsioon"><i class="fa fa-check"></i><b>24.2.4</b> Stohhastiline regressiooniga imputatsioon</a></li>
+<li class="chapter" data-level="24.2.5" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#eelmise-vaatluse-kopeerimine-locf."><i class="fa fa-check"></i><b>24.2.5</b> Eelmise vaatluse kopeerimine (LOCF).</a></li>
+</ul></li>
+<li class="chapter" data-level="24.3" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#mitmene-imputatsioon"><i class="fa fa-check"></i><b>24.3</b> Mitmene imputatsioon</a></li>
+<li class="chapter" data-level="24.4" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#predictive-mean-matching"><i class="fa fa-check"></i><b>24.4</b> Predictive mean matching</a></li>
+<li class="chapter" data-level="24.5" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#imputeerimine-mitte-normaalsete-jaotuste-korral"><i class="fa fa-check"></i><b>24.5</b> Imputeerimine mitte-normaalsete jaotuste korral</a></li>
+<li class="chapter" data-level="24.6" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#kategoorilised-muutujad"><i class="fa fa-check"></i><b>24.6</b> Kategoorilised muutujad</a></li>
+<li class="chapter" data-level="24.7" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#countid-sisaldavad-nulle"><i class="fa fa-check"></i><b>24.7</b> countid (sisaldavad nulle)</a></li>
+<li class="chapter" data-level="24.8" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#graafilised-meetodid"><i class="fa fa-check"></i><b>24.8</b> Graafilised meetodid</a></li>
+<li class="chapter" data-level="24.9" data-path="puuduvad-andmed.html"><a href="puuduvad-andmed.html#tulemuste-avaldamine"><i class="fa fa-check"></i><b>24.9</b> Tulemuste avaldamine</a></li>
+</ul></li>
+<li class="appendix"><span><b>Lisa</b></span></li>
+<li class="chapter" data-level="A" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html"><i class="fa fa-check"></i><b>A</b> Bayesi ja sagedusliku statistika võrdlus</a><ul>
+<li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#kaks-statistikat-ajaloost-ja-toenaosusest"><i class="fa fa-check"></i>Kaks statistikat: ajaloost ja tõenäosusest</a></li>
+<li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#poleemika-kumbki-toenaosus-pole-paris-see-mida-uldiselt-arvatakse"><i class="fa fa-check"></i>Poleemika: kumbki tõenäosus pole päris see, mida üldiselt arvatakse</a></li>
+<li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#vordlev-naide-kahe-grupi-vordlus"><i class="fa fa-check"></i>Võrdlev näide: kahe grupi võrdlus</a><ul>
+<li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#bayesiaan"><i class="fa fa-check"></i>Bayesiaan</a></li>
+<li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#sageduslik-statistik"><i class="fa fa-check"></i>Sageduslik statistik</a></li>
+<li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#tulemuste-tolgendamine"><i class="fa fa-check"></i>Tulemuste tõlgendamine</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#kahe-paradigma-erinevused"><i class="fa fa-check"></i>Kahe paradigma erinevused</a><ul>
+<li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#sageduslik-ja-teaduslik-hupoteesitestimine"><i class="fa fa-check"></i>Sageduslik ja teaduslik hüpoteesitestimine</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#statistiline-ennustus-kui-mitmetasandiline-protsess"><i class="fa fa-check"></i>Statistiline ennustus kui mitmetasandiline protsess</a><ul>
+<li class="chapter" data-level="A.0.1" data-path="bayesi-ja-sagedusliku-statistika-vordlus.html"><a href="bayesi-ja-sagedusliku-statistika-vordlus.html#ajaloolist-juttu-normaaljaotus-bayes-ja-sageduslik-statistika"><i class="fa fa-check"></i><b>A.0.1</b> Ajaloolist juttu: normaaljaotus, Bayes ja sageduslik statistika</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="sonastik.html"><a href="sonastik.html"><i class="fa fa-check"></i><b>B</b> Sõnastik</a><ul>
+<li class="chapter" data-level="" data-path="sonastik.html"><a href="sonastik.html#kaks-statistikat-ajaloost-ja-toenaosusest-1"><i class="fa fa-check"></i>Kaks statistikat: ajaloost ja tõenäosusest</a></li>
+<li class="chapter" data-level="" data-path="sonastik.html"><a href="sonastik.html#poleemika-kumbki-toenaosus-pole-paris-see-mida-uldiselt-arvatakse-1"><i class="fa fa-check"></i>Poleemika: kumbki tõenäosus pole päris see, mida üldiselt arvatakse</a></li>
+<li class="chapter" data-level="" data-path="sonastik.html"><a href="sonastik.html#vordlev-naide-kahe-grupi-vordlus-1"><i class="fa fa-check"></i>Võrdlev näide: kahe grupi võrdlus</a><ul>
+<li class="chapter" data-level="" data-path="sonastik.html"><a href="sonastik.html#bayesiaan-1"><i class="fa fa-check"></i>Bayesiaan</a></li>
+<li class="chapter" data-level="" data-path="sonastik.html"><a href="sonastik.html#sageduslik-statistik-1"><i class="fa fa-check"></i>Sageduslik statistik</a></li>
+<li class="chapter" data-level="" data-path="sonastik.html"><a href="sonastik.html#tulemuste-tolgendamine-1"><i class="fa fa-check"></i>Tulemuste tõlgendamine</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="sonastik.html"><a href="sonastik.html#kahe-paradigma-erinevused-1"><i class="fa fa-check"></i>Kahe paradigma erinevused</a><ul>
+<li class="chapter" data-level="" data-path="sonastik.html"><a href="sonastik.html#sageduslik-ja-teaduslik-hupoteesitestimine-1"><i class="fa fa-check"></i>Sageduslik ja teaduslik hüpoteesitestimine</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="sonastik.html"><a href="sonastik.html#statistiline-ennustus-kui-mitmetasandiline-protsess-1"><i class="fa fa-check"></i>Statistiline ennustus kui mitmetasandiline protsess</a><ul>
+<li class="chapter" data-level="B.0.1" data-path="sonastik.html"><a href="sonastik.html#ajaloolist-juttu-normaaljaotus-bayes-ja-sageduslik-statistika-1"><i class="fa fa-check"></i><b>B.0.1</b> Ajaloolist juttu: normaaljaotus, Bayes ja sageduslik statistika</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesi statistika kasutades R keelt</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="lineaarsed-mudelid" class="section level1">
+<h1><span class="header-section-number">4</span> Lineaarsed mudelid</h1>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(ggthemes)
+<span class="kw">library</span>(broom)
+<span class="kw">library</span>(modelr)
+<span class="kw">library</span>(viridis)</code></pre>
+<div id="sirge-vorrand" class="section level2">
+<h2><span class="header-section-number">4.1</span> Sirge võrrand</h2>
+<p>Oletame, et me mõõtsime N inimese pikkuse cm-s ja kaalu kg-s ning meid huvitab, kuidas inimeste pikkus sõltub nende kaalust.
+Lihtsaim mudel pikkuse sõltuvusest kaalust on pikkus = kaal (formaliseeritult: y = x) ja see mudel ennustab, et kui Juhani kaal = 80 kg, siis Juhan on 80 cm pikkune.
+Siin on pikkus muutuja, mille väärtust ennustatakse (y) ja kaal muutuja x, mille väärtuste põhjal ennustatakse pikkusi. Muidugi, sama hästi võiksime ennustada kaalu pikkuste põhjal, ja kumma ennustuse valime sõltub siinkohal eeskätt meie teaduslikest huvidest.</p>
+<p>Veelgi enam, sama mudel ennustab, et kui Juhani kaal = 80 tonni, siis on Juhan samuti 80 cm pikkune (eeldusel, et me avaldame x muutuja tonnides ja y muutuja sentimeetrites). Seega, mudeli ennustuse täpsus sõltub ühikutest, milles me andmed mudelisse sisse anname.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Genereerime andmed: x = pikkus ja y = kaal:</span>
+x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">100</span>
+y &lt;-<span class="st"> </span>x</code></pre>
+<p>Selle mudeli saame graafiliselt kujutada nii:</p>
+
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, 
+     <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Weight in kg&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="st">&quot;Heigth in cm&quot;</span>, 
+     <span class="dt">main =</span> <span class="kw">bquote</span>(y <span class="op">==</span><span class="st"> </span>x))</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:lihtnemudel"></span>
+<img src="04_lineaarsed_mudelid_files/figure-html/lihtnemudel-1.png" alt="Lihtne mudel y ~ x, mille lõikepunkt = 0 ja tõus = 1." width="70%" />
+<p class="caption">
+Joonis 4.1: Lihtne mudel y ~ x, mille lõikepunkt = 0 ja tõus = 1.
+</p>
+</div>
+<blockquote>
+<p>Üldistatult, mudeli keeles tähistame me seda muutujat, mille väärtusi me ennustame, Y-ga ja seda muutujat, mille väärtuse põhjal me ennustame, X-ga.</p>
+</blockquote>
+<p>Sirge mudeli lihtsaim matemaatiline formalism on Y = X.
+See on äärmiselt jäik mudel: sirge, mille asukoht on rangelt fikseeritud.
+Sirge lõikab y telge alati 0-s (mudeli keeles: sirge <em>intercept</em> ehk lõikepunkt Y teljel = 0) ja tema tõusunurk saab olla ainult 45 kraadi (mudeli keeles <em>slope</em> ehk tõus = 1).
+Selle mudeli jäikus tuleneb sellest, et temas ei ole parameetreid, mille väärtusi me saaksime vabalt muuta ehk tuunida.</p>
+<p>Mis juhtub, kui me lisame mudelisse konstandi, mille liidame x-i väärtustele?</p>
+<p><span class="math display">\[y = a + x\]</span></p>
+<p>See konstant on mudeli parameeter, mille väärtuse võime vabalt valida. Järgnevalt anname talle väärtuse 30 (ilma konkreetse põhjuseta).</p>
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">100</span> 
+a &lt;-<span class="st"> </span><span class="dv">30</span>
+y &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>x</code></pre>
+
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">150</span>), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,
+     <span class="dt">main =</span> <span class="kw">bquote</span>(y <span class="op">==</span><span class="st"> </span>a <span class="op">+</span><span class="st"> </span>x))
+<span class="kw">abline</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:intercept"></span>
+<img src="04_lineaarsed_mudelid_files/figure-html/intercept-1.png" alt="Lineaarne mudel, mille lõikepunkt = 30 ja tõus = 1. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = 30" width="70%" />
+<p class="caption">
+Joonis 4.2: Lineaarne mudel, mille lõikepunkt = 30 ja tõus = 1. Katkendjoon, lõikepunkt = 0. Pidevjoon, lõikepunkt = 30
+</p>
+</div>
+<p>Meie konstant a määrab <span class="math inline">\(y\)</span> väärtuse, kui <span class="math inline">\(x = 0\)</span>, ehk sirge lõikepunkti <span class="math inline">\(y\)</span> teljel.
+Teisisõnu, a = mudeli lõikepunkt (<em>intercept</em>).</p>
+<p>Mis juhtub, kui me mitte ei liida, vaid korrutame <em>x</em>-i konstandiga?</p>
+<p><span class="math display">\[y =  b \times x\]</span></p>
+<p>Jällegi, me anname mudeli parameetrile b suvalise väärtuse, 3.</p>
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">200</span>
+b &lt;-<span class="st"> </span><span class="dv">3</span>
+y &lt;-<span class="st"> </span>b <span class="op">*</span><span class="st"> </span>x</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">main =</span> <span class="kw">bquote</span>(y <span class="op">==</span><span class="st"> </span>b <span class="op">%*%</span><span class="st"> </span>x))
+<span class="kw">abline</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
+<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-7-1.png" alt="Lineaarne mudel, mille lõikepunkt = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3." width="70%" />
+<p class="caption">
+Joonis 4.3: Lineaarne mudel, mille lõikepunkt = 0 ja tõus = 3. Katkendjoon, tõus = 1. Pidevjoon, tõus = 3.
+</p>
+</div>
+<p>Nüüd muutub sirge tõusunurk, ehk kui palju me ootame <em>y</em>-t muutumas, kui <em>x</em> muutub näiteks ühe ühiku võrra.
+Kui b = 3, siis <em>x</em>-i tõustes ühe ühiku võrra suureneb <em>y</em> kolme ühiku võrra. Proovi järgi, mis juhtub, kui b = -3.</p>
+<p>Selleks, et sirget kahes dimensioonis vabalt liigutada, piisab kui me kombineerime eelnevad näited ühte:</p>
+<p><span class="math display">\[y = a + b \times x\]</span></p>
+<p>Selleks lisame mudelisse kaks parameetrit, lõikepunkt (a) ja tõus (b).
+Kui <span class="math inline">\(a = 0\)</span> ja <span class="math inline">\(b = 1\)</span>, saame me eelpool kirjeldatud mudeli <span class="math inline">\(y = x\)</span>.
+Kui <span class="math inline">\(a = 102\)</span>, siis sirge lõikab y-telge väärtusel 102.
+Kui <span class="math inline">\(b = 0.8\)</span>, siis x-i tõustes 1 ühiku võrra tõuseb y-i väärtus 0.8 ühiku võrra.
+Kui <span class="math inline">\(a = 100\)</span> ja <span class="math inline">\(b = 0\)</span>, siis saame sirge, mis on paraleelne x-teljega ja lõikab y-telge väärtusel 100.
+Seega, teades a ja b väärtusi ning omistades x-le suvalise meid huvitava väärtuse, saab ennustada y-i keskmist väärtust sellel x-i väärtusel.
+Näiteks, olgu andmete vastu fititud mudel pikkus(cm) = 102 + 0.8 * kaal(kg) ehk</p>
+<p><span class="math display">\[y = 102 + 0.8 \times x\]</span></p>
+<p>Omistades nüüd kaalule väärtuse 80 kg, tuleb mudeli poolt ennustatud keskmine pikkus 102 + 0.8 * 80 = 166 cm.
+Iga kg lisakaalu ennustab mudeli kohaselt 0.8 cm võrra suuremat pikkust.</p>
+<pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="dv">102</span>
+b &lt;-<span class="st"> </span><span class="fl">0.8</span>
+x &lt;-<span class="st">  </span><span class="dv">0</span><span class="op">:</span><span class="dv">100</span> 
+y &lt;-<span class="st">  </span>a <span class="op">+</span><span class="st"> </span>b <span class="op">*</span><span class="st"> </span>x</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">xlab =</span> <span class="st">&quot;Weight in kg&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Heigth in cm&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">200</span>), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">main =</span> <span class="kw">bquote</span>(y <span class="op">==</span><span class="st"> </span><span class="dv">102</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.8</span> <span class="op">%*%</span><span class="st"> </span>x))</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-9"></span>
+<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-9-1.png" alt="Lineaarne mudel, millel on tuunitud nii lõikepunkt kui tõus." width="70%" />
+<p class="caption">
+Joonis 4.4: Lineaarne mudel, millel on tuunitud nii lõikepunkt kui tõus.
+</p>
+</div>
+<p>See mudel ennustab, et 0 kaalu juures on pikku 102 cm, mis on rumal, aga mudelite puhul tavaline olukord. Sellel olukorral on mitmeid põhjusi:</p>
+<ul>
+<li><p>Me tuunime mudelit andmete peal, mis ei sisalda 0-kaalu.</p></li>
+<li><p>Meie valimiandmed ei peegelda täpselt inimpopulatsiooni.</p></li>
+<li><p>Sirge mudel ei peegelda täpselt pikkuse-kaalu suhteid vahemikus, kus meil on reaalseid kaaluandmeid; ja ta teeb seda veelgi vähem seal, kus meil mõõdetud kaalusid ei ole.</p></li>
+</ul>
+<p>Seega pole mõtet imestada, miks mudeli intercept meie üle irvitab.</p>
+<p>Kahe parameetriga sirge mudel ongi see, mida me fitime kahedimensiooniliste andmetega.</p>
+<p>Näiteks nii, kasutame R-i “iris” andmesetti:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Fit a linear model and name the model object as m</span>
+m &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length, <span class="dt">data =</span> iris)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Make a scatter plot, colored by the var called &quot;Species&quot;</span>
+<span class="co"># Draw the fitted regression line from m</span>
+<span class="kw">augment</span>(m, iris) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(Petal.Length, Sepal.Length, <span class="dt">color =</span> Species)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> .fitted), <span class="dt">color =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Sepal.Length ~ Petal.Length&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> <span class="ot">TRUE</span>)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
+<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-11-1.png" alt="Fititud mudel, kus muutuja Petal.Length järgi ennustatakse muutuja Sepal.Length väärtusi." width="70%" />
+<p class="caption">
+Joonis 4.5: Fititud mudel, kus muutuja Petal.Length järgi ennustatakse muutuja Sepal.Length väärtusi.
+</p>
+</div>
+<p>Mudeli fittimine tähendab siin lihtsalt, et sirge on 2D ruumi asetatud nii, et see oleks võimalikult lähedal kõikidele punktidele.</p>
+<blockquote>
+<p>Oletame, et meil on n andmepunkti ja et me fitime neile sirge. Nüüd plotime fititud sirge koos punktidega ja tõmbame igast punktist mudelsirgeni joone, mis on paraleelne y-teljega. Seejärel mõõdame nende n joone pikkused. Olgu need pikkused a, b, … i. <code>lm()</code> funktsioon fitib sirge niimoodi, et summa <span class="math inline">\(a^2 + b^2 + ... + i^2\)</span> oleks minimaalne. Seda kutsutakse vähimruutude meetodiks.</p>
+</blockquote>
+<p>Mudeli koefitsientide väärtused saame kasutades funktsiooni <code>coef()</code>:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(m)
+<span class="co">#&gt;  (Intercept) Petal.Length </span>
+<span class="co">#&gt;        4.307        0.409</span></code></pre>
+<p>Siin a = (Intercept) ja b = Petal.Length ehk 0.41.</p>
+</div>
+<div id="ennustus-lineaarsest-mudelist" class="section level2">
+<h2><span class="header-section-number">4.2</span> Ennustus lineaarsest mudelist</h2>
+<p>Anname x-le rea väärtusi, et ennustada y keskmisi väärtusi nendel x-i väärtustel.
+Siin me ennustame y (Sepal_length) keskväärtusi erinevatel x-i (Petal_length) väärtustel, mitte individuaalseid Sepal_length väärtusi. Me kasutame selleks deterministlikku mudelit kujul Sepal_length = a + b*Petal_length. Hiljem õpime ka bayesiaanlike meetoditega individuaalseid Sepal_length-e ennustama.</p>
+<p>Järgnev kood on sisuliselt sama, millega me üle-eelmisel plotil joonistasime mudeli y = a + bx.
+Me fikseerime mudeli koefitsiendid fititud irise mudeli omadega ja anname Petal_length muutujale 10 erinevat väärtust originaalse muutuja mõõtmisvahemikus.
+Aga sama hästi võiksime ekstrapoleerida ja küsida, mis on oodatav Sepal_length, kui Petal_length on 100 cm?
+Sellele küsimusele on ebareaalne vastus, aga mudel ei tea seda.
+Proovi, mis vastus tuleb.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">## Genereerime uued andmed Petal.Length vahemikus</span>
+Petal_length &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(iris<span class="op">$</span>Petal.Length), 
+                    <span class="kw">max</span>(iris<span class="op">$</span>Petal.Length), 
+                    <span class="dt">length.out =</span> <span class="dv">10</span>)
+<span class="co">## Võtame mudeli koefitsendid</span>
+a &lt;-<span class="st"> </span><span class="kw">coef</span>(m)[<span class="dv">1</span>]
+b &lt;-<span class="st"> </span><span class="kw">coef</span>(m)[<span class="dv">2</span>]
+<span class="co">## Kasutades mudeli koefitsente genereerime Sepal_length väärtused</span>
+Sepal_length &lt;-<span class="st">  </span>a <span class="op">+</span><span class="st"> </span>b <span class="op">*</span><span class="st"> </span>Petal_length</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(Sepal_length <span class="op">~</span><span class="st"> </span>Petal_length, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-14"></span>
+<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-14-1.png" alt="Siin ennustasime kümme y väärtust x väärtuste põhjal.." width="70%" />
+<p class="caption">
+Joonis 4.6: Siin ennustasime kümme y väärtust x väärtuste põhjal..
+</p>
+</div>
+<blockquote>
+<p>Mudelist saab kahte tüüpi ennustusi: interpolatsioone (ennustus on samas skaalas, mis andmed, mille peal mudel fititi) ja ekstrapoleerimine (ennustus jääb väljaspoole andmeid). Sõltuvalt erialast me kas vaatame ekstrapoleerimisele viltu või leiame, et selline tegevus on otsesõnu keelatud.</p>
+</blockquote>
+<blockquote>
+<p>Mudelist saab kahte tüüpi ennustusi: (1) saame ennustada Y keskmist väärtust X-i konkreetsel väärtusel ja (2) saame ennustada individuaalseid Y väärtusi X-i konkreetsel väärtusel. Viimase kohta vt ptk…</p>
+</blockquote>
+</div>
+<div id="neli-moistet" class="section level2">
+<h2><span class="header-section-number">4.3</span> Neli mõistet</h2>
+<p>Mudelis <span class="math inline">\(y = a + bx\)</span> on <span class="math inline">\(x\)</span> ja <span class="math inline">\(y\)</span> muutujad, ning <span class="math inline">\(a\)</span> ja <span class="math inline">\(b\)</span> on parameetrid.
+Muutujate väärtused fikseeritakse andmetega, parameetrid fititakse andmete põhjal.
+Fititud mudel valib kõikide võimalike seda tüüpi mudelite hulgast välja täpselt ühe unikaalse mudeli ja ennustab igale <span class="math inline">\(x\)</span>-i väärtusele vastava kõige tõenäolisema <span class="math inline">\(y\)</span> väärtuse (<span class="math inline">\(y\)</span> keskväärtuse sellel <span class="math inline">\(x\)</span>-i väärtusel).</p>
+<ul>
+<li><p>Y — mida me ennustame (<em>dependent variable, predicted variable</em>).</p></li>
+<li><p>X — mille põhjal me ennustame (<em>independent variable, predictor</em>).</p></li>
+<li><p>Muutuja (variable) — iga asi, mida me valimis mõõdame (X ja Y on kaks muutujat). Muutujal on sama palju fikseeritud väärtusi kui meil on selle muutuja kohta mõõtmisandmeid.</p></li>
+<li><p>Parameeter (parameter) — mudeli koefitsient, millele võib omistada suvalisi väärtusi. Parameetreid tuunides fitime mudeli võimalikult hästi sobituma andmetega.</p></li>
+</ul>
+<p>Mudel on matemaatilise formalism, mis püüab kirjeldada füüsikalist protsessi.
+Statistilise mudeli struktuuris on komponent, mis kirjeldab ideaalseid ennustusi (nn protsessi mudel) ja eraldi veakomponent (ehk veamudel), mis kirjeldab looduse varieeruvust nende ideaalsete ennustuste ümber. Mudeli koostisosad on (i) muutuja, mille väärtusi ennustatakse, (ii), muutuja(d), mille väärtuste põhjal ennustatakse, (iii) parameetrid, mille väärtused fititakse ii põhjal ja (iv) konstandid.</p>
+</div>
+<div id="mudeli-fittimine" class="section level2">
+<h2><span class="header-section-number">4.4</span> Mudeli fittimine</h2>
+<p>Mudelid sisaldavad nii (1) matemaatilisi struktuure, mis määravad mudeli tüübi, kui (2) parameetreid, mida saab andmete põhjal tuunida, niiviisi täpsustades mudeli kuju ehk paiknemist matemaatlises ruumis.
+Näiteks võrrand <span class="math inline">\(y = a + bx\)</span> määrab mudeli, kus <span class="math inline">\(y = x\)</span> on see struktuur, mis tagab, et mudeli tüüp on sirge, ning <span class="math inline">\(a\)</span> ja <span class="math inline">\(b\)</span> on parameetrid, mis määravad sirge asendi.
+Seevastu struktuur <span class="math inline">\(y = x + x^2\)</span> tagab, et mudeli <span class="math inline">\(y = a + b_1x + b_2x^2\)</span> tüüp on parabool, ning parameetrite <span class="math inline">\(a\)</span>, <span class="math inline">\(b_1\)</span> ja <span class="math inline">\(b_2\)</span> väärtused määravad selle parabooli täpse kuju. Ja nii edasi.</p>
+<p>Mudeli parameetrite tuunimist nimetatakse mudeli fittimiseks.
+Mudelit fittides on eesmärk saavutada antud tüüpi mudeli maksimaalne sobivus andmetega (kus “andmed” hõlmavad nii valimiandmeid kui taustateadmisi). Sellele tegevusele annab mõtte meie lootus, et mudeli tüüp kajastab mingit looduses toimuvat protsessi, mis meile teaduslikku huvi pakub. Ning, kuigi mudeli fit maksimeeritakse mudeli tüübi kohta, püüab see andmete vaatenurgast vaadatuna olla optimaalne, mitte maksimaalne (vt järgmine peatükk mudeli üle- ja alafittimisest). Kahjuks ei ole selline optimaalsus kuigi hästi matemaatilisse vormi valatav, ega ka mingi (pool)automaatse meetodiga empiiriliselt kontrollitav. Siin on tegu pigem teadlase sooviga, mille filosoofiline eeldus on, et meie andmetes on peidus nii andmeid genereeriva loodusliku protsessi üldine olemus (essents), kui juhuslik müra ehk valimiviga, ning et mudeli üldine kuju (sirge, parabool, jms) on juhtumisi sobiv just selleks, et neid kahte omavahel lahku ajada.</p>
+<blockquote>
+<p>Lineraarse mudeli parima sobivuse andmetega saab tagada kahel erineval viisil: (i) vähimruutude meetod (Legendre, 1805; Gauss, 1809) mõõdab y telje suunaliselt iga andmepunkti kauguse mudeli ennustusest, võtab selle kauguse ruutu, summeerib kauguste ruudud ning leiab sirge asendi, mille korral see summa on minimaalne; (ii) Bayesi teoreem (Laplace, 1774) annab väheinformatiivse priori korral praktiliselt sama fiti. Olulise erinevusena võtab vähimruutude meetod arvesse ainult valimiandmed, samas kui Bayesi teoreemi kasutades fitime mudeli koefitsiente nii valimiandmete kui taustateadmiste peal (vt 8. ptk).</p>
+</blockquote>
+<p>Hea mudel on</p>
+<ol style="list-style-type: decimal">
+<li><p>Võimalikult lihtsa struktuuriga, mille põhjal on veel võimalik teha järeldusi protsessi kohta, mis genereeris mudeli fittimiseks kasutatud andmeid;</p></li>
+<li><p>Sobitub piisavalt hästi andmetega (eriti uute andmetega, mida ei kasutatud selle mudeli fittimiseks), et olla relevantne andmeid genereeriva protsessi kirjeldus;</p></li>
+<li><p>Genereerib usutavaid simuleeritud andmeid.</p></li>
+</ol>
+<p>Sageli fititkse samade andmetega mitu erinevat tüüpi mudelit ja püütakse otsustada, milline neist vastab kõige paremini eeltoodud tingimustele.
+Näiteks, kui sirge suudab kaalu järgi pikkust ennustada paremini kui parabool, siis on sirge mudel paremas kooskõlas teadusliku hüpoteesiga, mis annaks mehhanismi protsessile, mille käigus kilode lisandumine viiks laias kaaluvahemikus inimeste pikkuse kasvule ilma, et pikkuse kasvu tempo kaalu tõustes langeks. Samas, see et me oleme oma andmeid fittinud n mudeliga ja otsustanud, et mõned neist on paremad kui teised, ei tähenda, et mõni meie mudelitest oleks hea ka võrdluses tegeliku looduses valitseva olukorraga. Mudelid on pelgalt matemmatilised formalismid, mis võivad, aga kindlasti ei pea, kajastama füüsikalist maailma, ja meie mudelitevalik sõltub meile jõukohasest matemaatikast. Siinkohal ei tasu unustada, et matemaatika kirjeldab eelkõige abstraktseid mustreid, mitte otse füüsikalist maailma.</p>
+<p>See, et teie andmed sobivad hästi mingi mudeliga, ei tähenda automaatselt, et see fakt oleks teaduslikult huvitav.
+Mudeli parameetrid on mõtekad mudeli matemaatilise kirjelduse kontekstis, aga mitte tingimata suure maailma põhjusliku seletamise kontekstis.
+Siiski, kui mudeli matemaatiline struktuur loodi andmeid genreeeriva loodusliku protsessi olemust silmas pidades, võib mudeli koefitsientide uurimisest selguda olulisi tõsiasju suure maailma kohta.</p>
+<blockquote>
+<p>Mudeli fittimine: X ja Y saavad oma väärtused otse andmetest; parameetrid võivad omandada ükskõik millise väärtuse.</p>
+</blockquote>
+<blockquote>
+<p>Fititud mudelist ennustamine: X-le saab omistada ükskõik millise väärtuse; parameetrite väärtused on fikseeritud; Y väärtus arvutatakse mudelist.</p>
+</blockquote>
+<div id="ule--ja-alafittimine" class="section level3">
+<h3><span class="header-section-number">4.4.1</span> Üle- ja alafittimine</h3>
+<p>Osad mudelite tüübid on vähem paindlikud kui teised (parameetreid tuunides on neil vähem liikumisruumi).
+Kuigi sellised mudelid sobituvad halvemini andmetega, võivad need ikkagi paremini kui mõni paindlikum mudel välja tuua andmete peidetud olemuse.
+Statistiline mudeldamine eeldab, et me usume, et meie andmetes leidub nii müra (mida mudel võiks ignoreerida), kui signaal (mida mudel püüab tabada). Ilma signaalita süsteemi poleks arusaadavatel põhjustel mõtekas mudeldada ja ilma mürata süsteemi mudel tuleks ilma varieeruvuse (vea) komponendita, ehk deterministlik.
+Kuna mudeli jaoks näeb müra samamoodi välja kui signaal, on iga mudel kompromiss üle- ja alafittimise vahel.
+Me lihtsalt loodame, et meie mudel on piisavalt jäik, et mitte liiga palju müra modelleerida ja samas piisavalt paindlik, et piisaval määral signaali tabada.</p>
+<p>Üks kõige jäigemaid mudeleid on sirge, mis tähendab, et sirge mudel on suure tõenäosusega alafittitud.
+Keera sirget kuipalju tahad, ikka ei sobitu ta enamiku andmekogudega. Ja need vähesed andmekogud, mis sirge mudeliga sobivad, on genereeritud teatud tüüpi lineaarsete protsesside poolt.
+Sirge on seega üks kõige paremini tõlgendatavaid mudeleid.
+Teises äärmuses on polünoomsed mudelid, mis on väga paindlikud, mida on väga raske tõlgendada ja mille puhul esineb suur mudeli ülefittimise oht.
+Ülefititud mudel järgib nii täpselt valimiandmeid, et sobitub hästi valimis leiduva juhusliku müraga ning seetõttu sobitub halvasti järgmise valimiga samast populatsioonist (igal valimil on oma juhuslik müra).
+Üldiselt, mida rohkem on mudelis tuunitavaid parameetreid, seda paindlikum on mudel, seda kergem on seda valimiandmetega sobitada ja seda raskem on seda tõlgendada.
+Veelgi enam, alati on võimalik konstrueerida mudel, mis sobitub täiuslikult kõikide andmepunktidega (selle mudeli parameetrite arv = N).
+Selline mudel on täpselt sama informatiivne kui andmed, mille põhjal see fititi — ja täiesti kasutu.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-16"></span>
+<img src="04_lineaarsed_mudelid_files/figure-html/unnamed-chunk-16-1.png" alt="Kasvava paindlikusega polünoomsed mudelid." width="70%" />
+<p class="caption">
+Joonis 4.7: Kasvava paindlikusega polünoomsed mudelid.
+</p>
+</div>
+<p>Vähimruutude meetodil fititud mudeleid saame võrrelda AIC-i näitaja järgi. AIC - Akaike Informatsiooni Kriteerium - vaatab mudeli sobivust andmetega ja mudeli parameetrite arvu.
+Väikseim AIC tähitab parimat fitti väikseima parameetrite arvu juures (kompromissi) ja väikseima AIC-ga mudel on eelistatuim mudel. Aga seda ainult võrreldud mudelite hulgas. AIC-i absoluutväärtus ei loe - see on suhteline näitaja.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">model_formula</th>
+<th align="right">aic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">y ~ x</td>
+<td align="right">35.0</td>
+</tr>
+<tr class="even">
+<td align="left">y ~ poly(x, 2)</td>
+<td align="right">37.0</td>
+</tr>
+<tr class="odd">
+<td align="left">y ~ poly(x, 3)</td>
+<td align="right">36.1</td>
+</tr>
+<tr class="even">
+<td align="left">y ~ poly(x, 4)</td>
+<td align="right">32.5</td>
+</tr>
+<tr class="odd">
+<td align="left">y ~ poly(x, 5)</td>
+<td align="right">-Inf</td>
+</tr>
+</tbody>
+</table>
+<p>AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel? Mis siis, kui 3-s andmepunkt on andmesisestaja näpuviga?</p>
+<blockquote>
+<p>Ülefittimise vältimiseks kasutavad Bayesi mudelid informatiivseid prioreid, mis välistavad ekstreemsed parameetriväärtused. Vt <a href="http://elevanth.org/blog/2017/08/22/there-is-always-prior-information/" class="uri">http://elevanth.org/blog/2017/08/22/there-is-always-prior-information/</a></p>
+</blockquote>
+</div>
+</div>
+<div id="lineaarse-regressiooni-eeldused" class="section level2">
+<h2><span class="header-section-number">4.5</span> Lineaarse regressiooni eeldused</h2>
+<div id="matemaatilised-eeldused" class="section level3 unnumbered">
+<h3>Matemaatilised eeldused:</h3>
+<ol style="list-style-type: decimal">
+<li><p>Lineaarsus: ennustus Y-muutujale on lineaarne funktsioon prediktoritest <span class="math inline">\(Y = \beta_1X_1 + \beta_2X_2 +···\beta_nX_n\)</span>, ehk ekvivalentselt: kõikidel X-i väärtustel keksmine residuaal = 0.</p></li>
+<li><p>homoskedastilisus ehk konstantne Y-muutuja suunaline varieeruvus kõigil X-i väärtustel. See tähendab ühtlasi residuaalide konstantset varieeruvust.</p></li>
+<li><p>Normaalsus - residuaalid on normaaljaotusega, ehk Y-muutuja on normaaljaotusega kõigil X-i väärtustel.</p></li>
+<li><p>Sõltumatus - residuaalide väärtused ei ole omavahel korreleeritud.</p></li>
+<li><p>X-muutuja suunal puudub mõõtmisviga ja ebakindlus, mis tähendab, et x-i väärtused on täpselt teada (me ei ennusta neid). See eeldus on tähtis siis, kui püüame anda regresioonimudelile põhjusliku tõlgenduse. Mudelis <span class="math inline">\(Y = \alpha + \beta_1X_1 + \beta_2X_2\)</span> viib mõõtmisviga <span class="math inline">\(X_2\)</span>-s <span class="math inline">\(\beta_2\)</span> koefitsiendi nulli suunas ja ühtlasi vähendab <span class="math inline">\(\beta_2X_2\)</span> liikme mõju <span class="math inline">\(\beta_1\)</span> fittimisel.</p></li>
+<li><p>X-muutuja ei ole konstant vaid sisaldab erinevaid väärtusi.</p></li>
+<li><p>Mitme prediktoriga lineaarse regressiooni puhul tuleb sisse veel kollineaarsuse eeldus: me eeldame, et ükski prediktorite paar pole täiuslikult lineaarselt korreleeritud (pole lineaarne funktsioon üksteisest).</p></li>
+</ol>
+</div>
+<div id="eeldused-praktilise-tahtsuse-jarjekorras" class="section level3 unnumbered">
+<h3>Eeldused praktilise tähtsuse järjekorras:</h3>
+<ol style="list-style-type: decimal">
+<li><p>Valiidsus – sa mõõdad asju, mis on relevantsed teadusliku küsimuse seisukohast. Näiteks, kui soovite mõõta kolesterooli alandava ravimi mõju, on mõistlik mõõta suremust, mitte pelgalt kolesterooli taset veres.</p></li>
+<li><p>Esinduslikkus – andmed peaksid olema esinduslikud laiema populatsiooni suhtes. Väikesed ja kallutatud valimid ei ole sageli esinduslikud.</p></li>
+<li><p>Lineaarsus ja sellest tulenev mudeli additiivsus. Väga tähtis on, et lineaarse regressiooniga mõõdetavad seosed oleks ka tõesti lineaarsed. Kui lineaarsusega on probleeme, võib aidata prediktorite transformeerimine (log(x) või 1/x) või uute prediktorite mudelisse lisamine. Samuti on võimalik prediktoritena samasse mudelisse panna nii <span class="math inline">\(x\)</span> kui <span class="math inline">\(x^2\)</span>. Näiteks kui me paneme mudelisse nii muutuja <span class="math inline">\(vanus\)</span> kui ka <span class="math inline">\(vanus^2\)</span>, saame modelleerida seost, kus y vanuse kasvades alguses kasvab ja siis kahaneb (aga ka U kujulist seost vanusega). Sellisel juhul võib olla ka mõistlik rekodeerida vanus kategooriliseks muutujaks (näit 4 vanuseklassi), mille tasemeid saab siis ükshaaval vaadata.</p></li>
+<li><p>Sõltumatus. Selle eelduse rikkumine viib liiga kitsastele usalduspiiridele.</p></li>
+<li><p>Vigade võrdne varieeruvus (homoskedastilisus) ja vigade normaalsus on vähemtähtsad. Log-normaalsete vigadega võiks lineaarsel regresioonil mudeldada log(Y) skaalas (vähimruutude meetodil) või Bayesi regressioonil mittelineaarset lognormaalset tõepäramudelit kasutades (vt. ptk 13).</p></li>
+<li><p>Kollineaarsus. Täieliku kolineaarsuse korral mudel ei lahendu, aga sellisel juhul on põhjuseks enamasti viga mudeli spetsifitseerimisel. Osaline, aga ikkagi väga kõrge, kollineaarsus, mis õnneks on praktikas pigem haruldane, viib koefitsientide laiadele veapiiridele. Kui veapiirid pole laiad, siis pole ka kollineaarsust.</p></li>
+</ol>
+</div>
+<div id="regressioon-kui-kirjeldus-ja-kui-pohjuslik-hupotees" class="section level3 unnumbered">
+<h3>Regressioon kui kirjeldus ja kui põhjuslik hüpotees</h3>
+<p>Regressioonanalüüsi võib vaadelda 1) empiirilise kirjeldusena y ja x-i koos-varieerumisest või 2) muutujate vaheliste põhjuslike suhete analüüsina. Esimesel juhul ei tõlgenda me x ja y suhet x-i mõjuna y-le ja senikaua kui mudeli fit väljaspool andmeid, mida kasutati selle mudeli fittimiseks, on piisavalt hea, ei ole võimalik, et me fitime vale struktuuriga mudeli.
+Kui me fitime 2 mudelit (i) <span class="math inline">\(Y = \alpha + \beta_1X_1\)</span> ja (ii) <span class="math inline">\(Y = \alpha + \beta_1X_1 + \beta_2X_2\)</span>, siis eeldame, et kahe mudeli <span class="math inline">\(\beta_1\)</span> koefitsiendid tulevad erinevad. Aga sellest pole midagi, sest need kirjeldavad mõlemal juhul vaid empiirilisi seoseid.</p>
+<p>Teisel, põhjuslikul juhul on kõik teisiti. Eeldades et <span class="math inline">\(X_2\)</span> on üks Y-i põhjustest, on nüüd esimese mudeli veakomponendis peidus ka <span class="math inline">\(\beta_2X_2\)</span>. Kui <span class="math inline">\(X_1\)</span> ja <span class="math inline">\(X_2\)</span> on omavahel korreleeritud, siis tekib meil seetõttu ka korrelatsioon <span class="math inline">\(X_1\)</span> ja veakomponendi vahel, mis rikub mudeli eeldusi, kallutades mudeli fittimisel meie hinnangut <span class="math inline">\(\beta_1\)</span>-le, misläbi osa <span class="math inline">\(X_2\)</span> mõjust Y-le omistatakse ekslikult <span class="math inline">\(X_1\)</span>-le. See kõik juhtub siis, kui teise mudeli <span class="math inline">\(\beta_2\)</span> ei ole null ja esineb <span class="math inline">\(X_1\)</span> ja <span class="math inline">\(X_2\)</span> vaheline põhjuslik seos.</p>
+<p>Selle kallutatuse tõlgendamine sõltub omakorda <span class="math inline">\(X_1\)</span> ja <span class="math inline">\(X_2\)</span> vahelise põhjusliku seose struktuurist. Oluline on mõista, et regressioonimudeli enda struktuuris ei ole põhjuslikku infot - mudel ei tea isegi põhjuslikkuse olemasolust. Seega on meil lisaks regressioonimudelile vaja iseseisvat põhjuslike mõjude mudelit, mille formuleerime puhtalt teaduslikest asjaoludest lähtuvalt.</p>
+<p>Kõige lihtsam selline mudel vastab randomiseeritud eksperimendile, kus me võrdleme katse- ja kontrolltingimust. Siin me usume, et kui katsetingimus (ravimi manustamine) mõjutab võrreldes kontrolltingimusega (platseeboga) katse väljundit (suremust), siis me oleme näidanud, et vastav ravim vähendab suremust. Seega on meie põhjuslik skeem ravim –&gt; suremus ja regressioonimudel suremus~ravim, mis sisuliselt taandub kahe grupi keskmiste suremuste võrdlusele.</p>
+<p>Kuidas on aga asjalood siis, kui meil ei lubata katset teha? Näiteks, kuidas määrata suitsetamise mõju kopsuvähile? Siin ei ole meil tegemist randomiseeritud katsega (me ei tohi jagada populatsiooni juhuslikult kahte gruppi ja sundida neist ühte suitsetama). Seega peame kasutama statistilisi meetodeid, et kontrollida oma tulemust nn confounderite vastu. Siin on lihtsaim regressioonimudel vähk ~ suitsetamine + muutuja_1 + …</p>
+<p>Aga muutujaid on maailmas palju ja meil peab olema mingi reegel, mille järgi otsustada, millised neist additiivsesse mudelisse sisse panna ja millised välja jätta. Mudeli ennustusjõu maksimeerimine siin ei aita. Selle asemel peame mõistma võimalike põhjuslike skeemide suhet mitmese regressioonimudelitega. Põhjuslikud skeemid on nagu legod, mis kombineerivad endis nelja loogiliselt võimalikku ehitusplokki.</p>
+<ol style="list-style-type: decimal">
+<li>toru: x –&gt; z –&gt; y</li>
+</ol>
+<pre><code>#&gt; Warning: Prefixing `UQ()` with the rlang namespace is deprecated as of rlang 0.3.0.
+#&gt; Please use the non-prefixed form or `!!` instead.
+#&gt; 
+#&gt;   # Bad:
+#&gt;   rlang::expr(mean(rlang::UQ(var) * 100))
+#&gt; 
+#&gt;   # Ok:
+#&gt;   rlang::expr(mean(UQ(var) * 100))
+#&gt; 
+#&gt;   # Good:
+#&gt;   rlang::expr(mean(!!var * 100))
+#&gt; 
+#&gt; This warning is displayed once per session.</code></pre>
+<div id="htmlwidget-2cde0e207c956baac353" style="width:70%;height:403.2px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2cde0e207c956baac353">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"põhjus\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"2\" [label = \"z\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"3\" [label = \"tagajärg\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"1\"->\"2\" \n  \"2\"->\"3\" \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p>Kui me tahame teada, kas x (põhjus) mõjutab y-t (tagajärge), siis toru puhul mudel <span class="math inline">\(tagajärg \sim põhjus + z\)</span> vähendab x-i mõju (sest see mõju käib läbi z-i). Samas, mudel <span class="math inline">\(tagajärg \sim põhjus\)</span> näitab x-i mõju. Seega, kumba mudelit kasutada sõltub sellest, kas me tahame näidata x-i otsest või kaudset mõju y-ile.</p>
+<p>Järgnev skeem illustreerib olukorda, kus me tahame testida rohelist otseteed põhjuse ja tagajärje vahel ja selleks peame sulgema kõrvaltee, ehk tagaukse. Tagaukse sulgemiseks konditsioneerime oma regressioonimudeli z-l, ehk lisame z-i mudelisse <span class="math inline">\(tagajärg \sim põhjus + z\)</span>.</p>
+<div id="htmlwidget-6797af6ebe04eb540a5a" style="width:70%;height:403.2px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6797af6ebe04eb540a5a">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"põhjus\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"2\" [label = \"z\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"3\" [label = \"tagajärg\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n\"1\"->\"2\" [color = \"gray80\"] \n\"2\"->\"3\" [color = \"gray80\"] \n\"1\"->\"3\" [color = \"forestgreen\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<ol start="2" style="list-style-type: decimal">
+<li>kahvel: x &lt;– z –&gt; y</li>
+</ol>
+<div id="htmlwidget-c88aafaf926c93bb6680" style="width:70%;height:403.2px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c88aafaf926c93bb6680">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"x\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"2\" [label = \"z\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"3\" [label = \"y\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"2\"->\"1\" \n  \"2\"->\"3\" \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p>Kahvli puhul regressioonimudel <span class="math inline">\(y \sim x\)</span> näitab x-i mõju y-le (ehkki meie põhjuslikkuse mudelis puudub x ja y vaheline põhjuslik seos), aga mudel <span class="math inline">\(y \sim x + z\)</span> välistab selle mõju. Seega peaksime sellise põhjusliku hüpoteesi korral mudelisse z-i sisse panema, sest see aitab kontrollida z konfounding mõju vastu.</p>
+<div id="htmlwidget-ebe935fb07cf1edabc85" style="width:70%;height:403.2px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ebe935fb07cf1edabc85">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"põhjus\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"2\" [label = \"z\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"3\" [label = \"tagajärg\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n\"2\"->\"1\" [color = \"gray80\"] \n\"2\"->\"3\" [color = \"gray80\"] \n\"1\"->\"3\" [color = \"forestgreen\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p>Jällegi, kahvlist tagaukse sulgemiseks lisame z-i oma mudelisse <span class="math inline">\(tagajärg \sim põhjus + z\)</span>.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>laupkokkupõrge: x –&gt; z &lt;– y</li>
+</ol>
+<div id="htmlwidget-b28c20a06498a3c0a972" style="width:70%;height:403.2px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b28c20a06498a3c0a972">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"x\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"2\" [label = \"z\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"3\" [label = \"y\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"1\"->\"2\" \n  \"3\"->\"2\" \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p>Laupkokkupõrke korral on olukord eelnevaga vastupidine. Nüüd avab mudel <span class="math inline">\(y ~ x + z\)</span> tagaukse ja laseb z-i segava mõju mudelisse sisse, mis tekitab meile võlts-põhjusliku suhte x ja y vahel.</p>
+<div id="htmlwidget-c83d0d1926f104be531f" style="width:70%;height:403.2px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c83d0d1926f104be531f">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"põhjus\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"2\" [label = \"z\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"3\" [label = \"tagajärg\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n\"1\"->\"2\" [color = \"gray80\"] \n\"3\"->\"2\" [color = \"gray80\"] \n\"1\"->\"3\" [color = \"forestgreen\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p>Laupkokkupõrke korral on tagauks suletud senikaua, kui me ei lisa z-i oma mudelisse.</p>
+<ol start="4" style="list-style-type: decimal">
+<li>järglane: see on toru, kus z-i juurest hargneb veel üks nool D-le. Siin saame me mudelisse A lisades ligikaudu sama tulemuse, mis z-i lisades. Seega, kui z-i väärtused pole meile teada, võime hädaga ka A-d kasutada.</li>
+</ol>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-25"></span>
+<div id="htmlwidget-d253ab2b790349d2074d" style="width:70%;height:403.2px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d253ab2b790349d2074d">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"x\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"2\" [label = \"z\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"3\" [label = \"y\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"4\" [label = \"D\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"1\"->\"2\" \n  \"2\"->\"3\" \n  \"2\"->\"4\" \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p class="caption">
+Joonis 4.8: järglane
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-26"></span>
+<div id="htmlwidget-92420365e0b94a92c476" style="width:70%;height:403.2px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-92420365e0b94a92c476">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"põhjus\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"2\" [label = \"z\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"3\" [label = \"tagajärg\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"4\" [label = \"D\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n\"1\"->\"2\" [color = \"gray80\"] \n\"2\"->\"3\" [color = \"gray80\"] \n\"2\"->\"4\" [color = \"gray80\"] \n\"1\"->\"3\" [color = \"forestgreen\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p class="caption">
+Joonis 4.9: järglane
+</p>
+</div>
+<p>Järglasest tagaukse võib sulgeda nii z-i (eelistatult) kui D (kui z on küll maailmas olemas, kuid puudub meie andmetest) mudelisse lisamise kaudu, aga ehk pole mõtet lisada mõlemat, sest z ja D võivad olla tugevalt kollineaarsed ehk omavahel korreleeritud.</p>
+<p>Näiteks võib meil tekkid olukord, kus testime suitsetamise mõju vähile, aga ühtlsi usume, et inimeste elukoht mõjutab iseseisvalt nii vähki kui suitsetamist (tööstuslinnades haigestuvad ka mittesuitsetajad enam vähki, aga neis elav töölisklass ka suitsetab rohkem). Selles põhjuslikus skeemis töötab vanus kahvlina, millega arvestamiseks tuleb see regressioonimudelisse muutujana sisse panna: <span class="math inline">\(vähk \sim suits + vanus\)</span>.</p>
+<div id="htmlwidget-b680ab61ef79ca48b408" style="width:70%;height:403.2px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b680ab61ef79ca48b408">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"suits\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"2\" [label = \"elukoht\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"3\" [label = \"vähk\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n\"2\"->\"1\" [color = \"gray80\"] \n\"2\"->\"3\" [color = \"gray80\"] \n\"1\"->\"3\" [color = \"forestgreen\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p>Ja lõpuks tähtis tähelepanek, et meie põhjuslikes skeemides mängivad oma rolli ka need muutujad, mida me mõõtnud ei ole. Me usume, et isade (ja emade) haridustase on põhjuslikus seoses nende laste haridustasemega (isa –&gt; laps). Oletame, et tahame uurida põhjuslikku hüpoteesi, mille kohaselt ka vanaisa haridustase mõjutab otseselt nende lapselaste haridustaset (vanaisa –&gt; laps). Aga loomulikult usume me ka, et vanaisa haridustase mõjutab tema laste haridustaset (vanaisa –&gt; isa). Seega saame loogilise skeemi torukujulise tagauksega, mille sulgemiseks peame fittima mudeli <span class="math inline">\(laps \sim vanaisa + isa\)</span></p>
+<div id="htmlwidget-1e92adb447f0b61cd767" style="width:70%;height:403.2px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1e92adb447f0b61cd767">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"vanaisa\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"2\" [label = \"isa\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"3\" [label = \"laps\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n\"1\"->\"2\" [color = \"gray80\"] \n\"2\"->\"3\" [color = \"gray80\"] \n\"1\"->\"3\" [color = \"forestgreen\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p>Aga mõtleme enne korra järele. Me ei oma küll andmeid oma andmestikus olevate inimeste elukohtade kohta, aga see on ikkagi tähtis. Nimelt elavad isad üldiselt koos oma lastega, aga lahus vanaisadest. Ja osad elukohad (näiteks ülikoolilinnad ja ooperiteatrite lähipiirkonnad) võivad mõjuda soodsalt hariduse omandamisele, samas kui teised piirkonnad võivad seda pärssida. Seega täiendame oma põhjuslikkusemudelit:
+<div id="htmlwidget-0a7c1586755aa116f455" style="width:70%;height:403.2px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0a7c1586755aa116f455">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"vanaisa\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"2\" [label = \"isa\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"3\" [label = \"laps\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n  \"4\" [label = \"?\", fillcolor = \"#F0F8FF\", fontcolor = \"#000000\"] \n\"1\"->\"2\" [color = \"gray80\"] \n\"2\"->\"3\" [color = \"gray80\"] \n\"1\"->\"3\" [color = \"forestgreen\"] \n\"4\"->\"2\" [color = \"gray80\"] \n\"4\"->\"3\" [color = \"gray80\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script></p>
+<p>Siin on küsimärgiga tähistatud muutuja, mida ei ole (elukoht). Selles mudelis tekkib laupkokkupõrge vanaisa –&gt; isa &lt;– ?, ja kui me isa mudelisse paneme, et sulgeda toru vanaisa –&gt; isa –&gt; laps, siis avame sellega uue tagaukse. Siin ei paistagi tagauste sulgemiseks muud lahendust kui mudel <span class="math inline">\(laps \sim vanaisa + ?\)</span>, aga selle fittimiseks peame me küsimärgi asendama elukohaga, ehk kätte saama elukohaandmed ja need muutujana oma andmestikku panema. Seega lähevad ka meile kättesaamatud andmed põhjuslikku mudelisse sisse, ja ka neist sõltub, kas meil on üldse mõtet regressioonimudelit fittima hakata.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="kuidas-naevad-valja-teie-andmed.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="kaks-lineaarse-mudeli-laiendust.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstats-tartu/bayesiraamat/edit/master/04_lineaarsed_mudelid.Rmd",
+"text": "Editeeri"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
